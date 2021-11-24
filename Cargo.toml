@@ -1,0 +1,9 @@
+[package]
+name = "cmrm"
+version = "1.0.0"
+authors = ["Jaemin Hong <hjm0901@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+lazy_static = "1.4.0"
+rustfix = "0.6.0"
