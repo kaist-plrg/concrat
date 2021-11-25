@@ -6,6 +6,85 @@ use std::{
 
 use xml::reader::{EventReader, XmlEvent};
 
+pub fn generate_mutex_map(globs: &Vec<Glob>) -> HashMap<String, Option<String>> {
+    let k1 = "mutex".to_string();
+    let k2 = "readwrite".to_string();
+
+    globs
+        .iter()
+        .map(|g| {
+            let Glob { name, analyses } = g;
+
+            let mutex_map = analyses.get(&k1).unwrap().as_map();
+
+            let v = vec![];
+            let mut readwrite_set = mutex_map
+                .get(&k2)
+                .unwrap()
+                .try_as_set()
+                .unwrap_or(&v)
+                .iter()
+                .map(|v| v.as_data().clone())
+                .collect::<Vec<_>>();
+
+            assert!(readwrite_set.len() <= 1);
+
+            (name.clone(), readwrite_set.pop())
+        })
+        .collect()
+}
+
+pub fn generate_node_map(calls: &Vec<Call>) -> HashMap<String, Vec<String>> {
+    let k1 = "mutex".to_string();
+    let k2 = "Normal Lvals".to_string();
+    calls
+        .iter()
+        .map(|c| {
+            let Call { attributes, ctxs } = c;
+            let id = attributes.get(&"id".to_string()).unwrap().clone();
+            let mut ms = ctxs
+                .iter()
+                .filter(|ctx| ctx.name == "path")
+                .flat_map(|ctx| ctx.analyses.get(&k1).unwrap().as_set().clone())
+                .map(|v| v.as_map().get(&k2).unwrap().as_data().clone())
+                .collect::<Vec<_>>();
+            ms.dedup();
+            (id, ms)
+        })
+        .collect()
+}
+
+pub fn generate_function_map(
+    funcs: &Vec<Function>,
+    node_map: &HashMap<String, Vec<String>>,
+) -> HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>> {
+    let mut map: HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>> =
+        HashMap::new();
+    for f in funcs {
+        let Function {
+            path,
+            name,
+            entry,
+            ret,
+            nodes,
+        } = f;
+        let entry_mutex = node_map.get(entry).unwrap().clone();
+        let ret_mutex = node_map.get(ret).unwrap().clone();
+        let mut node_mutex: Vec<_> = nodes
+            .iter()
+            .flat_map(|n| node_map.get(n).unwrap().clone())
+            .collect();
+        node_mutex.dedup();
+        let mut path = path.clone();
+        path.pop();
+        path.pop();
+        map.entry(path)
+            .or_default()
+            .insert(name.clone(), (entry_mutex, node_mutex, ret_mutex));
+    }
+    map
+}
+
 pub fn parse_file(file_name: &str) -> (Vec<Function>, Vec<Call>, Vec<Glob>) {
     let file = File::open(file_name).unwrap();
     let file = BufReader::new(file);
@@ -35,34 +114,34 @@ pub fn parse_file(file_name: &str) -> (Vec<Function>, Vec<Call>, Vec<Glob>) {
     (functions, calls, globs)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Function {
-    path: String,
-    name: String,
-    entry: String,
-    ret: String,
-    nodes: Vec<String>,
+    pub path: String,
+    pub name: String,
+    pub entry: String,
+    pub ret: String,
+    pub nodes: Vec<String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Glob {
-    name: String,
-    analyses: HashMap<String, Value>,
+    pub name: String,
+    pub analyses: HashMap<String, Value>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Call {
-    attributes: HashMap<String, String>,
-    ctxs: Vec<Ctx>,
+    pub attributes: HashMap<String, String>,
+    pub ctxs: Vec<Ctx>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Ctx {
-    name: String,
-    analyses: HashMap<String, Value>,
+    pub name: String,
+    pub analyses: HashMap<String, Value>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Value {
     Data(String),
     Map(HashMap<String, Value>),
@@ -92,20 +171,19 @@ fn to_function(element: Element, path: String) -> Function {
     } = element;
     assert_eq!(name, tag("function"));
     let name = attributes.get(&"name".to_string()).unwrap().clone();
-    let nodes: Vec<_> = children
+    let mut nodes: Vec<_> = children
         .drain(..)
         .map(|e| e.attributes.get(&"name".to_string()).unwrap().clone())
         .collect();
-    let entry = nodes
-        .iter()
-        .find(|s| (*s).starts_with("fun"))
-        .unwrap()
-        .clone();
-    let ret = nodes
-        .iter()
-        .find(|s| (*s).starts_with("ret"))
-        .unwrap()
-        .clone();
+
+    let mut entry: Vec<_> = nodes.drain_filter(|s| (*s).starts_with("fun")).collect();
+    assert_eq!(entry.len(), 1);
+    let entry = entry.pop().unwrap();
+
+    let mut ret: Vec<_> = nodes.drain_filter(|s| (*s).starts_with("ret")).collect();
+    assert_eq!(ret.len(), 1);
+    let ret = ret.pop().unwrap();
+
     Function {
         path,
         name,
@@ -191,6 +269,40 @@ fn to_value(element: Element) -> Value {
     } else {
         assert!(children.len() > 1);
         Value::Analyses(children.drain(..).map(to_analysis).collect())
+    }
+}
+
+impl Value {
+    pub fn as_map(&self) -> &HashMap<String, Value> {
+        if let Value::Map(m) = self {
+            &m
+        } else {
+            panic!()
+        }
+    }
+
+    pub fn try_as_set(&self) -> Option<&Vec<Value>> {
+        if let Value::Set(s) = self {
+            Some(&s)
+        } else {
+            None
+        }
+    }
+
+    pub fn as_set(&self) -> &Vec<Value> {
+        if let Value::Set(s) = self {
+            &s
+        } else {
+            panic!()
+        }
+    }
+
+    pub fn as_data(&self) -> &String {
+        if let Value::Data(d) = self {
+            &d
+        } else {
+            panic!()
+        }
     }
 }
 

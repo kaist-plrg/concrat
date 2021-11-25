@@ -1,10 +1,10 @@
 use concrat::*;
 
 fn main() {
-    let (_, _, globs) = parse_xml::parse_file("/home/medowhill/out.xml");
-    for g in globs {
-        println!("{:?}", g);
-    }
+    let (funcs, calls, globs) = parse_xml::parse_file("/home/medowhill/out.xml");
+    let mutex_map = parse_xml::generate_mutex_map(&globs);
+    let node_map = parse_xml::generate_node_map(&calls);
+    let function_map = parse_xml::generate_function_map(&funcs, &node_map);
 
     let args: Vec<_> = vec![
         "create-initial-program",
@@ -20,7 +20,7 @@ fn main() {
     .map(|s| s.to_string())
     .collect();
 
-    let suggestions = rewrite::collect_suggestions(args);
+    let suggestions = rewrite::collect_suggestions(args, mutex_map, function_map);
 
     for (file, suggestions) in suggestions.iter() {
         println!("For file {}:", file.to_str().unwrap());
