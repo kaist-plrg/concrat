@@ -47,7 +47,7 @@ fn main() {
         let fixed_source_code = rewrite::apply_suggestions(file, suggestions);
         use std::fs::File;
         use std::io::Write;
-        let mut file = File::create("/home/medowhill/a.rs").unwrap();
+        let mut file = File::create("/home/medowhill/all/all.rs").unwrap();
         file.write_all(fixed_source_code.as_bytes()).unwrap();
     }
 }

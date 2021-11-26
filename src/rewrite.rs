@@ -158,6 +158,18 @@ impl LintPass for RewritePass {
 }
 
 impl<'tcx> LateLintPass<'tcx> for RewritePass {
+    fn check_mod(&mut self, ctx: &LateContext<'tcx>, m: &'tcx Mod<'tcx>, _: Span, _: HirId) {
+        let hir = ctx.tcx.hir();
+        let is_fn = |i: &Item| match i.kind {
+            ItemKind::Fn(_, _, _) => true,
+            _ => false,
+        };
+        if m.item_ids.iter().any(|i| is_fn(hir.item(*i))) {
+            let span = m.inner.shrink_to_lo();
+            make_suggestion(ctx, span, "".to_string(), "use parking_lot::{lock_api::{self, RawMutex}, Mutex, MutexGuard};\nu".to_string(), self.depth);
+        }
+    }
+
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
         match i.kind {
             ItemKind::Static(_, _, _) => {
@@ -202,18 +214,22 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                 let name = id.name.to_ident_string();
                 let (entry, node, ret) = function_map().get(&curr).unwrap().get(&name).unwrap();
 
-                let stmts = if let ExprKind::Block(b, _) = body.value.kind {
-                    &b.stmts
+                let b = if let ExprKind::Block(b, _) = body.value.kind {
+                    b
                 } else {
                     panic!()
                 };
+                let stmts = &b.stmts;
+                assert!(stmts.len() > 0);
 
                 if entry.len() > 0 {
-                    let params: String = entry
+                    let params = entry
                         .iter()
-                        .map(|m| format!("{}: MutexGuard<'static, {}>", guard_of(m), struct_of(m)))
-                        .intersperse(", ".to_string())
+                        .map(|m| {
+                            format!("mut {}: MutexGuard<'static, {}>", guard_of(m), struct_of(m))
+                        })
                         .collect();
+                    let params = join(params, ", ");
                     let (span, sugg) = if body.params.len() == 0 {
                         (
                             ctx.sess()
@@ -254,26 +270,34 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     for m in ret {
                         ret_types.push(format!("MutexGuard<'static, {}>", struct_of(m)));
                     }
-                    let ret_type = if ret_types.len() == 1 {
-                        ret_types.pop().unwrap()
-                    } else {
-                        let s: String = ret_types.drain(..).intersperse(", ".to_string()).collect();
-                        format!("({})", s)
-                    };
+                    let ret_type = make_tuple(ret_types);
                     let sugg = if let FnRetTy::Return(_) = decl.output {
                         ret_type
                     } else {
                         format!("-> {} ", ret_type)
                     };
                     make_suggestion(ctx, decl.output.span(), "".to_string(), sugg, self.depth);
-                    // let ret_vals =
-                    //     if ret.len() == 1 {
-                    //         ret[0].clone()
-                    //     } else {
-                    //         let s: String = ret.iter().map(guard_of).intersperse(", ".to_string()).collect();
-                    //         format!("({})", s)
-                    //     };
-                    // make_suggestion(ctx, stmts.last().unwrap().span.shrink_to_hi(), "".to_string(), format!("\n    {}", ret_vals), self.depth);
+
+                    assert!(b.expr.is_none());
+                    let last = stmts.last().unwrap();
+                    if let StmtKind::Semi(e) = last.kind {
+                        match e.kind {
+                            ExprKind::Ret(_) => (),
+                            _ => {
+                                let ret_vals = ret.iter().map(guard_of).collect();
+                                let ret_val = make_tuple(ret_vals);
+                                make_suggestion(
+                                    ctx,
+                                    last.span.shrink_to_hi(),
+                                    "".to_string(),
+                                    format!("\n    {}", ret_val),
+                                    self.depth,
+                                );
+                            }
+                        }
+                    } else {
+                        panic!();
+                    }
                 }
             }
             _ => (),
@@ -308,6 +332,71 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                             self.depth,
                         );
                     }
+                    Some(f) => {
+                        let curr = get_current_file_name(ctx, e.span);
+                        if let Some((entry, _, ret)) = function_map().get(&curr).unwrap().get(f) {
+                            if entry.len() > 0 {
+                                let guards = entry.iter().map(guard_of).collect();
+                                let guards = join(guards, ", ");
+                                if let Some(arg) = args.last() {
+                                    let span = arg.span.shrink_to_hi();
+                                    make_suggestion(
+                                        ctx,
+                                        span,
+                                        "".to_string(),
+                                        format!(", {}", guards),
+                                        self.depth,
+                                    );
+                                } else {
+                                    let span = ctx
+                                        .sess()
+                                        .source_map()
+                                        .span_through_char(e.span, '(')
+                                        .shrink_to_hi();
+                                    make_suggestion(ctx, span, "".to_string(), guards, self.depth);
+                                }
+                            }
+                            if ret.len() > 0 {
+                                let id = e.hir_id;
+                                if ctx.tcx.typeck(id.owner).node_type(id).is_unit() {
+                                    if ret.len() == 1 {
+                                        let span = e.span.shrink_to_lo();
+                                        make_suggestion(
+                                            ctx,
+                                            span,
+                                            "".to_string(),
+                                            format!("{} = ", guard_of(&ret[0])),
+                                            self.depth,
+                                        );
+                                    } else {
+                                        todo!();
+                                    }
+                                } else {
+                                    let span = e.span.shrink_to_lo();
+                                    make_suggestion(
+                                        ctx,
+                                        span,
+                                        "".to_string(),
+                                        "{ let tmp = ".to_string(),
+                                        self.depth,
+                                    );
+                                    let span = e.span.shrink_to_hi();
+                                    let guards: String = ret
+                                        .iter()
+                                        .enumerate()
+                                        .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i + 1))
+                                        .collect();
+                                    make_suggestion(
+                                        ctx,
+                                        span,
+                                        "".to_string(),
+                                        format!("; {}tmp.0 }}", guards),
+                                        self.depth,
+                                    );
+                                }
+                            }
+                        }
+                    }
                     _ => (),
                 }
             }
@@ -321,6 +410,49 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                             format!("(*{}).{}", guard_of(m), x),
                             self.depth,
                         );
+                    }
+                }
+            }
+            ExprKind::Ret(v_opt) => {
+                let hir = ctx.tcx.hir();
+                let curr = get_current_file_name(ctx, e.span);
+                let func = if let Node::Item(item) = hir.get(hir.enclosing_body_owner(e.hir_id)) {
+                    item.ident.name.to_ident_string()
+                } else {
+                    panic!()
+                };
+                let (_, _, ret) = function_map().get(&curr).unwrap().get(&func).unwrap();
+                if ret.len() > 0 {
+                    let ret_vals = ret.iter().map(guard_of).collect();
+                    match v_opt {
+                        Some(v) => {
+                            let ret_val = join(ret_vals, ", ");
+                            make_suggestion(
+                                ctx,
+                                v.span.shrink_to_lo(),
+                                "".to_string(),
+                                "(".to_string(),
+                                self.depth + 1,
+                            );
+                            make_suggestion(
+                                ctx,
+                                v.span.shrink_to_hi(),
+                                "".to_string(),
+                                format!(", {})", ret_val),
+                                self.depth + 1,
+                            );
+                        }
+                        None => {
+                            let ret_vals = ret.iter().map(guard_of).collect();
+                            let ret_val = make_tuple(ret_vals);
+                            make_suggestion(
+                                ctx,
+                                e.span.shrink_to_hi(),
+                                "".to_string(),
+                                format!(" {}", ret_val),
+                                self.depth,
+                            );
+                        }
                     }
                 }
             }
@@ -477,4 +609,17 @@ fn guard_of(m: &String) -> String {
 
 fn struct_of(m: &String) -> String {
     format!("{}ProtectedData", m)
+}
+
+fn join(mut v: Vec<String>, sep: &str) -> String {
+    v.drain(..).intersperse(sep.to_string()).collect()
+}
+
+fn make_tuple(mut v: Vec<String>) -> String {
+    assert!(v.len() > 0);
+    if v.len() == 1 {
+        v.pop().unwrap()
+    } else {
+        format!("({})", join(v, ", "))
+    }
 }
