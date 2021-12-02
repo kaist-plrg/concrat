@@ -18,5 +18,9 @@ jobs:
         with:
             override: true
             components: rust-src, rustfmt, clippy
-      - name: Test
-        run: ./ci/test.sh
+      - name: Check formatting
+        run: cargo fmt --check
+      - name: Apply lints
+        run: cargo clippy -- -D warnings -A clippy::type-complexity -A clippy::single-match
+      - name: Build
+        run: cargo build --release

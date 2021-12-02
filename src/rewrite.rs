@@ -100,6 +100,7 @@ struct GlobalPass {
 }
 
 impl GlobalPass {
+    #[allow(clippy::new_ret_no_self)]
     fn new() -> Box<LatePass> {
         Box::new(Self { depth: 0 })
     }
@@ -129,7 +130,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         .lock()
                         .unwrap()
                         .entry(i.ident.name)
-                        .or_insert(m.clone());
+                        .or_insert_with(|| m.clone());
 
                     make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
                     remove_attributes(ctx, i, self.depth);
@@ -145,6 +146,7 @@ struct RewritePass {
 }
 
 impl RewritePass {
+    #[allow(clippy::new_ret_no_self)]
     fn new() -> Box<LatePass> {
         Box::new(Self { depth: 0 })
     }
@@ -159,11 +161,10 @@ impl LintPass for RewritePass {
 impl<'tcx> LateLintPass<'tcx> for RewritePass {
     fn check_mod(&mut self, ctx: &LateContext<'tcx>, m: &'tcx Mod<'tcx>, _: Span, _: HirId) {
         let hir = ctx.tcx.hir();
-        let is_fn = |i: &Item| match i.kind {
-            ItemKind::Fn(_, _, _) => true,
-            _ => false,
-        };
-        if m.item_ids.iter().any(|i| is_fn(hir.item(*i))) {
+        if m.item_ids
+            .iter()
+            .any(|i| matches!(hir.item(*i).kind, ItemKind::Fn(_, _, _)))
+        {
             let span = m.inner.shrink_to_lo();
             make_suggestion(
                 ctx,
@@ -478,6 +479,7 @@ fn make_suggestion(
 }
 
 // suggestions for right-hand side of expressions
+#[allow(dead_code)]
 fn make_suggestion_after(
     ctx: &LateContext<'_>,
     span: Span,
@@ -539,7 +541,7 @@ fn make_suggestion_impl(
         .entry(fname_real.clone().into_local_path().unwrap())
         .or_default()
         .entry(depth)
-        .or_insert(vec![])
+        .or_insert_with(Vec::new)
         .push(Suggestion {
             message: "".to_owned(),
             snippets: vec![snippet.clone()],
@@ -562,7 +564,7 @@ fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
     source_map.span_to_snippet(span).unwrap()
 }
 
-fn remove_attributes(ctx: &LateContext<'_>, i: &Item, depth: i32) {
+fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>, depth: i32) {
     let hir = ctx.tcx.hir();
     let attrs = hir.attrs(hir.local_def_id_to_hir_id(i.def_id));
     for a in attrs {
@@ -608,11 +610,12 @@ fn addr_of_name<'tcx>(e: &'tcx Expr<'tcx>) -> Option<String> {
     }
 }
 
+#[allow(clippy::ptr_arg)]
 fn guard_of(m: &String) -> String {
     format!("{}_guard", m)
 }
 
-fn struct_of(m: &String) -> String {
+fn struct_of(m: &str) -> String {
     format!("{}ProtectedData", m)
 }
 

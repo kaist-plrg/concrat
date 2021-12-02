@@ -6,7 +6,7 @@ use std::{
 
 use xml::reader::{EventReader, XmlEvent};
 
-pub fn generate_mutex_map(globs: &Vec<Glob>) -> HashMap<String, Option<String>> {
+pub fn generate_mutex_map(globs: &[Glob]) -> HashMap<String, Option<String>> {
     let k1 = "mutex".to_string();
     let k2 = "readwrite".to_string();
 
@@ -34,7 +34,7 @@ pub fn generate_mutex_map(globs: &Vec<Glob>) -> HashMap<String, Option<String>> 
         .collect()
 }
 
-pub fn generate_node_map(calls: &Vec<Call>) -> HashMap<String, Vec<String>> {
+pub fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
     let k1 = "mutex".to_string();
     let k2 = "Normal Lvals".to_string();
     calls
@@ -55,7 +55,7 @@ pub fn generate_node_map(calls: &Vec<Call>) -> HashMap<String, Vec<String>> {
 }
 
 pub fn generate_function_map(
-    funcs: &Vec<Function>,
+    funcs: &[Function],
     node_map: &HashMap<String, Vec<String>>,
 ) -> HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>> {
     let mut map: HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>> =
@@ -395,7 +395,8 @@ impl<'a, T> Iterator for PairIterator<'a, T> {
     }
 }
 
-fn _print_element(element: &Element, depth: usize) {
+#[allow(dead_code)]
+fn print_element(element: &Element, depth: usize) {
     const INDENT: &str = "    ";
     let i = (0..depth)
         .map(|_| INDENT)
@@ -407,6 +408,6 @@ fn _print_element(element: &Element, depth: usize) {
     } = element;
     println!("{}{:?} {:?}", i, name, attributes);
     for n in children {
-        _print_element(n, depth + 1);
+        print_element(n, depth + 1);
     }
 }
