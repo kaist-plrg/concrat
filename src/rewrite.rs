@@ -2,7 +2,6 @@ use std::{
     collections::{BTreeMap, HashMap},
     fs::File,
     io::Read,
-    mem,
     path::PathBuf,
     sync::Mutex,
 };
@@ -58,7 +57,7 @@ pub fn collect_suggestions(
     assert_eq!(exit_code, 0);
 
     let mut suggestions = RUSTFIX_SUGGESTIONS.lock().unwrap();
-    mem::replace(&mut suggestions, HashMap::default())
+    std::mem::take(&mut suggestions)
 }
 
 pub fn apply_suggestions(path: PathBuf, suggestions: BTreeMap<i32, Vec<Suggestion>>) -> String {
@@ -166,7 +165,13 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
         };
         if m.item_ids.iter().any(|i| is_fn(hir.item(*i))) {
             let span = m.inner.shrink_to_lo();
-            make_suggestion(ctx, span, "".to_string(), "use parking_lot::{lock_api::{self, RawMutex}, Mutex, MutexGuard};\nu".to_string(), self.depth);
+            make_suggestion(
+                ctx,
+                span,
+                "".to_string(),
+                "use parking_lot::{lock_api::{self, RawMutex}, Mutex, MutexGuard};\nu".to_string(),
+                self.depth,
+            );
         }
     }
 
@@ -220,9 +225,9 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     panic!()
                 };
                 let stmts = &b.stmts;
-                assert!(stmts.len() > 0);
+                assert!(!stmts.is_empty());
 
-                if entry.len() > 0 {
+                if !entry.is_empty() {
                     let params = entry
                         .iter()
                         .map(|m| {
@@ -230,7 +235,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                         })
                         .collect();
                     let params = join(params, ", ");
-                    let (span, sugg) = if body.params.len() == 0 {
+                    let (span, sugg) = if body.params.is_empty() {
                         (
                             ctx.sess()
                                 .source_map()
@@ -252,7 +257,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     .filter(|m| !entry.contains(m))
                     .map(|m| format!("let mut {};\n    ", guard_of(m)))
                     .collect();
-                if local_vars.len() > 0 {
+                if !local_vars.is_empty() {
                     make_suggestion(
                         ctx,
                         stmts[0].span.shrink_to_lo(),
@@ -262,7 +267,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     );
                 }
 
-                if ret.len() > 0 {
+                if !ret.is_empty() {
                     let mut ret_types = vec![];
                     if let FnRetTy::Return(t) = decl.output {
                         ret_types.push(span_to_string(ctx, t.span));
@@ -312,7 +317,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     assert_eq!(args.len(), 1);
                     addr_of_name(args.last().unwrap()).unwrap()
                 };
-                match f.as_ref().map(|s| s.as_str()) {
+                match f.as_deref() {
                     Some("pthread_mutex_lock") => {
                         let arg = arg();
                         make_suggestion(
@@ -335,7 +340,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     Some(f) => {
                         let curr = get_current_file_name(ctx, e.span);
                         if let Some((entry, _, ret)) = function_map().get(&curr).unwrap().get(f) {
-                            if entry.len() > 0 {
+                            if !entry.is_empty() {
                                 let guards = entry.iter().map(guard_of).collect();
                                 let guards = join(guards, ", ");
                                 if let Some(arg) = args.last() {
@@ -356,7 +361,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                                     make_suggestion(ctx, span, "".to_string(), guards, self.depth);
                                 }
                             }
-                            if ret.len() > 0 {
+                            if !ret.is_empty() {
                                 let id = e.hir_id;
                                 if ctx.tcx.typeck(id.owner).node_type(id).is_unit() {
                                     if ret.len() == 1 {
@@ -402,7 +407,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
             }
             ExprKind::Path(_) => {
                 if let Some(x) = name_symbol(e) {
-                    if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x).clone() {
+                    if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x) {
                         make_suggestion(
                             ctx,
                             e.span,
@@ -422,7 +427,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     panic!()
                 };
                 let (_, _, ret) = function_map().get(&curr).unwrap().get(&func).unwrap();
-                if ret.len() > 0 {
+                if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
                         Some(v) => {
@@ -616,7 +621,7 @@ fn join(mut v: Vec<String>, sep: &str) -> String {
 }
 
 fn make_tuple(mut v: Vec<String>) -> String {
-    assert!(v.len() > 0);
+    assert!(!v.is_empty());
     if v.len() == 1 {
         v.pop().unwrap()
     } else {

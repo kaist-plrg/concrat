@@ -275,7 +275,7 @@ fn to_value(element: Element) -> Value {
 impl Value {
     pub fn as_map(&self) -> &HashMap<String, Value> {
         if let Value::Map(m) = self {
-            &m
+            m
         } else {
             panic!()
         }
@@ -283,7 +283,7 @@ impl Value {
 
     pub fn try_as_set(&self) -> Option<&Vec<Value>> {
         if let Value::Set(s) = self {
-            Some(&s)
+            Some(s)
         } else {
             None
         }
@@ -291,7 +291,7 @@ impl Value {
 
     pub fn as_set(&self) -> &Vec<Value> {
         if let Value::Set(s) = self {
-            &s
+            s
         } else {
             panic!()
         }
@@ -299,7 +299,7 @@ impl Value {
 
     pub fn as_data(&self) -> &String {
         if let Value::Data(d) = self {
-            &d
+            d
         } else {
             panic!()
         }
@@ -396,7 +396,7 @@ impl<'a, T> Iterator for PairIterator<'a, T> {
 }
 
 fn _print_element(element: &Element, depth: usize) {
-    const INDENT: &'static str = "    ";
+    const INDENT: &str = "    ";
     let i = (0..depth)
         .map(|_| INDENT)
         .fold(String::with_capacity(depth * INDENT.len()), |r, s| r + s);
