@@ -12,12 +12,13 @@ jobs:
     name: test
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone repository
+        uses: actions/checkout@v2
       - name: Install nightly
         uses: actions-rs/toolchain@v1
         with:
             override: true
-            components: rust-src, rustfmt, clippy
+            components: rust-src, rustfmt, clippy, rustc-dev, llvm-tools-preview
       - name: Check formatting
         run: cargo fmt --check
       - name: Apply lints
