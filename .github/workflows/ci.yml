@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install nightly
+        uses: actions-rs/toolchain@v1
+        with:
+            override: true
+            components: rust-src, rustfmt, clippy
+      - name: Test
+        run: ./ci/test.sh
