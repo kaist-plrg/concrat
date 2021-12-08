@@ -1,0 +1,56 @@
+{
+  "ana": {
+    "int": {
+      "def_exc": true,
+      "interval": false,
+      "enums": true
+    },
+    "activated": [
+      "expRelation",
+      "base",
+      "threadid",
+      "threadflag",
+      "threadreturn",
+      "escape",
+      "mutex",
+      "mallocWrapper",
+      "var_eq",
+      "symb_locks",
+      "region",
+      "thread"
+    ],
+    "context": {
+      "widen": true
+    }
+  },
+  "sem": {
+    "unknown_function": {
+      "invalidate": {
+        "globals": false
+      }
+    }
+  },
+  "exp": {
+    "privatization": "protection",
+    "malloc": {
+      "wrappers": [
+        "kmalloc",
+        "__kmalloc",
+        "usb_alloc_urb",
+        "__builtin_alloca",
+        "kzalloc",
+
+        "ldv_malloc",
+
+        "kzalloc_node",
+        "ldv_zalloc",
+        "kmalloc_array",
+        "kcalloc",
+
+        "ldv_xmalloc",
+        "ldv_xzalloc",
+        "ldv_calloc"
+      ]
+    }
+  }
+}

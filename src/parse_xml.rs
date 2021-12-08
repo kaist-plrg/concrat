@@ -157,10 +157,14 @@ fn to_file(element: Element) -> Vec<Function> {
     } = element;
     assert_eq!(name, tag("file"));
     let path = attributes.get(&"path".to_string()).unwrap();
-    children
-        .drain(..)
-        .map(|e| to_function(e, path.clone()))
-        .collect()
+    if path.contains("analyzer/includes/stdlib.c") {
+        vec![]
+    } else {
+        children
+            .drain(..)
+            .map(|e| to_function(e, path.clone()))
+            .collect()
+    }
 }
 
 fn to_function(element: Element, path: String) -> Function {

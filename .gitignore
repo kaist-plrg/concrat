@@ -1,2 +1,6 @@
 target
 *.rlib
+*.out
+*.o
+compile_commands.json
+*_comb.c
