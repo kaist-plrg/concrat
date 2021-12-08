@@ -58,7 +58,7 @@ fn main() {
     let verbose = matches.is_present("verbose");
 
     input.push("a.xml");
-    let (funcs, calls, globs) = parse_xml::parse_file(input.to_str().unwrap());
+    let (funcs, calls, globs, _) = parse_xml::parse_file(input.to_str().unwrap());
     input.pop();
     let mutex_map = parse_xml::generate_mutex_map(&globs);
     let node_map = parse_xml::generate_node_map(&calls);

@@ -85,7 +85,7 @@ pub fn generate_function_map(
     map
 }
 
-pub fn parse_file(file_name: &str) -> (Vec<Function>, Vec<Call>, Vec<Glob>) {
+pub fn parse_file(file_name: &str) -> (Vec<Function>, Vec<Call>, Vec<Glob>, Vec<WarningGroup>) {
     let file = File::open(file_name).unwrap();
     let file = BufReader::new(file);
 
@@ -110,8 +110,12 @@ pub fn parse_file(file_name: &str) -> (Vec<Function>, Vec<Call>, Vec<Glob>) {
         .drain_filter(|e| e.name == tag("glob"))
         .map(to_glob)
         .collect();
+    let warnings: Vec<_> = elements
+        .drain_filter(|e| e.name == tag("warning"))
+        .flat_map(to_warning)
+        .collect();
 
-    (functions, calls, globs)
+    (functions, calls, globs, warnings)
 }
 
 #[derive(Debug, Clone)]
@@ -127,6 +131,26 @@ pub struct Function {
 pub struct Glob {
     pub name: String,
     pub analyses: HashMap<String, Value>,
+}
+
+#[derive(Debug, Clone)]
+pub struct WarningGroup {
+    pub location: String,
+    pub path: String,
+    pub line: usize,
+    pub column: usize,
+    pub safe: bool,
+    pub accesses: Vec<Access>,
+}
+
+#[derive(Debug, Clone)]
+pub struct Access {
+    pub path: String,
+    pub line: usize,
+    pub column: usize,
+    pub read: bool,
+    pub region: String,
+    pub locks: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -206,6 +230,86 @@ fn to_glob(element: Element) -> Glob {
     Glob { name, analyses }
 }
 
+fn to_warning(element: Element) -> Option<WarningGroup> {
+    let Element { name, children, .. } = element;
+    assert_eq!(name, tag("warning"));
+    let Element {
+        name,
+        attributes,
+        mut children,
+        ..
+    } = unique_child(children);
+    match name.tag().as_str() {
+        "group" => {
+            let info = attributes.get(&"name".to_string()).unwrap();
+            let info = &info[16..];
+
+            let (location, info) = find_and_split(info, '@');
+            let (path, info) = find_and_split(info, ':');
+            let (line, info) = find_and_split(info, ':');
+            let line = line.parse().unwrap();
+            let (column, info) = find_and_split(info, ' ');
+            let column = column.parse().unwrap();
+            let safe = info == "(safe)";
+            let accesses = children.drain(..).map(to_access).collect();
+            Some(WarningGroup {
+                location,
+                path,
+                line,
+                column,
+                safe,
+                accesses,
+            })
+        }
+        "text" => None,
+        _ => unreachable!(),
+    }
+}
+
+fn to_access(element: Element) -> Access {
+    let Element {
+        name,
+        attributes,
+        children,
+    } = element;
+    assert_eq!(name, tag("text"));
+    let path = attributes.get(&"file".to_string()).unwrap().clone();
+    let line = attributes
+        .get(&"line".to_string())
+        .unwrap()
+        .parse::<usize>()
+        .unwrap();
+    let column = attributes
+        .get(&"column".to_string())
+        .unwrap()
+        .parse::<usize>()
+        .unwrap();
+
+    let data = unique_child(children).name.data();
+    let (read, data) = find_and_split(&data, ' ');
+    let read = read == "read";
+    let (_, data) = find_and_split(data, ':');
+    let (region, data) = find_and_split(data, '}');
+    let (_, data) = find_and_split(data, '{');
+    let locks = data
+        .split(", ")
+        .filter_map(|s| {
+            s.strip_prefix("lock:")
+                .or_else(|| s.strip_prefix("i-lock:"))
+                .map(|s| s.to_string())
+        })
+        .collect();
+
+    Access {
+        path,
+        line,
+        column,
+        read,
+        region,
+        locks,
+    }
+}
+
 fn to_call(element: Element) -> Call {
     let Element {
         name,
@@ -250,7 +354,16 @@ fn to_value(element: Element) -> Value {
             name, mut children, ..
         } = unique_child(children);
         match name.tag().as_str() {
-            "data" => Value::Data(unique_child(children).name.data()),
+            "data" => {
+                let child = unique_child(children);
+                match &child.name {
+                    Name::Tag(t) => {
+                        assert_eq!(t, "value");
+                        to_value(child)
+                    }
+                    Name::Data(d) => Value::Data(d.clone()),
+                }
+            }
             "map" => {
                 let mut map = HashMap::new();
                 for (k, v) in PairIterator(&mut children.drain(..)) {
@@ -381,6 +494,11 @@ fn unique_child(mut v: Vec<Element>) -> Element {
 
 fn tag(s: &str) -> Name {
     Name::Tag(s.to_string())
+}
+
+fn find_and_split(s: &str, c: char) -> (String, &str) {
+    let i = s.find(c).unwrap();
+    (s[..i].to_string(), &s[i + 1..])
 }
 
 struct PairIterator<'a, T>(&'a mut dyn Iterator<Item = T>);

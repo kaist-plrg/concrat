@@ -1,7 +1,5 @@
 #include <pthread.h>
 
-#define N 5
-
 int n1 = 0;
 
 pthread_mutex_t num_mutex = PTHREAD_MUTEX_INITIALIZER;

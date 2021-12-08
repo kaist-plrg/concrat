@@ -1,7 +1,5 @@
 #include <pthread.h>
 
-#define N 5
-
 int n1 = 0;
 int n2 = 0;
 int n3 = 1;
