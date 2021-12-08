@@ -6,6 +6,7 @@
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
 #![feature(register_tool)]
+#![feature(rustc_private)]
 #![register_tool(c2rust)]
 
 

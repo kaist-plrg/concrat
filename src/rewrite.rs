@@ -218,6 +218,14 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
             intravisit::FnKind::ItemFn(id, _, _, _) => {
                 let curr = get_current_file_name(ctx, span);
                 let name = id.name.to_ident_string();
+                if name == "main" {
+                    return;
+                }
+                let name = if name == "main_0" {
+                    "main".to_string()
+                } else {
+                    name
+                };
                 let (entry, node, ret) = function_map().get(&curr).unwrap().get(&name).unwrap();
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
@@ -426,6 +434,11 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     item.ident.name.to_ident_string()
                 } else {
                     panic!()
+                };
+                let func = if func == "main_0" {
+                    "main".to_string()
+                } else {
+                    func
                 };
                 let (_, _, ret) = function_map().get(&curr).unwrap().get(&func).unwrap();
                 if !ret.is_empty() {

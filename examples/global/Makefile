@@ -9,6 +9,13 @@ a_cil.out: a.o b.o
 a_cil.out_comb.c: a.c
 	CC="cilly --gcc=/usr/bin/gcc --merge --keepmerged" make a_cil.out
 
+a.xml: a_cil.out_comb.c
+	goblint --conf ../../conf.json \
+		--enable allglobs \
+		--set result fast_xml \
+		--set outfile a.xml \
+		a_cil.out_comb.c
+
 compile_commands.json: a.c
 	intercept-build make a.out
 
