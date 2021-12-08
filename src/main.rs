@@ -25,19 +25,49 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{path::PathBuf, process::Command};
+use std::{fs::File, io::Write, path::PathBuf, process::Command};
 
+use clap::{App, Arg};
 use concrat::*;
 
 fn main() {
-    let (funcs, calls, globs) = parse_xml::parse_file("./examples/global/a.xml");
+    let matches = App::new("Concrat")
+        .arg(
+            Arg::with_name("input")
+                .long("input")
+                .short("i")
+                .help("input directory")
+                .required(true)
+                .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("dry-run")
+                .long("dry-run")
+                .help("do not fix files")
+                .takes_value(false),
+        )
+        .arg(
+            Arg::with_name("verbose")
+                .long("verbose")
+                .short("v")
+                .takes_value(false),
+        )
+        .get_matches();
+    let mut input = PathBuf::from(matches.value_of("input").unwrap());
+    let dry_run = matches.is_present("dry-run");
+    let verbose = matches.is_present("verbose");
+
+    input.push("a.xml");
+    let (funcs, calls, globs) = parse_xml::parse_file(input.to_str().unwrap());
+    input.pop();
     let mutex_map = parse_xml::generate_mutex_map(&globs);
     let node_map = parse_xml::generate_node_map(&calls);
     let function_map = parse_xml::generate_function_map(&funcs, &node_map);
 
+    input.push("c2rust-lib.rs");
     let args: Vec<_> = vec![
         "create-initial-program",
-        "./examples/global/c2rust-lib.rs",
+        input.to_str().unwrap(),
         "--sysroot",
         sys_root().as_str(),
         "--crate-type",
@@ -48,35 +78,42 @@ fn main() {
     .iter()
     .map(|s| s.to_string())
     .collect();
+    input.pop();
 
     let suggestions = rewrite::collect_suggestions(args, mutex_map, function_map);
 
-    for (file, suggestions) in suggestions.iter() {
-        println!("For file {}:", file.to_str().unwrap());
+    if verbose {
+        for (file, suggestions) in suggestions.iter() {
+            println!("For file {}:", file.to_str().unwrap());
 
-        for suggestion in suggestions.values().flatten() {
-            let solution = &suggestion.solutions[0];
-            println!("{}", solution.message);
-            for replacement in &solution.replacements {
-                println!(" - replace {:?}", replacement.snippet.text);
-                println!("   with   `{}`", replacement.replacement);
-                println!(
-                    "   at {} {}:{}-{}:{}",
-                    replacement.snippet.file_name,
-                    replacement.snippet.line_range.start.line,
-                    replacement.snippet.line_range.start.column,
-                    replacement.snippet.line_range.end.line,
-                    replacement.snippet.line_range.end.column,
-                );
+            for suggestion in suggestions.values().flatten() {
+                let solution = &suggestion.solutions[0];
+                println!("{}", solution.message);
+                for replacement in &solution.replacements {
+                    println!(" - replace {:?}", replacement.snippet.text);
+                    println!("   with   `{}`", replacement.replacement);
+                    println!(
+                        "   at {} {}:{}-{}:{}",
+                        replacement.snippet.file_name,
+                        replacement.snippet.line_range.start.line,
+                        replacement.snippet.line_range.start.column,
+                        replacement.snippet.line_range.end.line,
+                        replacement.snippet.line_range.end.column,
+                    );
+                }
             }
         }
     }
 
     for (file, suggestions) in suggestions {
         let fixed_source_code = rewrite::apply_suggestions(file, suggestions);
-        use std::{fs::File, io::Write};
-        let mut file = File::create("a.rs").unwrap();
-        file.write_all(fixed_source_code.as_bytes()).unwrap();
+        if dry_run {
+            println!("{}", fixed_source_code);
+        } else {
+            input.push("a.rs");
+            let mut file = File::create(input.to_str().unwrap()).unwrap();
+            file.write_all(fixed_source_code.as_bytes()).unwrap();
+        }
     }
 }
 

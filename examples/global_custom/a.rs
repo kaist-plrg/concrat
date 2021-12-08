@@ -59,10 +59,6 @@ pub const PTHREAD_MUTEX_TIMED_NP: C2RustUnnamed = 0;
 #[no_mangle]
 pub static mut n1: libc::c_int = 0 as libc::c_int;
 #[no_mangle]
-pub static mut n2: libc::c_int = 0 as libc::c_int;
-#[no_mangle]
-pub static mut n3: libc::c_int = 1 as libc::c_int;
-#[no_mangle]
 pub static mut num_mutex: pthread_mutex_t =
     pthread_mutex_t{__data:
                         {
@@ -99,55 +95,14 @@ pub static mut num_mutex: pthread_mutex_t =
                             init
                         },};
 #[no_mangle]
-pub unsafe extern "C" fn f1() {
-    let mut x: libc::c_int = n3;
-    pthread_mutex_lock(&mut num_mutex);
-    n1 = n1 + x;
-    n2 = n2 + x;
-    pthread_mutex_unlock(&mut num_mutex);
-}
-#[no_mangle]
-pub unsafe extern "C" fn f2() {
-    let mut x: libc::c_int = 0;
-    pthread_mutex_lock(&mut num_mutex);
-    while n1 < 10 as libc::c_int {
-        x = n1;
-        pthread_mutex_unlock(&mut num_mutex);
-        x = x + 1 as libc::c_int;
-        pthread_mutex_lock(&mut num_mutex);
-        n1 = x
-    }
-    pthread_mutex_unlock(&mut num_mutex);
-}
-#[no_mangle]
-pub unsafe extern "C" fn f3() {
-    pthread_mutex_lock(&mut num_mutex);
-    while n1 < 20 as libc::c_int {
-        if n1 > 18 as libc::c_int {
-            pthread_mutex_unlock(&mut num_mutex);
-            return
-        }
-        n1 = n1 + 1 as libc::c_int
-    }
-    pthread_mutex_unlock(&mut num_mutex);
-}
-#[no_mangle]
 pub unsafe extern "C" fn lock() { pthread_mutex_lock(&mut num_mutex); }
 #[no_mangle]
 pub unsafe extern "C" fn unlock() { pthread_mutex_unlock(&mut num_mutex); }
 #[no_mangle]
-pub unsafe extern "C" fn f4() {
+pub unsafe extern "C" fn f1() {
     lock();
     n1 = n1 + 1 as libc::c_int;
     unlock();
-}
-#[no_mangle]
-pub unsafe extern "C" fn inc() { n1 = n1 + 1 as libc::c_int; }
-#[no_mangle]
-pub unsafe extern "C" fn f5() {
-    pthread_mutex_lock(&mut num_mutex);
-    inc();
-    pthread_mutex_unlock(&mut num_mutex);
 }
 #[no_mangle]
 pub unsafe extern "C" fn lock2(mut n: libc::c_int) -> libc::c_int {
@@ -158,26 +113,22 @@ pub unsafe extern "C" fn lock2(mut n: libc::c_int) -> libc::c_int {
 #[no_mangle]
 pub unsafe extern "C" fn unlock2(mut n: libc::c_int) -> libc::c_int {
     n1 = n1 + n;
-    let mut n2_0: libc::c_int = n1;
+    let mut n2: libc::c_int = n1;
     pthread_mutex_unlock(&mut num_mutex);
-    return n2_0;
+    return n2;
 }
 #[no_mangle]
-pub unsafe extern "C" fn f6() -> libc::c_int {
-    let mut n2_0: libc::c_int = lock2(1 as libc::c_int);
+pub unsafe extern "C" fn f2() -> libc::c_int {
+    let mut n2: libc::c_int = lock2(1 as libc::c_int);
     n1 = n1 + 1 as libc::c_int;
-    n2_0 = n2_0 + unlock2(1 as libc::c_int);
-    return n2_0;
+    n2 = n2 + unlock2(1 as libc::c_int);
+    return n2;
 }
 #[no_mangle]
 pub unsafe extern "C" fn t_fun(mut arg: *mut libc::c_void)
  -> *mut libc::c_void {
     f1();
     f2();
-    f3();
-    f4();
-    f5();
-    f6();
     return 0 as *mut libc::c_void;
 }
 unsafe fn main_0() -> libc::c_int {

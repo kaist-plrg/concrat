@@ -257,9 +257,7 @@ fn to_value(element: Element) -> Value {
                     let Element { name, children, .. } = k;
                     assert_eq!(name, tag("key"));
                     let k = unique_child(children).name.data();
-                    if let Some(v) = map.insert(k.clone(), to_value(v)) {
-                        println!("duplicate key: {} {:?}", k, v);
-                    }
+                    map.insert(k.clone(), to_value(v));
                 }
                 Value::Map(map)
             }
