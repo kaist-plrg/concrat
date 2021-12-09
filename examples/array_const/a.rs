@@ -57,86 +57,10 @@ pub const PTHREAD_MUTEX_ERRORCHECK_NP: C2RustUnnamed = 2;
 pub const PTHREAD_MUTEX_RECURSIVE_NP: C2RustUnnamed = 1;
 pub const PTHREAD_MUTEX_TIMED_NP: C2RustUnnamed = 0;
 #[no_mangle]
-pub static mut n1: [libc::c_int; 5] = [0; 5];
+pub static mut n1: [libc::c_int; 3] = [0; 3];
 #[no_mangle]
-pub static mut n2: [libc::c_int; 5] =
-    [1 as libc::c_int, 2 as libc::c_int, 3 as libc::c_int, 4 as libc::c_int,
-     5 as libc::c_int];
-#[no_mangle]
-pub static mut n3: [libc::c_int; 5] =
-    [1 as libc::c_int, 1 as libc::c_int, 1 as libc::c_int, 1 as libc::c_int,
-     1 as libc::c_int];
-#[no_mangle]
-pub static mut num_mutex: [pthread_mutex_t; 5] =
+pub static mut num_mutex: [pthread_mutex_t; 3] =
     [pthread_mutex_t{__data:
-                         {
-                             let mut init =
-                                 __pthread_mutex_s{__lock: 0 as libc::c_int,
-                                                   __count:
-                                                       0 as libc::c_int as
-                                                           libc::c_uint,
-                                                   __owner: 0 as libc::c_int,
-                                                   __nusers:
-                                                       0 as libc::c_int as
-                                                           libc::c_uint,
-                                                   __kind:
-                                                       PTHREAD_MUTEX_TIMED_NP
-                                                           as libc::c_int,
-                                                   __spins: 0 as libc::c_int,
-                                                   __list:
-                                                       {
-                                                           let mut init =
-                                                               __pthread_internal_list{__prev:
-                                                                                           0
-                                                                                               as
-                                                                                               *const __pthread_internal_list
-                                                                                               as
-                                                                                               *mut __pthread_internal_list,
-                                                                                       __next:
-                                                                                           0
-                                                                                               as
-                                                                                               *const __pthread_internal_list
-                                                                                               as
-                                                                                               *mut __pthread_internal_list,};
-                                                           init
-                                                       },};
-                             init
-                         },},
-     pthread_mutex_t{__data:
-                         {
-                             let mut init =
-                                 __pthread_mutex_s{__lock: 0 as libc::c_int,
-                                                   __count:
-                                                       0 as libc::c_int as
-                                                           libc::c_uint,
-                                                   __owner: 0 as libc::c_int,
-                                                   __nusers:
-                                                       0 as libc::c_int as
-                                                           libc::c_uint,
-                                                   __kind:
-                                                       PTHREAD_MUTEX_TIMED_NP
-                                                           as libc::c_int,
-                                                   __spins: 0 as libc::c_int,
-                                                   __list:
-                                                       {
-                                                           let mut init =
-                                                               __pthread_internal_list{__prev:
-                                                                                           0
-                                                                                               as
-                                                                                               *const __pthread_internal_list
-                                                                                               as
-                                                                                               *mut __pthread_internal_list,
-                                                                                       __next:
-                                                                                           0
-                                                                                               as
-                                                                                               *const __pthread_internal_list
-                                                                                               as
-                                                                                               *mut __pthread_internal_list,};
-                                                           init
-                                                       },};
-                             init
-                         },},
-     pthread_mutex_t{__data:
                          {
                              let mut init =
                                  __pthread_mutex_s{__lock: 0 as libc::c_int,
@@ -240,15 +164,24 @@ pub static mut num_mutex: [pthread_mutex_t; 5] =
                          },}];
 #[no_mangle]
 pub unsafe extern "C" fn f1() {
-    let mut i: libc::c_int = 0 as libc::c_int;
-    while i < 5 as libc::c_int {
-        let mut x: libc::c_int = n3[i as usize];
-        pthread_mutex_lock(&mut *num_mutex.as_mut_ptr().offset(i as isize));
-        n1[i as usize] = n1[i as usize] + x;
-        n2[i as usize] = n2[i as usize] + x;
-        pthread_mutex_unlock(&mut *num_mutex.as_mut_ptr().offset(i as isize));
-        i += 1
-    };
+    pthread_mutex_lock(&mut *num_mutex.as_mut_ptr().offset(0 as libc::c_int as
+                                                               isize));
+    n1[0 as libc::c_int as usize] =
+        n1[0 as libc::c_int as usize] + 1 as libc::c_int;
+    pthread_mutex_unlock(&mut *num_mutex.as_mut_ptr().offset(0 as libc::c_int
+                                                                 as isize));
+    pthread_mutex_lock(&mut *num_mutex.as_mut_ptr().offset(1 as libc::c_int as
+                                                               isize));
+    n1[1 as libc::c_int as usize] =
+        n1[1 as libc::c_int as usize] + 1 as libc::c_int;
+    pthread_mutex_unlock(&mut *num_mutex.as_mut_ptr().offset(1 as libc::c_int
+                                                                 as isize));
+    pthread_mutex_lock(&mut *num_mutex.as_mut_ptr().offset(2 as libc::c_int as
+                                                               isize));
+    n1[2 as libc::c_int as usize] =
+        n1[2 as libc::c_int as usize] + 1 as libc::c_int;
+    pthread_mutex_unlock(&mut *num_mutex.as_mut_ptr().offset(2 as libc::c_int
+                                                                 as isize));
 }
 #[no_mangle]
 pub unsafe extern "C" fn t_fun(mut arg: *mut libc::c_void)

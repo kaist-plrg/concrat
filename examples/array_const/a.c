@@ -1,30 +1,27 @@
 #include <pthread.h>
 
-#define N 5
+#define N 3
 
 int n1[N];
-int n2[N] = { 1, 2, 3, 4, 5 };
-int n3[N] = { 1, 1, 1, 1, 1 };
 
 pthread_mutex_t num_mutex[N] = {
-    PTHREAD_MUTEX_INITIALIZER,
-    PTHREAD_MUTEX_INITIALIZER,
     PTHREAD_MUTEX_INITIALIZER,
     PTHREAD_MUTEX_INITIALIZER,
     PTHREAD_MUTEX_INITIALIZER
 };
 
 void f1() {
-    for (int i = 0; i < N; i++) {
-        int x = n3[i];
+    pthread_mutex_lock(&num_mutex[0]);
+    n1[0] = n1[0] + 1;
+    pthread_mutex_unlock(&num_mutex[0]);
 
-        pthread_mutex_lock(&num_mutex[i]);
+    pthread_mutex_lock(&num_mutex[1]);
+    n1[1] = n1[1] + 1;
+    pthread_mutex_unlock(&num_mutex[1]);
 
-        n1[i] = n1[i] + x;
-        n2[i] = n2[i] + x;
-
-        pthread_mutex_unlock(&num_mutex[i]);
-    }
+    pthread_mutex_lock(&num_mutex[2]);
+    n1[2] = n1[2] + 1;
+    pthread_mutex_unlock(&num_mutex[2]);
 }
 
 void *t_fun(void *arg) {

@@ -10,13 +10,13 @@ void f1() {
     pthread_mutex_lock(&num_mutex);
 
     while (n1 < 10) {
-      x = n1;
-      pthread_mutex_unlock(&num_mutex);
+        x = n1;
+        pthread_mutex_unlock(&num_mutex);
 
-      x = x + 1;
+        x = x + 1;
 
-      pthread_mutex_lock(&num_mutex);
-      n1 = x;
+        pthread_mutex_lock(&num_mutex);
+        n1 = x;
     }
 
     pthread_mutex_unlock(&num_mutex);
@@ -26,27 +26,27 @@ void f2() {
     pthread_mutex_lock(&num_mutex);
 
     while (n1 < 20) {
-      if (n1 > 18) {
-        pthread_mutex_unlock(&num_mutex);
-        return;
-      }
+        if (n1 > 18) {
+            pthread_mutex_unlock(&num_mutex);
+            return;
+        }
 
-      n1 = n1 + 1;
+        n1 = n1 + 1;
     }
 
     pthread_mutex_unlock(&num_mutex);
 }
 
 void *t_fun(void *arg) {
-  f1();
-  f2();
-  return NULL;
+    f1();
+    f2();
+    return NULL;
 }
 
 int main() {
-  pthread_t id1, id2;
-  pthread_create(&id1, NULL, t_fun, NULL);
-  pthread_create(&id2, NULL, t_fun, NULL);
-  pthread_join(id1, NULL);
-  pthread_join(id2, NULL);
+    pthread_t id1, id2;
+    pthread_create(&id1, NULL, t_fun, NULL);
+    pthread_create(&id2, NULL, t_fun, NULL);
+    pthread_join(id1, NULL);
+    pthread_join(id2, NULL);
 }

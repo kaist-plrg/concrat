@@ -58,11 +58,10 @@ fn main() {
     let verbose = matches.is_present("verbose");
 
     input.push("a.xml");
-    let (funcs, calls, globs, _) = parse_xml::parse_file(input.to_str().unwrap());
+    let elements = parse_xml::parse_file(input.to_str().unwrap());
     input.pop();
-    let mutex_map = parse_xml::generate_mutex_map(&globs);
-    let node_map = parse_xml::generate_node_map(&calls);
-    let function_map = parse_xml::generate_function_map(&funcs, &node_map);
+
+    let summary = analysis::summarize(elements);
 
     input.push("c2rust-lib.rs");
     let args: Vec<_> = vec![
@@ -80,7 +79,7 @@ fn main() {
     .collect();
     input.pop();
 
-    let suggestions = rewrite::collect_suggestions(args, mutex_map, function_map);
+    let suggestions = rewrite::collect_suggestions(args, summary);
 
     if verbose {
         for (file, suggestions) in suggestions.iter() {

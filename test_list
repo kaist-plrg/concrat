@@ -1,4 +1,7 @@
+examples/array_const
+examples/array_simple
 examples/global_assume
 examples/global_custom
+examples/global_nested
 examples/global_simple
 examples/global_while

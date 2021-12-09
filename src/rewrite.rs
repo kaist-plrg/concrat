@@ -15,35 +15,37 @@ use rustc_span::{FileName, Span, Symbol};
 use rustfix::{Replacement, Snippet, Solution, Suggestion};
 use spin::once::Once;
 
+use crate::analysis::{AnalysisSummary, FunctionSummary};
+
 lazy_static! {
     static ref RUSTFIX_SUGGESTIONS: Mutex<HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>>> =
         Mutex::new(HashMap::default());
     static ref MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
+    static ref ARRAY_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, Vec<String>)>>> =
+        Mutex::new(HashMap::default());
     static ref GLOBAL_MAP: Mutex<HashMap<Symbol, String>> = Mutex::new(HashMap::default());
 }
 
-static PROTECT_MAP: Once<HashMap<String, Option<String>>> = Once::new();
-static FUNCTION_MAP: Once<
-    HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>>,
-> = Once::new();
+static SUMMARY: Once<AnalysisSummary> = Once::new();
 
 fn protect_map() -> &'static HashMap<String, Option<String>> {
-    PROTECT_MAP.get().unwrap()
+    &SUMMARY.get().unwrap().mutex_map
 }
 
-fn function_map(
-) -> &'static HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>> {
-    FUNCTION_MAP.get().unwrap()
+fn function_map() -> &'static HashMap<String, HashMap<String, FunctionSummary>> {
+    &SUMMARY.get().unwrap().function_map
+}
+
+fn array_mutex_map() -> &'static HashMap<String, Option<String>> {
+    &SUMMARY.get().unwrap().array_mutex_map
 }
 
 pub fn collect_suggestions(
     args: Vec<String>,
-    mutex_map: HashMap<String, Option<String>>,
-    function_map: HashMap<String, HashMap<String, (Vec<String>, Vec<String>, Vec<String>)>>,
+    summary: AnalysisSummary,
 ) -> HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>> {
-    PROTECT_MAP.call_once(|| mutex_map);
-    FUNCTION_MAP.call_once(|| function_map);
+    SUMMARY.call_once(|| summary);
 
     let mut callbacks = DriverCallbacks {
         passes: vec![GlobalPass::new, RewritePass::new],
@@ -95,14 +97,12 @@ impl Callbacks for DriverCallbacks {
     }
 }
 
-struct GlobalPass {
-    depth: i32,
-}
+struct GlobalPass;
 
 impl GlobalPass {
     #[allow(clippy::new_ret_no_self)]
     fn new() -> Box<LatePass> {
-        Box::new(Self { depth: 0 })
+        Box::new(Self)
     }
 }
 
@@ -117,6 +117,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         match i.kind {
             ItemKind::Static(t, _, b) => {
                 let name = i.ident.name.to_ident_string();
+
+                // data
                 if let Some(m) = protect_map().get(&name).unwrap() {
                     let ty = span_to_string(ctx, t.span);
                     let init = hid_to_string(ctx, b.hir_id);
@@ -125,15 +127,37 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         .unwrap()
                         .entry(m.clone())
                         .or_default()
-                        .push((name, ty, init));
+                        .push((name.clone(), ty, init));
                     GLOBAL_MAP
                         .lock()
                         .unwrap()
                         .entry(i.ident.name)
                         .or_insert_with(|| m.clone());
+                }
 
-                    make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
-                    remove_attributes(ctx, i, self.depth);
+                // data (array)
+                if let Some(Some(m)) = array_mutex_map().get(&name) {
+                    let ty = match t.kind {
+                        TyKind::Array(t, _) => span_to_string(ctx, t.span),
+                        _ => unreachable!(),
+                    };
+                    let init = match &ctx.tcx.hir().body(b).value.kind {
+                        ExprKind::Repeat(e, l) => {
+                            let e = span_to_string(ctx, e.span);
+                            let l = hid_to_string(ctx, l.hir_id).parse().unwrap();
+                            vec![e; l]
+                        }
+                        ExprKind::Array(es) => {
+                            es.iter().map(|e| span_to_string(ctx, e.span)).collect()
+                        }
+                        _ => unreachable!(),
+                    };
+                    ARRAY_MUTEX_MAP
+                        .lock()
+                        .unwrap()
+                        .entry(m.clone())
+                        .or_default()
+                        .push((name.clone(), ty, init));
                 }
             }
             _ => (),
@@ -180,11 +204,25 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
         match i.kind {
             ItemKind::Static(_, _, _) => {
                 let name = i.ident.name.to_ident_string();
+
+                // data
+                if let Some(Some(_)) = protect_map().get(&name) {
+                    make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
+                    remove_attributes(ctx, i, self.depth);
+                }
+
+                // data (array)
+                if let Some(Some(_)) = array_mutex_map().get(&name) {
+                    make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
+                    remove_attributes(ctx, i, self.depth);
+                }
+
+                // mutex
                 if let Some(v) = MUTEX_MAP.lock().unwrap().get(&name) {
                     let mut decl = String::new();
                     let mut init = String::new();
                     for (x, t, i) in v {
-                        decl.push_str(format!("{}: {}, ", x, t).as_str());
+                        decl.push_str(format!("pub {}: {}, ", x, t).as_str());
                         init.push_str(format!("{}: {}, ", x, i).as_str());
                     }
                     let struct_name = struct_of(&name);
@@ -196,6 +234,45 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
     {0} {{ {3}}}
 );",
                         struct_name, decl, name, init
+                    );
+                    make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
+                    remove_attributes(ctx, i, self.depth);
+                }
+
+                // mutex array
+                if let Some(v) = ARRAY_MUTEX_MAP.lock().unwrap().get(&name) {
+                    let decls = v.iter().map(|(x, t, _)| format!("pub {}: {}", x, t));
+                    let decl = join(decls.collect(), ", ");
+
+                    let struct_name = struct_of(&name);
+                    let mut lens: Vec<_> = v.iter().map(|(_, _, i)| i.len()).collect();
+                    lens.dedup();
+                    assert_eq!(lens.len(), 1);
+                    let len = lens[0];
+                    let init = join(
+                        (0..len)
+                            .map(|i| {
+                                let inits =
+                                    v.iter().map(|(x, _, init)| format!("{}: {}", x, init[i]));
+                                let init = join(inits.collect(), ", ");
+                                format!(
+                                    "
+    lock_api::Mutex::const_new(
+        RawMutex::INIT,
+        {} {{ {} }}
+    )",
+                                    struct_name, init
+                                )
+                            })
+                            .collect(),
+                        ",",
+                    );
+                    let code = format!(
+                        "
+pub struct {0} {{ {1} }}
+pub static {2}: [Mutex<{0}>; {3}] = [{4}
+];",
+                        struct_name, decl, name, len, init
                     );
                     make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
                     remove_attributes(ctx, i, self.depth);
@@ -226,12 +303,16 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                 } else {
                     name
                 };
-                let (entry, node, ret) = function_map().get(&curr).unwrap().get(&name).unwrap();
+                let FunctionSummary {
+                    entry_mutex: entry,
+                    node_mutex: node,
+                    ret_mutex: ret,
+                } = function_map().get(&curr).unwrap().get(&name).unwrap();
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
                     b
                 } else {
-                    panic!()
+                    unreachable!()
                 };
                 let stmts = &b.stmts;
                 assert!(!stmts.is_empty());
@@ -310,7 +391,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                             }
                         }
                     } else {
-                        panic!();
+                        unreachable!();
                     }
                 }
             }
@@ -324,16 +405,48 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                 let f = name(func);
                 let arg = || {
                     assert_eq!(args.len(), 1);
-                    addr_of_name(args.last().unwrap()).unwrap()
+                    let arg = &args[0];
+                    let arg = unwrap_addr(arg).unwrap();
+                    match &arg.kind {
+                        ExprKind::Path(_) => {
+                            let arg = name(arg).unwrap();
+                            let guard = guard_of(&arg);
+                            (arg, guard)
+                        }
+                        ExprKind::Unary(
+                            UnOp::Deref,
+                            Expr {
+                                kind: ExprKind::MethodCall(method, _, args, _),
+                                ..
+                            },
+                        ) => {
+                            assert_eq!(method.ident.name.to_ident_string(), "offset");
+                            assert_eq!(args.len(), 2);
+                            let arr = match &args[0].kind {
+                                ExprKind::MethodCall(method, _, args, _) => {
+                                    assert_eq!(method.ident.name.to_ident_string(), "as_mut_ptr");
+                                    assert_eq!(args.len(), 1);
+                                    name(&args[0]).unwrap()
+                                }
+                                _ => unreachable!(),
+                            };
+                            let ind = unwrap_cast_recursively(&args[1]);
+                            let ind = span_to_string(ctx, ind.span);
+                            let arg = format!("{}[{} as usize]", arr, ind);
+                            let guard = guard_of(&format!("{}[{}]", arr, ind));
+                            (arg, guard)
+                        }
+                        _ => unreachable!(),
+                    }
                 };
                 match f.as_deref() {
                     Some("pthread_mutex_lock") => {
-                        let arg = arg();
+                        let (arg, guard) = arg();
                         make_suggestion(
                             ctx,
                             e.span,
                             "".to_string(),
-                            format!("{} = {}.lock()", guard_of(&arg), arg),
+                            format!("{} = {}.lock()", guard, arg),
                             self.depth,
                         );
                     }
@@ -342,13 +455,18 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                             ctx,
                             e.span,
                             "".to_string(),
-                            format!("drop({})", guard_of(&arg())),
+                            format!("drop({})", arg().1),
                             self.depth,
                         );
                     }
                     Some(f) => {
                         let curr = get_current_file_name(ctx, e.span);
-                        if let Some((entry, _, ret)) = function_map().get(&curr).unwrap().get(f) {
+                        if let Some(FunctionSummary {
+                            entry_mutex: entry,
+                            ret_mutex: ret,
+                            ..
+                        }) = function_map().get(&curr).unwrap().get(f)
+                        {
                             if !entry.is_empty() {
                                 let guards = entry.iter().map(guard_of).collect();
                                 let guards = join(guards, ", ");
@@ -427,20 +545,37 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                     }
                 }
             }
+            ExprKind::Index(a, i) => {
+                if let Some(a) = name(a) {
+                    let i = unwrap_cast_recursively(i);
+                    let i = span_to_string(ctx, i.span);
+                    if let Some(Some(m)) = array_mutex_map().get(&a) {
+                        let m = format!("{}[{}]", m, i);
+                        make_suggestion(
+                            ctx,
+                            e.span,
+                            "".to_string(),
+                            format!("(*{}).{}", guard_of(&m), a),
+                            self.depth,
+                        );
+                    }
+                }
+            }
             ExprKind::Ret(v_opt) => {
                 let hir = ctx.tcx.hir();
                 let curr = get_current_file_name(ctx, e.span);
                 let func = if let Node::Item(item) = hir.get(hir.enclosing_body_owner(e.hir_id)) {
                     item.ident.name.to_ident_string()
                 } else {
-                    panic!()
+                    unreachable!()
                 };
                 let func = if func == "main_0" {
                     "main".to_string()
                 } else {
                     func
                 };
-                let (_, _, ret) = function_map().get(&curr).unwrap().get(&func).unwrap();
+                let FunctionSummary { ret_mutex: ret, .. } =
+                    function_map().get(&curr).unwrap().get(&func).unwrap();
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
@@ -517,7 +652,7 @@ fn make_suggestion_impl(
 
     let fname_real = match fname {
         FileName::Real(ref n) => n,
-        _ => panic!(),
+        _ => unreachable!(),
     };
 
     let file = source_map.get_source_file(&fname).unwrap();
@@ -616,16 +751,28 @@ fn name<'tcx>(e: &'tcx Expr<'tcx>) -> Option<String> {
     name_symbol(e).map(|s| s.to_ident_string())
 }
 
-fn addr_of_name<'tcx>(e: &'tcx Expr<'tcx>) -> Option<String> {
+fn unwrap_addr<'tcx>(e: &'tcx Expr<'tcx>) -> Option<&'tcx Expr<'tcx>> {
     match &e.kind {
-        ExprKind::AddrOf(_, _, e) => name(e),
+        ExprKind::AddrOf(_, _, e) => Some(e),
         _ => None,
+    }
+}
+
+fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
+    match &e.kind {
+        ExprKind::Cast(e, _) => unwrap_cast_recursively(e),
+        _ => e,
     }
 }
 
 #[allow(clippy::ptr_arg)]
 fn guard_of(m: &String) -> String {
-    format!("{}_guard", m)
+    if let Some(i) = m.find('[') {
+        let j = m.rfind(']').unwrap();
+        format!("{}_{}_guard", &m[..i], &m[i + 1..j])
+    } else {
+        format!("{}_guard", m)
+    }
 }
 
 fn struct_of(m: &str) -> String {
