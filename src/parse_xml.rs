@@ -48,6 +48,7 @@ pub fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
                 .flat_map(|ctx| ctx.analyses.get(&k1).unwrap().as_set().clone())
                 .map(|v| v.as_map().get(&k2).unwrap().as_data().clone())
                 .collect::<Vec<_>>();
+            ms.sort();
             ms.dedup();
             (id, ms)
         })
@@ -74,6 +75,7 @@ pub fn generate_function_map(
             .iter()
             .flat_map(|n| node_map.get(n).unwrap().clone())
             .collect();
+        node_mutex.sort();
         node_mutex.dedup();
         let mut path = path.clone();
         path.pop();
