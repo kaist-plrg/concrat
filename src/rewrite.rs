@@ -41,6 +41,10 @@ fn array_mutex_map() -> &'static HashMap<String, Option<String>> {
     &SUMMARY.get().unwrap().array_mutex_map
 }
 
+fn struct_mutex_map() -> &'static HashMap<String, Option<String>> {
+    &SUMMARY.get().unwrap().struct_mutex_map
+}
+
 pub fn collect_suggestions(
     args: Vec<String>,
     summary: AnalysisSummary,
@@ -436,7 +440,25 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             let guard = guard_of(&format!("{}[{}]", arr, ind));
                             (arg, guard)
                         }
-                        _ => unreachable!(),
+                        ExprKind::Field(e, f) => {
+                            let field = f.name.to_ident_string();
+                            match &e.kind {
+                                ExprKind::Path(_) => {
+                                    let s = name(e).unwrap();
+                                    let arg = format!("{}.{}", s, field);
+                                    let guard = guard_of(&arg);
+                                    (arg, guard)
+                                }
+                                ExprKind::Unary(UnOp::Deref, e) => {
+                                    let s = name(e).unwrap();
+                                    let arg = format!("(*{}).{}", s, field);
+                                    let guard = guard_of(&format!("{}->{}", s, field));
+                                    (arg, guard)
+                                }
+                                _ => unreachable!(),
+                            }
+                        }
+                        e => unreachable!("{:?}", e),
                     }
                 };
                 match f.as_deref() {
@@ -559,6 +581,24 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             self.depth,
                         );
                     }
+                }
+            }
+            ExprKind::Field(s, f) => {
+                let f = f.name.to_ident_string();
+                if let Some(Some(m)) = struct_mutex_map().get(&f) {
+                    let s = match &s.kind {
+                        ExprKind::Path(_) => name(s).unwrap(),
+                        ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),
+                        _ => unreachable!(),
+                    };
+                    let g = guard_of(&format!("{}.{}", s, m));
+                    make_suggestion(
+                        ctx,
+                        e.span,
+                        "".to_string(),
+                        format!("(*{}).{}", g, f),
+                        self.depth,
+                    );
                 }
             }
             ExprKind::Ret(v_opt) => {
@@ -767,9 +807,13 @@ fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
 
 #[allow(clippy::ptr_arg)]
 fn guard_of(m: &String) -> String {
-    if let Some(i) = m.find('[') {
+    if let Some(i) = m.rfind('[') {
         let j = m.rfind(']').unwrap();
         format!("{}_{}_guard", &m[..i], &m[i + 1..j])
+    } else if let Some(i) = m.rfind('.') {
+        format!("{}_{}_guard", &m[..i], &m[i + 1..])
+    } else if let Some(i) = m.rfind("->") {
+        format!("{}_{}_guard", &m[..i], &m[i + 2..])
     } else {
         format!("{}_guard", m)
     }

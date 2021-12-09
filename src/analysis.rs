@@ -9,6 +9,7 @@ use crate::parse_xml::{Element, Name};
 pub struct AnalysisSummary {
     pub mutex_map: HashMap<String, Option<String>>,
     pub array_mutex_map: HashMap<String, Option<String>>,
+    pub struct_mutex_map: HashMap<String, Option<String>>,
     pub node_map: HashMap<String, Vec<String>>,
     pub function_map: HashMap<String, HashMap<String, FunctionSummary>>,
 }
@@ -50,10 +51,12 @@ pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
     let node_map = generate_node_map(&calls);
     let function_map = generate_function_map(&functions, &node_map);
     let array_mutex_map = generate_array_mutex_map(&warnings);
+    let struct_mutex_map = generate_struct_mutex_map(&warnings);
 
     AnalysisSummary {
         mutex_map,
         array_mutex_map,
+        struct_mutex_map,
         node_map,
         function_map,
     }
@@ -94,15 +97,21 @@ fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
         .map(|c| {
             let Call { attributes, ctxs } = c;
             let id = attributes.get(&"id".to_string()).unwrap().clone();
-            let mut ms = ctxs
+            let ms = ctxs
                 .iter()
                 .filter(|ctx| ctx.name == "path")
-                .flat_map(|ctx| ctx.analyses.get(&k).unwrap().as_set().clone())
-                .map(|v| v.as_data().strip_prefix("& ").unwrap().to_string())
-                .collect::<Vec<_>>();
-            ms.sort();
-            ms.dedup();
-            (id, ms)
+                .map(|ctx| {
+                    ctx.analyses
+                        .get(&k)
+                        .unwrap()
+                        .as_set()
+                        .iter()
+                        .cloned()
+                        .map(|v| v.as_data().strip_prefix("& ").unwrap().to_string())
+                        .collect::<HashSet<_>>()
+                })
+                .reduce(|s1, s2| s1.intersection(&s2).cloned().collect());
+            (id, ms.unwrap_or_default().drain().collect())
         })
         .collect()
 }
@@ -146,25 +155,53 @@ fn generate_function_map(
 fn generate_array_mutex_map(warnings: &[WarningGroup]) -> HashMap<String, Option<String>> {
     warnings
         .iter()
-        .flat_map(|w| {
+        .filter_map(|w| {
             let WarningGroup {
-                location,
-                safe,
-                accesses,
-                ..
+                location, accesses, ..
             } = w;
             if let Some(m) = location.strip_suffix("[?]") {
-                if *safe {
-                    let mut mutex_set = accesses
-                        .iter()
-                        .map(|a| HashSet::<String>::from_iter(a.locks.iter().cloned()))
-                        .reduce(|s1, s2| s1.intersection(&s2).cloned().collect())
-                        .unwrap();
-                    assert!(mutex_set.len() <= 1);
-                    return Some((m.to_string(), mutex_set.drain().next()));
-                }
+                let mut mutex_set = accesses
+                    .iter()
+                    .map(|a| HashSet::<String>::from_iter(a.locks.iter().cloned()))
+                    .reduce(|s1, s2| s1.intersection(&s2).cloned().collect())
+                    .unwrap();
+                assert!(mutex_set.len() <= 1);
+                return Some((m.to_string(), mutex_set.drain().next()));
             }
             None
+        })
+        .collect()
+}
+
+fn generate_struct_mutex_map(warnings: &[WarningGroup]) -> HashMap<String, Option<String>> {
+    let mut map: HashMap<String, Vec<Option<String>>> = HashMap::new();
+    for WarningGroup {
+        location, accesses, ..
+    } in warnings
+    {
+        if let Some(i) = location.rfind('.') {
+            let field = location[i + 1..].to_string();
+            let mutex_set = accesses
+                .iter()
+                .map(|a| HashSet::<String>::from_iter(a.locks.iter().cloned()))
+                .reduce(|s1, s2| s1.intersection(&s2).cloned().collect())
+                .unwrap();
+            let mut mutex_vec: Vec<_> = mutex_set
+                .iter()
+                .filter_map(|s| s.strip_prefix("*.").map(|s| s.to_string()))
+                .collect();
+            assert!(mutex_vec.len() <= 1);
+            map.entry(field)
+                .or_default()
+                .push(mutex_vec.drain(..).next());
+        }
+    }
+    map.drain()
+        .map(|(m, mut v)| {
+            v.sort();
+            v.dedup();
+            assert!(v.len() == 1);
+            (m, v.drain(..).next().unwrap())
         })
         .collect()
 }
@@ -347,6 +384,7 @@ fn to_access(element: Element) -> Access {
         .filter_map(|s| {
             s.strip_prefix("lock:")
                 .or_else(|| s.strip_prefix("i-lock:"))
+                .or_else(|| s.strip_prefix("p-lock:"))
                 .map(|s| s.split('[').next().unwrap().to_string())
         })
         .collect();
