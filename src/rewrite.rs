@@ -11,7 +11,7 @@ use rustc_data_structures::sync;
 use rustc_driver::{Callbacks, RunCompiler};
 use rustc_hir::*;
 use rustc_lint::{LateContext, LateLintPass, LintContext, LintPass};
-use rustc_span::{FileName, Span, Symbol};
+use rustc_span::{BytePos, FileName, Span, Symbol};
 use rustfix::{Replacement, Snippet, Solution, Suggestion};
 use spin::once::Once;
 
@@ -23,6 +23,8 @@ lazy_static! {
     static ref MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
     static ref ARRAY_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, Vec<String>)>>> =
+        Mutex::new(HashMap::default());
+    static ref STRUCT_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
     static ref GLOBAL_MAP: Mutex<HashMap<Symbol, String>> = Mutex::new(HashMap::default());
 }
@@ -52,7 +54,18 @@ pub fn collect_suggestions(
     SUMMARY.call_once(|| summary);
 
     let mut callbacks = DriverCallbacks {
-        passes: vec![GlobalPass::new, RewritePass::new],
+        passes: vec![GlobalPass::new],
+    };
+
+    let exit_code = rustc_driver::catch_with_exit_code(|| {
+        let compiler = RunCompiler::new(&args, &mut callbacks);
+        compiler.run()
+    });
+
+    assert_eq!(exit_code, 0);
+
+    let mut callbacks = DriverCallbacks {
+        passes: vec![RewritePass::new],
     };
 
     let exit_code = rustc_driver::catch_with_exit_code(|| {
@@ -118,7 +131,25 @@ impl LintPass for GlobalPass {
 
 impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
-        match i.kind {
+        match &i.kind {
+            ItemKind::Struct(VariantData::Struct(fs, _), _) => {
+                let s = i.ident.name.to_ident_string();
+                let v = fs
+                    .iter()
+                    .filter_map(|f| {
+                        let field = f.ident.name.to_ident_string();
+                        if let Some(Some(m)) = struct_mutex_map().get(&field) {
+                            let ty = span_to_string(ctx, f.ty.span);
+                            Some((field, ty, m.clone()))
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<_>>();
+                if !v.is_empty() {
+                    STRUCT_MUTEX_MAP.lock().unwrap().insert(s, v);
+                }
+            }
             ItemKind::Static(t, _, b) => {
                 let name = i.ident.name.to_ident_string();
 
@@ -145,7 +176,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         TyKind::Array(t, _) => span_to_string(ctx, t.span),
                         _ => unreachable!(),
                     };
-                    let init = match &ctx.tcx.hir().body(b).value.kind {
+                    let init = match &ctx.tcx.hir().body(*b).value.kind {
                         ExprKind::Repeat(e, l) => {
                             let e = span_to_string(ctx, e.span);
                             let l = hid_to_string(ctx, l.hir_id).parse().unwrap();
@@ -205,7 +236,79 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
     }
 
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
-        match i.kind {
+        match &i.kind {
+            ItemKind::Impl(im) => {
+                let t = path_to_string(im.of_trait.as_ref().unwrap().path);
+                if t == "Copy" {
+                    let s = match &im.self_ty.kind {
+                        TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
+                        _ => unreachable!(),
+                    };
+                    if STRUCT_MUTEX_MAP.lock().unwrap().contains_key(&s) {
+                        let span = i.span;
+                        make_suggestion(
+                            ctx,
+                            span.with_lo(span.lo() - BytePos(9))
+                                .with_hi(span.hi() + BytePos(9)),
+                            "".to_string(),
+                            "".to_string(),
+                            self.depth,
+                        );
+                    }
+                }
+            }
+            ItemKind::Struct(VariantData::Struct(fs, _), _) => {
+                let s = i.ident.name.to_ident_string();
+                if let Some(v) = STRUCT_MUTEX_MAP.lock().unwrap().get(&s) {
+                    let mut new_structs = String::new();
+                    for f in fs.iter() {
+                        let name = f.ident.name.to_ident_string();
+                        if v.iter().any(|(x, _, _)| *x == name) {
+                            let span = f.span;
+                            make_suggestion(
+                                ctx,
+                                span.with_hi(span.hi() + BytePos(1)),
+                                "".to_string(),
+                                "".to_string(),
+                                self.depth,
+                            );
+                            continue;
+                        }
+                        let pfs: Vec<_> = v
+                            .iter()
+                            .filter_map(|(x, t, m)| {
+                                if *m == name {
+                                    Some(format!("pub {}: {}", x, t))
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect();
+                        if !pfs.is_empty() {
+                            let st_name = struct_of2(&s, &name);
+                            make_suggestion(
+                                ctx,
+                                f.ty.span,
+                                "".to_string(),
+                                format!("Mutex<{}>", st_name),
+                                self.depth,
+                            );
+                            let st_body = join(pfs, ", ");
+                            let st = format!("\npub struct {} {{ {} }}", st_name, st_body);
+                            new_structs.push_str(&st);
+                        }
+                    }
+                    if !new_structs.is_empty() {
+                        make_suggestion(
+                            ctx,
+                            i.span.shrink_to_hi(),
+                            "".to_string(),
+                            new_structs,
+                            self.depth,
+                        );
+                    }
+                }
+            }
             ItemKind::Static(_, _, _) => {
                 let name = i.ident.name.to_ident_string();
 
@@ -554,53 +657,6 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     _ => (),
                 }
             }
-            ExprKind::Path(_) => {
-                if let Some(x) = name_symbol(e) {
-                    if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x) {
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("(*{}).{}", guard_of(m), x),
-                            self.depth,
-                        );
-                    }
-                }
-            }
-            ExprKind::Index(a, i) => {
-                if let Some(a) = name(a) {
-                    let i = unwrap_cast_recursively(i);
-                    let i = span_to_string(ctx, i.span);
-                    if let Some(Some(m)) = array_mutex_map().get(&a) {
-                        let m = format!("{}[{}]", m, i);
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("(*{}).{}", guard_of(&m), a),
-                            self.depth,
-                        );
-                    }
-                }
-            }
-            ExprKind::Field(s, f) => {
-                let f = f.name.to_ident_string();
-                if let Some(Some(m)) = struct_mutex_map().get(&f) {
-                    let s = match &s.kind {
-                        ExprKind::Path(_) => name(s).unwrap(),
-                        ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),
-                        _ => unreachable!(),
-                    };
-                    let g = guard_of(&format!("{}.{}", s, m));
-                    make_suggestion(
-                        ctx,
-                        e.span,
-                        "".to_string(),
-                        format!("(*{}).{}", g, f),
-                        self.depth,
-                    );
-                }
-            }
             ExprKind::Ret(v_opt) => {
                 let hir = ctx.tcx.hir();
                 let curr = get_current_file_name(ctx, e.span);
@@ -648,6 +704,102 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             );
                         }
                     }
+                }
+            }
+            ExprKind::Struct(s, fs, _) => {
+                let s = match s {
+                    QPath::Resolved(_, p) => path_to_string(p),
+                    _ => unreachable!(),
+                };
+                if let Some(v) = STRUCT_MUTEX_MAP.lock().unwrap().get(&s) {
+                    let init_map: HashMap<_, _> = fs
+                        .iter()
+                        .map(|f| {
+                            (
+                                f.ident.name.to_ident_string(),
+                                span_to_string(ctx, f.expr.span),
+                            )
+                        })
+                        .collect();
+                    for f in fs.iter() {
+                        let name = f.ident.name.to_ident_string();
+                        if v.iter().any(|(x, _, _)| *x == name) {
+                            let span = f.span;
+                            make_suggestion(
+                                ctx,
+                                span.with_hi(span.hi() + BytePos(1)),
+                                "".to_string(),
+                                "".to_string(),
+                                self.depth,
+                            );
+                            continue;
+                        }
+                        let pfs: Vec<_> = v
+                            .iter()
+                            .filter_map(|(x, _, m)| {
+                                if *m == name {
+                                    let i = init_map.get(x).unwrap();
+                                    Some(format!("{}: {}", x, i))
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect();
+                        if !pfs.is_empty() {
+                            let st_name = struct_of2(&s, &name);
+                            let st_body = join(pfs, ", ");
+                            let st = format!("{} {{ {} }}", st_name, st_body);
+                            let ini = format!("lock_api::Mutex::const_new(RawMutex::INIT, {})", st);
+                            make_suggestion(ctx, f.expr.span, "".to_string(), ini, self.depth);
+                        }
+                    }
+                }
+            }
+            ExprKind::Path(_) => {
+                if let Some(x) = name_symbol(e) {
+                    if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x) {
+                        make_suggestion(
+                            ctx,
+                            e.span,
+                            "".to_string(),
+                            format!("(*{}).{}", guard_of(m), x),
+                            self.depth,
+                        );
+                    }
+                }
+            }
+            ExprKind::Index(a, i) => {
+                if let Some(a) = name(a) {
+                    let i = unwrap_cast_recursively(i);
+                    let i = span_to_string(ctx, i.span);
+                    if let Some(Some(m)) = array_mutex_map().get(&a) {
+                        let m = format!("{}[{}]", m, i);
+                        make_suggestion(
+                            ctx,
+                            e.span,
+                            "".to_string(),
+                            format!("(*{}).{}", guard_of(&m), a),
+                            self.depth,
+                        );
+                    }
+                }
+            }
+            ExprKind::Field(s, f) => {
+                let f = f.name.to_ident_string();
+                if let Some(Some(m)) = struct_mutex_map().get(&f) {
+                    let s = match &s.kind {
+                        ExprKind::Path(_) => name(s).unwrap(),
+                        ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),
+                        _ => unreachable!(),
+                    };
+                    let g = guard_of(&format!("{}.{}", s, m));
+                    make_suggestion(
+                        ctx,
+                        e.span,
+                        "".to_string(),
+                        format!("(*{}).{}", g, f),
+                        self.depth,
+                    );
                 }
             }
             _ => (),
@@ -780,9 +932,17 @@ fn get_current_file_name(ctx: &LateContext<'_>, span: Span) -> String {
         .to_string()
 }
 
+fn path_to_symbol<'tcx>(p: &'tcx Path<'tcx>) -> Symbol {
+    p.segments.last().unwrap().ident.name
+}
+
+fn path_to_string<'tcx>(p: &'tcx Path<'tcx>) -> String {
+    path_to_symbol(p).to_ident_string()
+}
+
 fn name_symbol<'tcx>(e: &'tcx Expr<'tcx>) -> Option<Symbol> {
     match &e.kind {
-        ExprKind::Path(QPath::Resolved(_, p)) => Some(p.segments.last().unwrap().ident.name),
+        ExprKind::Path(QPath::Resolved(_, p)) => Some(path_to_symbol(p)),
         _ => None,
     }
 }
@@ -821,6 +981,10 @@ fn guard_of(m: &String) -> String {
 
 fn struct_of(m: &str) -> String {
     format!("{}ProtectedData", m)
+}
+
+fn struct_of2(s: &str, m: &str) -> String {
+    format!("{}Protected{}", m, s)
 }
 
 fn join(mut v: Vec<String>, sep: &str) -> String {
