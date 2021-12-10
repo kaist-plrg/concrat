@@ -312,13 +312,16 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             ItemKind::Static(_, _, _) => {
                 let name = i.ident.name.to_ident_string();
 
-                // data
-                if let Some(Some(_)) = protect_map().get(&name) {
-                    make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
-                    remove_attributes(ctx, i, self.depth);
+                // global variable
+                if let Some(Some(m)) = protect_map().get(&name) {
+                    // disallow struct
+                    if !m.contains('.') {
+                        make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
+                        remove_attributes(ctx, i, self.depth);
+                    }
                 }
 
-                // data (array)
+                // array
                 if let Some(Some(_)) = array_mutex_map().get(&name) {
                     make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
                     remove_attributes(ctx, i, self.depth);
@@ -755,19 +758,24 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     }
                 }
             }
+            // global variable
             ExprKind::Path(_) => {
                 if let Some(x) = name_symbol(e) {
                     if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x) {
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("(*{}).{}", guard_of(m), x),
-                            self.depth,
-                        );
+                        // disallow struct
+                        if !m.contains('.') {
+                            make_suggestion(
+                                ctx,
+                                e.span,
+                                "".to_string(),
+                                format!("(*{}).{}", guard_of(m), x),
+                                self.depth,
+                            );
+                        }
                     }
                 }
             }
+            // array
             ExprKind::Index(a, i) => {
                 if let Some(a) = name(a) {
                     let i = unwrap_cast_recursively(i);
@@ -784,6 +792,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     }
                 }
             }
+            // struct
             ExprKind::Field(s, f) => {
                 let f = f.name.to_ident_string();
                 if let Some(Some(m)) = struct_mutex_map().get(&f) {
