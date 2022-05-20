@@ -26,7 +26,6 @@ lazy_static! {
         Mutex::new(HashMap::default());
     static ref STRUCT_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
-    static ref GLOBAL_MAP: Mutex<HashMap<Symbol, String>> = Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
@@ -163,11 +162,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         .entry(m.clone())
                         .or_default()
                         .push((name.clone(), ty, init));
-                    GLOBAL_MAP
-                        .lock()
-                        .unwrap()
-                        .entry(i.ident.name)
-                        .or_insert_with(|| m.clone());
                 }
 
                 // data (array)
@@ -617,8 +611,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             }
                             if !ret.is_empty() {
-                                let id = e.hir_id;
-                                if ctx.tcx.typeck(id.owner).node_type(id).is_unit() {
+                                if type_of(ctx, e).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
                                         make_suggestion(
@@ -760,10 +753,10 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // global variable
             ExprKind::Path(_) => {
-                if let Some(x) = name_symbol(e) {
-                    if let Some(m) = GLOBAL_MAP.lock().unwrap().get(&x) {
-                        // disallow struct
-                        if !m.contains('.') {
+                if let Some(x) = name(e) {
+                    if let Some(Some(m)) = protect_map().get(&x) {
+                        // disallow struct, function
+                        if !m.contains('.') && !type_of(ctx, e).is_fn() {
                             make_suggestion(
                                 ctx,
                                 e.span,
@@ -919,6 +912,14 @@ fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>, depth: i32) {
     for a in attrs {
         make_suggestion(ctx, a.span, "".to_string(), "".to_string(), depth);
     }
+}
+
+fn type_of<'a, 'b, 'tcx>(
+    ctx: &'a LateContext<'b>,
+    e: &'tcx Expr<'tcx>,
+) -> &'a rustc_middle::ty::TyS<'b> {
+    let id = e.hir_id;
+    ctx.tcx.typeck(id.owner).node_type(id)
 }
 
 fn get_current_file_name(ctx: &LateContext<'_>, span: Span) -> String {

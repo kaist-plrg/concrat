@@ -63,6 +63,10 @@ fn main() {
 
     let summary = analysis::summarize(elements);
 
+    if verbose {
+        println!("{:?}", summary);
+    }
+
     input.push("c2rust-lib.rs");
     let args: Vec<_> = vec![
         "create-initial-program",
