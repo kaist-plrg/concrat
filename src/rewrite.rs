@@ -20,21 +20,21 @@ use crate::analysis::{AnalysisSummary, FunctionSummary};
 lazy_static! {
     static ref RUSTFIX_SUGGESTIONS: Mutex<HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>>> =
         Mutex::new(HashMap::default());
-    static ref MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
+    static ref GLOBAL_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
-    static ref ARRAY_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, Vec<String>)>>> =
+    static ref ARRAY_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, Vec<String>)>>> =
         Mutex::new(HashMap::default());
-    static ref STRUCT_MUTEX_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
+    static ref STRUCT_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
 
-fn protect_map() -> &'static HashMap<String, Option<String>> {
+fn global_mutex_map() -> &'static HashMap<String, Option<String>> {
     &SUMMARY.get().unwrap().mutex_map
 }
 
-fn function_map() -> &'static HashMap<String, HashMap<String, FunctionSummary>> {
+fn function_mutex_map() -> &'static HashMap<String, HashMap<String, FunctionSummary>> {
     &SUMMARY.get().unwrap().function_map
 }
 
@@ -146,17 +146,17 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     })
                     .collect::<Vec<_>>();
                 if !v.is_empty() {
-                    STRUCT_MUTEX_MAP.lock().unwrap().insert(s, v);
+                    STRUCT_DEF_MAP.lock().unwrap().insert(s, v);
                 }
             }
             ItemKind::Static(t, _, b) => {
                 let name = i.ident.name.to_ident_string();
 
                 // data
-                if let Some(m) = protect_map().get(&name).unwrap() {
+                if let Some(m) = global_mutex_map().get(&name).unwrap() {
                     let ty = span_to_string(ctx, t.span);
                     let init = hid_to_string(ctx, b.hir_id);
-                    MUTEX_MAP
+                    GLOBAL_DEF_MAP
                         .lock()
                         .unwrap()
                         .entry(m.clone())
@@ -181,7 +181,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         }
                         _ => unreachable!(),
                     };
-                    ARRAY_MUTEX_MAP
+                    ARRAY_DEF_MAP
                         .lock()
                         .unwrap()
                         .entry(m.clone())
@@ -238,7 +238,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
                         _ => unreachable!(),
                     };
-                    if STRUCT_MUTEX_MAP.lock().unwrap().contains_key(&s) {
+                    if STRUCT_DEF_MAP.lock().unwrap().contains_key(&s) {
                         let span = i.span;
                         make_suggestion(
                             ctx,
@@ -253,7 +253,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             }
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
-                if let Some(v) = STRUCT_MUTEX_MAP.lock().unwrap().get(&s) {
+                if let Some(v) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
                     let mut new_structs = String::new();
                     for f in fs.iter() {
                         let name = f.ident.name.to_ident_string();
@@ -307,7 +307,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 let name = i.ident.name.to_ident_string();
 
                 // global variable
-                if let Some(Some(m)) = protect_map().get(&name) {
+                if let Some(Some(m)) = global_mutex_map().get(&name) {
                     // disallow struct
                     if !m.contains('.') {
                         make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
@@ -322,7 +322,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 }
 
                 // mutex
-                if let Some(v) = MUTEX_MAP.lock().unwrap().get(&name) {
+                if let Some(v) = GLOBAL_DEF_MAP.lock().unwrap().get(&name) {
                     let mut decl = String::new();
                     let mut init = String::new();
                     for (x, t, i) in v {
@@ -344,7 +344,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                 }
 
                 // mutex array
-                if let Some(v) = ARRAY_MUTEX_MAP.lock().unwrap().get(&name) {
+                if let Some(v) = ARRAY_DEF_MAP.lock().unwrap().get(&name) {
                     let decls = v.iter().map(|(x, t, _)| format!("pub {}: {}", x, t));
                     let decl = join(decls.collect(), ", ");
 
@@ -411,7 +411,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     entry_mutex: entry,
                     node_mutex: node,
                     ret_mutex: ret,
-                } = function_map().get(&curr).unwrap().get(&name).unwrap();
+                } = function_mutex_map().get(&curr).unwrap().get(&name).unwrap();
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
                     b
@@ -587,7 +587,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             entry_mutex: entry,
                             ret_mutex: ret,
                             ..
-                        }) = function_map().get(&curr).unwrap().get(f)
+                        }) = function_mutex_map().get(&curr).unwrap().get(f)
                         {
                             if !entry.is_empty() {
                                 let guards = entry.iter().map(guard_of).collect();
@@ -667,7 +667,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     func
                 };
                 let FunctionSummary { ret_mutex: ret, .. } =
-                    function_map().get(&curr).unwrap().get(&func).unwrap();
+                    function_mutex_map().get(&curr).unwrap().get(&func).unwrap();
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
@@ -707,7 +707,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     QPath::Resolved(_, p) => path_to_string(p),
                     _ => unreachable!(),
                 };
-                if let Some(v) = STRUCT_MUTEX_MAP.lock().unwrap().get(&s) {
+                if let Some(v) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
                     let init_map: HashMap<_, _> = fs
                         .iter()
                         .map(|f| {
@@ -754,7 +754,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             // global variable
             ExprKind::Path(_) => {
                 if let Some(x) = name(e) {
-                    if let Some(Some(m)) = protect_map().get(&x) {
+                    if let Some(Some(m)) = global_mutex_map().get(&x) {
                         // disallow struct, function
                         if !m.contains('.') && !type_of(ctx, e).is_fn() {
                             make_suggestion(
