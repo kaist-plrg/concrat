@@ -622,7 +622,27 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                                             self.depth,
                                         );
                                     } else {
-                                        todo!();
+                                        let span = e.span.shrink_to_lo();
+                                        make_suggestion(
+                                            ctx,
+                                            span,
+                                            "".to_string(),
+                                            "{ let tmp = ".to_string(),
+                                            self.depth,
+                                        );
+                                        let span = e.span.shrink_to_hi();
+                                        let guards: String = ret
+                                            .iter()
+                                            .enumerate()
+                                            .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i))
+                                            .collect();
+                                        make_suggestion(
+                                            ctx,
+                                            span,
+                                            "".to_string(),
+                                            format!("; {} }}", guards),
+                                            self.depth,
+                                        );
                                     }
                                 } else {
                                     let span = e.span.shrink_to_lo();
