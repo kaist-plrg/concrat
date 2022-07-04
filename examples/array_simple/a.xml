@@ -1,16 +1,16 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml a_cil.out_comb.c</parameters><statistics>TOTAL                           0.001 s
+<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.001 s
   parse                           0.001 s
   convert to CIL                  0.001 s
   analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.069 s
+    global_inits                    0.000 s
+    solving                         0.096 s
       S.Dom.equal                     0.001 s
-      postsolver                      0.007 s
+      postsolver                      0.009 s
 Timing used
-Memory statistics: total=217.88MB, max=4.89MB, minor=216.18MB, major=4.67MB, promoted=2.97MB
+Memory statistics: total=218.04MB, max=4.89MB, minor=216.34MB, major=4.67MB, promoted=2.97MB
     minor collections=105  major collections=4 compactions=0
 </statistics><result>
-<file name="a.c" path="a.c">
+<file name="main.c" path="main.c">
 <function name="main">
 <node name="20"/>
 <node name="21"/>
@@ -40,7 +40,7 @@ Memory statistics: total=217.88MB, max=4.89MB, minor=216.18MB, major=4.67MB, pro
 <node name="8"/>
 </function>
 </file>
-<call id="23" file="a.c" line="40" order="3882" column="3">
+<call id="23" file="main.c" line="92" order="3168" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -175,6 +175,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -417,7 +424,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -455,7 +462,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -544,12 +551,12 @@ created
 <set>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 </set>
@@ -614,7 +621,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -777,6 +784,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -984,7 +998,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="8" file="a.c" line="19" order="3086" column="5">
+<call id="8" file="main.c" line="62" order="2526" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -1051,7 +1065,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -1215,7 +1229,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -1367,7 +1381,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -1584,6 +1598,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -1856,7 +1877,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -2020,7 +2041,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -2172,7 +2193,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -2389,6 +2410,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -2596,7 +2624,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="fun338" file="a.c" line="17" order="2981" column="1">
+<call id="fun338" file="main.c" line="54" order="2454" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -2663,7 +2691,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -2813,7 +2841,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -2965,7 +2993,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -3182,6 +3210,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -3454,7 +3489,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -3604,7 +3639,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -3756,7 +3791,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -3979,6 +4014,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -4180,7 +4222,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="fun342" file="a.c" line="30" order="3316" column="1">
+<call id="fun342" file="main.c" line="72" order="2679" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -4254,7 +4296,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -4411,663 +4453,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
-</data>
-</value>
-
-<key>1</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Multithreaded (other)
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-True
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-<key>
-main</key>
-<value><analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-n1</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-n2</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:Not {0}([0,7]); enums:{1, 2, 3, 4, 5}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-n3</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:1; enums:{1}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-num_mutex</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<map>
-<key>
-lifted fieldinfo
-</key>
-<value>
-<data>
-__data
-</data>
-</value>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>
-__count</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__kind</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__list</key>
-<value>
-<map>
-<key>
-__next</key>
-<value>
-<set>
-<value>
-<data>
-NULL
-</data>
-</value>
-</set>
-</value>
-<key>
-__prev</key>
-<value>
-<set>
-<value>
-<data>
-NULL
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-<key>
-__lock</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__nusers</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__owner</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__spins</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-</map>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Singlethreaded
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-False
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
-</value>
-
-</analysis></path><context>
-<analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-arg</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-t_fun@a.c:39:3
-</data>
-</value>
-
-<key>1</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Multithreaded (other)
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-True
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-arg</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-t_fun@a.c:39:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -5293,6 +4679,676 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__kind</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__list</key>
+<value>
+<map>
+<key>
+__next</key>
+<value>
+<set>
+<value>
+<data>
+NULL
+</data>
+</value>
+</set>
+</value>
+<key>
+__prev</key>
+<value>
+<set>
+<value>
+<data>
+NULL
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+<key>
+__lock</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__nusers</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__owner</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__spins</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+</map>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Singlethreaded
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+False
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+arg</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+t_fun@main.c:91:3
+</data>
+</value>
+
+<key>1</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Multithreaded (other)
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+True
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+arg</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+t_fun@main.c:91:3
+</data>
+</value>
+
+<key>1</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Multithreaded (other)
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+True
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+n1</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+n2</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:Not {0}([0,7]); enums:{1, 2, 3, 4, 5}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+n3</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:1; enums:{1}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+num_mutex</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<map>
+<key>
+lifted fieldinfo
+</key>
+<value>
+<data>
+__data
+</data>
+</value>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>
+__count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -5494,7 +5550,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="ret338" file="a.c" line="17" order="2981" column="1">
+<call id="ret338" file="main.c" line="54" order="2454" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -5561,7 +5617,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -5711,7 +5767,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -5863,7 +5919,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -6080,6 +6136,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -6352,7 +6415,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -6502,7 +6565,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -6654,7 +6717,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -6871,6 +6934,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -7078,7 +7148,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="5" file="a.c" line="18" order="3055" column="3">
+<call id="5" file="main.c" line="61" order="2506" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -7145,7 +7215,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -7309,7 +7379,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -7461,7 +7531,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -7678,6 +7748,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -7950,7 +8027,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -8114,7 +8191,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -8266,7 +8343,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -8489,6 +8566,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -8690,7 +8774,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="24" file="a.c" line="41" order="3936" column="3">
+<call id="24" file="main.c" line="93" order="3211" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -8825,6 +8909,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -9067,7 +9158,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -9105,7 +9196,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -9194,12 +9285,12 @@ created
 <set>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 </set>
@@ -9395,6 +9486,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -9602,7 +9700,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="ret345" file="a.c" line="35" order="3415" column="1">
+<call id="ret345" file="main.c" line="81" order="2745" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -9737,6 +9835,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -10037,12 +10142,12 @@ created
 <set>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 </set>
@@ -10244,6 +10349,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -10445,7 +10557,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="18" file="a.c" line="32" order="3380" column="3">
+<call id="18" file="main.c" line="78" order="2721" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -10519,7 +10631,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -10676,663 +10788,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
-</data>
-</value>
-
-<key>1</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Multithreaded (other)
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-True
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-<key>
-main</key>
-<value><analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-n1</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-n2</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:Not {0}([0,7]); enums:{1, 2, 3, 4, 5}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-n3</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<data>
-def_exc:1; enums:{1}
-</data>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-<key>
-num_mutex</key>
-<value>
-<map>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>Any</key>
-<value>
-<map>
-<key>
-lifted fieldinfo
-</key>
-<value>
-<data>
-__data
-</data>
-</value>
-<key>
-compound
-</key>
-<value>
-<map>
-<key>
-__count</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__kind</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__list</key>
-<value>
-<map>
-<key>
-__next</key>
-<value>
-<set>
-<value>
-<data>
-NULL
-</data>
-</value>
-</set>
-</value>
-<key>
-__prev</key>
-<value>
-<set>
-<value>
-<data>
-NULL
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-<key>
-__lock</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__nusers</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__owner</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-<key>
-__spins</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-</map>
-</value>
-
-</map>
-</value>
-<key>
-length
-</key>
-<value>
-<data>
-def_exc:Error int; enums:bot
-</data>
-</value>
-</map>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Singlethreaded
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-False
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
-</value>
-
-</analysis></path><context>
-<analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-arg</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-t_fun@a.c:39:3
-</data>
-</value>
-
-<key>1</key>
-<value>
-<data>
-main
-</data>
-</value>
-
-</map>
-</value>
-<key>
-set
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-<key>
-created
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadflag">
-<value>
-<data>
-Multithreaded (other)
-</data>
-</value>
-</analysis>
-<analysis name="threadreturn">
-<value>
-<data>
-True
-</data>
-</value>
-</analysis>
-<analysis name="escape">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="mutex">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="region">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="thread">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="expRelation">
-<value>
-<data>
-()
-</data>
-</value>
-</analysis>
-<analysis name="mallocWrapper">
-<value>
-<data>
-Unknown node
-</data>
-</value>
-</analysis>
-<analysis name="base">
-<value>
-<map>
-<key>
-value domain
-</key>
-<value>
-<map>
-<key>
-arg</key>
-<value>
-<data>
-def_exc:0; enums:{0}
-</data>
-</value>
-</map>
-</value>
-<key>
-array partitioning deps
-</key>
-<value>
-<map>
-</map>
-</value>
-<key>
-Vars with Weak Update
-</key>
-<value>
-<set>
-</set>
-</value>
-
-<key>
-P
-</key>
-<value>
-<set>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="threadid">
-<value>
-<map>
-<key>
-Thread
-</key>
-<value>
-<map>
-<key>
-prefix
-</key>
-<value>
-<map>
-<key>0</key>
-<value>
-<data>
-t_fun@a.c:39:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -11558,6 +11014,676 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__kind</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__list</key>
+<value>
+<map>
+<key>
+__next</key>
+<value>
+<set>
+<value>
+<data>
+NULL
+</data>
+</value>
+</set>
+</value>
+<key>
+__prev</key>
+<value>
+<set>
+<value>
+<data>
+NULL
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+<key>
+__lock</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__nusers</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__owner</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__spins</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+</map>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Singlethreaded
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+False
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+arg</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+t_fun@main.c:91:3
+</data>
+</value>
+
+<key>1</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Multithreaded (other)
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+True
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+arg</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+</map>
+</value>
+<key>
+array partitioning deps
+</key>
+<value>
+<map>
+</map>
+</value>
+<key>
+Vars with Weak Update
+</key>
+<value>
+<set>
+</set>
+</value>
+
+<key>
+P
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadid">
+<value>
+<map>
+<key>
+Thread
+</key>
+<value>
+<map>
+<key>
+prefix
+</key>
+<value>
+<map>
+<key>0</key>
+<value>
+<data>
+t_fun@main.c:91:3
+</data>
+</value>
+
+<key>1</key>
+<value>
+<data>
+main
+</data>
+</value>
+
+</map>
+</value>
+<key>
+set
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+<key>
+created
+</key>
+<value>
+<set>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="threadflag">
+<value>
+<data>
+Multithreaded (other)
+</data>
+</value>
+</analysis>
+<analysis name="threadreturn">
+<value>
+<data>
+True
+</data>
+</value>
+</analysis>
+<analysis name="escape">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="mutex">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="region">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="thread">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="expRelation">
+<value>
+<data>
+()
+</data>
+</value>
+</analysis>
+<analysis name="mallocWrapper">
+<value>
+<data>
+Unknown node
+</data>
+</value>
+</analysis>
+<analysis name="base">
+<value>
+<map>
+<key>
+value domain
+</key>
+<value>
+<map>
+<key>
+n1</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+n2</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:Not {0}([0,7]); enums:{1, 2, 3, 4, 5}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+n3</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<data>
+def_exc:1; enums:{1}
+</data>
+</value>
+
+</map>
+</value>
+<key>
+length
+</key>
+<value>
+<data>
+def_exc:Error int; enums:bot
+</data>
+</value>
+</map>
+</value>
+<key>
+num_mutex</key>
+<value>
+<map>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>Any</key>
+<value>
+<map>
+<key>
+lifted fieldinfo
+</key>
+<value>
+<data>
+__data
+</data>
+</value>
+<key>
+compound
+</key>
+<value>
+<map>
+<key>
+__count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -11759,7 +11885,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="11" file="a.c" line="24" order="3190" column="5">
+<call id="11" file="main.c" line="65" order="2597" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -11826,7 +11952,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -11990,7 +12116,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -12147,7 +12273,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -12364,6 +12490,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -12636,7 +12769,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -12800,7 +12933,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -12957,7 +13090,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -13174,6 +13307,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -13381,7 +13521,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="12" file="a.c" line="26" order="3217" column="5">
+<call id="12" file="main.c" line="66" order="2613" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -13448,7 +13588,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -13612,7 +13752,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -13769,7 +13909,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -13986,6 +14126,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -14258,7 +14405,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -14422,7 +14569,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -14579,7 +14726,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -14796,6 +14943,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -15003,7 +15157,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="9" file="a.c" line="21" order="3112" column="5">
+<call id="9" file="main.c" line="63" order="2541" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -15070,7 +15224,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -15234,7 +15388,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -15386,7 +15540,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -15603,6 +15757,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -15875,7 +16036,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -16039,7 +16200,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -16191,7 +16352,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -16414,6 +16575,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -16615,7 +16783,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="fun345" file="a.c" line="35" order="3415" column="1">
+<call id="fun345" file="main.c" line="81" order="2745" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -16750,6 +16918,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -17089,6 +17264,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -17436,6 +17618,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -17637,7 +17826,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="13" file="a.c" line="18" order="3270" column="5">
+<call id="13" file="main.c" line="67" order="2655" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -17704,7 +17893,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -17868,7 +18057,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -18020,7 +18209,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -18237,6 +18426,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -18509,7 +18705,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -18673,7 +18869,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -18825,7 +19021,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -19048,6 +19244,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -19249,7 +19452,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="22" file="a.c" line="39" order="3828" column="3">
+<call id="22" file="main.c" line="91" order="3125" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -19384,6 +19587,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -19626,7 +19836,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -19664,7 +19874,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -19753,12 +19963,12 @@ created
 <set>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 </set>
@@ -19823,7 +20033,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -19855,7 +20065,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -20018,6 +20228,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -20225,7 +20442,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="21" file="a.c" line="38" order="3657" column="3">
+<call id="21" file="main.c" line="89" order="2965" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -20360,6 +20577,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -20602,7 +20826,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -20698,7 +20922,7 @@ created
 <set>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 </set>
@@ -20763,7 +20987,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -20926,6 +21150,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -21133,7 +21364,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="10" file="a.c" line="23" order="3163" column="5">
+<call id="10" file="main.c" line="64" order="2581" column="5">
 <context>
 <analysis name="expRelation">
 <value>
@@ -21200,7 +21431,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -21364,7 +21595,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -21521,7 +21752,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -21738,6 +21969,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -22010,7 +22248,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -22174,7 +22412,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -22331,7 +22569,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -22554,6 +22792,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -22755,7 +23000,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="15" file="a.c" line="28" order="3293" column="3">
+<call id="15" file="main.c" line="69" order="2667" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -22822,7 +23067,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -22986,7 +23231,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -23138,7 +23383,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -23355,6 +23600,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -23627,7 +23879,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -23791,7 +24043,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -23943,7 +24195,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -24166,6 +24418,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -24367,7 +24626,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="17" file="a.c" line="31" order="3361" column="3">
+<call id="17" file="main.c" line="77" order="2713" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -24441,7 +24700,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -24598,7 +24857,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -24818,6 +25077,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -25097,7 +25363,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -25254,7 +25520,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -25480,6 +25746,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -25681,7 +25954,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="1" file="a.c" line="18" order="3035" column="3">
+<call id="1" file="main.c" line="60" order="2497" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -25748,7 +26021,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -25912,7 +26185,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -26064,7 +26337,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -26281,6 +26554,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -26553,7 +26833,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -26717,7 +26997,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -26869,7 +27149,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -27092,6 +27372,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -27293,7 +27580,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="ret342" file="a.c" line="30" order="3316" column="1">
+<call id="ret342" file="main.c" line="72" order="2679" column="1">
 <context>
 <analysis name="expRelation">
 <value>
@@ -27367,7 +27654,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -27524,7 +27811,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:38:3
+t_fun@main.c:89:3
 </data>
 </value>
 
@@ -27744,6 +28031,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -28023,7 +28317,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -28180,7 +28474,7 @@ prefix
 <key>0</key>
 <value>
 <data>
-t_fun@a.c:39:3
+t_fun@main.c:91:3
 </data>
 </value>
 
@@ -28406,6 +28700,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -28607,7 +28908,7 @@ False
 </value>
 
 </analysis></path></call>
-<call id="20" file="a.c" line="37" order="3486" column="3">
+<call id="20" file="main.c" line="87" order="2805" column="3">
 <context>
 <analysis name="expRelation">
 <value>
@@ -28742,6 +29043,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -29081,6 +29389,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -29436,6 +29751,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -30621,6 +30943,13 @@ def_exc:0; enums:{0}
 </data>
 </value>
 <key>
+__elision</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
 __kind</key>
 <value>
 <data>
@@ -30728,6 +31057,13 @@ compound
 <map>
 <key>
 __count</key>
+<value>
+<data>
+def_exc:0; enums:{0}
+</data>
+</value>
+<key>
+__elision</key>
 <value>
 <data>
 def_exc:0; enums:{0}
@@ -31247,23 +31583,23 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location n2[?]@a.c:6:5 (safe)">
-<text file="a.c" line="24" column="5">read in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:38:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="24" column="5">read in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:39:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="24" column="5">write in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:38:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="24" column="5">write in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:39:3, main], {})} (conf. 110)</text></group>
+<warning><group name="Memory location n2[?]@main.c:40:5 (safe)">
+<text file="main.c" line="65" column="5">read in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="65" column="5">read in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="65" column="5">write in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="65" column="5">write in {region:n2} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
 </warning>
-<warning><group name="Memory location n3[?]@a.c:7:5 (safe)">
-<text file="a.c" line="19" column="5">read in {region:n3} with {thread:([t_fun@a.c:38:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="19" column="5">read in {region:n3} with {thread:([t_fun@a.c:39:3, main], {})} (conf. 110)</text></group>
+<warning><group name="Memory location n3[?]@main.c:42:5 (safe)">
+<text file="main.c" line="62" column="5">read in {region:n3} with {thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="62" column="5">read in {region:n3} with {thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
 </warning>
-<warning><group name="Memory location n1[?]@a.c:5:5 (safe)">
-<text file="a.c" line="23" column="5">read in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:38:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="23" column="5">read in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:39:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="23" column="5">write in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:38:3, main], {})} (conf. 110)</text>
-<text file="a.c" line="23" column="5">write in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@a.c:39:3, main], {})} (conf. 110)</text></group>
+<warning><group name="Memory location n1[?]@main.c:39:5 (safe)">
+<text file="main.c" line="64" column="5">read in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="64" column="5">read in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="64" column="5">write in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
+<text file="main.c" line="64" column="5">write in {region:n1} with {i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}], thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
 </warning>
 <warning>
-<text file="a.c" line="40" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@a.c:39:3, main], {})}</text></warning>
+<text file="main.c" line="92" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:91:3, main], {})}</text></warning>
 <warning>
-<text file="a.c" line="39" column="3">Base EvalInt id1 query answering bot instead of {([t_fun@a.c:38:3, main], {})}</text></warning></result></run>
+<text file="main.c" line="91" column="3">Base EvalInt id1 query answering bot instead of {([t_fun@main.c:89:3, main], {})}</text></warning></result></run>

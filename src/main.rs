@@ -113,7 +113,7 @@ fn main() {
         if dry_run {
             println!("{}", fixed_source_code);
         } else {
-            input.push("a.rs");
+            input.push("main.rs");
             let mut file = File::create(input.to_str().unwrap()).unwrap();
             file.write_all(fixed_source_code.as_bytes()).unwrap();
         }
