@@ -309,11 +309,11 @@ fn to_file(element: Element) -> Vec<Function> {
     let path = attributes.get(&"path".to_string()).unwrap();
     children
         .drain(..)
-        .map(|e| to_function(e, path.clone()))
+        .flat_map(|e| to_function(e, path.clone()))
         .collect()
 }
 
-fn to_function(element: Element, path: String) -> Function {
+fn to_function(element: Element, path: String) -> Option<Function> {
     let Element {
         name,
         attributes,
@@ -326,6 +326,10 @@ fn to_function(element: Element, path: String) -> Function {
         .map(|e| e.attributes.get(&"name".to_string()).unwrap().clone())
         .collect();
 
+    if nodes.is_empty() {
+        return None;
+    }
+
     let mut entry: Vec<_> = nodes.drain_filter(|s| (*s).starts_with("fun")).collect();
     assert_eq!(entry.len(), 1);
     let entry = entry.pop().unwrap();
@@ -334,13 +338,13 @@ fn to_function(element: Element, path: String) -> Function {
     assert_eq!(ret.len(), 1);
     let ret = ret.pop().unwrap();
 
-    Function {
+    Some(Function {
         path,
         name,
         entry,
         ret,
         nodes,
-    }
+    })
 }
 
 fn to_glob(element: Element) -> Glob {
@@ -369,23 +373,37 @@ fn to_warning(element: Element) -> Option<WarningGroup> {
         "group" => {
             let info = attributes.get(&"name".to_string()).unwrap();
             let info = &info[16..];
-
-            let (location, info) = find_and_split(info, '@');
-            let (path, info) = find_and_split(info, ':');
-            let (line, info) = find_and_split(info, ':');
-            let line = line.parse().unwrap();
-            let (column, info) = find_and_split(info, ' ');
-            let column = column.parse().unwrap();
-            let safe = info == "(safe)";
             let accesses = children.drain(..).map(to_access).collect();
-            Some(WarningGroup {
-                location,
-                path,
-                line,
-                column,
-                safe,
-                accesses,
-            })
+
+            if let Some(i) = info.rfind('@') {
+                let location = info[..i].to_string();
+                let info = &info[i + 1..];
+                let (path, info) = find_and_split(info, ':');
+                let (line, info) = find_and_split(info, ':');
+                let line = line.parse().unwrap_or(0);
+                let (column, info) = find_and_split(info, ' ');
+                let column = column.parse().unwrap_or(0);
+                let safe = info == "(safe)";
+                Some(WarningGroup {
+                    location,
+                    path,
+                    line,
+                    column,
+                    safe,
+                    accesses,
+                })
+            } else {
+                let (location, info) = find_and_split(info, ' ');
+                let safe = info == "(safe)";
+                Some(WarningGroup {
+                    location,
+                    path: "".to_string(),
+                    line: 0,
+                    column: 0,
+                    safe,
+                    accesses,
+                })
+            }
         }
         "text" => None,
         _ => unreachable!(),
@@ -414,9 +432,15 @@ fn to_access(element: Element) -> Access {
     let data = unique_child(children).name.data();
     let (read, data) = find_and_split(&data, ' ');
     let read = read == "read";
-    let (_, data) = find_and_split(data, ':');
-    let (region, data) = find_and_split(data, '}');
-    let (_, data) = find_and_split(data, '{');
+    let (region, data) = if data.contains(" in ") {
+        let (_, data) = find_and_split(data, ':');
+        let (region, data) = find_and_split(data, '}');
+        let (_, data) = find_and_split(data, '{');
+        (region, data)
+    } else {
+        let (_, data) = find_and_split(data, '{');
+        ("".to_string(), data)
+    };
     let mut locks: Vec<_> = data
         .split(", ")
         .filter_map(|s| {
