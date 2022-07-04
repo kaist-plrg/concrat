@@ -64,7 +64,7 @@ fn main() {
     let summary = analysis::summarize(elements);
 
     if verbose {
-        println!("{:?}", summary);
+        summary.pretty_print();
     }
 
     input.push("c2rust-lib.rs");

@@ -14,6 +14,44 @@ pub struct AnalysisSummary {
     pub function_map: HashMap<String, HashMap<String, FunctionSummary>>,
 }
 
+impl AnalysisSummary {
+    pub fn pretty_print(&self) {
+        println!("[mutex_map]");
+        for (k, v) in &self.mutex_map {
+            println!("\t{}: {:?}", k, v);
+        }
+        println!("\n[array_mutex_map]");
+        for (k, v) in &self.array_mutex_map {
+            println!("\t{}: {:?}", k, v);
+        }
+        println!("\n[struct_mutex_map]");
+        for (k, v) in &self.struct_mutex_map {
+            println!("\t{}: {:?}", k, v);
+        }
+        println!("\n[node_map]");
+        for (k, v) in &self.node_map {
+            println!("\t{}: {:?}", k, v);
+        }
+        println!("\n[function_map]");
+        for (k1, v) in &self.function_map {
+            for (
+                k2,
+                FunctionSummary {
+                    entry_mutex,
+                    node_mutex,
+                    ret_mutex,
+                },
+            ) in v
+            {
+                println!("\t{} in {}", k2, k1);
+                println!("\t\tentry_mutex: {:?}", entry_mutex);
+                println!("\t\tnode_mutex: {:?}", node_mutex);
+                println!("\t\tret_mutex: {:?}", ret_mutex);
+            }
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<String>,
