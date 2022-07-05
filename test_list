@@ -8,3 +8,4 @@ examples/array_const
 examples/struct_simple
 examples/struct_multiple
 examples/struct_nested
+examples/struct_dup

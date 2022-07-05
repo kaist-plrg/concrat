@@ -24,7 +24,7 @@ lazy_static! {
         Mutex::new(HashMap::default());
     static ref ARRAY_DEF_MAP: Mutex<HashMap<String, (String, Vec<String>)>> =
         Mutex::new(HashMap::default());
-    static ref STRUCT_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
+    static ref STRUCT_DEF_MAP: Mutex<HashMap<String, HashMap<String, String>>> =
         Mutex::new(HashMap::default());
 }
 
@@ -38,7 +38,7 @@ fn array_mutex_map() -> &'static HashMap<String, String> {
     &SUMMARY.get().unwrap().array_mutex_map
 }
 
-fn struct_mutex_map() -> &'static HashMap<String, String> {
+fn struct_mutex_map() -> &'static HashMap<String, HashMap<String, String>> {
     &SUMMARY.get().unwrap().struct_mutex_map
 }
 
@@ -133,21 +133,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         match &i.kind {
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
-                let v = fs
+                let map = fs
                     .iter()
-                    .filter_map(|f| {
-                        let field = f.ident.name.to_ident_string();
-                        if let Some(m) = struct_mutex_map().get(&field) {
-                            let ty = span_to_string(ctx, f.ty.span);
-                            Some((field, ty, m.clone()))
-                        } else {
-                            None
-                        }
+                    .map(|f| {
+                        (
+                            f.ident.name.to_ident_string(),
+                            span_to_string(ctx, f.ty.span),
+                        )
                     })
-                    .collect::<Vec<_>>();
-                if !v.is_empty() {
-                    STRUCT_DEF_MAP.lock().unwrap().insert(s, v);
-                }
+                    .collect();
+                STRUCT_DEF_MAP.lock().unwrap().insert(s, map);
             }
             ItemKind::Static(t, _, b) => {
                 let name = i.ident.name.to_ident_string();
@@ -172,10 +167,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     _ => {
                         let ty = span_to_string(ctx, t.span);
                         let init = hid_to_string(ctx, b.hir_id);
-                        GLOBAL_DEF_MAP
-                            .lock()
-                            .unwrap()
-                            .insert(name.clone(), (ty, init));
+                        GLOBAL_DEF_MAP.lock().unwrap().insert(name, (ty, init));
                     }
                 }
             }
@@ -228,7 +220,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
                         _ => unreachable!(),
                     };
-                    if STRUCT_DEF_MAP.lock().unwrap().contains_key(&s) {
+                    if struct_mutex_map().contains_key(&s) {
                         let span = i.span;
                         make_suggestion(
                             ctx,
@@ -243,8 +235,19 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             }
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
-                if let Some(v) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
+                if let Some(map) = struct_mutex_map().get(&s) {
                     let mut new_structs = String::new();
+                    let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
+                    let v: Vec<_> = map
+                        .iter()
+                        .map(|(x, m)| {
+                            (
+                                x.clone(),
+                                struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
+                                m.clone(),
+                            )
+                        })
+                        .collect();
                     for f in fs.iter() {
                         let name = f.ident.name.to_ident_string();
                         if v.iter().any(|(x, _, _)| *x == name) {
@@ -723,7 +726,18 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     QPath::Resolved(_, p) => path_to_string(p),
                     _ => unreachable!(),
                 };
-                if let Some(v) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
+                if let Some(map) = struct_mutex_map().get(&s) {
+                    let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
+                    let v: Vec<_> = map
+                        .iter()
+                        .map(|(x, m)| {
+                            (
+                                x.clone(),
+                                struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
+                                m.clone(),
+                            )
+                        })
+                        .collect();
                     let init_map: HashMap<_, _> = fs
                         .iter()
                         .map(|f| {
@@ -803,8 +817,14 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // struct
             ExprKind::Field(s, f) => {
+                let ty = type_of(ctx, s)
+                    .to_string()
+                    .strip_prefix("main::")
+                    .unwrap()
+                    .to_string();
+                println!("{}", ty);
                 let f = f.name.to_ident_string();
-                if let Some(m) = struct_mutex_map().get(&f) {
+                if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = match &s.kind {
                         ExprKind::Path(_) => name(s).unwrap(),
                         ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),

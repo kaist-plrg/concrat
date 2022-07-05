@@ -6,7 +6,7 @@ use crate::parse_xml::{Element, Name};
 pub struct AnalysisSummary {
     pub mutex_map: HashMap<String, String>,
     pub array_mutex_map: HashMap<String, String>,
-    pub struct_mutex_map: HashMap<String, String>,
+    pub struct_mutex_map: HashMap<String, HashMap<String, String>>,
     pub node_map: HashMap<String, Vec<String>>,
     pub function_map: HashMap<String, FunctionSummary>,
 }
@@ -94,7 +94,7 @@ fn generate_mutex_maps(
 ) -> (
     HashMap<String, String>,
     HashMap<String, String>,
-    HashMap<String, String>,
+    HashMap<String, HashMap<String, String>>,
 ) {
     let mut global_mutex_map = HashMap::new();
     let mut array_mutex_map = HashMap::new();
@@ -111,13 +111,16 @@ fn generate_mutex_maps(
             .collect();
         if let Some(Protection::PLock(plock)) = plocks.pop() {
             assert_eq!(plocks.len(), 0);
-            let (_, field) = find_and_split(typ, '.');
+            let (typ, field) = find_and_split(typ, '.');
             let field = if let Some(i) = field.find('.') {
                 &field[..i]
             } else {
                 field
             };
-            struct_mutex_map.insert(field.to_string(), plock.to_string());
+            struct_mutex_map
+                .entry(typ)
+                .or_insert_with(HashMap::new)
+                .insert(field.to_string(), plock.to_string());
             continue;
         }
 
