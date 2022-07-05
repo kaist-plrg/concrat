@@ -112,6 +112,11 @@ fn generate_mutex_maps(
         if let Some(Protection::PLock(plock)) = plocks.pop() {
             assert_eq!(plocks.len(), 0);
             let (_, field) = find_and_split(typ, '.');
+            let field = if let Some(i) = field.find('.') {
+                &field[..i]
+            } else {
+                field
+            };
             struct_mutex_map.insert(field.to_string(), plock.to_string());
             continue;
         }

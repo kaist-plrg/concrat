@@ -7,3 +7,4 @@ examples/array_simple
 examples/array_const
 examples/struct_simple
 examples/struct_multiple
+examples/struct_nested
