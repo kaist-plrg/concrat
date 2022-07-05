@@ -30,20 +30,20 @@ lazy_static! {
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
 
-fn global_mutex_map() -> &'static HashMap<String, Option<String>> {
+fn global_mutex_map() -> &'static HashMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
 }
 
-fn function_mutex_map() -> &'static HashMap<String, HashMap<String, FunctionSummary>> {
-    &SUMMARY.get().unwrap().function_map
-}
-
-fn array_mutex_map() -> &'static HashMap<String, Option<String>> {
+fn array_mutex_map() -> &'static HashMap<String, String> {
     &SUMMARY.get().unwrap().array_mutex_map
 }
 
-fn struct_mutex_map() -> &'static HashMap<String, Option<String>> {
+fn struct_mutex_map() -> &'static HashMap<String, String> {
     &SUMMARY.get().unwrap().struct_mutex_map
+}
+
+fn function_mutex_map() -> &'static HashMap<String, FunctionSummary> {
+    &SUMMARY.get().unwrap().function_map
 }
 
 pub fn collect_suggestions(
@@ -137,7 +137,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .iter()
                     .filter_map(|f| {
                         let field = f.ident.name.to_ident_string();
-                        if let Some(Some(m)) = struct_mutex_map().get(&field) {
+                        if let Some(m) = struct_mutex_map().get(&field) {
                             let ty = span_to_string(ctx, f.ty.span);
                             Some((field, ty, m.clone()))
                         } else {
@@ -153,7 +153,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let name = i.ident.name.to_ident_string();
 
                 // data
-                if let Some(m) = global_mutex_map().get(&name).unwrap() {
+                if let Some(m) = global_mutex_map().get(&name) {
                     let ty = span_to_string(ctx, t.span);
                     let init = hid_to_string(ctx, b.hir_id);
                     GLOBAL_DEF_MAP
@@ -165,7 +165,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
 
                 // data (array)
-                if let Some(Some(m)) = array_mutex_map().get(&name) {
+                if let Some(m) = array_mutex_map().get(&name) {
                     let ty = match t.kind {
                         TyKind::Array(t, _) => span_to_string(ctx, t.span),
                         _ => unreachable!(),
@@ -307,7 +307,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 let name = i.ident.name.to_ident_string();
 
                 // global variable
-                if let Some(Some(m)) = global_mutex_map().get(&name) {
+                if let Some(m) = global_mutex_map().get(&name) {
                     // disallow struct
                     if !m.contains('.') {
                         make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
@@ -316,7 +316,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 }
 
                 // array
-                if let Some(Some(_)) = array_mutex_map().get(&name) {
+                if array_mutex_map().get(&name).is_some() {
                     make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
                     remove_attributes(ctx, i, self.depth);
                 }
@@ -397,7 +397,6 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
     ) {
         match kind {
             intravisit::FnKind::ItemFn(id, _, _, _) => {
-                let curr = get_current_file_name(ctx, span);
                 let name = id.name.to_ident_string();
                 if name == "main" {
                     return;
@@ -411,7 +410,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     entry_mutex: entry,
                     node_mutex: node,
                     ret_mutex: ret,
-                } = function_mutex_map().get(&curr).unwrap().get(&name).unwrap();
+                } = function_mutex_map().get(&name).unwrap();
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
                     b
@@ -582,12 +581,11 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                         );
                     }
                     Some(f) => {
-                        let curr = get_current_file_name(ctx, e.span);
                         if let Some(FunctionSummary {
                             entry_mutex: entry,
                             ret_mutex: ret,
                             ..
-                        }) = function_mutex_map().get(&curr).unwrap().get(f)
+                        }) = function_mutex_map().get(f)
                         {
                             if !entry.is_empty() {
                                 let guards = entry.iter().map(guard_of).collect();
@@ -675,7 +673,6 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Ret(v_opt) => {
                 let hir = ctx.tcx.hir();
-                let curr = get_current_file_name(ctx, e.span);
                 let func = if let Node::Item(item) = hir.get(hir.enclosing_body_owner(e.hir_id)) {
                     item.ident.name.to_ident_string()
                 } else {
@@ -687,7 +684,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     func
                 };
                 let FunctionSummary { ret_mutex: ret, .. } =
-                    function_mutex_map().get(&curr).unwrap().get(&func).unwrap();
+                    function_mutex_map().get(&func).unwrap();
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
@@ -774,7 +771,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             // global variable
             ExprKind::Path(_) => {
                 if let Some(x) = name(e) {
-                    if let Some(Some(m)) = global_mutex_map().get(&x) {
+                    if let Some(m) = global_mutex_map().get(&x) {
                         // disallow struct, function
                         if !m.contains('.') && !type_of(ctx, e).is_fn() {
                             make_suggestion(
@@ -793,7 +790,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 if let Some(a) = name(a) {
                     let i = unwrap_cast_recursively(i);
                     let i = span_to_string(ctx, i.span);
-                    if let Some(Some(m)) = array_mutex_map().get(&a) {
+                    if let Some(m) = array_mutex_map().get(&a) {
                         let m = format!("{}[{}]", m, i);
                         make_suggestion(
                             ctx,
@@ -808,7 +805,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             // struct
             ExprKind::Field(s, f) => {
                 let f = f.name.to_ident_string();
-                if let Some(Some(m)) = struct_mutex_map().get(&f) {
+                if let Some(m) = struct_mutex_map().get(&f) {
                     let s = match &s.kind {
                         ExprKind::Path(_) => name(s).unwrap(),
                         ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),
@@ -940,26 +937,6 @@ fn type_of<'a, 'b, 'tcx>(
 ) -> &'a rustc_middle::ty::TyS<'b> {
     let id = e.hir_id;
     ctx.tcx.typeck(id.owner).node_type(id)
-}
-
-fn get_current_file_name(ctx: &LateContext<'_>, span: Span) -> String {
-    let mut root = ctx.sess().local_crate_source_file.as_ref().unwrap().clone();
-    root.pop();
-    let root = root.as_path();
-    let curr = ctx
-        .sess()
-        .source_map()
-        .span_to_filename(span)
-        .prefer_local()
-        .to_string();
-    let curr = std::path::Path::new(&curr);
-    curr.strip_prefix(root)
-        .unwrap()
-        .file_stem()
-        .unwrap()
-        .to_str()
-        .unwrap()
-        .to_string()
 }
 
 fn path_to_symbol<'tcx>(p: &'tcx Path<'tcx>) -> Symbol {

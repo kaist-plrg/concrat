@@ -1,17 +1,14 @@
-use std::{
-    collections::{HashMap, HashSet},
-    iter::FromIterator,
-};
+use std::collections::{HashMap, HashSet};
 
 use crate::parse_xml::{Element, Name};
 
 #[derive(Debug)]
 pub struct AnalysisSummary {
-    pub mutex_map: HashMap<String, Option<String>>,
-    pub array_mutex_map: HashMap<String, Option<String>>,
-    pub struct_mutex_map: HashMap<String, Option<String>>,
+    pub mutex_map: HashMap<String, String>,
+    pub array_mutex_map: HashMap<String, String>,
+    pub struct_mutex_map: HashMap<String, String>,
     pub node_map: HashMap<String, Vec<String>>,
-    pub function_map: HashMap<String, HashMap<String, FunctionSummary>>,
+    pub function_map: HashMap<String, FunctionSummary>,
 }
 
 impl AnalysisSummary {
@@ -33,21 +30,19 @@ impl AnalysisSummary {
             println!("\t{}: {:?}", k, v);
         }
         println!("\n[function_map]");
-        for (k1, v) in &self.function_map {
-            for (
-                k2,
-                FunctionSummary {
-                    entry_mutex,
-                    node_mutex,
-                    ret_mutex,
-                },
-            ) in v
-            {
-                println!("\t{} in {}", k2, k1);
-                println!("\t\tentry_mutex: {:?}", entry_mutex);
-                println!("\t\tnode_mutex: {:?}", node_mutex);
-                println!("\t\tret_mutex: {:?}", ret_mutex);
-            }
+        for (
+            k,
+            FunctionSummary {
+                entry_mutex,
+                node_mutex,
+                ret_mutex,
+            },
+        ) in &self.function_map
+        {
+            println!("\t{}", k);
+            println!("\t\tentry_mutex: {:?}", entry_mutex);
+            println!("\t\tnode_mutex: {:?}", node_mutex);
+            println!("\t\tret_mutex: {:?}", ret_mutex);
         }
     }
 }
@@ -76,20 +71,14 @@ pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
         .drain_filter(|e| e.name == tag("call"))
         .map(to_call)
         .collect();
-    let globs: Vec<_> = elements
-        .drain_filter(|e| e.name == tag("glob"))
-        .map(to_glob)
-        .collect();
     let warnings: Vec<_> = elements
         .drain_filter(|e| e.name == tag("warning"))
         .flat_map(to_warning)
         .collect();
 
-    let mutex_map = generate_mutex_map(&globs);
+    let (mutex_map, array_mutex_map, struct_mutex_map) = generate_mutex_maps(&warnings);
     let node_map = generate_node_map(&calls);
     let function_map = generate_function_map(&functions, &node_map);
-    let array_mutex_map = generate_array_mutex_map(&warnings);
-    let struct_mutex_map = generate_struct_mutex_map(&warnings);
 
     AnalysisSummary {
         mutex_map,
@@ -100,32 +89,52 @@ pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
     }
 }
 
-fn generate_mutex_map(globs: &[Glob]) -> HashMap<String, Option<String>> {
-    let k1 = "mutex".to_string();
-    let k2 = "readwrite".to_string();
+fn generate_mutex_maps(
+    warnings: &[WarningGroup],
+) -> (
+    HashMap<String, String>,
+    HashMap<String, String>,
+    HashMap<String, String>,
+) {
+    let mut global_mutex_map = HashMap::new();
+    let mut array_mutex_map = HashMap::new();
+    let mut struct_mutex_map = HashMap::new();
+    for WarningGroup {
+        name,
+        typ,
+        protections,
+    } in warnings
+    {
+        let mut plocks: Vec<_> = protections
+            .iter()
+            .filter(|p| matches!(p, Protection::PLock(_)))
+            .collect();
+        if let Some(Protection::PLock(plock)) = plocks.pop() {
+            assert_eq!(plocks.len(), 0);
+            let (_, field) = find_and_split(typ, '.');
+            struct_mutex_map.insert(field.to_string(), plock.to_string());
+            continue;
+        }
 
-    globs
-        .iter()
-        .map(|g| {
-            let Glob { name, analyses } = g;
+        let mut ilocks: Vec<_> = protections
+            .iter()
+            .filter(|p| matches!(p, Protection::ILock(_)))
+            .collect();
+        if let Some(Protection::ILock(ilock)) = ilocks.pop() {
+            assert_eq!(ilocks.len(), 0);
+            array_mutex_map.insert(name.to_string(), ilock.to_string());
+            continue;
+        }
 
-            let mutex_map = analyses.get(&k1).unwrap().as_map();
+        if let Some(Protection::Lock(lock)) = protections.last() {
+            assert_eq!(protections.len(), 1);
+            global_mutex_map.insert(name.to_string(), lock.to_string());
+            continue;
+        }
 
-            let v = vec![];
-            let mut readwrite_set = mutex_map
-                .get(&k2)
-                .unwrap()
-                .try_as_set()
-                .unwrap_or(&v)
-                .iter()
-                .map(|v| v.as_data().clone())
-                .collect::<Vec<_>>();
-
-            assert!(readwrite_set.len() <= 1);
-
-            (name.clone(), readwrite_set.pop())
-        })
-        .collect()
+        unreachable!();
+    }
+    (global_mutex_map, array_mutex_map, struct_mutex_map)
 }
 
 fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
@@ -157,11 +166,10 @@ fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
 fn generate_function_map(
     funcs: &[Function],
     node_map: &HashMap<String, Vec<String>>,
-) -> HashMap<String, HashMap<String, FunctionSummary>> {
-    let mut map: HashMap<String, HashMap<String, FunctionSummary>> = HashMap::new();
+) -> HashMap<String, FunctionSummary> {
+    let mut map: HashMap<String, FunctionSummary> = HashMap::new();
     for f in funcs {
         let Function {
-            path,
             name,
             entry,
             ret,
@@ -175,10 +183,7 @@ fn generate_function_map(
             .collect();
         node_mutex.sort();
         node_mutex.dedup();
-        let mut path = path.clone();
-        path.pop();
-        path.pop();
-        map.entry(path).or_default().insert(
+        map.insert(
             name.clone(),
             FunctionSummary {
                 entry_mutex,
@@ -190,63 +195,8 @@ fn generate_function_map(
     map
 }
 
-fn generate_array_mutex_map(warnings: &[WarningGroup]) -> HashMap<String, Option<String>> {
-    warnings
-        .iter()
-        .filter_map(|w| {
-            let WarningGroup {
-                location, accesses, ..
-            } = w;
-            if let Some(m) = location.strip_suffix("[?]") {
-                let mut mutex_set = accesses
-                    .iter()
-                    .map(|a| HashSet::<String>::from_iter(a.locks.iter().cloned()))
-                    .reduce(|s1, s2| s1.intersection(&s2).cloned().collect())
-                    .unwrap();
-                assert!(mutex_set.len() <= 1);
-                return Some((m.to_string(), mutex_set.drain().next()));
-            }
-            None
-        })
-        .collect()
-}
-
-fn generate_struct_mutex_map(warnings: &[WarningGroup]) -> HashMap<String, Option<String>> {
-    let mut map: HashMap<String, Vec<Option<String>>> = HashMap::new();
-    for WarningGroup {
-        location, accesses, ..
-    } in warnings
-    {
-        if let Some(i) = location.rfind('.') {
-            let field = location[i + 1..].to_string();
-            let mutex_set = accesses
-                .iter()
-                .map(|a| HashSet::<String>::from_iter(a.locks.iter().cloned()))
-                .reduce(|s1, s2| s1.intersection(&s2).cloned().collect())
-                .unwrap();
-            let mut mutex_vec: Vec<_> = mutex_set
-                .iter()
-                .filter_map(|s| s.strip_prefix("*.").map(|s| s.to_string()))
-                .collect();
-            assert!(mutex_vec.len() <= 1);
-            map.entry(field)
-                .or_default()
-                .push(mutex_vec.drain(..).next());
-        }
-    }
-    map.drain()
-        .map(|(m, mut v)| {
-            v.sort();
-            v.dedup();
-            assert!(v.len() == 1);
-            (m, v.drain(..).next().unwrap())
-        })
-        .collect()
-}
-
 #[derive(Debug, Clone)]
 pub struct Function {
-    pub path: String,
     pub name: String,
     pub entry: String,
     pub ret: String,
@@ -254,29 +204,17 @@ pub struct Function {
 }
 
 #[derive(Debug, Clone)]
-pub struct Glob {
-    pub name: String,
-    pub analyses: HashMap<String, Value>,
-}
-
-#[derive(Debug, Clone)]
 pub struct WarningGroup {
-    pub location: String,
-    pub path: String,
-    pub line: usize,
-    pub column: usize,
-    pub safe: bool,
-    pub accesses: Vec<Access>,
+    pub name: String,
+    pub typ: String,
+    pub protections: Vec<Protection>,
 }
 
 #[derive(Debug, Clone)]
-pub struct Access {
-    pub path: String,
-    pub line: usize,
-    pub column: usize,
-    pub read: bool,
-    pub region: String,
-    pub locks: Vec<String>,
+pub enum Protection {
+    Lock(String),
+    ILock(String),
+    PLock(String),
 }
 
 #[derive(Debug, Clone)]
@@ -301,19 +239,13 @@ pub enum Value {
 
 fn to_file(element: Element) -> Vec<Function> {
     let Element {
-        name,
-        attributes,
-        mut children,
+        name, mut children, ..
     } = element;
     assert_eq!(name, tag("file"));
-    let path = attributes.get(&"path".to_string()).unwrap();
-    children
-        .drain(..)
-        .flat_map(|e| to_function(e, path.clone()))
-        .collect()
+    children.drain(..).flat_map(to_function).collect()
 }
 
-fn to_function(element: Element, path: String) -> Option<Function> {
+fn to_function(element: Element) -> Option<Function> {
     let Element {
         name,
         attributes,
@@ -339,25 +271,11 @@ fn to_function(element: Element, path: String) -> Option<Function> {
     let ret = ret.pop().unwrap();
 
     Some(Function {
-        path,
         name,
         entry,
         ret,
         nodes,
     })
-}
-
-fn to_glob(element: Element) -> Glob {
-    let Element {
-        name, mut children, ..
-    } = element;
-    assert_eq!(name, tag("glob"));
-    let mut iter = children.drain(..);
-    let Element { name, children, .. } = iter.next().unwrap();
-    assert_eq!(name, tag("key"));
-    let name = unique_child(children).name.data();
-    let analyses = iter.map(to_analysis).collect();
-    Glob { name, analyses }
 }
 
 fn to_warning(element: Element) -> Option<WarningGroup> {
@@ -371,96 +289,36 @@ fn to_warning(element: Element) -> Option<WarningGroup> {
     } = unique_child(children);
     match name.tag().as_str() {
         "group" => {
-            let info = attributes.get(&"name".to_string()).unwrap();
-            let info = &info[16..];
-            let accesses = children.drain(..).map(to_access).collect();
-
-            if let Some(i) = info.rfind('@') {
-                let location = info[..i].to_string();
-                let info = &info[i + 1..];
-                let (path, info) = find_and_split(info, ':');
-                let (line, info) = find_and_split(info, ':');
-                let line = line.parse().unwrap_or(0);
-                let (column, info) = find_and_split(info, ' ');
-                let column = column.parse().unwrap_or(0);
-                let safe = info == "(safe)";
-                Some(WarningGroup {
-                    location,
-                    path,
-                    line,
-                    column,
-                    safe,
-                    accesses,
-                })
-            } else {
-                let (location, info) = find_and_split(info, ' ');
-                let safe = info == "(safe)";
-                Some(WarningGroup {
-                    location,
-                    path: "".to_string(),
-                    line: 0,
-                    column: 0,
-                    safe,
-                    accesses,
-                })
-            }
+            let name = attributes.get("name").unwrap();
+            let (name, typ) = find_and_split(name, ':');
+            let protections = children.drain(..).map(to_protection).collect();
+            Some(WarningGroup {
+                name,
+                typ: typ.to_string(),
+                protections,
+            })
         }
         "text" => None,
         _ => unreachable!(),
     }
 }
 
-fn to_access(element: Element) -> Access {
-    let Element {
-        name,
-        attributes,
-        children,
-    } = element;
+fn to_protection(element: Element) -> Protection {
+    let Element { name, children, .. } = element;
     assert_eq!(name, tag("text"));
-    let path = attributes.get(&"file".to_string()).unwrap().clone();
-    let line = attributes
-        .get(&"line".to_string())
-        .unwrap()
-        .parse::<usize>()
-        .unwrap();
-    let column = attributes
-        .get(&"column".to_string())
-        .unwrap()
-        .parse::<usize>()
-        .unwrap();
-
     let data = unique_child(children).name.data();
-    let (read, data) = find_and_split(&data, ' ');
-    let read = read == "read";
-    let (region, data) = if data.contains(" in ") {
-        let (_, data) = find_and_split(data, ':');
-        let (region, data) = find_and_split(data, '}');
-        let (_, data) = find_and_split(data, '{');
-        (region, data)
-    } else {
-        let (_, data) = find_and_split(data, '{');
-        ("".to_string(), data)
-    };
-    let mut locks: Vec<_> = data
-        .split(", ")
-        .filter_map(|s| {
-            s.strip_prefix("lock:")
-                .or_else(|| s.strip_prefix("i-lock:"))
-                .or_else(|| s.strip_prefix("p-lock:"))
-                .map(|s| s.split('[').next().unwrap().to_string())
-        })
-        .collect();
-    locks.sort();
-    locks.dedup();
-
-    Access {
-        path,
-        line,
-        column,
-        read,
-        region,
-        locks,
+    if let Some(s) = data.strip_prefix("lock:") {
+        return Protection::Lock(s.to_string());
     }
+    if let Some(s) = data.strip_prefix("i-lock:") {
+        let (s, _) = find_and_split(s, '[');
+        return Protection::ILock(s);
+    }
+    if let Some(s) = data.strip_prefix("p-lock:") {
+        let (_, s) = find_and_split(s, '.');
+        return Protection::PLock(s.to_string());
+    }
+    unreachable!()
 }
 
 fn to_call(element: Element) -> Call {
@@ -537,22 +395,6 @@ fn to_value(element: Element) -> Value {
 }
 
 impl Value {
-    fn as_map(&self) -> &HashMap<String, Value> {
-        if let Value::Map(m) = self {
-            m
-        } else {
-            panic!()
-        }
-    }
-
-    fn try_as_set(&self) -> Option<&Vec<Value>> {
-        if let Value::Set(s) = self {
-            Some(s)
-        } else {
-            None
-        }
-    }
-
     fn as_set(&self) -> &Vec<Value> {
         if let Value::Set(s) = self {
             s
