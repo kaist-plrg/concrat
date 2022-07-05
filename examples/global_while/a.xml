@@ -1,15 +1,4 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.000 s
-  parse                           0.000 s
-  convert to CIL                  0.000 s
-  analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.092 s
-      S.Dom.equal                     0.001 s
-      postsolver                      0.013 s
-Timing used
-Memory statistics: total=187.35MB, max=4.89MB, minor=185.65MB, major=4.55MB, promoted=2.85MB
-    minor collections=90  major collections=4 compactions=0
-</statistics><result>
+<run><result>
 <file name="main.c" path="main.c">
 <function name="main">
 <node name="43"/>
@@ -42488,21 +42477,8 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location n1@main.c:39:5 (safe)">
-<text file="main.c" line="47" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="47" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="48" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="48" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="64" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="64" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="69" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="69" column="5">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="52" column="5">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="52" column="5">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="69" column="5">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:93:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="69" column="5">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:95:3, main], {})} (conf. 110)</text></group>
+<warning><group name="n1:int ">
+<text>lock:num_mutex</text></group>
 </warning>
 <warning>
 <text file="main.c" line="96" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:95:3, main], {})}</text></warning>

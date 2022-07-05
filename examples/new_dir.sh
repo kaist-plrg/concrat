@@ -10,5 +10,5 @@ fi
 
 mkdir $1
 ln -s ../Makefile.txt $1/Makefile
+ln -s ../b.c $1/b.c
 touch $1/a.c
-touch $1/b.c

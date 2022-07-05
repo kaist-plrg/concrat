@@ -1,15 +1,4 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.001 s
-  parse                           0.001 s
-  convert to CIL                  0.001 s
-  analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.065 s
-      S.Dom.equal                     0.001 s
-      postsolver                      0.010 s
-Timing used
-Memory statistics: total=122.34MB, max=4.89MB, minor=120.64MB, major=4.31MB, promoted=2.60MB
-    minor collections=59  major collections=4 compactions=0
-</statistics><result>
+<run><result>
 <file name="main.c" path="main.c">
 <function name="main">
 <node name="30"/>
@@ -52302,45 +52291,11 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location n1@main.c:39:5 (safe)">
-<text file="main.c" line="50" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">read in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">read in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="60" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="60" column="3">read in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">read in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">read in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">write in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">write in {region:n1} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="60" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="60" column="3">write in {region:n1} with {lock:n1_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
+<warning><group name="n1:int ">
+<text>lock:n1_mutex</text></group>
 </warning>
-<warning><group name="Memory location n2@main.c:40:5 (safe)">
-<text file="main.c" line="53" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="53" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">read in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">read in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="63" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="63" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">read in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">read in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="67" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="67" column="3">read in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="53" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="53" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="63" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="63" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">write in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="65" column="3">write in {region:n2} with {lock:n1_mutex, lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="67" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="67" column="3">write in {region:n2} with {lock:n2_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
+<warning><group name="n2:int ">
+<text>lock:n2_mutex</text></group>
 </warning>
 <warning>
 <text file="main.c" line="92" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:91:3, main], {})}</text></warning>

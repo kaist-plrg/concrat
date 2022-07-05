@@ -1,15 +1,4 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.000 s
-  parse                           0.000 s
-  convert to CIL                  0.000 s
-  analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.062 s
-      S.Dom.equal                     0.001 s
-      postsolver                      0.009 s
-Timing used
-Memory statistics: total=123.46MB, max=4.89MB, minor=121.76MB, major=4.37MB, promoted=2.66MB
-    minor collections=60  major collections=4 compactions=0
-</statistics><result>
+<run><result>
 <file name="main.c" path="main.c">
 <function name="main">
 <node name="17"/>
@@ -72624,23 +72613,17 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location s1.n1@main.c:44:4 (safe)">
-<text file="main.c" line="56" column="4">read in {region:s1} with {lock:s1.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">read in {region:s1} with {lock:s1.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s1} with {lock:s1.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s1} with {lock:s1.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s1:__anonstruct_st_672045599.n1">
+<text>lock:s1.num_mutex</text>
+<text>p-lock:*.num_mutex</text></group>
 </warning>
-<warning><group name="Memory location s3.n1@main.c:48:4 (safe)">
-<text file="main.c" line="56" column="4">read in {region:s3} with {lock:s3.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">read in {region:s3} with {lock:s3.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s3} with {lock:s3.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s3} with {lock:s3.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s3:__anonstruct_st_672045599.n1">
+<text>lock:s3.num_mutex</text>
+<text>p-lock:*.num_mutex</text></group>
 </warning>
-<warning><group name="Memory location s2.n1@main.c:46:4 (safe)">
-<text file="main.c" line="56" column="4">read in {region:s2} with {lock:s2.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">read in {region:s2} with {lock:s2.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s2} with {lock:s2.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:89:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="56" column="4">write in {region:s2} with {lock:s2.num_mutex, p-lock:*.num_mutex, thread:([t_fun@main.c:91:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s2:__anonstruct_st_672045599.n1">
+<text>lock:s2.num_mutex</text>
+<text>p-lock:*.num_mutex</text></group>
 </warning>
 <warning>
 <text file="main.c" line="92" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:91:3, main], {})}</text></warning>

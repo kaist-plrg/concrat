@@ -1,15 +1,4 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.001 s
-  parse                           0.001 s
-  convert to CIL                  0.001 s
-  analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.036 s
-      S.Dom.equal                     0.001 s
-      postsolver                      0.005 s
-Timing used
-Memory statistics: total=65.83MB, max=4.40MB, minor=64.13MB, major=3.99MB, promoted=2.28MB
-    minor collections=32  major collections=3 compactions=0
-</statistics><result>
+<run><result>
 <file name="main.c" path="main.c">
 <function name="main">
 <node name="15"/>
@@ -23302,21 +23291,11 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location n3@main.c:41:5 (safe)">
-<text file="main.c" line="48" column="3">read in {region:n3} with {thread:([t_fun@main.c:73:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="48" column="3">read in {region:n3} with {thread:([t_fun@main.c:75:3, main], {})} (conf. 110)</text></group>
+<warning><group name="n1:int ">
+<text>lock:num_mutex</text></group>
 </warning>
-<warning><group name="Memory location n1@main.c:39:5 (safe)">
-<text file="main.c" line="50" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:73:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">read in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:75:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:73:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="50" column="3">write in {region:n1} with {lock:num_mutex, thread:([t_fun@main.c:75:3, main], {})} (conf. 110)</text></group>
-</warning>
-<warning><group name="Memory location n2@main.c:40:5 (safe)">
-<text file="main.c" line="51" column="3">read in {region:n2} with {lock:num_mutex, thread:([t_fun@main.c:73:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="51" column="3">read in {region:n2} with {lock:num_mutex, thread:([t_fun@main.c:75:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="51" column="3">write in {region:n2} with {lock:num_mutex, thread:([t_fun@main.c:73:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="51" column="3">write in {region:n2} with {lock:num_mutex, thread:([t_fun@main.c:75:3, main], {})} (conf. 110)</text></group>
+<warning><group name="n2:int ">
+<text>lock:num_mutex</text></group>
 </warning>
 <warning>
 <text file="main.c" line="76" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:75:3, main], {})}</text></warning>

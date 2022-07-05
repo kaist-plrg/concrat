@@ -1,7 +1,7 @@
 CFLAGS = -pthread
 
 all:
-	make main.rs a.xml
+	make a.xml main.rs clean-intermediate
 
 main: a.o b.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -30,4 +30,4 @@ clean:
 	rm -rf main mainrs main.c *.o *.xml *.json *.rs Cargo.* rust-toolchain target
 
 clean-intermediate:
-	rm -rf main mainrs *.o *.json Cargo.lock target
+	rm -rf main mainrs main.c *.o *.json Cargo.lock target

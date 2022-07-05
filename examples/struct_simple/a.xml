@@ -1,15 +1,4 @@
-<run><parameters>goblint --conf ../../conf.json --enable allglobs --set result fast_xml --set outfile a.xml main.c</parameters><statistics>TOTAL                           0.001 s
-  parse                           0.001 s
-  convert to CIL                  0.001 s
-  analysis                        0.000 s
-    global_inits                    0.001 s
-    solving                         0.052 s
-      S.Dom.equal                     0.001 s
-      postsolver                      0.006 s
-Timing used
-Memory statistics: total=104.41MB, max=4.89MB, minor=102.71MB, major=4.34MB, promoted=2.64MB
-    minor collections=50  major collections=4 compactions=0
-</statistics><result>
+<run><result>
 <file name="main.c" path="main.c">
 <function name="main">
 <node name="ret341"/>
@@ -32610,27 +32599,17 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="Memory location s.n3@main.c:47:33 (safe)">
-<text file="main.c" line="61" column="3">read in {region:s} with {lock:s.m2, p-lock:*.m2, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="61" column="3">read in {region:s} with {lock:s.m2, p-lock:*.m2, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="61" column="3">write in {region:s} with {lock:s.m2, p-lock:*.m2, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="61" column="3">write in {region:s} with {lock:s.m2, p-lock:*.m2, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s:__anonstruct_s_998102261.n3">
+<text>lock:s.m2</text>
+<text>p-lock:*.m2</text></group>
 </warning>
-<warning><group name="Memory location s.n4@main.c:47:33 (safe)">
-<text file="main.c" line="55" column="3">read in {region:s} with {thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="55" column="3">read in {region:s} with {thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s:__anonstruct_s_998102261.n1">
+<text>lock:s.m1</text>
+<text>p-lock:*.m1</text></group>
 </warning>
-<warning><group name="Memory location s.n1@main.c:47:33 (safe)">
-<text file="main.c" line="57" column="3">read in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="57" column="3">read in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="57" column="3">write in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="57" column="3">write in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text></group>
-</warning>
-<warning><group name="Memory location s.n2@main.c:47:33 (safe)">
-<text file="main.c" line="58" column="3">read in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">read in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">write in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:83:3, main], {})} (conf. 110)</text>
-<text file="main.c" line="58" column="3">write in {region:s} with {lock:s.m1, p-lock:*.m1, thread:([t_fun@main.c:85:3, main], {})} (conf. 110)</text></group>
+<warning><group name="s:__anonstruct_s_998102261.n2">
+<text>lock:s.m1</text>
+<text>p-lock:*.m1</text></group>
 </warning>
 <warning>
 <text file="main.c" line="86" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:85:3, main], {})}</text></warning>
