@@ -20,9 +20,9 @@ use crate::analysis::{AnalysisSummary, FunctionSummary};
 lazy_static! {
     static ref RUSTFIX_SUGGESTIONS: Mutex<HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>>> =
         Mutex::new(HashMap::default());
-    static ref GLOBAL_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
+    static ref GLOBAL_DEF_MAP: Mutex<HashMap<String, (String, String)>> =
         Mutex::new(HashMap::default());
-    static ref ARRAY_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, Vec<String>)>>> =
+    static ref ARRAY_DEF_MAP: Mutex<HashMap<String, (String, Vec<String>)>> =
         Mutex::new(HashMap::default());
     static ref STRUCT_DEF_MAP: Mutex<HashMap<String, Vec<(String, String, String)>>> =
         Mutex::new(HashMap::default());
@@ -151,42 +151,32 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
             ItemKind::Static(t, _, b) => {
                 let name = i.ident.name.to_ident_string();
-
-                // data
-                if let Some(m) = global_mutex_map().get(&name) {
-                    let ty = span_to_string(ctx, t.span);
-                    let init = hid_to_string(ctx, b.hir_id);
-                    GLOBAL_DEF_MAP
-                        .lock()
-                        .unwrap()
-                        .entry(m.clone())
-                        .or_default()
-                        .push((name.clone(), ty, init));
-                }
-
-                // data (array)
-                if let Some(m) = array_mutex_map().get(&name) {
-                    let ty = match t.kind {
-                        TyKind::Array(t, _) => span_to_string(ctx, t.span),
-                        _ => unreachable!(),
-                    };
-                    let init = match &ctx.tcx.hir().body(*b).value.kind {
-                        ExprKind::Repeat(e, l) => {
-                            let e = span_to_string(ctx, e.span);
-                            let l = hid_to_string(ctx, l.hir_id).parse().unwrap();
-                            vec![e; l]
-                        }
-                        ExprKind::Array(es) => {
-                            es.iter().map(|e| span_to_string(ctx, e.span)).collect()
-                        }
-                        _ => unreachable!(),
-                    };
-                    ARRAY_DEF_MAP
-                        .lock()
-                        .unwrap()
-                        .entry(m.clone())
-                        .or_default()
-                        .push((name.clone(), ty, init));
+                match t.kind {
+                    // array
+                    TyKind::Array(t, _) => {
+                        let ty = span_to_string(ctx, t.span);
+                        let init = match &ctx.tcx.hir().body(*b).value.kind {
+                            ExprKind::Repeat(e, l) => {
+                                let e = span_to_string(ctx, e.span);
+                                let l = hid_to_string(ctx, l.hir_id).parse().unwrap();
+                                vec![e; l]
+                            }
+                            ExprKind::Array(es) => {
+                                es.iter().map(|e| span_to_string(ctx, e.span)).collect()
+                            }
+                            _ => unreachable!(),
+                        };
+                        ARRAY_DEF_MAP.lock().unwrap().insert(name, (ty, init));
+                    }
+                    // global
+                    _ => {
+                        let ty = span_to_string(ctx, t.span);
+                        let init = hid_to_string(ctx, b.hir_id);
+                        GLOBAL_DEF_MAP
+                            .lock()
+                            .unwrap()
+                            .insert(name.clone(), (ty, init));
+                    }
                 }
             }
             _ => (),
@@ -303,31 +293,26 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                     }
                 }
             }
-            ItemKind::Static(_, _, _) => {
+            ItemKind::Static(t, _, _) => {
                 let name = i.ident.name.to_ident_string();
 
-                // global variable
-                if let Some(m) = global_mutex_map().get(&name) {
-                    // disallow struct
-                    if !m.contains('.') {
-                        make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
-                        remove_attributes(ctx, i, self.depth);
-                    }
-                }
-
-                // array
-                if array_mutex_map().get(&name).is_some() {
+                // global or array
+                if global_mutex_map().get(&name).is_some() || array_mutex_map().get(&name).is_some()
+                {
                     make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
                     remove_attributes(ctx, i, self.depth);
                 }
 
                 // mutex
-                if let Some(v) = GLOBAL_DEF_MAP.lock().unwrap().get(&name) {
+                if span_to_string(ctx, t.span) == "pthread_mutex_t" {
                     let mut decl = String::new();
                     let mut init = String::new();
-                    for (x, t, i) in v {
-                        decl.push_str(format!("pub {}: {}, ", x, t).as_str());
-                        init.push_str(format!("{}: {}, ", x, i).as_str());
+                    for (x, m) in global_mutex_map() {
+                        if *m == name {
+                            let (t, i) = GLOBAL_DEF_MAP.lock().unwrap().get(x).unwrap().clone();
+                            decl.push_str(format!("pub {}: {}, ", x, t).as_str());
+                            init.push_str(format!("{}: {}, ", x, i).as_str());
+                        }
                     }
                     let struct_name = struct_of(&name);
                     let code = format!(
@@ -344,42 +329,56 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                 }
 
                 // mutex array
-                if let Some(v) = ARRAY_DEF_MAP.lock().unwrap().get(&name) {
-                    let decls = v.iter().map(|(x, t, _)| format!("pub {}: {}", x, t));
-                    let decl = join(decls.collect(), ", ");
+                if let TyKind::Array(t, _) = t.kind {
+                    if span_to_string(ctx, t.span) == "pthread_mutex_t" {
+                        let v: Vec<_> = array_mutex_map()
+                            .iter()
+                            .filter_map(|(x, m)| {
+                                if **m == name {
+                                    let (t, i) =
+                                        ARRAY_DEF_MAP.lock().unwrap().get(x).unwrap().clone();
+                                    Some((x, t, i))
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect();
+                        let decls = v.iter().map(|(x, t, _)| format!("pub {}: {}", x, t));
+                        let decl = join(decls.collect(), ", ");
 
-                    let struct_name = struct_of(&name);
-                    let mut lens: Vec<_> = v.iter().map(|(_, _, i)| i.len()).collect();
-                    lens.dedup();
-                    assert_eq!(lens.len(), 1);
-                    let len = lens[0];
-                    let init = join(
-                        (0..len)
-                            .map(|i| {
-                                let inits =
-                                    v.iter().map(|(x, _, init)| format!("{}: {}", x, init[i]));
-                                let init = join(inits.collect(), ", ");
-                                format!(
-                                    "
+                        let struct_name = struct_of(&name);
+                        let mut lens: Vec<_> = v.iter().map(|(_, _, i)| i.len()).collect();
+                        lens.dedup();
+                        assert_eq!(lens.len(), 1);
+                        let len = lens[0];
+                        let init = join(
+                            (0..len)
+                                .map(|i| {
+                                    let inits =
+                                        v.iter().map(|(x, _, init)| format!("{}: {}", x, init[i]));
+                                    let init = join(inits.collect(), ", ");
+                                    format!(
+                                        "
     lock_api::Mutex::const_new(
         RawMutex::INIT,
         {} {{ {} }}
     )",
-                                    struct_name, init
-                                )
-                            })
-                            .collect(),
-                        ",",
-                    );
-                    let code = format!(
-                        "
+                                        struct_name, init
+                                    )
+                                })
+                                .collect(),
+                            ",",
+                        );
+                        let code = format!(
+                            "
 pub struct {0} {{ {1} }}
 pub static {2}: [Mutex<{0}>; {3}] = [{4}
 ];",
-                        struct_name, decl, name, len, init
-                    );
-                    make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
-                    remove_attributes(ctx, i, self.depth);
+                            struct_name, decl, name, len, init
+                        );
+                        make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
+                        remove_attributes(ctx, i, self.depth);
+                    }
                 }
             }
             _ => (),
