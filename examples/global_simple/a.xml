@@ -23291,10 +23291,10 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="n1:int ">
+<warning><group name="n1;int ">
 <text>lock:num_mutex</text></group>
 </warning>
-<warning><group name="n2:int ">
+<warning><group name="n2;int ">
 <text>lock:num_mutex</text></group>
 </warning>
 <warning>

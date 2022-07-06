@@ -31572,10 +31572,10 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="n2:int ">
+<warning><group name="n2;int ">
 <text>i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}]</text></group>
 </warning>
-<warning><group name="n1:int ">
+<warning><group name="n1;int ">
 <text>i-lock:num_mutex[def_exc:-19012009; enums:{-19012009}]</text></group>
 </warning>
 <warning>

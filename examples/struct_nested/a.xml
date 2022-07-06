@@ -22047,11 +22047,11 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="s:__anonstruct_ss_867292538.s.n1">
+<warning><group name="s;__anonstruct_ss_867292538.s.n1">
 <text>lock:s.m</text>
 <text>p-lock:*.m</text></group>
 </warning>
-<warning><group name="s:__anonstruct_ss_867292538.s.n2">
+<warning><group name="s;__anonstruct_ss_867292538.s.n2">
 <text>lock:s.m</text>
 <text>p-lock:*.m</text></group>
 </warning>

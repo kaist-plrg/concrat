@@ -52291,10 +52291,10 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="n1:int ">
+<warning><group name="n1;int ">
 <text>lock:n1_mutex</text></group>
 </warning>
-<warning><group name="n2:int ">
+<warning><group name="n2;int ">
 <text>lock:n2_mutex</text></group>
 </warning>
 <warning>

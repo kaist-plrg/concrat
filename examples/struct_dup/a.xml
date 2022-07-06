@@ -32728,12 +32728,12 @@ clean exit
 </value>
 </analysis>
 </glob>
-<warning><group name="s2:__anonstruct_ss2_343348022.n1">
+<warning><group name="s2;__anonstruct_ss2_343348022.n1">
 <text>lock:s1.m1</text>
 <text>lock:s2.m2</text>
 <text>p-lock:*.m2</text></group>
 </warning>
-<warning><group name="s1:__anonstruct_ss1_343348021.n1">
+<warning><group name="s1;__anonstruct_ss1_343348021.n1">
 <text>lock:s1.m1</text>
 <text>lock:s2.m2</text>
 <text>p-lock:*.m1</text></group>

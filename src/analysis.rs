@@ -298,7 +298,7 @@ fn to_warning(element: Element) -> Option<WarningGroup> {
     match name.tag().as_str() {
         "group" => {
             let name = attributes.get("name").unwrap();
-            let (name, typ) = find_and_split(name, ':');
+            let (name, typ) = find_and_split(name, ';');
             let protections = children.drain(..).map(to_protection).collect();
             Some(WarningGroup {
                 name,
