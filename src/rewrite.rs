@@ -1,25 +1,18 @@
-use std::{
-    collections::{BTreeMap, HashMap},
-    fs::File,
-    io::Read,
-    path::PathBuf,
-    sync::Mutex,
-};
+use std::{collections::HashMap, fs::File, io::Read, sync::Mutex};
 
 use lazy_static::lazy_static;
 use rustc_data_structures::sync;
 use rustc_driver::{Callbacks, RunCompiler};
 use rustc_hir::*;
 use rustc_lint::{LateContext, LateLintPass, LintContext, LintPass};
-use rustc_span::{BytePos, FileName, Span, Symbol};
+use rustc_span::{BytePos, Span, Symbol};
 use rustfix::{Replacement, Snippet, Solution, Suggestion};
 use spin::once::Once;
 
 use crate::analysis::{AnalysisSummary, FunctionSummary};
 
 lazy_static! {
-    static ref RUSTFIX_SUGGESTIONS: Mutex<HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>>> =
-        Mutex::new(HashMap::default());
+    static ref REPLACEMENTS: Mutex<Vec<Replacement>> = Mutex::new(vec![]);
     static ref GLOBAL_DEF_MAP: Mutex<HashMap<String, (String, String)>> =
         Mutex::new(HashMap::default());
     static ref ARRAY_DEF_MAP: Mutex<HashMap<String, (String, Vec<String>)>> =
@@ -46,10 +39,7 @@ fn function_mutex_map() -> &'static HashMap<String, FunctionSummary> {
     &SUMMARY.get().unwrap().function_map
 }
 
-pub fn collect_suggestions(
-    args: Vec<String>,
-    summary: AnalysisSummary,
-) -> HashMap<PathBuf, BTreeMap<i32, Vec<Suggestion>>> {
+pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<Replacement> {
     SUMMARY.call_once(|| summary);
 
     let mut callbacks = DriverCallbacks {
@@ -74,21 +64,28 @@ pub fn collect_suggestions(
 
     assert_eq!(exit_code, 0);
 
-    let mut suggestions = RUSTFIX_SUGGESTIONS.lock().unwrap();
-    std::mem::take(&mut suggestions)
+    let mut replacements = REPLACEMENTS.lock().unwrap();
+    replacements.sort_by_key(|r| r.snippet.range.start);
+    std::mem::take(&mut replacements)
 }
 
-pub fn apply_suggestions(path: PathBuf, suggestions: BTreeMap<i32, Vec<Suggestion>>) -> String {
-    let ordered_suggestions = suggestions
-        .into_values()
-        .flatten()
-        .collect::<Vec<Suggestion>>();
-
-    let mut file = File::open(path).unwrap();
+pub fn apply_suggestions(mut replacements: Vec<Replacement>) -> String {
+    let file = &replacements.last().unwrap().snippet.file_name;
+    let mut file = File::open(file).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
-
-    rustfix::apply_suggestions(contents.as_str(), &ordered_suggestions).unwrap()
+    let suggestions: Vec<_> = replacements
+        .drain(..)
+        .map(|r| Suggestion {
+            message: "".to_owned(),
+            snippets: vec![r.snippet.clone()],
+            solutions: vec![Solution {
+                message: "".to_string(),
+                replacements: vec![r],
+            }],
+        })
+        .collect();
+    rustfix::apply_suggestions(contents.as_str(), &suggestions).unwrap()
 }
 
 type LatePass = dyn for<'tcx> LateLintPass<'tcx> + sync::Send + sync::Sync + 'static;
@@ -176,14 +173,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 }
 
-struct RewritePass {
-    depth: i32,
-}
+struct RewritePass;
 
 impl RewritePass {
     #[allow(clippy::new_ret_no_self)]
     fn new() -> Box<LatePass> {
-        Box::new(Self { depth: 0 })
+        Box::new(Self)
     }
 }
 
@@ -201,12 +196,10 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             .any(|i| matches!(hir.item(*i).kind, ItemKind::Fn(_, _, _)))
         {
             let span = m.inner.shrink_to_lo();
-            make_suggestion(
+            add_replacement(
                 ctx,
                 span,
-                "".to_string(),
                 "use parking_lot::{lock_api::{self, RawMutex}, Mutex, MutexGuard};\nu".to_string(),
-                self.depth,
             );
         }
     }
@@ -222,13 +215,11 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                     };
                     if struct_mutex_map().contains_key(&s) {
                         let span = i.span;
-                        make_suggestion(
+                        add_replacement(
                             ctx,
                             span.with_lo(span.lo() - BytePos(9))
                                 .with_hi(span.hi() + BytePos(9)),
                             "".to_string(),
-                            "".to_string(),
-                            self.depth,
                         );
                     }
                 }
@@ -252,12 +243,10 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         let name = f.ident.name.to_ident_string();
                         if v.iter().any(|(x, _, _)| *x == name) {
                             let span = f.span;
-                            make_suggestion(
+                            add_replacement(
                                 ctx,
                                 span.with_hi(span.hi() + BytePos(1)),
                                 "".to_string(),
-                                "".to_string(),
-                                self.depth,
                             );
                             continue;
                         }
@@ -273,26 +262,14 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                             .collect();
                         if !pfs.is_empty() {
                             let st_name = struct_of2(&s, &name);
-                            make_suggestion(
-                                ctx,
-                                f.ty.span,
-                                "".to_string(),
-                                format!("Mutex<{}>", st_name),
-                                self.depth,
-                            );
+                            add_replacement(ctx, f.ty.span, format!("Mutex<{}>", st_name));
                             let st_body = join(pfs, ", ");
                             let st = format!("\npub struct {} {{ {} }}", st_name, st_body);
                             new_structs.push_str(&st);
                         }
                     }
                     if !new_structs.is_empty() {
-                        make_suggestion(
-                            ctx,
-                            i.span.shrink_to_hi(),
-                            "".to_string(),
-                            new_structs,
-                            self.depth,
-                        );
+                        add_replacement(ctx, i.span.shrink_to_hi(), new_structs);
                     }
                 }
             }
@@ -302,8 +279,8 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 // global or array
                 if global_mutex_map().get(&name).is_some() || array_mutex_map().get(&name).is_some()
                 {
-                    make_suggestion(ctx, i.span, "".to_string(), "".to_string(), self.depth);
-                    remove_attributes(ctx, i, self.depth);
+                    add_replacement(ctx, i.span, "".to_string());
+                    remove_attributes(ctx, i);
                 }
 
                 // mutex
@@ -327,8 +304,8 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
 );",
                         struct_name, decl, name, init
                     );
-                    make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
-                    remove_attributes(ctx, i, self.depth);
+                    add_replacement(ctx, i.span, code);
+                    remove_attributes(ctx, i);
                 }
 
                 // mutex array
@@ -379,8 +356,8 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
 ];",
                             struct_name, decl, name, len, init
                         );
-                        make_suggestion(ctx, i.span, "".to_string(), code, self.depth);
-                        remove_attributes(ctx, i, self.depth);
+                        add_replacement(ctx, i.span, code);
+                        remove_attributes(ctx, i);
                     }
                 }
             }
@@ -444,7 +421,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             format!(", {}", params),
                         )
                     };
-                    make_suggestion(ctx, span, "".to_string(), sugg, self.depth);
+                    add_replacement(ctx, span, sugg);
                 }
 
                 let local_vars: String = node
@@ -453,13 +430,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     .map(|m| format!("let mut {};\n    ", guard_of(m)))
                     .collect();
                 if !local_vars.is_empty() {
-                    make_suggestion(
-                        ctx,
-                        stmts[0].span.shrink_to_lo(),
-                        "".to_string(),
-                        local_vars,
-                        self.depth,
-                    );
+                    add_replacement(ctx, stmts[0].span.shrink_to_lo(), local_vars);
                 }
 
                 if !ret.is_empty() {
@@ -476,7 +447,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     } else {
                         format!("-> {} ", ret_type)
                     };
-                    make_suggestion(ctx, decl.output.span(), "".to_string(), sugg, self.depth);
+                    add_replacement(ctx, decl.output.span(), sugg);
 
                     assert!(b.expr.is_none());
                     let last = stmts.last().unwrap();
@@ -486,12 +457,10 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             _ => {
                                 let ret_vals = ret.iter().map(guard_of).collect();
                                 let ret_val = make_tuple(ret_vals);
-                                make_suggestion(
+                                add_replacement(
                                     ctx,
                                     last.span.shrink_to_hi(),
-                                    "".to_string(),
                                     format!("\n    {}", ret_val),
-                                    self.depth,
                                 );
                             }
                         }
@@ -565,22 +534,10 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 match f.as_deref() {
                     Some("pthread_mutex_lock") => {
                         let (arg, guard) = arg();
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("{} = {}.lock()", guard, arg),
-                            self.depth,
-                        );
+                        add_replacement(ctx, e.span, format!("{} = {}.lock()", guard, arg));
                     }
                     Some("pthread_mutex_unlock") => {
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("drop({})", arg().1),
-                            self.depth,
-                        );
+                        add_replacement(ctx, e.span, format!("drop({})", arg().1));
                     }
                     Some(f) => {
                         if let Some(FunctionSummary {
@@ -594,78 +551,46 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                                 let guards = join(guards, ", ");
                                 if let Some(arg) = args.last() {
                                     let span = arg.span.shrink_to_hi();
-                                    make_suggestion(
-                                        ctx,
-                                        span,
-                                        "".to_string(),
-                                        format!(", {}", guards),
-                                        self.depth,
-                                    );
+                                    add_replacement(ctx, span, format!(", {}", guards));
                                 } else {
                                     let span = ctx
                                         .sess()
                                         .source_map()
                                         .span_through_char(e.span, '(')
                                         .shrink_to_hi();
-                                    make_suggestion(ctx, span, "".to_string(), guards, self.depth);
+                                    add_replacement(ctx, span, guards);
                                 }
                             }
                             if !ret.is_empty() {
                                 if type_of(ctx, e).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
-                                        make_suggestion(
+                                        add_replacement(
                                             ctx,
                                             span,
-                                            "".to_string(),
                                             format!("{} = ", guard_of(&ret[0])),
-                                            self.depth,
                                         );
                                     } else {
                                         let span = e.span.shrink_to_lo();
-                                        make_suggestion(
-                                            ctx,
-                                            span,
-                                            "".to_string(),
-                                            "{ let tmp = ".to_string(),
-                                            self.depth,
-                                        );
+                                        add_replacement(ctx, span, "{ let tmp = ".to_string());
                                         let span = e.span.shrink_to_hi();
                                         let guards: String = ret
                                             .iter()
                                             .enumerate()
                                             .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i))
                                             .collect();
-                                        make_suggestion(
-                                            ctx,
-                                            span,
-                                            "".to_string(),
-                                            format!("; {} }}", guards),
-                                            self.depth,
-                                        );
+                                        add_replacement(ctx, span, format!("; {} }}", guards));
                                     }
                                 } else {
                                     let span = e.span.shrink_to_lo();
-                                    make_suggestion(
-                                        ctx,
-                                        span,
-                                        "".to_string(),
-                                        "{ let tmp = ".to_string(),
-                                        self.depth,
-                                    );
+                                    add_replacement(ctx, span, "{ let tmp = ".to_string());
                                     let span = e.span.shrink_to_hi();
                                     let guards: String = ret
                                         .iter()
                                         .enumerate()
                                         .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i + 1))
                                         .collect();
-                                    make_suggestion(
-                                        ctx,
-                                        span,
-                                        "".to_string(),
-                                        format!("; {}tmp.0 }}", guards),
-                                        self.depth,
-                                    );
+                                    add_replacement(ctx, span, format!("; {}tmp.0 }}", guards));
                                 }
                             }
                         }
@@ -692,31 +617,13 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     match v_opt {
                         Some(v) => {
                             let ret_val = join(ret_vals, ", ");
-                            make_suggestion(
-                                ctx,
-                                v.span.shrink_to_lo(),
-                                "".to_string(),
-                                "(".to_string(),
-                                self.depth + 1,
-                            );
-                            make_suggestion(
-                                ctx,
-                                v.span.shrink_to_hi(),
-                                "".to_string(),
-                                format!(", {})", ret_val),
-                                self.depth + 1,
-                            );
+                            add_replacement(ctx, v.span.shrink_to_lo(), "(".to_string());
+                            add_replacement(ctx, v.span.shrink_to_hi(), format!(", {})", ret_val));
                         }
                         None => {
                             let ret_vals = ret.iter().map(guard_of).collect();
                             let ret_val = make_tuple(ret_vals);
-                            make_suggestion(
-                                ctx,
-                                e.span.shrink_to_hi(),
-                                "".to_string(),
-                                format!(" {}", ret_val),
-                                self.depth,
-                            );
+                            add_replacement(ctx, e.span.shrink_to_hi(), format!(" {}", ret_val));
                         }
                     }
                 }
@@ -751,12 +658,10 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                         let name = f.ident.name.to_ident_string();
                         if v.iter().any(|(x, _, _)| *x == name) {
                             let span = f.span;
-                            make_suggestion(
+                            add_replacement(
                                 ctx,
                                 span.with_hi(span.hi() + BytePos(1)),
                                 "".to_string(),
-                                "".to_string(),
-                                self.depth,
                             );
                             continue;
                         }
@@ -776,7 +681,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             let st_body = join(pfs, ", ");
                             let st = format!("{} {{ {} }}", st_name, st_body);
                             let ini = format!("lock_api::Mutex::const_new(RawMutex::INIT, {})", st);
-                            make_suggestion(ctx, f.expr.span, "".to_string(), ini, self.depth);
+                            add_replacement(ctx, f.expr.span, ini);
                         }
                     }
                 }
@@ -787,13 +692,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     if let Some(m) = global_mutex_map().get(&x) {
                         // disallow struct, function
                         if !m.contains('.') && !type_of(ctx, e).is_fn() {
-                            make_suggestion(
-                                ctx,
-                                e.span,
-                                "".to_string(),
-                                format!("(*{}).{}", guard_of(m), x),
-                                self.depth,
-                            );
+                            add_replacement(ctx, e.span, format!("(*{}).{}", guard_of(m), x));
                         }
                     }
                 }
@@ -805,13 +704,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     let i = span_to_string(ctx, i.span);
                     if let Some(m) = array_mutex_map().get(&a) {
                         let m = format!("{}[{}]", m, i);
-                        make_suggestion(
-                            ctx,
-                            e.span,
-                            "".to_string(),
-                            format!("(*{}).{}", guard_of(&m), a),
-                            self.depth,
-                        );
+                        add_replacement(ctx, e.span, format!("(*{}).{}", guard_of(&m), a));
                     }
                 }
             }
@@ -822,7 +715,6 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     .strip_prefix("main::")
                     .unwrap()
                     .to_string();
-                println!("{}", ty);
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = match &s.kind {
@@ -831,13 +723,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                         _ => unreachable!(),
                     };
                     let g = guard_of(&format!("{}.{}", s, m));
-                    make_suggestion(
-                        ctx,
-                        e.span,
-                        "".to_string(),
-                        format!("(*{}).{}", g, f),
-                        self.depth,
-                    );
+                    add_replacement(ctx, e.span, format!("(*{}).{}", g, f));
                 }
             }
             _ => (),
@@ -846,44 +732,11 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
 }
 
 // suggestions for left-hand side of expressions
-fn make_suggestion(
-    ctx: &LateContext<'_>,
-    span: Span,
-    message: String,
-    replacement: String,
-    depth: i32,
-) {
-    make_suggestion_impl(ctx, span, message, replacement, depth)
-}
-
-// suggestions for right-hand side of expressions
-#[allow(dead_code)]
-fn make_suggestion_after(
-    ctx: &LateContext<'_>,
-    span: Span,
-    message: String,
-    replacement: String,
-    depth: i32,
-) {
-    make_suggestion_impl(ctx, span, message, replacement, -depth)
-}
-
-fn make_suggestion_impl(
-    ctx: &LateContext<'_>,
-    span: Span,
-    message: String,
-    replacement: String,
-    depth: i32,
-) {
+fn add_replacement(ctx: &LateContext<'_>, span: Span, replacement: String) {
     use rustfix::{LinePosition, LineRange};
 
     let source_map = ctx.sess().source_map();
     let fname = source_map.span_to_filename(span);
-
-    let fname_real = match fname {
-        FileName::Real(ref n) => n,
-        _ => unreachable!(),
-    };
 
     let file = source_map.get_source_file(&fname).unwrap();
     // get the line and the column numbers
@@ -913,24 +766,10 @@ fn make_suggestion_impl(
         ),
     };
 
-    let mut suggestions = RUSTFIX_SUGGESTIONS.lock().unwrap();
-
-    suggestions
-        .entry(fname_real.clone().into_local_path().unwrap())
-        .or_default()
-        .entry(depth)
-        .or_insert_with(Vec::new)
-        .push(Suggestion {
-            message: "".to_owned(),
-            snippets: vec![snippet.clone()],
-            solutions: vec![Solution {
-                message,
-                replacements: vec![Replacement {
-                    snippet,
-                    replacement,
-                }],
-            }],
-        });
+    REPLACEMENTS.lock().unwrap().push(Replacement {
+        snippet,
+        replacement,
+    });
 }
 
 fn hid_to_string(ctx: &LateContext<'_>, hid: HirId) -> String {
@@ -942,11 +781,11 @@ fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
     source_map.span_to_snippet(span).unwrap()
 }
 
-fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>, depth: i32) {
+fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>) {
     let hir = ctx.tcx.hir();
     let attrs = hir.attrs(hir.local_def_id_to_hir_id(i.def_id));
     for a in attrs {
-        make_suggestion(ctx, a.span, "".to_string(), "".to_string(), depth);
+        add_replacement(ctx, a.span, "".to_string());
     }
 }
 

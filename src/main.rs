@@ -83,40 +83,29 @@ fn main() {
     .collect();
     input.pop();
 
-    let suggestions = rewrite::collect_suggestions(args, summary);
+    let replacements = rewrite::collect_replacements(args, summary);
 
     if verbose {
-        for (file, suggestions) in suggestions.iter() {
-            println!("For file {}:", file.to_str().unwrap());
-
-            for suggestion in suggestions.values().flatten() {
-                let solution = &suggestion.solutions[0];
-                println!("{}", solution.message);
-                for replacement in &solution.replacements {
-                    println!(" - replace {:?}", replacement.snippet.text);
-                    println!("   with   `{}`", replacement.replacement);
-                    println!(
-                        "   at {} {}:{}-{}:{}",
-                        replacement.snippet.file_name,
-                        replacement.snippet.line_range.start.line,
-                        replacement.snippet.line_range.start.column,
-                        replacement.snippet.line_range.end.line,
-                        replacement.snippet.line_range.end.column,
-                    );
-                }
-            }
+        for replacement in &replacements {
+            println!("- replace `{}`", replacement.snippet.text.1);
+            println!("  with    `{}`", replacement.replacement);
+            println!(
+                "  at {}:{}-{}:{}",
+                replacement.snippet.line_range.start.line,
+                replacement.snippet.line_range.start.column,
+                replacement.snippet.line_range.end.line,
+                replacement.snippet.line_range.end.column,
+            );
         }
     }
 
-    for (file, suggestions) in suggestions {
-        let fixed_source_code = rewrite::apply_suggestions(file, suggestions);
-        if dry_run {
-            println!("{}", fixed_source_code);
-        } else {
-            input.push("main.rs");
-            let mut file = File::create(input.to_str().unwrap()).unwrap();
-            file.write_all(fixed_source_code.as_bytes()).unwrap();
-        }
+    let fixed_source_code = rewrite::apply_suggestions(replacements);
+    if dry_run {
+        println!("{}", fixed_source_code);
+    } else {
+        input.push("main.rs");
+        let mut file = File::create(input.to_str().unwrap()).unwrap();
+        file.write_all(fixed_source_code.as_bytes()).unwrap();
     }
 }
 
