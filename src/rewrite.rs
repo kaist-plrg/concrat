@@ -199,7 +199,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             add_replacement(
                 ctx,
                 span,
-                "use std::sync::{Mutex, MutexGuard};\nu".to_string(),
+                "use std::sync::{Mutex, MutexGuard, Condvar};\nu".to_string(),
             );
         }
     }
@@ -275,21 +275,34 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             }
             ItemKind::Static(t, _, _) => {
                 let name = i.ident.name.to_ident_string();
+                let typ = span_to_string(ctx, t.span);
+
+                // condvar
+                if typ == "pthread_cond_t" {
+                    let new_i = format!("pub static mut {}: Condvar = Condvar::new();", name);
+                    add_replacement(ctx, i.span, new_i);
+                    remove_attributes(ctx, i);
+                    return;
+                }
 
                 // global or array
                 if global_mutex_map().get(&name).is_some() || array_mutex_map().get(&name).is_some()
                 {
                     add_replacement(ctx, i.span, "".to_string());
                     remove_attributes(ctx, i);
+                    return;
                 }
 
                 // mutex
-                if span_to_string(ctx, t.span) == "pthread_mutex_t" {
+                if typ == "pthread_mutex_t" {
                     let mut decl = String::new();
                     let mut init = String::new();
                     for (x, m) in global_mutex_map() {
                         if *m == name {
                             let (t, i) = GLOBAL_DEF_MAP.lock().unwrap().get(x).unwrap().clone();
+                            if t == "pthread_cond_t" {
+                                continue;
+                            }
                             decl.push_str(format!("pub {}: {}, ", x, t).as_str());
                             init.push_str(format!("{}: {}, ", x, i).as_str());
                         }
@@ -305,6 +318,7 @@ pub static mut {2}: Mutex<{0}> = Mutex::new(
                     );
                     add_replacement(ctx, i.span, code);
                     remove_attributes(ctx, i);
+                    return;
                 }
 
                 // mutex array
@@ -490,10 +504,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         match &e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
-                let arg = || {
-                    assert_eq!(args.len(), 1);
-                    let arg = &args[0];
-                    let arg = unwrap_addr(arg).unwrap();
+                let arg = |idx| {
+                    let arg = &args[idx];
+                    let arg = unwrap_addr(unwrap_cast_recursively(arg)).unwrap();
                     match &arg.kind {
                         ExprKind::Path(_) => {
                             let arg = name(arg).unwrap();
@@ -546,7 +559,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 };
                 match f.as_deref() {
                     Some("pthread_mutex_lock") => {
-                        let (arg, guard) = arg();
+                        let (arg, guard) = arg(0);
                         add_replacement(
                             ctx,
                             e.span,
@@ -554,7 +567,18 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         );
                     }
                     Some("pthread_mutex_unlock") => {
-                        add_replacement(ctx, e.span, format!("drop({})", arg().1));
+                        add_replacement(ctx, e.span, format!("drop({})", arg(0).1));
+                    }
+                    Some("pthread_cond_wait") => {
+                        let c = arg(0).0;
+                        let m = arg(1).1;
+                        add_replacement(ctx, e.span, format!("{1} = {0}.wait({1}).unwrap()", c, m));
+                    }
+                    Some("pthread_cond_signal") => {
+                        add_replacement(ctx, e.span, format!("{}.notify_one()", arg(0).0));
+                    }
+                    Some("pthread_cond_broadcast") => {
+                        add_replacement(ctx, e.span, format!("{}.notify_all()", arg(0).0));
                     }
                     Some(f) => {
                         if let Some(FunctionSummary {
@@ -693,6 +717,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // global variable
             ExprKind::Path(_) => {
+                if type_of(ctx, e).to_string().contains("pthread_cond_t") {
+                    return;
+                }
                 if let Some(x) = name(e) {
                     if let Some(m) = global_mutex_map().get(&x) {
                         let new_e = if func_summary().node_mutex.contains(m) {
