@@ -199,7 +199,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             add_replacement(
                 ctx,
                 span,
-                "use parking_lot::{lock_api::{self, RawMutex}, Mutex, MutexGuard};\nu".to_string(),
+                "use std::sync::{Mutex, MutexGuard};\nu".to_string(),
             );
         }
     }
@@ -298,8 +298,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                     let code = format!(
                         "
 pub struct {0} {{ {1}}}
-pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
-    RawMutex::INIT,
+pub static {2}: Mutex<{0}> = Mutex::new(
     {0} {{ {3}}}
 );",
                         struct_name, decl, name, init
@@ -339,8 +338,7 @@ pub static {2}: Mutex<{0}> = lock_api::Mutex::const_new(
                                     let init = join(inits.collect(), ", ");
                                     format!(
                                         "
-    lock_api::Mutex::const_new(
-        RawMutex::INIT,
+    Mutex::new(
         {} {{ {} }}
     )",
                                         struct_name, init
@@ -548,7 +546,11 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 match f.as_deref() {
                     Some("pthread_mutex_lock") => {
                         let (arg, guard) = arg();
-                        add_replacement(ctx, e.span, format!("{} = {}.lock()", guard, arg));
+                        add_replacement(
+                            ctx,
+                            e.span,
+                            format!("{} = {}.lock().unwrap()", guard, arg),
+                        );
                     }
                     Some("pthread_mutex_unlock") => {
                         add_replacement(ctx, e.span, format!("drop({})", arg().1));
@@ -683,7 +685,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                             let st_name = struct_of2(&s, &name);
                             let st_body = join(pfs, ", ");
                             let st = format!("{} {{ {} }}", st_name, st_body);
-                            let ini = format!("lock_api::Mutex::const_new(RawMutex::INIT, {})", st);
+                            let ini = format!("Mutex::new({})", st);
                             add_replacement(ctx, f.expr.span, ini);
                         }
                     }

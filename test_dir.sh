@@ -22,7 +22,6 @@ fi
 
 mkdir -p $to
 cp -r $from/{*.rs,*.xml,Cargo.toml,rust-toolchain} $to
-echo 'parking_lot = "0.11.2"' >> $to/Cargo.toml
 
 echo Translating $from
 cargo run --release -- -i $to $@
