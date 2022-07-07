@@ -3,10 +3,13 @@ examples/global_nested
 examples/global_while
 examples/global_custom
 examples/global_assume
+examples/global_main
 examples/array_simple
 examples/array_const
+examples/array_main
 examples/struct_simple
 examples/struct_multiple
 examples/struct_nested
 examples/struct_dup
+examples/struct_main
 examples/unused_func

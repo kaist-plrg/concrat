@@ -162,7 +162,13 @@ fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
                         .as_set()
                         .iter()
                         .cloned()
-                        .map(|v| v.as_data().strip_prefix("& ").unwrap().to_string())
+                        .map(|v| {
+                            v.as_data()
+                                .strip_prefix("& ")
+                                .unwrap()
+                                .replace("->", ".")
+                                .to_string()
+                        })
                         .collect::<HashSet<_>>()
                 })
                 .reduce(|s1, s2| s1.intersection(&s2).cloned().collect());

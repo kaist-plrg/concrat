@@ -298,7 +298,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                     let code = format!(
                         "
 pub struct {0} {{ {1}}}
-pub static {2}: Mutex<{0}> = Mutex::new(
+pub static mut {2}: Mutex<{0}> = Mutex::new(
     {0} {{ {3}}}
 );",
                         struct_name, decl, name, init
@@ -350,7 +350,7 @@ pub static {2}: Mutex<{0}> = Mutex::new(
                         let code = format!(
                             "
 pub struct {0} {{ {1} }}
-pub static {2}: [Mutex<{0}>; {3}] = [{4}
+pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
 ];",
                             struct_name, decl, name, len, init
                         );
@@ -480,6 +480,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let func = current_function(ctx, e.hir_id);
+        let func_summary = || function_mutex_map().get(func.as_ref().unwrap()).unwrap();
         if func
             .as_ref()
             .map_or(false, |f| !function_mutex_map().contains_key(f))
@@ -615,8 +616,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 }
             }
             ExprKind::Ret(v_opt) => {
-                let FunctionSummary { ret_mutex: ret, .. } =
-                    function_mutex_map().get(&func.unwrap()).unwrap();
+                let ret = &func_summary().ret_mutex;
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
@@ -695,21 +695,29 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Path(_) => {
                 if let Some(x) = name(e) {
                     if let Some(m) = global_mutex_map().get(&x) {
-                        // disallow struct, function
-                        if !m.contains('.') && !type_of(ctx, e).is_fn() {
-                            add_replacement(ctx, e.span, format!("(*{}).{}", guard_of(m), x));
-                        }
+                        let new_e = if func_summary().node_mutex.contains(m) {
+                            format!("(*{}).{}", guard_of(m), x)
+                        } else {
+                            format!("{}.get_mut().unwrap().{}", m, x)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                 }
             }
             // array
             ExprKind::Index(a, i) => {
                 if let Some(a) = name(a) {
-                    let i = unwrap_cast_recursively(i);
-                    let i = span_to_string(ctx, i.span);
+                    let ind = unwrap_cast_recursively(i);
+                    let ind = span_to_string(ctx, ind.span);
                     if let Some(m) = array_mutex_map().get(&a) {
-                        let m = format!("{}[{}]", m, i);
-                        add_replacement(ctx, e.span, format!("(*{}).{}", guard_of(&m), a));
+                        let mutex = format!("{}[{}]", m, ind);
+                        let new_e = if func_summary().node_mutex.contains(&mutex) {
+                            format!("(*{}).{}", guard_of(&mutex), a)
+                        } else {
+                            let i = span_to_string(ctx, i.span);
+                            format!("{}[{}].get_mut().unwrap().{}", m, i, a)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                 }
             }
@@ -722,13 +730,14 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                     .to_string();
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
-                    let s = match &s.kind {
-                        ExprKind::Path(_) => name(s).unwrap(),
-                        ExprKind::Unary(UnOp::Deref, s) => name(s).unwrap(),
-                        _ => unreachable!(),
+                    let s = span_to_string(ctx, s.span);
+                    let mutex = format!("{}.{}", normalize_path(&s), m);
+                    let new_e = if func_summary().node_mutex.contains(&mutex) {
+                        format!("(*{}).{}", guard_of(&mutex), f)
+                    } else {
+                        format!("{}.{}.get_mut().unwrap().{}", s, m, f)
                     };
-                    let g = guard_of(&format!("{}.{}", s, m));
-                    add_replacement(ctx, e.span, format!("(*{}).{}", g, f));
+                    add_replacement(ctx, e.span, new_e);
                 }
             }
             _ => (),
@@ -853,26 +862,31 @@ fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
     }
 }
 
+fn normalize_path(p: &str) -> String {
+    p.split(&['-', '>', '.', '(', ')', '*', '&'])
+        .filter(|s| !s.is_empty())
+        .collect::<Vec<_>>()
+        .join(".")
+}
+
+fn path_to_id(p: &str) -> String {
+    p.split(&['-', '>', '(', ')', '[', ']', '.', '*', '&'])
+        .filter(|s| !s.is_empty())
+        .collect::<Vec<_>>()
+        .join("_")
+}
+
 #[allow(clippy::ptr_arg)]
 fn guard_of(m: &String) -> String {
-    if let Some(i) = m.rfind('[') {
-        let j = m.rfind(']').unwrap();
-        format!("{}_{}_guard", &m[..i], &m[i + 1..j])
-    } else if let Some(i) = m.rfind('.') {
-        format!("{}_{}_guard", &m[..i], &m[i + 1..])
-    } else if let Some(i) = m.rfind("->") {
-        format!("{}_{}_guard", &m[..i], &m[i + 2..])
-    } else {
-        format!("{}_guard", m)
-    }
+    format!("{}_guard", path_to_id(m))
 }
 
 fn struct_of(m: &str) -> String {
-    format!("{}ProtectedData", m)
+    format!("{}Data", path_to_id(m))
 }
 
 fn struct_of2(s: &str, m: &str) -> String {
-    format!("{}Protected{}", m, s)
+    format!("{}{}Data", path_to_id(s), path_to_id(m))
 }
 
 fn join(mut v: Vec<String>, sep: &str) -> String {
