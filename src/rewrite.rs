@@ -385,11 +385,18 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 } else {
                     name
                 };
-                let FunctionSummary {
-                    entry_mutex: entry,
-                    node_mutex: node,
-                    ret_mutex: ret,
-                } = function_mutex_map().get(&name).unwrap();
+
+                let (entry, node, ret) = if let Some(fs) = function_mutex_map().get(&name) {
+                    let FunctionSummary {
+                        entry_mutex,
+                        node_mutex,
+                        ret_mutex,
+                    } = fs;
+                    (entry_mutex, node_mutex, ret_mutex)
+                } else {
+                    add_replacement(ctx, span, "".to_string());
+                    return;
+                };
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
                     b
@@ -474,6 +481,13 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
     }
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
+        let func = current_function(ctx, e.hir_id);
+        if func
+            .as_ref()
+            .map_or(false, |f| !function_mutex_map().contains_key(f))
+        {
+            return;
+        }
         match &e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
@@ -599,19 +613,8 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                 }
             }
             ExprKind::Ret(v_opt) => {
-                let hir = ctx.tcx.hir();
-                let func = if let Node::Item(item) = hir.get(hir.enclosing_body_owner(e.hir_id)) {
-                    item.ident.name.to_ident_string()
-                } else {
-                    unreachable!()
-                };
-                let func = if func == "main_0" {
-                    "main".to_string()
-                } else {
-                    func
-                };
                 let FunctionSummary { ret_mutex: ret, .. } =
-                    function_mutex_map().get(&func).unwrap();
+                    function_mutex_map().get(&func.unwrap()).unwrap();
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
                     match v_opt {
@@ -779,6 +782,24 @@ fn hid_to_string(ctx: &LateContext<'_>, hid: HirId) -> String {
 fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
     let source_map = ctx.sess().source_map();
     source_map.span_to_snippet(span).unwrap()
+}
+
+fn current_function(ctx: &LateContext<'_>, hid: HirId) -> Option<String> {
+    let hir = ctx.tcx.hir();
+    if let Node::Item(item) = hir.get(hir.enclosing_body_owner(hid)) {
+        if let ItemKind::Fn(_, _, _) = item.kind {
+            let func = item.ident.name.to_ident_string();
+            Some(if func == "main_0" {
+                "main".to_string()
+            } else {
+                func
+            })
+        } else {
+            None
+        }
+    } else {
+        None
+    }
 }
 
 fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>) {
