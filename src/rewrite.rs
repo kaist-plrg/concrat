@@ -439,6 +439,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
                 let name = correct_function_name(name);
 
+                let empty = vec![];
                 let (entry, _, ret) = if let Some(fs) = function_mutex_map().get(&name) {
                     let FunctionSummary {
                         entry_mutex,
@@ -447,8 +448,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     } = fs;
                     (entry_mutex, node_mutex, ret_mutex)
                 } else {
-                    add_replacement(ctx, span, "".to_string());
-                    return;
+                    (&empty, &empty, &empty)
                 };
 
                 let b = if let ExprKind::Block(b, _) = body.value.kind {
@@ -537,12 +537,13 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         match kind {
             intravisit::FnKind::ItemFn(id, _, _) => {
                 let name = correct_function_name(&id.name.to_ident_string());
-                let fs = if let Some(fs) = function_mutex_map().get(&name) {
-                    fs
+                let empty = vec![];
+                let entry = if let Some(fs) = function_mutex_map().get(&name) {
+                    &fs.entry_mutex
                 } else {
-                    return;
+                    &empty
                 };
-                let entry: HashSet<_> = fs.entry_mutex.iter().map(guard_of).collect();
+                let entry: HashSet<_> = entry.iter().map(guard_of).collect();
                 let mut guards = GUARD_MAP
                     .lock()
                     .unwrap()
@@ -571,13 +572,16 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let func_name_opt = current_function(ctx, e.hir_id);
         let func_name = || func_name_opt.as_ref().unwrap().clone();
-        let func_summary = || function_mutex_map().get(&func_name()).unwrap();
-        if func_name_opt
-            .as_ref()
-            .map_or(false, |f| !function_mutex_map().contains_key(f))
-        {
-            return;
-        }
+        let empty_summary = FunctionSummary {
+            entry_mutex: vec![],
+            node_mutex: vec![],
+            ret_mutex: vec![],
+        };
+        let func_summary = || {
+            function_mutex_map()
+                .get(&func_name())
+                .unwrap_or(&empty_summary)
+        };
         match &e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
