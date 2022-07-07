@@ -241,19 +241,19 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         .collect();
                     for f in fs.iter() {
                         let name = f.ident.name.to_ident_string();
-                        if v.iter().any(|(x, _, _)| *x == name) {
-                            let span = f.span;
-                            add_replacement(
-                                ctx,
-                                span.with_hi(span.hi() + BytePos(1)),
-                                "".to_string(),
-                            );
+                        if let Some((_, t, _)) = v.iter().find(|(x, _, _)| *x == name) {
+                            if t == "pthread_cond_t" {
+                                add_replacement(ctx, f.ty.span, "Condvar".to_string());
+                            } else {
+                                let span = f.span.with_hi(f.span.hi() + BytePos(1));
+                                add_replacement(ctx, span, "".to_string());
+                            }
                             continue;
                         }
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, t, m)| {
-                                if *m == name {
+                                if t != "pthread_cond_t" && *m == name {
                                     Some(format!("pub {}: {}", x, t))
                                 } else {
                                     None
@@ -685,19 +685,19 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         .collect();
                     for f in fs.iter() {
                         let name = f.ident.name.to_ident_string();
-                        if v.iter().any(|(x, _, _)| *x == name) {
-                            let span = f.span;
-                            add_replacement(
-                                ctx,
-                                span.with_hi(span.hi() + BytePos(1)),
-                                "".to_string(),
-                            );
+                        if let Some((_, t, _)) = v.iter().find(|(x, _, _)| *x == name) {
+                            if t == "pthread_cond_t" {
+                                add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
+                            } else {
+                                let span = f.span.with_hi(f.span.hi() + BytePos(1));
+                                add_replacement(ctx, span, "".to_string());
+                            }
                             continue;
                         }
                         let pfs: Vec<_> = v
                             .iter()
-                            .filter_map(|(x, _, m)| {
-                                if *m == name {
+                            .filter_map(|(x, t, m)| {
+                                if t != "pthread_cond_t" && *m == name {
                                     let i = init_map.get(x).unwrap();
                                     Some(format!("{}: {}", x, i))
                                 } else {
@@ -750,6 +750,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // struct
             ExprKind::Field(s, f) => {
+                if type_of(ctx, e).to_string().contains("pthread_cond_t") {
+                    return;
+                }
                 let ty = type_of(ctx, s)
                     .to_string()
                     .strip_prefix("main::")
