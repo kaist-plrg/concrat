@@ -1,4 +1,9 @@
-use std::{collections::HashMap, fs::File, io::Read, sync::Mutex};
+use std::{
+    collections::{HashMap, HashSet},
+    fs::File,
+    io::Read,
+    sync::Mutex,
+};
 
 use lazy_static::lazy_static;
 use rustc_data_structures::sync;
@@ -19,6 +24,11 @@ lazy_static! {
         Mutex::new(HashMap::default());
     static ref STRUCT_DEF_MAP: Mutex<HashMap<String, HashMap<String, String>>> =
         Mutex::new(HashMap::default());
+    static ref INIT_MAP: Mutex<HashMap<(String, String, String), String>> =
+        Mutex::new(HashMap::default());
+    static ref MUTEX_INIT_MAP: Mutex<HashSet<(String, String, String)>> =
+        Mutex::new(HashSet::default());
+    static ref GUARD_MAP: Mutex<HashMap<String, Vec<String>>> = Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
@@ -168,6 +178,41 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     }
                 }
             }
+            _ => (),
+        }
+    }
+
+    fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
+        let func_name = || current_function(ctx, e.hir_id).unwrap();
+        match e.kind {
+            ExprKind::Call(func, args) => {
+                let f = name(func);
+                match f.as_deref() {
+                    Some("pthread_mutex_init") => {
+                        let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
+                        match m.kind {
+                            ExprKind::Field(s, f) => {
+                                let func = func_name();
+                                let s = normalize_path(&span_to_string(ctx, s.span));
+                                let f = f.name.to_ident_string();
+                                MUTEX_INIT_MAP.lock().unwrap().insert((func, s, f));
+                            }
+                            _ => unreachable!(),
+                        }
+                    }
+                    _ => (),
+                }
+            }
+            ExprKind::Assign(lhs, rhs, _) => match lhs.kind {
+                ExprKind::Field(s, f) => {
+                    let func = func_name();
+                    let s = normalize_path(&span_to_string(ctx, s.span));
+                    let f = f.name.to_ident_string();
+                    let i = span_to_string(ctx, rhs.span);
+                    INIT_MAP.lock().unwrap().insert((func, s, f), i);
+                }
+                _ => (),
+            },
             _ => (),
         }
     }
@@ -388,17 +433,13 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     ) {
         match kind {
             intravisit::FnKind::ItemFn(id, _, _) => {
-                let name = id.name.to_ident_string();
+                let name = &id.name.to_ident_string();
                 if name == "main" {
                     return;
                 }
-                let name = if name == "main_0" {
-                    "main".to_string()
-                } else {
-                    name
-                };
+                let name = correct_function_name(name);
 
-                let (entry, node, ret) = if let Some(fs) = function_mutex_map().get(&name) {
+                let (entry, _, ret) = if let Some(fs) = function_mutex_map().get(&name) {
                     let FunctionSummary {
                         entry_mutex,
                         node_mutex,
@@ -443,15 +484,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     add_replacement(ctx, span, sugg);
                 }
 
-                let local_vars: String = node
-                    .iter()
-                    .filter(|m| !entry.contains(m))
-                    .map(|m| format!("let mut {};\n    ", guard_of(m)))
-                    .collect();
-                if !local_vars.is_empty() {
-                    add_replacement(ctx, stmts[0].span.shrink_to_lo(), local_vars);
-                }
-
                 if !ret.is_empty() {
                     let mut ret_types = vec![];
                     if let FnRetTy::Return(t) = decl.output {
@@ -475,6 +507,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             ExprKind::Ret(_) => (),
                             _ => {
                                 let ret_vals = ret.iter().map(guard_of).collect();
+                                use_guards(name.clone(), &ret_vals);
                                 let ret_val = make_tuple(ret_vals);
                                 add_replacement(
                                     ctx,
@@ -492,10 +525,54 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         }
     }
 
+    fn check_fn_post(
+        &mut self,
+        ctx: &LateContext<'tcx>,
+        kind: intravisit::FnKind<'tcx>,
+        _: &'tcx FnDecl<'tcx>,
+        body: &'tcx Body<'tcx>,
+        _: Span,
+        _: HirId,
+    ) {
+        match kind {
+            intravisit::FnKind::ItemFn(id, _, _) => {
+                let name = correct_function_name(&id.name.to_ident_string());
+                let fs = if let Some(fs) = function_mutex_map().get(&name) {
+                    fs
+                } else {
+                    return;
+                };
+                let entry: HashSet<_> = fs.entry_mutex.iter().map(guard_of).collect();
+                let mut guards = GUARD_MAP
+                    .lock()
+                    .unwrap()
+                    .get(&name)
+                    .cloned()
+                    .unwrap_or_default();
+                guards.sort();
+                guards.dedup();
+                let local_vars: String = guards
+                    .iter()
+                    .filter(|m| !entry.contains(*m))
+                    .map(|m| format!("\n    let mut {};", m))
+                    .collect();
+                if !local_vars.is_empty() {
+                    let span = body.value.span;
+                    let span = span
+                        .with_lo(span.lo() + BytePos(1))
+                        .with_hi(span.lo() + BytePos(1));
+                    add_replacement(ctx, span, format!("{}\n", local_vars));
+                }
+            }
+            _ => (),
+        }
+    }
+
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
-        let func = current_function(ctx, e.hir_id);
-        let func_summary = || function_mutex_map().get(func.as_ref().unwrap()).unwrap();
-        if func
+        let func_name_opt = current_function(ctx, e.hir_id);
+        let func_name = || func_name_opt.as_ref().unwrap().clone();
+        let func_summary = || function_mutex_map().get(&func_name()).unwrap();
+        if func_name_opt
             .as_ref()
             .map_or(false, |f| !function_mutex_map().contains_key(f))
         {
@@ -558,6 +635,47 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     }
                 };
                 match f.as_deref() {
+                    Some("pthread_mutex_init") => {
+                        let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
+                        match m.kind {
+                            ExprKind::Field(s, f) => {
+                                let func = func_name();
+                                let typ = type_of(ctx, s)
+                                    .to_string()
+                                    .strip_prefix("main::")
+                                    .unwrap()
+                                    .to_string();
+                                let s = normalize_path(&span_to_string(ctx, s.span));
+                                let f = f.name.to_ident_string();
+                                let map = struct_mutex_map().get(&typ).unwrap();
+                                let init_map = INIT_MAP.lock().unwrap();
+                                let struct_map = STRUCT_DEF_MAP.lock().unwrap();
+                                let init = join(
+                                    map.iter()
+                                        .filter_map(|(x, m)| {
+                                            let t = struct_map.get(&typ).unwrap().get(x).unwrap();
+                                            if t != "pthread_cond_t" && *m == f {
+                                                let i = init_map
+                                                    .get(&(func.clone(), s.clone(), x.clone()))
+                                                    .unwrap();
+                                                Some(format!("{}: {}", x, i))
+                                            } else {
+                                                None
+                                            }
+                                        })
+                                        .collect(),
+                                    ", ",
+                                );
+                                let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
+                                add_replacement(
+                                    ctx,
+                                    e.span,
+                                    format!("{} = Mutex::new({})", span_to_string(ctx, m.span), st),
+                                );
+                            }
+                            _ => unreachable!(),
+                        }
+                    }
                     Some("pthread_mutex_lock") => {
                         let (arg, guard) = arg(0);
                         add_replacement(
@@ -567,12 +685,18 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         );
                     }
                     Some("pthread_mutex_unlock") => {
-                        add_replacement(ctx, e.span, format!("drop({})", arg(0).1));
+                        let guard = arg(0).1;
+                        use_guard(func_name(), guard.clone());
+                        add_replacement(ctx, e.span, format!("drop({})", guard));
+                    }
+                    Some("pthread_cond_init") => {
+                        add_replacement(ctx, e.span, format!("{} = Condvar::new()", arg(0).0));
                     }
                     Some("pthread_cond_wait") => {
                         let c = arg(0).0;
-                        let m = arg(1).1;
-                        add_replacement(ctx, e.span, format!("{1} = {0}.wait({1}).unwrap()", c, m));
+                        let g = arg(1).1;
+                        use_guard(func_name(), g.clone());
+                        add_replacement(ctx, e.span, format!("{1} = {0}.wait({1}).unwrap()", c, g));
                     }
                     Some("pthread_cond_signal") => {
                         add_replacement(ctx, e.span, format!("{}.notify_one()", arg(0).0));
@@ -589,6 +713,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         {
                             if !entry.is_empty() {
                                 let guards = entry.iter().map(guard_of).collect();
+                                use_guards(func_name(), &guards);
                                 let guards = join(guards, ", ");
                                 if let Some(arg) = args.last() {
                                     let span = arg.span.shrink_to_hi();
@@ -606,15 +731,16 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 if type_of(ctx, e).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
-                                        add_replacement(
-                                            ctx,
-                                            span,
-                                            format!("{} = ", guard_of(&ret[0])),
-                                        );
+                                        let guard = guard_of(&ret[0]);
+                                        use_guard(func_name(), guard.clone());
+                                        add_replacement(ctx, span, format!("{} = ", guard));
                                     } else {
                                         let span = e.span.shrink_to_lo();
                                         add_replacement(ctx, span, "{ let tmp = ".to_string());
                                         let span = e.span.shrink_to_hi();
+                                        for m in ret {
+                                            use_guard(func_name(), guard_of(m));
+                                        }
                                         let guards: String = ret
                                             .iter()
                                             .enumerate()
@@ -626,6 +752,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     let span = e.span.shrink_to_lo();
                                     add_replacement(ctx, span, "{ let tmp = ".to_string());
                                     let span = e.span.shrink_to_hi();
+                                    for m in ret {
+                                        use_guard(func_name(), guard_of(m));
+                                    }
                                     let guards: String = ret
                                         .iter()
                                         .enumerate()
@@ -643,6 +772,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let ret = &func_summary().ret_mutex;
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
+                    use_guards(func_name(), &ret_vals);
                     match v_opt {
                         Some(v) => {
                             let ret_val = join(ret_vals, ", ");
@@ -650,7 +780,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             add_replacement(ctx, v.span.shrink_to_hi(), format!(", {})", ret_val));
                         }
                         None => {
-                            let ret_vals = ret.iter().map(guard_of).collect();
                             let ret_val = make_tuple(ret_vals);
                             add_replacement(ctx, e.span.shrink_to_hi(), format!(" {}", ret_val));
                         }
@@ -723,7 +852,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 if let Some(x) = name(e) {
                     if let Some(m) = global_mutex_map().get(&x) {
                         let new_e = if func_summary().node_mutex.contains(m) {
-                            format!("(*{}).{}", guard_of(m), x)
+                            let guard = guard_of(m);
+                            use_guard(func_name(), guard.clone());
+                            format!("(*{}).{}", guard, x)
                         } else {
                             format!("{}.get_mut().unwrap().{}", m, x)
                         };
@@ -739,7 +870,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     if let Some(m) = array_mutex_map().get(&a) {
                         let mutex = format!("{}[{}]", m, ind);
                         let new_e = if func_summary().node_mutex.contains(&mutex) {
-                            format!("(*{}).{}", guard_of(&mutex), a)
+                            let guard = guard_of(&mutex);
+                            use_guard(func_name(), guard.clone());
+                            format!("(*{}).{}", guard, a)
                         } else {
                             let i = span_to_string(ctx, i.span);
                             format!("{}[{}].get_mut().unwrap().{}", m, i, a)
@@ -761,15 +894,45 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = span_to_string(ctx, s.span);
+                    if MUTEX_INIT_MAP.lock().unwrap().contains(&(
+                        func_name(),
+                        normalize_path(&s),
+                        m.clone(),
+                    )) {
+                        return;
+                    }
                     let mutex = format!("{}.{}", normalize_path(&s), m);
                     let new_e = if func_summary().node_mutex.contains(&mutex) {
-                        format!("(*{}).{}", guard_of(&mutex), f)
+                        let guard = guard_of(&mutex);
+                        use_guard(func_name(), guard.clone());
+                        format!("(*{}).{}", guard, f)
                     } else {
                         format!("{}.{}.get_mut().unwrap().{}", s, m, f)
                     };
                     add_replacement(ctx, e.span, new_e);
                 }
             }
+            ExprKind::Assign(lhs, _, _) => match lhs.kind {
+                ExprKind::Field(s, f) => {
+                    let ty = type_of(ctx, s)
+                        .to_string()
+                        .strip_prefix("main::")
+                        .unwrap()
+                        .to_string();
+                    let s = normalize_path(&span_to_string(ctx, s.span));
+                    let f = f.name.to_ident_string();
+                    if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
+                        if MUTEX_INIT_MAP
+                            .lock()
+                            .unwrap()
+                            .contains(&(func_name(), s, m.clone()))
+                        {
+                            add_replacement(ctx, e.span, "()".to_string());
+                        }
+                    }
+                }
+                _ => (),
+            },
             _ => (),
         }
     }
@@ -816,6 +979,21 @@ fn add_replacement(ctx: &LateContext<'_>, span: Span, replacement: String) {
     });
 }
 
+fn use_guard(func: String, guard: String) {
+    GUARD_MAP
+        .lock()
+        .unwrap()
+        .entry(func)
+        .or_insert(vec![])
+        .push(guard);
+}
+
+fn use_guards(func: String, guards: &Vec<String>) {
+    for g in guards {
+        use_guard(func.clone(), g.clone());
+    }
+}
+
 fn hid_to_string(ctx: &LateContext<'_>, hid: HirId) -> String {
     span_to_string(ctx, ctx.tcx.hir().span(hid))
 }
@@ -825,16 +1003,16 @@ fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
     source_map.span_to_snippet(span).unwrap()
 }
 
+fn correct_function_name(name: &str) -> String {
+    if name == "main_0" { "main" } else { name }.to_string()
+}
+
 fn current_function(ctx: &LateContext<'_>, hid: HirId) -> Option<String> {
     let hir = ctx.tcx.hir();
     if let Node::Item(item) = hir.get(hir.enclosing_body_owner(hid)) {
         if let ItemKind::Fn(_, _, _) = item.kind {
             let func = item.ident.name.to_ident_string();
-            Some(if func == "main_0" {
-                "main".to_string()
-            } else {
-                func
-            })
+            Some(correct_function_name(&func))
         } else {
             None
         }
@@ -893,14 +1071,14 @@ fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
 }
 
 fn normalize_path(p: &str) -> String {
-    p.split(&['-', '>', '.', '(', ')', '*', '&'])
+    p.split(&[' ', '-', '>', '.', '(', ')', '*', '&'])
         .filter(|s| !s.is_empty())
         .collect::<Vec<_>>()
         .join(".")
 }
 
 fn path_to_id(p: &str) -> String {
-    p.split(&['-', '>', '(', ')', '[', ']', '.', '*', '&'])
+    p.split(&[' ', '-', '>', '(', ')', '[', ']', '.', '*', '&'])
         .filter(|s| !s.is_empty())
         .collect::<Vec<_>>()
         .join("_")
