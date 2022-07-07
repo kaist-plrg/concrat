@@ -150,7 +150,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         let init = match &ctx.tcx.hir().body(*b).value.kind {
                             ExprKind::Repeat(e, l) => {
                                 let e = span_to_string(ctx, e.span);
-                                let l = hid_to_string(ctx, l.hir_id).parse().unwrap();
+                                let l = hid_to_string(ctx, l.hir_id()).parse().unwrap();
                                 vec![e; l]
                             }
                             ExprKind::Array(es) => {
@@ -195,7 +195,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             .iter()
             .any(|i| matches!(hir.item(*i).kind, ItemKind::Fn(_, _, _)))
         {
-            let span = m.inner.shrink_to_lo();
+            let span = m.spans.inner_span.shrink_to_lo();
             add_replacement(
                 ctx,
                 span,
@@ -375,7 +375,7 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
         _: HirId,
     ) {
         match kind {
-            intravisit::FnKind::ItemFn(id, _, _, _) => {
+            intravisit::FnKind::ItemFn(id, _, _) => {
                 let name = id.name.to_ident_string();
                 if name == "main" {
                     return;
@@ -490,14 +490,14 @@ pub static {2}: [Mutex<{0}>; {3}] = [{4}
                         ExprKind::Unary(
                             UnOp::Deref,
                             Expr {
-                                kind: ExprKind::MethodCall(method, _, args, _),
+                                kind: ExprKind::MethodCall(method, args, _),
                                 ..
                             },
                         ) => {
                             assert_eq!(method.ident.name.to_ident_string(), "offset");
                             assert_eq!(args.len(), 2);
                             let arr = match &args[0].kind {
-                                ExprKind::MethodCall(method, _, args, _) => {
+                                ExprKind::MethodCall(method, args, _) => {
                                     assert_eq!(method.ident.name.to_ident_string(), "as_mut_ptr");
                                     assert_eq!(args.len(), 1);
                                     name(&args[0]).unwrap()
@@ -792,7 +792,7 @@ fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>) {
 fn type_of<'a, 'b, 'tcx>(
     ctx: &'a LateContext<'b>,
     e: &'tcx Expr<'tcx>,
-) -> &'a rustc_middle::ty::TyS<'b> {
+) -> rustc_middle::ty::Ty<'b> {
     let id = e.hir_id;
     ctx.tcx.typeck(id.owner).node_type(id)
 }

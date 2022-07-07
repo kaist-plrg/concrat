@@ -24,7 +24,8 @@ compile_commands.json: main.c
 	intercept-build make mainrs
 
 main.rs: compile_commands.json
-	c2rust transpile -e compile_commands.json
+	c2rust transpile -e compile_commands.json && \
+	cargo fmt
 
 clean:
 	rm -rf main mainrs main.c *.o *.xml *.json *.rs Cargo.* rust-toolchain target
