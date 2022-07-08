@@ -912,11 +912,20 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = span_to_string(ctx, s.span);
-                    if MUTEX_INIT_MAP.lock().unwrap().contains(&(
-                        func_name(),
-                        normalize_path(&s),
-                        m.clone(),
-                    )) {
+                    let hir = ctx.tcx.hir();
+                    let parent_is_assignment =
+                        if let Node::Expr(e) = hir.get(hir.get_parent_node(e.hir_id)) {
+                            matches!(e.kind, ExprKind::Assign(_, _, _))
+                        } else {
+                            false
+                        };
+                    if parent_is_assignment
+                        && MUTEX_INIT_MAP.lock().unwrap().contains(&(
+                            func_name(),
+                            normalize_path(&s),
+                            m.clone(),
+                        ))
+                    {
                         return;
                     }
                     let mutex = format!("{}.{}", normalize_path(&s), m);
