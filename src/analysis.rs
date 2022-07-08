@@ -1,6 +1,9 @@
 use std::collections::{HashMap, HashSet};
 
-use crate::parse_xml::{Element, Name};
+use crate::{
+    parse_xml::{Element, Name},
+    rewrite::normalize_path,
+};
 
 #[derive(Debug)]
 pub struct AnalysisSummary {
@@ -146,7 +149,8 @@ fn generate_mutex_maps(
 }
 
 fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
-    let k = "symb_locks".to_string();
+    let k1 = "symb_locks".to_string();
+    let k2 = "var_eq".to_string();
     calls
         .iter()
         .map(|c| {
@@ -156,19 +160,56 @@ fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
                 .iter()
                 .filter(|ctx| ctx.name == "path")
                 .map(|ctx| {
+                    let var_eq = ctx
+                        .analyses
+                        .get(&k2)
+                        .unwrap()
+                        .as_map()
+                        .iter()
+                        .flat_map(|(_, v)| {
+                            let mut v = v
+                                .as_set()
+                                .iter()
+                                .map(|v| v.as_data().clone())
+                                .collect::<Vec<_>>();
+                            v.sort_by_key(|s| -(s.len() as isize));
+                            let var1 = v.pop().unwrap();
+                            v.drain(..)
+                                .filter_map(|var2| {
+                                    if var1 == var2 {
+                                        None
+                                    } else {
+                                        Some((var2, var1.clone()))
+                                    }
+                                })
+                                .collect::<Vec<_>>()
+                        })
+                        .collect::<Vec<_>>();
                     ctx.analyses
-                        .get(&k)
+                        .get(&k1)
                         .unwrap()
                         .as_set()
                         .iter()
                         .cloned()
-                        .map(|v| v.as_data().strip_prefix("& ").unwrap().replace("->", "."))
+                        .map(|v| normalize_path(&simplify(v.as_data().clone(), &var_eq)))
                         .collect::<HashSet<_>>()
                 })
                 .reduce(|s1, s2| s1.intersection(&s2).cloned().collect());
             (id, ms.unwrap_or_default().drain().collect())
         })
         .collect()
+}
+
+fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
+    if let Some((v1, v2)) = var_eq
+        .iter()
+        .filter(|(v, _)| s.contains(v))
+        .max_by_key(|(v, _)| v.len())
+    {
+        simplify(s.replace(v1, v2), var_eq)
+    } else {
+        s
+    }
 }
 
 fn generate_function_map(
@@ -240,7 +281,7 @@ pub struct Ctx {
 #[derive(Debug, Clone)]
 pub enum Value {
     Data(String),
-    Map(HashMap<String, Value>),
+    Map(Vec<(String, Value)>),
     Set(Vec<Value>),
     Analyses(HashMap<String, Value>),
 }
@@ -384,12 +425,12 @@ fn to_value(element: Element) -> Value {
                 }
             }
             "map" => {
-                let mut map = HashMap::new();
+                let mut map = vec![];
                 for (k, v) in PairIterator(&mut children.drain(..)) {
                     let Element { name, children, .. } = k;
                     assert_eq!(name, tag("key"));
                     let k = unique_child(children).name.data();
-                    map.insert(k.clone(), to_value(v));
+                    map.push((k.clone(), to_value(v)));
                 }
                 Value::Map(map)
             }
@@ -406,6 +447,14 @@ impl Value {
     fn as_set(&self) -> &Vec<Value> {
         if let Value::Set(s) = self {
             s
+        } else {
+            panic!()
+        }
+    }
+
+    fn as_map(&self) -> &Vec<(String, Value)> {
+        if let Value::Map(m) = self {
+            m
         } else {
             panic!()
         }

@@ -29,6 +29,7 @@ lazy_static! {
     static ref MUTEX_INIT_MAP: Mutex<HashSet<(String, String, String)>> =
         Mutex::new(HashSet::default());
     static ref GUARD_MAP: Mutex<HashMap<String, Vec<String>>> = Mutex::new(HashMap::default());
+    static ref ID_TYPE_MAP: Mutex<HashMap<String, String>> = Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
@@ -213,6 +214,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
                 _ => (),
             },
+            ExprKind::Path(_) => {
+                if let (Some(_f), Some(n)) = (current_function(ctx, e.hir_id), name(e)) {
+                    let ty = type_of(ctx, e).to_string().replace("main::", "");
+                    if !ty.contains("fn(") {
+                        ID_TYPE_MAP.lock().unwrap().insert(n, ty);
+                    }
+                }
+            }
             _ => (),
         }
     }
@@ -463,7 +472,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let params = entry
                         .iter()
                         .map(|m| {
-                            format!("mut {}: MutexGuard<'static, {}>", guard_of(m), struct_of(m))
+                            format!(
+                                "mut {}: MutexGuard<'static, {}>",
+                                guard_of(m),
+                                struct_of_path(&name, m)
+                            )
                         })
                         .collect();
                     let params = join(params, ", ");
@@ -490,7 +503,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         ret_types.push(span_to_string(ctx, t.span));
                     }
                     for m in ret {
-                        ret_types.push(format!("MutexGuard<'static, {}>", struct_of(m)));
+                        ret_types
+                            .push(format!("MutexGuard<'static, {}>", struct_of_path(&name, m)));
                     }
                     let ret_type = make_tuple(ret_types);
                     let sugg = if let FnRetTy::Return(_) = decl.output {
@@ -1074,7 +1088,7 @@ fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
     }
 }
 
-fn normalize_path(p: &str) -> String {
+pub fn normalize_path(p: &str) -> String {
     p.split(&[' ', '-', '>', '.', '(', ')', '*', '&'])
         .filter(|s| !s.is_empty())
         .collect::<Vec<_>>()
@@ -1099,6 +1113,23 @@ fn struct_of(m: &str) -> String {
 
 fn struct_of2(s: &str, m: &str) -> String {
     format!("{}{}Data", path_to_id(s), path_to_id(m))
+}
+
+fn struct_of_path(_func: &str, s: &str) -> String {
+    if let Some(i) = s.find('.') {
+        let (s, f) = s.split_at(i);
+        struct_of2(
+            &ID_TYPE_MAP
+                .lock()
+                .unwrap()
+                .get(&s.to_string())
+                .unwrap()
+                .replace("*mut", ""),
+            f,
+        )
+    } else {
+        struct_of(s)
+    }
 }
 
 fn join(mut v: Vec<String>, sep: &str) -> String {
