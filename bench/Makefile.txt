@@ -1,0 +1,26 @@
+CFLAGS = -pthread
+
+all:
+	make a.xml main.rs clean-intermediate
+
+a.xml: main.c
+	goblint --conf ../../conf.json \
+		--enable allglobs \
+		--set result fast_xml \
+		--set outfile a.xml \
+		main.c
+
+mainrs: main.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+compile_commands.json: main.c
+	intercept-build make mainrs
+
+main.rs: compile_commands.json
+	c2rust transpile -e compile_commands.json
+
+clean:
+	rm -rf main mainrs *.o *.xml *.json *.rs Cargo.* rust-toolchain target
+
+clean-intermediate:
+	rm -rf main mainrs *.o *.json Cargo.lock target

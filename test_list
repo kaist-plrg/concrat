@@ -18,3 +18,4 @@ examples/struct_condvar
 examples/struct_malloc
 examples/struct_assume
 examples/unused_func
+bench/C-Thread-Pool
