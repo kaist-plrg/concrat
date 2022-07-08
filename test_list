@@ -5,6 +5,7 @@ examples/global_custom
 examples/global_assume
 examples/global_main
 examples/global_condvar
+examples/global_read
 examples/array_simple
 examples/array_const
 examples/array_main
@@ -15,4 +16,5 @@ examples/struct_dup
 examples/struct_main
 examples/struct_condvar
 examples/struct_malloc
+examples/struct_assume
 examples/unused_func

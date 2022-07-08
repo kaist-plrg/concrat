@@ -42421,45 +42421,6 @@ clean exit
 <warning><group name="n1;int ">
 <text>lock:num_mutex</text></group>
 </warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__align">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField1.__wseq">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField1.__wseq32.__low">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField1.__wseq32.__high">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField2.__g1_start">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField2.__g1_start32.__low">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__annonCompField2.__g1_start32.__high">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__g_refs[?]">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__g_size[?]">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__g1_orig_size">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__wrefs">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__data.__g_signals[?]">
-<text>lock:num_mutex</text></group>
-</warning>
-<warning><group name="cond;__anonunion_pthread_cond_t_951761805.__size[?]">
-<text>lock:num_mutex</text></group>
-</warning>
 <warning>
 <text file="main.c" line="123" column="3">Base EvalInt id2 query answering bot instead of {([t_fun@main.c:122:3, main], {})}</text></warning>
 <warning>
