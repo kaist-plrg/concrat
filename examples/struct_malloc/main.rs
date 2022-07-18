@@ -5,7 +5,7 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(_: *mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
     fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
@@ -158,13 +158,13 @@ unsafe fn main_0() -> libc::c_int {
     pthread_create(
         &mut id1 as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
-        Some(t_fun as unsafe extern "C" fn(_: *mut libc::c_void) -> *mut libc::c_void),
+        Some(t_fun as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
         s as *mut libc::c_void,
     );
     pthread_create(
         &mut id2 as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
-        Some(t_fun as unsafe extern "C" fn(_: *mut libc::c_void) -> *mut libc::c_void),
+        Some(t_fun as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
         s as *mut libc::c_void,
     );
     pthread_join(id1, 0 as *mut libc::c_void as *mut *mut libc::c_void);

@@ -17,18 +17,15 @@ a.xml: main.c
 		--set outfile a.xml \
 		main.c
 
-mainrs: main.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-compile_commands.json: main.c
-	intercept-build make mainrs
+compile_commands.json:
+	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json
 
 main.rs: compile_commands.json
 	c2rust transpile -e compile_commands.json && \
 	cargo fmt
 
 clean:
-	rm -rf main mainrs main.c *.o *.xml *.json *.rs Cargo.* rust-toolchain target
+	rm -rf main main.c *.o *.xml *.json *.rs Cargo.* rust-toolchain target
 
 clean-intermediate:
-	rm -rf main mainrs main.c *.o *.json Cargo.lock target
+	rm -rf main main.c *.o *.json Cargo.lock target
