@@ -866,9 +866,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     .collect();
                 for f in fs.iter() {
                     let name = f.ident.name.to_ident_string();
-                    let typ = type_as_string(ctx, f.expr);
-                    println!("{}", typ);
-                    if typ.contains("pthread_cond_t") {
+                    let ftyp = type_as_string(ctx, f.expr);
+                    if ftyp.contains("pthread_cond_t") {
                         add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
                         continue;
                     }
@@ -877,7 +876,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         add_replacement(ctx, span, "".to_string());
                         continue;
                     }
-                    if typ.contains("pthread_mutex_t") {
+                    if ftyp.contains("pthread_mutex_t") {
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, _, m)| {
