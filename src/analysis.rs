@@ -108,6 +108,9 @@ fn generate_mutex_maps(
         protections,
     } in warnings
     {
+        let mut protections = protections.clone();
+        protections.sort();
+        protections.dedup();
         let mut plocks: Vec<_> = protections
             .iter()
             .filter(|p| matches!(p, Protection::PLock(_)))
@@ -139,7 +142,9 @@ fn generate_mutex_maps(
 
         if let Some(Protection::Lock(lock)) = protections.last() {
             assert_eq!(protections.len(), 1);
-            global_mutex_map.insert(name.to_string(), lock.to_string());
+            if !name.is_empty() && !name.contains('@') {
+                global_mutex_map.insert(name.to_string(), lock.to_string());
+            }
             continue;
         }
 
@@ -259,7 +264,7 @@ pub struct WarningGroup {
     pub protections: Vec<Protection>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Protection {
     Lock(String),
     ILock(String),
