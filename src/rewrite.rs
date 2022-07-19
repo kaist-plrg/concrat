@@ -662,29 +662,35 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     .to_string();
                                 let s = normalize_path(&span_to_string(ctx, s.span));
                                 let f = f.name.to_ident_string();
-                                let map = struct_mutex_map().get(&typ).unwrap();
-                                let init_map = INIT_MAP.lock().unwrap();
-                                let init = join(
-                                    map.iter()
-                                        .filter_map(|(x, m)| {
-                                            if *m == f {
-                                                let i = init_map
-                                                    .get(&(func.clone(), s.clone(), x.clone()))
-                                                    .unwrap();
-                                                Some(format!("{}: {}", x, i))
-                                            } else {
-                                                None
-                                            }
-                                        })
-                                        .collect(),
-                                    ", ",
-                                );
-                                let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
-                                add_replacement(
-                                    ctx,
-                                    e.span,
-                                    format!("{} = Mutex::new({})", span_to_string(ctx, m.span), st),
-                                );
+                                if GLOBAL_DEF_MAP.lock().unwrap().contains_key(&s) {
+                                    add_replacement(ctx, e.span, "0".to_string());
+                                } else {
+                                    let map = struct_mutex_map().get(&typ).unwrap();
+                                    let init_map = INIT_MAP.lock().unwrap();
+                                    let init = join(
+                                        map.iter()
+                                            .filter_map(|(x, m)| {
+                                                if *m == f {
+                                                    println!("{} {} {}", func, s, x);
+                                                    let i = init_map
+                                                        .get(&(func.clone(), s.clone(), x.clone()))
+                                                        .unwrap();
+                                                    Some(format!("{}: {}", x, i))
+                                                } else {
+                                                    None
+                                                }
+                                            })
+                                            .collect(),
+                                        ", ",
+                                    );
+                                    let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
+                                    let new_init = format!(
+                                        "{} = Mutex::new({})",
+                                        span_to_string(ctx, m.span),
+                                        st
+                                    );
+                                    add_replacement(ctx, e.span, new_init);
+                                }
                             }
                             _ => unreachable!(),
                         }
@@ -799,19 +805,20 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     }
                 }
             }
-            ExprKind::Struct(s, fs, _) => {
-                let s = match s {
-                    QPath::Resolved(_, p) => path_to_string(p),
-                    _ => unreachable!(),
-                };
-                if let Some(map) = struct_mutex_map().get(&s) {
+            ExprKind::Struct(_, fs, _) => {
+                let typ = type_of(ctx, e)
+                    .to_string()
+                    .strip_prefix("main::")
+                    .unwrap()
+                    .to_string();
+                if let Some(map) = struct_mutex_map().get(&typ) {
                     let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
                     let v: Vec<_> = map
                         .iter()
                         .map(|(x, m)| {
                             (
                                 x.clone(),
-                                struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
+                                struct_def_map.get(&typ).unwrap().get(x).unwrap().clone(),
                                 m.clone(),
                             )
                         })
@@ -848,7 +855,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             })
                             .collect();
                         if !pfs.is_empty() {
-                            let st_name = struct_of2(&s, &name);
+                            let st_name = struct_of2(&typ, &name);
                             let st_body = join(pfs, ", ");
                             let st = format!("{} {{ {} }}", st_name, st_body);
                             let ini = format!("Mutex::new({})", st);
@@ -895,6 +902,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Field(s, f) => {
                 let ty = type_of(ctx, s)
                     .to_string()
+                    .replace("&mut ", "")
+                    .replace('&', "")
                     .strip_prefix("main::")
                     .unwrap()
                     .to_string();
