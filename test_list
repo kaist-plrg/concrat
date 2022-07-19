@@ -6,6 +6,7 @@ examples/global_assume
 examples/global_main
 examples/global_condvar
 examples/global_read
+examples/global_trylock
 examples/array_simple
 examples/array_const
 examples/array_main

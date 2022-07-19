@@ -32,6 +32,8 @@ lazy_static! {
     static ref ID_TYPE_MAP: Mutex<HashMap<String, String>> = Mutex::new(HashMap::default());
     static ref DURATION_MAP: Mutex<HashMap<(String, String, String), String>> =
         Mutex::new(HashMap::default());
+    static ref TRYLOCK_MAP: Mutex<HashMap<(String, String), (String, String)>> =
+        Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
@@ -206,16 +208,31 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     _ => (),
                 }
             }
-            ExprKind::Assign(lhs, rhs, _) => match lhs.kind {
-                ExprKind::Field(s, f) => {
-                    let func = func_name();
-                    let s = normalize_path(&span_to_string(ctx, s.span));
-                    let f = f.name.to_ident_string();
-                    let i = span_to_string(ctx, rhs.span);
-                    INIT_MAP.lock().unwrap().insert((func, s, f), i);
+            ExprKind::Assign(lhs, rhs, _) => {
+                match lhs.kind {
+                    ExprKind::Field(s, f) => {
+                        let func = func_name();
+                        let s = normalize_path(&span_to_string(ctx, s.span));
+                        let f = f.name.to_ident_string();
+                        let i = span_to_string(ctx, rhs.span);
+                        INIT_MAP.lock().unwrap().insert((func, s, f), i);
+                    }
+                    _ => (),
                 }
-                _ => (),
-            },
+                match rhs.kind {
+                    ExprKind::Call(func, args) => {
+                        if let Some(f) = name(func) {
+                            if f == "pthread_mutex_trylock" {
+                                let f = func_name();
+                                let l = span_to_string(ctx, lhs.span);
+                                let (a, g) = normalize_arg(ctx, &args[0]);
+                                TRYLOCK_MAP.lock().unwrap().insert((f, l), (a, g));
+                            }
+                        }
+                    }
+                    _ => (),
+                }
+            }
             ExprKind::AssignOp(op, lhs, rhs) => match op.node {
                 BinOpKind::Add => match lhs.kind {
                     ExprKind::Field(s, f) => {
@@ -607,6 +624,29 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         }
     }
 
+    fn check_local(&mut self, ctx: &LateContext<'tcx>, l: &'tcx Local<'tcx>) {
+        if let Some(f) = current_function(ctx, l.hir_id) {
+            match &l.pat.kind {
+                PatKind::Binding(_, _, x, _) => {
+                    if TRYLOCK_MAP
+                        .lock()
+                        .unwrap()
+                        .contains_key(&(f, x.name.to_ident_string()))
+                    {
+                        let span = l.ty.unwrap().span;
+                        add_replacement(
+                            ctx,
+                            span.with_lo(span.lo() - BytePos(2))
+                                .with_hi(span.hi() + BytePos(4)),
+                            "".to_string(),
+                        );
+                    }
+                }
+                _ => (),
+            }
+        }
+    }
+
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let func_name_opt = current_function(ctx, e.hir_id);
         let func_name = || func_name_opt.as_ref().unwrap().clone();
@@ -623,40 +663,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         match &e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
-                let arg = |idx| {
-                    let arg = &args[idx];
-                    let arg = unwrap_addr(unwrap_cast_recursively(arg)).unwrap();
-                    match &arg.kind {
-                        ExprKind::Unary(
-                            UnOp::Deref,
-                            Expr {
-                                kind: ExprKind::MethodCall(method, args, _),
-                                ..
-                            },
-                        ) => {
-                            assert_eq!(method.ident.name.to_ident_string(), "offset");
-                            assert_eq!(args.len(), 2);
-                            let arr = match &args[0].kind {
-                                ExprKind::MethodCall(method, args, _) => {
-                                    assert_eq!(method.ident.name.to_ident_string(), "as_mut_ptr");
-                                    assert_eq!(args.len(), 1);
-                                    name(&args[0]).unwrap()
-                                }
-                                _ => unreachable!(),
-                            };
-                            let ind = unwrap_cast_recursively(&args[1]);
-                            let ind = span_to_string(ctx, ind.span);
-                            let arg = format!("{}[{} as usize]", arr, ind);
-                            let guard = guard_of(&format!("{}[{}]", arr, ind));
-                            (arg, guard)
-                        }
-                        _ => {
-                            let arg = span_to_string(ctx, arg.span);
-                            let guard = guard_of(&arg);
-                            (arg, guard)
-                        }
-                    }
-                };
+                let arg = |idx| normalize_arg(ctx, &args[idx]);
                 match f.as_deref() {
                     Some("pthread_mutex_init") => {
                         let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
@@ -710,6 +717,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             e.span,
                             format!("{} = {}.lock().unwrap()", guard, arg),
                         );
+                    }
+                    Some("pthread_mutex_trylock") => {
+                        add_replacement(ctx, e.span, format!("{}.try_lock()", arg(0).0))
                     }
                     Some("pthread_mutex_unlock") => {
                         let guard = arg(0).1;
@@ -984,6 +994,64 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
                 _ => (),
             },
+            ExprKind::If(c, t, f) => match c.kind {
+                ExprKind::DropTemps(e) => match e.kind {
+                    ExprKind::Binary(op, lhs, rhs) => {
+                        let lhs = span_to_string(ctx, lhs.span);
+                        let rhs = span_to_string(ctx, rhs.span);
+                        let trylock_map = TRYLOCK_MAP.lock().unwrap();
+                        let (x, g) = if let Some((_, g)) =
+                            trylock_map.get(&(func_name(), lhs.clone()))
+                        {
+                            (lhs, g)
+                        } else if let Some((_, g)) = trylock_map.get(&(func_name(), rhs.clone())) {
+                            (rhs, g)
+                        } else {
+                            return;
+                        };
+                        let eq = match op.node {
+                            BinOpKind::Eq => true,
+                            BinOpKind::Ne => false,
+                            op => panic!("{:?}", op),
+                        };
+                        let span = c
+                            .span
+                            .with_lo(c.span.lo() - BytePos(3))
+                            .with_hi(c.span.hi() + BytePos(2));
+                        let true_branch = if eq {
+                            format!("Ok(g) => {{ {} = g;", g)
+                        } else {
+                            "Err(_) => {".to_string()
+                        };
+                        add_replacement(ctx, span, format!("match {} {{ {}", x, true_branch));
+                        if let Some(f) = f {
+                            let span = t
+                                .span
+                                .with_lo(t.span.hi())
+                                .with_hi(f.span.lo() + BytePos(1));
+                            let false_branch = if eq {
+                                "Err(_) => {".to_string()
+                            } else {
+                                format!("Ok(g) => {{ {} = g;", g)
+                            };
+                            add_replacement(ctx, span, false_branch);
+
+                            let span = f.span.with_lo(f.span.hi());
+                            add_replacement(ctx, span, "}".to_string());
+                        } else {
+                            let span = t.span.with_lo(t.span.hi());
+                            let false_branch = if eq {
+                                "Err(_) => {} }".to_string()
+                            } else {
+                                format!("Ok(g) => {{ {} = g; }} }}", g)
+                            };
+                            add_replacement(ctx, span, false_branch);
+                        }
+                    }
+                    _ => (),
+                },
+                _ => (),
+            },
             _ => (),
         }
     }
@@ -1122,6 +1190,40 @@ fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
     match &e.kind {
         ExprKind::Cast(e, _) => unwrap_cast_recursively(e),
         _ => e,
+    }
+}
+
+fn normalize_arg<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) -> (String, String) {
+    let arg = unwrap_addr(unwrap_cast_recursively(e)).unwrap();
+    match &arg.kind {
+        ExprKind::Unary(
+            UnOp::Deref,
+            Expr {
+                kind: ExprKind::MethodCall(method, args, _),
+                ..
+            },
+        ) => {
+            assert_eq!(method.ident.name.to_ident_string(), "offset");
+            assert_eq!(args.len(), 2);
+            let arr = match &args[0].kind {
+                ExprKind::MethodCall(method, args, _) => {
+                    assert_eq!(method.ident.name.to_ident_string(), "as_mut_ptr");
+                    assert_eq!(args.len(), 1);
+                    name(&args[0]).unwrap()
+                }
+                _ => unreachable!(),
+            };
+            let ind = unwrap_cast_recursively(&args[1]);
+            let ind = span_to_string(ctx, ind.span);
+            let arg = format!("{}[{} as usize]", arr, ind);
+            let guard = guard_of(&format!("{}[{}]", arr, ind));
+            (arg, guard)
+        }
+        _ => {
+            let arg = span_to_string(ctx, arg.span);
+            let guard = guard_of(&arg);
+            (arg, guard)
+        }
     }
 }
 
