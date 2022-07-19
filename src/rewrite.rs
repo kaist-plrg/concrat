@@ -600,11 +600,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let arg = &args[idx];
                     let arg = unwrap_addr(unwrap_cast_recursively(arg)).unwrap();
                     match &arg.kind {
-                        ExprKind::Path(_) => {
-                            let arg = name(arg).unwrap();
-                            let guard = guard_of(&arg);
-                            (arg, guard)
-                        }
                         ExprKind::Unary(
                             UnOp::Deref,
                             Expr {
@@ -628,25 +623,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             let guard = guard_of(&format!("{}[{}]", arr, ind));
                             (arg, guard)
                         }
-                        ExprKind::Field(e, f) => {
-                            let field = f.name.to_ident_string();
-                            match &e.kind {
-                                ExprKind::Path(_) => {
-                                    let s = name(e).unwrap();
-                                    let arg = format!("{}.{}", s, field);
-                                    let guard = guard_of(&arg);
-                                    (arg, guard)
-                                }
-                                ExprKind::Unary(UnOp::Deref, e) => {
-                                    let s = name(e).unwrap();
-                                    let arg = format!("(*{}).{}", s, field);
-                                    let guard = guard_of(&format!("{}->{}", s, field));
-                                    (arg, guard)
-                                }
-                                _ => unreachable!(),
-                            }
+                        _ => {
+                            let arg = span_to_string(ctx, arg.span);
+                            let guard = guard_of(&arg);
+                            (arg, guard)
                         }
-                        e => unreachable!("{:?}", e),
                     }
                 };
                 match f.as_deref() {
