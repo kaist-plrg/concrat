@@ -18,5 +18,6 @@ examples/struct_condvar
 examples/struct_malloc
 examples/struct_assume
 examples/struct_init
+examples/struct_timedwait
 examples/unused_func
 bench/C-Thread-Pool

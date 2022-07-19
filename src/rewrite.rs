@@ -30,6 +30,8 @@ lazy_static! {
         Mutex::new(HashSet::default());
     static ref GUARD_MAP: Mutex<HashMap<String, Vec<String>>> = Mutex::new(HashMap::default());
     static ref ID_TYPE_MAP: Mutex<HashMap<String, String>> = Mutex::new(HashMap::default());
+    static ref DURATION_MAP: Mutex<HashMap<(String, String, String), String>> =
+        Mutex::new(HashMap::default());
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
@@ -214,6 +216,21 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
                 _ => (),
             },
+            ExprKind::AssignOp(op, lhs, rhs) => match op.node {
+                BinOpKind::Add => match lhs.kind {
+                    ExprKind::Field(s, f) => {
+                        if type_as_string(ctx, s) == "timespec" {
+                            let func = func_name();
+                            let s = span_to_string(ctx, s.span);
+                            let f = span_to_string(ctx, f.span);
+                            let r = span_to_string(ctx, rhs.span);
+                            DURATION_MAP.lock().unwrap().insert((func, s, f), r);
+                        }
+                    }
+                    _ => (),
+                },
+                _ => (),
+            },
             ExprKind::Path(_) => {
                 if let (Some(_f), Some(n)) = (current_function(ctx, e.hir_id), name(e)) {
                     let ty = type_as_string(ctx, e);
@@ -253,7 +270,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             add_replacement(
                 ctx,
                 span,
-                "use std::sync::{Mutex, MutexGuard, Condvar};\nu".to_string(),
+                "use std::{sync::{Mutex, MutexGuard, Condvar}, time::Duration};\nu".to_string(),
             );
         }
     }
@@ -692,6 +709,33 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         let g = arg(1).1;
                         use_guard(func_name(), g.clone());
                         add_replacement(ctx, e.span, format!("{1} = {0}.wait({1}).unwrap()", c, g));
+                    }
+                    Some("pthread_cond_timedwait") => {
+                        let c = arg(0).0;
+                        let g = arg(1).1;
+                        let t = arg(2).0;
+                        use_guard(func_name(), g.clone());
+                        let duration_map = DURATION_MAP.lock().unwrap();
+                        let f = func_name();
+                        let zero = "0".to_string();
+                        let tv_sec = duration_map
+                            .get(&(f.clone(), t.clone(), "tv_sec".to_string()))
+                            .unwrap_or(&zero);
+                        let tv_nsec = duration_map
+                            .get(&(f, t, "tv_nsec".to_string()))
+                            .unwrap_or(&zero);
+                        add_replacement(
+                            ctx,
+                            e.span,
+                            format!(
+                                "{{
+        let tmp = {0}.wait_timeout({1}, Duration::new({2} as u64, {3} as u32)).unwrap();
+        {1} = tmp.0;
+        if tmp.1.timed_out() {{ libc::ETIMEDOUT }} else {{ 0 }}
+    }}",
+                                c, g, tv_sec, tv_nsec
+                            ),
+                        );
                     }
                     Some("pthread_cond_signal") => {
                         add_replacement(ctx, e.span, format!("{}.notify_one()", arg(0).0));
