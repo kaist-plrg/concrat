@@ -278,49 +278,57 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
         match &i.kind {
             ItemKind::Impl(im) => {
-                let t = path_to_string(im.of_trait.as_ref().unwrap().path);
-                if t == "Copy" {
+                let t = im.of_trait.as_ref().map(|t| path_to_string(t.path));
+                if t == Some("Copy".to_string()) {
                     let s = match &im.self_ty.kind {
                         TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
                         _ => unreachable!(),
                     };
-                    if struct_mutex_map().contains_key(&s) {
-                        let span = i.span;
-                        add_replacement(
-                            ctx,
-                            span.with_lo(span.lo() - BytePos(9))
-                                .with_hi(span.hi() + BytePos(9)),
-                            "".to_string(),
-                        );
+                    if let Some(map) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
+                        if map
+                            .iter()
+                            .any(|(_, t)| t == "pthread_mutex_t" || t == "pthread_cond_t")
+                        {
+                            let span = i.span;
+                            add_replacement(
+                                ctx,
+                                span.with_lo(span.lo() - BytePos(9))
+                                    .with_hi(span.hi() + BytePos(9)),
+                                "".to_string(),
+                            );
+                        }
                     }
                 }
             }
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
-                if let Some(map) = struct_mutex_map().get(&s) {
-                    let mut new_structs = String::new();
-                    let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
-                    let v: Vec<_> = map
-                        .iter()
-                        .map(|(x, m)| {
-                            (
-                                x.clone(),
-                                struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
-                                m.clone(),
-                            )
-                        })
-                        .collect();
-                    for f in fs.iter() {
-                        let name = f.ident.name.to_ident_string();
-                        if span_to_string(ctx, f.ty.span) == "pthread_cond_t" {
-                            add_replacement(ctx, f.ty.span, "Condvar".to_string());
-                            continue;
-                        }
-                        if v.iter().any(|(x, _, _)| *x == name) {
-                            let span = f.span.with_hi(f.span.hi() + BytePos(1));
-                            add_replacement(ctx, span, "".to_string());
-                            continue;
-                        }
+                let empty = HashMap::new();
+                let map = struct_mutex_map().get(&s).unwrap_or(&empty);
+                let mut new_structs = String::new();
+                let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
+                let v: Vec<_> = map
+                    .iter()
+                    .map(|(x, m)| {
+                        (
+                            x.clone(),
+                            struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
+                            m.clone(),
+                        )
+                    })
+                    .collect();
+                for f in fs.iter() {
+                    let name = f.ident.name.to_ident_string();
+                    let typ = span_to_string(ctx, f.ty.span);
+                    if typ == "pthread_cond_t" {
+                        add_replacement(ctx, f.ty.span, "Condvar".to_string());
+                        continue;
+                    }
+                    if v.iter().any(|(x, _, _)| *x == name) {
+                        let span = f.span.with_hi(f.span.hi() + BytePos(1));
+                        add_replacement(ctx, span, "".to_string());
+                        continue;
+                    }
+                    if typ == "pthread_mutex_t" {
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, t, m)| {
@@ -331,7 +339,9 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                                 }
                             })
                             .collect();
-                        if !pfs.is_empty() {
+                        if pfs.is_empty() {
+                            add_replacement(ctx, f.ty.span, "Mutex<()>".to_string());
+                        } else {
                             let st_name = struct_of2(&s, &name);
                             add_replacement(ctx, f.ty.span, format!("Mutex<{}>", st_name));
                             let st_body = join(pfs, ", ");
@@ -339,9 +349,9 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                             new_structs.push_str(&st);
                         }
                     }
-                    if !new_structs.is_empty() {
-                        add_replacement(ctx, i.span.shrink_to_hi(), new_structs);
-                    }
+                }
+                if !new_structs.is_empty() {
+                    add_replacement(ctx, i.span.shrink_to_hi(), new_structs);
                 }
             }
             ItemKind::Static(t, _, _) => {
@@ -658,8 +668,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 let f = f.name.to_ident_string();
                                 if GLOBAL_DEF_MAP.lock().unwrap().contains_key(&s) {
                                     add_replacement(ctx, e.span, "0".to_string());
-                                } else {
-                                    let map = struct_mutex_map().get(&typ).unwrap();
+                                } else if let Some(map) = struct_mutex_map().get(&typ) {
                                     let init_map = INIT_MAP.lock().unwrap();
                                     let init = join(
                                         map.iter()
@@ -678,9 +687,15 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     );
                                     let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
                                     let new_init = format!(
-                                        "{} = Mutex::new({})",
+                                        "{{ {} = Mutex::new({}); 0 }}",
                                         span_to_string(ctx, m.span),
                                         st
+                                    );
+                                    add_replacement(ctx, e.span, new_init);
+                                } else {
+                                    let new_init = format!(
+                                        "{{ {} = Mutex::new(()); 0 }}",
+                                        span_to_string(ctx, m.span)
                                     );
                                     add_replacement(ctx, e.span, new_init);
                                 }
@@ -827,38 +842,42 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Struct(_, fs, _) => {
                 let typ = type_as_string(ctx, e);
-                if let Some(map) = struct_mutex_map().get(&typ) {
-                    let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
-                    let v: Vec<_> = map
-                        .iter()
-                        .map(|(x, m)| {
-                            (
-                                x.clone(),
-                                struct_def_map.get(&typ).unwrap().get(x).unwrap().clone(),
-                                m.clone(),
-                            )
-                        })
-                        .collect();
-                    let init_map: HashMap<_, _> = fs
-                        .iter()
-                        .map(|f| {
-                            (
-                                f.ident.name.to_ident_string(),
-                                span_to_string(ctx, f.expr.span),
-                            )
-                        })
-                        .collect();
-                    for f in fs.iter() {
-                        let name = f.ident.name.to_ident_string();
-                        if type_as_string(ctx, f.expr).contains("pthread_cond_t") {
-                            add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
-                            continue;
-                        }
-                        if v.iter().any(|(x, _, _)| *x == name) {
-                            let span = f.span.with_hi(f.span.hi() + BytePos(1));
-                            add_replacement(ctx, span, "".to_string());
-                            continue;
-                        }
+                let empty = HashMap::new();
+                let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
+                let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
+                let v: Vec<_> = map
+                    .iter()
+                    .map(|(x, m)| {
+                        (
+                            x.clone(),
+                            struct_def_map.get(&typ).unwrap().get(x).unwrap().clone(),
+                            m.clone(),
+                        )
+                    })
+                    .collect();
+                let init_map: HashMap<_, _> = fs
+                    .iter()
+                    .map(|f| {
+                        (
+                            f.ident.name.to_ident_string(),
+                            span_to_string(ctx, f.expr.span),
+                        )
+                    })
+                    .collect();
+                for f in fs.iter() {
+                    let name = f.ident.name.to_ident_string();
+                    let typ = type_as_string(ctx, f.expr);
+                    println!("{}", typ);
+                    if typ.contains("pthread_cond_t") {
+                        add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
+                        continue;
+                    }
+                    if v.iter().any(|(x, _, _)| *x == name) {
+                        let span = f.span.with_hi(f.span.hi() + BytePos(1));
+                        add_replacement(ctx, span, "".to_string());
+                        continue;
+                    }
+                    if typ.contains("pthread_mutex_t") {
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, _, m)| {
@@ -870,7 +889,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             })
                             .collect();
-                        if !pfs.is_empty() {
+                        if pfs.is_empty() {
+                            add_replacement(ctx, f.expr.span, "Mutex::new(())".to_string());
+                        } else {
                             let st_name = struct_of2(&typ, &name);
                             let st_body = join(pfs, ", ");
                             let st = format!("{} {{ {} }}", st_name, st_body);
