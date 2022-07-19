@@ -29,7 +29,9 @@ impl AnalysisSummary {
             println!("\t{}: {:?}", k, v);
         }
         println!("\n[node_map]");
-        for (k, v) in &self.node_map {
+        let mut node_map: Vec<_> = self.node_map.iter().collect();
+        node_map.sort();
+        for (k, v) in &node_map {
             println!("\t{}: {:?}", k, v);
         }
         println!("\n[function_map]");
