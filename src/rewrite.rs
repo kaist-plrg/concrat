@@ -216,7 +216,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             },
             ExprKind::Path(_) => {
                 if let (Some(_f), Some(n)) = (current_function(ctx, e.hir_id), name(e)) {
-                    let ty = type_of(ctx, e).to_string().replace("main::", "");
+                    let ty = type_as_string(ctx, e);
                     if !ty.contains("fn(") {
                         ID_TYPE_MAP.lock().unwrap().insert(n, ty);
                     }
@@ -636,11 +636,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         match m.kind {
                             ExprKind::Field(s, f) => {
                                 let func = func_name();
-                                let typ = type_of(ctx, s)
-                                    .to_string()
-                                    .strip_prefix("main::")
-                                    .unwrap()
-                                    .to_string();
+                                let typ = type_as_string(ctx, s);
                                 let s = normalize_path(&span_to_string(ctx, s.span));
                                 let f = f.name.to_ident_string();
                                 if GLOBAL_DEF_MAP.lock().unwrap().contains_key(&s) {
@@ -652,7 +648,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                         map.iter()
                                             .filter_map(|(x, m)| {
                                                 if *m == f {
-                                                    println!("{} {} {}", func, s, x);
                                                     let i = init_map
                                                         .get(&(func.clone(), s.clone(), x.clone()))
                                                         .unwrap();
@@ -787,11 +782,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
             }
             ExprKind::Struct(_, fs, _) => {
-                let typ = type_of(ctx, e)
-                    .to_string()
-                    .strip_prefix("main::")
-                    .unwrap()
-                    .to_string();
+                let typ = type_as_string(ctx, e);
                 if let Some(map) = struct_mutex_map().get(&typ) {
                     let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
                     let v: Vec<_> = map
@@ -815,7 +806,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         .collect();
                     for f in fs.iter() {
                         let name = f.ident.name.to_ident_string();
-                        if type_of(ctx, f.expr).to_string().contains("pthread_cond_t") {
+                        if type_as_string(ctx, f.expr).contains("pthread_cond_t") {
                             add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
                             continue;
                         }
@@ -881,13 +872,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // struct
             ExprKind::Field(s, f) => {
-                let ty = type_of(ctx, s)
-                    .to_string()
-                    .replace("&mut ", "")
-                    .replace('&', "")
-                    .strip_prefix("main::")
-                    .unwrap()
-                    .to_string();
+                let ty = type_as_string(ctx, s).replace("&mut ", "").replace('&', "");
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = span_to_string(ctx, s.span);
@@ -920,11 +905,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Assign(lhs, _, _) => match lhs.kind {
                 ExprKind::Field(s, f) => {
-                    let ty = type_of(ctx, s)
-                        .to_string()
-                        .strip_prefix("main::")
-                        .unwrap()
-                        .to_string();
+                    let ty = type_as_string(ctx, s);
                     let s = normalize_path(&span_to_string(ctx, s.span));
                     let f = f.name.to_ident_string();
                     if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
@@ -1041,6 +1022,10 @@ fn type_of<'a, 'b, 'tcx>(
 ) -> rustc_middle::ty::Ty<'b> {
     let id = e.hir_id;
     ctx.tcx.typeck(id.owner).node_type(id)
+}
+
+fn type_as_string<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) -> String {
+    type_of(ctx, e).to_string().replace("main::", "")
 }
 
 fn path_to_symbol<'tcx>(p: &'tcx Path<'tcx>) -> Symbol {
