@@ -9,10 +9,10 @@ typedef int __pid_t;
 typedef long __clock_t;
 typedef long __time_t;
 typedef unsigned long size_t;
-struct __anonstruct___sigset_t_764561023 {
+struct __anonstruct___sigset_t_991265788 {
    unsigned long __val[1024UL / (8UL * sizeof(unsigned long ))] ;
 };
-typedef struct __anonstruct___sigset_t_764561023 __sigset_t;
+typedef struct __anonstruct___sigset_t_991265788 __sigset_t;
 typedef __sigset_t sigset_t;
 union sigval {
    int sival_int ;
@@ -44,42 +44,42 @@ struct __anonstruct__addr_bnd_5259977 {
    void *_lower ;
    void *_upper ;
 };
-union __anonunion__bounds_801020161 {
+union __anonunion__bounds_505112296 {
    struct __anonstruct__addr_bnd_5259977 _addr_bnd ;
    __uint32_t _pkey ;
 };
-struct __anonstruct__sigfault_543708144 {
+struct __anonstruct__sigfault_657862099 {
    void *si_addr ;
    short si_addr_lsb ;
-   union __anonunion__bounds_801020161 _bounds ;
+   union __anonunion__bounds_505112296 _bounds ;
 };
 struct __anonstruct__sigpoll_386613454 {
    long si_band ;
    int si_fd ;
 };
-struct __anonstruct__sigsys_634745154 {
+struct __anonstruct__sigsys_44812255 {
    void *_call_addr ;
    int _syscall ;
    unsigned int _arch ;
 };
-union __anonunion__sifields_540637023 {
+union __anonunion__sifields_369293474 {
    int _pad[128UL / sizeof(int ) - 4UL] ;
    struct __anonstruct__kill_244518854 _kill ;
    struct __anonstruct__timer_490064738 _timer ;
    struct __anonstruct__rt_619254530 _rt ;
    struct __anonstruct__sigchld_284671705 _sigchld ;
-   struct __anonstruct__sigfault_543708144 _sigfault ;
+   struct __anonstruct__sigfault_657862099 _sigfault ;
    struct __anonstruct__sigpoll_386613454 _sigpoll ;
-   struct __anonstruct__sigsys_634745154 _sigsys ;
+   struct __anonstruct__sigsys_44812255 _sigsys ;
 };
-struct __anonstruct_siginfo_t_741136699 {
+struct __anonstruct_siginfo_t_727121837 {
    int si_signo ;
    int si_errno ;
    int si_code ;
    int __pad0 ;
-   union __anonunion__sifields_540637023 _sifields ;
+   union __anonunion__sifields_369293474 _sifields ;
 };
-typedef struct __anonstruct_siginfo_t_741136699 siginfo_t;
+typedef struct __anonstruct_siginfo_t_727121837 siginfo_t;
 union pthread_attr_t ;
 typedef union pthread_attr_t pthread_attr_t;
 union __anonunion___sigaction_handler_363639592 {
@@ -107,25 +107,25 @@ struct __pthread_mutex_s {
    short __elision ;
    __pthread_list_t __list ;
 };
-struct __anonstruct___wseq32_817613185 {
+struct __anonstruct___wseq32_112954846 {
    unsigned int __low ;
    unsigned int __high ;
 };
-union __anonunion____missing_field_name_101974041 {
+union __anonunion____missing_field_name_878880208 {
    unsigned long long __wseq ;
-   struct __anonstruct___wseq32_817613185 __wseq32 ;
+   struct __anonstruct___wseq32_112954846 __wseq32 ;
 };
-struct __anonstruct___g1_start32_817613186 {
+struct __anonstruct___g1_start32_1034561119 {
    unsigned int __low ;
    unsigned int __high ;
 };
-union __anonunion____missing_field_name_529023891 {
+union __anonunion____missing_field_name_1034561118 {
    unsigned long long __g1_start ;
-   struct __anonstruct___g1_start32_817613186 __g1_start32 ;
+   struct __anonstruct___g1_start32_1034561119 __g1_start32 ;
 };
 struct __pthread_cond_s {
-   union __anonunion____missing_field_name_101974041 __annonCompField1 ;
-   union __anonunion____missing_field_name_529023891 __annonCompField2 ;
+   union __anonunion____missing_field_name_878880208 __annonCompField1 ;
+   union __anonunion____missing_field_name_1034561118 __annonCompField2 ;
    unsigned int __g_refs[2] ;
    unsigned int __g_size[2] ;
    unsigned int __g1_orig_size ;
@@ -235,42 +235,40 @@ struct thpool_ {
 typedef struct thpool_ thpool_;
 typedef unsigned long uintptr_t;
 typedef struct thpool_ *threadpool;
-#pragma merger("0","/tmp/cil-J_dAtDK8.i","")
+#pragma merger("0","/tmp/cil-AyrgnWqJ.i","")
 extern unsigned int sleep(unsigned int __seconds ) ;
-extern int ( __attribute__((__nonnull__(1), __leaf__)) sigemptyset)(sigset_t *__set )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__leaf__)) sigaction)(int __sig , struct sigaction  const  * __restrict  __act ,
-                                                  struct sigaction * __restrict  __oact )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__leaf__)) pthread_kill)(pthread_t __threadid , int __signo )  __attribute__((__nothrow__)) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) sigemptyset)(sigset_t *__set ) ;
+extern  __attribute__((__nothrow__)) int sigaction(int __sig , struct sigaction  const  * __restrict  __act ,
+                                                   struct sigaction * __restrict  __oact ) ;
+extern  __attribute__((__nothrow__)) int pthread_kill(pthread_t __threadid , int __signo ) ;
 extern FILE *stderr ;
 extern int fprintf(FILE * __restrict  __stream , char const   * __restrict  __format 
                    , ...) ;
-extern int ( /* format attribute */  snprintf)(char * __restrict  __s , size_t __maxlen ,
-                                               char const   * __restrict  __format 
-                                               , ...)  __attribute__((__nothrow__)) ;
-extern void *( __attribute__((__leaf__)) malloc)(size_t __size )  __attribute__((__nothrow__,
-__malloc__, __alloc_size__(1))) ;
-extern void ( __attribute__((__leaf__)) free)(void *__ptr )  __attribute__((__nothrow__)) ;
-extern void ( __attribute__((__leaf__)) exit)(int __status )  __attribute__((__nothrow__,
-__noreturn__)) ;
-extern time_t ( __attribute__((__leaf__)) time)(time_t *__timer )  __attribute__((__nothrow__)) ;
-extern double ( __attribute__((__leaf__)) difftime)(time_t __time1 , time_t __time0 )  __attribute__((__nothrow__,
-__const__)) ;
-extern int ( __attribute__((__nonnull__(1,3))) pthread_create)(pthread_t * __restrict  __newthread ,
-                                                               pthread_attr_t const   * __restrict  __attr ,
-                                                               void *(*__start_routine)(void * ) ,
-                                                               void * __restrict  __arg )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__leaf__)) pthread_detach)(pthread_t __th )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1), __leaf__)) pthread_mutex_init)(pthread_mutex_t *__mutex ,
-                                                                           pthread_mutexattr_t const   *__mutexattr )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1))) pthread_mutex_lock)(pthread_mutex_t *__mutex )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1))) pthread_mutex_unlock)(pthread_mutex_t *__mutex )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1), __leaf__)) pthread_cond_init)(pthread_cond_t * __restrict  __cond ,
-                                                                          pthread_condattr_t const   * __restrict  __cond_attr )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1))) pthread_cond_signal)(pthread_cond_t *__cond )  __attribute__((__nothrow__)) ;
-extern int ( __attribute__((__nonnull__(1))) pthread_cond_broadcast)(pthread_cond_t *__cond )  __attribute__((__nothrow__)) ;
+extern  __attribute__((__nothrow__)) int ( /* format attribute */  snprintf)(char * __restrict  __s ,
+                                                                             size_t __maxlen ,
+                                                                             char const   * __restrict  __format 
+                                                                             , ...) ;
+extern  __attribute__((__nothrow__)) void *malloc(size_t __size )  __attribute__((__malloc__)) ;
+extern  __attribute__((__nothrow__)) void free(void *__ptr ) ;
+extern  __attribute__((__nothrow__, __noreturn__)) void exit(int __status ) ;
+extern  __attribute__((__nothrow__)) time_t time(time_t *__timer ) ;
+extern  __attribute__((__nothrow__)) double difftime(time_t __time1 , time_t __time0 )  __attribute__((__const__)) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,3))) pthread_create)(pthread_t * __restrict  __newthread ,
+                                                                                             pthread_attr_t const   * __restrict  __attr ,
+                                                                                             void *(*__start_routine)(void * ) ,
+                                                                                             void * __restrict  __arg ) ;
+extern  __attribute__((__nothrow__)) int pthread_detach(pthread_t __th ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_mutex_init)(pthread_mutex_t *__mutex ,
+                                                                                               pthread_mutexattr_t const   *__mutexattr ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_mutex_lock)(pthread_mutex_t *__mutex ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_mutex_unlock)(pthread_mutex_t *__mutex ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_cond_init)(pthread_cond_t * __restrict  __cond ,
+                                                                                              pthread_condattr_t const   * __restrict  __cond_attr ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_cond_signal)(pthread_cond_t *__cond ) ;
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_cond_broadcast)(pthread_cond_t *__cond ) ;
 extern int ( __attribute__((__nonnull__(1,2))) pthread_cond_wait)(pthread_cond_t * __restrict  __cond ,
                                                                   pthread_mutex_t * __restrict  __mutex ) ;
-extern int ( __attribute__((__leaf__)) prctl)(int __option  , ...)  __attribute__((__nothrow__)) ;
+extern  __attribute__((__nothrow__)) int prctl(int __option  , ...) ;
 struct thpool_ *thpool_init(int num_threads ) ;
 int thpool_add_work(struct thpool_ *thpool_p , void (*function_p)(void * ) , void *arg_p ) ;
 void thpool_wait(struct thpool_ *thpool_p ) ;
@@ -713,11 +711,10 @@ static void bsem_wait(struct bsem *bsem_p )
   return;
 }
 }
-#pragma merger("0","/tmp/cil-oDobv0z3.i","")
+#pragma merger("0","/tmp/cil-O2DPwCEf.i","")
 extern int printf(char const   * __restrict  __format  , ...) ;
 extern int puts(char const   *__s ) ;
-extern pthread_t ( __attribute__((__leaf__)) pthread_self)(void)  __attribute__((__nothrow__,
-__const__)) ;
+extern  __attribute__((__nothrow__)) pthread_t pthread_self(void)  __attribute__((__const__)) ;
 void task(void *arg ) 
 { 
   pthread_t tmp ;
@@ -735,17 +732,17 @@ int main(void)
   int i ;
 
   {
-  puts((char const   *)"Making threadpool with 4 threads");
+  puts("Making threadpool with 4 threads");
   tmp = thpool_init(4);
   thpool = tmp;
-  puts((char const   *)"Adding 40 tasks to threadpool");
+  puts("Adding 40 tasks to threadpool");
   i = 0;
   while (i < 40) {
     thpool_add_work(thpool, & task, (void *)((uintptr_t )i));
     i ++;
   }
   thpool_wait(thpool);
-  puts((char const   *)"Killing threadpool");
+  puts("Killing threadpool");
   thpool_destroy(thpool);
   return (0);
 }

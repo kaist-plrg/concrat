@@ -60,10 +60,10 @@ pub type __time_t = libc::c_long;
 pub type size_t = libc::c_ulong;
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___sigset_t_764561023 {
+pub struct __anonstruct___sigset_t_991265788 {
     pub __val: [libc::c_ulong; 16],
 }
-pub type __sigset_t = __anonstruct___sigset_t_764561023;
+pub type __sigset_t = __anonstruct___sigset_t_991265788;
 pub type sigset_t = __sigset_t;
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -109,16 +109,16 @@ pub struct __anonstruct__addr_bnd_5259977 {
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion__bounds_801020161 {
+pub union __anonunion__bounds_505112296 {
     pub _addr_bnd: __anonstruct__addr_bnd_5259977,
     pub _pkey: __uint32_t,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct__sigfault_543708144 {
+pub struct __anonstruct__sigfault_657862099 {
     pub si_addr: *mut libc::c_void,
     pub si_addr_lsb: libc::c_short,
-    pub _bounds: __anonunion__bounds_801020161,
+    pub _bounds: __anonunion__bounds_505112296,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -128,33 +128,33 @@ pub struct __anonstruct__sigpoll_386613454 {
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct__sigsys_634745154 {
+pub struct __anonstruct__sigsys_44812255 {
     pub _call_addr: *mut libc::c_void,
     pub _syscall: libc::c_int,
     pub _arch: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion__sifields_540637023 {
+pub union __anonunion__sifields_369293474 {
     pub _pad: [libc::c_int; 28],
     pub _kill: __anonstruct__kill_244518854,
     pub _timer: __anonstruct__timer_490064738,
     pub _rt: __anonstruct__rt_619254530,
     pub _sigchld: __anonstruct__sigchld_284671705,
-    pub _sigfault: __anonstruct__sigfault_543708144,
+    pub _sigfault: __anonstruct__sigfault_657862099,
     pub _sigpoll: __anonstruct__sigpoll_386613454,
-    pub _sigsys: __anonstruct__sigsys_634745154,
+    pub _sigsys: __anonstruct__sigsys_44812255,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct_siginfo_t_741136699 {
+pub struct __anonstruct_siginfo_t_727121837 {
     pub si_signo: libc::c_int,
     pub si_errno: libc::c_int,
     pub si_code: libc::c_int,
     pub __pad0: libc::c_int,
-    pub _sifields: __anonunion__sifields_540637023,
+    pub _sifields: __anonunion__sifields_369293474,
 }
-pub type siginfo_t = __anonstruct_siginfo_t_741136699;
+pub type siginfo_t = __anonstruct_siginfo_t_727121837;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub union pthread_attr_t {
@@ -197,33 +197,33 @@ pub struct __pthread_mutex_s {
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___wseq32_817613185 {
+pub struct __anonstruct___wseq32_112954846 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_101974041 {
+pub union __anonunion____missing_field_name_878880208 {
     pub __wseq: libc::c_ulonglong,
-    pub __wseq32: __anonstruct___wseq32_817613185,
+    pub __wseq32: __anonstruct___wseq32_112954846,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___g1_start32_817613186 {
+pub struct __anonstruct___g1_start32_1034561119 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_529023891 {
+pub union __anonunion____missing_field_name_1034561118 {
     pub __g1_start: libc::c_ulonglong,
-    pub __g1_start32: __anonstruct___g1_start32_817613186,
+    pub __g1_start32: __anonstruct___g1_start32_1034561119,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __pthread_cond_s {
-    pub __annonCompField1: __anonunion____missing_field_name_101974041,
-    pub __annonCompField2: __anonunion____missing_field_name_529023891,
+    pub __annonCompField1: __anonunion____missing_field_name_878880208,
+    pub __annonCompField2: __anonunion____missing_field_name_1034561118,
     pub __g_refs: [libc::c_uint; 2],
     pub __g_size: [libc::c_uint; 2],
     pub __g1_orig_size: libc::c_uint,

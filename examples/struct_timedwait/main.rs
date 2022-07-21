@@ -48,33 +48,33 @@ pub struct __pthread_mutex_s {
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___wseq32_817613185 {
+pub struct __anonstruct___wseq32_112954846 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_190110243 {
+pub union __anonunion____missing_field_name_456658959 {
     pub __wseq: libc::c_ulonglong,
-    pub __wseq32: __anonstruct___wseq32_817613185,
+    pub __wseq32: __anonstruct___wseq32_112954846,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___g1_start32_1011077618 {
+pub struct __anonstruct___g1_start32_554396209 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_1011077617 {
+pub union __anonunion____missing_field_name_554396208 {
     pub __g1_start: libc::c_ulonglong,
-    pub __g1_start32: __anonstruct___g1_start32_1011077618,
+    pub __g1_start32: __anonstruct___g1_start32_554396209,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __pthread_cond_s {
-    pub __annonCompField1: __anonunion____missing_field_name_190110243,
-    pub __annonCompField2: __anonunion____missing_field_name_1011077617,
+    pub __annonCompField1: __anonunion____missing_field_name_456658959,
+    pub __annonCompField2: __anonunion____missing_field_name_554396208,
     pub __g_refs: [libc::c_uint; 2],
     pub __g_size: [libc::c_uint; 2],
     pub __g1_orig_size: libc::c_uint,
@@ -144,10 +144,10 @@ pub static mut s: __anonstruct_s_587009629 = {
         cond: __anonunion_pthread_cond_t_951761805 {
             __data: {
                 let mut init = __pthread_cond_s {
-                    __annonCompField1: __anonunion____missing_field_name_190110243 {
+                    __annonCompField1: __anonunion____missing_field_name_456658959 {
                         __wseq: 0 as libc::c_ulonglong,
                     },
-                    __annonCompField2: __anonunion____missing_field_name_1011077617 {
+                    __annonCompField2: __anonunion____missing_field_name_554396208 {
                         __g1_start: 0 as libc::c_ulonglong,
                     },
                     __g_refs: [0 as libc::c_uint, 0 as libc::c_uint],

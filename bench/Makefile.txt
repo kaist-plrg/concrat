@@ -21,4 +21,4 @@ clean:
 	rm -rf *.xml *.json *.rs Cargo.* rust-toolchain target
 
 clean-intermediate:
-	rm -rf *.json Cargo.lock target
+	rm -rf Cargo.lock target

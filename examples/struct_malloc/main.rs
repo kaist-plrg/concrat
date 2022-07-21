@@ -44,33 +44,33 @@ pub struct __pthread_mutex_s {
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___wseq32_817613185 {
+pub struct __anonstruct___wseq32_112954846 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_1062343758 {
+pub union __anonunion____missing_field_name_499936056 {
     pub __wseq: libc::c_ulonglong,
-    pub __wseq32: __anonstruct___wseq32_817613185,
+    pub __wseq32: __anonstruct___wseq32_112954846,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub struct __anonstruct___g1_start32_817613186 {
+pub struct __anonstruct___g1_start32_803601229 {
     pub __low: libc::c_uint,
     pub __high: libc::c_uint,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
-pub union __anonunion____missing_field_name_429311082 {
+pub union __anonunion____missing_field_name_803601228 {
     pub __g1_start: libc::c_ulonglong,
-    pub __g1_start32: __anonstruct___g1_start32_817613186,
+    pub __g1_start32: __anonstruct___g1_start32_803601229,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __pthread_cond_s {
-    pub __annonCompField1: __anonunion____missing_field_name_1062343758,
-    pub __annonCompField2: __anonunion____missing_field_name_429311082,
+    pub __annonCompField1: __anonunion____missing_field_name_499936056,
+    pub __annonCompField2: __anonunion____missing_field_name_803601228,
     pub __g_refs: [libc::c_uint; 2],
     pub __g_size: [libc::c_uint; 2],
     pub __g1_orig_size: libc::c_uint,
