@@ -1,7 +1,7 @@
 CFLAGS = -pthread
 
 all:
-	make a.xml main.rs clean-intermediate
+	make a.json clean-intermediate
 
 a.xml: main.c
 	goblint --conf ../../conf.json \
@@ -16,6 +16,9 @@ compile_commands.json:
 main.rs: compile_commands.json
 	c2rust transpile -e compile_commands.json && \
 	cargo fmt
+
+a.json: a.xml main.rs
+	cargo run --release --manifest-path ../../Cargo.toml --bin goblint2json -- -i . -d ../../deps
 
 clean:
 	rm -rf *.xml *.json *.rs Cargo.* rust-toolchain target

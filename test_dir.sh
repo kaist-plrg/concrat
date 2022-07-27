@@ -21,10 +21,10 @@ if [ ! -d "$from" ]; then
 fi
 
 mkdir -p $to
-cp -r $from/{*.rs,*.xml,Cargo.toml,rust-toolchain} $to
+cp -r $from/{*.rs,a.json,Cargo.toml,rust-toolchain} $to
 
 echo Translating $from
-cargo run --release -- -i $to $@
+cargo run --release --bin concrat -- -i $to -d deps $@
 
 echo Compiling $from
 nightly=`cat $to/rust-toolchain`

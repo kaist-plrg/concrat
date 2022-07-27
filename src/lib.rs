@@ -37,5 +37,8 @@ extern crate rustc_middle;
 extern crate rustc_span;
 
 pub mod analysis;
+pub mod callback;
 pub mod parse_xml;
 pub mod rewrite;
+pub mod util;
+pub mod validate;

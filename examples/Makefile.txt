@@ -1,7 +1,7 @@
 CFLAGS = -pthread
 
 all:
-	make a.xml main.rs clean-intermediate
+	make a.json clean-intermediate
 
 main: a.o b.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -20,12 +20,15 @@ a.xml: main.c
 compile_commands.json:
 	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json
 
-main.rs: compile_commands.json
+main.rs: compile_commands.json main.c
 	c2rust transpile -e compile_commands.json && \
 	cargo fmt
 
+a.json: a.xml main.rs
+	cargo run --release --manifest-path ../../Cargo.toml --bin goblint2json -- -i . -d ../../deps
+
 clean:
-	rm -rf main main.c *.o *.xml *.json *.rs Cargo.* rust-toolchain target
+	rm -rf main main.c *.o *.xml *.json *.rs *.rlib Cargo.* rust-toolchain target
 
 clean-intermediate:
-	rm -rf main main.c *.o *.json Cargo.lock target
+	rm -rf main main.c *.o compile_commands.json *.rlib Cargo.lock target

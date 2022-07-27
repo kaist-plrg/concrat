@@ -1,20 +1,21 @@
 use std::{
-    collections::{HashMap, HashSet},
+    collections::{BTreeMap, HashMap, HashSet},
     fs::File,
     io::Read,
     sync::Mutex,
 };
 
 use lazy_static::lazy_static;
-use rustc_data_structures::sync;
-use rustc_driver::{Callbacks, RunCompiler};
 use rustc_hir::*;
 use rustc_lint::{LateContext, LateLintPass, LintContext, LintPass};
 use rustc_span::{BytePos, Span, Symbol};
 use rustfix::{Replacement, Snippet, Solution, Suggestion};
 use spin::once::Once;
 
-use crate::analysis::{AnalysisSummary, FunctionSummary};
+use crate::{
+    analysis::{AnalysisSummary, FunctionSummary},
+    callback::{compile_with, LatePass},
+};
 
 lazy_static! {
     static ref REPLACEMENTS: Mutex<Vec<Replacement>> = Mutex::new(vec![]);
@@ -38,45 +39,29 @@ lazy_static! {
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
 
-fn global_mutex_map() -> &'static HashMap<String, String> {
+fn global_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
 }
 
-fn array_mutex_map() -> &'static HashMap<String, String> {
+fn array_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().array_mutex_map
 }
 
-fn struct_mutex_map() -> &'static HashMap<String, HashMap<String, String>> {
+fn struct_mutex_map() -> &'static BTreeMap<String, BTreeMap<String, String>> {
     &SUMMARY.get().unwrap().struct_mutex_map
 }
 
-fn function_mutex_map() -> &'static HashMap<String, FunctionSummary> {
+fn function_mutex_map() -> &'static BTreeMap<String, FunctionSummary> {
     &SUMMARY.get().unwrap().function_map
 }
 
 pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<Replacement> {
     SUMMARY.call_once(|| summary);
 
-    let mut callbacks = DriverCallbacks {
-        passes: vec![GlobalPass::new],
-    };
-
-    let exit_code = rustc_driver::catch_with_exit_code(|| {
-        let compiler = RunCompiler::new(&args, &mut callbacks);
-        compiler.run()
-    });
-
+    let exit_code = compile_with(args.clone(), vec![GlobalPass::new]);
     assert_eq!(exit_code, 0);
 
-    let mut callbacks = DriverCallbacks {
-        passes: vec![RewritePass::new],
-    };
-
-    let exit_code = rustc_driver::catch_with_exit_code(|| {
-        let compiler = RunCompiler::new(&args, &mut callbacks);
-        compiler.run()
-    });
-
+    let exit_code = compile_with(args, vec![RewritePass::new]);
     assert_eq!(exit_code, 0);
 
     let mut replacements = REPLACEMENTS.lock().unwrap();
@@ -101,28 +86,6 @@ pub fn apply_suggestions(mut replacements: Vec<Replacement>) -> String {
         })
         .collect();
     rustfix::apply_suggestions(contents.as_str(), &suggestions).unwrap()
-}
-
-type LatePass = dyn for<'tcx> LateLintPass<'tcx> + sync::Send + sync::Sync + 'static;
-type LateCallback = fn() -> Box<LatePass>;
-
-struct DriverCallbacks {
-    passes: Vec<LateCallback>,
-}
-
-impl Callbacks for DriverCallbacks {
-    fn config(&mut self, cfg: &mut rustc_interface::Config) {
-        let prev_lints = std::mem::replace(&mut cfg.register_lints, None);
-        let passes = self.passes.clone();
-        cfg.register_lints = Some(Box::new(move |sess, lint_store| {
-            for p in passes.clone() {
-                lint_store.register_late_pass(p);
-            }
-            if let Some(lints) = &prev_lints {
-                lints(sess, lint_store);
-            }
-        }));
-    }
 }
 
 struct GlobalPass;
@@ -319,7 +282,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
             }
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
-                let empty = HashMap::new();
+                let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&s).unwrap_or(&empty);
                 let mut new_structs = String::new();
                 let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
@@ -852,7 +815,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Struct(_, fs, _) => {
                 let typ = type_as_string(ctx, e);
-                let empty = HashMap::new();
+                let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
                 let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
                 let v: Vec<_> = map
@@ -1117,7 +1080,7 @@ fn hid_to_string(ctx: &LateContext<'_>, hid: HirId) -> String {
     span_to_string(ctx, ctx.tcx.hir().span(hid))
 }
 
-fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
+pub fn span_to_string(ctx: &LateContext<'_>, span: Span) -> String {
     let source_map = ctx.sess().source_map();
     source_map.span_to_snippet(span).unwrap()
 }

@@ -1,65 +1,51 @@
-use std::collections::{HashMap, HashSet};
+use std::{
+    collections::{BTreeMap, HashMap, HashSet},
+    fs::File,
+    io::stdout,
+    path::Path,
+};
+
+use serde::{Deserialize, Serialize};
 
 use crate::{
     parse_xml::{Element, Name},
     rewrite::normalize_path,
 };
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AnalysisSummary {
-    pub mutex_map: HashMap<String, String>,
-    pub array_mutex_map: HashMap<String, String>,
-    pub struct_mutex_map: HashMap<String, HashMap<String, String>>,
-    pub node_map: HashMap<String, Vec<String>>,
-    pub function_map: HashMap<String, FunctionSummary>,
+    pub mutex_map: BTreeMap<String, String>,
+    pub array_mutex_map: BTreeMap<String, String>,
+    pub struct_mutex_map: BTreeMap<String, BTreeMap<String, String>>,
+    pub function_map: BTreeMap<String, FunctionSummary>,
 }
 
 impl AnalysisSummary {
     pub fn pretty_print(&self) {
-        println!("[mutex_map]");
-        for (k, v) in &self.mutex_map {
-            println!("\t{}: {:?}", k, v);
-        }
-        println!("\n[array_mutex_map]");
-        for (k, v) in &self.array_mutex_map {
-            println!("\t{}: {:?}", k, v);
-        }
-        println!("\n[struct_mutex_map]");
-        for (k, v) in &self.struct_mutex_map {
-            println!("\t{}: {:?}", k, v);
-        }
-        println!("\n[node_map]");
-        let mut node_map: Vec<_> = self.node_map.iter().collect();
-        node_map.sort();
-        for (k, v) in &node_map {
-            println!("\t{}: {:?}", k, v);
-        }
-        println!("\n[function_map]");
-        for (
-            k,
-            FunctionSummary {
-                entry_mutex,
-                node_mutex,
-                ret_mutex,
-            },
-        ) in &self.function_map
-        {
-            println!("\t{}", k);
-            println!("\t\tentry_mutex: {:?}", entry_mutex);
-            println!("\t\tnode_mutex: {:?}", node_mutex);
-            println!("\t\tret_mutex: {:?}", ret_mutex);
-        }
+        serde_json::to_writer_pretty(stdout(), self).unwrap();
+    }
+
+    pub fn from_json(json: &str) -> Self {
+        serde_json::from_str(json).unwrap()
+    }
+
+    pub fn from_json_file(path: &Path) -> Self {
+        let file = File::open(path.to_str().unwrap()).unwrap();
+        serde_json::from_reader(file).unwrap()
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<String>,
     pub node_mutex: Vec<String>,
     pub ret_mutex: Vec<String>,
 }
 
-pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
+pub fn summarize(
+    mut elements: Vec<Element>,
+    structs: &HashMap<String, HashMap<String, String>>,
+) -> AnalysisSummary {
     let mut elements = elements
         .pop()
         .unwrap()
@@ -81,7 +67,7 @@ pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
         .flat_map(to_warning)
         .collect();
 
-    let (mutex_map, array_mutex_map, struct_mutex_map) = generate_mutex_maps(&warnings);
+    let (mutex_map, array_mutex_map, struct_mutex_map) = generate_mutex_maps(&warnings, structs);
     let node_map = generate_node_map(&calls);
     let function_map = generate_function_map(&functions, &node_map);
 
@@ -89,21 +75,36 @@ pub fn summarize(mut elements: Vec<Element>) -> AnalysisSummary {
         mutex_map,
         array_mutex_map,
         struct_mutex_map,
-        node_map,
         function_map,
+    }
+}
+
+fn find_protected<'a>(
+    typ: &'a String,
+    path: &'a [String],
+    mutex: &String,
+    structs: &'a HashMap<String, HashMap<String, String>>,
+) -> (&'a String, &'a String) {
+    let fs = structs.get(typ).unwrap();
+    let f = &path[0];
+    if fs.get(mutex).is_some() {
+        (typ, f)
+    } else {
+        find_protected(fs.get(f).unwrap(), &path[1..], mutex, structs)
     }
 }
 
 fn generate_mutex_maps(
     warnings: &[WarningGroup],
+    structs: &HashMap<String, HashMap<String, String>>,
 ) -> (
-    HashMap<String, String>,
-    HashMap<String, String>,
-    HashMap<String, HashMap<String, String>>,
+    BTreeMap<String, String>,
+    BTreeMap<String, String>,
+    BTreeMap<String, BTreeMap<String, String>>,
 ) {
-    let mut global_mutex_map = HashMap::new();
-    let mut array_mutex_map = HashMap::new();
-    let mut struct_mutex_map = HashMap::new();
+    let mut global_mutex_map = BTreeMap::new();
+    let mut array_mutex_map = BTreeMap::new();
+    let mut struct_mutex_map = BTreeMap::new();
     for WarningGroup {
         name,
         typ,
@@ -120,14 +121,11 @@ fn generate_mutex_maps(
         if let Some(Protection::PLock(plock)) = plocks.pop() {
             assert_eq!(plocks.len(), 0);
             let (typ, field) = find_and_split(typ, '.');
-            let field = if let Some(i) = field.find('.') {
-                &field[..i]
-            } else {
-                field
-            };
+            let path: Vec<_> = field.split('.').map(|s| s.to_string()).collect();
+            let (typ, field) = find_protected(&typ, &path, plock, structs);
             struct_mutex_map
-                .entry(typ)
-                .or_insert_with(HashMap::new)
+                .entry(typ.to_string())
+                .or_insert_with(BTreeMap::new)
                 .insert(field.to_string(), plock.to_string());
             continue;
         }
@@ -155,7 +153,7 @@ fn generate_mutex_maps(
     (global_mutex_map, array_mutex_map, struct_mutex_map)
 }
 
-fn generate_node_map(calls: &[Call]) -> HashMap<String, Vec<String>> {
+fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<String>> {
     let k1 = "symb_locks".to_string();
     let k2 = "var_eq".to_string();
     calls
@@ -221,9 +219,9 @@ fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
 
 fn generate_function_map(
     funcs: &[Function],
-    node_map: &HashMap<String, Vec<String>>,
-) -> HashMap<String, FunctionSummary> {
-    let mut map: HashMap<String, FunctionSummary> = HashMap::new();
+    node_map: &BTreeMap<String, Vec<String>>,
+) -> BTreeMap<String, FunctionSummary> {
+    let mut map: BTreeMap<String, FunctionSummary> = BTreeMap::new();
     for f in funcs {
         let Function {
             name,

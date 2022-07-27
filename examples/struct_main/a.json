@@ -1,0 +1,28 @@
+{
+  "mutex_map": {},
+  "array_mutex_map": {},
+  "struct_mutex_map": {
+    "__anonstruct_s_672045599": {
+      "n1": "m1"
+    }
+  },
+  "function_map": {
+    "f1": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "s.m1"
+      ],
+      "ret_mutex": []
+    },
+    "main": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "t_fun": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    }
+  }
+}
