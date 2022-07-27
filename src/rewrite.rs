@@ -169,6 +169,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                                 let f = f.name.to_ident_string();
                                 MUTEX_INIT_MAP.lock().unwrap().insert((func, s, f));
                             }
+                            ExprKind::Path(_) => (),
                             _ => unreachable!(),
                         }
                     }
@@ -677,6 +678,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     );
                                     add_replacement(ctx, e.span, new_init);
                                 }
+                            }
+                            ExprKind::Path(_) => {
+                                add_replacement(ctx, e.span, "".to_string());
                             }
                             _ => unreachable!(),
                         }
