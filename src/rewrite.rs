@@ -557,7 +557,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     ) {
         match kind {
             intravisit::FnKind::ItemFn(id, _, _) => {
-                let name = correct_function_name(&id.name.to_ident_string());
+                let name = &id.name.to_ident_string();
+                if name == "main" {
+                    return;
+                }
+                let name = correct_function_name(name);
                 let empty = vec![];
                 let entry = if let Some(fs) = function_mutex_map().get(&name) {
                     &fs.entry_mutex
