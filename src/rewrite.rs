@@ -126,6 +126,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     TyKind::Array(t, _) => {
                         let ty = span_to_string(ctx, t.span);
                         let init = match &ctx.tcx.hir().body(*b).value.kind {
+                            ExprKind::Block(Block { expr: Some(e), .. }, _) => &e.kind,
+                            e => e,
+                        };
+                        let init = match init {
                             ExprKind::Repeat(e, l) => {
                                 let e = span_to_string(ctx, e.span);
                                 let l = hid_to_string(ctx, l.hir_id()).parse().unwrap();
@@ -470,7 +474,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     unreachable!()
                 };
                 let stmts = &b.stmts;
-                assert!(!stmts.is_empty());
 
                 if !entry.is_empty() {
                     let params = entry
@@ -639,6 +642,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 if GLOBAL_DEF_MAP.lock().unwrap().contains_key(&s) {
                                     add_replacement(ctx, e.span, "0".to_string());
                                 } else if let Some(map) = struct_mutex_map().get(&typ) {
+                                    let zero = "0".to_string();
                                     let init_map = INIT_MAP.lock().unwrap();
                                     let init = join(
                                         map.iter()
@@ -646,7 +650,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                                 if *m == f {
                                                     let i = init_map
                                                         .get(&(func.clone(), s.clone(), x.clone()))
-                                                        .unwrap();
+                                                        .unwrap_or(&zero);
                                                     Some(format!("{}: {}", x, i))
                                                 } else {
                                                     None
@@ -672,6 +676,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             }
                             _ => unreachable!(),
                         }
+                    }
+                    Some("pthread_mutex_destroy") => {
+                        add_replacement(ctx, e.span, "".to_string());
                     }
                     Some("pthread_mutex_lock") => {
                         let (arg, guard) = arg(0);
