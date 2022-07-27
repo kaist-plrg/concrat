@@ -324,15 +324,11 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                                 }
                             })
                             .collect();
-                        if pfs.is_empty() {
-                            add_replacement(ctx, f.ty.span, "Mutex<()>".to_string());
-                        } else {
-                            let st_name = struct_of2(&s, &name);
-                            add_replacement(ctx, f.ty.span, format!("Mutex<{}>", st_name));
-                            let st_body = join(pfs, ", ");
-                            let st = format!("\npub struct {} {{ {} }}", st_name, st_body);
-                            new_structs.push_str(&st);
-                        }
+                        let st_name = struct_of2(&s, &name);
+                        add_replacement(ctx, f.ty.span, format!("Mutex<{}>", st_name));
+                        let st_body = join(pfs, ", ");
+                        let st = format!("\npub struct {} {{ {} }}", st_name, st_body);
+                        new_structs.push_str(&st);
                     }
                 }
                 if !new_structs.is_empty() {
@@ -644,9 +640,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 let typ = type_as_string(ctx, s);
                                 let s = normalize_path(&span_to_string(ctx, s.span));
                                 let f = f.name.to_ident_string();
+                                let empty = BTreeMap::new();
                                 if GLOBAL_DEF_MAP.lock().unwrap().contains_key(&s) {
                                     add_replacement(ctx, e.span, "0".to_string());
-                                } else if let Some(map) = struct_mutex_map().get(&typ) {
+                                } else {
+                                    let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
                                     let zero = "0".to_string();
                                     let init_map = INIT_MAP.lock().unwrap();
                                     let init = join(
@@ -669,12 +667,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                         "{{ {} = Mutex::new({}); 0 }}",
                                         span_to_string(ctx, m.span),
                                         st
-                                    );
-                                    add_replacement(ctx, e.span, new_init);
-                                } else {
-                                    let new_init = format!(
-                                        "{{ {} = Mutex::new(()); 0 }}",
-                                        span_to_string(ctx, m.span)
                                     );
                                     add_replacement(ctx, e.span, new_init);
                                 }
@@ -876,15 +868,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             })
                             .collect();
-                        if pfs.is_empty() {
-                            add_replacement(ctx, f.expr.span, "Mutex::new(())".to_string());
-                        } else {
-                            let st_name = struct_of2(&typ, &name);
-                            let st_body = join(pfs, ", ");
-                            let st = format!("{} {{ {} }}", st_name, st_body);
-                            let ini = format!("Mutex::new({})", st);
-                            add_replacement(ctx, f.expr.span, ini);
-                        }
+                        let st_name = struct_of2(&typ, &name);
+                        let st_body = join(pfs, ", ");
+                        let st = format!("{} {{ {} }}", st_name, st_body);
+                        let ini = format!("Mutex::new({})", st);
+                        add_replacement(ctx, f.expr.span, ini);
                     }
                 }
             }
