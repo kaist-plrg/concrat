@@ -1,0 +1,24 @@
+{
+  "ana": {
+    "activated": [
+      "expRelation",
+      "base",
+      "threadid",
+      "threadflag",
+      "threadreturn",
+      "escape",
+      "mutex",
+      "mallocWrapper",
+      "var_eq",
+      "symb_locks",
+      "region"
+    ]
+  },
+  "sem": {
+    "unknown_function": {
+      "invalidate": {
+        "globals": false
+      }
+    }
+  }
+}

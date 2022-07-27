@@ -1,0 +1,277 @@
+{
+  "mutex_map": {},
+  "array_mutex_map": {},
+  "struct_mutex_map": {
+    "Event": {
+      "bTriggered": "mutex",
+      "nWaiters": "mutex"
+    },
+    "coordinator": {
+      "nWaiters": "mutexEventTriggered",
+      "numberTriggered": "mutexEventTriggered"
+    }
+  },
+  "function_map": {
+    "BeginMonitoring": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "self.evtStartMonitoring.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "CheckKernelVersion": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "CommitMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "ContinueMonitoring": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "CpuMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "CreateTriggerThreads": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "DestroyEvent": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "DiagTrace": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "ExitProcDump": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "FileDescriptorCountMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "FilterForPid": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "FreeProcDumpConfiguration": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "GetOptions": {
+      "entry_mutex": [
+      ],
+      "node_mutex": [
+      ],
+      "ret_mutex": []
+    },
+    "GetProcessName": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "GetProcessStat": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "InitNamedEvent": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "InitProcDump": {
+      "entry_mutex": [],
+      "node_mutex": [
+      ],
+      "ret_mutex": [
+      ]
+    },
+    "InitProcDumpConfiguration": {
+      "entry_mutex": [],
+      "node_mutex": [
+      ],
+      "ret_mutex": [
+      ]
+    },
+    "IsCoreClrProcess": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "IsValidNumberArg": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "Log": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "LogFormatter": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "LoggerLock"
+      ],
+      "ret_mutex": []
+    },
+    "LookupProcessByPid": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "NewCoreDumpWriter": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "PrintBanner": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "PrintConfiguration": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "self.evtConfigurationPrinted.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "PrintUsage": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "SetEvent": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "Event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "SetQuit": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "self.evtQuit.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "SignalMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "ptrace_mutex"
+      ],
+      "ret_mutex": []
+    },
+    "SignalThread": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "ptrace_mutex"
+      ],
+      "ret_mutex": []
+    },
+    "ThreadCountMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "TimerThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WaitForAllThreadsToTerminate": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WaitForMultipleObjects": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "coordinator.evtCanCleanUp.__annonCompField4.event.mutex",
+        "coordinator.evtStartWaiting.__annonCompField4.event.mutex",
+        "coordinator.mutexEventTriggered",
+        "struct.coordinator.tmp___1.mutexEventTriggered",
+        "struct.tmp___1.tmp___1.mutexEventTriggered",
+        "tmp___1.mutexEventTriggered"
+      ],
+      "ret_mutex": []
+    },
+    "WaitForProcessName": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WaitForQuit": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WaitForQuitOrEvent": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WaitForSingleObject": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "Handle.__annonCompField4.event.mutex",
+        "self.evtQuit.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "WaiterThread": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "input.coordinator.mutexEventTriggered"
+      ],
+      "ret_mutex": []
+    },
+    "WriteCoreDump": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "WriteCoreDumpInternal": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "self.Config.evtQuit.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "main": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "g_evtConfigurationInitialized.__annonCompField4.event.mutex"
+      ],
+      "ret_mutex": []
+    },
+    "popen2": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "sanitize": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    }
+  }
+}

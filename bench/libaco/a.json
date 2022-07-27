@@ -1,0 +1,70 @@
+{
+  "mutex_map": {
+    "gl_race_aco_yield_ct": "gl_race_aco_yield_ct_mutex"
+  },
+  "array_mutex_map": {},
+  "struct_mutex_map": {},
+  "function_map": {
+    "aco_create": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_destroy": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_resume": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_share_stack_destroy": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_share_stack_new": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_share_stack_new2": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "aco_thread_init": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "co_fp0": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "gl_race_aco_yield_ct_mutex"
+      ],
+      "ret_mutex": []
+    },
+    "foo": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "gl_race_aco_yield_ct_mutex"
+      ],
+      "ret_mutex": []
+    },
+    "main": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "pmain": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "gl_race_aco_yield_ct_mutex"
+      ],
+      "ret_mutex": []
+    }
+  }
+}
