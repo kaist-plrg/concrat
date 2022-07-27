@@ -23,3 +23,6 @@ examples/struct_timedwait
 examples/struct_empty
 examples/unused_func
 bench/C-Thread-Pool
+bench/libaco
+bench/fzy
+bench/dump1090
