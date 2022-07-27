@@ -21,7 +21,7 @@ a.json: a.xml main.rs
 	cargo run --release --manifest-path ../../Cargo.toml --bin goblint2json -- -i . -d ../../deps
 
 clean:
-	rm -rf *.xml *.json *.rs Cargo.* rust-toolchain target
+	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target
 
 clean-intermediate:
 	rm -rf Cargo.lock target

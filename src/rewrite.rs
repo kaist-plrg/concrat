@@ -15,6 +15,7 @@ use spin::once::Once;
 use crate::{
     analysis::{AnalysisSummary, FunctionSummary},
     callback::{compile_with, LatePass},
+    util,
 };
 
 lazy_static! {
@@ -38,6 +39,7 @@ lazy_static! {
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
+static TRANS_STRUCT_DEF_MAP: Once<HashMap<String, HashSet<String>>> = Once::new();
 
 fn global_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
@@ -60,6 +62,14 @@ pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<
 
     let exit_code = compile_with(args.clone(), vec![GlobalPass::new]);
     assert_eq!(exit_code, 0);
+
+    let map: HashMap<_, HashSet<_>> = STRUCT_DEF_MAP
+        .lock()
+        .unwrap()
+        .iter()
+        .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
+        .collect();
+    TRANS_STRUCT_DEF_MAP.call_once(|| util::transitive_closure(map));
 
     let exit_code = compile_with(args, vec![RewritePass::new]);
     assert_eq!(exit_code, 0);
@@ -106,7 +116,8 @@ impl LintPass for GlobalPass {
 impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
         match &i.kind {
-            ItemKind::Struct(VariantData::Struct(fs, _), _) => {
+            ItemKind::Struct(VariantData::Struct(fs, _), _)
+            | ItemKind::Union(VariantData::Struct(fs, _), _) => {
                 let s = i.ident.name.to_ident_string();
                 let map = fs
                     .iter()
@@ -268,10 +279,10 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
                         _ => unreachable!(),
                     };
-                    if let Some(map) = STRUCT_DEF_MAP.lock().unwrap().get(&s) {
+                    if let Some(map) = TRANS_STRUCT_DEF_MAP.get().unwrap().get(&s) {
                         if map
                             .iter()
-                            .any(|(_, t)| t == "pthread_mutex_t" || t == "pthread_cond_t")
+                            .any(|t| t == "pthread_mutex_t" || t == "pthread_cond_t")
                         {
                             let span = i.span;
                             add_replacement(

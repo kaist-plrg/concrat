@@ -1,4 +1,6 @@
 use std::{
+    collections::{HashMap, HashSet},
+    hash::Hash,
     path::{Path, PathBuf},
     process::Command,
 };
@@ -80,4 +82,26 @@ fn toolchain_path(home: Option<String>, toolchain: Option<String>) -> Option<Pat
             path
         })
     })
+}
+
+pub fn transitive_closure<T: Clone + Eq + Hash>(
+    mut map: HashMap<T, HashSet<T>>,
+) -> HashMap<T, HashSet<T>> {
+    let empty = HashSet::new();
+    loop {
+        let new = map
+            .iter()
+            .map(|(k, vs)| {
+                let nvs = vs
+                    .iter()
+                    .flat_map(|v| map.get(v).unwrap_or(&empty).clone())
+                    .collect();
+                (k.clone(), vs.union(&nvs).cloned().collect())
+            })
+            .collect();
+        if map == new {
+            return new;
+        }
+        map = new;
+    }
 }
