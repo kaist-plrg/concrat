@@ -465,13 +465,6 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     (&empty, &empty, &empty)
                 };
 
-                let b = if let ExprKind::Block(b, _) = body.value.kind {
-                    b
-                } else {
-                    unreachable!()
-                };
-                let stmts = &b.stmts;
-
                 if !entry.is_empty() {
                     let params = entry
                         .iter()
@@ -518,24 +511,32 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     };
                     add_replacement(ctx, decl.output.span(), sugg);
 
-                    assert!(b.expr.is_none());
-                    let last = stmts.last().unwrap();
-                    if let StmtKind::Semi(e) = last.kind {
-                        match e.kind {
-                            ExprKind::Ret(_) => (),
-                            _ => {
-                                let ret_vals = ret.iter().map(guard_of).collect();
-                                use_guards(name.clone(), &ret_vals);
-                                let ret_val = make_tuple(ret_vals);
-                                add_replacement(
-                                    ctx,
-                                    last.span.shrink_to_hi(),
-                                    format!("\n    {}", ret_val),
-                                );
-                            }
-                        }
+                    let b = if let ExprKind::Block(b, _) = body.value.kind {
+                        b
                     } else {
-                        unreachable!();
+                        unreachable!()
+                    };
+
+                    let span = if let Some(e) = b.expr {
+                        Some(e.span)
+                    } else {
+                        let last = b.stmts.last().unwrap();
+                        if let StmtKind::Semi(e) = last.kind {
+                            if matches!(e.kind, ExprKind::Ret(_)) {
+                                None
+                            } else {
+                                Some(last.span)
+                            }
+                        } else {
+                            unreachable!();
+                        }
+                    };
+
+                    if let Some(span) = span {
+                        let ret_vals: Vec<_> = ret.iter().map(guard_of).collect();
+                        use_guards(name.clone(), &ret_vals);
+                        let ret_val = make_tuple(ret_vals);
+                        add_replacement(ctx, span.shrink_to_hi(), format!("\n    {}", ret_val));
                     }
                 }
             }
