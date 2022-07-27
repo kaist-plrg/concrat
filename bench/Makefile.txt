@@ -3,8 +3,8 @@ CFLAGS = -pthread
 all:
 	make a.json clean-intermediate
 
-a.xml: main.c
-	goblint --conf ../../conf.json \
+a.xml: main.c conf.json
+	goblint --conf conf.json \
 		--enable allglobs \
 		--set result fast_xml \
 		--set outfile a.xml \

@@ -23,6 +23,7 @@ pub struct AnalysisSummary {
 impl AnalysisSummary {
     pub fn pretty_print(&self) {
         serde_json::to_writer_pretty(stdout(), self).unwrap();
+        println!();
     }
 
     pub fn from_json(json: &str) -> Self {
