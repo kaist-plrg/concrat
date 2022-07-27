@@ -689,14 +689,14 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         }
                     }
                     Some("pthread_mutex_destroy") => {
-                        add_replacement(ctx, e.span, "".to_string());
+                        add_replacement(ctx, e.span, "0".to_string());
                     }
                     Some("pthread_mutex_lock") => {
                         let (arg, guard) = arg(0);
                         add_replacement(
                             ctx,
                             e.span,
-                            format!("{} = {}.lock().unwrap()", guard, arg),
+                            format!("{{ {} = {}.lock().unwrap(); 0 }}", guard, arg),
                         );
                     }
                     Some("pthread_mutex_trylock") => {
@@ -705,16 +705,27 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     Some("pthread_mutex_unlock") => {
                         let guard = arg(0).1;
                         use_guard(func_name(), guard.clone());
-                        add_replacement(ctx, e.span, format!("drop({})", guard));
+                        add_replacement(ctx, e.span, format!("{{ drop({}); 0 }}", guard));
                     }
                     Some("pthread_cond_init") => {
-                        add_replacement(ctx, e.span, format!("{} = Condvar::new()", arg(0).0));
+                        add_replacement(
+                            ctx,
+                            e.span,
+                            format!("{{ {} = Condvar::new(); 0 }}", arg(0).0),
+                        );
+                    }
+                    Some("pthread_cond_destroy") => {
+                        add_replacement(ctx, e.span, "0".to_string());
                     }
                     Some("pthread_cond_wait") => {
                         let c = arg(0).0;
                         let g = arg(1).1;
                         use_guard(func_name(), g.clone());
-                        add_replacement(ctx, e.span, format!("{1} = {0}.wait({1}).unwrap()", c, g));
+                        add_replacement(
+                            ctx,
+                            e.span,
+                            format!("{{ {1} = {0}.wait({1}).unwrap(); 0 }}", c, g),
+                        );
                     }
                     Some("pthread_cond_timedwait") => {
                         let c = arg(0).0;
