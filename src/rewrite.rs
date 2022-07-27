@@ -216,12 +216,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 },
                 _ => (),
             },
-            ExprKind::Path(_) => {
-                if let (Some(_f), Some(n)) = (current_function(ctx, e.hir_id), name(e)) {
-                    let ty = type_as_string(ctx, e);
-                    if !ty.contains("fn(") {
-                        ID_TYPE_MAP.lock().unwrap().insert(n, ty);
-                    }
+            ExprKind::Path(_) | ExprKind::Field(_, _) => {
+                let n = normalize_path(&span_to_string(ctx, e.span));
+                let ty = type_as_string(ctx, e);
+                if !ty.contains("fn(") {
+                    ID_TYPE_MAP.lock().unwrap().insert(n, ty);
                 }
             }
             _ => (),
@@ -1222,7 +1221,7 @@ fn struct_of2(s: &str, m: &str) -> String {
 }
 
 fn struct_of_path(_func: &str, s: &str) -> String {
-    if let Some(i) = s.find('.') {
+    if let Some(i) = s.rfind('.') {
         let (s, f) = s.split_at(i);
         struct_of2(
             &ID_TYPE_MAP
