@@ -6,10 +6,10 @@ use rustc_hir::{
 };
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
-use rustc_middle::mir::{self, Body, Location, Operand, Terminator, TerminatorKind};
+use rustc_middle::mir::{self, BasicBlock, Body, Location, Operand, Terminator, TerminatorKind};
 use rustc_mir_dataflow::{
-    fmt::DebugWithContext, Analysis, AnalysisDomain, Backward, CallReturnPlaces, GenKill,
-    GenKillAnalysis,
+    fmt::DebugWithContext, lattice::Dual, Analysis, AnalysisDomain, Backward, CallReturnPlaces,
+    Forward, GenKill, GenKillAnalysis,
 };
 use rustc_span::def_id::DefId;
 
@@ -76,7 +76,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         for callees in self.call_graph.values_mut() {
             callees.retain(|f| functions.contains(f));
         }
-        println!("{:#?}", self.call_graph);
         let id_map: HashMap<_, _> = functions.iter().enumerate().map(|(i, f)| (i, *f)).collect();
         let inv_id_map: HashMap<_, _> = id_map.iter().map(|(i, f)| (*f, *i)).collect();
         let edges = self
@@ -98,15 +97,15 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let f = *id_map.get(&i).unwrap();
             component_elems.entry(scc).or_default().push(f);
         }
-        let component_graph: HashMap<_, _> = sccs
+        let component_elems = component_elems;
+        let mut component_graph: HashMap<_, _> = sccs
             .all_sccs()
             .map(|node| (node, sccs.successors(node).to_vec()))
             .collect();
+        println!("{:#?}", self.call_graph);
         println!("{:#?}", component_elems);
         println!("{:?}", component_graph);
-        if !self.call_graph.is_empty() {
-            return;
-        }
+
         self.mutexes.sort();
         self.mutexes.dedup();
         let mutexes: HashMap<_, _> = self
@@ -115,31 +114,45 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .enumerate()
             .map(|(i, s)| (s.clone(), i))
             .collect();
-        for def_id in functions {
-            println!("{:?}", def_id);
-            let tcx = ctx.tcx;
-            let body = tcx.optimized_mir(def_id);
-            let mut results = LiveGuards {
-                mutexes: mutexes.clone(),
-                ctx,
-                body,
+        while !component_graph.is_empty() {
+            let leaves: HashSet<_> = component_graph
+                .drain_filter(|_, succs| succs.is_empty())
+                .map(|(node, _)| node)
+                .collect();
+            for succs in component_graph.values_mut() {
+                succs.retain(|n| !leaves.contains(n));
             }
-            .into_engine(tcx, body)
-            .iterate_to_fixpoint()
-            .into_results_cursor(body);
-            for (bb, bbd) in body.basic_blocks().iter_enumerated() {
-                results.seek_to_block_start(bb);
-                let state = results.get();
-                println!("{:?}", bb);
-                println!("{:?}", state);
-                for stmt in &bbd.statements {
-                    println!("{:?}", stmt);
-                }
-                if let Some(tm) = &bbd.terminator {
-                    println!("{:?}", tm);
-                }
+            for node in leaves {
+                let funcs = component_elems.get(&node).unwrap();
+                assert_eq!(funcs.len(), 1);
+                let def_id = &funcs[0];
+                let tcx = ctx.tcx;
+                let body = tcx.optimized_mir(def_id);
+                let analysis = LiveGuards {
+                    mutexes: mutexes.clone(),
+                    ctx,
+                    body,
+                };
+                let mut results = analysis
+                    .into_engine(tcx, body)
+                    .iterate_to_fixpoint()
+                    .into_results_cursor(body);
+                results.seek_to_block_start(BasicBlock::from_usize(0));
+                let start = results.get();
+                let analysis = AvailableGuards {
+                    mutexes: mutexes.clone(),
+                    init: start.clone(),
+                    ctx,
+                    body,
+                };
+                let mut results = analysis
+                    .into_engine(tcx, body)
+                    .iterate_to_fixpoint()
+                    .into_results_cursor(body);
+                results.seek_to_block_end(BasicBlock::from_usize(body.basic_blocks().len() - 1));
+                let end = results.get().0.clone();
+                println!("{:?} {:?} {:?}", def_id, start, end);
             }
-            println!();
         }
     }
 }
@@ -239,7 +252,73 @@ impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, '_, '_> {
     fn call_return_effect(
         &self,
         _trans: &mut impl GenKill<Self::Idx>,
-        _block: mir::BasicBlock,
+        _block: BasicBlock,
+        _return_places: CallReturnPlaces<'_, 'tcx>,
+    ) {
+    }
+}
+
+struct AvailableGuards<'a, 'b, 'tcx> {
+    mutexes: HashMap<String, usize>,
+    init: BitSet<Id>,
+    body: &'a Body<'tcx>,
+    ctx: &'b LateContext<'tcx>,
+}
+
+impl<'tcx> AnalysisDomain<'tcx> for AvailableGuards<'_, '_, '_> {
+    type Direction = Forward;
+    type Domain = Dual<BitSet<Id>>;
+
+    const NAME: &'static str = "available guards";
+
+    fn bottom_value(&self, _: &Body<'tcx>) -> Self::Domain {
+        Dual(BitSet::new_filled(self.mutexes.len()))
+    }
+
+    fn initialize_start_block(&self, _: &Body<'tcx>, state: &mut Self::Domain) {
+        state.0.clear();
+        for i in self.init.iter() {
+            state.0.insert(i);
+        }
+    }
+}
+
+impl<'tcx> GenKillAnalysis<'tcx> for AvailableGuards<'_, '_, '_> {
+    type Idx = Id;
+
+    fn statement_effect(
+        &self,
+        _trans: &mut impl GenKill<Self::Idx>,
+        _statement: &mir::Statement<'tcx>,
+        _location: Location,
+    ) {
+    }
+
+    fn terminator_effect(
+        &self,
+        trans: &mut impl GenKill<Self::Idx>,
+        terminator: &Terminator<'tcx>,
+        _location: Location,
+    ) {
+        if let Some((f, args)) = get_function_call(self.ctx, self.body, terminator) {
+            match f.as_str() {
+                "pthread_mutex_lock" => {
+                    let idx = *self.mutexes.get(&args[0]).unwrap();
+                    trans.gen(Id(idx));
+                }
+                "pthread_mutex_unlock" => {
+                    let idx = *self.mutexes.get(&args[0]).unwrap();
+                    trans.kill(Id(idx));
+                }
+                _ => (),
+            }
+        }
+    }
+
+    fn call_return_effect(
+        &self,
+        _trans: &mut impl GenKill<Self::Idx>,
+        _block: BasicBlock,
         _return_places: CallReturnPlaces<'_, 'tcx>,
     ) {
     }

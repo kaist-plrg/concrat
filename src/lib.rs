@@ -25,6 +25,7 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 #![feature(drain_filter)]
+#![feature(hash_drain_filter)]
 #![feature(iter_intersperse)]
 #![feature(rustc_private)]
 
