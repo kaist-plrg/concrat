@@ -95,6 +95,10 @@ fn find_protected<'a>(
     }
 }
 
+fn avoid_keyword(s: &str) -> String {
+    if s == "as" { "as_0" } else { s }.to_string()
+}
+
 fn generate_mutex_maps(
     warnings: &[WarningGroup],
     structs: &HashMap<String, HashMap<String, String>>,
@@ -127,7 +131,7 @@ fn generate_mutex_maps(
             struct_mutex_map
                 .entry(typ.to_string())
                 .or_insert_with(BTreeMap::new)
-                .insert(field.to_string(), plock.to_string());
+                .insert(avoid_keyword(field), avoid_keyword(plock));
             continue;
         }
 
@@ -137,14 +141,14 @@ fn generate_mutex_maps(
             .collect();
         if let Some(Protection::ILock(ilock)) = ilocks.pop() {
             assert_eq!(ilocks.len(), 0);
-            array_mutex_map.insert(name.to_string(), ilock.to_string());
+            array_mutex_map.insert(avoid_keyword(name), avoid_keyword(ilock));
             continue;
         }
 
         if let Some(Protection::Lock(lock)) = protections.last() {
             assert_eq!(protections.len(), 1);
             if !name.is_empty() && !name.contains('@') {
-                global_mutex_map.insert(name.to_string(), lock.to_string());
+                global_mutex_map.insert(avoid_keyword(name), avoid_keyword(lock));
             }
             continue;
         }

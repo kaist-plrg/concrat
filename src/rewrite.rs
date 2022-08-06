@@ -1253,7 +1253,8 @@ fn struct_of_path(_func: &str, s: &str) -> String {
                 .unwrap()
                 .get(&s.to_string())
                 .unwrap()
-                .replace("*mut", ""),
+                .replace("*mut", "")
+                .replace("const ", ""),
             f,
         )
     } else {
