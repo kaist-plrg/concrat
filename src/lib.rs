@@ -40,6 +40,7 @@ extern crate rustc_span;
 
 pub mod analysis;
 pub mod callback;
+pub mod dataflow;
 pub mod graph;
 pub mod parse_xml;
 pub mod rewrite;
