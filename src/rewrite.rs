@@ -171,7 +171,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ExprKind::Call(func, args) => {
                 let f = name(func);
                 match f.as_deref() {
-                    Some("pthread_mutex_init") => {
+                    Some("pthread_mutex_init" | "pthread_spin_init") => {
                         let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
                         match m.kind {
                             ExprKind::Field(s, f) => {
@@ -201,7 +201,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 match rhs.kind {
                     ExprKind::Call(func, args) => {
                         if let Some(f) = name(func) {
-                            if f == "pthread_mutex_trylock" {
+                            if f == "pthread_mutex_trylock" || f == "pthread_spin_trylock" {
                                 let f = func_name();
                                 let l = span_to_string(ctx, lhs.span);
                                 let (a, g) = normalize_arg(ctx, &args[0]);
@@ -280,10 +280,11 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         _ => unreachable!(),
                     };
                     if let Some(map) = TRANS_STRUCT_DEF_MAP.get().unwrap().get(&s) {
-                        if map
-                            .iter()
-                            .any(|t| t == "pthread_mutex_t" || t == "pthread_cond_t")
-                        {
+                        if map.iter().any(|t| {
+                            t == "pthread_mutex_t"
+                                || t == "pthread_spinlock_t"
+                                || t == "pthread_cond_t"
+                        }) {
                             let span = i.span;
                             add_replacement(
                                 ctx,
@@ -323,7 +324,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         add_replacement(ctx, span, "".to_string());
                         continue;
                     }
-                    if typ == "pthread_mutex_t" {
+                    if typ == "pthread_mutex_t" || typ == "pthread_spinlock_t" {
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, t, m)| {
@@ -366,7 +367,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 }
 
                 // mutex
-                if typ == "pthread_mutex_t" {
+                if typ == "pthread_mutex_t" || typ == "pthread_spinlock_t" {
                     let mut decl = String::new();
                     let mut init = String::new();
                     for (x, m) in global_mutex_map() {
@@ -392,7 +393,8 @@ pub static mut {2}: Mutex<{0}> = Mutex::new(
 
                 // mutex array
                 if let TyKind::Array(t, _) = t.kind {
-                    if span_to_string(ctx, t.span) == "pthread_mutex_t" {
+                    let ty = span_to_string(ctx, t.span);
+                    if ty == "pthread_mutex_t" || ty == "pthread_spinlock_t" {
                         let v: Vec<_> = array_mutex_map()
                             .iter()
                             .filter_map(|(x, m)| {
@@ -643,7 +645,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let f = name(func);
                 let arg = |idx| normalize_arg(ctx, &args[idx]);
                 match f.as_deref() {
-                    Some("pthread_mutex_init") => {
+                    Some("pthread_mutex_init" | "pthread_spin_init") => {
                         let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
                         match m.kind {
                             ExprKind::Field(s, f) => {
@@ -688,10 +690,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             _ => unreachable!(),
                         }
                     }
-                    Some("pthread_mutex_destroy") => {
+                    Some("pthread_mutex_destroy" | "pthread_spin_destroy") => {
                         add_replacement(ctx, e.span, "0".to_string());
                     }
-                    Some("pthread_mutex_lock") => {
+                    Some("pthread_mutex_lock" | "pthread_spin_lock") => {
                         let (arg, guard) = arg(0);
                         add_replacement(
                             ctx,
@@ -699,10 +701,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             format!("{{ {} = {}.lock().unwrap(); 0 }}", guard, arg),
                         );
                     }
-                    Some("pthread_mutex_trylock") => {
+                    Some("pthread_mutex_trylock" | "pthread_spin_trylock") => {
                         add_replacement(ctx, e.span, format!("{}.try_lock()", arg(0).0))
                     }
-                    Some("pthread_mutex_unlock") => {
+                    Some("pthread_mutex_unlock" | "pthread_spin_unlock") => {
                         let guard = arg(0).1;
                         use_guard(func_name(), guard.clone());
                         add_replacement(ctx, e.span, format!("{{ drop({}); 0 }}", guard));
@@ -878,7 +880,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         add_replacement(ctx, span, "".to_string());
                         continue;
                     }
-                    if ftyp.contains("pthread_mutex_t") {
+                    if ftyp.contains("pthread_mutex_t") || ftyp.contains("pthread_spinlock_t") {
                         let pfs: Vec<_> = v
                             .iter()
                             .filter_map(|(x, _, m)| {
