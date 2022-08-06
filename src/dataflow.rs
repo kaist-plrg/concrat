@@ -59,7 +59,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ExprKind::Call(f, args) => {
                 if let Some(curr) = current_function(ctx) {
                     if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
-                        self.call_graph.get_mut(&curr).unwrap().insert(def_id);
+                        if let Some(v) = self.call_graph.get_mut(&curr) {
+                            v.insert(def_id);
+                        }
                     }
                 }
                 let f = span_to_string(ctx, f.span);
@@ -114,6 +116,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .enumerate()
             .map(|(i, s)| (s.clone(), i))
             .collect();
+        let mut function_mutex_map: HashMap<DefId, (BitSet<Id>, BitSet<Id>)> = HashMap::new();
         while !component_graph.is_empty() {
             let leaves: HashSet<_> = component_graph
                 .drain_filter(|_, succs| succs.is_empty())
@@ -129,7 +132,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let tcx = ctx.tcx;
                 let body = tcx.optimized_mir(def_id);
                 let analysis = LiveGuards {
-                    mutexes: mutexes.clone(),
+                    mutexes: &mutexes,
+                    function_mutex_map: &function_mutex_map,
                     ctx,
                     body,
                 };
@@ -138,10 +142,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .iterate_to_fixpoint()
                     .into_results_cursor(body);
                 results.seek_to_block_start(BasicBlock::from_usize(0));
-                let start = results.get();
+                let start = results.get().clone();
                 let analysis = AvailableGuards {
-                    mutexes: mutexes.clone(),
-                    init: start.clone(),
+                    mutexes: &mutexes,
+                    function_mutex_map: &function_mutex_map,
+                    start: &start,
                     ctx,
                     body,
                 };
@@ -151,20 +156,29 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .into_results_cursor(body);
                 results.seek_to_block_end(BasicBlock::from_usize(body.basic_blocks().len() - 1));
                 let end = results.get().0.clone();
-                println!("{:?} {:?} {:?}", def_id, start, end);
+                function_mutex_map.insert(*def_id, (start, end));
             }
+        }
+        let mut res: Vec<_> = function_mutex_map.iter().collect();
+        res.sort_by_key(|(def_id, _)| *def_id);
+        for (def_id, (start, end)) in &res {
+            println!("{:?} {:?} {:?}", def_id, start, end);
         }
     }
 }
 
-fn get_function_call(
-    ctx: &LateContext<'_>,
-    body: &Body<'_>,
-    tm: &Terminator<'_>,
-) -> Option<(String, Vec<String>)> {
+fn get_function_call<'tcx>(
+    ctx: &LateContext<'tcx>,
+    body: &Body<'tcx>,
+    tm: &Terminator<'tcx>,
+) -> Option<(DefId, Vec<String>)> {
     if let TerminatorKind::Call { func, args, .. } = &tm.kind {
         let func = if let Operand::Constant(func) = func {
-            span_to_string(ctx, func.span)
+            if let rustc_middle::ty::TyKind::FnDef(def_id, _) = func.literal.ty().kind() {
+                *def_id
+            } else {
+                return None;
+            }
         } else {
             return None;
         };
@@ -198,13 +212,14 @@ impl Idx for Id {
 
 impl<T> DebugWithContext<T> for Id {}
 
-struct LiveGuards<'a, 'b, 'tcx> {
-    mutexes: HashMap<String, usize>,
+struct LiveGuards<'a, 'tcx> {
+    mutexes: &'a HashMap<String, usize>,
+    function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
     body: &'a Body<'tcx>,
-    ctx: &'b LateContext<'tcx>,
+    ctx: &'a LateContext<'tcx>,
 }
 
-impl<'tcx> AnalysisDomain<'tcx> for LiveGuards<'_, '_, '_> {
+impl<'tcx> AnalysisDomain<'tcx> for LiveGuards<'_, '_> {
     type Direction = Backward;
     type Domain = BitSet<Id>;
 
@@ -217,7 +232,7 @@ impl<'tcx> AnalysisDomain<'tcx> for LiveGuards<'_, '_, '_> {
     fn initialize_start_block(&self, _: &Body<'tcx>, _: &mut Self::Domain) {}
 }
 
-impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, '_, '_> {
+impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, 'tcx> {
     type Idx = Id;
 
     fn statement_effect(
@@ -235,16 +250,20 @@ impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, '_, '_> {
         _location: Location,
     ) {
         if let Some((f, args)) = get_function_call(self.ctx, self.body, terminator) {
-            match f.as_str() {
-                "pthread_mutex_lock" => {
+            match self.ctx.tcx.def_path_str(f).as_str() {
+                "main::pthread_mutex_lock" => {
                     let idx = *self.mutexes.get(&args[0]).unwrap();
                     trans.kill(Id(idx));
                 }
-                "pthread_mutex_unlock" => {
+                "main::pthread_mutex_unlock" => {
                     let idx = *self.mutexes.get(&args[0]).unwrap();
                     trans.gen(Id(idx));
                 }
                 _ => (),
+            }
+            if let Some((start, end)) = self.function_mutex_map.get(&f) {
+                trans.kill_all(end.iter());
+                trans.gen_all(start.iter());
             }
         }
     }
@@ -258,14 +277,15 @@ impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, '_, '_> {
     }
 }
 
-struct AvailableGuards<'a, 'b, 'tcx> {
-    mutexes: HashMap<String, usize>,
-    init: BitSet<Id>,
+struct AvailableGuards<'a, 'tcx> {
+    mutexes: &'a HashMap<String, usize>,
+    function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
+    start: &'a BitSet<Id>,
     body: &'a Body<'tcx>,
-    ctx: &'b LateContext<'tcx>,
+    ctx: &'a LateContext<'tcx>,
 }
 
-impl<'tcx> AnalysisDomain<'tcx> for AvailableGuards<'_, '_, '_> {
+impl<'tcx> AnalysisDomain<'tcx> for AvailableGuards<'_, '_> {
     type Direction = Forward;
     type Domain = Dual<BitSet<Id>>;
 
@@ -277,13 +297,13 @@ impl<'tcx> AnalysisDomain<'tcx> for AvailableGuards<'_, '_, '_> {
 
     fn initialize_start_block(&self, _: &Body<'tcx>, state: &mut Self::Domain) {
         state.0.clear();
-        for i in self.init.iter() {
+        for i in self.start.iter() {
             state.0.insert(i);
         }
     }
 }
 
-impl<'tcx> GenKillAnalysis<'tcx> for AvailableGuards<'_, '_, '_> {
+impl<'tcx> GenKillAnalysis<'tcx> for AvailableGuards<'_, 'tcx> {
     type Idx = Id;
 
     fn statement_effect(
@@ -301,16 +321,20 @@ impl<'tcx> GenKillAnalysis<'tcx> for AvailableGuards<'_, '_, '_> {
         _location: Location,
     ) {
         if let Some((f, args)) = get_function_call(self.ctx, self.body, terminator) {
-            match f.as_str() {
-                "pthread_mutex_lock" => {
+            match self.ctx.tcx.def_path_str(f).as_str() {
+                "main::pthread_mutex_lock" => {
                     let idx = *self.mutexes.get(&args[0]).unwrap();
                     trans.gen(Id(idx));
                 }
-                "pthread_mutex_unlock" => {
+                "main::pthread_mutex_unlock" => {
                     let idx = *self.mutexes.get(&args[0]).unwrap();
                     trans.kill(Id(idx));
                 }
                 _ => (),
+            }
+            if let Some((start, end)) = self.function_mutex_map.get(&f) {
+                trans.kill_all(start.iter());
+                trans.gen_all(end.iter());
             }
         }
     }
