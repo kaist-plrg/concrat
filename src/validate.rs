@@ -6,7 +6,7 @@ use rustc_lint::{LateContext, LateLintPass, LintPass};
 
 use crate::{
     callback::{compile_with, LatePass},
-    rewrite::span_to_string,
+    util::span_to_string,
 };
 
 lazy_static! {
