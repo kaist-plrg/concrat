@@ -658,15 +658,18 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     add_replacement(ctx, e.span, "0".to_string());
                                 } else {
                                     let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
-                                    let zero = "0".to_string();
                                     let init_map = INIT_MAP.lock().unwrap();
+                                    let struct_map = STRUCT_DEF_MAP.lock().unwrap();
                                     let init = join(
                                         map.iter()
                                             .filter_map(|(x, m)| {
+                                                let default = default_value(
+                                                    struct_map.get(&typ).unwrap().get(x).unwrap(),
+                                                );
                                                 if *m == f {
                                                     let i = init_map
                                                         .get(&(func.clone(), s.clone(), x.clone()))
-                                                        .unwrap_or(&zero);
+                                                        .unwrap_or(&default);
                                                     Some(format!("{}: {}", x, i))
                                                 } else {
                                                     None
@@ -1259,6 +1262,16 @@ fn struct_of_path(_func: &str, s: &str) -> String {
         )
     } else {
         struct_of(s)
+    }
+}
+
+fn default_value(typ: &str) -> String {
+    if typ.contains("*mut") {
+        "0 as *mut _".to_string()
+    } else if typ.contains("int") || typ.contains("size") {
+        "0".to_string()
+    } else {
+        format!("std::mem::transmute([0u8; std::mem::size_of::<{}>()])", typ)
     }
 }
 
