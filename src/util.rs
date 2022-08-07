@@ -5,9 +5,26 @@ use std::{
 
 use etrace::some_or;
 use rustc_hir::{def::Res, Expr, ExprKind, UnOp};
+use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::TypeckResults;
+use rustc_mir_dataflow::fmt::DebugWithContext;
 use rustc_span::{def_id::DefId, Span};
+
+#[derive(Clone, Copy, Eq, PartialEq, Debug, Hash, PartialOrd, Ord)]
+pub struct Id(usize);
+
+impl Idx for Id {
+    fn new(idx: usize) -> Self {
+        Self(idx)
+    }
+
+    fn index(self) -> usize {
+        self.0
+    }
+}
+
+impl<T> DebugWithContext<T> for Id {}
 
 pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
     let dep = dep.to_str().unwrap();
