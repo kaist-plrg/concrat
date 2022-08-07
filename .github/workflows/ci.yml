@@ -25,5 +25,7 @@ jobs:
         run: cargo clippy -- -D warnings -A clippy::type-complexity -A clippy::single-match
       - name: Build
         run: cargo build --release
+      - name: Run Cargo tests
+        run: cargo test --release --lib
       - name: Run tests
         run: ./test.sh

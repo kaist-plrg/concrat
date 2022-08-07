@@ -15,7 +15,7 @@ use spin::once::Once;
 use crate::{
     analysis::{AnalysisSummary, FunctionSummary},
     callback::{compile_with, LatePass},
-    graph::Graph,
+    graph::transitive_closure,
     util::{normalize_path, span_to_string},
 };
 
@@ -70,7 +70,7 @@ pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<
         .iter()
         .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
         .collect();
-    TRANS_STRUCT_DEF_MAP.call_once(|| Graph::new(map).transitive_closure().into_inner());
+    TRANS_STRUCT_DEF_MAP.call_once(|| transitive_closure(map));
 
     let exit_code = compile_with(args, vec![RewritePass::new]);
     assert_eq!(exit_code, 0);
