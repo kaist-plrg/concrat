@@ -4,7 +4,7 @@ use std::{
 };
 
 use etrace::some_or;
-use rustc_hir::{def::Res, Expr, ExprKind};
+use rustc_hir::{def::Res, Expr, ExprKind, UnOp};
 use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::TypeckResults;
 use rustc_span::{def_id::DefId, Span};
@@ -110,5 +110,30 @@ pub fn resolve_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Res> {
         Some(typeck_res.qpath_res(p, expr.hir_id))
     } else {
         None
+    }
+}
+
+pub fn normalize_path(p: &str) -> String {
+    p.replace("&mut ", "")
+        .split(&[' ', '-', '>', '.', '(', ')', '*', '&'])
+        .filter(|s| !s.is_empty())
+        .collect::<Vec<_>>()
+        .join(".")
+}
+
+pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String>> {
+    match &expr.kind {
+        ExprKind::Box(e)
+        | ExprKind::Unary(UnOp::Deref, e)
+        | ExprKind::Cast(e, _)
+        | ExprKind::DropTemps(e)
+        | ExprKind::AddrOf(_, _, e) => expr_to_path(ctx, e),
+        ExprKind::Field(e, f) => {
+            let mut v = expr_to_path(ctx, e)?;
+            v.push(span_to_string(ctx, f.span));
+            Some(v)
+        }
+        ExprKind::Path(_) => Some(vec![span_to_string(ctx, expr.span)]),
+        _ => None,
     }
 }

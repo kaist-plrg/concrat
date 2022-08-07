@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+use etrace::some_or;
 use rustc_hir::{
     def::{DefKind, Res},
     Expr, ExprKind, Item, ItemKind,
@@ -16,7 +17,7 @@ use rustc_span::def_id::DefId;
 use crate::{
     callback::{compile_with, LatePass},
     graph::compute_sccs,
-    util::{current_function, resolve_path, span_to_string},
+    util::{current_function, normalize_path, resolve_path, span_to_string},
 };
 
 pub fn run(args: Vec<String>) {
@@ -66,7 +67,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
                 let f = span_to_string(ctx, f.span);
                 if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
-                    self.mutexes.push(span_to_string(ctx, args[0].span));
+                    println!("{:?}", crate::util::expr_to_path(ctx, &args[0]));
+                    self.mutexes
+                        .push(normalize_path(&span_to_string(ctx, args[0].span)));
                 }
             }
             _ => (),
@@ -116,6 +119,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .enumerate()
             .map(|(i, s)| (s.clone(), i))
             .collect();
+        let inv_mutexes: HashMap<_, _> = self
+            .mutexes
+            .iter()
+            .enumerate()
+            .map(|(i, s)| (i, s.clone()))
+            .collect();
         let mut function_mutex_map: HashMap<DefId, (BitSet<Id>, BitSet<Id>)> = HashMap::new();
         while !component_graph.is_empty() {
             let leaves: HashSet<_> = component_graph
@@ -129,6 +138,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let funcs = component_elems.get(&node).unwrap();
                 assert_eq!(funcs.len(), 1);
                 let def_id = &funcs[0];
+                assert!(!self.call_graph.get(def_id).unwrap().contains(def_id));
                 let tcx = ctx.tcx;
                 let body = tcx.optimized_mir(def_id);
                 let analysis = LiveGuards {
@@ -156,12 +166,32 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .into_results_cursor(body);
                 results.seek_to_block_end(BasicBlock::from_usize(body.basic_blocks().len() - 1));
                 let end = results.get().0.clone();
+                for (block, bbd) in body.basic_blocks().iter_enumerated() {
+                    let tm = some_or!(&bbd.terminator, continue);
+                    let (func, _) = some_or!(get_function_call(ctx, body, tm), continue);
+                    let statement_index = bbd.statements.len();
+                    let location = Location {
+                        block,
+                        statement_index,
+                    };
+                    results.seek_before_primary_effect(location);
+                    let v = results.get().0.clone();
+                    println!("{:?} {:?} {:?}", def_id, func, v);
+                }
                 function_mutex_map.insert(*def_id, (start, end));
             }
         }
         let mut res: Vec<_> = function_mutex_map.iter().collect();
         res.sort_by_key(|(def_id, _)| *def_id);
         for (def_id, (start, end)) in &res {
+            let start: Vec<_> = start
+                .iter()
+                .map(|i| inv_mutexes.get(&i.index()).unwrap())
+                .collect();
+            let end: Vec<_> = end
+                .iter()
+                .map(|i| inv_mutexes.get(&i.index()).unwrap())
+                .collect();
             println!("{:?} {:?} {:?}", def_id, start, end);
         }
     }
@@ -185,10 +215,10 @@ fn get_function_call<'tcx>(
         let mut arguments = vec![];
         for arg in args {
             if let Operand::Move(arg) = arg {
-                arguments.push(span_to_string(
+                arguments.push(normalize_path(&span_to_string(
                     ctx,
                     body.local_decls[arg.local].source_info.span,
-                ));
+                )));
             }
         }
         Some((func, arguments))

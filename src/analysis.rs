@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     parse_xml::{Element, Name},
-    rewrite::normalize_path,
+    util::normalize_path,
 };
 
 #[derive(Debug, Serialize, Deserialize)]

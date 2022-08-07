@@ -16,7 +16,7 @@ use crate::{
     analysis::{AnalysisSummary, FunctionSummary},
     callback::{compile_with, LatePass},
     graph::Graph,
-    util::span_to_string,
+    util::{normalize_path, span_to_string},
 };
 
 lazy_static! {
@@ -1214,13 +1214,6 @@ fn normalize_arg<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) ->
             (arg, guard)
         }
     }
-}
-
-pub fn normalize_path(p: &str) -> String {
-    p.split(&[' ', '-', '>', '.', '(', ')', '*', '&'])
-        .filter(|s| !s.is_empty())
-        .collect::<Vec<_>>()
-        .join(".")
 }
 
 fn path_to_id(p: &str) -> String {
