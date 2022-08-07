@@ -134,7 +134,7 @@ mod tests {
         let mut rpo = super::reverse_post_order(&graph, inv_graph);
         assert_eq!(rpo.len(), 1);
         let v = rpo.pop().unwrap();
-        assert!(v == vec![1, 2] || v == vec![1, 2]);
+        assert!(v == vec![1, 2] || v == vec![2, 1]);
     }
 
     #[test]
