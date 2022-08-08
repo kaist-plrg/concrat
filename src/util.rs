@@ -4,7 +4,7 @@ use std::{
 };
 
 use etrace::some_or;
-use rustc_hir::{def::Res, Expr, ExprKind, Node, UnOp};
+use rustc_hir::{def::Res, Expr, ExprKind, HirId, Node, UnOp};
 use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::{TyCtxt, TypeckResults};
@@ -160,4 +160,16 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String
         ExprKind::Path(_) => Some(vec![span_to_string(ctx, expr.span)]),
         _ => None,
     }
+}
+
+pub fn type_of<'a, 'b>(ctx: &'a LateContext<'b>, hir_id: HirId) -> rustc_middle::ty::Ty<'b> {
+    ctx.tcx.typeck(hir_id.owner).node_type(hir_id)
+}
+
+pub fn type_as_string(ctx: &LateContext<'_>, hir_id: HirId) -> String {
+    type_of(ctx, hir_id).to_string().replace("main::", "")
+}
+
+pub fn join(mut v: Vec<String>, sep: &str) -> String {
+    v.drain(..).intersperse(sep.to_string()).collect()
 }

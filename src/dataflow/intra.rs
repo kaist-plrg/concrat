@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use etrace::some_or;
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::LateContext;
 use rustc_middle::mir::{self, BasicBlock, Body, Location, Terminator};
@@ -10,13 +11,15 @@ use rustc_mir_dataflow::{
 use rustc_span::def_id::DefId;
 
 use super::get_function_call;
-use crate::util::Id;
+use crate::util::{normalize_path, Id};
 
 #[allow(missing_debug_implementations)]
 #[derive(Clone, Copy)]
 pub struct AnalysisContext<'a, 'tcx> {
     mutexes: &'a HashMap<String, usize>,
+    inv_mutexes: &'a HashMap<usize, String>,
     function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
+    params: &'a HashMap<DefId, Vec<(String, String)>>,
     body: &'a Body<'tcx>,
     ctx: &'a LateContext<'tcx>,
 }
@@ -24,15 +27,74 @@ pub struct AnalysisContext<'a, 'tcx> {
 impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     pub fn new(
         mutexes: &'a HashMap<String, usize>,
+        inv_mutexes: &'a HashMap<usize, String>,
         function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
+        params: &'a HashMap<DefId, Vec<(String, String)>>,
         body: &'a Body<'tcx>,
         ctx: &'a LateContext<'tcx>,
     ) -> Self {
         Self {
             mutexes,
+            inv_mutexes,
             function_mutex_map,
+            params,
             body,
             ctx,
+        }
+    }
+
+    fn alias_id(self, id: Id, func: &DefId, args: &[String]) -> Id {
+        let m = self.inv_mutexes.get(&id.index()).unwrap();
+        let i = some_or!(m.find('.'), return id);
+        let x = &m[0..i];
+        let y = &m[i..];
+        let params = self.params.get(func).unwrap();
+        let (i, _) = some_or!(
+            params.iter().enumerate().find(|(_, (p, _))| x == p),
+            return id
+        );
+        let arg = normalize_path(&args[i]);
+        let m = format!("{}{}", arg, y);
+        Id::new(*self.mutexes.get(&m).unwrap())
+    }
+
+    fn terminator_effect(
+        self,
+        trans: &mut impl GenKill<Id>,
+        terminator: &Terminator<'tcx>,
+        forward: bool,
+    ) {
+        if let Some((f, args)) = get_function_call(self.ctx, self.body, terminator) {
+            match self.ctx.tcx.def_path_str(f).as_str() {
+                "main::pthread_mutex_lock" => {
+                    let idx = *self.mutexes.get(&args[0]).unwrap();
+                    if forward {
+                        trans.gen(Id::new(idx));
+                    } else {
+                        trans.kill(Id::new(idx));
+                    }
+                }
+                "main::pthread_mutex_unlock" => {
+                    let idx = *self.mutexes.get(&args[0]).unwrap();
+                    if forward {
+                        trans.kill(Id::new(idx));
+                    } else {
+                        trans.gen(Id::new(idx));
+                    }
+                }
+                _ => (),
+            }
+            if let Some((start, end)) = self.function_mutex_map.get(&f) {
+                let start = start.iter().map(|i| self.alias_id(i, &f, &args));
+                let end = end.iter().map(|i| self.alias_id(i, &f, &args));
+                if forward {
+                    trans.kill_all(start);
+                    trans.gen_all(end);
+                } else {
+                    trans.kill_all(end);
+                    trans.gen_all(start);
+                }
+            }
         }
     }
 }
@@ -81,23 +143,7 @@ impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, 'tcx> {
         terminator: &Terminator<'tcx>,
         _location: Location,
     ) {
-        if let Some((f, args)) = get_function_call(self.ctx.ctx, self.ctx.body, terminator) {
-            match self.ctx.ctx.tcx.def_path_str(f).as_str() {
-                "main::pthread_mutex_lock" => {
-                    let idx = *self.ctx.mutexes.get(&args[0]).unwrap();
-                    trans.kill(Id::new(idx));
-                }
-                "main::pthread_mutex_unlock" => {
-                    let idx = *self.ctx.mutexes.get(&args[0]).unwrap();
-                    trans.gen(Id::new(idx));
-                }
-                _ => (),
-            }
-            if let Some((start, end)) = self.ctx.function_mutex_map.get(&f) {
-                trans.kill_all(end.iter());
-                trans.gen_all(start.iter());
-            }
-        }
+        self.ctx.terminator_effect(trans, terminator, false);
     }
 
     fn call_return_effect(
@@ -160,23 +206,7 @@ impl<'tcx> GenKillAnalysis<'tcx> for AvailableGuards<'_, 'tcx> {
         terminator: &Terminator<'tcx>,
         _location: Location,
     ) {
-        if let Some((f, args)) = get_function_call(self.ctx.ctx, self.ctx.body, terminator) {
-            match self.ctx.ctx.tcx.def_path_str(f).as_str() {
-                "main::pthread_mutex_lock" => {
-                    let idx = *self.ctx.mutexes.get(&args[0]).unwrap();
-                    trans.gen(Id::new(idx));
-                }
-                "main::pthread_mutex_unlock" => {
-                    let idx = *self.ctx.mutexes.get(&args[0]).unwrap();
-                    trans.kill(Id::new(idx));
-                }
-                _ => (),
-            }
-            if let Some((start, end)) = self.ctx.function_mutex_map.get(&f) {
-                trans.kill_all(start.iter());
-                trans.gen_all(end.iter());
-            }
-        }
+        self.ctx.terminator_effect(trans, terminator, true);
     }
 
     fn call_return_effect(

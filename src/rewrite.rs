@@ -16,7 +16,7 @@ use crate::{
     analysis::{AnalysisSummary, FunctionSummary},
     callback::{compile_with, LatePass},
     graph::transitive_closure,
-    util::{normalize_path, span_to_string},
+    util::{join, normalize_path, span_to_string, type_as_string, type_of},
 };
 
 lazy_static! {
@@ -216,7 +216,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ExprKind::AssignOp(op, lhs, rhs) => match op.node {
                 BinOpKind::Add => match lhs.kind {
                     ExprKind::Field(s, f) => {
-                        if type_as_string(ctx, s) == "timespec" {
+                        if type_as_string(ctx, s.hir_id) == "timespec" {
                             let func = func_name();
                             let s = span_to_string(ctx, s.span);
                             let f = span_to_string(ctx, f.span);
@@ -230,7 +230,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             },
             ExprKind::Path(_) | ExprKind::Field(_, _) => {
                 let n = normalize_path(&span_to_string(ctx, e.span));
-                let ty = type_as_string(ctx, e);
+                let ty = type_as_string(ctx, e.hir_id);
                 if !ty.contains("fn(") {
                     ID_TYPE_MAP.lock().unwrap().insert(n, ty);
                 }
@@ -651,7 +651,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         match m.kind {
                             ExprKind::Field(s, f) => {
                                 let func = func_name();
-                                let typ = type_as_string(ctx, s);
+                                let typ = type_as_string(ctx, s.hir_id);
                                 let s = normalize_path(&span_to_string(ctx, s.span));
                                 let f = f.name.to_ident_string();
                                 let empty = BTreeMap::new();
@@ -790,7 +790,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             }
                             if !ret.is_empty() {
-                                if type_of(ctx, e).is_unit() {
+                                if type_of(ctx, e.hir_id).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
                                         let guard = guard_of(&ret[0]);
@@ -849,7 +849,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
             }
             ExprKind::Struct(_, fs, _) => {
-                let typ = type_as_string(ctx, e);
+                let typ = type_as_string(ctx, e.hir_id);
                 let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
                 let struct_def_map = STRUCT_DEF_MAP.lock().unwrap();
@@ -874,7 +874,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     .collect();
                 for f in fs.iter() {
                     let name = f.ident.name.to_ident_string();
-                    let ftyp = type_as_string(ctx, f.expr);
+                    let ftyp = type_as_string(ctx, f.expr.hir_id);
                     if ftyp.contains("pthread_cond_t") {
                         add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
                         continue;
@@ -940,7 +940,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             // struct
             ExprKind::Field(s, f) => {
-                let ty = type_as_string(ctx, s).replace("&mut ", "").replace('&', "");
+                let ty = type_as_string(ctx, s.hir_id)
+                    .replace("&mut ", "")
+                    .replace('&', "");
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
                     let s = span_to_string(ctx, s.span);
@@ -973,7 +975,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Assign(lhs, _, _) => match lhs.kind {
                 ExprKind::Field(s, f) => {
-                    let ty = type_as_string(ctx, s);
+                    let ty = type_as_string(ctx, s.hir_id);
                     let s = normalize_path(&span_to_string(ctx, s.span));
                     let f = f.name.to_ident_string();
                     if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
@@ -1137,18 +1139,6 @@ fn remove_attributes(ctx: &LateContext<'_>, i: &Item<'_>) {
     }
 }
 
-fn type_of<'a, 'b, 'tcx>(
-    ctx: &'a LateContext<'b>,
-    e: &'tcx Expr<'tcx>,
-) -> rustc_middle::ty::Ty<'b> {
-    let id = e.hir_id;
-    ctx.tcx.typeck(id.owner).node_type(id)
-}
-
-fn type_as_string<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) -> String {
-    type_of(ctx, e).to_string().replace("main::", "")
-}
-
 fn path_to_symbol<'tcx>(p: &'tcx Path<'tcx>) -> Symbol {
     p.segments.last().unwrap().ident.name
 }
@@ -1262,10 +1252,6 @@ fn default_value(typ: &str) -> String {
     } else {
         format!("std::mem::transmute([0u8; std::mem::size_of::<{}>()])", typ)
     }
-}
-
-fn join(mut v: Vec<String>, sep: &str) -> String {
-    v.drain(..).intersperse(sep.to_string()).collect()
 }
 
 fn make_tuple(mut v: Vec<String>) -> String {

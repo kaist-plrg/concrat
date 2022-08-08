@@ -18,7 +18,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::compute_sccs,
     util::{
-        current_function, def_id_to_item_name, normalize_path, resolve_path, span_to_string, Id,
+        current_function, def_id_to_item_name, expr_to_path, join, resolve_path, span_to_string,
+        type_as_string, Id,
     },
 };
 
@@ -29,8 +30,9 @@ pub fn run(args: Vec<String>) {
 
 #[derive(Default)]
 struct GlobalPass {
-    mutexes: Vec<String>,
-    params: HashMap<DefId, Vec<String>>,
+    mutexes: HashMap<DefId, HashSet<String>>,
+    params: HashMap<DefId, Vec<(String, String)>>,
+    args_per_type: HashMap<String, HashSet<String>>,
     call_graph: HashMap<DefId, HashSet<DefId>>,
 }
 
@@ -47,6 +49,26 @@ impl LintPass for GlobalPass {
     }
 }
 
+impl GlobalPass {
+    fn possible_mutexes(&self) -> HashSet<String> {
+        let mut mutexes: HashSet<_> = self.mutexes.values().flatten().cloned().collect();
+        for (def_id, ms) in &self.mutexes {
+            let params = self.params.get(def_id).unwrap();
+            for m in ms {
+                let i = some_or!(m.find('.'), continue);
+                let x = &m[0..i];
+                let y = &m[i..];
+                let (_, t) = some_or!(params.iter().find(|(p, _)| p == x), continue);
+                let args = some_or!(self.args_per_type.get(t), continue);
+                for arg in args {
+                    mutexes.insert(format!("{}{}", arg, y));
+                }
+            }
+        }
+        mutexes
+    }
+}
+
 impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
         match &i.kind {
@@ -59,7 +81,15 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .body(*bid)
                     .params
                     .iter()
-                    .map(|p| span_to_string(ctx, p.span))
+                    .map(|p| {
+                        (
+                            span_to_string(ctx, p.pat.span).replace("mut ", ""),
+                            type_as_string(ctx, p.pat.hir_id)
+                                .replace("&mut ", "")
+                                .replace("*mut ", "")
+                                .replace("*const ", ""),
+                        )
+                    })
                     .collect();
                 self.params.insert(def_id, params);
             }
@@ -76,11 +106,30 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             v.insert(def_id);
                         }
                     }
-                }
-                let f = span_to_string(ctx, f.span);
-                if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
-                    self.mutexes
-                        .push(normalize_path(&span_to_string(ctx, args[0].span)));
+
+                    let args: Vec<_> = args
+                        .iter()
+                        .filter_map(|arg| {
+                            let a = join(expr_to_path(ctx, arg)?, ".");
+                            let t = type_as_string(ctx, arg.hir_id)
+                                .replace("&mut ", "")
+                                .replace("*mut ", "")
+                                .replace("*const ", "");
+                            Some((a, t))
+                        })
+                        .collect();
+
+                    let f = span_to_string(ctx, f.span);
+                    if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
+                        self.mutexes
+                            .entry(curr)
+                            .or_default()
+                            .insert(args[0].0.clone());
+                    }
+
+                    for (a, t) in args {
+                        self.args_per_type.entry(t).or_default().insert(a);
+                    }
                 }
             }
             _ => (),
@@ -88,6 +137,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 
     fn check_crate_post(&mut self, ctx: &LateContext<'tcx>) {
+        println!("{:#?}", self.params);
+        println!("{:#?}", self.args_per_type);
         let functions: HashSet<_> = self.call_graph.iter().map(|(f, _)| f).cloned().collect();
         for callees in self.call_graph.values_mut() {
             callees.retain(|f| functions.contains(f));
@@ -97,20 +148,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         println!("{:#?}", component_elems);
         println!("{:?}", component_graph);
 
-        self.mutexes.sort();
-        self.mutexes.dedup();
-        let mutexes: HashMap<_, _> = self
-            .mutexes
+        let mutexes: HashSet<_> = self.possible_mutexes();
+        println!("{:?}", mutexes);
+        let mutexes: HashMap<_, _> = mutexes
             .iter()
             .enumerate()
             .map(|(i, s)| (s.clone(), i))
             .collect();
-        let inv_mutexes: HashMap<_, _> = self
-            .mutexes
-            .iter()
-            .enumerate()
-            .map(|(i, s)| (i, s.clone()))
-            .collect();
+        let inv_mutexes: HashMap<_, _> = mutexes.iter().map(|(s, i)| (*i, s.clone())).collect();
 
         let mut function_mutex_map: HashMap<DefId, (BitSet<Id>, BitSet<Id>)> = HashMap::new();
         let mut call_mutex_map: HashMap<(DefId, DefId), BitSet<Id>> = HashMap::new();
@@ -130,7 +175,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
                 let tcx = ctx.tcx;
                 let body = tcx.optimized_mir(def_id);
-                let ana_ctx = AnalysisContext::new(&mutexes, &function_mutex_map, body, ctx);
+                let ana_ctx = AnalysisContext::new(
+                    &mutexes,
+                    &inv_mutexes,
+                    &function_mutex_map,
+                    &self.params,
+                    body,
+                    ctx,
+                );
 
                 let mut results = live_guards(ana_ctx);
                 results.seek_to_block_start(BasicBlock::from_usize(0));
