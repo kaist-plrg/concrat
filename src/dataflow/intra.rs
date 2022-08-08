@@ -4,7 +4,8 @@ use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::LateContext;
 use rustc_middle::mir::{self, BasicBlock, Body, Location, Terminator};
 use rustc_mir_dataflow::{
-    lattice::Dual, AnalysisDomain, Backward, CallReturnPlaces, Forward, GenKill, GenKillAnalysis,
+    lattice::Dual, Analysis, AnalysisDomain, Backward, CallReturnPlaces, Forward, GenKill,
+    GenKillAnalysis, ResultsCursor,
 };
 use rustc_span::def_id::DefId;
 
@@ -36,15 +37,18 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     }
 }
 
+pub fn live_guards<'a, 'tcx>(
+    ctx: AnalysisContext<'a, 'tcx>,
+) -> ResultsCursor<'a, 'tcx, LiveGuards<'a, 'tcx>> {
+    LiveGuards { ctx }
+        .into_engine(ctx.ctx.tcx, ctx.body)
+        .iterate_to_fixpoint()
+        .into_results_cursor(ctx.body)
+}
+
 #[allow(missing_debug_implementations)]
 pub struct LiveGuards<'a, 'tcx> {
     ctx: AnalysisContext<'a, 'tcx>,
-}
-
-impl<'a, 'tcx> LiveGuards<'a, 'tcx> {
-    pub fn new(ctx: AnalysisContext<'a, 'tcx>) -> Self {
-        Self { ctx }
-    }
 }
 
 impl<'tcx> AnalysisDomain<'tcx> for LiveGuards<'_, '_> {
@@ -105,16 +109,20 @@ impl<'tcx> GenKillAnalysis<'tcx> for LiveGuards<'_, 'tcx> {
     }
 }
 
+pub fn available_guards<'a, 'tcx>(
+    ctx: AnalysisContext<'a, 'tcx>,
+    start: &'a BitSet<Id>,
+) -> ResultsCursor<'a, 'tcx, AvailableGuards<'a, 'tcx>> {
+    AvailableGuards { ctx, start }
+        .into_engine(ctx.ctx.tcx, ctx.body)
+        .iterate_to_fixpoint()
+        .into_results_cursor(ctx.body)
+}
+
 #[allow(missing_debug_implementations)]
 pub struct AvailableGuards<'a, 'tcx> {
     ctx: AnalysisContext<'a, 'tcx>,
     start: &'a BitSet<Id>,
-}
-
-impl<'a, 'tcx> AvailableGuards<'a, 'tcx> {
-    pub fn new(ctx: AnalysisContext<'a, 'tcx>, start: &'a BitSet<Id>) -> Self {
-        Self { ctx, start }
-    }
 }
 
 impl<'tcx> AnalysisDomain<'tcx> for AvailableGuards<'_, '_> {

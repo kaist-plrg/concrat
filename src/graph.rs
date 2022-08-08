@@ -6,6 +6,8 @@ use std::{
 use rustc_data_structures::graph::{scc::Sccs, vec_graph::VecGraph};
 use rustc_index::vec::Idx;
 
+use crate::util::Id;
+
 pub fn transitive_closure<T: Clone + Eq + Hash>(
     mut map: HashMap<T, HashSet<T>>,
 ) -> HashMap<T, HashSet<T>> {
@@ -79,8 +81,41 @@ pub fn reverse_post_order<T: Clone + Eq + Hash>(
     res
 }
 
-pub fn compute_sccs<T: Idx + Ord>(num_nodes: usize, edges: Vec<(T, T)>) -> Sccs<T, T> {
-    Sccs::new(&VecGraph::new(num_nodes, edges))
+pub fn compute_sccs<T: Clone + Eq + Hash>(
+    map: &HashMap<T, HashSet<T>>,
+) -> (HashMap<Id, HashSet<Id>>, HashMap<Id, HashSet<T>>) {
+    let id_map: HashMap<_, _> = map
+        .keys()
+        .enumerate()
+        .map(|(i, f)| (i, f.clone()))
+        .collect();
+    let inv_id_map: HashMap<_, _> = id_map.iter().map(|(i, f)| (f.clone(), *i)).collect();
+    let edges = map
+        .iter()
+        .flat_map(|(node, succs)| {
+            succs.iter().map(|succ| {
+                (
+                    Id::new(*inv_id_map.get(node).unwrap()),
+                    Id::new(*inv_id_map.get(succ).unwrap()),
+                )
+            })
+        })
+        .collect();
+    let sccs: Sccs<Id, Id> = Sccs::new(&VecGraph::new(map.len(), edges));
+
+    let component_graph: HashMap<_, _> = sccs
+        .all_sccs()
+        .map(|node| (node, sccs.successors(node).iter().cloned().collect()))
+        .collect();
+
+    let mut component_elems: HashMap<_, HashSet<_>> = HashMap::new();
+    for i in 0..(map.len()) {
+        let scc = sccs.scc(Id::new(i));
+        let node = id_map.get(&i).unwrap().clone();
+        component_elems.entry(scc).or_default().insert(node);
+    }
+
+    (component_graph, component_elems)
 }
 
 #[cfg(test)]

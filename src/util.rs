@@ -4,10 +4,10 @@ use std::{
 };
 
 use etrace::some_or;
-use rustc_hir::{def::Res, Expr, ExprKind, UnOp};
+use rustc_hir::{def::Res, Expr, ExprKind, Node, UnOp};
 use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
-use rustc_middle::ty::TypeckResults;
+use rustc_middle::ty::{TyCtxt, TypeckResults};
 use rustc_mir_dataflow::fmt::DebugWithContext;
 use rustc_span::{def_id::DefId, Span};
 
@@ -127,6 +127,13 @@ pub fn resolve_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Res> {
         Some(typeck_res.qpath_res(p, expr.hir_id))
     } else {
         None
+    }
+}
+
+pub fn def_id_to_item_name(tcx: TyCtxt<'_>, def_id: DefId) -> String {
+    match tcx.hir().get_if_local(def_id).unwrap() {
+        Node::Item(i) => i.ident.to_string(),
+        _ => unreachable!(),
     }
 }
 
