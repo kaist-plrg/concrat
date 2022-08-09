@@ -1,4 +1,5 @@
 use std::{
+    fmt::Display,
     path::{Path, PathBuf},
     process::Command,
 };
@@ -25,6 +26,47 @@ impl Idx for Id {
 }
 
 impl<T> DebugWithContext<T> for Id {}
+
+#[derive(Clone, Debug)]
+pub struct ExprPath {
+    base: String,
+    projections: Vec<ExprPathProj>,
+}
+
+impl ExprPath {
+    pub fn new(base: String, projections: Vec<ExprPathProj>) -> Self {
+        Self { base, projections }
+    }
+
+    pub fn add_suffix(&mut self, proj: ExprPathProj) {
+        self.projections.push(proj);
+    }
+}
+
+impl Display for ExprPath {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(fmt, "{}", self.base)?;
+        for p in &self.projections {
+            write!(fmt, "{}", p)?;
+        }
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug)]
+pub enum ExprPathProj {
+    Field(String),
+    Index(String),
+}
+
+impl Display for ExprPathProj {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Field(f) => write!(fmt, ".{}", f),
+            Self::Index(i) => write!(fmt, "[{}]", i),
+        }
+    }
+}
 
 pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
     let dep = dep.to_str().unwrap();
@@ -145,7 +187,7 @@ pub fn normalize_path(p: &str) -> String {
         .join(".")
 }
 
-pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String>> {
+pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> {
     match &expr.kind {
         ExprKind::Box(e)
         | ExprKind::Unary(UnOp::Deref, e)
@@ -158,11 +200,11 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String
                 match args[0].kind {
                     ExprKind::MethodCall(m, args, _) => match m.ident.to_string().as_str() {
                         "as_mut_ptr" => {
-                            let arr = &args[0];
-                            let mut p1 = expr_to_path(ctx, arr)?;
-                            let mut p2 = expr_to_path(ctx, index)?;
-                            p1.append(&mut p2);
-                            Some(p1)
+                            let mut base = expr_to_path(ctx, &args[0])?;
+                            let index = unwrap_cast_recursively(index);
+                            let index = span_to_string(ctx, index.span);
+                            base.add_suffix(ExprPathProj::Index(index));
+                            Some(base)
                         }
                         _ => None,
                     },
@@ -172,11 +214,11 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String
             _ => None,
         },
         ExprKind::Field(e, f) => {
-            let mut v = expr_to_path(ctx, e)?;
-            v.push(span_to_string(ctx, f.span));
-            Some(v)
+            let mut base = expr_to_path(ctx, e)?;
+            base.add_suffix(ExprPathProj::Field(span_to_string(ctx, f.span)));
+            Some(base)
         }
-        ExprKind::Path(_) => Some(vec![span_to_string(ctx, expr.span)]),
+        ExprKind::Path(_) => Some(ExprPath::new(span_to_string(ctx, expr.span), vec![])),
         _ => None,
     }
 }
@@ -191,4 +233,11 @@ pub fn type_as_string(ctx: &LateContext<'_>, hir_id: HirId) -> String {
 
 pub fn join(mut v: Vec<String>, sep: &str) -> String {
     v.drain(..).intersperse(sep.to_string()).collect()
+}
+
+pub fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
+    match &e.kind {
+        ExprKind::Cast(e, _) => unwrap_cast_recursively(e),
+        _ => e,
+    }
 }

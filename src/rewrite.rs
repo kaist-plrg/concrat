@@ -16,7 +16,9 @@ use crate::{
     analysis::{AnalysisSummary, FunctionSummary},
     callback::{compile_with, LatePass},
     graph::transitive_closure,
-    util::{join, normalize_path, span_to_string, type_as_string, type_of},
+    util::{
+        join, normalize_path, span_to_string, type_as_string, type_of, unwrap_cast_recursively,
+    },
 };
 
 lazy_static! {
@@ -1162,13 +1164,6 @@ fn unwrap_addr<'tcx>(e: &'tcx Expr<'tcx>) -> Option<&'tcx Expr<'tcx>> {
     match &e.kind {
         ExprKind::AddrOf(_, _, e) => Some(e),
         _ => None,
-    }
-}
-
-fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
-    match &e.kind {
-        ExprKind::Cast(e, _) => unwrap_cast_recursively(e),
-        _ => e,
     }
 }
 

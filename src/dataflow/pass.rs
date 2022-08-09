@@ -8,17 +8,18 @@ use rustc_hir::{
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
 use rustc_middle::mir::{BasicBlock, Location};
-use rustc_span::def_id::DefId;
+use rustc_span::{def_id::DefId, Span};
 
 use super::{
     get_function_call,
     intra::{available_guards, live_guards, AnalysisContext},
+    Arg,
 };
 use crate::{
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order},
     util::{
-        current_function, def_id_to_item_name, expr_to_path, join, resolve_path, span_to_string,
+        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string,
         type_as_string, Id,
     },
 };
@@ -33,6 +34,7 @@ struct GlobalPass {
     mutexes: HashMap<DefId, HashSet<String>>,
     params: HashMap<DefId, Vec<(String, String)>>,
     args_per_type: HashMap<String, HashSet<String>>,
+    calls: HashMap<Span, Vec<Arg>>,
     call_graph: HashMap<DefId, HashSet<DefId>>,
 }
 
@@ -107,10 +109,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         }
                     }
 
+                    self.calls
+                        .insert(e.span, args.iter().map(|arg| Arg::new(ctx, arg)).collect());
+
                     let args: Vec<_> = args
                         .iter()
                         .filter_map(|arg| {
-                            let a = join(expr_to_path(ctx, arg)?, ".");
+                            let a = expr_to_path(ctx, arg)?.to_string();
                             let t = type_as_string(ctx, arg.hir_id)
                                 .replace("&mut ", "")
                                 .replace("*mut ", "")
@@ -175,11 +180,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 &inv_mutexes,
                 &function_mutex_map,
                 &self.params,
+                &self.calls,
                 body,
                 ctx,
             );
 
-            let mut results = live_guards(ana_ctx);
+            let mut results = live_guards(ana_ctx.clone());
             results.seek_to_block_start(BasicBlock::from_usize(0));
             let start = results.get().clone();
 
@@ -190,7 +196,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let mut func_call_mutex_map: HashMap<_, Vec<_>> = HashMap::new();
             for (block, bbd) in body.basic_blocks().iter_enumerated() {
                 let tm = some_or!(&bbd.terminator, continue);
-                let (func, _) = some_or!(get_function_call(ctx, body, tm), continue);
+                let func = some_or!(get_function_call(tm), continue);
                 if !functions.contains(&func) {
                     continue;
                 }
