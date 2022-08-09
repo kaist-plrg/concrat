@@ -20,7 +20,7 @@ use crate::{
     graph::{compute_sccs, inverse, post_order},
     util::{
         current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string,
-        type_as_string, Id,
+        type_as_string, ExprPath, Id,
     },
 };
 
@@ -31,11 +31,13 @@ pub fn run(args: Vec<String>) {
 
 #[derive(Default)]
 struct GlobalPass {
-    mutexes: HashMap<DefId, HashSet<String>>,
+    mutexes: HashMap<DefId, HashSet<ExprPath>>,
     params: HashMap<DefId, Vec<(String, String)>>,
     args_per_type: HashMap<String, HashSet<String>>,
     calls: HashMap<Span, Vec<Arg>>,
+    accesses: HashMap<DefId, Vec<(Span, ExprPath, bool)>>,
     call_graph: HashMap<DefId, HashSet<DefId>>,
+    globs: HashSet<String>,
 }
 
 impl GlobalPass {
@@ -52,18 +54,20 @@ impl LintPass for GlobalPass {
 }
 
 impl GlobalPass {
-    fn possible_mutexes(&self) -> HashSet<String> {
+    fn possible_mutexes(&self) -> HashSet<ExprPath> {
         let mut mutexes: HashSet<_> = self.mutexes.values().flatten().cloned().collect();
         for (def_id, ms) in &self.mutexes {
             let params = self.params.get(def_id).unwrap();
             for m in ms {
-                let i = some_or!(m.find('.'), continue);
-                let x = &m[0..i];
-                let y = &m[i..];
-                let (_, t) = some_or!(params.iter().find(|(p, _)| p == x), continue);
+                if m.is_variable() {
+                    continue;
+                }
+                let (_, t) = some_or!(params.iter().find(|(p, _)| p == &m.base), continue);
                 let args = some_or!(self.args_per_type.get(t), continue);
                 for arg in args {
-                    mutexes.insert(format!("{}{}", arg, y));
+                    let mut m = m.clone();
+                    m.base = arg.clone();
+                    mutexes.insert(m);
                 }
             }
         }
@@ -95,46 +99,57 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .collect();
                 self.params.insert(def_id, params);
             }
+            ItemKind::Static(_, _, _) => {
+                self.globs.insert(i.ident.to_string());
+            }
             _ => (),
         }
     }
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
+        let curr = some_or!(current_function(ctx), return);
+        if let Some(path) = expr_to_path(ctx, e) {
+            if !path.is_variable() || self.globs.contains(&path.base) {
+                self.accesses
+                    .entry(curr)
+                    .or_default()
+                    .push((e.span, path, false));
+            }
+        }
         match &e.kind {
             ExprKind::Call(f, args) => {
-                if let Some(curr) = current_function(ctx) {
-                    if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
-                        if let Some(v) = self.call_graph.get_mut(&curr) {
-                            v.insert(def_id);
-                        }
+                if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
+                    if let Some(v) = self.call_graph.get_mut(&curr) {
+                        v.insert(def_id);
                     }
+                }
 
-                    self.calls
-                        .insert(e.span, args.iter().map(|arg| Arg::new(ctx, arg)).collect());
+                let args: Vec<_> = args.iter().map(|arg| Arg::new(ctx, arg)).collect();
 
-                    let args: Vec<_> = args
-                        .iter()
-                        .filter_map(|arg| {
-                            let a = expr_to_path(ctx, arg)?.to_string();
-                            let t = type_as_string(ctx, arg.hir_id)
-                                .replace("&mut ", "")
-                                .replace("*mut ", "")
-                                .replace("*const ", "");
-                            Some((a, t))
-                        })
-                        .collect();
+                let f = span_to_string(ctx, f.span);
+                if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
+                    self.mutexes
+                        .entry(curr)
+                        .or_default()
+                        .insert(args[0].path.clone().unwrap());
+                }
 
-                    let f = span_to_string(ctx, f.span);
-                    if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
-                        self.mutexes
-                            .entry(curr)
-                            .or_default()
-                            .insert(args[0].0.clone());
-                    }
+                for arg in &args {
+                    self.args_per_type
+                        .entry(arg.typ.clone())
+                        .or_default()
+                        .insert(arg.expr.clone());
+                }
 
-                    for (a, t) in args {
-                        self.args_per_type.entry(t).or_default().insert(a);
-                    }
+                self.calls.insert(e.span, args);
+            }
+            ExprKind::Assign(e, _, _) | ExprKind::AssignOp(_, e, _) => {
+                let path = some_or!(expr_to_path(ctx, e), return);
+                if !path.is_variable() || self.globs.contains(&path.base) {
+                    self.accesses
+                        .entry(curr)
+                        .or_default()
+                        .push((e.span, path, true));
                 }
             }
             _ => (),
@@ -150,6 +165,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         let inv_component_graph = inverse(&component_graph);
         let po = post_order(&component_graph, &inv_component_graph);
 
+        println!("{:#?}", self.accesses);
         println!("{:#?}", self.params);
         println!("{:#?}", self.args_per_type);
         println!("{:#?}", self.call_graph);
@@ -167,6 +183,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         let mut function_mutex_map: HashMap<DefId, (BitSet<Id>, BitSet<Id>)> = HashMap::new();
         let mut call_mutex_map: HashMap<(DefId, DefId), BitSet<Id>> = HashMap::new();
+        let mut function_access_map: HashMap<DefId, _> = HashMap::new();
         for component in po.iter().flatten() {
             let funcs = component_elems.get(component).unwrap();
             assert_eq!(funcs.len(), 1);
@@ -218,6 +235,30 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     })
                     .unwrap();
                 call_mutex_map.insert((*def_id, func), v);
+            }
+
+            if let Some(accesses) = self.accesses.get(def_id) {
+                let mut access_map: HashMap<ExprPath, Vec<(BitSet<Id>, bool)>> = HashMap::new();
+                for (block, bbd) in body.basic_blocks().iter_enumerated() {
+                    for (statement_index, stmt) in bbd.statements.iter().enumerate() {
+                        let location = Location {
+                            block,
+                            statement_index,
+                        };
+                        results.seek_before_primary_effect(location);
+                        let v = results.get().0.clone();
+                        let span = stmt.source_info.span;
+                        for (s, path, write) in accesses {
+                            if s.overlaps(span) {
+                                access_map
+                                    .entry(path.clone())
+                                    .or_default()
+                                    .push((v.clone(), *write));
+                            }
+                        }
+                    }
+                }
+                function_access_map.insert(*def_id, access_map);
             }
 
             function_mutex_map.insert(*def_id, (start, end));
@@ -275,5 +316,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let abs_st: Vec<_> = abs_states.get(def_id).unwrap().iter().map(i2m).collect();
             println!("{} {:?} {:?} {:?}", f, start, end, abs_st);
         }
+
+        println!("{:#?}", function_access_map);
     }
 }

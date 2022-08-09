@@ -11,13 +11,13 @@ use rustc_mir_dataflow::{
 use rustc_span::{def_id::DefId, Span};
 
 use super::{get_function_call, Arg};
-use crate::util::Id;
+use crate::util::{ExprPath, Id};
 
 #[allow(missing_debug_implementations)]
 #[derive(Clone)]
 pub struct AnalysisContext<'a, 'tcx> {
-    mutexes: &'a HashMap<String, usize>,
-    inv_mutexes: &'a HashMap<usize, String>,
+    mutexes: &'a HashMap<ExprPath, usize>,
+    inv_mutexes: &'a HashMap<usize, ExprPath>,
     function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
     params: &'a HashMap<DefId, Vec<(String, String)>>,
     calls: &'a HashMap<Span, Vec<Arg>>,
@@ -27,8 +27,8 @@ pub struct AnalysisContext<'a, 'tcx> {
 
 impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     pub fn new(
-        mutexes: &'a HashMap<String, usize>,
-        inv_mutexes: &'a HashMap<usize, String>,
+        mutexes: &'a HashMap<ExprPath, usize>,
+        inv_mutexes: &'a HashMap<usize, ExprPath>,
         function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
         params: &'a HashMap<DefId, Vec<(String, String)>>,
         calls: &'a HashMap<Span, Vec<Arg>>,
@@ -46,18 +46,18 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         }
     }
 
-    fn alias_id(&self, id: Id, func: &DefId, args: &[Option<String>]) -> Id {
-        let m = self.inv_mutexes.get(&id.index()).unwrap();
-        let i = some_or!(m.find('.'), return id);
-        let x = &m[0..i];
-        let y = &m[i..];
+    fn alias_id(&self, id: Id, func: &DefId, args: &[Arg]) -> Id {
+        let mut m = self.inv_mutexes.get(&id.index()).unwrap().clone();
+        if m.is_variable() {
+            return id;
+        }
         let params = self.params.get(func).unwrap();
         let (i, _) = some_or!(
-            params.iter().enumerate().find(|(_, (p, _))| x == p),
+            params.iter().enumerate().find(|(_, (p, _))| &m.base == p),
             return id
         );
-        let arg = some_or!(&args[i], return id);
-        let m = format!("{}{}", arg, y);
+        let arg = some_or!(args[i].path.as_ref(), return id);
+        m.set_base(arg);
         Id::new(*self.mutexes.get(&m).unwrap())
     }
 
@@ -69,10 +69,9 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     ) {
         let f = some_or!(get_function_call(terminator), return);
         let args = some_or!(self.calls.get(&terminator.source_info.span), return);
-        let args: Vec<_> = args.iter().map(|arg| arg.path()).collect();
         match self.ctx.tcx.def_path_str(f).as_str() {
             "main::pthread_mutex_lock" => {
-                let idx = *self.mutexes.get(args[0].as_ref().unwrap()).unwrap();
+                let idx = *self.mutexes.get(args[0].path.as_ref().unwrap()).unwrap();
                 if forward {
                     trans.gen(Id::new(idx));
                 } else {
@@ -80,7 +79,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
                 }
             }
             "main::pthread_mutex_unlock" => {
-                let idx = *self.mutexes.get(args[0].as_ref().unwrap()).unwrap();
+                let idx = *self.mutexes.get(args[0].path.as_ref().unwrap()).unwrap();
                 if forward {
                     trans.kill(Id::new(idx));
                 } else {
@@ -90,8 +89,8 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
             _ => (),
         }
         if let Some((start, end)) = self.function_mutex_map.get(&f) {
-            let start = start.iter().map(|i| self.alias_id(i, &f, &args));
-            let end = end.iter().map(|i| self.alias_id(i, &f, &args));
+            let start = start.iter().map(|i| self.alias_id(i, &f, args));
+            let end = end.iter().map(|i| self.alias_id(i, &f, args));
             if forward {
                 trans.kill_all(start);
                 trans.gen_all(end);

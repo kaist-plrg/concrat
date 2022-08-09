@@ -27,10 +27,10 @@ impl Idx for Id {
 
 impl<T> DebugWithContext<T> for Id {}
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Hash, PartialEq, Eq)]
 pub struct ExprPath {
-    base: String,
-    projections: Vec<ExprPathProj>,
+    pub base: String,
+    pub projections: Vec<ExprPathProj>,
 }
 
 impl ExprPath {
@@ -40,6 +40,18 @@ impl ExprPath {
 
     pub fn add_suffix(&mut self, proj: ExprPathProj) {
         self.projections.push(proj);
+    }
+
+    pub fn is_variable(&self) -> bool {
+        self.projections.is_empty()
+    }
+
+    pub fn set_base(&mut self, path: &ExprPath) {
+        self.base = path.base.clone();
+        let mut v = vec![];
+        v.append(&mut self.projections);
+        self.projections = path.projections.clone();
+        self.projections.append(&mut v);
     }
 }
 
@@ -53,7 +65,13 @@ impl Display for ExprPath {
     }
 }
 
-#[derive(Clone, Debug)]
+impl core::fmt::Debug for ExprPath {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(self, fmt)
+    }
+}
+
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub enum ExprPathProj {
     Field(String),
     Index(String),
@@ -216,6 +234,13 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> 
         ExprKind::Field(e, f) => {
             let mut base = expr_to_path(ctx, e)?;
             base.add_suffix(ExprPathProj::Field(span_to_string(ctx, f.span)));
+            Some(base)
+        }
+        ExprKind::Index(e, i) => {
+            let mut base = expr_to_path(ctx, e)?;
+            let index = unwrap_cast_recursively(i);
+            let index = span_to_string(ctx, index.span);
+            base.add_suffix(ExprPathProj::Index(index));
             Some(base)
         }
         ExprKind::Path(_) => Some(ExprPath::new(span_to_string(ctx, expr.span), vec![])),
