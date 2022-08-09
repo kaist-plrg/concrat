@@ -42,6 +42,14 @@ impl ExprPath {
         self.projections.push(proj);
     }
 
+    pub fn add_base(&mut self, base: String) {
+        let mut v = vec![];
+        v.append(&mut self.projections);
+        let old_base = std::mem::replace(&mut self.base, base);
+        self.projections.push(ExprPathProj::Field(old_base));
+        self.projections.append(&mut v);
+    }
+
     pub fn is_variable(&self) -> bool {
         self.projections.is_empty()
     }
@@ -52,6 +60,29 @@ impl ExprPath {
         v.append(&mut self.projections);
         self.projections = path.projections.clone();
         self.projections.append(&mut v);
+    }
+
+    pub fn suffix(&self) -> Option<ExprPath> {
+        if self.is_variable() {
+            return None;
+        }
+        let new_base = match &self.projections[0] {
+            ExprPathProj::Field(x) | ExprPathProj::Index(x) => x,
+        };
+        Some(Self::new(new_base.clone(), self.projections[1..].to_vec()))
+    }
+
+    pub fn strip_prefix(&self, path: &ExprPath) -> Option<ExprPath> {
+        if self.base != path.base {
+            return None;
+        }
+        let new_self = self.suffix()?;
+        if path.is_variable() {
+            Some(new_self)
+        } else {
+            let new_path = path.suffix()?;
+            new_self.strip_prefix(&new_path)
+        }
     }
 }
 

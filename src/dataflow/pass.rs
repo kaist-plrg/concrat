@@ -223,8 +223,30 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     statement_index,
                 };
                 results.seek_before_primary_effect(location);
-                let v = results.get().0.clone();
-                func_call_mutex_map.entry(func).or_default().push(v);
+                let v = &results.get().0;
+                let args = self.calls.get(&tm.source_info.span).unwrap();
+                let params = self.params.get(&func).unwrap();
+                let alias_id = |id: Id| {
+                    let m = inv_mutexes.get(&id.index()).unwrap().clone();
+                    if m.is_variable() {
+                        return id;
+                    }
+                    let (i, mut m) = some_or!(
+                        args.iter().enumerate().find_map(|(i, arg)| {
+                            let m = m.strip_prefix(arg.path.as_ref()?)?;
+                            Some((i, m))
+                        }),
+                        return id
+                    );
+                    let arg = &params[i].0;
+                    m.add_base(arg.clone());
+                    Id::new(*mutexes.get(&m).unwrap())
+                };
+                let mut nv = BitSet::new_empty(mutexes.len());
+                for id in v.iter() {
+                    nv.insert(alias_id(id));
+                }
+                func_call_mutex_map.entry(func).or_default().push(nv);
             }
             for (func, mut vs) in func_call_mutex_map {
                 let v = vs
