@@ -152,6 +152,25 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Vec<String
         | ExprKind::Cast(e, _)
         | ExprKind::DropTemps(e)
         | ExprKind::AddrOf(_, _, e) => expr_to_path(ctx, e),
+        ExprKind::MethodCall(m, args, _) => match m.ident.to_string().as_str() {
+            "offset" => {
+                let index = &args[1];
+                match args[0].kind {
+                    ExprKind::MethodCall(m, args, _) => match m.ident.to_string().as_str() {
+                        "as_mut_ptr" => {
+                            let arr = &args[0];
+                            let mut p1 = expr_to_path(ctx, arr)?;
+                            let mut p2 = expr_to_path(ctx, index)?;
+                            p1.append(&mut p2);
+                            Some(p1)
+                        }
+                        _ => None,
+                    },
+                    _ => None,
+                }
+            }
+            _ => None,
+        },
         ExprKind::Field(e, f) => {
             let mut v = expr_to_path(ctx, e)?;
             v.push(span_to_string(ctx, f.span));

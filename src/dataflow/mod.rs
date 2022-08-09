@@ -27,10 +27,14 @@ fn get_function_call<'tcx>(
         let mut arguments = vec![];
         for arg in args {
             if let Operand::Move(arg) = arg {
-                arguments.push(normalize_path(&span_to_string(
-                    ctx,
-                    body.local_decls[arg.local].source_info.span,
-                )));
+                arguments.push(
+                    normalize_path(&span_to_string(
+                        ctx,
+                        body.local_decls[arg.local].source_info.span,
+                    ))
+                    .replace(".as_mut_ptr.offset", "")
+                    .replace(".as.isize", ""),
+                );
             }
         }
         Some((func, arguments))
