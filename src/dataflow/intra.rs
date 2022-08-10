@@ -10,7 +10,7 @@ use rustc_mir_dataflow::{
 };
 use rustc_span::{def_id::DefId, Span};
 
-use super::{get_function_call, Arg};
+use super::{get_function_call, Arg, FunctionSummary};
 use crate::util::{ExprPath, Id};
 
 #[allow(missing_debug_implementations)]
@@ -18,7 +18,7 @@ use crate::util::{ExprPath, Id};
 pub struct AnalysisContext<'a, 'tcx> {
     mutexes: &'a HashMap<ExprPath, usize>,
     inv_mutexes: &'a HashMap<usize, ExprPath>,
-    function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
+    function_mutex_map: &'a HashMap<DefId, FunctionSummary>,
     params: &'a HashMap<DefId, Vec<(String, String)>>,
     calls: &'a HashMap<Span, Vec<Arg>>,
     body: &'a Body<'tcx>,
@@ -29,7 +29,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     pub fn new(
         mutexes: &'a HashMap<ExprPath, usize>,
         inv_mutexes: &'a HashMap<usize, ExprPath>,
-        function_mutex_map: &'a HashMap<DefId, (BitSet<Id>, BitSet<Id>)>,
+        function_mutex_map: &'a HashMap<DefId, FunctionSummary>,
         params: &'a HashMap<DefId, Vec<(String, String)>>,
         calls: &'a HashMap<Span, Vec<Arg>>,
         body: &'a Body<'tcx>,
@@ -88,9 +88,14 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
             }
             _ => (),
         }
-        if let Some((start, end)) = self.function_mutex_map.get(&f) {
-            let start = start.iter().map(|i| self.alias_id(i, &f, args));
-            let end = end.iter().map(|i| self.alias_id(i, &f, args));
+        if let Some(summary) = self.function_mutex_map.get(&f) {
+            let FunctionSummary {
+                entry_mutex,
+                ret_mutex,
+                ..
+            } = summary;
+            let start = entry_mutex.iter().map(|i| self.alias_id(i, &f, args));
+            let end = ret_mutex.iter().map(|i| self.alias_id(i, &f, args));
             if forward {
                 trans.kill_all(start);
                 trans.gen_all(end);
