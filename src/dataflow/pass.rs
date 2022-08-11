@@ -175,18 +175,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let args: Vec<_> = arg_exprs.iter().map(|arg| Arg::new(ctx, arg)).collect();
 
                 let f = span_to_string(ctx, f.span);
+                let mut add_mutex = |i: usize| {
+                    self.mutexes
+                        .entry(curr)
+                        .or_default()
+                        .insert(args[i].path.clone().unwrap())
+                };
                 match f.as_str() {
                     "pthread_mutex_lock" | "pthread_mutex_unlock" | "pthread_mutex_trylock" => {
-                        self.mutexes
-                            .entry(curr)
-                            .or_default()
-                            .insert(args[0].path.clone().unwrap());
+                        add_mutex(0);
                     }
                     "pthread_cond_wait" | "pthread_cond_timedwait" => {
-                        self.mutexes
-                            .entry(curr)
-                            .or_default()
-                            .insert(args[1].path.clone().unwrap());
+                        add_mutex(1);
                     }
                     "pthread_create" => {
                         let t_fun = unwrap_cast_recursively(unwrap_call(&arg_exprs[2]));
@@ -195,7 +195,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         }
                     }
                     "pthread_mutex_init" | "pthread_mutex_destroy" => {
-                        if let Some(mut path) = expr_to_path(ctx, &arg_exprs[0]) {
+                        add_mutex(0);
+                        if let Some(mut path) = args[0].path.clone() {
                             if path.pop().is_some() {
                                 self.init_or_destory.entry(curr).or_default().insert(path);
                             }
@@ -228,7 +229,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
     fn check_crate_post(&mut self, ctx: &LateContext<'tcx>) {
         if verbose() {
-            println!("{:?}", self);
+            println!("{:#?}", self);
         }
 
         // user-defined functions
@@ -552,6 +553,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .push((def_id, path, v, w));
         }
 
+        // find init or destroy functions per type
+        let mut init_or_destroy_map: HashMap<_, HashSet<_>> = HashMap::new();
+        for (def_id, paths) in &mut self.init_or_destory {
+            for path in paths.iter() {
+                let ty = some_or!(self.path_types.get(&(*def_id, path.clone())), continue);
+                init_or_destroy_map
+                    .entry(ty.clone())
+                    .or_default()
+                    .insert(*def_id);
+            }
+        }
+
         // for each struct field access path
         for ((typ, field), mut accesses) in struct_access_per_type {
             // skip read-only
@@ -578,15 +591,20 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let ss = accesses.iter().map(|t| &t.2).cloned().collect();
             let mut mutexes = intersection_all(ss).unwrap();
 
-            // try with only pthread_create reachable functions
+            // remove pthread_create unreachable functions
             if !thread_functions.is_empty() {
                 accesses.retain(|(f, _, _, _)| thread_functions.contains(f));
-                if !accesses.is_empty() && accesses.iter().any(|(_, _, _, w)| *w) {
-                    let ss = accesses.iter().map(|t| &t.2).cloned().collect();
-                    if let Some(ms) = intersection_all(ss) {
-                        for m in ms {
-                            mutexes.insert(m);
-                        }
+            }
+            // remove accesses in init or destroy functions
+            if let Some(init_or_destroy) = init_or_destroy_map.get(&typ) {
+                accesses.retain(|(f, _, _, _)| !init_or_destroy.contains(f));
+            }
+
+            if !accesses.is_empty() && accesses.iter().any(|(_, _, _, w)| *w) {
+                let ss = accesses.iter().map(|t| &t.2).cloned().collect();
+                if let Some(ms) = intersection_all(ss) {
+                    for m in ms {
+                        mutexes.insert(m);
                     }
                 }
             }
