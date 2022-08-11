@@ -1,0 +1,32 @@
+{
+  "mutex_map": {"n":"m"},
+  "array_mutex_map": {},
+  "struct_mutex_map": {},
+  "function_map": {
+    "f1": {
+      "entry_mutex": [],
+      "node_mutex": ["m"],
+      "ret_mutex": []
+    },
+    "f2": {
+      "entry_mutex": [],
+      "node_mutex": ["m"],
+      "ret_mutex": []
+    },
+    "f3": {
+      "entry_mutex": [],
+      "node_mutex": ["m"],
+      "ret_mutex": []
+    },
+    "t_fun": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "main": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    }
+  }
+}

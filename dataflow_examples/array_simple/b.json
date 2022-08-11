@@ -1,0 +1,17 @@
+{
+  "mutex_map": {},
+  "array_mutex_map": {"n":"m"},
+  "struct_mutex_map": {},
+  "function_map": {
+    "f1": {
+      "entry_mutex": [],
+      "node_mutex": ["m[i]"],
+      "ret_mutex": []
+    },
+    "main": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    }
+  }
+}

@@ -12,7 +12,7 @@ use crate::{
     util::normalize_path,
 };
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AnalysisSummary {
     pub mutex_map: BTreeMap<String, String>,
     pub array_mutex_map: BTreeMap<String, String>,
@@ -36,7 +36,7 @@ impl AnalysisSummary {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<String>,
     pub node_mutex: Vec<String>,

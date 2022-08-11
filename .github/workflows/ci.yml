@@ -27,5 +27,7 @@ jobs:
         run: cargo build --release
       - name: Run Cargo tests
         run: cargo test --release --lib
+      - name: Run dataflow analysis tests
+        run: ./test_dataflow.sh
       - name: Run tests
         run: ./test.sh

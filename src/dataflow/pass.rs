@@ -292,16 +292,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let tm = some_or!(&bbd.terminator, continue);
                 // get callee
                 let func = some_or!(get_function_call(tm), continue);
-
-                // find guards held before function call
+                // location of function call
                 let statement_index = bbd.statements.len();
                 let location = Location {
                     block,
                     statement_index,
                 };
-                results.seek_before_primary_effect(location);
-                let v = &results.get().0;
 
+                // find guards held after function call
+                results.seek_after_primary_effect(location);
+                let v = &results.get().0;
                 // update node_mutex
                 node_mutex.union(v);
 
@@ -309,6 +309,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 if !functions.contains(&func) {
                     continue;
                 }
+
+                // find guards held before function call
+                results.seek_before_primary_effect(location);
+                let v = &results.get().0;
 
                 // arguments for this call
                 let args = self.calls.get(&tm.source_info.span).unwrap();
@@ -608,7 +612,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .map(|i| inv_mutexes.get(&i.index()).unwrap().to_string())
                 .collect::<Vec<_>>()
         };
-        let function_map: BTreeMap<_, _> = function_summary_map
+        let mut function_map: BTreeMap<_, _> = function_summary_map
             .iter()
             .map(|(def_id, summary)| {
                 let FunctionSummary {
@@ -636,6 +640,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 (f, summary)
             })
             .collect();
+        function_map.remove("main");
+        let summ = function_map.remove("main_0").unwrap();
+        function_map.insert("main".to_string(), summ);
         let summary = AnalysisSummary {
             mutex_map,
             array_mutex_map,

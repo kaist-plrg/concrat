@@ -25,7 +25,7 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{fs::File, path::PathBuf};
+use std::{collections::HashSet, fs::File, path::PathBuf};
 
 use clap::{App, Arg};
 use concrat::*;
@@ -55,8 +55,16 @@ fn main() {
                 .help("verbose")
                 .takes_value(false),
         )
+        .arg(
+            Arg::with_name("test")
+                .long("test")
+                .short("t")
+                .help("test")
+                .takes_value(false),
+        )
         .get_matches();
     let verbose = matches.is_present("verbose");
+    let test = matches.is_present("test");
     let mut input = PathBuf::from(matches.value_of("input").unwrap());
     let dep = PathBuf::from(matches.value_of("dependency").unwrap());
 
@@ -64,10 +72,40 @@ fn main() {
     let args = util::compile_args(&input, &dep);
     input.pop();
 
-    input.push("a.json");
-    let file = File::create(input.to_str().unwrap()).unwrap();
-    input.pop();
-
     let summary = dataflow::run(args, verbose);
-    serde_json::to_writer_pretty(file, &summary).unwrap();
+
+    if test {
+        input.push("b.json");
+        let file = File::open(input.to_str().unwrap()).unwrap();
+        input.pop();
+
+        let summary2: analysis::AnalysisSummary = serde_json::from_reader(file).unwrap();
+        assert_eq!(summary.mutex_map, summary2.mutex_map, "mutex_map");
+        assert_eq!(
+            summary.array_mutex_map, summary2.array_mutex_map,
+            "array_mutex_map"
+        );
+        assert_eq!(
+            summary.struct_mutex_map, summary2.struct_mutex_map,
+            "struct_mutex_map"
+        );
+        assert_eq!(
+            summary.function_map.keys().collect::<HashSet<_>>(),
+            summary2.function_map.keys().collect::<HashSet<_>>()
+        );
+        for f in summary.function_map.keys() {
+            assert_eq!(
+                summary.function_map.get(f).unwrap(),
+                summary2.function_map.get(f).unwrap(),
+                "{}",
+                f
+            );
+        }
+    } else {
+        input.push("a.json");
+        let file = File::create(input.to_str().unwrap()).unwrap();
+        input.pop();
+
+        serde_json::to_writer_pretty(file, &summary).unwrap();
+    }
 }

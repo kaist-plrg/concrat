@@ -1,0 +1,24 @@
+CFLAGS = -pthread
+
+all:
+	make main.rs clean-intermediate
+
+main: a.o b.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+main.c: a.c
+	CC="cilly --gcc=/usr/bin/clang-14 --merge --keepmerged --noPrintLn" make main && \
+	mv main_comb.c main.c
+
+compile_commands.json:
+	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json
+
+main.rs: compile_commands.json main.c
+	c2rust transpile -e compile_commands.json && \
+	cargo fmt
+
+clean:
+	rm -rf main main.c *.o *.xml compile_commands.json *.rs *.rlib Cargo.* rust-toolchain target
+
+clean-intermediate:
+	rm -rf main main.c *.o compile_commands.json *.rlib Cargo.lock target
