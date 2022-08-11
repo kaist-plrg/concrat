@@ -1,5 +1,6 @@
 use std::{
     collections::{BTreeMap, HashMap, HashSet, VecDeque},
+    hash::Hash,
     sync::{
         atomic::{AtomicBool, Ordering},
         Mutex,
@@ -467,31 +468,33 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // for each global variable access path
         for (path, mut accesses) in global_access {
-            // keep only pthread_create reachable functions
-            if !thread_functions.is_empty() {
-                accesses.retain(|(f, _, _)| thread_functions.contains(f));
-            }
-            if accesses.is_empty() {
-                continue;
-            }
             // skip read-only
             if accesses.iter().all(|(_, _, w)| !w) {
                 continue;
             }
+
             // compute always-held mutexes
-            let mutexes = accesses
-                .drain(..)
-                .map(|t| t.1)
-                .reduce(|mut ov, nv| {
-                    ov.intersect(&nv);
-                    ov
-                })
-                .unwrap();
+            let vs = accesses.iter().map(|t| &t.1).cloned().collect();
+            let mut mutexes = intersect_all(vs).unwrap();
+
+            // try with only pthread_create reachable functions
+            if !thread_functions.is_empty() {
+                accesses.retain(|(f, _, _)| thread_functions.contains(f));
+                if !accesses.is_empty() && accesses.iter().any(|(_, _, w)| *w) {
+                    let vs = accesses.iter().map(|t| &t.1).cloned().collect();
+                    if let Some(ms) = intersect_all(vs) {
+                        mutexes.union(&ms);
+                    }
+                }
+            }
+
+            // get mutex paths
             let mut mutexes = iv2mv(&mutexes);
             if mutexes.is_empty() {
                 continue;
             }
-            // find mutexes that confirm to path type
+
+            // find mutexes that conform to path type
             if let Some(ExprPathProj::Index(i)) = path.projections.get(0) {
                 mutexes.retain(|m| {
                     if let Some(ExprPathProj::Index(j)) = m.projections.get(0) {
@@ -535,21 +538,15 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // for each struct field access path
         for ((typ, field), mut accesses) in struct_access_per_type {
-            // keep only pthread_create reachable functions
-            if !thread_functions.is_empty() {
-                accesses.retain(|(f, _, _, _)| thread_functions.contains(f));
-            }
-            if accesses.is_empty() {
-                continue;
-            }
             // skip read-only
             if accesses.iter().all(|(_, _, _, w)| !w) {
                 continue;
             }
-            // compute always-held mutexes
-            let mut mutexes = accesses
+
+            // find held mutexes that conform to path
+            let mut accesses: Vec<_> = accesses
                 .drain(..)
-                .map(|(_, path, v, _)| {
+                .map(|(def_id, path, v, w)| {
                     let held: HashSet<_> = v
                         .iter()
                         .filter_map(|i| {
@@ -557,10 +554,27 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             mutex.strip_prefix(&path)
                         })
                         .collect();
-                    held
+                    (def_id, path, held, w)
                 })
-                .reduce(|os, ns| os.intersection(&ns).cloned().collect())
-                .unwrap();
+                .collect();
+
+            // compute always-held mutexes
+            let ss = accesses.iter().map(|t| &t.2).cloned().collect();
+            let mut mutexes = intersection_all(ss).unwrap();
+
+            // try with only pthread_create reachable functions
+            if !thread_functions.is_empty() {
+                accesses.retain(|(f, _, _, _)| thread_functions.contains(f));
+                if !accesses.is_empty() && accesses.iter().any(|(_, _, _, w)| *w) {
+                    let ss = accesses.iter().map(|t| &t.2).cloned().collect();
+                    if let Some(ms) = intersection_all(ss) {
+                        for m in ms {
+                            mutexes.insert(m);
+                        }
+                    }
+                }
+            }
+
             let m_opt = mutexes.drain().next();
             if let Some(m) = m_opt {
                 struct_mutex_map
@@ -648,4 +662,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         };
         *SUMMARY.lock().unwrap() = Some(summary);
     }
+}
+
+fn intersect_all(mut vs: Vec<BitSet<Id>>) -> Option<BitSet<Id>> {
+    vs.drain(..).reduce(|mut ov, nv| {
+        ov.intersect(&nv);
+        ov
+    })
+}
+
+fn intersection_all<T: Hash + Eq>(mut ss: Vec<HashSet<T>>) -> Option<HashSet<T>> {
+    ss.drain(..).reduce(|mut os, ns| {
+        os.retain(|x| ns.contains(x));
+        os
+    })
 }
