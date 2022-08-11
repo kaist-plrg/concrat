@@ -3,7 +3,6 @@
   "array_mutex_map": {},
   "struct_mutex_map": {
     "__anonstruct_Modes_120292704": {
-      "data": "data_mutex",
       "data_ready": "data_mutex",
       "exit": "data_mutex"
     }
@@ -59,6 +58,21 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "anetPeerToString": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetRead": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetResolve": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "anetSetError": {
       "entry_mutex": [],
       "node_mutex": [],
@@ -69,12 +83,72 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "anetSockName": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "anetTcpAccept": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
     },
+    "anetTcpConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetTcpGenericConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetTcpKeepAlive": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetTcpNoDelay": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetTcpNonBlockConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "anetTcpServer": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetUnixAccept": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetUnixConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetUnixGenericConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetUnixNonBlockConnect": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetUnixServer": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "anetWrite": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
@@ -260,7 +334,9 @@
       "node_mutex": [
         "Modes.data_mutex"
       ],
-      "ret_mutex": []
+      "ret_mutex": [
+        "Modes.data_mutex"
+      ]
     },
     "modesAcceptClients": {
       "entry_mutex": [],
@@ -344,7 +420,9 @@
     },
     "readDataFromFile": {
       "entry_mutex": [],
-      "node_mutex": ["Modes.data_mutex"],
+      "node_mutex": [
+        "Modes.data_mutex"
+      ],
       "ret_mutex": []
     },
     "readerThreadEntryPoint": {
@@ -357,6 +435,11 @@
       "node_mutex": [
         "Modes.data_mutex"
       ],
+      "ret_mutex": []
+    },
+    "run_static_initializers": {
+      "entry_mutex": [],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "showHelp": {

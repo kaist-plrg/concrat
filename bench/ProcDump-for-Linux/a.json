@@ -7,16 +7,13 @@
       "nWaiters": "mutex"
     },
     "coordinator": {
-      "nWaiters": "mutexEventTriggered",
-      "numberTriggered": "mutexEventTriggered"
+      "nWaiters": "mutexEventTriggered"
     }
   },
   "function_map": {
     "BeginMonitoring": {
       "entry_mutex": [],
-      "node_mutex": [
-        "self.evtStartMonitoring.__annonCompField4.event.mutex"
-      ],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "CheckKernelVersion": {
@@ -35,6 +32,16 @@
       "ret_mutex": []
     },
     "CpuMonitoringThread": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "CreateEvent": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "CreateNamedEvent": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
@@ -74,11 +81,19 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "GenerateCoreClrDump": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "GetOptions": {
-      "entry_mutex": [
-      ],
-      "node_mutex": [
-      ],
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "GetPath": {
+      "entry_mutex": [],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "GetProcessName": {
@@ -91,6 +106,16 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "GetUint16": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "InitEvent": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "InitNamedEvent": {
       "entry_mutex": [],
       "node_mutex": [],
@@ -98,19 +123,20 @@
     },
     "InitProcDump": {
       "entry_mutex": [],
-      "node_mutex": [
-      ],
-      "ret_mutex": [
-      ]
+      "node_mutex": [],
+      "ret_mutex": []
     },
     "InitProcDumpConfiguration": {
       "entry_mutex": [],
-      "node_mutex": [
-      ],
-      "ret_mutex": [
-      ]
+      "node_mutex": [],
+      "ret_mutex": []
     },
     "IsCoreClrProcess": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "IsQuit": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
@@ -149,14 +175,19 @@
     },
     "PrintConfiguration": {
       "entry_mutex": [],
-      "node_mutex": [
-        "self.evtConfigurationPrinted.__annonCompField4.event.mutex"
-      ],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "PrintUsage": {
       "entry_mutex": [],
       "node_mutex": [],
+      "ret_mutex": []
+    },
+    "ResetEvent": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "Event.mutex"
+      ],
       "ret_mutex": []
     },
     "SetEvent": {
@@ -168,9 +199,7 @@
     },
     "SetQuit": {
       "entry_mutex": [],
-      "node_mutex": [
-        "self.evtQuit.__annonCompField4.event.mutex"
-      ],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "SignalMonitoringThread": {
@@ -205,12 +234,7 @@
     "WaitForMultipleObjects": {
       "entry_mutex": [],
       "node_mutex": [
-        "coordinator.evtCanCleanUp.__annonCompField4.event.mutex",
-        "coordinator.evtStartWaiting.__annonCompField4.event.mutex",
-        "coordinator.mutexEventTriggered",
-        "struct.coordinator.tmp___1.mutexEventTriggered",
-        "struct.tmp___1.tmp___1.mutexEventTriggered",
-        "tmp___1.mutexEventTriggered"
+        "coordinator.mutexEventTriggered"
       ],
       "ret_mutex": []
     },
@@ -232,8 +256,7 @@
     "WaitForSingleObject": {
       "entry_mutex": [],
       "node_mutex": [
-        "Handle.__annonCompField4.event.mutex",
-        "self.evtQuit.__annonCompField4.event.mutex"
+        "Handle.__annonCompField4.event.mutex"
       ],
       "ret_mutex": []
     },
@@ -251,16 +274,12 @@
     },
     "WriteCoreDumpInternal": {
       "entry_mutex": [],
-      "node_mutex": [
-        "self.Config.evtQuit.__annonCompField4.event.mutex"
-      ],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "main": {
       "entry_mutex": [],
-      "node_mutex": [
-        "g_evtConfigurationInitialized.__annonCompField4.event.mutex"
-      ],
+      "node_mutex": [],
       "ret_mutex": []
     },
     "popen2": {

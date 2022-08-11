@@ -86,6 +86,11 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "task": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "thpool_add_work": {
       "entry_mutex": [],
       "node_mutex": [],
@@ -101,10 +106,25 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "thpool_num_threads_working": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "thpool_pause": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "thpool_resume": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "thpool_wait": {
       "entry_mutex": [],
       "node_mutex": [
-        "tmp.thcount_lock"
+        "thpool_p.thcount_lock"
       ],
       "ret_mutex": []
     },

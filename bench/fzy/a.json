@@ -202,7 +202,7 @@
       "node_mutex": [],
       "ret_mutex": []
     },
-    "match": {
+    "match_0": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
@@ -252,6 +252,16 @@
       "node_mutex": [],
       "ret_mutex": []
     },
+    "tolower": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "toupper": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
     "tty_clearline": {
       "entry_mutex": [],
       "node_mutex": [],
@@ -273,6 +283,11 @@
       "ret_mutex": []
     },
     "tty_getheight": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "tty_getwidth": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
@@ -348,6 +363,11 @@
       "ret_mutex": []
     },
     "tty_setnowrap": {
+      "entry_mutex": [],
+      "node_mutex": [],
+      "ret_mutex": []
+    },
+    "tty_setunderline": {
       "entry_mutex": [],
       "node_mutex": [],
       "ret_mutex": []
