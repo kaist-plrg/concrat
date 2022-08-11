@@ -182,6 +182,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             .or_default()
                             .insert(args[0].path.clone().unwrap());
                     }
+                    "pthread_cond_wait" | "pthread_cond_timedwait" => {
+                        self.mutexes
+                            .entry(curr)
+                            .or_default()
+                            .insert(args[1].path.clone().unwrap());
+                    }
                     "pthread_create" => {
                         let t_fun = unwrap_cast_recursively(unwrap_call(&arg_exprs[2]));
                         if let Some(Res::Def(DefKind::Fn, t_fun_id)) = resolve_path(ctx, t_fun) {

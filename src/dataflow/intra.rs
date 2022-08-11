@@ -86,6 +86,10 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
                     trans.gen(Id::new(idx));
                 }
             }
+            "main::pthread_cond_wait" | "main::pthread_cond_timedwait" => {
+                let idx = *self.mutexes.get(args[1].path.as_ref().unwrap()).unwrap();
+                trans.gen(Id::new(idx));
+            }
             _ => (),
         }
         if let Some(summary) = self.function_mutex_map.get(&f) {
