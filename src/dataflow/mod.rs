@@ -11,7 +11,9 @@ pub mod pass;
 
 pub use pass::run;
 
-use crate::util::{expr_to_path, span_to_string, type_as_string, ExprPath, Id};
+use crate::util::{
+    expr_to_path, span_to_string, type_of, type_to_string, unwrap_ptr_from_type, ExprPath, Id,
+};
 
 #[derive(Debug)]
 pub struct Arg {
@@ -25,10 +27,7 @@ pub struct Arg {
 impl Arg {
     fn new<'tcx>(ctx: &LateContext<'tcx>, expr: &Expr<'tcx>) -> Self {
         let path = expr_to_path(ctx, expr);
-        let typ = type_as_string(ctx, expr.hir_id)
-            .replace("&mut ", "")
-            .replace("*mut ", "")
-            .replace("*const ", "");
+        let typ = type_to_string(unwrap_ptr_from_type(type_of(ctx, expr.hir_id)));
         let hir_id = expr.hir_id;
         let expr = span_to_string(ctx, expr.span);
         Self {

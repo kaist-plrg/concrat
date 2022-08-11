@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet, VecDeque};
 use etrace::some_or;
 use rustc_hir::{
     def::{DefKind, Res},
-    Expr, ExprKind, Item, ItemKind,
+    Expr, ExprKind, Item, ItemKind, VariantData,
 };
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
@@ -19,8 +19,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order},
     util::{
-        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string,
-        type_as_string, ExprPath, Id,
+        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string, type_of,
+        type_to_string, unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
     },
 };
 
@@ -37,6 +37,8 @@ struct GlobalPass {
     calls: HashMap<Span, Vec<Arg>>,
     accesses: HashMap<DefId, Vec<(Span, ExprPath, bool)>>,
     call_graph: HashMap<DefId, HashSet<DefId>>,
+    path_types: HashMap<(DefId, ExprPath), String>,
+    mutexes_per_struct: HashMap<String, HashSet<String>>,
     globs: HashSet<String>,
 }
 
@@ -90,10 +92,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .map(|p| {
                         (
                             span_to_string(ctx, p.pat.span).replace("mut ", ""),
-                            type_as_string(ctx, p.pat.hir_id)
-                                .replace("&mut ", "")
-                                .replace("*mut ", "")
-                                .replace("*const ", ""),
+                            type_to_string(unwrap_ptr_from_type(type_of(ctx, p.pat.hir_id))),
                         )
                     })
                     .collect();
@@ -102,6 +101,17 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ItemKind::Static(_, _, _) => {
                 self.globs.insert(i.ident.to_string());
             }
+            ItemKind::Struct(VariantData::Struct(fs, _), _) => {
+                for f in fs.iter() {
+                    let ty = span_to_string(ctx, f.ty.span);
+                    if ty.contains("pthread_mutex_t") {
+                        self.mutexes_per_struct
+                            .entry(i.ident.to_string())
+                            .or_default()
+                            .insert(f.ident.to_string());
+                    }
+                }
+            }
             _ => (),
         }
     }
@@ -109,6 +119,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let curr = some_or!(current_function(ctx), return);
         if let Some(path) = expr_to_path(ctx, e) {
+            let typ = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
+            self.path_types.insert((curr, path.clone()), typ);
             if !path.is_variable() || self.globs.contains(&path.base) {
                 self.accesses
                     .entry(curr)
@@ -351,26 +363,69 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
         }
 
-        let mut access_map: HashMap<ExprPath, Vec<(DefId, BitSet<Id>, bool)>> = HashMap::new();
+        for (def_id, summary) in &mut function_summary_map {
+            let FunctionSummary {
+                entry_mutex,
+                node_mutex,
+                ret_mutex,
+                ..
+            } = summary;
+            let abs_st = abs_states.get(def_id).unwrap();
+            entry_mutex.union(abs_st);
+            node_mutex.union(abs_st);
+            ret_mutex.union(abs_st);
+        }
+
+        let mut global_access: HashMap<ExprPath, Vec<(DefId, BitSet<Id>, bool)>> = HashMap::new();
+        let mut struct_access: Vec<(ExprPath, DefId, BitSet<Id>, bool)> = vec![];
         for (def_id, summary) in &function_summary_map {
             for (path, (v, w)) in &summary.access {
-                access_map
-                    .entry(path.clone())
-                    .or_default()
-                    .push((*def_id, v.clone(), *w));
+                if path.is_struct() {
+                    struct_access.push((path.clone(), *def_id, v.clone(), *w));
+                } else {
+                    global_access
+                        .entry(path.clone())
+                        .or_default()
+                        .push((*def_id, v.clone(), *w));
+                }
             }
         }
-        for (path, mut v) in access_map {
-            let v = some_or!(
-                v.drain(..)
-                    .filter_map(|(_, v, w)| if w { Some(v) } else { None })
-                    .reduce(|mut ov, v| {
-                        ov.intersect(&v);
-                        ov
-                    }),
-                continue
-            );
-            println!("{} {:?}", path, v);
+
+        let mut struct_access_per_type: HashMap<_, Vec<_>> = HashMap::new();
+        for (mut path, def_id, v, w) in struct_access {
+            let opt = loop {
+                let last = some_or!(path.pop(), break None);
+                let last = match last {
+                    ExprPathProj::Field(f) => f,
+                    _ => break None,
+                };
+                let typ = self.path_types.get(&(def_id, path.clone())).unwrap();
+                if self.mutexes_per_struct.get(typ).is_some() {
+                    break Some((typ.clone(), path, last));
+                }
+            };
+            let (typ, path, field) = some_or!(opt, continue);
+            struct_access_per_type
+                .entry((typ, field))
+                .or_default()
+                .push((def_id, path, v, w));
+        }
+
+        for ((typ, field), mut accesses) in struct_access_per_type {
+            let accesses: Vec<_> = accesses
+                .drain(..)
+                .map(|(def_id, path, v, w)| {
+                    let held: HashSet<_> = v
+                        .iter()
+                        .filter_map(|i| {
+                            let mutex = inv_mutexes.get(&i.index()).unwrap().clone();
+                            mutex.strip_prefix(&path)
+                        })
+                        .collect();
+                    (def_id, held, w)
+                })
+                .collect();
+            println!("{} {} {:?}", typ, field, accesses);
         }
 
         let mut res: Vec<_> = function_summary_map.iter().collect();
@@ -393,7 +448,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let start: Vec<_> = iv2mv(entry_mutex);
             let mid: Vec<_> = iv2mv(node_mutex);
             let end: Vec<_> = iv2mv(ret_mutex);
-            let abs_st: Vec<_> = iv2mv(abs_states.get(def_id).unwrap());
             let propagation: HashMap<_, _> = propagation
                 .iter()
                 .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
@@ -403,8 +457,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .map(|(path, (v, w))| (path, (iv2mv(v), w)))
                 .collect();
             println!(
-                "{} {:?} {:?} {:?} {:?} {:?} {:?}",
-                f, start, mid, end, abs_st, propagation, access
+                "{} {:?} {:?} {:?} {:?} {:?}",
+                f, start, mid, end, propagation, access
             );
         }
     }

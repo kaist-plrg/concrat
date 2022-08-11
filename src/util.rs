@@ -8,7 +8,7 @@ use etrace::some_or;
 use rustc_hir::{def::Res, Expr, ExprKind, HirId, Node, UnOp};
 use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
-use rustc_middle::ty::{TyCtxt, TypeckResults};
+use rustc_middle::ty::{Ty, TyCtxt, TyKind, TypeAndMut, TypeckResults};
 use rustc_mir_dataflow::fmt::DebugWithContext;
 use rustc_span::{def_id::DefId, Span};
 
@@ -54,6 +54,14 @@ impl ExprPath {
         self.projections.is_empty()
     }
 
+    pub fn is_array(&self) -> bool {
+        matches!(self.projections.get(0), Some(ExprPathProj::Index(_)))
+    }
+
+    pub fn is_struct(&self) -> bool {
+        matches!(self.projections.get(0), Some(ExprPathProj::Field(_)))
+    }
+
     pub fn set_base(&mut self, path: &ExprPath) {
         self.base = path.base.clone();
         let mut v = vec![];
@@ -83,6 +91,10 @@ impl ExprPath {
             let new_path = path.suffix()?;
             new_self.strip_prefix(&new_path)
         }
+    }
+
+    pub fn pop(&mut self) -> Option<ExprPathProj> {
+        self.projections.pop()
     }
 }
 
@@ -279,12 +291,19 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> 
     }
 }
 
-pub fn type_of<'a, 'b>(ctx: &'a LateContext<'b>, hir_id: HirId) -> rustc_middle::ty::Ty<'b> {
+pub fn type_of<'a, 'b>(ctx: &'a LateContext<'b>, hir_id: HirId) -> Ty<'b> {
     ctx.tcx.typeck(hir_id.owner).node_type(hir_id)
 }
 
-pub fn type_as_string(ctx: &LateContext<'_>, hir_id: HirId) -> String {
-    type_of(ctx, hir_id).to_string().replace("main::", "")
+pub fn unwrap_ptr_from_type(ty: Ty<'_>) -> Ty<'_> {
+    match ty.kind() {
+        TyKind::RawPtr(TypeAndMut { ty, .. }) | TyKind::Ref(_, ty, _) => unwrap_ptr_from_type(*ty),
+        _ => ty,
+    }
+}
+
+pub fn type_to_string(ty: Ty<'_>) -> String {
+    ty.to_string().replace("main::", "")
 }
 
 pub fn join(mut v: Vec<String>, sep: &str) -> String {
