@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 
 use etrace::some_or;
 use rustc_hir::{
@@ -17,10 +17,11 @@ use super::{
 };
 use crate::{
     callback::{compile_with, LatePass},
-    graph::{compute_sccs, inverse, post_order},
+    graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
         current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string, type_of,
-        type_to_string, unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
+        type_to_string, unwrap_cast_recursively, unwrap_ptr_from_type, unwrap_some, ExprPath,
+        ExprPathProj, Id,
     },
 };
 
@@ -39,6 +40,7 @@ struct GlobalPass {
     call_graph: HashMap<DefId, HashSet<DefId>>,
     path_types: HashMap<(DefId, ExprPath), String>,
     mutexes_per_struct: HashMap<String, HashSet<String>>,
+    thread_entries: HashSet<DefId>,
     globs: HashSet<String>,
 }
 
@@ -74,6 +76,22 @@ impl GlobalPass {
             }
         }
         mutexes
+    }
+
+    fn thread_functions(&self) -> HashSet<DefId> {
+        if self.thread_entries.is_empty() {
+            return HashSet::new();
+        }
+        let graph = transitive_closure(self.call_graph.clone());
+        let mut thread_entries = self.thread_entries.clone();
+        for f in self
+            .thread_entries
+            .iter()
+            .flat_map(|f| graph.get(f).unwrap())
+        {
+            thread_entries.insert(*f);
+        }
+        thread_entries
     }
 }
 
@@ -129,21 +147,30 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
         }
         match &e.kind {
-            ExprKind::Call(f, args) => {
+            ExprKind::Call(f, arg_exprs) => {
                 if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
                     if let Some(v) = self.call_graph.get_mut(&curr) {
                         v.insert(def_id);
                     }
                 }
 
-                let args: Vec<_> = args.iter().map(|arg| Arg::new(ctx, arg)).collect();
+                let args: Vec<_> = arg_exprs.iter().map(|arg| Arg::new(ctx, arg)).collect();
 
                 let f = span_to_string(ctx, f.span);
-                if f == "pthread_mutex_lock" || f == "pthread_mutex_unlock" {
-                    self.mutexes
-                        .entry(curr)
-                        .or_default()
-                        .insert(args[0].path.clone().unwrap());
+                match f.as_str() {
+                    "pthread_mutex_lock" | "pthread_mutex_unlock" => {
+                        self.mutexes
+                            .entry(curr)
+                            .or_default()
+                            .insert(args[0].path.clone().unwrap());
+                    }
+                    "pthread_create" => {
+                        let t_fun = unwrap_cast_recursively(unwrap_some(ctx, &arg_exprs[2]));
+                        if let Some(Res::Def(DefKind::Fn, t_fun_id)) = resolve_path(ctx, t_fun) {
+                            self.thread_entries.insert(t_fun_id);
+                        }
+                    }
+                    _ => (),
                 }
 
                 for arg in &args {
@@ -391,8 +418,69 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
         }
 
+        let iv2mv = |is: &BitSet<Id>| {
+            is.iter()
+                .map(|i| inv_mutexes.get(&i.index()).unwrap().clone())
+                .collect::<Vec<_>>()
+        };
+
+        // find functions reachable from pthread_create
+        let thread_functions = self.thread_functions();
+
+        let mut mutex_map: BTreeMap<String, String> = BTreeMap::new();
+        let mut array_mutex_map: BTreeMap<String, String> = BTreeMap::new();
+        let mut struct_mutex_map: BTreeMap<String, BTreeMap<String, String>> = BTreeMap::new();
+
+        // for each global variable access path
+        for (path, mut accesses) in global_access {
+            // keep only pthread_create reachable functions
+            if !thread_functions.is_empty() {
+                accesses.retain(|(f, _, _)| thread_functions.contains(f));
+            }
+            if accesses.is_empty() {
+                continue;
+            }
+            // skip read-only
+            if accesses.iter().all(|(_, _, w)| !w) {
+                continue;
+            }
+            // compute always-held mutexes
+            let mutexes = accesses
+                .drain(..)
+                .map(|t| t.1)
+                .reduce(|mut ov, nv| {
+                    ov.intersect(&nv);
+                    ov
+                })
+                .unwrap();
+            let mut mutexes = iv2mv(&mutexes);
+            if mutexes.is_empty() {
+                continue;
+            }
+            // find mutexes that confirm to path type
+            if let Some(ExprPathProj::Index(i)) = path.projections.get(0) {
+                mutexes.retain(|m| {
+                    if let Some(ExprPathProj::Index(j)) = m.projections.get(0) {
+                        i == j
+                    } else {
+                        false
+                    }
+                });
+                if let Some(m) = mutexes.pop() {
+                    array_mutex_map.insert(path.base, m.base);
+                }
+            } else {
+                mutexes.retain(|m| m.is_variable());
+                if let Some(m) = mutexes.pop() {
+                    mutex_map.insert(path.base, m.base);
+                }
+            }
+        }
+
+        // group struct field accesses by type and field name
         let mut struct_access_per_type: HashMap<_, Vec<_>> = HashMap::new();
         for (mut path, def_id, v, w) in struct_access {
+            // find longest prefix whose type has mutex
             let opt = loop {
                 let last = some_or!(path.pop(), break None);
                 let last = match last {
@@ -411,10 +499,23 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .push((def_id, path, v, w));
         }
 
+        // for each struct field access path
         for ((typ, field), mut accesses) in struct_access_per_type {
-            let accesses: Vec<_> = accesses
+            // keep only pthread_create reachable functions
+            if !thread_functions.is_empty() {
+                accesses.retain(|(f, _, _, _)| thread_functions.contains(f));
+            }
+            if accesses.is_empty() {
+                continue;
+            }
+            // skip read-only
+            if accesses.iter().all(|(_, _, _, w)| !w) {
+                continue;
+            }
+            // compute always-held mutexes
+            let mut mutexes = accesses
                 .drain(..)
-                .map(|(def_id, path, v, w)| {
+                .map(|(_, path, v, _)| {
                     let held: HashSet<_> = v
                         .iter()
                         .filter_map(|i| {
@@ -422,19 +523,25 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             mutex.strip_prefix(&path)
                         })
                         .collect();
-                    (def_id, held, w)
+                    held
                 })
-                .collect();
-            println!("{} {} {:?}", typ, field, accesses);
+                .reduce(|os, ns| os.intersection(&ns).cloned().collect())
+                .unwrap();
+            let m_opt = mutexes.drain().next();
+            if let Some(m) = m_opt {
+                struct_mutex_map
+                    .entry(typ)
+                    .or_default()
+                    .insert(field, m.base);
+            }
         }
+
+        println!("{:?}", mutex_map);
+        println!("{:?}", array_mutex_map);
+        println!("{:?}", struct_mutex_map);
 
         let mut res: Vec<_> = function_summary_map.iter().collect();
         res.sort_by_key(|(def_id, _)| *def_id);
-        let iv2mv = |is: &BitSet<Id>| {
-            is.iter()
-                .map(|i| inv_mutexes.get(&i.index()).unwrap().clone())
-                .collect::<Vec<_>>()
-        };
         for (def_id, summary) in res {
             let FunctionSummary {
                 entry_mutex,

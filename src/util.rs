@@ -310,9 +310,16 @@ pub fn join(mut v: Vec<String>, sep: &str) -> String {
     v.drain(..).intersperse(sep.to_string()).collect()
 }
 
-pub fn unwrap_cast_recursively<'tcx>(e: &'tcx Expr<'tcx>) -> &'tcx Expr<'tcx> {
+pub fn unwrap_cast_recursively<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
     match &e.kind {
         ExprKind::Cast(e, _) => unwrap_cast_recursively(e),
+        _ => e,
+    }
+}
+
+pub fn unwrap_some<'a, 'tcx>(ctx: &'a LateContext<'tcx>, e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
+    match &e.kind {
+        ExprKind::Call(f, args) if span_to_string(ctx, f.span) == "Some" => &args[0],
         _ => e,
     }
 }
