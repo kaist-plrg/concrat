@@ -363,30 +363,30 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
         }
 
+        // update function summaries
         for (def_id, summary) in &mut function_summary_map {
-            let FunctionSummary {
-                entry_mutex,
-                node_mutex,
-                ret_mutex,
-                ..
-            } = summary;
             let abs_st = abs_states.get(def_id).unwrap();
-            entry_mutex.union(abs_st);
-            node_mutex.union(abs_st);
-            ret_mutex.union(abs_st);
+            summary.propagation_mutex = abs_st.clone();
         }
 
+        // accesses to global variables
         let mut global_access: HashMap<ExprPath, Vec<(DefId, BitSet<Id>, bool)>> = HashMap::new();
+        // accesses to struct fields
         let mut struct_access: Vec<(ExprPath, DefId, BitSet<Id>, bool)> = vec![];
+
+        // classify accesses
         for (def_id, summary) in &function_summary_map {
+            let prop = &summary.propagation_mutex;
             for (path, (v, w)) in &summary.access {
+                let mut v = v.clone();
+                v.union(prop);
                 if path.is_struct() {
-                    struct_access.push((path.clone(), *def_id, v.clone(), *w));
+                    struct_access.push((path.clone(), *def_id, v, *w));
                 } else {
                     global_access
                         .entry(path.clone())
                         .or_default()
-                        .push((*def_id, v.clone(), *w));
+                        .push((*def_id, v, *w));
                 }
             }
         }
@@ -440,6 +440,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 entry_mutex,
                 node_mutex,
                 ret_mutex,
+                propagation_mutex,
                 propagation,
                 access,
                 ..
@@ -448,6 +449,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let start: Vec<_> = iv2mv(entry_mutex);
             let mid: Vec<_> = iv2mv(node_mutex);
             let end: Vec<_> = iv2mv(ret_mutex);
+            let prop: Vec<_> = iv2mv(propagation_mutex);
             let propagation: HashMap<_, _> = propagation
                 .iter()
                 .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
@@ -457,8 +459,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .map(|(path, (v, w))| (path, (iv2mv(v), w)))
                 .collect();
             println!(
-                "{} {:?} {:?} {:?} {:?} {:?}",
-                f, start, mid, end, propagation, access
+                "{} {:?} {:?} {:?} {:?} {:?} {:?}",
+                f, start, mid, end, prop, propagation, access
             );
         }
     }
