@@ -255,11 +255,7 @@ fn generate_function_map(
             nodes,
         } = f;
         let entry_mutex = node_map.get(entry).unwrap().clone();
-        let ret_mutex = if name != "main" {
-            node_map.get(ret).unwrap().clone()
-        } else {
-            vec![]
-        };
+        let ret_mutex = node_map.get(ret).unwrap().clone();
         let mut node_mutex: Vec<_> = nodes
             .iter()
             .flat_map(|n| node_map.get(n).unwrap().clone())

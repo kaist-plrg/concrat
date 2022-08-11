@@ -510,7 +510,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     add_replacement(ctx, span, sugg);
                 }
 
-                if !ret.is_empty() {
+                if !ret.is_empty() && name != "main" {
                     let mut ret_types = vec![];
                     if let FnRetTy::Return(t) = decl.output {
                         ret_types.push(span_to_string(ctx, t.span));
@@ -830,10 +830,14 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
             }
             ExprKind::Ret(v_opt) => {
+                let f = func_name();
+                if f == "main" {
+                    return;
+                }
                 let ret = &func_summary().ret_mutex;
                 if !ret.is_empty() {
                     let ret_vals = ret.iter().map(guard_of).collect();
-                    use_guards(func_name(), &ret_vals);
+                    use_guards(f, &ret_vals);
                     match v_opt {
                         Some(v) => {
                             let ret_val = join(ret_vals, ", ");
