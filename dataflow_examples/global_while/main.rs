@@ -99,6 +99,14 @@ pub unsafe extern "C" fn f5() {
         n += 1;
     }
 }
+pub unsafe extern "C" fn f6() {
+    loop {
+        n += 1;
+        pthread_mutex_unlock(&mut m);
+        pthread_mutex_lock(&mut m);
+        n += 1;
+    }
+}
 unsafe fn main_0() -> libc::c_int {
     return 0 as libc::c_int;
 }

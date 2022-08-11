@@ -55,4 +55,13 @@ void f5() {
     }
 }
 
+void f6() {
+    while (1) {
+        n++;
+        pthread_mutex_unlock(&m);
+        pthread_mutex_lock(&m);
+        n++;
+    }
+}
+
 int main() {}
