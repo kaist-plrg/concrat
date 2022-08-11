@@ -14,7 +14,7 @@ use rustc_hir::{
 };
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
-use rustc_middle::mir::{BasicBlock, Location};
+use rustc_middle::mir::{BasicBlock, Location, TerminatorKind};
 use rustc_span::{def_id::DefId, Span};
 
 use super::{
@@ -278,8 +278,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
             // available guard analysis
             let mut results = available_guards(ana_ctx, &entry_mutex);
-            results.seek_to_block_end(BasicBlock::from_usize(body.basic_blocks().len() - 1));
-            let ret_mutex = results.get().0.clone();
+            let return_opt = body.basic_blocks().iter_enumerated().find(|(_, bbd)| {
+                matches!(
+                    bbd.terminator.as_ref().unwrap().kind,
+                    TerminatorKind::Return
+                )
+            });
+            let ret_mutex = if let Some((return_bb, _)) = return_opt {
+                results.seek_to_block_end(return_bb);
+                results.get().0.clone()
+            } else {
+                BitSet::new_empty(entry_mutex.domain_size())
+            };
 
             // set of guards held by function
             let mut node_mutex = entry_mutex.clone();
