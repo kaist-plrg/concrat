@@ -25,7 +25,7 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::path::PathBuf;
+use std::{fs::File, path::PathBuf};
 
 use clap::{App, Arg};
 use concrat::*;
@@ -48,7 +48,15 @@ fn main() {
                 .required(true)
                 .takes_value(true),
         )
+        .arg(
+            Arg::with_name("verbose")
+                .long("verbose")
+                .short("v")
+                .help("verbose")
+                .takes_value(false),
+        )
         .get_matches();
+    let verbose = matches.is_present("verbose");
     let mut input = PathBuf::from(matches.value_of("input").unwrap());
     let dep = PathBuf::from(matches.value_of("dependency").unwrap());
 
@@ -56,5 +64,10 @@ fn main() {
     let args = util::compile_args(&input, &dep);
     input.pop();
 
-    dataflow::run(args);
+    input.push("a.json");
+    let file = File::create(input.to_str().unwrap()).unwrap();
+    input.pop();
+
+    let summary = dataflow::run(args, verbose);
+    serde_json::to_writer_pretty(file, &summary).unwrap();
 }

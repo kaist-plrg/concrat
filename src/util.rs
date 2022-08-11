@@ -317,9 +317,9 @@ pub fn unwrap_cast_recursively<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
     }
 }
 
-pub fn unwrap_some<'a, 'tcx>(ctx: &'a LateContext<'tcx>, e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
+pub fn unwrap_call<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
     match &e.kind {
-        ExprKind::Call(f, args) if span_to_string(ctx, f.span) == "Some" => &args[0],
+        ExprKind::Call(_, args) => unwrap_call(&args[0]),
         _ => e,
     }
 }

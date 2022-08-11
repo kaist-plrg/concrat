@@ -1,4 +1,10 @@
-use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
+use std::{
+    collections::{BTreeMap, HashMap, HashSet, VecDeque},
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        Mutex,
+    },
+};
 
 use etrace::some_or;
 use rustc_hir::{
@@ -16,21 +22,31 @@ use super::{
     Arg, FunctionSummary,
 };
 use crate::{
+    analysis::AnalysisSummary,
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
         current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string, type_of,
-        type_to_string, unwrap_cast_recursively, unwrap_ptr_from_type, unwrap_some, ExprPath,
+        type_to_string, unwrap_call, unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath,
         ExprPathProj, Id,
     },
 };
 
-pub fn run(args: Vec<String>) {
-    let exit_code = compile_with(args, vec![GlobalPass::new]);
-    assert_eq!(exit_code, 0);
+static VERBOSE: AtomicBool = AtomicBool::new(false);
+static SUMMARY: Mutex<Option<AnalysisSummary>> = Mutex::new(None);
+
+fn verbose() -> bool {
+    VERBOSE.load(Ordering::Relaxed)
 }
 
-#[derive(Default)]
+pub fn run(args: Vec<String>, verbose: bool) -> AnalysisSummary {
+    VERBOSE.store(verbose, Ordering::Relaxed);
+    let exit_code = compile_with(args, vec![GlobalPass::new]);
+    assert_eq!(exit_code, 0);
+    SUMMARY.lock().unwrap().take().unwrap()
+}
+
+#[derive(Default, Debug)]
 struct GlobalPass {
     mutexes: HashMap<DefId, HashSet<ExprPath>>,
     params: HashMap<DefId, Vec<(String, String)>>,
@@ -41,6 +57,7 @@ struct GlobalPass {
     path_types: HashMap<(DefId, ExprPath), String>,
     mutexes_per_struct: HashMap<String, HashSet<String>>,
     thread_entries: HashSet<DefId>,
+    init_or_destory: HashMap<DefId, HashSet<ExprPath>>,
     globs: HashSet<String>,
 }
 
@@ -165,9 +182,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             .insert(args[0].path.clone().unwrap());
                     }
                     "pthread_create" => {
-                        let t_fun = unwrap_cast_recursively(unwrap_some(ctx, &arg_exprs[2]));
+                        let t_fun = unwrap_cast_recursively(unwrap_call(&arg_exprs[2]));
                         if let Some(Res::Def(DefKind::Fn, t_fun_id)) = resolve_path(ctx, t_fun) {
                             self.thread_entries.insert(t_fun_id);
+                        }
+                    }
+                    "pthread_mutex_init" | "pthread_mutex_destroy" => {
+                        if let Some(mut path) = expr_to_path(ctx, &arg_exprs[0]) {
+                            if path.pop().is_some() {
+                                self.init_or_destory.entry(curr).or_default().insert(path);
+                            }
                         }
                     }
                     _ => (),
@@ -196,6 +220,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 
     fn check_crate_post(&mut self, ctx: &LateContext<'tcx>) {
+        if verbose() {
+            println!("{:?}", self);
+        }
+
         // user-defined functions
         let functions: HashSet<_> = self.call_graph.iter().map(|(f, _)| f).cloned().collect();
         // remove library functions from call graph
@@ -392,8 +420,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // update function summaries
         for (def_id, summary) in &mut function_summary_map {
-            let abs_st = abs_states.get(def_id).unwrap();
-            summary.propagation_mutex = abs_st.clone();
+            let mut abs_st = abs_states.get(def_id).unwrap().clone();
+            assert!(abs_st.superset(&summary.entry_mutex));
+            abs_st.subtract(&summary.entry_mutex);
+            summary.propagation_mutex = abs_st;
         }
 
         // accesses to global variables
@@ -536,39 +566,82 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
         }
 
-        println!("{:?}", mutex_map);
-        println!("{:?}", array_mutex_map);
-        println!("{:?}", struct_mutex_map);
+        if verbose() {
+            println!("{:?}", mutex_map);
+            println!("{:?}", array_mutex_map);
+            println!("{:?}", struct_mutex_map);
 
-        let mut res: Vec<_> = function_summary_map.iter().collect();
-        res.sort_by_key(|(def_id, _)| *def_id);
-        for (def_id, summary) in res {
-            let FunctionSummary {
-                entry_mutex,
-                node_mutex,
-                ret_mutex,
-                propagation_mutex,
-                propagation,
-                access,
-                ..
-            } = summary;
-            let f = def_id_to_item_name(ctx.tcx, *def_id);
-            let start: Vec<_> = iv2mv(entry_mutex);
-            let mid: Vec<_> = iv2mv(node_mutex);
-            let end: Vec<_> = iv2mv(ret_mutex);
-            let prop: Vec<_> = iv2mv(propagation_mutex);
-            let propagation: HashMap<_, _> = propagation
-                .iter()
-                .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
-                .collect();
-            let access: HashMap<_, _> = access
-                .iter()
-                .map(|(path, (v, w))| (path, (iv2mv(v), w)))
-                .collect();
-            println!(
-                "{} {:?} {:?} {:?} {:?} {:?} {:?}",
-                f, start, mid, end, prop, propagation, access
-            );
+            let mut res: Vec<_> = function_summary_map.iter().collect();
+            res.sort_by_key(|(def_id, _)| *def_id);
+            for (def_id, summary) in res {
+                let FunctionSummary {
+                    entry_mutex,
+                    node_mutex,
+                    ret_mutex,
+                    propagation_mutex,
+                    propagation,
+                    access,
+                    ..
+                } = summary;
+                let f = def_id_to_item_name(ctx.tcx, *def_id);
+                let start: Vec<_> = iv2mv(entry_mutex);
+                let mid: Vec<_> = iv2mv(node_mutex);
+                let end: Vec<_> = iv2mv(ret_mutex);
+                let prop: Vec<_> = iv2mv(propagation_mutex);
+                let propagation: HashMap<_, _> = propagation
+                    .iter()
+                    .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
+                    .collect();
+                let access: HashMap<_, _> = access
+                    .iter()
+                    .map(|(path, (v, w))| (path, (iv2mv(v), w)))
+                    .collect();
+                println!(
+                    "{} {:?} {:?} {:?} {:?} {:?} {:?}",
+                    f, start, mid, end, prop, propagation, access
+                );
+            }
         }
+
+        let iv2mv = |is: &BitSet<Id>| {
+            is.iter()
+                .map(|i| inv_mutexes.get(&i.index()).unwrap().to_string())
+                .collect::<Vec<_>>()
+        };
+        let function_map: BTreeMap<_, _> = function_summary_map
+            .iter()
+            .map(|(def_id, summary)| {
+                let FunctionSummary {
+                    entry_mutex,
+                    node_mutex,
+                    ret_mutex,
+                    propagation_mutex,
+                    ..
+                } = summary;
+                let mut entry_mutex = iv2mv(entry_mutex);
+                let mut node_mutex = iv2mv(node_mutex);
+                let mut ret_mutex = iv2mv(ret_mutex);
+                let prop = iv2mv(propagation_mutex);
+                for m in prop {
+                    entry_mutex.push(m.clone());
+                    node_mutex.push(m.clone());
+                    ret_mutex.push(m);
+                }
+                let f = def_id_to_item_name(ctx.tcx, *def_id);
+                let summary = crate::analysis::FunctionSummary {
+                    entry_mutex,
+                    node_mutex,
+                    ret_mutex,
+                };
+                (f, summary)
+            })
+            .collect();
+        let summary = AnalysisSummary {
+            mutex_map,
+            array_mutex_map,
+            struct_mutex_map,
+            function_map,
+        };
+        *SUMMARY.lock().unwrap() = Some(summary);
     }
 }
