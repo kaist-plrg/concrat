@@ -36,11 +36,31 @@ impl AnalysisSummary {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<String>,
     pub node_mutex: Vec<String>,
     pub ret_mutex: Vec<String>,
+}
+
+impl FunctionSummary {
+    pub fn new(
+        mut entry_mutex: Vec<String>,
+        mut node_mutex: Vec<String>,
+        mut ret_mutex: Vec<String>,
+    ) -> Self {
+        entry_mutex.dedup();
+        entry_mutex.sort();
+        node_mutex.dedup();
+        node_mutex.sort();
+        ret_mutex.dedup();
+        ret_mutex.sort();
+        Self {
+            entry_mutex,
+            node_mutex,
+            ret_mutex,
+        }
+    }
 }
 
 pub fn summarize(
@@ -248,11 +268,7 @@ fn generate_function_map(
         node_mutex.dedup();
         map.insert(
             name.clone(),
-            FunctionSummary {
-                entry_mutex,
-                node_mutex,
-                ret_mutex,
-            },
+            FunctionSummary::new(entry_mutex, node_mutex, ret_mutex),
         );
     }
     map

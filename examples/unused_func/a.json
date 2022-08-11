@@ -12,6 +12,13 @@
       ],
       "ret_mutex": []
     },
+    "f2": {
+      "entry_mutex": [],
+      "node_mutex": [
+        "num_mutex"
+      ],
+      "ret_mutex": []
+    },
     "main": {
       "entry_mutex": [],
       "node_mutex": [],

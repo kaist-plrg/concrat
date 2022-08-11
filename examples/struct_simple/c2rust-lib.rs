@@ -7,6 +7,7 @@
 #![allow(unused_mut)]
 #![feature(register_tool)]
 #![feature(rustc_private)]
+#![feature(untagged_unions)]
 #![register_tool(c2rust)]
 
 extern crate libc;

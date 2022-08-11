@@ -175,7 +175,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
                 let f = span_to_string(ctx, f.span);
                 match f.as_str() {
-                    "pthread_mutex_lock" | "pthread_mutex_unlock" => {
+                    "pthread_mutex_lock" | "pthread_mutex_unlock" | "pthread_mutex_trylock" => {
                         self.mutexes
                             .entry(curr)
                             .or_default()
@@ -632,11 +632,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     ret_mutex.push(m);
                 }
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
-                let summary = crate::analysis::FunctionSummary {
-                    entry_mutex,
-                    node_mutex,
-                    ret_mutex,
-                };
+                let summary =
+                    crate::analysis::FunctionSummary::new(entry_mutex, node_mutex, ret_mutex);
                 (f, summary)
             })
             .collect();

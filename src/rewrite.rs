@@ -634,11 +634,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let func_name_opt = current_function(ctx, e.hir_id);
         let func_name = || func_name_opt.as_ref().unwrap().clone();
-        let empty_summary = FunctionSummary {
-            entry_mutex: vec![],
-            node_mutex: vec![],
-            ret_mutex: vec![],
-        };
+        let empty_summary = FunctionSummary::default();
         let func_summary = || {
             function_mutex_map()
                 .get(&func_name())

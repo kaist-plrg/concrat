@@ -70,7 +70,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         let f = some_or!(get_function_call(terminator), return);
         let args = some_or!(self.calls.get(&terminator.source_info.span), return);
         match self.ctx.tcx.def_path_str(f).as_str() {
-            "main::pthread_mutex_lock" => {
+            "main::pthread_mutex_lock" | "main::pthread_mutex_trylock" => {
                 let idx = *self.mutexes.get(args[0].path.as_ref().unwrap()).unwrap();
                 if forward {
                     trans.gen(Id::new(idx));
