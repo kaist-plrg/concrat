@@ -70,7 +70,10 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         let f = some_or!(get_function_call(terminator), return);
         let args = some_or!(self.calls.get(&terminator.source_info.span), return);
         match self.ctx.tcx.def_path_str(f).as_str() {
-            "main::pthread_mutex_lock" | "main::pthread_mutex_trylock" => {
+            "main::pthread_mutex_lock"
+            | "main::pthread_mutex_trylock"
+            | "main::pthread_spin_lock"
+            | "main::pthread_spin_trylock" => {
                 let idx = *self.mutexes.get(args[0].path.as_ref().unwrap()).unwrap();
                 if forward {
                     trans.gen(Id::new(idx));
@@ -78,7 +81,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
                     trans.kill(Id::new(idx));
                 }
             }
-            "main::pthread_mutex_unlock" => {
+            "main::pthread_mutex_unlock" | "main::pthread_spin_unlock" => {
                 let idx = *self.mutexes.get(args[0].path.as_ref().unwrap()).unwrap();
                 if forward {
                     trans.kill(Id::new(idx));

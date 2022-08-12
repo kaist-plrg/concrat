@@ -140,7 +140,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ItemKind::Struct(VariantData::Struct(fs, _), _) => {
                 for f in fs.iter() {
                     let ty = span_to_string(ctx, f.ty.span);
-                    if ty.contains("pthread_mutex_t") {
+                    if ty.contains("pthread_mutex_t") || ty.contains("pthread_spinlock_t") {
                         self.mutexes_per_struct
                             .entry(i.ident.to_string())
                             .or_default()
@@ -182,7 +182,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         .insert(args[i].path.clone().unwrap())
                 };
                 match f.as_str() {
-                    "pthread_mutex_lock" | "pthread_mutex_unlock" | "pthread_mutex_trylock" => {
+                    "pthread_mutex_lock"
+                    | "pthread_mutex_unlock"
+                    | "pthread_mutex_trylock"
+                    | "pthread_spin_lock"
+                    | "pthread_spin_unlock"
+                    | "pthread_spin_trylock" => {
                         add_mutex(0);
                     }
                     "pthread_cond_wait" | "pthread_cond_timedwait" => {
@@ -194,7 +199,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             self.thread_entries.insert(t_fun_id);
                         }
                     }
-                    "pthread_mutex_init" | "pthread_mutex_destroy" => {
+                    "pthread_mutex_init"
+                    | "pthread_mutex_destroy"
+                    | "pthread_spin_init"
+                    | "pthread_spin_destroy" => {
                         add_mutex(0);
                         if let Some(mut path) = args[0].path.clone() {
                             if path.pop().is_some() {
