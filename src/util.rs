@@ -13,6 +13,7 @@ use rustc_mir_dataflow::fmt::DebugWithContext;
 use rustc_span::{def_id::DefId, Span};
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug, Hash, PartialOrd, Ord)]
+#[repr(transparent)]
 pub struct Id(usize);
 
 impl Idx for Id {
@@ -95,6 +96,14 @@ impl ExprPath {
 
     pub fn pop(&mut self) -> Option<ExprPathProj> {
         self.projections.pop()
+    }
+
+    pub fn index(&self) -> Option<&String> {
+        if let Some(ExprPathProj::Index(i)) = self.projections.get(0) {
+            Some(i)
+        } else {
+            None
+        }
     }
 }
 
