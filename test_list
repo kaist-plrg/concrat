@@ -27,3 +27,4 @@ bench/libaco
 bench/fzy
 bench/dump1090
 bench/ProcDump-for-Linux
+bench/brubeck

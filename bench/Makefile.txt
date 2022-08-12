@@ -1,7 +1,7 @@
 CFLAGS = -pthread
 
 all:
-	make a.json clean-intermediate
+	make a.json
 
 a.xml: main.c conf.json
 	goblint --conf conf.json \
@@ -10,18 +10,20 @@ a.xml: main.c conf.json
 		--set outfile a.xml \
 		main.c
 
-compile_commands.json:
-	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json
-
-main.rs: compile_commands.json
+main.rs: main.c
+	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json && \
+	rm -f main.rs && \
 	c2rust transpile -e compile_commands.json && \
 	cargo fmt
 
+ifeq ($(GOBLINT),yes)
+CMD = goblint2json
+else
+CMD = dataflow
+endif
+
 a.json: a.xml main.rs
-	cargo run --release --manifest-path ../../Cargo.toml --bin goblint2json -- -i . -d ../../deps
+	cargo run --release --manifest-path ../../Cargo.toml --bin ${CMD} -- -i . -d ../../deps
 
 clean:
-	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target
-
-clean-intermediate:
-	rm -rf Cargo.lock target
+	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib

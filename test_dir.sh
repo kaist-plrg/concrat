@@ -21,7 +21,10 @@ if [ ! -d "$from" ]; then
 fi
 
 mkdir -p $to
-cp -r $from/{*.rs,a.json,Cargo.toml,rust-toolchain} $to
+cp -r $from/{*.rs,Cargo.toml,rust-toolchain} $to
+
+echo Analyzing $from
+cargo run --release --bin dataflow -- -i $to -d deps $@
 
 echo Translating $from
 cargo run --release --bin concrat -- -i $to -d deps $@

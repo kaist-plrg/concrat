@@ -7,7 +7,8 @@
       "nWaiters": "mutex"
     },
     "coordinator": {
-      "nWaiters": "mutexEventTriggered"
+      "nWaiters": "mutexEventTriggered",
+      "numberTriggered": "mutexEventTriggered"
     }
   },
   "function_map": {
