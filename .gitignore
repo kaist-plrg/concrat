@@ -3,3 +3,4 @@ libc2rust_lib.rlib
 *.o
 compile_commands.json
 tmp
+a.json

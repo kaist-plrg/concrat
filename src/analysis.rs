@@ -247,6 +247,47 @@ fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
     }
 }
 
+fn compute_mutex_line<T: Ord, F>(
+    nodes: &[T],
+    node_map: &BTreeMap<T, Vec<String>>,
+    f: F,
+) -> BTreeMap<String, BTreeSet<usize>>
+where
+    F: Fn(&T) -> HashSet<usize>,
+{
+    let lines: BTreeSet<_> = nodes.iter().flat_map(&f).collect();
+    let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
+    for n in nodes {
+        let ms = some_or!(node_map.get(n), continue);
+        for m in ms {
+            let s = mutex_line.entry(m.clone()).or_default();
+            for l in f(n) {
+                s.insert(l);
+            }
+        }
+    }
+    for ls in mutex_line.values_mut() {
+        let start = *lines.first().unwrap();
+        let last = *lines.last().unwrap();
+        let mut held = false;
+        let mut new_ls: BTreeSet<_> = BTreeSet::new();
+        for i in (start..=last).rev() {
+            if lines.contains(&i) {
+                if ls.contains(&i) {
+                    held = true;
+                } else {
+                    held = false;
+                }
+            }
+            if held {
+                new_ls.insert(i);
+            }
+        }
+        *ls = new_ls;
+    }
+    mutex_line
+}
+
 fn generate_function_map(
     funcs: &[Function],
     node_map: &BTreeMap<String, Vec<String>>,
@@ -266,42 +307,9 @@ fn generate_function_map(
             .iter()
             .flat_map(|n| node_map.get(n).unwrap().clone())
             .collect();
-        let empty = HashSet::new();
-        let lines: BTreeSet<_> = nodes
-            .iter()
-            .flat_map(|n| node_line.get(n).unwrap_or(&empty))
-            .cloned()
-            .collect();
-        let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
-        for n in nodes {
-            let ls = some_or!(node_line.get(n), continue);
-            let ms = some_or!(node_map.get(n), continue);
-            for m in ms {
-                let s = mutex_line.entry(m.clone()).or_default();
-                for l in ls {
-                    s.insert(*l);
-                }
-            }
-        }
-        for ls in mutex_line.values_mut() {
-            let start = *lines.first().unwrap();
-            let last = *lines.last().unwrap();
-            let mut held = false;
-            let mut new_ls: BTreeSet<_> = BTreeSet::new();
-            for i in (start..=last).rev() {
-                if lines.contains(&i) {
-                    if ls.contains(&i) {
-                        held = true;
-                    } else {
-                        held = false;
-                    }
-                }
-                if held {
-                    new_ls.insert(i);
-                }
-            }
-            *ls = new_ls;
-        }
+        let mutex_line = compute_mutex_line(nodes, node_map, |n| {
+            node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
+        });
         map.insert(
             name.clone(),
             FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
