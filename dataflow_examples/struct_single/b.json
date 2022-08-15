@@ -6,42 +6,85 @@
     "lock": {
       "entry_mutex": [],
       "node_mutex": ["s.m"],
-      "ret_mutex": ["s.m"]
+      "ret_mutex": ["s.m"],
+      "mutex_line": {
+        "s.m": [
+          71
+        ]
+      }
     },
     "unlock": {
       "entry_mutex": ["s.m"],
       "node_mutex": ["s.m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "s.m": [
+          73
+        ]
+      }
     },
     "lock1": {
       "entry_mutex": [],
       "node_mutex": ["s.m"],
-      "ret_mutex": ["s.m"]
+      "ret_mutex": ["s.m"],
+      "mutex_line": {
+        "s.m": [
+          77
+        ]
+      }
     },
     "unlock1": {
       "entry_mutex": ["s.m"],
       "node_mutex": ["s.m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "s.m": [
+          79
+        ]
+      }
     },
     "lock2": {
       "entry_mutex": [],
       "node_mutex": ["s.m"],
-      "ret_mutex": ["s.m"]
+      "ret_mutex": ["s.m"],
+      "mutex_line": {
+        "s.m": [
+          83
+        ]
+      }
     },
     "unlock2": {
       "entry_mutex": ["s.m"],
       "node_mutex": ["s.m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "s.m": [
+          85
+        ]
+      }
     },
     "f1": {
       "entry_mutex": [],
       "node_mutex": ["s.m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "s.m": [
+          89,
+          90,
+          92,
+          93,
+          95,
+          96,
+          98,
+          99
+        ]
+      }
     },
     "main": {
       "entry_mutex": [],
       "node_mutex": [],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {}
     }
   }
 }

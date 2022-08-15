@@ -1,4 +1,5 @@
 use std::{
+    collections::HashSet,
     fmt::Display,
     path::{Path, PathBuf},
     process::Command,
@@ -331,4 +332,13 @@ pub fn unwrap_call<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
         ExprKind::Call(_, args) => unwrap_call(&args[0]),
         _ => e,
     }
+}
+
+pub fn span_lines(ctx: &LateContext<'_>, span: Span) -> HashSet<usize> {
+    let source_map = ctx.sess().source_map();
+    let fname = source_map.span_to_filename(span);
+    let file = source_map.get_source_file(&fname).unwrap();
+    let lo = file.lookup_file_pos_with_col_display(span.lo());
+    let hi = file.lookup_file_pos_with_col_display(span.hi());
+    ((lo.0)..=(hi.0)).collect()
 }

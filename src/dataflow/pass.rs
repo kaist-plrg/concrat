@@ -22,13 +22,13 @@ use super::{
     Arg, FunctionSummary,
 };
 use crate::{
-    analysis::AnalysisSummary,
+    analysis::{compute_mutex_line, AnalysisSummary},
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
-        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_to_string, type_of,
-        type_to_string, unwrap_call, unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath,
-        ExprPathProj, Id,
+        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_lines,
+        span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
+        unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
     },
 };
 
@@ -402,9 +402,54 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
             }
 
+            // guards held at each span
+            let mut span_mutex: Vec<(Span, BitSet<Id>)> = vec![];
+            // for each basic block
+            for (block, bbd) in body.basic_blocks().iter_enumerated() {
+                // for each statement
+                for (statement_index, stmt) in bbd.statements.iter().enumerate() {
+                    // find guards held before each statement
+                    let location = Location {
+                        block,
+                        statement_index,
+                    };
+                    results.seek_before_primary_effect(location);
+                    let v = results.get().0.clone();
+                    // get span of statement
+                    let span = stmt.source_info.span;
+                    // add to list
+                    span_mutex.push((span, v.clone()));
+                }
+
+                // if terminator exists
+                if let Some(tm) = &bbd.terminator {
+                    match &tm.kind {
+                        TerminatorKind::Call { .. } | TerminatorKind::Return => (),
+                        _ => continue,
+                    }
+                    // find guards held before each statement
+                    let location = Location {
+                        block,
+                        statement_index: bbd.statements.len(),
+                    };
+                    results.seek_before_primary_effect(location);
+                    let v = results.get().0.clone();
+                    // get span of statement
+                    let span = tm.source_info.span;
+                    // add to list
+                    span_mutex.push((span, v.clone()));
+                }
+            }
+
             // create summary
-            let summary =
-                FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, propagation, access);
+            let summary = FunctionSummary::new(
+                entry_mutex,
+                node_mutex,
+                ret_mutex,
+                propagation,
+                access,
+                span_mutex,
+            );
             // save summary
             function_summary_map.insert(*def_id, summary);
         }
@@ -730,23 +775,38 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     node_mutex,
                     ret_mutex,
                     propagation_mutex,
+                    span_mutex,
                     ..
                 } = summary;
                 let mut entry_mutex = iv2mv(entry_mutex);
                 let mut node_mutex = iv2mv(node_mutex);
                 let mut ret_mutex = iv2mv(ret_mutex);
                 let prop = iv2mv(propagation_mutex);
-                for m in prop {
+                for m in &prop {
                     entry_mutex.push(m.clone());
                     node_mutex.push(m.clone());
-                    ret_mutex.push(m);
+                    ret_mutex.push(m.clone());
                 }
+                let mut span_mutex_map: BTreeMap<_, Vec<_>> = BTreeMap::new();
+                for (span, v) in span_mutex {
+                    let mut ms = iv2mv(v);
+                    span_mutex_map.entry(*span).or_default().append(&mut ms);
+                    span_mutex_map
+                        .entry(*span)
+                        .or_default()
+                        .append(&mut prop.clone());
+                }
+                for v in span_mutex_map.values_mut() {
+                    v.sort();
+                    v.dedup();
+                }
+                let mutex_line = compute_mutex_line(&span_mutex_map, |span| span_lines(ctx, *span));
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
                 let summary = crate::analysis::FunctionSummary::new(
                     entry_mutex,
                     node_mutex,
                     ret_mutex,
-                    BTreeMap::new(),
+                    mutex_line,
                 );
                 (f, summary)
             })

@@ -6,37 +6,69 @@
     "f1": {
       "entry_mutex": [],
       "node_mutex": ["m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "m": [
+          58,
+          59,
+          60,
+          62,
+          63,
+          64
+        ]
+      }
     },
     "f2": {
       "entry_mutex": [],
       "node_mutex": ["m"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "m": [
+          68,
+          69
+        ]
+      }
     },
     "a1": {
       "entry_mutex": ["m"],
       "node_mutex": ["m"],
-      "ret_mutex": ["m"]
+      "ret_mutex": ["m"],
+      "mutex_line": {
+        "m": [
+          73,
+          74,
+          75
+        ]
+      }
     },
     "a2": {
       "entry_mutex": ["m"],
       "node_mutex": ["m"],
-      "ret_mutex": ["m"]
+      "ret_mutex": ["m"],
+      "mutex_line": {
+        "m": [
+          77,
+          78
+        ]
+      }
     },
     "b1": {
       "entry_mutex": [],
       "node_mutex": [],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {}
     },
     "b2": {
       "entry_mutex": [],
       "node_mutex": [],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {}
     },
     "main": {
       "entry_mutex": [],
       "node_mutex": [],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {}
     }
   }
 }

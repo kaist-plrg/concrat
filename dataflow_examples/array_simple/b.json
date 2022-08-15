@@ -6,12 +6,20 @@
     "f1": {
       "entry_mutex": [],
       "node_mutex": ["m[i]"],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+        "m[i]": [
+          60,
+          61
+        ]
+      }
     },
     "main": {
       "entry_mutex": [],
       "node_mutex": [],
-      "ret_mutex": []
+      "ret_mutex": [],
+      "mutex_line": {
+      }
     }
   }
 }

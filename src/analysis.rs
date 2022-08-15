@@ -247,17 +247,16 @@ fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
     }
 }
 
-fn compute_mutex_line<T: Ord, F>(
-    nodes: &[T],
+pub fn compute_mutex_line<T: Ord, F>(
     node_map: &BTreeMap<T, Vec<String>>,
     f: F,
 ) -> BTreeMap<String, BTreeSet<usize>>
 where
     F: Fn(&T) -> HashSet<usize>,
 {
-    let lines: BTreeSet<_> = nodes.iter().flat_map(&f).collect();
+    let lines: BTreeSet<_> = node_map.keys().flat_map(&f).collect();
     let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
-    for n in nodes {
+    for n in node_map.keys() {
         let ms = some_or!(node_map.get(n), continue);
         for m in ms {
             let s = mutex_line.entry(m.clone()).or_default();
@@ -307,7 +306,7 @@ fn generate_function_map(
             .iter()
             .flat_map(|n| node_map.get(n).unwrap().clone())
             .collect();
-        let mutex_line = compute_mutex_line(nodes, node_map, |n| {
+        let mutex_line = compute_mutex_line(node_map, |n| {
             node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
         });
         map.insert(

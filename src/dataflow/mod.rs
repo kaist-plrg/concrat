@@ -4,7 +4,7 @@ use rustc_hir::{Expr, HirId};
 use rustc_index::bit_set::BitSet;
 use rustc_lint::LateContext;
 use rustc_middle::mir::{Operand, Terminator, TerminatorKind};
-use rustc_span::def_id::DefId;
+use rustc_span::{def_id::DefId, Span};
 
 pub mod intra;
 pub mod pass;
@@ -49,6 +49,7 @@ pub struct FunctionSummary {
     pub propagation_raw: Vec<(DefId, BitSet<Id>)>,
     pub access: HashMap<ExprPath, (BitSet<Id>, bool)>,
     pub access_raw: Vec<(ExprPath, BitSet<Id>, bool)>,
+    pub span_mutex: Vec<(Span, BitSet<Id>)>,
 }
 
 impl FunctionSummary {
@@ -58,6 +59,7 @@ impl FunctionSummary {
         ret_mutex: BitSet<Id>,
         propagation_raw: Vec<(DefId, BitSet<Id>)>,
         access_raw: Vec<(ExprPath, BitSet<Id>, bool)>,
+        span_mutex: Vec<(Span, BitSet<Id>)>,
     ) -> Self {
         let len = entry_mutex.domain_size();
         let mut propagation = HashMap::new();
@@ -84,6 +86,7 @@ impl FunctionSummary {
             propagation_raw,
             access,
             access_raw,
+            span_mutex,
         }
     }
 }
