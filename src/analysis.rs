@@ -1,10 +1,11 @@
 use std::{
-    collections::{BTreeMap, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet, HashMap, HashSet},
     fs::File,
     io::stdout,
     path::Path,
 };
 
+use etrace::some_or;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -41,6 +42,7 @@ pub struct FunctionSummary {
     pub entry_mutex: Vec<String>,
     pub node_mutex: Vec<String>,
     pub ret_mutex: Vec<String>,
+    pub mutex_line: BTreeMap<String, BTreeSet<usize>>,
 }
 
 impl FunctionSummary {
@@ -48,17 +50,19 @@ impl FunctionSummary {
         mut entry_mutex: Vec<String>,
         mut node_mutex: Vec<String>,
         mut ret_mutex: Vec<String>,
+        mutex_line: BTreeMap<String, BTreeSet<usize>>,
     ) -> Self {
-        entry_mutex.dedup();
         entry_mutex.sort();
-        node_mutex.dedup();
+        entry_mutex.dedup();
         node_mutex.sort();
-        ret_mutex.dedup();
+        node_mutex.dedup();
         ret_mutex.sort();
+        ret_mutex.dedup();
         Self {
             entry_mutex,
             node_mutex,
             ret_mutex,
+            mutex_line,
         }
     }
 }
@@ -66,6 +70,7 @@ impl FunctionSummary {
 pub fn summarize(
     mut elements: Vec<Element>,
     structs: &HashMap<String, HashMap<String, String>>,
+    node_line: &HashMap<String, HashSet<usize>>,
 ) -> AnalysisSummary {
     let mut elements = elements
         .pop()
@@ -90,7 +95,7 @@ pub fn summarize(
 
     let (mutex_map, array_mutex_map, struct_mutex_map) = generate_mutex_maps(&warnings, structs);
     let node_map = generate_node_map(&calls);
-    let function_map = generate_function_map(&functions, &node_map);
+    let function_map = generate_function_map(&functions, &node_map, node_line);
 
     AnalysisSummary {
         mutex_map,
@@ -245,6 +250,7 @@ fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
 fn generate_function_map(
     funcs: &[Function],
     node_map: &BTreeMap<String, Vec<String>>,
+    node_line: &HashMap<String, HashSet<usize>>,
 ) -> BTreeMap<String, FunctionSummary> {
     let mut map: BTreeMap<String, FunctionSummary> = BTreeMap::new();
     for f in funcs {
@@ -256,15 +262,49 @@ fn generate_function_map(
         } = f;
         let entry_mutex = node_map.get(entry).unwrap().clone();
         let ret_mutex = node_map.get(ret).unwrap().clone();
-        let mut node_mutex: Vec<_> = nodes
+        let node_mutex: Vec<_> = nodes
             .iter()
             .flat_map(|n| node_map.get(n).unwrap().clone())
             .collect();
-        node_mutex.sort();
-        node_mutex.dedup();
+        let empty = HashSet::new();
+        let lines: BTreeSet<_> = nodes
+            .iter()
+            .flat_map(|n| node_line.get(n).unwrap_or(&empty))
+            .cloned()
+            .collect();
+        let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
+        for n in nodes {
+            let ls = some_or!(node_line.get(n), continue);
+            let ms = some_or!(node_map.get(n), continue);
+            for m in ms {
+                let s = mutex_line.entry(m.clone()).or_default();
+                for l in ls {
+                    s.insert(*l);
+                }
+            }
+        }
+        for ls in mutex_line.values_mut() {
+            let start = *lines.first().unwrap();
+            let last = *lines.last().unwrap();
+            let mut held = false;
+            let mut new_ls: BTreeSet<_> = BTreeSet::new();
+            for i in (start..=last).rev() {
+                if lines.contains(&i) {
+                    if ls.contains(&i) {
+                        held = true;
+                    } else {
+                        held = false;
+                    }
+                }
+                if held {
+                    new_ls.insert(i);
+                }
+            }
+            *ls = new_ls;
+        }
         map.insert(
             name.clone(),
-            FunctionSummary::new(entry_mutex, node_mutex, ret_mutex),
+            FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
         );
     }
     map

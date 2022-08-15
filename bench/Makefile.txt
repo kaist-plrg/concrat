@@ -1,11 +1,12 @@
 CFLAGS = -pthread
 
 all:
-	make a.json
+	make main.rs a.xml
 
 a.xml: main.c conf.json
 	goblint --conf conf.json \
 		--enable allglobs \
+		--enable justcfg \
 		--set result fast_xml \
 		--set outfile a.xml \
 		main.c
@@ -13,17 +14,17 @@ a.xml: main.c conf.json
 main.rs: main.c
 	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json && \
 	rm -f main.rs && \
-	c2rust transpile -e compile_commands.json && \
-	cargo fmt
+	c2rust transpile -e compile_commands.json > lines
 
 ifeq ($(GOBLINT),yes)
+XML = a.xml
 CMD = goblint2json
 else
 CMD = dataflow
 endif
 
-a.json: a.xml main.rs
+a.json: main.rs $(XML)
 	cargo run --release --manifest-path ../../Cargo.toml --bin ${CMD} -- -i . -d ../../deps
 
 clean:
-	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib
+	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib *.dot lines

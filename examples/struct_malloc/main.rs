@@ -5,10 +5,15 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_mutex_init(
         __mutex: *mut pthread_mutex_t,
         __mutexattr: *const pthread_mutexattr_t,
@@ -20,8 +25,10 @@ extern "C" {
         __cond_attr: *const pthread_condattr_t,
     ) -> libc::c_int;
     fn pthread_cond_signal(__cond: *mut pthread_cond_t) -> libc::c_int;
-    fn pthread_cond_wait(__cond: *mut pthread_cond_t, __mutex: *mut pthread_mutex_t)
-        -> libc::c_int;
+    fn pthread_cond_wait(
+        __cond: *mut pthread_cond_t,
+        __mutex: *mut pthread_mutex_t,
+    ) -> libc::c_int;
 }
 #[derive(Copy, Clone)]
 #[repr(C)]

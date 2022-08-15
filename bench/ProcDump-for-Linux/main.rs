@@ -16,8 +16,11 @@ extern "C" {
     fn pthread_mutex_lock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_mutex_unlock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
     fn sprintf(_: *mut libc::c_char, _: *const libc::c_char, _: ...) -> libc::c_int;
-    fn vsprintf(_: *mut libc::c_char, _: *const libc::c_char, _: ::std::ffi::VaList)
-        -> libc::c_int;
+    fn vsprintf(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: ::std::ffi::VaList,
+    ) -> libc::c_int;
     fn snprintf(
         _: *mut libc::c_char,
         _: libc::c_ulong,
@@ -35,8 +38,11 @@ extern "C" {
     fn free(__ptr: *mut libc::c_void);
     fn exit(_: libc::c_int) -> !;
     fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
-    fn strncpy(_: *mut libc::c_char, _: *const libc::c_char, _: libc::c_ulong)
-        -> *mut libc::c_char;
+    fn strncpy(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
     fn strlen(_: *const libc::c_char) -> libc::c_ulong;
     fn pthread_mutex_init(
         __mutex: *mut pthread_mutex_t,
@@ -56,7 +62,11 @@ extern "C" {
     fn fprintf(_: *mut FILE, _: *const libc::c_char, _: ...) -> libc::c_int;
     fn printf(_: *const libc::c_char, _: ...) -> libc::c_int;
     fn sscanf(_: *const libc::c_char, _: *const libc::c_char, _: ...) -> libc::c_int;
-    fn fgets(__s: *mut libc::c_char, __n: libc::c_int, __stream: *mut FILE) -> *mut libc::c_char;
+    fn fgets(
+        __s: *mut libc::c_char,
+        __n: libc::c_int,
+        __stream: *mut FILE,
+    ) -> *mut libc::c_char;
     static mut optarg: *mut libc::c_char;
     fn getopt_long(
         ___argc: libc::c_int,
@@ -84,12 +94,18 @@ extern "C" {
     fn uname(__name: *mut utsname) -> libc::c_int;
     fn __ctype_b_loc() -> *mut *const libc::c_ushort;
     fn closelog();
-    fn openlog(__ident: *const libc::c_char, __option: libc::c_int, __facility: libc::c_int);
+    fn openlog(
+        __ident: *const libc::c_char,
+        __option: libc::c_int,
+        __facility: libc::c_int,
+    );
     fn scandir(
         __dir: *const libc::c_char,
         __namelist: *mut *mut *mut dirent,
-        __selector: Option<unsafe extern "C" fn(*const dirent) -> libc::c_int>,
-        __cmp: Option<unsafe extern "C" fn(*mut *const dirent, *mut *const dirent) -> libc::c_int>,
+        __selector: Option::<unsafe extern "C" fn(*const dirent) -> libc::c_int>,
+        __cmp: Option::<
+            unsafe extern "C" fn(*mut *const dirent, *mut *const dirent) -> libc::c_int,
+        >,
     ) -> libc::c_int;
     fn alphasort(__e1: *mut *const dirent, __e2: *mut *const dirent) -> libc::c_int;
     fn __errno_location() -> *mut libc::c_int;
@@ -99,19 +115,30 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
     fn pthread_exit(__retval: *mut libc::c_void) -> !;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_cancel(__th: pthread_t) -> libc::c_int;
-    fn sem_init(__sem: *mut sem_t, __pshared: libc::c_int, __value: libc::c_uint) -> libc::c_int;
+    fn sem_init(
+        __sem: *mut sem_t,
+        __pshared: libc::c_int,
+        __value: libc::c_uint,
+    ) -> libc::c_int;
     fn sem_destroy(__sem: *mut sem_t) -> libc::c_int;
     fn ptrace(__request: __ptrace_request, _: ...) -> libc::c_long;
     fn clock_gettime(__clock_id: clockid_t, __tp: *mut timespec) -> libc::c_int;
     fn pthread_detach(__th: pthread_t) -> libc::c_int;
-    fn pthread_cond_wait(__cond: *mut pthread_cond_t, __mutex: *mut pthread_mutex_t)
-        -> libc::c_int;
+    fn pthread_cond_wait(
+        __cond: *mut pthread_cond_t,
+        __mutex: *mut pthread_mutex_t,
+    ) -> libc::c_int;
     fn pthread_cond_timedwait(
         __cond: *mut pthread_cond_t,
         __mutex: *mut pthread_mutex_t,
@@ -127,28 +154,55 @@ extern "C" {
         __delim: *const libc::c_char,
         __save_ptr: *mut *mut libc::c_char,
     ) -> *mut libc::c_char;
-    fn strtol(_: *const libc::c_char, _: *mut *mut libc::c_char, _: libc::c_int) -> libc::c_long;
-    fn strtoul(_: *const libc::c_char, _: *mut *mut libc::c_char, _: libc::c_int) -> libc::c_ulong;
+    fn strtol(
+        _: *const libc::c_char,
+        _: *mut *mut libc::c_char,
+        _: libc::c_int,
+    ) -> libc::c_long;
+    fn strtoul(
+        _: *const libc::c_char,
+        _: *mut *mut libc::c_char,
+        _: libc::c_int,
+    ) -> libc::c_ulong;
     fn strtoull(
         _: *const libc::c_char,
         _: *mut *mut libc::c_char,
         _: libc::c_int,
     ) -> libc::c_ulonglong;
     fn geteuid() -> __uid_t;
-    fn waitpid(__pid: __pid_t, __stat_loc: *mut libc::c_int, __options: libc::c_int) -> __pid_t;
-    fn pthread_setcanceltype(__type: libc::c_int, __oldtype: *mut libc::c_int) -> libc::c_int;
+    fn waitpid(
+        __pid: __pid_t,
+        __stat_loc: *mut libc::c_int,
+        __options: libc::c_int,
+    ) -> __pid_t;
+    fn pthread_setcanceltype(
+        __type: libc::c_int,
+        __oldtype: *mut libc::c_int,
+    ) -> libc::c_int;
     fn sem_post(__sem: *mut sem_t) -> libc::c_int;
     fn access(__name: *const libc::c_char, __type: libc::c_int) -> libc::c_int;
     fn close(__fd: libc::c_int) -> libc::c_int;
     fn pipe(__pipedes: *mut libc::c_int) -> libc::c_int;
     fn sleep(__seconds: libc::c_uint) -> libc::c_uint;
     fn dup2(__fd: libc::c_int, __fd2: libc::c_int) -> libc::c_int;
-    fn execl(__path: *const libc::c_char, __arg: *const libc::c_char, _: ...) -> libc::c_int;
+    fn execl(
+        __path: *const libc::c_char,
+        __arg: *const libc::c_char,
+        _: ...
+    ) -> libc::c_int;
     fn setpgid(__pid: __pid_t, __pgid: __pid_t) -> libc::c_int;
     fn fork() -> __pid_t;
     fn unlink(__name: *const libc::c_char) -> libc::c_int;
-    fn socket(__domain: libc::c_int, __type: libc::c_int, __protocol: libc::c_int) -> libc::c_int;
-    fn connect(__fd: libc::c_int, __addr: *const sockaddr, __len: socklen_t) -> libc::c_int;
+    fn socket(
+        __domain: libc::c_int,
+        __type: libc::c_int,
+        __protocol: libc::c_int,
+    ) -> libc::c_int;
+    fn connect(
+        __fd: libc::c_int,
+        __addr: *const sockaddr,
+        __len: socklen_t,
+    ) -> libc::c_int;
     fn send(
         __fd: libc::c_int,
         __buf: *const libc::c_void,
@@ -161,9 +215,21 @@ extern "C" {
         __n: size_t,
         __flags: libc::c_int,
     ) -> ssize_t;
-    fn memcpy(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
-    fn memset(_: *mut libc::c_void, _: libc::c_int, _: libc::c_ulong) -> *mut libc::c_void;
-    fn strncmp(_: *const libc::c_char, _: *const libc::c_char, _: libc::c_ulong) -> libc::c_int;
+    fn memcpy(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn memset(
+        _: *mut libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn strncmp(
+        _: *const libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> libc::c_int;
     fn strstr(_: *const libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
     fn strtok(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
     fn getenv(__name: *const libc::c_char) -> *mut libc::c_char;
@@ -763,11 +829,7 @@ pub unsafe extern "C" fn LogFormatter(
     if logLevel as libc::c_uint != 0 as libc::c_uint {
         puts(trace as *const libc::c_char);
     }
-    syslog(
-        7 as libc::c_int,
-        b"%s\0" as *const u8 as *const libc::c_char,
-        trace,
-    );
+    syslog(7 as libc::c_int, b"%s\0" as *const u8 as *const libc::c_char, trace);
     free(trace as *mut libc::c_void);
     pthread_mutex_unlock(&mut LoggerLock);
 }
@@ -796,12 +858,10 @@ pub unsafe extern "C" fn CreateEvent(
     tmp = malloc(::std::mem::size_of::<Event>() as libc::c_ulong);
     event = tmp as *mut Event;
     if event as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
-        Log(
-            error,
-            b"INTERNAL_ERROR\0" as *const u8 as *const libc::c_char,
-        );
+        Log(error, b"INTERNAL_ERROR\0" as *const u8 as *const libc::c_char);
         DiagTrace(
-            b"CreateEvent: failed memory allocation. %s\0" as *const u8 as *const libc::c_char,
+            b"CreateEvent: failed memory allocation. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 24\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -825,7 +885,8 @@ pub unsafe extern "C" fn CreateNamedEvent(
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"CreateNamedEvent: failed memory allocation. %s\0" as *const u8 as *const libc::c_char,
+            b"CreateNamedEvent: failed memory allocation. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 43\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -869,7 +930,8 @@ pub unsafe extern "C" fn InitNamedEvent(
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"InitNamedEvent: failed pthread_cond_init. %s\0" as *const u8 as *const libc::c_char,
+            b"InitNamedEvent: failed pthread_cond_init. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 76\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -909,7 +971,8 @@ pub unsafe extern "C" fn DestroyEvent(mut Event: *mut Event) {
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"DestroyEvent: failed pthread_cond_destroy. %s\0" as *const u8 as *const libc::c_char,
+            b"DestroyEvent: failed pthread_cond_destroy. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 104\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -922,7 +985,8 @@ pub unsafe extern "C" fn DestroyEvent(mut Event: *mut Event) {
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"DestroyEvent: failed pthread_mutex_destroy. %s\0" as *const u8 as *const libc::c_char,
+            b"DestroyEvent: failed pthread_mutex_destroy. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 109\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -947,7 +1011,8 @@ pub unsafe extern "C" fn SetEvent(mut Event: *mut Event) -> bool {
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"SetEvent: failed pthread_mutex_lock. %s\0" as *const u8 as *const libc::c_char,
+            b"SetEvent: failed pthread_mutex_lock. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 135\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -982,7 +1047,8 @@ pub unsafe extern "C" fn ResetEvent(mut Event: *mut Event) -> bool {
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"ResetEvent: failed pthread_mutex_lock. %s\0" as *const u8 as *const libc::c_char,
+            b"ResetEvent: failed pthread_mutex_lock. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Events.c, at line 163\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -1478,7 +1544,9 @@ pub static mut ptrace_mutex: pthread_mutex_t = __anonunion_pthread_mutex_t_33546
         },
     },
 };
-pub unsafe extern "C" fn SignalThread(mut input: *mut libc::c_void) -> *mut libc::c_void {
+pub unsafe extern "C" fn SignalThread(
+    mut input: *mut libc::c_void,
+) -> *mut libc::c_void {
     let mut config: *mut ProcDumpConfiguration = 0 as *mut ProcDumpConfiguration;
     let mut sig_caught: libc::c_int = 0;
     let mut rc: libc::c_int = 0;
@@ -1488,25 +1556,20 @@ pub unsafe extern "C" fn SignalThread(mut input: *mut libc::c_void) -> *mut libc
         &mut sig_caught as *mut libc::c_int,
     );
     if rc != 0 as libc::c_int {
-        Log(
-            error,
-            b"Failed to wait on signal\0" as *const u8 as *const libc::c_char,
-        );
+        Log(error, b"Failed to wait on signal\0" as *const u8 as *const libc::c_char);
         exit(-(1 as libc::c_int));
     }
     match sig_caught {
         2 => {
             SetQuit(config, 1 as libc::c_int);
             if (*config).gcorePid != 2147483647 as libc::c_int {
-                Log(
-                    info,
-                    b"Shutting down gcore\0" as *const u8 as *const libc::c_char,
-                );
+                Log(info, b"Shutting down gcore\0" as *const u8 as *const libc::c_char);
                 rc = kill(-(*config).gcorePid, 9 as libc::c_int);
                 if rc != 0 as libc::c_int {
                     Log(
                         error,
-                        b"Failed to shutdown gcore.\0" as *const u8 as *const libc::c_char,
+                        b"Failed to shutdown gcore.\0" as *const u8
+                            as *const libc::c_char,
                     );
                 }
             }
@@ -1523,8 +1586,8 @@ pub unsafe extern "C" fn SignalThread(mut input: *mut libc::c_void) -> *mut libc
                 if rc != 0 as libc::c_int {
                     Log(
                         error,
-                        b"An error occurred while canceling SignalMonitorThread.\n\0" as *const u8
-                            as *const libc::c_char,
+                        b"An error occurred while canceling SignalMonitorThread.\n\0"
+                            as *const u8 as *const libc::c_char,
                     );
                     exit(-(1 as libc::c_int));
                 }
@@ -1571,7 +1634,9 @@ pub unsafe extern "C" fn ExitProcDump() {
     closelog();
     FreeProcDumpConfiguration(&mut g_config);
 }
-pub unsafe extern "C" fn InitProcDumpConfiguration(mut self_0: *mut ProcDumpConfiguration) {
+pub unsafe extern "C" fn InitProcDumpConfiguration(
+    mut self_0: *mut ProcDumpConfiguration,
+) {
     let mut tmp: libc::c_int = 0;
     let mut tmp___0: libc::c_long = 0;
     tmp = WaitForSingleObject(&mut g_evtConfigurationInitialized, 0 as libc::c_int);
@@ -1583,13 +1648,11 @@ pub unsafe extern "C" fn InitProcDumpConfiguration(mut self_0: *mut ProcDumpConf
     HZ = sysconf(2 as libc::c_int);
     sysinfo(&mut (*self_0).SystemInfo);
     InitNamedEvent(
-        &mut (*self_0)
-            .evtCtrlHandlerCleanupComplete
-            .__annonCompField4
-            .event,
+        &mut (*self_0).evtCtrlHandlerCleanupComplete.__annonCompField4.event,
         1 as libc::c_int != 0,
         0 as libc::c_int != 0,
-        b"CtrlHandlerCleanupComplete\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+        b"CtrlHandlerCleanupComplete\0" as *const u8 as *const libc::c_char
+            as *mut libc::c_char,
     );
     (*self_0).evtCtrlHandlerCleanupComplete.type_0 = EVENT;
     InitNamedEvent(
@@ -1603,14 +1666,16 @@ pub unsafe extern "C" fn InitProcDumpConfiguration(mut self_0: *mut ProcDumpConf
         &mut (*self_0).evtConfigurationPrinted.__annonCompField4.event,
         1 as libc::c_int != 0,
         0 as libc::c_int != 0,
-        b"ConfigurationPrinted\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+        b"ConfigurationPrinted\0" as *const u8 as *const libc::c_char
+            as *mut libc::c_char,
     );
     (*self_0).evtConfigurationPrinted.type_0 = EVENT;
     InitNamedEvent(
         &mut (*self_0).evtDebugThreadInitialized.__annonCompField4.event,
         1 as libc::c_int != 0,
         0 as libc::c_int != 0,
-        b"DebugThreadInitialized\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+        b"DebugThreadInitialized\0" as *const u8 as *const libc::c_char
+            as *mut libc::c_char,
     );
     (*self_0).evtDebugThreadInitialized.type_0 = EVENT;
     InitNamedEvent(
@@ -1653,14 +1718,11 @@ pub unsafe extern "C" fn InitProcDumpConfiguration(mut self_0: *mut ProcDumpConf
     (*self_0).CoreDumpName = 0 as *mut libc::c_void as *mut libc::c_char;
     SetEvent(&mut g_evtConfigurationInitialized.__annonCompField4.event);
 }
-pub unsafe extern "C" fn FreeProcDumpConfiguration(mut self_0: *mut ProcDumpConfiguration) {
+pub unsafe extern "C" fn FreeProcDumpConfiguration(
+    mut self_0: *mut ProcDumpConfiguration,
+) {
     let mut tmp: libc::c_int = 0;
-    DestroyEvent(
-        &mut (*self_0)
-            .evtCtrlHandlerCleanupComplete
-            .__annonCompField4
-            .event,
-    );
+    DestroyEvent(&mut (*self_0).evtCtrlHandlerCleanupComplete.__annonCompField4.event);
     DestroyEvent(&mut (*self_0).evtBannerPrinted.__annonCompField4.event);
     DestroyEvent(&mut (*self_0).evtConfigurationPrinted.__annonCompField4.event);
     DestroyEvent(&mut (*self_0).evtDebugThreadInitialized.__annonCompField4.event);
@@ -1706,18 +1768,9 @@ pub unsafe extern "C" fn GetOptions(
         st_size: 0,
         st_blksize: 0,
         st_blocks: 0,
-        st_atim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
-        st_mtim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
-        st_ctim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
+        st_atim: timespec { tv_sec: 0, tv_nsec: 0 },
+        st_mtim: timespec { tv_sec: 0, tv_nsec: 0 },
+        st_ctim: timespec { tv_sec: 0, tv_nsec: 0 },
         __glibc_reserved: [0; 3],
     };
     let mut tmp___1: libc::c_int = 0;
@@ -1768,8 +1821,10 @@ pub unsafe extern "C" fn GetOptions(
     tmp = WaitForSingleObject(&mut g_evtConfigurationInitialized, 0 as libc::c_int);
     if tmp != 0 as libc::c_int {
         DiagTrace(
-            b"GetOptions: Configuration not initialized. %s\0" as *const u8 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 202\0" as *const u8 as *const libc::c_char,
+            b"GetOptions: Configuration not initialized. %s\0" as *const u8
+                as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 202\0" as *const u8
+                as *const libc::c_char,
         );
         return -(1 as libc::c_int);
     }
@@ -1777,83 +1832,110 @@ pub unsafe extern "C" fn GetOptions(
         DiagTrace(
             b"GetOptions: Invalid number of command line arguments. %s\0" as *const u8
                 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 207\0" as *const u8 as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 207\0" as *const u8
+                as *const libc::c_char,
         );
         tmp___0 = PrintUsage(self_0);
         return tmp___0;
     }
     option_index = 0 as libc::c_int;
-    short_options = b"+p:C:c:M:m:n:s:w:T:F:G:I:o:dh\0" as *const u8 as *const libc::c_char;
-    long_options[0 as libc::c_int as usize].name = b"pid\0" as *const u8 as *const libc::c_char;
+    short_options = b"+p:C:c:M:m:n:s:w:T:F:G:I:o:dh\0" as *const u8
+        as *const libc::c_char;
+    long_options[0 as libc::c_int as usize]
+        .name = b"pid\0" as *const u8 as *const libc::c_char;
     long_options[0 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[0 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[0 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[0 as libc::c_int as usize].val = 'p' as i32;
-    long_options[1 as libc::c_int as usize].name = b"cpu\0" as *const u8 as *const libc::c_char;
+    long_options[1 as libc::c_int as usize]
+        .name = b"cpu\0" as *const u8 as *const libc::c_char;
     long_options[1 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[1 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[1 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[1 as libc::c_int as usize].val = 'C' as i32;
-    long_options[2 as libc::c_int as usize].name =
-        b"lower-cpu\0" as *const u8 as *const libc::c_char;
+    long_options[2 as libc::c_int as usize]
+        .name = b"lower-cpu\0" as *const u8 as *const libc::c_char;
     long_options[2 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[2 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[2 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[2 as libc::c_int as usize].val = 'c' as i32;
-    long_options[3 as libc::c_int as usize].name = b"memory\0" as *const u8 as *const libc::c_char;
+    long_options[3 as libc::c_int as usize]
+        .name = b"memory\0" as *const u8 as *const libc::c_char;
     long_options[3 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[3 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[3 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[3 as libc::c_int as usize].val = 'M' as i32;
-    long_options[4 as libc::c_int as usize].name =
-        b"lower-mem\0" as *const u8 as *const libc::c_char;
+    long_options[4 as libc::c_int as usize]
+        .name = b"lower-mem\0" as *const u8 as *const libc::c_char;
     long_options[4 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[4 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[4 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[4 as libc::c_int as usize].val = 'm' as i32;
-    long_options[5 as libc::c_int as usize].name =
-        b"number-of-dumps\0" as *const u8 as *const libc::c_char;
+    long_options[5 as libc::c_int as usize]
+        .name = b"number-of-dumps\0" as *const u8 as *const libc::c_char;
     long_options[5 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[5 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[5 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[5 as libc::c_int as usize].val = 'n' as i32;
-    long_options[6 as libc::c_int as usize].name =
-        b"time-between-dumps\0" as *const u8 as *const libc::c_char;
+    long_options[6 as libc::c_int as usize]
+        .name = b"time-between-dumps\0" as *const u8 as *const libc::c_char;
     long_options[6 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[6 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[6 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[6 as libc::c_int as usize].val = 's' as i32;
-    long_options[7 as libc::c_int as usize].name = b"wait\0" as *const u8 as *const libc::c_char;
+    long_options[7 as libc::c_int as usize]
+        .name = b"wait\0" as *const u8 as *const libc::c_char;
     long_options[7 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[7 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[7 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[7 as libc::c_int as usize].val = 'w' as i32;
-    long_options[8 as libc::c_int as usize].name = b"threads\0" as *const u8 as *const libc::c_char;
+    long_options[8 as libc::c_int as usize]
+        .name = b"threads\0" as *const u8 as *const libc::c_char;
     long_options[8 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[8 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[8 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[8 as libc::c_int as usize].val = 'T' as i32;
-    long_options[9 as libc::c_int as usize].name =
-        b"filedescriptors\0" as *const u8 as *const libc::c_char;
+    long_options[9 as libc::c_int as usize]
+        .name = b"filedescriptors\0" as *const u8 as *const libc::c_char;
     long_options[9 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[9 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[9 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[9 as libc::c_int as usize].val = 'F' as i32;
-    long_options[10 as libc::c_int as usize].name = b"signal\0" as *const u8 as *const libc::c_char;
+    long_options[10 as libc::c_int as usize]
+        .name = b"signal\0" as *const u8 as *const libc::c_char;
     long_options[10 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[10 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[10 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[10 as libc::c_int as usize].val = 'G' as i32;
-    long_options[11 as libc::c_int as usize].name =
-        b"pollinginterval\0" as *const u8 as *const libc::c_char;
+    long_options[11 as libc::c_int as usize]
+        .name = b"pollinginterval\0" as *const u8 as *const libc::c_char;
     long_options[11 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[11 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[11 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[11 as libc::c_int as usize].val = 'I' as i32;
-    long_options[12 as libc::c_int as usize].name =
-        b"output-path\0" as *const u8 as *const libc::c_char;
+    long_options[12 as libc::c_int as usize]
+        .name = b"output-path\0" as *const u8 as *const libc::c_char;
     long_options[12 as libc::c_int as usize].has_arg = 1 as libc::c_int;
-    long_options[12 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[12 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[12 as libc::c_int as usize].val = 'o' as i32;
-    long_options[13 as libc::c_int as usize].name = b"diag\0" as *const u8 as *const libc::c_char;
+    long_options[13 as libc::c_int as usize]
+        .name = b"diag\0" as *const u8 as *const libc::c_char;
     long_options[13 as libc::c_int as usize].has_arg = 0 as libc::c_int;
-    long_options[13 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[13 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[13 as libc::c_int as usize].val = 'd' as i32;
-    long_options[14 as libc::c_int as usize].name = b"help\0" as *const u8 as *const libc::c_char;
+    long_options[14 as libc::c_int as usize]
+        .name = b"help\0" as *const u8 as *const libc::c_char;
     long_options[14 as libc::c_int as usize].has_arg = 0 as libc::c_int;
-    long_options[14 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[14 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[14 as libc::c_int as usize].val = 'h' as i32;
-    long_options[15 as libc::c_int as usize].name = 0 as *mut libc::c_void as *const libc::c_char;
+    long_options[15 as libc::c_int as usize]
+        .name = 0 as *mut libc::c_void as *const libc::c_char;
     long_options[15 as libc::c_int as usize].has_arg = 0 as libc::c_int;
-    long_options[15 as libc::c_int as usize].flag = 0 as *mut libc::c_void as *mut libc::c_int;
+    long_options[15 as libc::c_int as usize]
+        .flag = 0 as *mut libc::c_void as *mut libc::c_int;
     long_options[15 as libc::c_int as usize].val = 0 as libc::c_int;
     tempOutputPath = 0 as *mut libc::c_void as *mut libc::c_char;
     loop {
@@ -1875,8 +1957,8 @@ pub unsafe extern "C" fn GetOptions(
                 if !tmp___3 {
                     Log(
                         error,
-                        b"Invalid PID - failed looking up process name by PID.\0" as *const u8
-                            as *const libc::c_char,
+                        b"Invalid PID - failed looking up process name by PID.\0"
+                            as *const u8 as *const libc::c_char,
                     );
                     tmp___2 = PrintUsage(self_0);
                     return tmp___2;
@@ -1886,7 +1968,8 @@ pub unsafe extern "C" fn GetOptions(
                 if (*self_0).CpuThreshold != -(1 as libc::c_int) {
                     Log(
                         error,
-                        b"Invalid CPU threshold specified.\0" as *const u8 as *const libc::c_char,
+                        b"Invalid CPU threshold specified.\0" as *const u8
+                            as *const libc::c_char,
                     );
                     tmp___4 = PrintUsage(self_0);
                     return tmp___4;
@@ -1933,8 +2016,8 @@ pub unsafe extern "C" fn GetOptions(
                     if tmp___9 < 0 as libc::c_int {
                         Log(
                             error,
-                            b"Invalid polling interval specified (minimum %d).\0" as *const u8
-                                as *const libc::c_char,
+                            b"Invalid polling interval specified (minimum %d).\0"
+                                as *const u8 as *const libc::c_char,
                             1000 as libc::c_int,
                         );
                         tmp___7 = PrintUsage(self_0);
@@ -1943,8 +2026,8 @@ pub unsafe extern "C" fn GetOptions(
                         if (*self_0).PollingInterval < 1000 as libc::c_int {
                             Log(
                                 error,
-                                b"Invalid polling interval specified (minimum %d).\0" as *const u8
-                                    as *const libc::c_char,
+                                b"Invalid polling interval specified (minimum %d).\0"
+                                    as *const u8 as *const libc::c_char,
                                 1000 as libc::c_int,
                             );
                             tmp___7 = PrintUsage(self_0);
@@ -1954,8 +2037,8 @@ pub unsafe extern "C" fn GetOptions(
                 } else {
                     Log(
                         error,
-                        b"Invalid polling interval specified (minimum %d).\0" as *const u8
-                            as *const libc::c_char,
+                        b"Invalid polling interval specified (minimum %d).\0"
+                            as *const u8 as *const libc::c_char,
                         1000 as libc::c_int,
                     );
                     tmp___7 = PrintUsage(self_0);
@@ -2013,8 +2096,8 @@ pub unsafe extern "C" fn GetOptions(
                         if tmp___15 < 0 as libc::c_int {
                             Log(
                                 error,
-                                b"Invalid file descriptor threshold specified.\0" as *const u8
-                                    as *const libc::c_char,
+                                b"Invalid file descriptor threshold specified.\0"
+                                    as *const u8 as *const libc::c_char,
                             );
                             tmp___13 = PrintUsage(self_0);
                             return tmp___13;
@@ -2022,8 +2105,8 @@ pub unsafe extern "C" fn GetOptions(
                     } else {
                         Log(
                             error,
-                            b"Invalid file descriptor threshold specified.\0" as *const u8
-                                as *const libc::c_char,
+                            b"Invalid file descriptor threshold specified.\0"
+                                as *const u8 as *const libc::c_char,
                         );
                         tmp___13 = PrintUsage(self_0);
                         return tmp___13;
@@ -2034,7 +2117,8 @@ pub unsafe extern "C" fn GetOptions(
                 if (*self_0).SignalNumber != -(1 as libc::c_int) {
                     Log(
                         error,
-                        b"Invalid signal specified.\0" as *const u8 as *const libc::c_char,
+                        b"Invalid signal specified.\0" as *const u8
+                            as *const libc::c_char,
                     );
                     tmp___16 = PrintUsage(self_0);
                     return tmp___16;
@@ -2046,7 +2130,8 @@ pub unsafe extern "C" fn GetOptions(
                         if tmp___18 < 0 as libc::c_int {
                             Log(
                                 error,
-                                b"Invalid signal specified.\0" as *const u8 as *const libc::c_char,
+                                b"Invalid signal specified.\0" as *const u8
+                                    as *const libc::c_char,
                             );
                             tmp___16 = PrintUsage(self_0);
                             return tmp___16;
@@ -2054,7 +2139,8 @@ pub unsafe extern "C" fn GetOptions(
                     } else {
                         Log(
                             error,
-                            b"Invalid signal specified.\0" as *const u8 as *const libc::c_char,
+                            b"Invalid signal specified.\0" as *const u8
+                                as *const libc::c_char,
                         );
                         tmp___16 = PrintUsage(self_0);
                         return tmp___16;
@@ -2065,7 +2151,8 @@ pub unsafe extern "C" fn GetOptions(
                 if (*self_0).CpuThreshold != -(1 as libc::c_int) {
                     Log(
                         error,
-                        b"Invalid CPU threshold specified.\0" as *const u8 as *const libc::c_char,
+                        b"Invalid CPU threshold specified.\0" as *const u8
+                            as *const libc::c_char,
                     );
                     tmp___19 = PrintUsage(self_0);
                     return tmp___19;
@@ -2191,7 +2278,8 @@ pub unsafe extern "C" fn GetOptions(
                 } else {
                     Log(
                         error,
-                        b"Invalid dumps threshold specified.\0" as *const u8 as *const libc::c_char,
+                        b"Invalid dumps threshold specified.\0" as *const u8
+                            as *const libc::c_char,
                     );
                     tmp___28 = PrintUsage(self_0);
                     return tmp___28;
@@ -2214,7 +2302,8 @@ pub unsafe extern "C" fn GetOptions(
                 } else {
                     Log(
                         error,
-                        b"Invalid time threshold specified.\0" as *const u8 as *const libc::c_char,
+                        b"Invalid time threshold specified.\0" as *const u8
+                            as *const libc::c_char,
                     );
                     tmp___31 = PrintUsage(self_0);
                     return tmp___31;
@@ -2234,7 +2323,8 @@ pub unsafe extern "C" fn GetOptions(
                 if tmp___36 == 0 as libc::c_int {
                     if statbuf.st_mode & 61440 as libc::c_uint == 16384 as libc::c_uint {
                         (*self_0).CoreDumpPath = tempOutputPath;
-                        (*self_0).CoreDumpName = 0 as *mut libc::c_void as *mut libc::c_char;
+                        (*self_0)
+                            .CoreDumpName = 0 as *mut libc::c_void as *mut libc::c_char;
                         current_block_304 = 7539340762994337730;
                     } else {
                         current_block_304 = 9460471516650888218;
@@ -2247,18 +2337,20 @@ pub unsafe extern "C" fn GetOptions(
                         tmp___37 = strlen(tempOutputPath as *const libc::c_char);
                         if *tempOutputPath
                             .offset(tmp___37.wrapping_sub(1 as libc::c_ulong) as isize)
-                            as libc::c_int
-                            == 47 as libc::c_int
+                            as libc::c_int == 47 as libc::c_int
                         {
                             (*self_0).CoreDumpPath = tempOutputPath;
-                            (*self_0).CoreDumpName = 0 as *mut libc::c_void as *mut libc::c_char;
+                            (*self_0)
+                                .CoreDumpName = 0 as *mut libc::c_void as *mut libc::c_char;
                         } else {
                             tmp___34 = dirname(tempOutputPath);
-                            (*self_0).CoreDumpPath = strdup(tmp___34 as *const libc::c_char);
+                            (*self_0)
+                                .CoreDumpPath = strdup(tmp___34 as *const libc::c_char);
                             free(tempOutputPath as *mut libc::c_void);
                             tempOutputPath = strdup(optarg as *const libc::c_char);
                             tmp___35 = __xpg_basename(tempOutputPath);
-                            (*self_0).CoreDumpName = strdup(tmp___35 as *const libc::c_char);
+                            (*self_0)
+                                .CoreDumpName = strdup(tmp___35 as *const libc::c_char);
                             free(tempOutputPath as *mut libc::c_void);
                         }
                     }
@@ -2271,14 +2363,16 @@ pub unsafe extern "C" fn GetOptions(
                 if tmp___39 < 0 as libc::c_int {
                     Log(
                         error,
-                        b"Invalid directory (\"%s\") provided for core dump output.\0" as *const u8
-                            as *const libc::c_char,
+                        b"Invalid directory (\"%s\") provided for core dump output.\0"
+                            as *const u8 as *const libc::c_char,
                         (*self_0).CoreDumpPath,
                     );
                     tmp___38 = PrintUsage(self_0);
                     return tmp___38;
                 } else {
-                    if !(statbuf.st_mode & 61440 as libc::c_uint == 16384 as libc::c_uint) {
+                    if !(statbuf.st_mode & 61440 as libc::c_uint
+                        == 16384 as libc::c_uint)
+                    {
                         Log(
                             error,
                             b"Invalid directory (\"%s\") provided for core dump output.\0"
@@ -2307,7 +2401,8 @@ pub unsafe extern "C" fn GetOptions(
             }
         }
     }
-    if (*self_0).CoreDumpPath as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
+    if (*self_0).CoreDumpPath as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong
+    {
         (*self_0).CoreDumpPath = strdup(b".\0" as *const u8 as *const libc::c_char);
     }
     if (*self_0).NumberOfDumpsToCollect != -(1 as libc::c_int) {
@@ -2343,8 +2438,8 @@ pub unsafe extern "C" fn GetOptions(
                 if (*self_0).FileDescriptorThreshold != -(1 as libc::c_int) {
                     Log(
                         error,
-                        b"Signal trigger must be the only trigger specified.\0" as *const u8
-                            as *const libc::c_char,
+                        b"Signal trigger must be the only trigger specified.\0"
+                            as *const u8 as *const libc::c_char,
                     );
                     tmp___42 = PrintUsage(self_0);
                     return tmp___42;
@@ -2352,8 +2447,8 @@ pub unsafe extern "C" fn GetOptions(
                     if (*self_0).MemoryThreshold != -(1 as libc::c_int) {
                         Log(
                             error,
-                            b"Signal trigger must be the only trigger specified.\0" as *const u8
-                                as *const libc::c_char,
+                            b"Signal trigger must be the only trigger specified.\0"
+                                as *const u8 as *const libc::c_char,
                         );
                         tmp___42 = PrintUsage(self_0);
                         return tmp___42;
@@ -2364,8 +2459,8 @@ pub unsafe extern "C" fn GetOptions(
         if (*self_0).PollingInterval != 1000 as libc::c_int {
             Log(
                 error,
-                b"Polling interval has no meaning during signal monitoring.\0" as *const u8
-                    as *const libc::c_char,
+                b"Polling interval has no meaning during signal monitoring.\0"
+                    as *const u8 as *const libc::c_char,
             );
             tmp___43 = PrintUsage(self_0);
             return tmp___43;
@@ -2387,7 +2482,8 @@ pub unsafe extern "C" fn GetOptions(
         if (*self_0).WaitingForProcessName {
             Log(
                 error,
-                b"Please only specify one of -p or -w\0" as *const u8 as *const libc::c_char,
+                b"Please only specify one of -p or -w\0" as *const u8
+                    as *const libc::c_char,
             );
             tmp___45 = PrintUsage(self_0);
             return tmp___45;
@@ -2397,12 +2493,16 @@ pub unsafe extern "C" fn GetOptions(
         (*self_0).ProcessName = GetProcessName((*self_0).ProcessId);
     }
     DiagTrace(
-        b"GetOpts and initial Configuration finished %s\0" as *const u8 as *const libc::c_char,
-        b"in src/ProcDumpConfiguration.c, at line 429\0" as *const u8 as *const libc::c_char,
+        b"GetOpts and initial Configuration finished %s\0" as *const u8
+            as *const libc::c_char,
+        b"in src/ProcDumpConfiguration.c, at line 429\0" as *const u8
+            as *const libc::c_char,
     );
     return 0 as libc::c_int;
 }
-pub unsafe extern "C" fn LookupProcessByPid(mut self_0: *mut ProcDumpConfiguration) -> bool {
+pub unsafe extern "C" fn LookupProcessByPid(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> bool {
     let mut statFilePath: [libc::c_char; 32] = [0; 32];
     let mut fd: *mut FILE = 0 as *mut FILE;
     let mut tmp: *mut FILE = 0 as *mut FILE;
@@ -2424,8 +2524,8 @@ pub unsafe extern "C" fn LookupProcessByPid(mut self_0: *mut ProcDumpConfigurati
         );
         Log(
             error,
-            b"Try elevating the command prompt (i.e., `sudo procdump ...`)\0" as *const u8
-                as *const libc::c_char,
+            b"Try elevating the command prompt (i.e., `sudo procdump ...`)\0"
+                as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
@@ -2437,7 +2537,9 @@ unsafe extern "C" fn FilterForPid(mut entry: *const dirent) -> libc::c_int {
     tmp = IsValidNumberArg(((*entry).d_name).as_ptr());
     return tmp as libc::c_int;
 }
-pub unsafe extern "C" fn WaitForProcessName(mut self_0: *mut ProcDumpConfiguration) -> bool {
+pub unsafe extern "C" fn WaitForProcessName(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> bool {
     let mut nameList: *mut *mut dirent = 0 as *mut *mut dirent;
     let mut moreThanOne: bool = false;
     let mut matchingPid: pid_t = 0;
@@ -2465,14 +2567,19 @@ pub unsafe extern "C" fn WaitForProcessName(mut self_0: *mut ProcDumpConfigurati
             Some(FilterForPid as unsafe extern "C" fn(*const dirent) -> libc::c_int),
             Some(
                 alphasort
-                    as unsafe extern "C" fn(*mut *const dirent, *mut *const dirent) -> libc::c_int,
+                    as unsafe extern "C" fn(
+                        *mut *const dirent,
+                        *mut *const dirent,
+                    ) -> libc::c_int,
             ),
         );
         numEntries = tmp;
         i = 0 as libc::c_int;
         while i < numEntries {
-            tmp___0 =
-                atoi(((**nameList.offset(i as isize)).d_name).as_mut_ptr() as *const libc::c_char);
+            tmp___0 = atoi(
+                ((**nameList.offset(i as isize)).d_name).as_mut_ptr()
+                    as *const libc::c_char,
+            );
             procPid = tmp___0;
             tmp___1 = GetProcessName(procPid);
             nameForPid = tmp___1;
@@ -2491,8 +2598,8 @@ pub unsafe extern "C" fn WaitForProcessName(mut self_0: *mut ProcDumpConfigurati
                     } else {
                         Log(
                             error,
-                            b"More than one matching process found, exiting...\0" as *const u8
-                                as *const libc::c_char,
+                            b"More than one matching process found, exiting...\0"
+                                as *const u8 as *const libc::c_char,
                         );
                         moreThanOne = 1 as libc::c_int != 0;
                         free(nameForPid as *mut libc::c_void);
@@ -2523,7 +2630,7 @@ pub unsafe extern "C" fn WaitForProcessName(mut self_0: *mut ProcDumpConfigurati
                 return 1 as libc::c_int != 0;
             }
         }
-    }
+    };
 }
 pub unsafe extern "C" fn GetProcessName(mut pid: pid_t) -> *mut libc::c_char {
     let mut procFilePath: [libc::c_char; 32] = [0; 32];
@@ -2561,10 +2668,7 @@ pub unsafe extern "C" fn GetProcessName(mut pid: pid_t) -> *mut libc::c_char {
             fclose(procFile);
             tmp___0 = strlen(fileBuffer.as_mut_ptr() as *const libc::c_char);
             if tmp___0 == 0 as libc::c_ulong {
-                Log(
-                    debug,
-                    b"Empty cmdline.\n\0" as *const u8 as *const libc::c_char,
-                );
+                Log(debug, b"Empty cmdline.\n\0" as *const u8 as *const libc::c_char);
             } else {
                 Log(
                     debug,
@@ -2596,9 +2700,12 @@ pub unsafe extern "C" fn GetProcessName(mut pid: pid_t) -> *mut libc::c_char {
             );
             if tmp___5 != 0 as libc::c_int {
                 processName = strrchr(stringItr as *const libc::c_char, '/' as i32);
-                if processName as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+                if processName as libc::c_ulong
+                    != 0 as *mut libc::c_void as libc::c_ulong
+                {
                     tmp___3 = strdup(
-                        processName.offset(1 as libc::c_int as isize) as *const libc::c_char
+                        processName.offset(1 as libc::c_int as isize)
+                            as *const libc::c_char,
                     );
                     return tmp___3;
                 } else {
@@ -2632,24 +2739,30 @@ pub unsafe extern "C" fn CreateTriggerThreads(
     rc = sigemptyset(&mut sig_set);
     if rc < 0 as libc::c_int {
         DiagTrace(
-            b"CreateTriggerThreads: sigemptyset failed. %s\0" as *const u8 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 598\0" as *const u8 as *const libc::c_char,
+            b"CreateTriggerThreads: sigemptyset failed. %s\0" as *const u8
+                as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 598\0" as *const u8
+                as *const libc::c_char,
         );
         return rc;
     }
     rc = sigaddset(&mut sig_set, 2 as libc::c_int);
     if rc < 0 as libc::c_int {
         DiagTrace(
-            b"CreateTriggerThreads: sigaddset failed. %s\0" as *const u8 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 603\0" as *const u8 as *const libc::c_char,
+            b"CreateTriggerThreads: sigaddset failed. %s\0" as *const u8
+                as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 603\0" as *const u8
+                as *const libc::c_char,
         );
         return rc;
     }
     rc = sigaddset(&mut sig_set, 15 as libc::c_int);
     if rc < 0 as libc::c_int {
         DiagTrace(
-            b"CreateTriggerThreads: sigaddset failed. %s\0" as *const u8 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 608\0" as *const u8 as *const libc::c_char,
+            b"CreateTriggerThreads: sigaddset failed. %s\0" as *const u8
+                as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 608\0" as *const u8
+                as *const libc::c_char,
         );
         return rc;
     }
@@ -2662,7 +2775,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         DiagTrace(
             b"CreateTriggerThreads: pthread_sigmask failed. %s\0" as *const u8
                 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 614\0" as *const u8 as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 614\0" as *const u8
+                as *const libc::c_char,
         );
         return rc;
     }
@@ -2670,10 +2784,12 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         tmp = (*self_0).nThreads;
         (*self_0).nThreads += 1;
         rc = pthread_create(
-            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp as isize) as *mut pthread_t,
+            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp as isize)
+                as *mut pthread_t,
             0 as *mut libc::c_void as *const pthread_attr_t,
             Some(
-                CpuMonitoringThread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+                CpuMonitoringThread
+                    as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
             ),
             self_0 as *mut libc::c_void,
         );
@@ -2691,7 +2807,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         tmp___0 = (*self_0).nThreads;
         (*self_0).nThreads += 1;
         rc = pthread_create(
-            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___0 as isize) as *mut pthread_t,
+            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___0 as isize)
+                as *mut pthread_t,
             0 as *mut libc::c_void as *const pthread_attr_t,
             Some(
                 CommitMonitoringThread
@@ -2713,7 +2830,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         tmp___1 = (*self_0).nThreads;
         (*self_0).nThreads += 1;
         rc = pthread_create(
-            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___1 as isize) as *mut pthread_t,
+            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___1 as isize)
+                as *mut pthread_t,
             0 as *mut libc::c_void as *const pthread_attr_t,
             Some(
                 ThreadCountMonitoringThread
@@ -2735,7 +2853,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         tmp___2 = (*self_0).nThreads;
         (*self_0).nThreads += 1;
         rc = pthread_create(
-            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___2 as isize) as *mut pthread_t,
+            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___2 as isize)
+                as *mut pthread_t,
             0 as *mut libc::c_void as *const pthread_attr_t,
             Some(
                 FileDescriptorCountMonitoringThread
@@ -2745,8 +2864,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         );
         if rc != 0 as libc::c_int {
             DiagTrace(
-                b"CreateTriggerThreads: failed to create FileDescriptorThread. %s\0" as *const u8
-                    as *const libc::c_char,
+                b"CreateTriggerThreads: failed to create FileDescriptorThread. %s\0"
+                    as *const u8 as *const libc::c_char,
                 b"in src/ProcDumpConfiguration.c, at line 642\0" as *const u8
                     as *const libc::c_char,
             );
@@ -2765,8 +2884,8 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         );
         if rc != 0 as libc::c_int {
             DiagTrace(
-                b"CreateTriggerThreads: failed to create SignalMonitoringThread. %s\0" as *const u8
-                    as *const libc::c_char,
+                b"CreateTriggerThreads: failed to create SignalMonitoringThread. %s\0"
+                    as *const u8 as *const libc::c_char,
                 b"in src/ProcDumpConfiguration.c, at line 649\0" as *const u8
                     as *const libc::c_char,
             );
@@ -2777,9 +2896,13 @@ pub unsafe extern "C" fn CreateTriggerThreads(
         tmp___3 = (*self_0).nThreads;
         (*self_0).nThreads += 1;
         rc = pthread_create(
-            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___3 as isize) as *mut pthread_t,
+            &mut *((*self_0).Threads).as_mut_ptr().offset(tmp___3 as isize)
+                as *mut pthread_t,
             0 as *mut libc::c_void as *const pthread_attr_t,
-            Some(TimerThread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
+            Some(
+                TimerThread
+                    as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+            ),
             self_0 as *mut libc::c_void,
         );
         if rc != 0 as libc::c_int {
@@ -2795,14 +2918,17 @@ pub unsafe extern "C" fn CreateTriggerThreads(
     rc = pthread_create(
         &mut sig_thread_id as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
-        Some(SignalThread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
+        Some(
+            SignalThread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        ),
         self_0 as *mut libc::c_void,
     );
     if rc != 0 as libc::c_int {
         DiagTrace(
             b"CreateTriggerThreads: failed to create SignalThread. %s\0" as *const u8
                 as *const libc::c_char,
-            b"in src/ProcDumpConfiguration.c, at line 663\0" as *const u8 as *const libc::c_char,
+            b"in src/ProcDumpConfiguration.c, at line 663\0" as *const u8
+                as *const libc::c_char,
         );
         return rc;
     }
@@ -2906,10 +3032,7 @@ pub unsafe extern "C" fn WaitForAllThreadsToTerminate(
         }
     }
     pthread_cancel(sig_thread_id);
-    rc = pthread_join(
-        sig_thread_id,
-        0 as *mut libc::c_void as *mut *mut libc::c_void,
-    );
+    rc = pthread_join(sig_thread_id, 0 as *mut libc::c_void as *mut *mut libc::c_void);
     if rc != 0 as libc::c_int {
         Log(
             error,
@@ -2931,7 +3054,9 @@ pub unsafe extern "C" fn SetQuit(
     SetEvent(&mut (*self_0).evtQuit.__annonCompField4.event);
     return (*self_0).nQuit;
 }
-pub unsafe extern "C" fn PrintConfiguration(mut self_0: *mut ProcDumpConfiguration) -> bool {
+pub unsafe extern "C" fn PrintConfiguration(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> bool {
     let mut tmp: libc::c_int = 0;
     tmp = WaitForSingleObject(&mut (*self_0).evtConfigurationPrinted, 0 as libc::c_int);
     if tmp == 110 as libc::c_int {
@@ -2946,10 +3071,7 @@ pub unsafe extern "C" fn PrintConfiguration(mut self_0: *mut ProcDumpConfigurati
             (*self_0).ProcessName,
         );
         if !(*self_0).WaitingForProcessName {
-            printf(
-                b" (%d)\0" as *const u8 as *const libc::c_char,
-                (*self_0).ProcessId,
-            );
+            printf(b" (%d)\0" as *const u8 as *const libc::c_char, (*self_0).ProcessId);
         } else {
             printf(b" (pending)\0" as *const u8 as *const libc::c_char);
         }
@@ -2994,11 +3116,15 @@ pub unsafe extern "C" fn PrintConfiguration(mut self_0: *mut ProcDumpConfigurati
         }
         if (*self_0).FileDescriptorThreshold != -(1 as libc::c_int) {
             printf(
-                b"File descriptor Threshold:\t>=%d\n\0" as *const u8 as *const libc::c_char,
+                b"File descriptor Threshold:\t>=%d\n\0" as *const u8
+                    as *const libc::c_char,
                 (*self_0).FileDescriptorThreshold,
             );
         } else {
-            printf(b"File descriptor Threshold:\t\tn/a\n\0" as *const u8 as *const libc::c_char);
+            printf(
+                b"File descriptor Threshold:\t\tn/a\n\0" as *const u8
+                    as *const libc::c_char,
+            );
         }
         if (*self_0).SignalNumber != -(1 as libc::c_int) {
             printf(
@@ -3021,10 +3147,13 @@ pub unsafe extern "C" fn PrintConfiguration(mut self_0: *mut ProcDumpConfigurati
             (*self_0).NumberOfDumpsToCollect,
         );
         printf(
-            b"Output directory for core dumps:\t%s\n\0" as *const u8 as *const libc::c_char,
+            b"Output directory for core dumps:\t%s\n\0" as *const u8
+                as *const libc::c_char,
             (*self_0).CoreDumpPath,
         );
-        if (*self_0).CoreDumpName as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+        if (*self_0).CoreDumpName as libc::c_ulong
+            != 0 as *mut libc::c_void as libc::c_ulong
+        {
             printf(
                 b"Custom name for core dumps:\t%s_<counter>.<pid>\n\0" as *const u8
                     as *const libc::c_char,
@@ -3036,7 +3165,9 @@ pub unsafe extern "C" fn PrintConfiguration(mut self_0: *mut ProcDumpConfigurati
     }
     return 0 as libc::c_int != 0;
 }
-pub unsafe extern "C" fn ContinueMonitoring(mut self_0: *mut ProcDumpConfiguration) -> bool {
+pub unsafe extern "C" fn ContinueMonitoring(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> bool {
     let mut tmp: libc::c_int = 0;
     if (*self_0).NumberOfDumpsCollected >= (*self_0).NumberOfDumpsToCollect {
         return 0 as libc::c_int != 0;
@@ -3055,7 +3186,9 @@ pub unsafe extern "C" fn ContinueMonitoring(mut self_0: *mut ProcDumpConfigurati
     }
     return 1 as libc::c_int != 0;
 }
-pub unsafe extern "C" fn BeginMonitoring(mut self_0: *mut ProcDumpConfiguration) -> bool {
+pub unsafe extern "C" fn BeginMonitoring(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> bool {
     let mut tmp: bool = false;
     tmp = SetEvent(&mut (*self_0).evtStartMonitoring.__annonCompField4.event);
     return tmp;
@@ -3071,14 +3204,12 @@ pub unsafe extern "C" fn IsValidNumberArg(mut arg: *const libc::c_char) -> bool 
     i = 0 as libc::c_int;
     while i < strLen {
         tmp___0 = __ctype_b_loc();
-        if *(*tmp___0).offset(*arg.offset(i as isize) as libc::c_int as isize) as libc::c_int
-            & 2048 as libc::c_int
-            == 0
+        if *(*tmp___0).offset(*arg.offset(i as isize) as libc::c_int as isize)
+            as libc::c_int & 2048 as libc::c_int == 0
         {
             tmp___1 = __ctype_b_loc();
-            if *(*tmp___1).offset(*arg.offset(i as isize) as libc::c_int as isize) as libc::c_int
-                & 8192 as libc::c_int
-                == 0
+            if *(*tmp___1).offset(*arg.offset(i as isize) as libc::c_int as isize)
+                as libc::c_int & 8192 as libc::c_int == 0
             {
                 return 0 as libc::c_int != 0;
             }
@@ -3157,15 +3288,22 @@ pub unsafe extern "C" fn PrintBanner() {
             as *const libc::c_char,
     );
     printf(
-        b"Monitors a process and writes a dump file when the process meets the\n\0" as *const u8
-            as *const libc::c_char,
+        b"Monitors a process and writes a dump file when the process meets the\n\0"
+            as *const u8 as *const libc::c_char,
     );
     printf(b"specified criteria.\n\n\0" as *const u8 as *const libc::c_char);
 }
-pub unsafe extern "C" fn PrintUsage(mut self_0: *mut ProcDumpConfiguration) -> libc::c_int {
-    printf(b"\nUsage: procdump [OPTIONS...] TARGET\n\0" as *const u8 as *const libc::c_char);
+pub unsafe extern "C" fn PrintUsage(
+    mut self_0: *mut ProcDumpConfiguration,
+) -> libc::c_int {
+    printf(
+        b"\nUsage: procdump [OPTIONS...] TARGET\n\0" as *const u8 as *const libc::c_char,
+    );
     printf(b"   OPTIONS\n\0" as *const u8 as *const libc::c_char);
-    printf(b"      -h          Prints this help screen\n\0" as *const u8 as *const libc::c_char);
+    printf(
+        b"      -h          Prints this help screen\n\0" as *const u8
+            as *const libc::c_char,
+    );
     printf(
         b"      -C          Trigger core dump generation when CPU exceeds or equals specified value (0 to 100 * nCPU)\n\0"
             as *const u8 as *const libc::c_char,
@@ -3195,8 +3333,8 @@ pub unsafe extern "C" fn PrintUsage(mut self_0: *mut ProcDumpConfiguration) -> l
             as *const u8 as *const libc::c_char,
     );
     printf(
-        b"      -I          Polling frequency in milliseconds (default is %d)\n\0" as *const u8
-            as *const libc::c_char,
+        b"      -I          Polling frequency in milliseconds (default is %d)\n\0"
+            as *const u8 as *const libc::c_char,
         1000 as libc::c_int,
     );
     printf(
@@ -3217,8 +3355,13 @@ pub unsafe extern "C" fn PrintUsage(mut self_0: *mut ProcDumpConfiguration) -> l
         b"      -d          Writes diagnostic logs to syslog\n\0" as *const u8
             as *const libc::c_char,
     );
-    printf(b"   TARGET must be exactly one of these:\n\0" as *const u8 as *const libc::c_char);
-    printf(b"      -p          pid of the process\n\0" as *const u8 as *const libc::c_char);
+    printf(
+        b"   TARGET must be exactly one of these:\n\0" as *const u8
+            as *const libc::c_char,
+    );
+    printf(
+        b"      -p          pid of the process\n\0" as *const u8 as *const libc::c_char,
+    );
     printf(
         b"      -w          Name of the process executable\n\n\0" as *const u8
             as *const libc::c_char,
@@ -3229,10 +3372,7 @@ pub unsafe extern "C" fn WaitForSingleObject(
     mut Handle: *mut Handle,
     mut Milliseconds: libc::c_int,
 ) -> libc::c_int {
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     let mut rc: libc::c_int = 0;
     let mut tmp: libc::c_int = 0;
     let mut tmp___0: libc::c_int = 0;
@@ -3242,8 +3382,9 @@ pub unsafe extern "C" fn WaitForSingleObject(
     if Milliseconds != -(1 as libc::c_int) {
         clock_gettime(0 as libc::c_int, &mut ts);
         ts.tv_sec += (Milliseconds / 1000 as libc::c_int) as __time_t;
-        ts.tv_nsec +=
-            (Milliseconds % 1000 as libc::c_int * 1000000 as libc::c_int) as __syscall_slong_t;
+        ts.tv_nsec
+            += (Milliseconds % 1000 as libc::c_int * 1000000 as libc::c_int)
+                as __syscall_slong_t;
     }
     match (*Handle).type_0 as libc::c_uint {
         0 => {
@@ -3256,14 +3397,18 @@ pub unsafe extern "C" fn WaitForSingleObject(
                     }
                     if Milliseconds == -(1 as libc::c_int) {
                         tmp = pthread_cond_wait(
-                            &mut (*Handle).__annonCompField4.event.cond as *mut pthread_cond_t,
-                            &mut (*Handle).__annonCompField4.event.mutex as *mut pthread_mutex_t,
+                            &mut (*Handle).__annonCompField4.event.cond
+                                as *mut pthread_cond_t,
+                            &mut (*Handle).__annonCompField4.event.mutex
+                                as *mut pthread_mutex_t,
                         );
                         rc = tmp;
                     } else {
                         tmp___0 = pthread_cond_timedwait(
-                            &mut (*Handle).__annonCompField4.event.cond as *mut pthread_cond_t,
-                            &mut (*Handle).__annonCompField4.event.mutex as *mut pthread_mutex_t,
+                            &mut (*Handle).__annonCompField4.event.cond
+                                as *mut pthread_cond_t,
+                            &mut (*Handle).__annonCompField4.event.mutex
+                                as *mut pthread_mutex_t,
                             &mut ts as *mut timespec as *const timespec,
                         );
                         rc = tmp___0;
@@ -3272,7 +3417,10 @@ pub unsafe extern "C" fn WaitForSingleObject(
                 (*Handle).__annonCompField4.event.nWaiters -= 1;
                 if (*Handle).__annonCompField4.event.nWaiters == 0 as libc::c_int {
                     if !(*Handle).__annonCompField4.event.bManualReset {
-                        (*Handle).__annonCompField4.event.bTriggered = 0 as libc::c_int != 0;
+                        (*Handle)
+                            .__annonCompField4
+                            .event
+                            .bTriggered = 0 as libc::c_int != 0;
                     }
                 }
                 pthread_mutex_unlock(&mut (*Handle).__annonCompField4.event.mutex);
@@ -3296,7 +3444,9 @@ pub unsafe extern "C" fn WaitForSingleObject(
     }
     return rc;
 }
-pub unsafe extern "C" fn WaiterThread(mut thread_args: *mut libc::c_void) -> *mut libc::c_void {
+pub unsafe extern "C" fn WaiterThread(
+    mut thread_args: *mut libc::c_void,
+) -> *mut libc::c_void {
     let mut rc: libc::c_int = 0;
     let mut input: *mut thread_args = 0 as *mut thread_args;
     let mut result: thread_result = thread_result {
@@ -3330,10 +3480,7 @@ pub unsafe extern "C" fn WaiterThread(mut thread_args: *mut libc::c_void) -> *mu
     *((*(*input).coordinator).results).offset(tmp as isize) = result;
     pthread_mutex_unlock(&mut (*(*input).coordinator).mutexEventTriggered);
     pthread_cond_signal(&mut (*(*input).coordinator).condEventTriggered);
-    WaitForSingleObject(
-        &mut (*(*input).coordinator).evtCanCleanUp,
-        -(1 as libc::c_int),
-    );
+    WaitForSingleObject(&mut (*(*input).coordinator).evtCanCleanUp, -(1 as libc::c_int));
     pthread_mutex_lock(&mut (*(*input).coordinator).mutexEventTriggered);
     (*(*input).coordinator).nWaiters -= 1;
     if (*(*input).coordinator).nWaiters == 0 as libc::c_int {
@@ -3359,10 +3506,7 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
     let mut results: *mut thread_result = 0 as *mut thread_result;
     let mut threads: *mut pthread_t = 0 as *mut pthread_t;
     let mut thread_args: *mut *mut thread_args = 0 as *mut *mut thread_args;
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     let mut t: libc::c_int = 0;
     let mut rc: libc::c_int = 0;
     let mut retVal: libc::c_int = 0;
@@ -3373,7 +3517,8 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
     let mut tmp___3: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___4: *mut libc::c_void = 0 as *mut libc::c_void;
     tmp = malloc(
-        (::std::mem::size_of::<pthread_t>() as libc::c_ulong).wrapping_mul(Count as libc::c_ulong),
+        (::std::mem::size_of::<pthread_t>() as libc::c_ulong)
+            .wrapping_mul(Count as libc::c_ulong),
     );
     threads = tmp as *mut pthread_t;
     tmp___0 = malloc(
@@ -3424,8 +3569,9 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
     if Milliseconds != -(1 as libc::c_int) {
         clock_gettime(0 as libc::c_int, &mut ts);
         ts.tv_sec += (Milliseconds / 1000 as libc::c_int) as __time_t;
-        ts.tv_nsec +=
-            (Milliseconds % 1000 as libc::c_int * 1000000 as libc::c_int) as __syscall_slong_t;
+        ts.tv_nsec
+            += (Milliseconds % 1000 as libc::c_int * 1000000 as libc::c_int)
+                as __syscall_slong_t;
     }
     pthread_mutex_lock(&mut (*coordinator).mutexEventTriggered);
     t = 0 as libc::c_int;
@@ -3447,7 +3593,8 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
         if Milliseconds == -(1 as libc::c_int) {
             (**thread_args.offset(t as isize)).milliseconds = Milliseconds;
         } else {
-            (**thread_args.offset(t as isize)).milliseconds = Milliseconds + 100 as libc::c_int;
+            (**thread_args.offset(t as isize))
+                .milliseconds = Milliseconds + 100 as libc::c_int;
         }
         (**thread_args.offset(t as isize)).threadIndex = t;
         let ref mut fresh2 = (**thread_args.offset(t as isize)).coordinator;
@@ -3455,7 +3602,10 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
         rc = pthread_create(
             threads.offset(t as isize),
             0 as *mut libc::c_void as *const pthread_attr_t,
-            Some(WaiterThread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
+            Some(
+                WaiterThread
+                    as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+            ),
             *thread_args.offset(t as isize) as *mut libc::c_void,
         );
         if rc != 0 {
@@ -3535,7 +3685,10 @@ pub unsafe extern "C" fn WaitForMultipleObjects(
     }
     return retVal;
 }
-pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut ProcessStat) -> bool {
+pub unsafe extern "C" fn GetProcessStat(
+    mut pid: pid_t,
+    mut proc_0: *mut ProcessStat,
+) -> bool {
     let mut procFilePath: [libc::c_char; 32] = [0; 32];
     let mut fileBuffer: [libc::c_char; 1024] = [0; 1024];
     let mut token: *mut libc::c_char = 0 as *mut libc::c_char;
@@ -3606,13 +3759,15 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     if procFile as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
         tmp___1 = fgets(
             fileBuffer.as_mut_ptr(),
-            ::std::mem::size_of::<[libc::c_char; 1024]>() as libc::c_ulong as libc::c_int,
+            ::std::mem::size_of::<[libc::c_char; 1024]>() as libc::c_ulong
+                as libc::c_int,
             procFile,
         );
         if tmp___1 as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
             Log(
                 error,
-                b"Failed to read from %s. Exiting...\n\0" as *const u8 as *const libc::c_char,
+                b"Failed to read from %s. Exiting...\n\0" as *const u8
+                    as *const libc::c_char,
                 procFilePath.as_mut_ptr(),
             );
             fclose(procFile);
@@ -3760,13 +3915,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - Minflt. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - Minflt. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 138\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).minflt = strtoul(
+    (*proc_0)
+        .minflt = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3778,13 +3934,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - cminflt. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - cminflt. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 147\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cminflt = strtoul(
+    (*proc_0)
+        .cminflt = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3796,13 +3953,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - majflt. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - majflt. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 156\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).majflt = strtoul(
+    (*proc_0)
+        .majflt = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3814,13 +3972,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - cmajflt. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - cmajflt. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 165\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cmajflt = strtoul(
+    (*proc_0)
+        .cmajflt = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3832,13 +3991,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - utime. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - utime. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 174\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).utime = strtoul(
+    (*proc_0)
+        .utime = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3850,13 +4010,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - stime. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - stime. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 183\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).stime = strtoul(
+    (*proc_0)
+        .stime = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3868,13 +4029,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - cutime. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - cutime. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 192\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cutime = strtoul(
+    (*proc_0)
+        .cutime = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3886,13 +4048,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - cstime. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - cstime. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 201\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cstime = strtoul(
+    (*proc_0)
+        .cstime = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3910,7 +4073,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).priority = strtol(
+    (*proc_0)
+        .priority = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3922,13 +4086,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - nice. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - nice. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 219\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).nice = strtol(
+    (*proc_0)
+        .nice = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3946,7 +4111,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).num_threads = strtol(
+    (*proc_0)
+        .num_threads = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3964,7 +4130,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).itrealvalue = strtol(
+    (*proc_0)
+        .itrealvalue = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3982,7 +4149,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).starttime = strtoull(
+    (*proc_0)
+        .starttime = strtoull(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -3994,13 +4162,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - vsize. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - vsize. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 255\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).vsize = strtoul(
+    (*proc_0)
+        .vsize = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4012,13 +4181,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - rss. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - rss. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 264\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).rss = strtol(
+    (*proc_0)
+        .rss = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4030,13 +4200,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - rsslim. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - rsslim. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 273\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).rsslim = strtoul(
+    (*proc_0)
+        .rsslim = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4054,7 +4225,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).startcode = strtoul(
+    (*proc_0)
+        .startcode = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4066,13 +4238,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - endcode. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - endcode. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 291\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).endcode = strtoul(
+    (*proc_0)
+        .endcode = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4090,7 +4263,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).startstack = strtoul(
+    (*proc_0)
+        .startstack = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4102,13 +4276,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - kstkesp. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - kstkesp. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 309\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).kstkesp = strtoul(
+    (*proc_0)
+        .kstkesp = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4120,13 +4295,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - kstkeip. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - kstkeip. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 318\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).kstkeip = strtoul(
+    (*proc_0)
+        .kstkeip = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4138,13 +4314,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - signal. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - signal. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 327\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).signal = strtoul(
+    (*proc_0)
+        .signal = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4156,13 +4333,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - blocked. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - blocked. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 336\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).blocked = strtoul(
+    (*proc_0)
+        .blocked = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4180,7 +4358,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).sigignore = strtoul(
+    (*proc_0)
+        .sigignore = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4198,7 +4377,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).sigcatch = strtoul(
+    (*proc_0)
+        .sigcatch = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4210,13 +4390,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - wchan. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - wchan. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 363\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).wchan = strtoul(
+    (*proc_0)
+        .wchan = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4228,13 +4409,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - nswap. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - nswap. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 372\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).nswap = strtoul(
+    (*proc_0)
+        .nswap = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4246,13 +4428,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - cnswap. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - cnswap. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 381\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cnswap = strtoul(
+    (*proc_0)
+        .cnswap = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4321,8 +4504,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - policy. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - policy. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 417\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
@@ -4346,7 +4529,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).delayacct_blkio_ticks = strtoull(
+    (*proc_0)
+        .delayacct_blkio_ticks = strtoull(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4364,7 +4548,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).guest_time = strtoul(
+    (*proc_0)
+        .guest_time = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4382,7 +4567,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).cguest_time = strtol(
+    (*proc_0)
+        .cguest_time = strtol(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4400,7 +4586,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).start_data = strtoul(
+    (*proc_0)
+        .start_data = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4418,7 +4605,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).end_data = strtoul(
+    (*proc_0)
+        .end_data = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4436,7 +4624,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).end_data = strtoul(
+    (*proc_0)
+        .end_data = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4454,7 +4643,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).arg_start = strtoul(
+    (*proc_0)
+        .arg_start = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4466,13 +4656,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - arg_end. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - arg_end. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 489\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).arg_end = strtoul(
+    (*proc_0)
+        .arg_end = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4490,7 +4681,8 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).env_start = strtoul(
+    (*proc_0)
+        .env_start = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4502,13 +4694,14 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     );
     if token as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         DiagTrace(
-            b"GetProcessStat: failed to get token from proc/[pid]/stat - env_end. %s\0" as *const u8
-                as *const libc::c_char,
+            b"GetProcessStat: failed to get token from proc/[pid]/stat - env_end. %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/Process.c, at line 507\0" as *const u8 as *const libc::c_char,
         );
         return 0 as libc::c_int != 0;
     }
-    (*proc_0).env_end = strtoul(
+    (*proc_0)
+        .env_end = strtoul(
         token as *const libc::c_char,
         0 as *mut libc::c_void as *mut *mut libc::c_char,
         10 as libc::c_int,
@@ -4534,7 +4727,10 @@ pub unsafe extern "C" fn GetProcessStat(mut pid: pid_t, mut proc_0: *mut Process
     (*proc_0).exit_code = tmp___14 as libc::c_int;
     return 1 as libc::c_int != 0;
 }
-unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> libc::c_int {
+unsafe fn main_0(
+    mut argc: libc::c_int,
+    mut argv: *mut *mut libc::c_char,
+) -> libc::c_int {
     let mut tmp: libc::c_int = 0;
     let mut tmp___0: __uid_t = 0;
     let mut tmp___1: bool = false;
@@ -4553,8 +4749,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
     }
     PrintConfiguration(&mut g_config);
     printf(
-        b"\nPress Ctrl-C to end monitoring without terminating the process.\n\n\0" as *const u8
-            as *const libc::c_char,
+        b"\nPress Ctrl-C to end monitoring without terminating the process.\n\n\0"
+            as *const u8 as *const libc::c_char,
     );
     tmp___0 = geteuid();
     if tmp___0 != 0 as libc::c_uint {
@@ -4578,7 +4774,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"main: failed to create trigger threads. %s\0" as *const u8 as *const libc::c_char,
+            b"main: failed to create trigger threads. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Procdump.c, at line 45\0" as *const u8 as *const libc::c_char,
         );
         ExitProcDump();
@@ -4591,7 +4788,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"main: failed to start monitoring. %s\0" as *const u8 as *const libc::c_char,
+            b"main: failed to start monitoring. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/Procdump.c, at line 51\0" as *const u8 as *const libc::c_char,
         );
         ExitProcDump();
@@ -4667,7 +4865,8 @@ pub unsafe extern "C" fn CommitMonitoringThread(
     let mut tmp___0: libc::c_long = 0;
     let mut tmp___1: bool = false;
     DiagTrace(
-        b"CommitMonitoringThread: Starting Trigger Thread %s\0" as *const u8 as *const libc::c_char,
+        b"CommitMonitoringThread: Starting Trigger Thread %s\0" as *const u8
+            as *const libc::c_char,
         b"in src/TriggerThreadProcs.c, at line 16\0" as *const u8 as *const libc::c_char,
     );
     config = thread_args as *mut ProcDumpConfiguration;
@@ -4744,10 +4943,13 @@ pub unsafe extern "C" fn CommitMonitoringThread(
             }
             tmp___1 = GetProcessStat((*config).ProcessId, &mut proc_0);
             if tmp___1 {
-                memUsage = (proc_0.rss * pageSize_kb >> 10 as libc::c_int) as libc::c_ulong;
-                memUsage = memUsage.wrapping_add(
-                    (proc_0.nswap).wrapping_mul(pageSize_kb as libc::c_ulong) >> 10 as libc::c_int,
-                );
+                memUsage = (proc_0.rss * pageSize_kb >> 10 as libc::c_int)
+                    as libc::c_ulong;
+                memUsage = memUsage
+                    .wrapping_add(
+                        (proc_0.nswap).wrapping_mul(pageSize_kb as libc::c_ulong)
+                            >> 10 as libc::c_int,
+                    );
                 if (*config).bMemoryTriggerBelowValue {
                     if memUsage < (*config).MemoryThreshold as libc::c_ulong {
                         current_block_71 = 17467640331785294267;
@@ -4774,7 +4976,10 @@ pub unsafe extern "C" fn CommitMonitoringThread(
                     memUsage,
                 );
                 rc = WriteCoreDump(writer);
-                rc = WaitForQuit(config, (*config).ThresholdSeconds * 1000 as libc::c_int);
+                rc = WaitForQuit(
+                    config,
+                    (*config).ThresholdSeconds * 1000 as libc::c_int,
+                );
                 if rc != 110 as libc::c_int {
                     break;
                 }
@@ -4790,7 +4995,8 @@ pub unsafe extern "C" fn CommitMonitoringThread(
     }
     free(writer as *mut libc::c_void);
     DiagTrace(
-        b"CommitMonitoringThread: Exiting Trigger Thread %s\0" as *const u8 as *const libc::c_char,
+        b"CommitMonitoringThread: Exiting Trigger Thread %s\0" as *const u8
+            as *const libc::c_char,
         b"in src/TriggerThreadProcs.c, at line 59\0" as *const u8 as *const libc::c_char,
     );
     pthread_exit(0 as *mut libc::c_void);
@@ -4942,7 +5148,10 @@ pub unsafe extern "C" fn ThreadCountMonitoringThread(
                     proc_0.num_threads,
                 );
                 rc = WriteCoreDump(writer);
-                rc = WaitForQuit(config, (*config).ThresholdSeconds * 1000 as libc::c_int);
+                rc = WaitForQuit(
+                    config,
+                    (*config).ThresholdSeconds * 1000 as libc::c_int,
+                );
                 if rc != 110 as libc::c_int {
                     break;
                 }
@@ -5028,8 +5237,8 @@ pub unsafe extern "C" fn FileDescriptorCountMonitoringThread(
     let mut tmp: *mut CoreDumpWriter = 0 as *mut CoreDumpWriter;
     let mut tmp___0: bool = false;
     DiagTrace(
-        b"FileDescriptorCountMonitoringThread: Starting Filedescriptor Thread %s\0" as *const u8
-            as *const libc::c_char,
+        b"FileDescriptorCountMonitoringThread: Starting Filedescriptor Thread %s\0"
+            as *const u8 as *const libc::c_char,
         b"in src/TriggerThreadProcs.c, at line 105\0" as *const u8 as *const libc::c_char,
     );
     config = thread_args as *mut ProcDumpConfiguration;
@@ -5111,7 +5320,10 @@ pub unsafe extern "C" fn FileDescriptorCountMonitoringThread(
                     proc_0.num_filedescriptors,
                 );
                 rc = WriteCoreDump(writer);
-                rc = WaitForQuit(config, (*config).ThresholdSeconds * 1000 as libc::c_int);
+                rc = WaitForQuit(
+                    config,
+                    (*config).ThresholdSeconds * 1000 as libc::c_int,
+                );
                 if rc != 110 as libc::c_int {
                     break;
                 }
@@ -5170,7 +5382,8 @@ pub unsafe extern "C" fn SignalMonitoringThread(
         if tmp___2 == -(1 as libc::c_long) {
             Log(
                 error,
-                b"Unable to PTRACE the target process\0" as *const u8 as *const libc::c_char,
+                b"Unable to PTRACE the target process\0" as *const u8
+                    as *const libc::c_char,
             );
         } else {
             loop {
@@ -5183,11 +5396,10 @@ pub unsafe extern "C" fn SignalMonitoringThread(
                         0 as libc::c_int,
                     );
                     break;
-                } else if ((wstatus & 127 as libc::c_int) + 1 as libc::c_int) as libc::c_schar
-                    as libc::c_int
-                    >> 1 as libc::c_int
-                    > 0 as libc::c_int
-                {
+                } else if ((wstatus & 127 as libc::c_int) + 1 as libc::c_int)
+                        as libc::c_schar as libc::c_int >> 1 as libc::c_int
+                        > 0 as libc::c_int
+                    {
                     ptrace(
                         PTRACE_DETACH,
                         (*config).ProcessId,
@@ -5208,20 +5420,22 @@ pub unsafe extern "C" fn SignalMonitoringThread(
                         if tmp___0 == -(1 as libc::c_long) {
                             Log(
                                 error,
-                                b"Unable to PTRACE (DETACH) the target process\0" as *const u8
-                                    as *const libc::c_char,
+                                b"Unable to PTRACE (DETACH) the target process\0"
+                                    as *const u8 as *const libc::c_char,
                             );
                             pthread_mutex_unlock(&mut ptrace_mutex);
                             break;
                         } else {
                             Log(
                                 info,
-                                b"Signal intercepted: %d\0" as *const u8 as *const libc::c_char,
+                                b"Signal intercepted: %d\0" as *const u8
+                                    as *const libc::c_char,
                                 signum,
                             );
                             rc = WriteCoreDump(writer);
                             kill((*config).ProcessId, 18 as libc::c_int);
-                            if (*config).NumberOfDumpsCollected >= (*config).NumberOfDumpsToCollect
+                            if (*config).NumberOfDumpsCollected
+                                >= (*config).NumberOfDumpsToCollect
                             {
                                 kill((*config).ProcessId, signum);
                                 pthread_mutex_unlock(&mut ptrace_mutex);
@@ -5356,7 +5570,8 @@ pub unsafe extern "C" fn CpuMonitoringThread(
     };
     let mut tmp___0: bool = false;
     DiagTrace(
-        b"CpuMonitoringThread: Starting Trigger Thread %s\0" as *const u8 as *const libc::c_char,
+        b"CpuMonitoringThread: Starting Trigger Thread %s\0" as *const u8
+            as *const libc::c_char,
         b"in src/TriggerThreadProcs.c, at line 238\0" as *const u8 as *const libc::c_char,
     );
     config = thread_args as *mut ProcDumpConfiguration;
@@ -5437,8 +5652,8 @@ pub unsafe extern "C" fn CpuMonitoringThread(
                     .wrapping_add(proc_0.stime)
                     .wrapping_div(HZ as libc::c_ulong);
                 elapsedTime = (sysInfo.uptime
-                    - (proc_0.starttime).wrapping_div(HZ as libc::c_ulonglong) as libc::c_long)
-                    as libc::c_ulong;
+                    - (proc_0.starttime).wrapping_div(HZ as libc::c_ulonglong)
+                        as libc::c_long) as libc::c_ulong;
                 cpuUsage = (100 as libc::c_int as libc::c_double
                     * (totalTime as libc::c_double / elapsedTime as libc::c_double))
                     as libc::c_int;
@@ -5462,13 +5677,12 @@ pub unsafe extern "C" fn CpuMonitoringThread(
                     }
                     _ => {}
                 }
-                Log(
-                    info,
-                    b"CPU:\t%d%%\0" as *const u8 as *const libc::c_char,
-                    cpuUsage,
-                );
+                Log(info, b"CPU:\t%d%%\0" as *const u8 as *const libc::c_char, cpuUsage);
                 rc = WriteCoreDump(writer);
-                rc = WaitForQuit(config, (*config).ThresholdSeconds * 1000 as libc::c_int);
+                rc = WaitForQuit(
+                    config,
+                    (*config).ThresholdSeconds * 1000 as libc::c_int,
+                );
                 if rc != 110 as libc::c_int {
                     break;
                 }
@@ -5484,12 +5698,15 @@ pub unsafe extern "C" fn CpuMonitoringThread(
     }
     free(writer as *mut libc::c_void);
     DiagTrace(
-        b"CpuTCpuMonitoringThread: Exiting Trigger Thread %s\0" as *const u8 as *const libc::c_char,
+        b"CpuTCpuMonitoringThread: Exiting Trigger Thread %s\0" as *const u8
+            as *const libc::c_char,
         b"in src/TriggerThreadProcs.c, at line 285\0" as *const u8 as *const libc::c_char,
     );
     pthread_exit(0 as *mut libc::c_void);
 }
-pub unsafe extern "C" fn TimerThread(mut thread_args: *mut libc::c_void) -> *mut libc::c_void {
+pub unsafe extern "C" fn TimerThread(
+    mut thread_args: *mut libc::c_void,
+) -> *mut libc::c_void {
     let mut config: *mut ProcDumpConfiguration = 0 as *mut ProcDumpConfiguration;
     let mut writer: *mut CoreDumpWriter = 0 as *mut CoreDumpWriter;
     let mut tmp: *mut CoreDumpWriter = 0 as *mut CoreDumpWriter;
@@ -5582,8 +5799,10 @@ pub unsafe extern "C" fn GetPath(mut lineBuf: *mut libc::c_char) -> *mut libc::c
     }
     if ptr as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
         tmp___0 = strlen(ptr as *const libc::c_char);
-        *ptr.offset(tmp___0.wrapping_sub(1 as libc::c_ulong) as isize) =
-            '\u{0}' as i32 as libc::c_char;
+        *ptr
+            .offset(
+                tmp___0.wrapping_sub(1 as libc::c_ulong) as isize,
+            ) = '\u{0}' as i32 as libc::c_char;
     }
     return ptr;
 }
@@ -5633,7 +5852,8 @@ pub unsafe extern "C" fn IsCoreClrProcess(
     if procFile as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
         fgets(
             lineBuf.as_mut_ptr(),
-            ::std::mem::size_of::<[libc::c_char; 4096]>() as libc::c_ulong as libc::c_int,
+            ::std::mem::size_of::<[libc::c_char; 4096]>() as libc::c_ulong
+                as libc::c_int,
             procFile,
         );
         loop {
@@ -5662,7 +5882,8 @@ pub unsafe extern "C" fn IsCoreClrProcess(
                     .wrapping_add(1 as libc::c_ulong),
             );
             *socketName = tmp___1 as *mut libc::c_char;
-            if !(*socketName as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
+            if !(*socketName as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong)
+            {
                 continue;
             }
             tmp___2 = strlen(ptr as *const libc::c_char);
@@ -5683,9 +5904,11 @@ pub unsafe extern "C" fn IsCoreClrProcess(
             );
             if tmp___4 as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
                 DiagTrace(
-                    b"CoreCLR diagnostics socket: %s %s\0" as *const u8 as *const libc::c_char,
+                    b"CoreCLR diagnostics socket: %s %s\0" as *const u8
+                        as *const libc::c_char,
                     socketName,
-                    b"in src/CoreDumpWriter.c, at line 140\0" as *const u8 as *const libc::c_char,
+                    b"in src/CoreDumpWriter.c, at line 140\0" as *const u8
+                        as *const libc::c_char,
                 );
                 bRet = 1 as libc::c_int != 0;
             }
@@ -5694,7 +5917,8 @@ pub unsafe extern "C" fn IsCoreClrProcess(
     } else {
         tmp___8 = __errno_location();
         DiagTrace(
-            b"Failed to open /proc/net/unix [%d]. %s\0" as *const u8 as *const libc::c_char,
+            b"Failed to open /proc/net/unix [%d]. %s\0" as *const u8
+                as *const libc::c_char,
             *tmp___8,
             b"in src/CoreDumpWriter.c, at line 151\0" as *const u8 as *const libc::c_char,
         );
@@ -5730,12 +5954,16 @@ pub unsafe extern "C" fn WriteCoreDump(mut self_0: *mut CoreDumpWriter) -> libc:
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"WriteCoreDump: failed WaitForQuitOrEvent. %s\0" as *const u8 as *const libc::c_char,
+            b"WriteCoreDump: failed WaitForQuitOrEvent. %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/CoreDumpWriter.c, at line 189\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
     }
-    tmp = pthread_setcanceltype(0 as libc::c_int, 0 as *mut libc::c_void as *mut libc::c_int);
+    tmp = pthread_setcanceltype(
+        0 as libc::c_int,
+        0 as *mut libc::c_void as *mut libc::c_int,
+    );
     if tmp != 0 as libc::c_int {
         Log(
             error,
@@ -5768,7 +5996,8 @@ pub unsafe extern "C" fn WriteCoreDump(mut self_0: *mut CoreDumpWriter) -> libc:
                             as *const u8 as *const libc::c_char,
                     );
                     DiagTrace(
-                        b"WriteCoreDump: failed sem_post. %s\0" as *const u8 as *const libc::c_char,
+                        b"WriteCoreDump: failed sem_post. %s\0" as *const u8
+                            as *const libc::c_char,
                         b"in src/CoreDumpWriter.c, at line 208\0" as *const u8
                             as *const libc::c_char,
                     );
@@ -5785,12 +6014,17 @@ pub unsafe extern "C" fn WriteCoreDump(mut self_0: *mut CoreDumpWriter) -> libc:
         0 | 128 => {}
         _ => {
             DiagTrace(
-                b"WriteCoreDump: Error in default case %s\0" as *const u8 as *const libc::c_char,
-                b"in src/CoreDumpWriter.c, at line 219\0" as *const u8 as *const libc::c_char,
+                b"WriteCoreDump: Error in default case %s\0" as *const u8
+                    as *const libc::c_char,
+                b"in src/CoreDumpWriter.c, at line 219\0" as *const u8
+                    as *const libc::c_char,
             );
         }
     }
-    tmp___1 = pthread_setcanceltype(1 as libc::c_int, 0 as *mut libc::c_void as *mut libc::c_int);
+    tmp___1 = pthread_setcanceltype(
+        1 as libc::c_int,
+        0 as *mut libc::c_void as *mut libc::c_int,
+    );
     if tmp___1 != 0 as libc::c_int {
         Log(
             error,
@@ -5816,7 +6050,8 @@ pub unsafe extern "C" fn GetUint16(mut buffer: *mut libc::c_char) -> *mut uint16
     if buffer as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
         tmp = strlen(buffer as *const libc::c_char);
         tmp___0 = malloc(
-            tmp.wrapping_add(1 as libc::c_ulong)
+            tmp
+                .wrapping_add(1 as libc::c_ulong)
                 .wrapping_mul(::std::mem::size_of::<uint16_t>() as libc::c_ulong),
         );
         dumpFileNameW = tmp___0 as *mut uint16_t;
@@ -5995,9 +6230,10 @@ pub unsafe extern "C" fn GenerateCoreClrDump(
         fd = socket(1 as libc::c_int, 1 as libc::c_int, 0 as libc::c_int);
         if fd == -(1 as libc::c_int) {
             DiagTrace(
-                b"Failed to create socket for .NET Core dump generation. %s\0" as *const u8
+                b"Failed to create socket for .NET Core dump generation. %s\0"
+                    as *const u8 as *const libc::c_char,
+                b"in src/CoreDumpWriter.c, at line 276\0" as *const u8
                     as *const libc::c_char,
-                b"in src/CoreDumpWriter.c, at line 276\0" as *const u8 as *const libc::c_char,
             );
         } else {
             memset(
@@ -6019,18 +6255,23 @@ pub unsafe extern "C" fn GenerateCoreClrDump(
             );
             if tmp___6 == -(1 as libc::c_int) {
                 DiagTrace(
-                    b"Failed to connect to socket for .NET Core dump generation. %s\0" as *const u8
+                    b"Failed to connect to socket for .NET Core dump generation. %s\0"
+                        as *const u8 as *const libc::c_char,
+                    b"in src/CoreDumpWriter.c, at line 287\0" as *const u8
                         as *const libc::c_char,
-                    b"in src/CoreDumpWriter.c, at line 287\0" as *const u8 as *const libc::c_char,
                 );
             } else {
                 tmp = strlen(dumpFileName as *const libc::c_char);
                 dumpFileNameLen = tmp.wrapping_add(1 as libc::c_ulong) as libc::c_uint;
-                payloadSize = ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong as libc::c_int;
-                payloadSize = (payloadSize as libc::c_ulong).wrapping_add(
-                    (dumpFileNameLen as libc::c_ulong)
-                        .wrapping_mul(::std::mem::size_of::<wchar_t>() as libc::c_ulong),
-                ) as libc::c_int;
+                payloadSize = ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong
+                    as libc::c_int;
+                payloadSize = (payloadSize as libc::c_ulong)
+                    .wrapping_add(
+                        (dumpFileNameLen as libc::c_ulong)
+                            .wrapping_mul(
+                                ::std::mem::size_of::<wchar_t>() as libc::c_ulong,
+                            ),
+                    ) as libc::c_int;
                 dumpType = 4 as libc::c_uint;
                 payloadSize = (payloadSize as libc::c_ulong)
                     .wrapping_add(::std::mem::size_of::<libc::c_uint>() as libc::c_ulong)
@@ -6040,39 +6281,68 @@ pub unsafe extern "C" fn GenerateCoreClrDump(
                     .wrapping_add(::std::mem::size_of::<libc::c_uint>() as libc::c_ulong)
                     as libc::c_int;
                 totalPacketSize = (::std::mem::size_of::<IpcHeader>() as libc::c_ulong)
-                    .wrapping_add(payloadSize as libc::c_ulong)
-                    as uint16_t;
+                    .wrapping_add(payloadSize as libc::c_ulong) as uint16_t;
                 temp_buffer = malloc(totalPacketSize as size_t);
-                if temp_buffer as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+                if temp_buffer as libc::c_ulong
+                    != 0 as *mut libc::c_void as libc::c_ulong
+                {
                     memset(temp_buffer, 0 as libc::c_int, totalPacketSize as size_t);
-                    dumpHeader.__annonCompField6._magic.Magic[0 as libc::c_int as usize] =
-                        'D' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[1 as libc::c_int as usize] =
-                        'O' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[2 as libc::c_int as usize] =
-                        'T' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[3 as libc::c_int as usize] =
-                        'N' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[4 as libc::c_int as usize] =
-                        'E' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[5 as libc::c_int as usize] =
-                        'T' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[6 as libc::c_int as usize] =
-                        '_' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[7 as libc::c_int as usize] =
-                        'I' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[8 as libc::c_int as usize] =
-                        'P' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[9 as libc::c_int as usize] =
-                        'C' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[10 as libc::c_int as usize] =
-                        '_' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[11 as libc::c_int as usize] =
-                        'V' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[12 as libc::c_int as usize] =
-                        '1' as i32 as uint8_t;
-                    dumpHeader.__annonCompField6._magic.Magic[13 as libc::c_int as usize] =
-                        '\u{0}' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[0 as libc::c_int as usize] = 'D' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[1 as libc::c_int as usize] = 'O' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[2 as libc::c_int as usize] = 'T' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[3 as libc::c_int as usize] = 'N' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[4 as libc::c_int as usize] = 'E' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[5 as libc::c_int as usize] = 'T' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[6 as libc::c_int as usize] = '_' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[7 as libc::c_int as usize] = 'I' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[8 as libc::c_int as usize] = 'P' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[9 as libc::c_int as usize] = 'C' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[10 as libc::c_int as usize] = '_' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[11 as libc::c_int as usize] = 'V' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[12 as libc::c_int as usize] = '1' as i32 as uint8_t;
+                    dumpHeader
+                        .__annonCompField6
+                        ._magic
+                        .Magic[13 as libc::c_int as usize] = '\u{0}' as i32 as uint8_t;
                     dumpHeader.Size = totalPacketSize;
                     dumpHeader.CommandSet = 1 as libc::c_int as uint8_t;
                     dumpHeader.CommandId = 1 as libc::c_int as uint8_t;
@@ -6084,32 +6354,44 @@ pub unsafe extern "C" fn GenerateCoreClrDump(
                         ::std::mem::size_of::<IpcHeader>() as libc::c_ulong,
                     );
                     temp_buffer_cur = temp_buffer_cur
-                        .offset(::std::mem::size_of::<IpcHeader>() as libc::c_ulong as isize);
+                        .offset(
+                            ::std::mem::size_of::<IpcHeader>() as libc::c_ulong as isize,
+                        );
                     memcpy(
                         temp_buffer_cur,
                         &mut dumpFileNameLen as *mut libc::c_uint as *const libc::c_void,
                         ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong,
                     );
                     temp_buffer_cur = temp_buffer_cur
-                        .offset(::std::mem::size_of::<libc::c_uint>() as libc::c_ulong as isize);
+                        .offset(
+                            ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong
+                                as isize,
+                        );
                     memcpy(
                         temp_buffer_cur,
                         dumpFileNameW as *const libc::c_void,
                         (dumpFileNameLen as libc::c_ulong)
-                            .wrapping_mul(::std::mem::size_of::<uint16_t>() as libc::c_ulong),
+                            .wrapping_mul(
+                                ::std::mem::size_of::<uint16_t>() as libc::c_ulong,
+                            ),
                     );
-                    temp_buffer_cur = temp_buffer_cur.offset(
-                        (dumpFileNameLen as libc::c_ulong)
-                            .wrapping_mul(::std::mem::size_of::<uint16_t>() as libc::c_ulong)
-                            as isize,
-                    );
+                    temp_buffer_cur = temp_buffer_cur
+                        .offset(
+                            (dumpFileNameLen as libc::c_ulong)
+                                .wrapping_mul(
+                                    ::std::mem::size_of::<uint16_t>() as libc::c_ulong,
+                                ) as isize,
+                        );
                     memcpy(
                         temp_buffer_cur,
                         &mut dumpType as *mut libc::c_uint as *const libc::c_void,
                         ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong,
                     );
                     temp_buffer_cur = temp_buffer_cur
-                        .offset(::std::mem::size_of::<libc::c_uint>() as libc::c_ulong as isize);
+                        .offset(
+                            ::std::mem::size_of::<libc::c_uint>() as libc::c_ulong
+                                as isize,
+                        );
                     memcpy(
                         temp_buffer_cur,
                         &mut diagnostics as *mut libc::c_uint as *const libc::c_void,
@@ -6124,8 +6406,8 @@ pub unsafe extern "C" fn GenerateCoreClrDump(
                     if tmp___5 == -(1 as libc::c_long) {
                         tmp___0 = __errno_location();
                         DiagTrace(
-                            b"Failed sending packet to diagnostics server [%d] %s\0" as *const u8
-                                as *const libc::c_char,
+                            b"Failed sending packet to diagnostics server [%d] %s\0"
+                                as *const u8 as *const libc::c_char,
                             *tmp___0,
                             b"in src/CoreDumpWriter.c, at line 336\0" as *const u8
                                 as *const libc::c_char,
@@ -6251,8 +6533,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"WriteCoreDumpInternal: failed gcore output buffer allocation %s\0" as *const u8
-                as *const libc::c_char,
+            b"WriteCoreDumpInternal: failed gcore output buffer allocation %s\0"
+                as *const u8 as *const libc::c_char,
             b"in src/CoreDumpWriter.c, at line 428\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -6266,7 +6548,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                 as *const u8 as *const libc::c_char,
         );
         DiagTrace(
-            b"WriteCoreDumpInternal: failed localtime %s\0" as *const u8 as *const libc::c_char,
+            b"WriteCoreDumpInternal: failed localtime %s\0" as *const u8
+                as *const libc::c_char,
             b"in src/CoreDumpWriter.c, at line 436\0" as *const u8 as *const libc::c_char,
         );
         exit(-(1 as libc::c_int));
@@ -6277,7 +6560,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
         b"%Y-%m-%d_%H:%M:%S\0" as *const u8 as *const libc::c_char,
         timerInfo as *const tm,
     );
-    if (*(*self_0).Config).CoreDumpName as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong
+    if (*(*self_0).Config).CoreDumpName as libc::c_ulong
+        != 0 as *mut libc::c_void as libc::c_ulong
     {
         tmp___1 = snprintf(
             gcorePrefixName.as_mut_ptr(),
@@ -6294,9 +6578,10 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                     as *const u8 as *const libc::c_char,
             );
             DiagTrace(
-                b"WriteCoreDumpInternal: failed sprintf custom output file name %s\0" as *const u8
+                b"WriteCoreDumpInternal: failed sprintf custom output file name %s\0"
+                    as *const u8 as *const libc::c_char,
+                b"in src/CoreDumpWriter.c, at line 448\0" as *const u8
                     as *const libc::c_char,
-                b"in src/CoreDumpWriter.c, at line 448\0" as *const u8 as *const libc::c_char,
             );
             exit(-(1 as libc::c_int));
         }
@@ -6317,9 +6602,10 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                     as *const u8 as *const libc::c_char,
             );
             DiagTrace(
-                b"WriteCoreDumpInternal: failed sprintf default output file name %s\0" as *const u8
+                b"WriteCoreDumpInternal: failed sprintf default output file name %s\0"
+                    as *const u8 as *const libc::c_char,
+                b"in src/CoreDumpWriter.c, at line 455\0" as *const u8
                     as *const libc::c_char,
-                b"in src/CoreDumpWriter.c, at line 455\0" as *const u8 as *const libc::c_char,
             );
             exit(-(1 as libc::c_int));
         }
@@ -6422,7 +6708,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
             DiagTrace(
                 b"WriteCoreDumpInternal: Failed to open pipe to gcore %s\0" as *const u8
                     as *const libc::c_char,
-                b"in src/CoreDumpWriter.c, at line 512\0" as *const u8 as *const libc::c_char,
+                b"in src/CoreDumpWriter.c, at line 512\0" as *const u8
+                    as *const libc::c_char,
             );
             exit(1 as libc::c_int);
         }
@@ -6430,7 +6717,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
         while i < 15 as libc::c_int {
             tmp___9 = fgets(
                 lineBuffer.as_mut_ptr(),
-                ::std::mem::size_of::<[libc::c_char; 1024]>() as libc::c_ulong as libc::c_int,
+                ::std::mem::size_of::<[libc::c_char; 1024]>() as libc::c_ulong
+                    as libc::c_int,
                 commandPipe,
             );
             if !(tmp___9 as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
@@ -6453,8 +6741,9 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                     (lineLength - 1 as libc::c_int) as size_t,
                 );
                 *(*outputBuffer.offset(i as isize))
-                    .offset((lineLength - 1 as libc::c_int) as isize) =
-                    '\u{0}' as i32 as libc::c_char;
+                    .offset(
+                        (lineLength - 1 as libc::c_int) as isize,
+                    ) = '\u{0}' as i32 as libc::c_char;
             } else {
                 Log(
                     error,
@@ -6464,7 +6753,8 @@ pub unsafe extern "C" fn WriteCoreDumpInternal(
                 DiagTrace(
                     b"WriteCoreDumpInternal: failed to allocate gcore error message buffer %s\0"
                         as *const u8 as *const libc::c_char,
-                    b"in src/CoreDumpWriter.c, at line 527\0" as *const u8 as *const libc::c_char,
+                    b"in src/CoreDumpWriter.c, at line 527\0" as *const u8
+                        as *const libc::c_char,
                 );
                 exit(-(1 as libc::c_int));
             }
@@ -6582,7 +6872,8 @@ pub unsafe extern "C" fn popen2(
     }
     if childPid == 0 as libc::c_int {
         setpgid(0 as libc::c_int, 0 as libc::c_int);
-        if *type_0.offset(0 as libc::c_int as isize) as libc::c_int == 114 as libc::c_int {
+        if *type_0.offset(0 as libc::c_int as isize) as libc::c_int == 114 as libc::c_int
+        {
             close(pipefd[0 as libc::c_int as usize]);
             dup2(pipefd[1 as libc::c_int as usize], 1 as libc::c_int);
         } else {
@@ -6600,7 +6891,8 @@ pub unsafe extern "C" fn popen2(
     } else {
         setpgid(childPid, childPid);
         *pid = childPid;
-        if *type_0.offset(0 as libc::c_int as isize) as libc::c_int == 114 as libc::c_int {
+        if *type_0.offset(0 as libc::c_int as isize) as libc::c_int == 114 as libc::c_int
+        {
             close(pipefd[1 as libc::c_int as usize]);
             tmp___0 = fdopen(
                 pipefd[0 as libc::c_int as usize],
@@ -6617,17 +6909,16 @@ pub unsafe extern "C" fn popen2(
         }
     };
 }
-pub unsafe extern "C" fn sanitize(mut processName: *mut libc::c_char) -> *mut libc::c_char {
+pub unsafe extern "C" fn sanitize(
+    mut processName: *mut libc::c_char,
+) -> *mut libc::c_char {
     let mut sanitizedProcessName: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut tmp: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut i: libc::c_int = 0;
     let mut tmp___0: *mut *const libc::c_ushort = 0 as *mut *const libc::c_ushort;
     let mut tmp___1: size_t = 0;
     if processName as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
-        Log(
-            error,
-            b"NULL process name.\n\0" as *const u8 as *const libc::c_char,
-        );
+        Log(error, b"NULL process name.\n\0" as *const u8 as *const libc::c_char);
         exit(-(1 as libc::c_int));
     }
     tmp = strdup(processName as *const libc::c_char);
@@ -6639,10 +6930,9 @@ pub unsafe extern "C" fn sanitize(mut processName: *mut libc::c_char) -> *mut li
             break;
         }
         tmp___0 = __ctype_b_loc();
-        if *(*tmp___0).offset(*sanitizedProcessName.offset(i as isize) as libc::c_int as isize)
-            as libc::c_int
-            & 8 as libc::c_int
-            == 0
+        if *(*tmp___0)
+            .offset(*sanitizedProcessName.offset(i as isize) as libc::c_int as isize)
+            as libc::c_int & 8 as libc::c_int == 0
         {
             *sanitizedProcessName.offset(i as isize) = '_' as i32 as libc::c_char;
         }
@@ -6651,7 +6941,7 @@ pub unsafe extern "C" fn sanitize(mut processName: *mut libc::c_char) -> *mut li
     return sanitizedProcessName;
 }
 pub fn main() {
-    let mut args: Vec<*mut libc::c_char> = Vec::new();
+    let mut args: Vec::<*mut libc::c_char> = Vec::new();
     for arg in ::std::env::args() {
         args.push(
             (::std::ffi::CString::new(arg))
@@ -6661,9 +6951,11 @@ pub fn main() {
     }
     args.push(::std::ptr::null_mut());
     unsafe {
-        ::std::process::exit(main_0(
-            (args.len() - 1) as libc::c_int,
-            args.as_mut_ptr() as *mut *mut libc::c_char,
-        ) as i32)
+        ::std::process::exit(
+            main_0(
+                (args.len() - 1) as libc::c_int,
+                args.as_mut_ptr() as *mut *mut libc::c_char,
+            ) as i32,
+        )
     }
 }

@@ -27,7 +27,9 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
     fn pthread_detach(__th: pthread_t) -> libc::c_int;
@@ -43,8 +45,10 @@ extern "C" {
     ) -> libc::c_int;
     fn pthread_cond_signal(__cond: *mut pthread_cond_t) -> libc::c_int;
     fn pthread_cond_broadcast(__cond: *mut pthread_cond_t) -> libc::c_int;
-    fn pthread_cond_wait(__cond: *mut pthread_cond_t, __mutex: *mut pthread_mutex_t)
-        -> libc::c_int;
+    fn pthread_cond_wait(
+        __cond: *mut pthread_cond_t,
+        __mutex: *mut pthread_mutex_t,
+    ) -> libc::c_int;
     fn prctl(__option: libc::c_int, _: ...) -> libc::c_int;
     fn printf(_: *const libc::c_char, _: ...) -> libc::c_int;
     fn puts(__s: *const libc::c_char) -> libc::c_int;
@@ -164,9 +168,10 @@ pub union pthread_attr_t {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub union __anonunion___sigaction_handler_363639592 {
-    pub sa_handler: Option<unsafe extern "C" fn(libc::c_int) -> ()>,
-    pub sa_sigaction:
-        Option<unsafe extern "C" fn(libc::c_int, *mut siginfo_t, *mut libc::c_void) -> ()>,
+    pub sa_handler: Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
+    pub sa_sigaction: Option::<
+        unsafe extern "C" fn(libc::c_int, *mut siginfo_t, *mut libc::c_void) -> (),
+    >,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -174,7 +179,7 @@ pub struct sigaction {
     pub __sigaction_handler: __anonunion___sigaction_handler_363639592,
     pub sa_mask: __sigset_t,
     pub sa_flags: libc::c_int,
-    pub sa_restorer: Option<unsafe extern "C" fn() -> ()>,
+    pub sa_restorer: Option::<unsafe extern "C" fn() -> ()>,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -327,7 +332,7 @@ pub struct bsem {
 #[repr(C)]
 pub struct job {
     pub prev: *mut job,
-    pub function: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+    pub function: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
     pub arg: *mut libc::c_void,
 }
 #[derive(Copy, Clone)]
@@ -407,7 +412,7 @@ pub unsafe extern "C" fn thpool_init(mut num_threads: libc::c_int) -> *mut thpoo
 }
 pub unsafe extern "C" fn thpool_add_work(
     mut thpool_p: *mut thpool_,
-    mut function_p: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+    mut function_p: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
     mut arg_p: *mut libc::c_void,
 ) -> libc::c_int {
     let mut newjob: *mut job = 0 as *mut job;
@@ -492,7 +497,9 @@ pub unsafe extern "C" fn thpool_pause(mut thpool_p: *mut thpool_) {
 pub unsafe extern "C" fn thpool_resume(mut thpool_p: *mut thpool_) {
     threads_on_hold = 0 as libc::c_int;
 }
-pub unsafe extern "C" fn thpool_num_threads_working(mut thpool_p: *mut thpool_) -> libc::c_int {
+pub unsafe extern "C" fn thpool_num_threads_working(
+    mut thpool_p: *mut thpool_,
+) -> libc::c_int {
     return (*thpool_p).num_threads_working;
 }
 unsafe extern "C" fn thread_init(
@@ -517,11 +524,9 @@ unsafe extern "C" fn thread_init(
         &mut (**thread_p).pthread as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
         ::std::mem::transmute::<
-            Option<unsafe extern "C" fn(*mut thread) -> *mut libc::c_void>,
-            Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
-        >(Some(
-            thread_do as unsafe extern "C" fn(*mut thread) -> *mut libc::c_void,
-        )),
+            Option::<unsafe extern "C" fn(*mut thread) -> *mut libc::c_void>,
+            Option::<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        >(Some(thread_do as unsafe extern "C" fn(*mut thread) -> *mut libc::c_void)),
         *thread_p as *mut libc::c_void,
     );
     pthread_detach((**thread_p).pthread);
@@ -538,13 +543,15 @@ unsafe extern "C" fn thread_do(mut thread_p: *mut thread) -> *mut libc::c_void {
     let mut tmp: libc::c_uint = 0;
     let mut thpool_p: *mut thpool_ = 0 as *mut thpool_;
     let mut act: sigaction = sigaction {
-        __sigaction_handler: __anonunion___sigaction_handler_363639592 { sa_handler: None },
+        __sigaction_handler: __anonunion___sigaction_handler_363639592 {
+            sa_handler: None,
+        },
         sa_mask: __sigset_t { __val: [0; 16] },
         sa_flags: 0,
         sa_restorer: None,
     };
     let mut tmp___0: libc::c_int = 0;
-    let mut func_buff: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()> = None;
+    let mut func_buff: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()> = None;
     let mut arg_buff: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut job_p: *mut job = 0 as *mut job;
     let mut tmp___1: *mut job = 0 as *mut job;
@@ -564,8 +571,9 @@ unsafe extern "C" fn thread_do(mut thread_p: *mut thread) -> *mut libc::c_void {
     thpool_p = (*thread_p).thpool_p;
     sigemptyset(&mut act.sa_mask);
     act.sa_flags = 0 as libc::c_int;
-    act.__sigaction_handler.sa_handler =
-        Some(thread_hold as unsafe extern "C" fn(libc::c_int) -> ());
+    act
+        .__sigaction_handler
+        .sa_handler = Some(thread_hold as unsafe extern "C" fn(libc::c_int) -> ());
     tmp___0 = sigaction(
         10 as libc::c_int,
         &mut act as *mut sigaction as *const sigaction,
@@ -578,17 +586,19 @@ unsafe extern "C" fn thread_do(mut thread_p: *mut thread) -> *mut libc::c_void {
         );
     }
     pthread_mutex_lock(&mut (*thpool_p).thcount_lock);
-    (*thpool_p).num_threads_alive = ::std::ptr::read_volatile::<libc::c_int>(
-        &(*thpool_p).num_threads_alive as *const libc::c_int,
-    ) + 1 as libc::c_int;
+    (*thpool_p)
+        .num_threads_alive = ::std::ptr::read_volatile::<
+        libc::c_int,
+    >(&(*thpool_p).num_threads_alive as *const libc::c_int) + 1 as libc::c_int;
     pthread_mutex_unlock(&mut (*thpool_p).thcount_lock);
     while threads_keepalive != 0 {
         bsem_wait((*thpool_p).jobqueue.has_jobs);
         if threads_keepalive != 0 {
             pthread_mutex_lock(&mut (*thpool_p).thcount_lock);
-            (*thpool_p).num_threads_working = ::std::ptr::read_volatile::<libc::c_int>(
-                &(*thpool_p).num_threads_working as *const libc::c_int,
-            ) + 1 as libc::c_int;
+            (*thpool_p)
+                .num_threads_working = ::std::ptr::read_volatile::<
+                libc::c_int,
+            >(&(*thpool_p).num_threads_working as *const libc::c_int) + 1 as libc::c_int;
             pthread_mutex_unlock(&mut (*thpool_p).thcount_lock);
             tmp___1 = jobqueue_pull(&mut (*thpool_p).jobqueue);
             job_p = tmp___1;
@@ -600,9 +610,10 @@ unsafe extern "C" fn thread_do(mut thread_p: *mut thread) -> *mut libc::c_void {
                 free(job_p as *mut libc::c_void);
             }
             pthread_mutex_lock(&mut (*thpool_p).thcount_lock);
-            (*thpool_p).num_threads_working = ::std::ptr::read_volatile::<libc::c_int>(
-                &(*thpool_p).num_threads_working as *const libc::c_int,
-            ) - 1 as libc::c_int;
+            (*thpool_p)
+                .num_threads_working = ::std::ptr::read_volatile::<
+                libc::c_int,
+            >(&(*thpool_p).num_threads_working as *const libc::c_int) - 1 as libc::c_int;
             if (*thpool_p).num_threads_working == 0 {
                 pthread_cond_signal(&mut (*thpool_p).threads_all_idle);
             }
@@ -610,9 +621,10 @@ unsafe extern "C" fn thread_do(mut thread_p: *mut thread) -> *mut libc::c_void {
         }
     }
     pthread_mutex_lock(&mut (*thpool_p).thcount_lock);
-    (*thpool_p).num_threads_alive = ::std::ptr::read_volatile::<libc::c_int>(
-        &(*thpool_p).num_threads_alive as *const libc::c_int,
-    ) - 1 as libc::c_int;
+    (*thpool_p)
+        .num_threads_alive = ::std::ptr::read_volatile::<
+        libc::c_int,
+    >(&(*thpool_p).num_threads_alive as *const libc::c_int) - 1 as libc::c_int;
     pthread_mutex_unlock(&mut (*thpool_p).thcount_lock);
     return 0 as *mut libc::c_void;
 }
@@ -626,7 +638,8 @@ unsafe extern "C" fn jobqueue_init(mut jobqueue_p: *mut jobqueue) -> libc::c_int
     (*jobqueue_p).rear = 0 as *mut libc::c_void as *mut job;
     tmp = malloc(::std::mem::size_of::<bsem>() as libc::c_ulong);
     (*jobqueue_p).has_jobs = tmp as *mut bsem;
-    if (*jobqueue_p).has_jobs as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
+    if (*jobqueue_p).has_jobs as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong
+    {
         return -(1 as libc::c_int);
     }
     pthread_mutex_init(
@@ -700,8 +713,8 @@ unsafe extern "C" fn bsem_init(mut bsem_p: *mut bsem, mut value: libc::c_int) {
         if value > 1 as libc::c_int {
             fprintf(
                 stderr,
-                b"bsem_init(): Binary semaphore can take only values 1 or 0\0" as *const u8
-                    as *const libc::c_char,
+                b"bsem_init(): Binary semaphore can take only values 1 or 0\0"
+                    as *const u8 as *const libc::c_char,
             );
             exit(1 as libc::c_int);
         }

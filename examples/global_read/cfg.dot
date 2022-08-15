@@ -1,0 +1,37 @@
+digraph cfg {
+	node [];
+	fun3 -> ret3 [label = "-1"] ;
+	4 -> ret337 [label = "50"] ;
+	7 -> ret339 [label = "59"] ;
+	1 -> 2 [label = "47"] ;
+	10 -> 11 [label = "70"] ;
+	11 -> 12 [label = "72"] ;
+	fun342 -> 9 [label = "62"] ;
+	3 -> 4 [label = "49"] ;
+	2 -> 3 [label = "48"] ;
+	12 -> 13 [label = "73"] ;
+	6 -> 7 [label = "58"] ;
+	9 -> 10 [label = "68"] ;
+	fun337 -> 1 [label = "42"] ;
+	13 -> ret342 [label = "74"] ;
+	fun339 -> 6 [label = "53"] ;
+	ret3 [label="return of __goblint_dummy_init()",shape=box];
+	fun342 [label="main()",shape=box];
+	ret337 [label="return of f1()",shape=box];
+	fun339 [label="t_fun()",shape=box];
+	2 [];
+	ret339 [label="return of t_fun()",shape=box];
+	11 [];
+	12 [];
+	9 [];
+	4 [];
+	3 [];
+	13 [];
+	fun337 [label="f1()",shape=box];
+	7 [];
+	10 [];
+	fun3 [label="__goblint_dummy_init()",shape=box];
+	1 [];
+	ret342 [label="return of main()",shape=box];
+	6 [];
+}

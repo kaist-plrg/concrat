@@ -1,8 +1,7 @@
-use std::arch::asm;
-
-use ::c2rust_asm_casts;
 use ::libc;
+use ::c2rust_asm_casts;
 use c2rust_asm_casts::AsmCastTrait;
+use std::arch::asm;
 extern "C" {
     pub type _IO_wide_data;
     pub type _IO_codecvt;
@@ -26,10 +25,21 @@ extern "C" {
     fn getc(__stream: *mut FILE) -> libc::c_int;
     fn putc(__c: libc::c_int, __stream: *mut FILE) -> libc::c_int;
     fn perror(__s: *const libc::c_char);
-    fn memcpy(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
-    fn memmove(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong)
-        -> *mut libc::c_void;
-    fn memset(_: *mut libc::c_void, _: libc::c_int, _: libc::c_ulong) -> *mut libc::c_void;
+    fn memcpy(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn memmove(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn memset(
+        _: *mut libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn strcmp(_: *const libc::c_char, _: *const libc::c_char) -> libc::c_int;
     fn strdup(_: *const libc::c_char) -> *mut libc::c_char;
     fn strchr(_: *const libc::c_char, _: libc::c_int) -> *mut libc::c_char;
@@ -37,7 +47,11 @@ extern "C" {
     fn strlen(_: *const libc::c_char) -> libc::c_ulong;
     fn strerror(_: libc::c_int) -> *mut libc::c_char;
     fn strtod(_: *const libc::c_char, _: *mut *mut libc::c_char) -> libc::c_double;
-    fn strtol(_: *const libc::c_char, _: *mut *mut libc::c_char, _: libc::c_int) -> libc::c_long;
+    fn strtol(
+        _: *const libc::c_char,
+        _: *mut *mut libc::c_char,
+        _: libc::c_int,
+    ) -> libc::c_long;
     fn strtoll(
         _: *const libc::c_char,
         _: *mut *mut libc::c_char,
@@ -59,7 +73,9 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
     fn pthread_mutex_init(
@@ -73,8 +89,10 @@ extern "C" {
         __cond_attr: *const pthread_condattr_t,
     ) -> libc::c_int;
     fn pthread_cond_signal(__cond: *mut pthread_cond_t) -> libc::c_int;
-    fn pthread_cond_wait(__cond: *mut pthread_cond_t, __mutex: *mut pthread_mutex_t)
-        -> libc::c_int;
+    fn pthread_cond_wait(
+        __cond: *mut pthread_cond_t,
+        __mutex: *mut pthread_mutex_t,
+    ) -> libc::c_int;
     fn __errno_location() -> *mut libc::c_int;
     fn lseek(__fd: libc::c_int, __offset: __off_t, __whence: libc::c_int) -> __off_t;
     fn close(__fd: libc::c_int) -> libc::c_int;
@@ -88,7 +106,7 @@ extern "C" {
     fn gettimeofday(__tv: *mut timeval, __tz: *mut libc::c_void) -> libc::c_int;
     fn signal(
         __sig: libc::c_int,
-        __handler: Option<unsafe extern "C" fn(libc::c_int) -> ()>,
+        __handler: Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
     ) -> __sighandler_t;
     fn open(__file: *const libc::c_char, __oflag: libc::c_int, _: ...) -> libc::c_int;
     fn __ctype_b_loc() -> *mut *const libc::c_ushort;
@@ -109,26 +127,53 @@ extern "C" {
     fn rtlsdr_open(dev: *mut *mut rtlsdr_dev_t, index: uint32_t) -> libc::c_int;
     fn rtlsdr_close(dev: *mut rtlsdr_dev_t) -> libc::c_int;
     fn rtlsdr_set_center_freq(dev: *mut rtlsdr_dev_t, freq: uint32_t) -> libc::c_int;
-    fn rtlsdr_set_freq_correction(dev: *mut rtlsdr_dev_t, ppm: libc::c_int) -> libc::c_int;
-    fn rtlsdr_get_tuner_gains(dev: *mut rtlsdr_dev_t, gains: *mut libc::c_int) -> libc::c_int;
+    fn rtlsdr_set_freq_correction(
+        dev: *mut rtlsdr_dev_t,
+        ppm: libc::c_int,
+    ) -> libc::c_int;
+    fn rtlsdr_get_tuner_gains(
+        dev: *mut rtlsdr_dev_t,
+        gains: *mut libc::c_int,
+    ) -> libc::c_int;
     fn rtlsdr_set_tuner_gain(dev: *mut rtlsdr_dev_t, gain: libc::c_int) -> libc::c_int;
     fn rtlsdr_get_tuner_gain(dev: *mut rtlsdr_dev_t) -> libc::c_int;
-    fn rtlsdr_set_tuner_gain_mode(dev: *mut rtlsdr_dev_t, manual: libc::c_int) -> libc::c_int;
+    fn rtlsdr_set_tuner_gain_mode(
+        dev: *mut rtlsdr_dev_t,
+        manual: libc::c_int,
+    ) -> libc::c_int;
     fn rtlsdr_set_sample_rate(dev: *mut rtlsdr_dev_t, rate: uint32_t) -> libc::c_int;
     fn rtlsdr_set_agc_mode(dev: *mut rtlsdr_dev_t, on: libc::c_int) -> libc::c_int;
     fn rtlsdr_reset_buffer(dev: *mut rtlsdr_dev_t) -> libc::c_int;
     fn rtlsdr_read_async(
         dev: *mut rtlsdr_dev_t,
-        cb: Option<unsafe extern "C" fn(*mut libc::c_uchar, uint32_t, *mut libc::c_void) -> ()>,
+        cb: Option::<
+            unsafe extern "C" fn(*mut libc::c_uchar, uint32_t, *mut libc::c_void) -> (),
+        >,
         ctx: *mut libc::c_void,
         buf_num: uint32_t,
         buf_len: uint32_t,
     ) -> libc::c_int;
-    fn socket(__domain: libc::c_int, __type: libc::c_int, __protocol: libc::c_int) -> libc::c_int;
+    fn socket(
+        __domain: libc::c_int,
+        __type: libc::c_int,
+        __protocol: libc::c_int,
+    ) -> libc::c_int;
     fn bind(__fd: libc::c_int, __addr: *const sockaddr, __len: socklen_t) -> libc::c_int;
-    fn getsockname(__fd: libc::c_int, __addr: *mut sockaddr, __len: *mut socklen_t) -> libc::c_int;
-    fn connect(__fd: libc::c_int, __addr: *const sockaddr, __len: socklen_t) -> libc::c_int;
-    fn getpeername(__fd: libc::c_int, __addr: *mut sockaddr, __len: *mut socklen_t) -> libc::c_int;
+    fn getsockname(
+        __fd: libc::c_int,
+        __addr: *mut sockaddr,
+        __len: *mut socklen_t,
+    ) -> libc::c_int;
+    fn connect(
+        __fd: libc::c_int,
+        __addr: *const sockaddr,
+        __len: socklen_t,
+    ) -> libc::c_int;
+    fn getpeername(
+        __fd: libc::c_int,
+        __addr: *mut sockaddr,
+        __len: *mut socklen_t,
+    ) -> libc::c_int;
     fn setsockopt(
         __fd: libc::c_int,
         __level: libc::c_int,
@@ -137,11 +182,18 @@ extern "C" {
         __optlen: socklen_t,
     ) -> libc::c_int;
     fn listen(__fd: libc::c_int, __n: libc::c_int) -> libc::c_int;
-    fn accept(__fd: libc::c_int, __addr: *mut sockaddr, __addr_len: *mut socklen_t) -> libc::c_int;
+    fn accept(
+        __fd: libc::c_int,
+        __addr: *mut sockaddr,
+        __addr_len: *mut socklen_t,
+    ) -> libc::c_int;
     fn chmod(__file: *const libc::c_char, __mode: __mode_t) -> libc::c_int;
     fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
-    fn strncpy(_: *mut libc::c_char, _: *const libc::c_char, _: libc::c_ulong)
-        -> *mut libc::c_char;
+    fn strncpy(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
     fn inet_ntoa(__in: in_addr) -> *mut libc::c_char;
     fn inet_aton(__cp: *const libc::c_char, __inp: *mut in_addr) -> libc::c_int;
     fn fcntl(__fd: libc::c_int, __cmd: libc::c_int, _: ...) -> libc::c_int;
@@ -331,7 +383,7 @@ pub union __anonunion_pthread_cond_t_951761805 {
 pub type pthread_cond_t = __anonunion_pthread_cond_t_951761805;
 pub type uint16_t = __uint16_t;
 pub type uint32_t = __uint32_t;
-pub type __sighandler_t = Option<unsafe extern "C" fn(libc::c_int) -> ()>;
+pub type __sighandler_t = Option::<unsafe extern "C" fn(libc::c_int) -> ()>;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct stat {
@@ -595,15 +647,21 @@ pub static mut Modes: __anonstruct_Modes_120292704 = __anonstruct_Modes_12029270
             __spins: 0,
             __elision: 0,
             __list: __pthread_list_t {
-                __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                __prev: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
+                __next: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
             },
         },
     },
     data_cond: __anonunion_pthread_cond_t_951761805 {
         __data: __pthread_cond_s {
-            __annonCompField1: __anonunion____missing_field_name_506248102 { __wseq: 0 },
-            __annonCompField2: __anonunion____missing_field_name_100370678 { __g1_start: 0 },
+            __annonCompField1: __anonunion____missing_field_name_506248102 {
+                __wseq: 0,
+            },
+            __annonCompField2: __anonunion____missing_field_name_100370678 {
+                __g1_start: 0,
+            },
             __g_refs: [0; 2],
             __g_size: [0; 2],
             __g1_orig_size: 0,
@@ -660,10 +718,7 @@ pub static mut Modes: __anonstruct_Modes_120292704 = __anonstruct_Modes_12029270
     stat_out_of_phase: 0,
 };
 unsafe extern "C" fn mstime() -> libc::c_longlong {
-    let mut tv: timeval = timeval {
-        tv_sec: 0,
-        tv_usec: 0,
-    };
+    let mut tv: timeval = timeval { tv_sec: 0, tv_usec: 0 };
     let mut mst: libc::c_longlong = 0;
     gettimeofday(&mut tv as *mut timeval, 0 as *mut libc::c_void);
     mst = tv.tv_sec as libc::c_longlong * 1000 as libc::c_longlong;
@@ -729,7 +784,8 @@ pub unsafe extern "C" fn modesInit() {
     if Modes.data as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         fprintf(
             stderr,
-            b"Out of memory allocating data buffer.\n\0" as *const u8 as *const libc::c_char,
+            b"Out of memory allocating data buffer.\n\0" as *const u8
+                as *const libc::c_char,
         );
         exit(1 as libc::c_int);
     } else {
@@ -738,7 +794,8 @@ pub unsafe extern "C" fn modesInit() {
         if Modes.magnitude as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
             fprintf(
                 stderr,
-                b"Out of memory allocating data buffer.\n\0" as *const u8 as *const libc::c_char,
+                b"Out of memory allocating data buffer.\n\0" as *const u8
+                    as *const libc::c_char,
             );
             exit(1 as libc::c_int);
         }
@@ -756,7 +813,8 @@ pub unsafe extern "C" fn modesInit() {
         while q <= 128 as libc::c_int {
             tmp___3 = sqrt((i * i + q * q) as libc::c_double);
             tmp___4 = round(tmp___3 * 360 as libc::c_int as libc::c_double);
-            *(Modes.maglut).offset((i * 129 as libc::c_int + q) as isize) = tmp___4 as uint16_t;
+            *(Modes.maglut)
+                .offset((i * 129 as libc::c_int + q) as isize) = tmp___4 as uint16_t;
             q += 1;
         }
         i += 1;
@@ -835,7 +893,8 @@ pub unsafe extern "C" fn modesInitRTLSDR() {
         tmp___2 = strerror(*tmp___1);
         fprintf(
             stderr,
-            b"Error opening the RTLSDR device: %s\n\0" as *const u8 as *const libc::c_char,
+            b"Error opening the RTLSDR device: %s\n\0" as *const u8
+                as *const libc::c_char,
             tmp___2,
         );
         exit(1 as libc::c_int);
@@ -926,7 +985,8 @@ pub unsafe extern "C" fn readDataFromFile() {
             }
             memcpy(
                 Modes.data as *mut libc::c_void,
-                (Modes.data).offset(262144 as libc::c_int as isize) as *const libc::c_void,
+                (Modes.data).offset(262144 as libc::c_int as isize)
+                    as *const libc::c_void,
                 476 as libc::c_int as size_t,
             );
             toread = 262144 as libc::c_int as ssize_t;
@@ -934,11 +994,16 @@ pub unsafe extern "C" fn readDataFromFile() {
             while toread != 0 {
                 nread = read(Modes.fd, p as *mut libc::c_void, toread as size_t);
                 if nread == 0 as libc::c_long {
-                    if Modes.filename as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+                    if Modes.filename as libc::c_ulong
+                        != 0 as *mut libc::c_void as libc::c_ulong
+                    {
                         if Modes.fd != 0 as libc::c_int {
                             if Modes.loop_0 != 0 {
-                                tmp =
-                                    lseek(Modes.fd, 0 as libc::c_int as __off_t, 0 as libc::c_int);
+                                tmp = lseek(
+                                    Modes.fd,
+                                    0 as libc::c_int as __off_t,
+                                    0 as libc::c_int,
+                                );
                                 if tmp != -(1 as libc::c_long) {
                                     continue;
                                 }
@@ -960,15 +1025,21 @@ pub unsafe extern "C" fn readDataFromFile() {
             Modes.data_ready = 1 as libc::c_int;
             pthread_cond_signal(&mut Modes.data_cond);
         }
-    }
+    };
 }
-pub unsafe extern "C" fn readerThreadEntryPoint(mut arg: *mut libc::c_void) -> *mut libc::c_void {
+pub unsafe extern "C" fn readerThreadEntryPoint(
+    mut arg: *mut libc::c_void,
+) -> *mut libc::c_void {
     if Modes.filename as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         rtlsdr_read_async(
             Modes.dev,
             Some(
                 rtlsdrCallback
-                    as unsafe extern "C" fn(*mut libc::c_uchar, uint32_t, *mut libc::c_void) -> (),
+                    as unsafe extern "C" fn(
+                        *mut libc::c_uchar,
+                        uint32_t,
+                        *mut libc::c_void,
+                    ) -> (),
             ),
             0 as *mut libc::c_void,
             12 as libc::c_int as uint32_t,
@@ -979,7 +1050,10 @@ pub unsafe extern "C" fn readerThreadEntryPoint(mut arg: *mut libc::c_void) -> *
     }
     return 0 as *mut libc::c_void;
 }
-pub unsafe extern "C" fn dumpMagnitudeBar(mut index___0: libc::c_int, mut magnitude: libc::c_int) {
+pub unsafe extern "C" fn dumpMagnitudeBar(
+    mut index___0: libc::c_int,
+    mut magnitude: libc::c_int,
+) {
     let mut set: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut buf: [libc::c_char; 256] = [0; 256];
     let mut div___0: libc::c_int = 0;
@@ -988,11 +1062,7 @@ pub unsafe extern "C" fn dumpMagnitudeBar(mut index___0: libc::c_int, mut magnit
     set = b" .-o\0" as *const u8 as *const libc::c_char as *mut libc::c_char;
     div___0 = magnitude / 256 as libc::c_int / 4 as libc::c_int;
     rem = magnitude / 256 as libc::c_int % 4 as libc::c_int;
-    memset(
-        buf.as_mut_ptr() as *mut libc::c_void,
-        'O' as i32,
-        div___0 as size_t,
-    );
+    memset(buf.as_mut_ptr() as *mut libc::c_void, 'O' as i32, div___0 as size_t);
     buf[div___0 as usize] = *set.offset(rem as isize);
     buf[(div___0 + 1 as libc::c_int) as usize] = '\u{0}' as i32 as libc::c_char;
     if index___0 >= 0 as libc::c_int {
@@ -1007,7 +1077,8 @@ pub unsafe extern "C" fn dumpMagnitudeBar(mut index___0: libc::c_int, mut magnit
             markchar = '>' as i32;
         }
         if index___0 >= 16 as libc::c_int {
-            if (index___0 - 16 as libc::c_int) / 2 as libc::c_int & 1 as libc::c_int != 0 {
+            if (index___0 - 16 as libc::c_int) / 2 as libc::c_int & 1 as libc::c_int != 0
+            {
                 markchar = '|' as i32;
             } else {
                 markchar = ')' as i32;
@@ -1029,7 +1100,10 @@ pub unsafe extern "C" fn dumpMagnitudeBar(mut index___0: libc::c_int, mut magnit
         );
     };
 }
-pub unsafe extern "C" fn dumpMagnitudeVector(mut m: *mut uint16_t, mut offset: uint32_t) {
+pub unsafe extern "C" fn dumpMagnitudeVector(
+    mut m: *mut uint16_t,
+    mut offset: uint32_t,
+) {
     let mut padding: uint32_t = 0;
     let mut start: uint32_t = 0;
     let mut tmp: uint32_t = 0;
@@ -1103,7 +1177,8 @@ pub unsafe extern "C" fn dumpRawMessageJS(
     }
     fprintf(
         fp,
-        b"frames.push({\"descr\": \"%s\", \"mag\": [\0" as *const u8 as *const libc::c_char,
+        b"frames.push({\"descr\": \"%s\", \"mag\": [\0" as *const u8
+            as *const libc::c_char,
         descr,
     );
     j = start;
@@ -1182,10 +1257,7 @@ pub unsafe extern "C" fn dumpRawMessage(
         dumpRawMessageJS(descr, msg, m, offset, fixable);
         return;
     }
-    printf(
-        b"\n--- %s\n    \0" as *const u8 as *const libc::c_char,
-        descr,
-    );
+    printf(b"\n--- %s\n    \0" as *const u8 as *const libc::c_char, descr);
     j = 0 as libc::c_int;
     while j < 14 as libc::c_int {
         printf(
@@ -1351,17 +1423,17 @@ pub unsafe extern "C" fn modesChecksum(
 }
 pub unsafe extern "C" fn modesMessageLenByType(mut type_0: libc::c_int) -> libc::c_int {
     if type_0 == 16 as libc::c_int {
-        return 112 as libc::c_int;
+        return 112 as libc::c_int
     } else if type_0 == 17 as libc::c_int {
-        return 112 as libc::c_int;
+        return 112 as libc::c_int
     } else if type_0 == 19 as libc::c_int {
-        return 112 as libc::c_int;
+        return 112 as libc::c_int
     } else if type_0 == 20 as libc::c_int {
-        return 112 as libc::c_int;
+        return 112 as libc::c_int
     } else if type_0 == 21 as libc::c_int {
-        return 112 as libc::c_int;
+        return 112 as libc::c_int
     } else {
-        return 56 as libc::c_int;
+        return 56 as libc::c_int
     };
 }
 pub unsafe extern "C" fn fixSingleBitErrors(
@@ -1383,7 +1455,8 @@ pub unsafe extern "C" fn fixSingleBitErrors(
             msg as *const libc::c_void,
             (bits / 8 as libc::c_int) as size_t,
         );
-        aux[byte as usize] = (aux[byte as usize] as libc::c_int ^ bitmask) as libc::c_uchar;
+        aux[byte
+            as usize] = (aux[byte as usize] as libc::c_int ^ bitmask) as libc::c_uchar;
         crc1 = (aux[(bits / 8 as libc::c_int - 3 as libc::c_int) as usize] as uint32_t)
             << 16 as libc::c_int
             | (aux[(bits / 8 as libc::c_int - 2 as libc::c_int) as usize] as uint32_t)
@@ -1428,12 +1501,16 @@ pub unsafe extern "C" fn fixTwoBitsErrors(
                 msg as *const libc::c_void,
                 (bits / 8 as libc::c_int) as size_t,
             );
-            aux[byte1 as usize] = (aux[byte1 as usize] as libc::c_int ^ bitmask1) as libc::c_uchar;
-            aux[byte2 as usize] = (aux[byte2 as usize] as libc::c_int ^ bitmask2) as libc::c_uchar;
-            crc1 = (aux[(bits / 8 as libc::c_int - 3 as libc::c_int) as usize] as uint32_t)
-                << 16 as libc::c_int
-                | (aux[(bits / 8 as libc::c_int - 2 as libc::c_int) as usize] as uint32_t)
-                    << 8 as libc::c_int
+            aux[byte1
+                as usize] = (aux[byte1 as usize] as libc::c_int ^ bitmask1)
+                as libc::c_uchar;
+            aux[byte2
+                as usize] = (aux[byte2 as usize] as libc::c_int ^ bitmask2)
+                as libc::c_uchar;
+            crc1 = (aux[(bits / 8 as libc::c_int - 3 as libc::c_int) as usize]
+                as uint32_t) << 16 as libc::c_int
+                | (aux[(bits / 8 as libc::c_int - 2 as libc::c_int) as usize]
+                    as uint32_t) << 8 as libc::c_int
                 | aux[(bits / 8 as libc::c_int - 1 as libc::c_int) as usize] as uint32_t;
             crc2 = modesChecksum(aux.as_mut_ptr(), bits);
             if crc1 == crc2 {
@@ -1464,10 +1541,10 @@ pub unsafe extern "C" fn addRecentlySeenICAOAddr(mut addr: uint32_t) {
     h = tmp;
     *(Modes.icao_cache).offset(h.wrapping_mul(2 as libc::c_uint) as isize) = addr;
     tmp___0 = time(0 as *mut libc::c_void as *mut time_t);
-    *(Modes.icao_cache).offset(
-        h.wrapping_mul(2 as libc::c_uint)
-            .wrapping_add(1 as libc::c_uint) as isize,
-    ) = tmp___0 as uint32_t;
+    *(Modes.icao_cache)
+        .offset(
+            h.wrapping_mul(2 as libc::c_uint).wrapping_add(1 as libc::c_uint) as isize,
+        ) = tmp___0 as uint32_t;
 }
 pub unsafe extern "C" fn ICAOAddressWasRecentlySeen(mut addr: uint32_t) -> libc::c_int {
     let mut h: uint32_t = 0;
@@ -1479,10 +1556,10 @@ pub unsafe extern "C" fn ICAOAddressWasRecentlySeen(mut addr: uint32_t) -> libc:
     tmp = ICAOCacheHashAddress(addr);
     h = tmp;
     a = *(Modes.icao_cache).offset(h.wrapping_mul(2 as libc::c_uint) as isize);
-    t = *(Modes.icao_cache).offset(
-        h.wrapping_mul(2 as libc::c_uint)
-            .wrapping_add(1 as libc::c_uint) as isize,
-    );
+    t = *(Modes.icao_cache)
+        .offset(
+            h.wrapping_mul(2 as libc::c_uint).wrapping_add(1 as libc::c_uint) as isize,
+        );
     if a != 0 {
         if a == addr {
             tmp___0 = time(0 as *mut libc::c_void as *mut time_t);
@@ -1539,20 +1616,20 @@ pub unsafe extern "C" fn bruteForceAP(
                 (msgbits / 8 as libc::c_int) as size_t,
             );
             crc = modesChecksum(aux.as_mut_ptr(), msgbits);
-            aux[lastbyte as usize] = (aux[lastbyte as usize] as libc::c_uint
+            aux[lastbyte
+                as usize] = (aux[lastbyte as usize] as libc::c_uint
                 ^ crc & 255 as libc::c_uint) as libc::c_uchar;
-            aux[(lastbyte - 1 as libc::c_int) as usize] =
-                (aux[(lastbyte - 1 as libc::c_int) as usize] as libc::c_uint
-                    ^ crc >> 8 as libc::c_int & 255 as libc::c_uint)
-                    as libc::c_uchar;
-            aux[(lastbyte - 2 as libc::c_int) as usize] =
-                (aux[(lastbyte - 2 as libc::c_int) as usize] as libc::c_uint
-                    ^ crc >> 16 as libc::c_int & 255 as libc::c_uint)
-                    as libc::c_uchar;
+            aux[(lastbyte - 1 as libc::c_int)
+                as usize] = (aux[(lastbyte - 1 as libc::c_int) as usize] as libc::c_uint
+                ^ crc >> 8 as libc::c_int & 255 as libc::c_uint) as libc::c_uchar;
+            aux[(lastbyte - 2 as libc::c_int)
+                as usize] = (aux[(lastbyte - 2 as libc::c_int) as usize] as libc::c_uint
+                ^ crc >> 16 as libc::c_int & 255 as libc::c_uint) as libc::c_uchar;
             addr = (aux[lastbyte as usize] as libc::c_int
-                | (aux[(lastbyte - 1 as libc::c_int) as usize] as libc::c_int) << 8 as libc::c_int
-                | (aux[(lastbyte - 2 as libc::c_int) as usize] as libc::c_int) << 16 as libc::c_int)
-                as uint32_t;
+                | (aux[(lastbyte - 1 as libc::c_int) as usize] as libc::c_int)
+                    << 8 as libc::c_int
+                | (aux[(lastbyte - 2 as libc::c_int) as usize] as libc::c_int)
+                    << 16 as libc::c_int) as uint32_t;
             tmp = ICAOAddressWasRecentlySeen(addr);
             if tmp != 0 {
                 (*mm).aa1 = aux[(lastbyte - 2 as libc::c_int) as usize] as libc::c_int;
@@ -1579,13 +1656,14 @@ pub unsafe extern "C" fn decodeAC13Field(
     if m_bit == 0 {
         *unit = 0 as libc::c_int;
         if q_bit != 0 {
-            n = (*msg.offset(2 as libc::c_int as isize) as libc::c_int & 31 as libc::c_int)
-                << 6 as libc::c_int
-                | (*msg.offset(3 as libc::c_int as isize) as libc::c_int & 128 as libc::c_int)
-                    >> 2 as libc::c_int
-                | (*msg.offset(3 as libc::c_int as isize) as libc::c_int & 32 as libc::c_int)
-                    >> 1 as libc::c_int
-                | *msg.offset(3 as libc::c_int as isize) as libc::c_int & 15 as libc::c_int;
+            n = (*msg.offset(2 as libc::c_int as isize) as libc::c_int
+                & 31 as libc::c_int) << 6 as libc::c_int
+                | (*msg.offset(3 as libc::c_int as isize) as libc::c_int
+                    & 128 as libc::c_int) >> 2 as libc::c_int
+                | (*msg.offset(3 as libc::c_int as isize) as libc::c_int
+                    & 32 as libc::c_int) >> 1 as libc::c_int
+                | *msg.offset(3 as libc::c_int as isize) as libc::c_int
+                    & 15 as libc::c_int;
             return n * 25 as libc::c_int - 1000 as libc::c_int;
         }
     } else {
@@ -1604,20 +1682,23 @@ pub unsafe extern "C" fn decodeAC12Field(
         *unit = 0 as libc::c_int;
         n = (*msg.offset(5 as libc::c_int as isize) as libc::c_int >> 1 as libc::c_int)
             << 4 as libc::c_int
-            | (*msg.offset(6 as libc::c_int as isize) as libc::c_int & 240 as libc::c_int)
-                >> 4 as libc::c_int;
+            | (*msg.offset(6 as libc::c_int as isize) as libc::c_int
+                & 240 as libc::c_int) >> 4 as libc::c_int;
         return n * 25 as libc::c_int - 1000 as libc::c_int;
     } else {
-        return 0 as libc::c_int;
+        return 0 as libc::c_int
     };
 }
 pub static mut ca_str: [*mut libc::c_char; 8] = [
-    b"Level 1 (Survillance Only)\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"Level 2 (DF0,4,5,11)\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"Level 3 (DF0,4,5,11,20,21)\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"Level 4 (DF0,4,5,11,20,21,24)\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-    b"Level 2+3+4 (DF0,4,5,11,20,21,24,code7 - is on ground)\0" as *const u8 as *const libc::c_char
+    b"Level 1 (Survillance Only)\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
+    b"Level 2 (DF0,4,5,11)\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+    b"Level 3 (DF0,4,5,11,20,21)\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
+    b"Level 4 (DF0,4,5,11,20,21,24)\0" as *const u8 as *const libc::c_char
+        as *mut libc::c_char,
+    b"Level 2+3+4 (DF0,4,5,11,20,21,24,code7 - is on ground)\0" as *const u8
+        as *const libc::c_char as *mut libc::c_char,
     b"Level 2+3+4 (DF0,4,5,11,20,21,24,code7 - is on airborne)\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
     b"Level 2+3+4 (DF0,4,5,11,20,21,24,code7)\0" as *const u8 as *const libc::c_char
@@ -1631,9 +1712,10 @@ pub static mut fs_str: [*mut libc::c_char; 8] = [
     b"ALERT,  On the ground\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
     b"ALERT & Special Position Identification. Airborne or Ground\0" as *const u8
         as *const libc::c_char as *mut libc::c_char,
-    b"Special Position Identification. Airborne or Ground\0" as *const u8 as *const libc::c_char
+    b"Special Position Identification. Airborne or Ground\0" as *const u8
+        as *const libc::c_char as *mut libc::c_char,
+    b"Value 6 is not assigned\0" as *const u8 as *const libc::c_char
         as *mut libc::c_char,
-    b"Value 6 is not assigned\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
     b"Value 7 is not assigned\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
 ];
 pub static mut me_str: [*mut libc::c_char; 0] = [];
@@ -1646,8 +1728,8 @@ pub unsafe extern "C" fn getMEDescription(
     mename = b"Unknown\0" as *const u8 as *const libc::c_char as *mut libc::c_char;
     if metype >= 1 as libc::c_int {
         if metype <= 4 as libc::c_int {
-            mename = b"Aircraft Identification and Category\0" as *const u8 as *const libc::c_char
-                as *mut libc::c_char;
+            mename = b"Aircraft Identification and Category\0" as *const u8
+                as *const libc::c_char as *mut libc::c_char;
             current_block = 9437013279121998969;
         } else {
             current_block = 3274268373848840126;
@@ -1674,8 +1756,7 @@ pub unsafe extern "C" fn getMEDescription(
                     if metype >= 9 as libc::c_int {
                         if metype <= 18 as libc::c_int {
                             mename = b"Airborne Position (Baro Altitude)\0" as *const u8
-                                as *const libc::c_char
-                                as *mut libc::c_char;
+                                as *const libc::c_char as *mut libc::c_char;
                             current_block = 9437013279121998969;
                         } else {
                             current_block = 13739842543123985354;
@@ -1690,8 +1771,7 @@ pub unsafe extern "C" fn getMEDescription(
                                 if mesub >= 1 as libc::c_int {
                                     if mesub <= 4 as libc::c_int {
                                         mename = b"Airborne Velocity\0" as *const u8
-                                            as *const libc::c_char
-                                            as *mut libc::c_char;
+                                            as *const libc::c_char as *mut libc::c_char;
                                         current_block = 9437013279121998969;
                                     } else {
                                         current_block = 4623188485972666653;
@@ -1708,10 +1788,8 @@ pub unsafe extern "C" fn getMEDescription(
                                     let mut current_block_35: u64;
                                     if metype >= 20 as libc::c_int {
                                         if metype <= 22 as libc::c_int {
-                                            mename = b"Airborne Position (GNSS Height)\0"
-                                                as *const u8
-                                                as *const libc::c_char
-                                                as *mut libc::c_char;
+                                            mename = b"Airborne Position (GNSS Height)\0" as *const u8
+                                                as *const libc::c_char as *mut libc::c_char;
                                             current_block_35 = 9512719473022792396;
                                         } else {
                                             current_block_35 = 6555870807602492068;
@@ -1725,8 +1803,7 @@ pub unsafe extern "C" fn getMEDescription(
                                             if metype == 23 as libc::c_int {
                                                 if mesub == 0 as libc::c_int {
                                                     mename = b"Test Message\0" as *const u8
-                                                        as *const libc::c_char
-                                                        as *mut libc::c_char;
+                                                        as *const libc::c_char as *mut libc::c_char;
                                                     current_block_34 = 168769493162332264;
                                                 } else {
                                                     current_block_34 = 15117816922977958695;
@@ -1739,10 +1816,8 @@ pub unsafe extern "C" fn getMEDescription(
                                                     let mut current_block_33: u64;
                                                     if metype == 24 as libc::c_int {
                                                         if mesub == 1 as libc::c_int {
-                                                            mename = b"Surface System Status\0"
-                                                                as *const u8
-                                                                as *const libc::c_char
-                                                                as *mut libc::c_char;
+                                                            mename = b"Surface System Status\0" as *const u8
+                                                                as *const libc::c_char as *mut libc::c_char;
                                                             current_block_33 = 5159818223158340697;
                                                         } else {
                                                             current_block_33 = 15227540185581375090;
@@ -1757,40 +1832,31 @@ pub unsafe extern "C" fn getMEDescription(
                                                                 if mesub == 1 as libc::c_int {
                                                                     mename = b"Extended Squitter Aircraft Status (Emergency)\0"
                                                                         as *const u8 as *const libc::c_char as *mut libc::c_char;
-                                                                    current_block_32 =
-                                                                        13325891313334703151;
+                                                                    current_block_32 = 13325891313334703151;
                                                                 } else {
-                                                                    current_block_32 =
-                                                                        11875477312844758197;
+                                                                    current_block_32 = 11875477312844758197;
                                                                 }
                                                             } else {
-                                                                current_block_32 =
-                                                                    11875477312844758197;
+                                                                current_block_32 = 11875477312844758197;
                                                             }
                                                             match current_block_32 {
                                                                 11875477312844758197 => {
                                                                     let mut current_block_31: u64;
                                                                     if metype == 28 as libc::c_int {
-                                                                        if mesub == 2 as libc::c_int
-                                                                        {
+                                                                        if mesub == 2 as libc::c_int {
                                                                             mename = b"Extended Squitter Aircraft Status (1090ES TCAS RA)\0"
                                                                                 as *const u8 as *const libc::c_char as *mut libc::c_char;
-                                                                            current_block_31 =
-                                                                                7343950298149844727;
+                                                                            current_block_31 = 7343950298149844727;
                                                                         } else {
-                                                                            current_block_31 =
-                                                                                2981975133808773618;
+                                                                            current_block_31 = 2981975133808773618;
                                                                         }
                                                                     } else {
-                                                                        current_block_31 =
-                                                                            2981975133808773618;
+                                                                        current_block_31 = 2981975133808773618;
                                                                     }
                                                                     match current_block_31 {
                                                                         2981975133808773618 => {
                                                                             let mut current_block_30: u64;
-                                                                            if metype
-                                                                                == 29 as libc::c_int
-                                                                            {
+                                                                            if metype == 29 as libc::c_int {
                                                                                 if mesub == 0 as libc::c_int {
                                                                                     mename = b"Target State and Status Message\0" as *const u8
                                                                                         as *const libc::c_char as *mut libc::c_char;
@@ -1863,22 +1929,26 @@ pub unsafe extern "C" fn decodeModesMessage(
     let mut ewv: libc::c_int = 0;
     let mut nsv: libc::c_int = 0;
     let mut heading: libc::c_double = 0.;
-    ais_charset = b"?ABCDEFGHIJKLMNOPQRSTUVWXYZ????? ???????????????0123456789??????\0" as *const u8
-        as *const libc::c_char as *mut libc::c_char;
+    ais_charset = b"?ABCDEFGHIJKLMNOPQRSTUVWXYZ????? ???????????????0123456789??????\0"
+        as *const u8 as *const libc::c_char as *mut libc::c_char;
     memcpy(
         ((*mm).msg).as_mut_ptr() as *mut libc::c_void,
         msg as *const libc::c_void,
         14 as libc::c_int as size_t,
     );
     msg = ((*mm).msg).as_mut_ptr();
-    (*mm).msgtype = *msg.offset(0 as libc::c_int as isize) as libc::c_int >> 3 as libc::c_int;
+    (*mm)
+        .msgtype = *msg.offset(0 as libc::c_int as isize) as libc::c_int
+        >> 3 as libc::c_int;
     (*mm).msgbits = modesMessageLenByType((*mm).msgtype);
-    (*mm).crc = (*msg.offset(((*mm).msgbits / 8 as libc::c_int - 3 as libc::c_int) as isize)
-        as uint32_t)
-        << 16 as libc::c_int
-        | (*msg.offset(((*mm).msgbits / 8 as libc::c_int - 2 as libc::c_int) as isize) as uint32_t)
-            << 8 as libc::c_int
-        | *msg.offset(((*mm).msgbits / 8 as libc::c_int - 1 as libc::c_int) as isize) as uint32_t;
+    (*mm)
+        .crc = (*msg
+        .offset(((*mm).msgbits / 8 as libc::c_int - 3 as libc::c_int) as isize)
+        as uint32_t) << 16 as libc::c_int
+        | (*msg.offset(((*mm).msgbits / 8 as libc::c_int - 2 as libc::c_int) as isize)
+            as uint32_t) << 8 as libc::c_int
+        | *msg.offset(((*mm).msgbits / 8 as libc::c_int - 1 as libc::c_int) as isize)
+            as uint32_t;
     crc2 = modesChecksum(msg, (*mm).msgbits);
     (*mm).errorbit = -(1 as libc::c_int);
     (*mm).crcok = ((*mm).crc == crc2) as libc::c_int;
@@ -1918,12 +1988,18 @@ pub unsafe extern "C" fn decodeModesMessage(
     (*mm).aa1 = *msg.offset(1 as libc::c_int as isize) as libc::c_int;
     (*mm).aa2 = *msg.offset(2 as libc::c_int as isize) as libc::c_int;
     (*mm).aa3 = *msg.offset(3 as libc::c_int as isize) as libc::c_int;
-    (*mm).metype = *msg.offset(4 as libc::c_int as isize) as libc::c_int >> 3 as libc::c_int;
-    (*mm).mesub = *msg.offset(4 as libc::c_int as isize) as libc::c_int & 7 as libc::c_int;
+    (*mm)
+        .metype = *msg.offset(4 as libc::c_int as isize) as libc::c_int
+        >> 3 as libc::c_int;
+    (*mm)
+        .mesub = *msg.offset(4 as libc::c_int as isize) as libc::c_int
+        & 7 as libc::c_int;
     (*mm).fs = *msg.offset(0 as libc::c_int as isize) as libc::c_int & 7 as libc::c_int;
-    (*mm).dr = *msg.offset(1 as libc::c_int as isize) as libc::c_int >> 3 as libc::c_int
+    (*mm)
+        .dr = *msg.offset(1 as libc::c_int as isize) as libc::c_int >> 3 as libc::c_int
         & 31 as libc::c_int;
-    (*mm).um = (*msg.offset(1 as libc::c_int as isize) as libc::c_int & 7 as libc::c_int)
+    (*mm)
+        .um = (*msg.offset(1 as libc::c_int as isize) as libc::c_int & 7 as libc::c_int)
         << 3 as libc::c_int
         | *msg.offset(2 as libc::c_int as isize) as libc::c_int >> 5 as libc::c_int;
     a = (*msg.offset(3 as libc::c_int as isize) as libc::c_int & 128 as libc::c_int)
@@ -1949,7 +2025,9 @@ pub unsafe extern "C" fn decodeModesMessage(
             >> 1 as libc::c_int
         | (*msg.offset(3 as libc::c_int as isize) as libc::c_int & 16 as libc::c_int)
             >> 4 as libc::c_int;
-    (*mm).identity = a * 1000 as libc::c_int + b * 100 as libc::c_int + c * 10 as libc::c_int + d;
+    (*mm)
+        .identity = a * 1000 as libc::c_int + b * 100 as libc::c_int
+        + c * 10 as libc::c_int + d;
     let mut current_block_56: u64;
     if (*mm).msgtype != 11 as libc::c_int {
         if (*mm).msgtype != 17 as libc::c_int {
@@ -1971,8 +2049,7 @@ pub unsafe extern "C" fn decodeModesMessage(
             if (*mm).crcok != 0 {
                 if (*mm).errorbit == -(1 as libc::c_int) {
                     addr = ((*mm).aa1 << 16 as libc::c_int
-                        | (*mm).aa2 << 8 as libc::c_int
-                        | (*mm).aa3) as uint32_t;
+                        | (*mm).aa2 << 8 as libc::c_int | (*mm).aa3) as uint32_t;
                     addRecentlySeenICAOAddr(addr);
                 }
             }
@@ -1993,46 +2070,70 @@ pub unsafe extern "C" fn decodeModesMessage(
         if (*mm).metype >= 1 as libc::c_int {
             if (*mm).metype <= 4 as libc::c_int {
                 (*mm).aircraft_type = (*mm).metype - 1 as libc::c_int;
-                (*mm).flight[0 as libc::c_int as usize] = *ais_charset.offset(
-                    (*msg.offset(5 as libc::c_int as isize) as libc::c_int >> 2 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[1 as libc::c_int as usize] = *ais_charset.offset(
-                    ((*msg.offset(5 as libc::c_int as isize) as libc::c_int & 3 as libc::c_int)
-                        << 4 as libc::c_int
-                        | *msg.offset(6 as libc::c_int as isize) as libc::c_int >> 4 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[2 as libc::c_int as usize] = *ais_charset.offset(
-                    ((*msg.offset(6 as libc::c_int as isize) as libc::c_int & 15 as libc::c_int)
-                        << 2 as libc::c_int
-                        | *msg.offset(7 as libc::c_int as isize) as libc::c_int >> 6 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[3 as libc::c_int as usize] = *ais_charset.offset(
-                    (*msg.offset(7 as libc::c_int as isize) as libc::c_int & 63 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[4 as libc::c_int as usize] = *ais_charset.offset(
-                    (*msg.offset(8 as libc::c_int as isize) as libc::c_int >> 2 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[5 as libc::c_int as usize] = *ais_charset.offset(
-                    ((*msg.offset(8 as libc::c_int as isize) as libc::c_int & 3 as libc::c_int)
-                        << 4 as libc::c_int
-                        | *msg.offset(9 as libc::c_int as isize) as libc::c_int >> 4 as libc::c_int)
-                        as isize,
-                );
-                (*mm).flight[6 as libc::c_int as usize] = *ais_charset.offset(
-                    ((*msg.offset(9 as libc::c_int as isize) as libc::c_int & 15 as libc::c_int)
-                        << 2 as libc::c_int
-                        | *msg.offset(10 as libc::c_int as isize) as libc::c_int
-                            >> 6 as libc::c_int) as isize,
-                );
-                (*mm).flight[7 as libc::c_int as usize] = *ais_charset.offset(
-                    (*msg.offset(10 as libc::c_int as isize) as libc::c_int & 63 as libc::c_int)
-                        as isize,
-                );
+                (*mm)
+                    .flight[0 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        (*msg.offset(5 as libc::c_int as isize) as libc::c_int
+                            >> 2 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[1 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        ((*msg.offset(5 as libc::c_int as isize) as libc::c_int
+                            & 3 as libc::c_int) << 4 as libc::c_int
+                            | *msg.offset(6 as libc::c_int as isize) as libc::c_int
+                                >> 4 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[2 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        ((*msg.offset(6 as libc::c_int as isize) as libc::c_int
+                            & 15 as libc::c_int) << 2 as libc::c_int
+                            | *msg.offset(7 as libc::c_int as isize) as libc::c_int
+                                >> 6 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[3 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        (*msg.offset(7 as libc::c_int as isize) as libc::c_int
+                            & 63 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[4 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        (*msg.offset(8 as libc::c_int as isize) as libc::c_int
+                            >> 2 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[5 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        ((*msg.offset(8 as libc::c_int as isize) as libc::c_int
+                            & 3 as libc::c_int) << 4 as libc::c_int
+                            | *msg.offset(9 as libc::c_int as isize) as libc::c_int
+                                >> 4 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[6 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        ((*msg.offset(9 as libc::c_int as isize) as libc::c_int
+                            & 15 as libc::c_int) << 2 as libc::c_int
+                            | *msg.offset(10 as libc::c_int as isize) as libc::c_int
+                                >> 6 as libc::c_int) as isize,
+                    );
+                (*mm)
+                    .flight[7 as libc::c_int
+                    as usize] = *ais_charset
+                    .offset(
+                        (*msg.offset(10 as libc::c_int as isize) as libc::c_int
+                            & 63 as libc::c_int) as isize,
+                    );
                 (*mm).flight[8 as libc::c_int as usize] = '\u{0}' as i32 as libc::c_char;
                 current_block_128 = 18104233774012731761;
             } else {
@@ -2046,23 +2147,23 @@ pub unsafe extern "C" fn decodeModesMessage(
                 let mut current_block_127: u64;
                 if (*mm).metype >= 9 as libc::c_int {
                     if (*mm).metype <= 18 as libc::c_int {
-                        (*mm).fflag = *msg.offset(6 as libc::c_int as isize) as libc::c_int
-                            & (1 as libc::c_int) << 2 as libc::c_int;
-                        (*mm).tflag = *msg.offset(6 as libc::c_int as isize) as libc::c_int
-                            & (1 as libc::c_int) << 3 as libc::c_int;
+                        (*mm)
+                            .fflag = *msg.offset(6 as libc::c_int as isize)
+                            as libc::c_int & (1 as libc::c_int) << 2 as libc::c_int;
+                        (*mm)
+                            .tflag = *msg.offset(6 as libc::c_int as isize)
+                            as libc::c_int & (1 as libc::c_int) << 3 as libc::c_int;
                         (*mm).altitude = decodeAC12Field(msg, &mut (*mm).unit);
-                        (*mm).raw_latitude = (*msg.offset(6 as libc::c_int as isize)
-                            as libc::c_int
-                            & 3 as libc::c_int)
-                            << 15 as libc::c_int
+                        (*mm)
+                            .raw_latitude = (*msg.offset(6 as libc::c_int as isize)
+                            as libc::c_int & 3 as libc::c_int) << 15 as libc::c_int
                             | (*msg.offset(7 as libc::c_int as isize) as libc::c_int)
                                 << 7 as libc::c_int
                             | *msg.offset(8 as libc::c_int as isize) as libc::c_int
                                 >> 1 as libc::c_int;
-                        (*mm).raw_longitude = (*msg.offset(8 as libc::c_int as isize)
-                            as libc::c_int
-                            & 1 as libc::c_int)
-                            << 16 as libc::c_int
+                        (*mm)
+                            .raw_longitude = (*msg.offset(8 as libc::c_int as isize)
+                            as libc::c_int & 1 as libc::c_int) << 16 as libc::c_int
                             | (*msg.offset(9 as libc::c_int as isize) as libc::c_int)
                                 << 8 as libc::c_int
                             | *msg.offset(10 as libc::c_int as isize) as libc::c_int;
@@ -2085,89 +2186,59 @@ pub unsafe extern "C" fn decodeModesMessage(
                                         current_block_120 = 9021772824828667159;
                                     } else {
                                         if (*mm).mesub == 3 as libc::c_int {
-                                            (*mm).heading_is_valid = *msg
-                                                .offset(5 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & (1 as libc::c_int) << 2 as libc::c_int;
-                                            (*mm).heading = (360.0f64
-                                                / 128 as libc::c_int as libc::c_double
-                                                * ((*msg.offset(5 as libc::c_int as isize)
-                                                    as libc::c_int
-                                                    & 3 as libc::c_int)
-                                                    << 5 as libc::c_int
-                                                    | *msg.offset(6 as libc::c_int as isize)
-                                                        as libc::c_int
-                                                        >> 3 as libc::c_int)
-                                                    as libc::c_double)
-                                                as libc::c_int;
+                                            (*mm)
+                                                .heading_is_valid = *msg.offset(5 as libc::c_int as isize)
+                                                as libc::c_int & (1 as libc::c_int) << 2 as libc::c_int;
+                                            (*mm)
+                                                .heading = (360.0f64 / 128 as libc::c_int as libc::c_double
+                                                * ((*msg.offset(5 as libc::c_int as isize) as libc::c_int
+                                                    & 3 as libc::c_int) << 5 as libc::c_int
+                                                    | *msg.offset(6 as libc::c_int as isize) as libc::c_int
+                                                        >> 3 as libc::c_int) as libc::c_double) as libc::c_int;
                                         } else if (*mm).mesub == 4 as libc::c_int {
-                                            (*mm).heading_is_valid = *msg
-                                                .offset(5 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & (1 as libc::c_int) << 2 as libc::c_int;
-                                            (*mm).heading = (360.0f64
-                                                / 128 as libc::c_int as libc::c_double
-                                                * ((*msg.offset(5 as libc::c_int as isize)
-                                                    as libc::c_int
-                                                    & 3 as libc::c_int)
-                                                    << 5 as libc::c_int
-                                                    | *msg.offset(6 as libc::c_int as isize)
-                                                        as libc::c_int
-                                                        >> 3 as libc::c_int)
-                                                    as libc::c_double)
-                                                as libc::c_int;
+                                            (*mm)
+                                                .heading_is_valid = *msg.offset(5 as libc::c_int as isize)
+                                                as libc::c_int & (1 as libc::c_int) << 2 as libc::c_int;
+                                            (*mm)
+                                                .heading = (360.0f64 / 128 as libc::c_int as libc::c_double
+                                                * ((*msg.offset(5 as libc::c_int as isize) as libc::c_int
+                                                    & 3 as libc::c_int) << 5 as libc::c_int
+                                                    | *msg.offset(6 as libc::c_int as isize) as libc::c_int
+                                                        >> 3 as libc::c_int) as libc::c_double) as libc::c_int;
                                         }
                                         current_block_120 = 7639320476250304355;
                                     }
                                     match current_block_120 {
                                         9021772824828667159 => {
-                                            (*mm).ew_dir = (*msg.offset(5 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 4 as libc::c_int)
-                                                >> 2 as libc::c_int;
-                                            (*mm).ew_velocity = (*msg
-                                                .offset(5 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 3 as libc::c_int)
-                                                << 8 as libc::c_int
-                                                | *msg.offset(6 as libc::c_int as isize)
-                                                    as libc::c_int;
-                                            (*mm).ns_dir = (*msg.offset(7 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 128 as libc::c_int)
-                                                >> 7 as libc::c_int;
-                                            (*mm).ns_velocity = (*msg
-                                                .offset(7 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 127 as libc::c_int)
-                                                << 3 as libc::c_int
-                                                | (*msg.offset(8 as libc::c_int as isize)
-                                                    as libc::c_int
-                                                    & 224 as libc::c_int)
-                                                    >> 5 as libc::c_int;
-                                            (*mm).vert_rate_source = (*msg
-                                                .offset(8 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 16 as libc::c_int)
-                                                >> 4 as libc::c_int;
-                                            (*mm).vert_rate_sign = (*msg
-                                                .offset(8 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 8 as libc::c_int)
-                                                >> 3 as libc::c_int;
-                                            (*mm).vert_rate = (*msg
-                                                .offset(8 as libc::c_int as isize)
-                                                as libc::c_int
-                                                & 7 as libc::c_int)
-                                                << 6 as libc::c_int
-                                                | (*msg.offset(9 as libc::c_int as isize)
-                                                    as libc::c_int
-                                                    & 252 as libc::c_int)
-                                                    >> 2 as libc::c_int;
+                                            (*mm)
+                                                .ew_dir = (*msg.offset(5 as libc::c_int as isize)
+                                                as libc::c_int & 4 as libc::c_int) >> 2 as libc::c_int;
+                                            (*mm)
+                                                .ew_velocity = (*msg.offset(5 as libc::c_int as isize)
+                                                as libc::c_int & 3 as libc::c_int) << 8 as libc::c_int
+                                                | *msg.offset(6 as libc::c_int as isize) as libc::c_int;
+                                            (*mm)
+                                                .ns_dir = (*msg.offset(7 as libc::c_int as isize)
+                                                as libc::c_int & 128 as libc::c_int) >> 7 as libc::c_int;
+                                            (*mm)
+                                                .ns_velocity = (*msg.offset(7 as libc::c_int as isize)
+                                                as libc::c_int & 127 as libc::c_int) << 3 as libc::c_int
+                                                | (*msg.offset(8 as libc::c_int as isize) as libc::c_int
+                                                    & 224 as libc::c_int) >> 5 as libc::c_int;
+                                            (*mm)
+                                                .vert_rate_source = (*msg.offset(8 as libc::c_int as isize)
+                                                as libc::c_int & 16 as libc::c_int) >> 4 as libc::c_int;
+                                            (*mm)
+                                                .vert_rate_sign = (*msg.offset(8 as libc::c_int as isize)
+                                                as libc::c_int & 8 as libc::c_int) >> 3 as libc::c_int;
+                                            (*mm)
+                                                .vert_rate = (*msg.offset(8 as libc::c_int as isize)
+                                                as libc::c_int & 7 as libc::c_int) << 6 as libc::c_int
+                                                | (*msg.offset(9 as libc::c_int as isize) as libc::c_int
+                                                    & 252 as libc::c_int) >> 2 as libc::c_int;
                                             tmp___2 = sqrt(
                                                 ((*mm).ns_velocity * (*mm).ns_velocity
-                                                    + (*mm).ew_velocity * (*mm).ew_velocity)
-                                                    as libc::c_double,
+                                                    + (*mm).ew_velocity * (*mm).ew_velocity) as libc::c_double,
                                             );
                                             (*mm).velocity = tmp___2 as libc::c_int;
                                             if (*mm).velocity != 0 {
@@ -2183,11 +2254,10 @@ pub unsafe extern "C" fn decodeModesMessage(
                                                     ewv as libc::c_double,
                                                     nsv as libc::c_double,
                                                 );
-                                                (*mm).heading = (heading
-                                                    * 360 as libc::c_int as libc::c_double
+                                                (*mm)
+                                                    .heading = (heading * 360 as libc::c_int as libc::c_double
                                                     / (3.14159265358979323846f64
-                                                        * 2 as libc::c_int as libc::c_double))
-                                                    as libc::c_int;
+                                                        * 2 as libc::c_int as libc::c_double)) as libc::c_int;
                                                 if (*mm).heading < 0 as libc::c_int {
                                                     (*mm).heading += 360 as libc::c_int;
                                                 }
@@ -2260,7 +2330,9 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
         );
     }
     if (*mm).msgtype == 0 as libc::c_int {
-        printf(b"DF 0: Short Air-Air Surveillance.\n\0" as *const u8 as *const libc::c_char);
+        printf(
+            b"DF 0: Short Air-Air Surveillance.\n\0" as *const u8 as *const libc::c_char,
+        );
         if (*mm).unit == 1 as libc::c_int {
             tmp___0 = b"meters\0" as *const u8 as *const libc::c_char;
         } else {
@@ -2291,64 +2363,76 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                 current_block_129 = 13383156954553174665;
             } else {
                 if (*mm).msgtype == 11 as libc::c_int {
-                    printf(b"DF 11: All Call Reply.\n\0" as *const u8 as *const libc::c_char);
+                    printf(
+                        b"DF 11: All Call Reply.\n\0" as *const u8 as *const libc::c_char,
+                    );
                     printf(
                         b"  Capability  : %s\n\0" as *const u8 as *const libc::c_char,
                         ca_str[(*mm).ca as usize],
                     );
                     printf(
-                        b"  ICAO Address: %02x%02x%02x\n\0" as *const u8 as *const libc::c_char,
+                        b"  ICAO Address: %02x%02x%02x\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).aa1,
                         (*mm).aa2,
                         (*mm).aa3,
                     );
                 } else if (*mm).msgtype == 17 as libc::c_int {
-                    printf(b"DF 17: ADS-B message.\n\0" as *const u8 as *const libc::c_char);
                     printf(
-                        b"  Capability     : %d (%s)\n\0" as *const u8 as *const libc::c_char,
+                        b"DF 17: ADS-B message.\n\0" as *const u8 as *const libc::c_char,
+                    );
+                    printf(
+                        b"  Capability     : %d (%s)\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).ca,
                         ca_str[(*mm).ca as usize],
                     );
                     printf(
-                        b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8 as *const libc::c_char,
+                        b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).aa1,
                         (*mm).aa2,
                         (*mm).aa3,
                     );
                     printf(
-                        b"  Extended Squitter  Type: %d\n\0" as *const u8 as *const libc::c_char,
+                        b"  Extended Squitter  Type: %d\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).metype,
                     );
                     printf(
-                        b"  Extended Squitter  Sub : %d\n\0" as *const u8 as *const libc::c_char,
+                        b"  Extended Squitter  Sub : %d\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).mesub,
                     );
                     tmp___4 = getMEDescription((*mm).metype, (*mm).mesub);
                     printf(
-                        b"  Extended Squitter  Name: %s\n\0" as *const u8 as *const libc::c_char,
+                        b"  Extended Squitter  Name: %s\n\0" as *const u8
+                            as *const libc::c_char,
                         tmp___4,
                     );
                     let mut current_block_122: u64;
                     if (*mm).metype >= 1 as libc::c_int {
                         if (*mm).metype <= 4 as libc::c_int {
-                            ac_type_str[0 as libc::c_int as usize] =
-                                b"Aircraft Type D\0" as *const u8 as *const libc::c_char
-                                    as *mut libc::c_char;
-                            ac_type_str[1 as libc::c_int as usize] =
-                                b"Aircraft Type C\0" as *const u8 as *const libc::c_char
-                                    as *mut libc::c_char;
-                            ac_type_str[2 as libc::c_int as usize] =
-                                b"Aircraft Type B\0" as *const u8 as *const libc::c_char
-                                    as *mut libc::c_char;
-                            ac_type_str[3 as libc::c_int as usize] =
-                                b"Aircraft Type A\0" as *const u8 as *const libc::c_char
-                                    as *mut libc::c_char;
+                            ac_type_str[0 as libc::c_int
+                                as usize] = b"Aircraft Type D\0" as *const u8
+                                as *const libc::c_char as *mut libc::c_char;
+                            ac_type_str[1 as libc::c_int
+                                as usize] = b"Aircraft Type C\0" as *const u8
+                                as *const libc::c_char as *mut libc::c_char;
+                            ac_type_str[2 as libc::c_int
+                                as usize] = b"Aircraft Type B\0" as *const u8
+                                as *const libc::c_char as *mut libc::c_char;
+                            ac_type_str[3 as libc::c_int
+                                as usize] = b"Aircraft Type A\0" as *const u8
+                                as *const libc::c_char as *mut libc::c_char;
                             printf(
-                                b"    Aircraft Type  : %s\n\0" as *const u8 as *const libc::c_char,
+                                b"    Aircraft Type  : %s\n\0" as *const u8
+                                    as *const libc::c_char,
                                 ac_type_str[(*mm).aircraft_type as usize],
                             );
                             printf(
-                                b"    Identification : %s\n\0" as *const u8 as *const libc::c_char,
+                                b"    Identification : %s\n\0" as *const u8
+                                    as *const libc::c_char,
                                 ((*mm).flight).as_mut_ptr(),
                             );
                             current_block_122 = 3575278370434307847;
@@ -2423,8 +2507,7 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                                             (*mm).heading_is_valid,
                                                         );
                                                         printf(
-                                                            b"    Heading: %d\0" as *const u8
-                                                                as *const libc::c_char,
+                                                            b"    Heading: %d\0" as *const u8 as *const libc::c_char,
                                                             (*mm).heading,
                                                         );
                                                     } else if (*mm).mesub == 4 as libc::c_int {
@@ -2434,8 +2517,7 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                                             (*mm).heading_is_valid,
                                                         );
                                                         printf(
-                                                            b"    Heading: %d\0" as *const u8
-                                                                as *const libc::c_char,
+                                                            b"    Heading: %d\0" as *const u8 as *const libc::c_char,
                                                             (*mm).heading,
                                                         );
                                                     }
@@ -2444,44 +2526,37 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                                 match current_block_108 {
                                                     17934513498363362370 => {
                                                         printf(
-                                                            b"    EW direction      : %d\n\0"
-                                                                as *const u8
+                                                            b"    EW direction      : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).ew_dir,
                                                         );
                                                         printf(
-                                                            b"    EW velocity       : %d\n\0"
-                                                                as *const u8
+                                                            b"    EW velocity       : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).ew_velocity,
                                                         );
                                                         printf(
-                                                            b"    NS direction      : %d\n\0"
-                                                                as *const u8
+                                                            b"    NS direction      : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).ns_dir,
                                                         );
                                                         printf(
-                                                            b"    NS velocity       : %d\n\0"
-                                                                as *const u8
+                                                            b"    NS velocity       : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).ns_velocity,
                                                         );
                                                         printf(
-                                                            b"    Vertical rate src : %d\n\0"
-                                                                as *const u8
+                                                            b"    Vertical rate src : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).vert_rate_source,
                                                         );
                                                         printf(
-                                                            b"    Vertical rate sign: %d\n\0"
-                                                                as *const u8
+                                                            b"    Vertical rate sign: %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).vert_rate_sign,
                                                         );
                                                         printf(
-                                                            b"    Vertical rate     : %d\n\0"
-                                                                as *const u8
+                                                            b"    Vertical rate     : %d\n\0" as *const u8
                                                                 as *const libc::c_char,
                                                             (*mm).vert_rate,
                                                         );
@@ -2490,8 +2565,7 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                                 }
                                             } else {
                                                 printf(
-                                                    b"    Unrecognized ME type: %d subtype: %d\n\0"
-                                                        as *const u8
+                                                    b"    Unrecognized ME type: %d subtype: %d\n\0" as *const u8
                                                         as *const libc::c_char,
                                                     (*mm).metype,
                                                     (*mm).mesub,
@@ -2499,8 +2573,7 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                             }
                                         } else {
                                             printf(
-                                                b"    Unrecognized ME type: %d subtype: %d\n\0"
-                                                    as *const u8
+                                                b"    Unrecognized ME type: %d subtype: %d\n\0" as *const u8
                                                     as *const libc::c_char,
                                                 (*mm).metype,
                                                 (*mm).mesub,
@@ -2508,8 +2581,7 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                                         }
                                     } else {
                                         printf(
-                                            b"    Unrecognized ME type: %d subtype: %d\n\0"
-                                                as *const u8
+                                            b"    Unrecognized ME type: %d subtype: %d\n\0" as *const u8
                                                 as *const libc::c_char,
                                             (*mm).metype,
                                             (*mm).mesub,
@@ -2538,7 +2610,8 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                         tmp___3 = b"Comm-B\0" as *const u8 as *const libc::c_char;
                     }
                     printf(
-                        b"DF %d: %s, Identity Reply.\n\0" as *const u8 as *const libc::c_char,
+                        b"DF %d: %s, Identity Reply.\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).msgtype,
                         tmp___3,
                     );
@@ -2559,7 +2632,8 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                         (*mm).identity,
                     );
                     printf(
-                        b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8 as *const libc::c_char,
+                        b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8
+                            as *const libc::c_char,
                         (*mm).aa1,
                         (*mm).aa2,
                         (*mm).aa3,
@@ -2577,7 +2651,8 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                     tmp___1 = b"Comm-B\0" as *const u8 as *const libc::c_char;
                 }
                 printf(
-                    b"DF %d: %s, Altitude Reply.\n\0" as *const u8 as *const libc::c_char,
+                    b"DF %d: %s, Altitude Reply.\n\0" as *const u8
+                        as *const libc::c_char,
                     (*mm).msgtype,
                     tmp___1,
                 );
@@ -2604,7 +2679,8 @@ pub unsafe extern "C" fn displayModesMessage(mut mm: *mut modesMessage) {
                     tmp___2,
                 );
                 printf(
-                    b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8 as *const libc::c_char,
+                    b"  ICAO Address   : %02x%02x%02x\n\0" as *const u8
+                        as *const libc::c_char,
                     (*mm).aa1,
                     (*mm).aa2,
                     (*mm).aa3,
@@ -2633,8 +2709,10 @@ pub unsafe extern "C" fn computeMagnitudeVector() {
         if q < 0 as libc::c_int {
             q = -q;
         }
-        *m.offset(j.wrapping_div(2 as libc::c_uint) as isize) =
-            *(Modes.maglut).offset((i * 129 as libc::c_int + q) as isize);
+        *m
+            .offset(
+                j.wrapping_div(2 as libc::c_uint) as isize,
+            ) = *(Modes.maglut).offset((i * 129 as libc::c_int + q) as isize);
         j = (j as libc::c_uint).wrapping_add(2 as libc::c_uint) as uint32_t as uint32_t;
     }
 }
@@ -2669,13 +2747,17 @@ pub unsafe extern "C" fn applyPhaseCorrection(mut m: *mut uint16_t) {
         if *m.offset(j as isize) as libc::c_int
             > *m.offset((j + 1 as libc::c_int) as isize) as libc::c_int
         {
-            *m.offset((j + 2 as libc::c_int) as isize) =
-                (*m.offset((j + 2 as libc::c_int) as isize) as libc::c_int * 5 as libc::c_int
-                    / 4 as libc::c_int) as uint16_t;
+            *m
+                .offset(
+                    (j + 2 as libc::c_int) as isize,
+                ) = (*m.offset((j + 2 as libc::c_int) as isize) as libc::c_int
+                * 5 as libc::c_int / 4 as libc::c_int) as uint16_t;
         } else {
-            *m.offset((j + 2 as libc::c_int) as isize) =
-                (*m.offset((j + 2 as libc::c_int) as isize) as libc::c_int * 4 as libc::c_int
-                    / 5 as libc::c_int) as uint16_t;
+            *m
+                .offset(
+                    (j + 2 as libc::c_int) as isize,
+                ) = (*m.offset((j + 2 as libc::c_int) as isize) as libc::c_int
+                * 4 as libc::c_int / 5 as libc::c_int) as uint16_t;
         }
         j += 2 as libc::c_int;
     }
@@ -2746,113 +2828,78 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                 > *m.offset(j.wrapping_add(1 as libc::c_uint) as isize) as libc::c_int
             {
                 if (*m.offset(j.wrapping_add(1 as libc::c_uint) as isize) as libc::c_int)
-                    < *m.offset(j.wrapping_add(2 as libc::c_uint) as isize) as libc::c_int
+                    < *m.offset(j.wrapping_add(2 as libc::c_uint) as isize)
+                        as libc::c_int
                 {
-                    if *m.offset(j.wrapping_add(2 as libc::c_uint) as isize) as libc::c_int
-                        > *m.offset(j.wrapping_add(3 as libc::c_uint) as isize) as libc::c_int
+                    if *m.offset(j.wrapping_add(2 as libc::c_uint) as isize)
+                        as libc::c_int
+                        > *m.offset(j.wrapping_add(3 as libc::c_uint) as isize)
+                            as libc::c_int
                     {
-                        if (*m.offset(j.wrapping_add(3 as libc::c_uint) as isize) as libc::c_int)
-                            < *m.offset(j as isize) as libc::c_int
+                        if (*m.offset(j.wrapping_add(3 as libc::c_uint) as isize)
+                            as libc::c_int) < *m.offset(j as isize) as libc::c_int
                         {
                             if (*m.offset(j.wrapping_add(4 as libc::c_uint) as isize)
-                                as libc::c_int)
-                                < *m.offset(j as isize) as libc::c_int
+                                as libc::c_int) < *m.offset(j as isize) as libc::c_int
                             {
                                 if (*m.offset(j.wrapping_add(5 as libc::c_uint) as isize)
-                                    as libc::c_int)
-                                    < *m.offset(j as isize) as libc::c_int
+                                    as libc::c_int) < *m.offset(j as isize) as libc::c_int
                                 {
                                     if (*m.offset(j.wrapping_add(6 as libc::c_uint) as isize)
-                                        as libc::c_int)
-                                        < *m.offset(j as isize) as libc::c_int
+                                        as libc::c_int) < *m.offset(j as isize) as libc::c_int
                                     {
                                         if *m.offset(j.wrapping_add(7 as libc::c_uint) as isize)
                                             as libc::c_int
                                             > *m.offset(j.wrapping_add(8 as libc::c_uint) as isize)
                                                 as libc::c_int
                                         {
-                                            if (*m
-                                                .offset(j.wrapping_add(8 as libc::c_uint) as isize)
+                                            if (*m.offset(j.wrapping_add(8 as libc::c_uint) as isize)
                                                 as libc::c_int)
-                                                < *m.offset(
-                                                    j.wrapping_add(9 as libc::c_uint) as isize
-                                                )
+                                                < *m.offset(j.wrapping_add(9 as libc::c_uint) as isize)
                                                     as libc::c_int
                                             {
-                                                if !(*m.offset(
-                                                    j.wrapping_add(9 as libc::c_uint) as isize
-                                                )
+                                                if !(*m.offset(j.wrapping_add(9 as libc::c_uint) as isize)
                                                     as libc::c_int
-                                                    > *m.offset(
-                                                        j.wrapping_add(6 as libc::c_uint) as isize
-                                                    )
+                                                    > *m.offset(j.wrapping_add(6 as libc::c_uint) as isize)
                                                         as libc::c_int)
                                                 {
                                                     current_block = 15946799889753539359;
                                                 } else {
                                                     high = (*m.offset(j as isize) as libc::c_int
-                                                        + *m.offset(
-                                                            j.wrapping_add(2 as libc::c_uint)
-                                                                as isize,
-                                                        )
+                                                        + *m.offset(j.wrapping_add(2 as libc::c_uint) as isize)
                                                             as libc::c_int
-                                                        + *m.offset(
-                                                            j.wrapping_add(7 as libc::c_uint)
-                                                                as isize,
-                                                        )
+                                                        + *m.offset(j.wrapping_add(7 as libc::c_uint) as isize)
                                                             as libc::c_int
-                                                        + *m.offset(
-                                                            j.wrapping_add(9 as libc::c_uint)
-                                                                as isize,
-                                                        )
-                                                            as libc::c_int)
-                                                        / 6 as libc::c_int;
-                                                    if *m
-                                                        .offset(j.wrapping_add(4 as libc::c_uint)
-                                                            as isize)
-                                                        as libc::c_int
-                                                        >= high
+                                                        + *m.offset(j.wrapping_add(9 as libc::c_uint) as isize)
+                                                            as libc::c_int) / 6 as libc::c_int;
+                                                    if *m.offset(j.wrapping_add(4 as libc::c_uint) as isize)
+                                                        as libc::c_int >= high
                                                     {
                                                         current_block = 13643677783189868280;
                                                     } else if *m
-                                                        .offset(j.wrapping_add(5 as libc::c_uint)
-                                                            as isize)
-                                                        as libc::c_int
-                                                        >= high
-                                                    {
+                                                            .offset(j.wrapping_add(5 as libc::c_uint) as isize)
+                                                            as libc::c_int >= high
+                                                        {
                                                         current_block = 13643677783189868280;
                                                     } else {
-                                                        if *m.offset(
-                                                            j.wrapping_add(11 as libc::c_uint)
-                                                                as isize,
-                                                        )
-                                                            as libc::c_int
-                                                            >= high
+                                                        if *m.offset(j.wrapping_add(11 as libc::c_uint) as isize)
+                                                            as libc::c_int >= high
                                                         {
                                                             current_block = 14686173634295280353;
-                                                        } else if *m.offset(
-                                                            j.wrapping_add(12 as libc::c_uint)
-                                                                as isize,
-                                                        )
-                                                            as libc::c_int
-                                                            >= high
-                                                        {
+                                                        } else if *m
+                                                                .offset(j.wrapping_add(12 as libc::c_uint) as isize)
+                                                                as libc::c_int >= high
+                                                            {
                                                             current_block = 14686173634295280353;
-                                                        } else if *m.offset(
-                                                            j.wrapping_add(13 as libc::c_uint)
-                                                                as isize,
-                                                        )
-                                                            as libc::c_int
-                                                            >= high
-                                                        {
+                                                        } else if *m
+                                                                .offset(j.wrapping_add(13 as libc::c_uint) as isize)
+                                                                as libc::c_int >= high
+                                                            {
                                                             current_block = 14686173634295280353;
-                                                        } else if *m.offset(
-                                                            j.wrapping_add(14 as libc::c_uint)
-                                                                as isize,
-                                                        )
-                                                            as libc::c_int
-                                                            >= high
-                                                        {
+                                                        } else if *m
+                                                                .offset(j.wrapping_add(14 as libc::c_uint) as isize)
+                                                                as libc::c_int >= high
+                                                            {
                                                             current_block = 14686173634295280353;
                                                         } else {
                                                             Modes.stat_valid_preamble += 1;
@@ -2861,14 +2908,9 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                                         match current_block {
                                                             7294691061932571495 => {}
                                                             _ => {
-                                                                if Modes.debug
-                                                                    & (1 as libc::c_int)
-                                                                        << 4 as libc::c_int
-                                                                    != 0
+                                                                if Modes.debug & (1 as libc::c_int) << 4 as libc::c_int != 0
                                                                 {
-                                                                    if *m.offset(j as isize)
-                                                                        as libc::c_int
-                                                                        > 25 as libc::c_int
+                                                                    if *m.offset(j as isize) as libc::c_int > 25 as libc::c_int
                                                                     {
                                                                         dumpRawMessage(
                                                                             b"Too high level in samples between 10 and 15\0"
@@ -2887,14 +2929,9 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                                         7294691061932571495 => {}
                                                         5851367039589866568 => {}
                                                         _ => {
-                                                            if Modes.debug
-                                                                & (1 as libc::c_int)
-                                                                    << 4 as libc::c_int
-                                                                != 0
+                                                            if Modes.debug & (1 as libc::c_int) << 4 as libc::c_int != 0
                                                             {
-                                                                if *m.offset(j as isize)
-                                                                    as libc::c_int
-                                                                    > 25 as libc::c_int
+                                                                if *m.offset(j as isize) as libc::c_int > 25 as libc::c_int
                                                                 {
                                                                     dumpRawMessage(
                                                                         b"Too high level in samples between 3 and 6\0" as *const u8
@@ -2944,8 +2981,7 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                         if *m.offset(j as isize) as libc::c_int > 25 as libc::c_int {
                             dumpRawMessage(
                                 b"Unexpected ratio among first 10 samples\0" as *const u8
-                                    as *const libc::c_char
-                                    as *mut libc::c_char,
+                                    as *const libc::c_char as *mut libc::c_char,
                                 msg.as_mut_ptr(),
                                 m,
                                 j,
@@ -2976,15 +3012,19 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                 errors = 0 as libc::c_int;
                 i = 0 as libc::c_int;
                 while i < 224 as libc::c_int {
-                    low = *m.offset(
-                        j.wrapping_add(i as uint32_t)
-                            .wrapping_add(16 as libc::c_uint) as isize,
-                    ) as libc::c_int;
-                    high = *m.offset(
-                        j.wrapping_add(i as uint32_t)
-                            .wrapping_add(16 as libc::c_uint)
-                            .wrapping_add(1 as libc::c_uint) as isize,
-                    ) as libc::c_int;
+                    low = *m
+                        .offset(
+                            j
+                                .wrapping_add(i as uint32_t)
+                                .wrapping_add(16 as libc::c_uint) as isize,
+                        ) as libc::c_int;
+                    high = *m
+                        .offset(
+                            j
+                                .wrapping_add(i as uint32_t)
+                                .wrapping_add(16 as libc::c_uint)
+                                .wrapping_add(1 as libc::c_uint) as isize,
+                        ) as libc::c_int;
                     delta = low - high;
                     if delta < 0 as libc::c_int {
                         delta = -delta;
@@ -2992,8 +3032,9 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                     let mut current_block_50: u64;
                     if i > 0 as libc::c_int {
                         if delta < 256 as libc::c_int {
-                            bits[(i / 2 as libc::c_int) as usize] =
-                                bits[(i / 2 as libc::c_int - 1 as libc::c_int) as usize];
+                            bits[(i / 2 as libc::c_int)
+                                as usize] = bits[(i / 2 as libc::c_int - 1 as libc::c_int)
+                                as usize];
                             current_block_50 = 6838274324784804404;
                         } else {
                             current_block_50 = 5696151258243725727;
@@ -3004,17 +3045,17 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                     match current_block_50 {
                         5696151258243725727 => {
                             if low == high {
-                                bits[(i / 2 as libc::c_int) as usize] =
-                                    2 as libc::c_int as libc::c_uchar;
+                                bits[(i / 2 as libc::c_int)
+                                    as usize] = 2 as libc::c_int as libc::c_uchar;
                                 if i < 112 as libc::c_int {
                                     errors += 1;
                                 }
                             } else if low > high {
-                                bits[(i / 2 as libc::c_int) as usize] =
-                                    1 as libc::c_int as libc::c_uchar;
+                                bits[(i / 2 as libc::c_int)
+                                    as usize] = 1 as libc::c_int as libc::c_uchar;
                             } else {
-                                bits[(i / 2 as libc::c_int) as usize] =
-                                    0 as libc::c_int as libc::c_uchar;
+                                bits[(i / 2 as libc::c_int)
+                                    as usize] = 0 as libc::c_int as libc::c_uchar;
                             }
                         }
                         _ => {}
@@ -3031,7 +3072,8 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                 }
                 i = 0 as libc::c_int;
                 while i < 112 as libc::c_int {
-                    msg[(i / 8 as libc::c_int) as usize] = ((bits[i as usize] as libc::c_int)
+                    msg[(i / 8 as libc::c_int)
+                        as usize] = ((bits[i as usize] as libc::c_int)
                         << 7 as libc::c_int
                         | (bits[(i + 1 as libc::c_int) as usize] as libc::c_int)
                             << 6 as libc::c_int
@@ -3049,22 +3091,28 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                         as libc::c_uchar;
                     i += 8 as libc::c_int;
                 }
-                msgtype = msg[0 as libc::c_int as usize] as libc::c_int >> 3 as libc::c_int;
+                msgtype = msg[0 as libc::c_int as usize] as libc::c_int
+                    >> 3 as libc::c_int;
                 tmp___0 = modesMessageLenByType(msgtype);
                 msglen = tmp___0 / 8 as libc::c_int;
                 delta = 0 as libc::c_int;
                 i = 0 as libc::c_int;
                 while i < msglen * 8 as libc::c_int * 2 as libc::c_int {
-                    tmp___1 = abs(*m.offset(
-                        j.wrapping_add(i as uint32_t)
-                            .wrapping_add(16 as libc::c_uint) as isize,
-                    ) as libc::c_int
-                        - *m.offset(
-                            j.wrapping_add(i as uint32_t)
-                                .wrapping_add(16 as libc::c_uint)
-                                .wrapping_add(1 as libc::c_uint)
-                                as isize,
-                        ) as libc::c_int);
+                    tmp___1 = abs(
+                        *m
+                            .offset(
+                                j
+                                    .wrapping_add(i as uint32_t)
+                                    .wrapping_add(16 as libc::c_uint) as isize,
+                            ) as libc::c_int
+                            - *m
+                                .offset(
+                                    j
+                                        .wrapping_add(i as uint32_t)
+                                        .wrapping_add(16 as libc::c_uint)
+                                        .wrapping_add(1 as libc::c_uint) as isize,
+                                ) as libc::c_int,
+                    );
                     delta += tmp___1;
                     i += 2 as libc::c_int;
                 }
@@ -3087,18 +3135,17 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                         match current_block {
                             4105741179806547613 => {}
                             _ => {
-                                if Modes.debug & (1 as libc::c_int) << 1 as libc::c_int != 0 {
+                                if Modes.debug & (1 as libc::c_int) << 1 as libc::c_int != 0
+                                {
                                     if use_correction != 0 {
                                         printf(
                                             b"The following message has %d demod errors\n\0"
-                                                as *const u8
-                                                as *const libc::c_char,
+                                                as *const u8 as *const libc::c_char,
                                             errors,
                                         );
                                         dumpRawMessage(
                                             b"Demodulated with errors\0" as *const u8
-                                                as *const libc::c_char
-                                                as *mut libc::c_char,
+                                                as *const libc::c_char as *mut libc::c_char,
                                             msg.as_mut_ptr(),
                                             m,
                                             j,
@@ -3147,20 +3194,19 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                 if Modes.debug & 1 as libc::c_int != 0 {
                                     dumpRawMessage(
                                         b"Demodulated with 0 errors\0" as *const u8
-                                            as *const libc::c_char
-                                            as *mut libc::c_char,
+                                            as *const libc::c_char as *mut libc::c_char,
                                         msg.as_mut_ptr(),
                                         m,
                                         j,
                                     );
                                 } else {
-                                    if Modes.debug & (1 as libc::c_int) << 2 as libc::c_int != 0 {
+                                    if Modes.debug & (1 as libc::c_int) << 2 as libc::c_int != 0
+                                    {
                                         if mm.msgtype == 17 as libc::c_int {
                                             if mm.crcok == 0 {
                                                 dumpRawMessage(
                                                     b"Decoded with bad CRC\0" as *const u8
-                                                        as *const libc::c_char
-                                                        as *mut libc::c_char,
+                                                        as *const libc::c_char as *mut libc::c_char,
                                                     msg.as_mut_ptr(),
                                                     m,
                                                     j,
@@ -3169,8 +3215,7 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                             } else if mm.errorbit != -(1 as libc::c_int) {
                                                 dumpRawMessage(
                                                     b"Decoded with bad CRC\0" as *const u8
-                                                        as *const libc::c_char
-                                                        as *mut libc::c_char,
+                                                        as *const libc::c_char as *mut libc::c_char,
                                                     msg.as_mut_ptr(),
                                                     m,
                                                     j,
@@ -3188,15 +3233,13 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                     match current_block {
                                         9008220588464243015 => {}
                                         _ => {
-                                            if Modes.debug & (1 as libc::c_int) << 3 as libc::c_int
-                                                != 0
+                                            if Modes.debug & (1 as libc::c_int) << 3 as libc::c_int != 0
                                             {
                                                 if mm.crcok != 0 {
                                                     if mm.errorbit == -(1 as libc::c_int) {
                                                         dumpRawMessage(
                                                             b"Decoded with good CRC\0" as *const u8
-                                                                as *const libc::c_char
-                                                                as *mut libc::c_char,
+                                                                as *const libc::c_char as *mut libc::c_char,
                                                             msg.as_mut_ptr(),
                                                             m,
                                                             j,
@@ -3209,11 +3252,11 @@ pub unsafe extern "C" fn detectModeS(mut m: *mut uint16_t, mut mlen: uint32_t) {
                                 }
                             }
                             if mm.crcok != 0 {
-                                j = (j as libc::c_uint).wrapping_add(
-                                    ((8 as libc::c_int + msglen * 8 as libc::c_int)
-                                        * 2 as libc::c_int)
-                                        as uint32_t,
-                                ) as uint32_t as uint32_t;
+                                j = (j as libc::c_uint)
+                                    .wrapping_add(
+                                        ((8 as libc::c_int + msglen * 8 as libc::c_int)
+                                            * 2 as libc::c_int) as uint32_t,
+                                    ) as uint32_t as uint32_t;
                                 good_message = 1 as libc::c_int;
                                 if use_correction != 0 {
                                     mm.phase_corrected = 1 as libc::c_int;
@@ -3331,7 +3374,10 @@ pub unsafe extern "C" fn interactiveFindAircraft(mut addr: uint32_t) -> *mut air
     }
     return 0 as *mut libc::c_void as *mut aircraft;
 }
-pub unsafe extern "C" fn cprModFunction(mut a: libc::c_int, mut b: libc::c_int) -> libc::c_int {
+pub unsafe extern "C" fn cprModFunction(
+    mut a: libc::c_int,
+    mut b: libc::c_int,
+) -> libc::c_int {
     let mut res: libc::c_int = 0;
     res = a % b;
     if res < 0 as libc::c_int {
@@ -3514,11 +3560,7 @@ pub unsafe extern "C" fn cprNLFunction(mut lat: libc::c_double) -> libc::c_int {
     if lat < 86.53536998f64 {
         return 3 as libc::c_int;
     }
-    if lat < 87.00000000f64 {
-        return 2 as libc::c_int;
-    } else {
-        return 1 as libc::c_int;
-    };
+    if lat < 87.00000000f64 { return 2 as libc::c_int } else { return 1 as libc::c_int };
 }
 pub unsafe extern "C" fn cprNFunction(
     mut lat: libc::c_double,
@@ -3579,15 +3621,17 @@ pub unsafe extern "C" fn decodeCPR(mut a: *mut aircraft) {
     lon0 = (*a).even_cprlon as libc::c_double;
     lon1 = (*a).odd_cprlon as libc::c_double;
     tmp = floor(
-        (59 as libc::c_int as libc::c_double * lat0 - 60 as libc::c_int as libc::c_double * lat1)
-            / 131072 as libc::c_int as libc::c_double
-            + 0.5f64,
+        (59 as libc::c_int as libc::c_double * lat0
+            - 60 as libc::c_int as libc::c_double * lat1)
+            / 131072 as libc::c_int as libc::c_double + 0.5f64,
     );
     j = tmp as libc::c_int;
     tmp___0 = cprModFunction(j, 60 as libc::c_int);
-    rlat0 = AirDlat0 * (tmp___0 as libc::c_double + lat0 / 131072 as libc::c_int as libc::c_double);
+    rlat0 = AirDlat0
+        * (tmp___0 as libc::c_double + lat0 / 131072 as libc::c_int as libc::c_double);
     tmp___1 = cprModFunction(j, 59 as libc::c_int);
-    rlat1 = AirDlat1 * (tmp___1 as libc::c_double + lat1 / 131072 as libc::c_int as libc::c_double);
+    rlat1 = AirDlat1
+        * (tmp___1 as libc::c_double + lat1 / 131072 as libc::c_int as libc::c_double);
     if rlat0 >= 270 as libc::c_int as libc::c_double {
         rlat0 -= 360 as libc::c_int as libc::c_double;
     }
@@ -3607,14 +3651,15 @@ pub unsafe extern "C" fn decodeCPR(mut a: *mut aircraft) {
         tmp___7 = floor(
             (lon0 * (tmp___5 - 1 as libc::c_int) as libc::c_double
                 - lon1 * tmp___6 as libc::c_double)
-                / 131072 as libc::c_int as libc::c_double
-                + 0.5f64,
+                / 131072 as libc::c_int as libc::c_double + 0.5f64,
         );
         m = tmp___7 as libc::c_int;
         tmp___8 = cprDlonFunction(rlat0, 0 as libc::c_int);
         tmp___9 = cprModFunction(m, ni);
-        (*a).lon =
-            tmp___8 * (tmp___9 as libc::c_double + lon0 / 131072 as libc::c_int as libc::c_double);
+        (*a)
+            .lon = tmp___8
+            * (tmp___9 as libc::c_double
+                + lon0 / 131072 as libc::c_int as libc::c_double);
         (*a).lat = rlat0;
     } else {
         tmp___10 = cprNFunction(rlat1, 1 as libc::c_int);
@@ -3623,22 +3668,24 @@ pub unsafe extern "C" fn decodeCPR(mut a: *mut aircraft) {
         tmp___12 = cprNLFunction(rlat1);
         tmp___13 = floor(
             (lon0 * (tmp___11 - 1 as libc::c_int) as libc::c_double
-                - lon1 * tmp___12 as libc::c_double)
-                / 131072.0f64
-                + 0.5f64,
+                - lon1 * tmp___12 as libc::c_double) / 131072.0f64 + 0.5f64,
         );
         m___0 = tmp___13 as libc::c_int;
         tmp___14 = cprDlonFunction(rlat1, 1 as libc::c_int);
         tmp___15 = cprModFunction(m___0, ni___0);
-        (*a).lon = tmp___14
-            * (tmp___15 as libc::c_double + lon1 / 131072 as libc::c_int as libc::c_double);
+        (*a)
+            .lon = tmp___14
+            * (tmp___15 as libc::c_double
+                + lon1 / 131072 as libc::c_int as libc::c_double);
         (*a).lat = rlat1;
     }
     if (*a).lon > 180 as libc::c_int as libc::c_double {
         (*a).lon -= 360 as libc::c_int as libc::c_double;
     }
 }
-pub unsafe extern "C" fn interactiveReceiveData(mut mm: *mut modesMessage) -> *mut aircraft {
+pub unsafe extern "C" fn interactiveReceiveData(
+    mut mm: *mut modesMessage,
+) -> *mut aircraft {
     let mut addr: uint32_t = 0;
     let mut a: *mut aircraft = 0 as *mut aircraft;
     let mut tmp___0: libc::c_int = 0;
@@ -3647,7 +3694,8 @@ pub unsafe extern "C" fn interactiveReceiveData(mut mm: *mut modesMessage) -> *m
             return 0 as *mut libc::c_void as *mut aircraft;
         }
     }
-    addr = ((*mm).aa1 << 16 as libc::c_int | (*mm).aa2 << 8 as libc::c_int | (*mm).aa3) as uint32_t;
+    addr = ((*mm).aa1 << 16 as libc::c_int | (*mm).aa2 << 8 as libc::c_int | (*mm).aa3)
+        as uint32_t;
     a = interactiveFindAircraft(addr);
     if a.is_null() {
         a = interactiveCreateAircraft(addr);
@@ -3693,7 +3741,9 @@ pub unsafe extern "C" fn interactiveReceiveData(mut mm: *mut modesMessage) -> *m
                             (*a).even_cprlon = (*mm).raw_longitude;
                             (*a).even_cprtime = mstime();
                         }
-                        tmp___0 = abs(((*a).even_cprtime - (*a).odd_cprtime) as libc::c_int);
+                        tmp___0 = abs(
+                            ((*a).even_cprtime - (*a).odd_cprtime) as libc::c_int,
+                        );
                         if tmp___0 <= 10000 as libc::c_int {
                             decodeCPR(a);
                         }
@@ -3762,8 +3812,8 @@ pub unsafe extern "C" fn interactiveShowData() {
             speed = (speed as libc::c_double * 1.852f64) as libc::c_int;
         }
         printf(
-            b"%-6s %-8s %-9d %-7d %-7.03f   %-7.03f   %-3d   %-9ld %d sec\n\0" as *const u8
-                as *const libc::c_char,
+            b"%-6s %-8s %-9d %-7d %-7.03f   %-7.03f   %-3d   %-9ld %d sec\n\0"
+                as *const u8 as *const libc::c_char,
             ((*a).hexaddr).as_mut_ptr(),
             ((*a).flight).as_mut_ptr(),
             altitude,
@@ -3836,14 +3886,13 @@ pub unsafe extern "C" fn snipMode(mut level: libc::c_int) {
         }
         putchar(i);
         putchar(q);
-    }
+    };
 }
-pub static mut modesNetServices: [__anonstruct_modesNetServices_483049182; 4] =
-    [__anonstruct_modesNetServices_483049182 {
-        descr: 0 as *mut libc::c_char,
-        socket: 0 as *mut libc::c_int,
-        port: 0,
-    }; 4];
+pub static mut modesNetServices: [__anonstruct_modesNetServices_483049182; 4] = [__anonstruct_modesNetServices_483049182 {
+    descr: 0 as *mut libc::c_char,
+    socket: 0 as *mut libc::c_int,
+    port: 0,
+}; 4];
 pub unsafe extern "C" fn modesInitNet() {
     let mut j: libc::c_int = 0;
     let mut s: libc::c_int = 0;
@@ -3883,9 +3932,10 @@ pub unsafe extern "C" fn modesInitNet() {
     }
     signal(
         13 as libc::c_int,
-        ::std::mem::transmute::<libc::intptr_t, Option<unsafe extern "C" fn(libc::c_int) -> ()>>(
-            1 as libc::c_int as libc::intptr_t,
-        ),
+        ::std::mem::transmute::<
+            libc::intptr_t,
+            Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
+        >(1 as libc::c_int as libc::intptr_t),
     );
 }
 pub unsafe extern "C" fn modesAcceptClients() {
@@ -3954,10 +4004,7 @@ pub unsafe extern "C" fn modesFreeClient(mut fd: libc::c_int) {
     free(Modes.clients[fd as usize] as *mut libc::c_void);
     Modes.clients[fd as usize] = 0 as *mut libc::c_void as *mut client;
     if Modes.debug & (1 as libc::c_int) << 5 as libc::c_int != 0 {
-        printf(
-            b"Closing client %d\n\0" as *const u8 as *const libc::c_char,
-            fd,
-        );
+        printf(b"Closing client %d\n\0" as *const u8 as *const libc::c_char, fd);
     }
     if Modes.maxfd == fd {
         Modes.maxfd = -(1 as libc::c_int);
@@ -4029,7 +4076,10 @@ pub unsafe extern "C" fn modesSendRawOutput(mut mm: *mut modesMessage) {
         p.offset_from(msg.as_mut_ptr()) as libc::c_long as libc::c_int,
     );
 }
-pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *mut aircraft) {
+pub unsafe extern "C" fn modesSendSBSOutput(
+    mut mm: *mut modesMessage,
+    mut a: *mut aircraft,
+) {
     let mut current_block: u64;
     let mut msg: [libc::c_char; 256] = [0; 256];
     let mut p: *mut libc::c_char = 0 as *mut libc::c_char;
@@ -4095,7 +4145,8 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
     if (*mm).msgtype == 0 as libc::c_int {
         tmp = sprintf(
             p,
-            b"MSG,5,,,%02X%02X%02X,,,,,,,%d,,,,,,,,,,\0" as *const u8 as *const libc::c_char,
+            b"MSG,5,,,%02X%02X%02X,,,,,,,%d,,,,,,,,,,\0" as *const u8
+                as *const libc::c_char,
             (*mm).aa1,
             (*mm).aa2,
             (*mm).aa3,
@@ -4135,7 +4186,8 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
     } else if (*mm).msgtype == 11 as libc::c_int {
         tmp___2 = sprintf(
             p,
-            b"MSG,8,,,%02X%02X%02X,,,,,,,,,,,,,,,,,\0" as *const u8 as *const libc::c_char,
+            b"MSG,8,,,%02X%02X%02X,,,,,,,,,,,,,,,,,\0" as *const u8
+                as *const libc::c_char,
             (*mm).aa1,
             (*mm).aa2,
             (*mm).aa3,
@@ -4172,8 +4224,7 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                     tmp___4 = sprintf(
                                         p,
                                         b"MSG,3,,,%02X%02X%02X,,,,,,,%d,,,,,,,0,0,0,0\0"
-                                            as *const u8
-                                            as *const libc::c_char,
+                                            as *const u8 as *const libc::c_char,
                                         (*mm).aa1,
                                         (*mm).aa2,
                                         (*mm).aa3,
@@ -4184,8 +4235,7 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                     tmp___5 = sprintf(
                                         p,
                                         b"MSG,3,,,%02X%02X%02X,,,,,,,%d,,,%1.5f,%1.5f,,,0,0,0,0\0"
-                                            as *const u8
-                                            as *const libc::c_char,
+                                            as *const u8 as *const libc::c_char,
                                         (*mm).aa1,
                                         (*mm).aa2,
                                         (*mm).aa3,
@@ -4199,8 +4249,7 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                 tmp___5 = sprintf(
                                     p,
                                     b"MSG,3,,,%02X%02X%02X,,,,,,,%d,,,%1.5f,%1.5f,,,0,0,0,0\0"
-                                        as *const u8
-                                        as *const libc::c_char,
+                                        as *const u8 as *const libc::c_char,
                                     (*mm).aa1,
                                     (*mm).aa2,
                                     (*mm).aa3,
@@ -4231,14 +4280,12 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                     } else {
                                         tmp___6 = -(1 as libc::c_int);
                                     }
-                                    vr = tmp___6
-                                        * ((*mm).vert_rate - 1 as libc::c_int)
+                                    vr = tmp___6 * ((*mm).vert_rate - 1 as libc::c_int)
                                         * 64 as libc::c_int;
                                     tmp___7 = sprintf(
                                         p,
                                         b"MSG,4,,,%02X%02X%02X,,,,,,,,%d,%d,,,%i,,0,0,0,0\0"
-                                            as *const u8
-                                            as *const libc::c_char,
+                                            as *const u8 as *const libc::c_char,
                                         (*mm).aa1,
                                         (*mm).aa2,
                                         (*mm).aa3,
@@ -4264,8 +4311,7 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                     tmp___8 = sprintf(
                                         p,
                                         b"MSG,6,,,%02X%02X%02X,,,,,,,,,,,,,%d,%d,%d,%d,%d\0"
-                                            as *const u8
-                                            as *const libc::c_char,
+                                            as *const u8 as *const libc::c_char,
                                         (*mm).aa1,
                                         (*mm).aa2,
                                         (*mm).aa3,
@@ -4277,7 +4323,7 @@ pub unsafe extern "C" fn modesSendSBSOutput(mut mm: *mut modesMessage, mut a: *m
                                     );
                                     p = p.offset(tmp___8 as isize);
                                 } else {
-                                    return;
+                                    return
                                 }
                             }
                         }
@@ -4312,12 +4358,12 @@ pub unsafe extern "C" fn hexDigitVal(mut c: libc::c_int) -> libc::c_int {
     }
     if c >= 97 as libc::c_int {
         if c <= 102 as libc::c_int {
-            return c - 97 as libc::c_int + 10 as libc::c_int;
+            return c - 97 as libc::c_int + 10 as libc::c_int
         } else {
-            return -(1 as libc::c_int);
+            return -(1 as libc::c_int)
         }
     } else {
-        return -(1 as libc::c_int);
+        return -(1 as libc::c_int)
     };
 }
 pub unsafe extern "C" fn decodeHexMessage(mut c: *mut client) -> libc::c_int {
@@ -4374,10 +4420,9 @@ pub unsafe extern "C" fn decodeHexMessage(mut c: *mut client) -> libc::c_int {
     l = tmp as libc::c_int;
     while l != 0 {
         tmp___0 = __ctype_b_loc();
-        if *(*tmp___0).offset(*hex.offset((l - 1 as libc::c_int) as isize) as libc::c_int as isize)
-            as libc::c_int
-            & 8192 as libc::c_int
-            == 0
+        if *(*tmp___0)
+            .offset(*hex.offset((l - 1 as libc::c_int) as isize) as libc::c_int as isize)
+            as libc::c_int & 8192 as libc::c_int == 0
         {
             break;
         }
@@ -4386,8 +4431,8 @@ pub unsafe extern "C" fn decodeHexMessage(mut c: *mut client) -> libc::c_int {
     }
     loop {
         tmp___1 = __ctype_b_loc();
-        if *(*tmp___1).offset(*hex as libc::c_int as isize) as libc::c_int & 8192 as libc::c_int
-            == 0
+        if *(*tmp___1).offset(*hex as libc::c_int as isize) as libc::c_int
+            & 8192 as libc::c_int == 0
         {
             break;
         }
@@ -4395,12 +4440,14 @@ pub unsafe extern "C" fn decodeHexMessage(mut c: *mut client) -> libc::c_int {
         l -= 1;
     }
     if l < 2 as libc::c_int {
-        return 0 as libc::c_int;
+        return 0 as libc::c_int
     } else {
         if *hex.offset(0 as libc::c_int as isize) as libc::c_int != 42 as libc::c_int {
-            return 0 as libc::c_int;
+            return 0 as libc::c_int
         } else {
-            if *hex.offset((l - 1 as libc::c_int) as isize) as libc::c_int != 59 as libc::c_int {
+            if *hex.offset((l - 1 as libc::c_int) as isize) as libc::c_int
+                != 59 as libc::c_int
+            {
                 return 0 as libc::c_int;
             }
         }
@@ -4414,23 +4461,28 @@ pub unsafe extern "C" fn decodeHexMessage(mut c: *mut client) -> libc::c_int {
     while j < l {
         tmp___2 = hexDigitVal(*hex.offset(j as isize) as libc::c_int);
         high = tmp___2;
-        tmp___3 = hexDigitVal(*hex.offset((j + 1 as libc::c_int) as isize) as libc::c_int);
+        tmp___3 = hexDigitVal(
+            *hex.offset((j + 1 as libc::c_int) as isize) as libc::c_int,
+        );
         low = tmp___3;
         if high == -(1 as libc::c_int) {
-            return 0 as libc::c_int;
+            return 0 as libc::c_int
         } else {
             if low == -(1 as libc::c_int) {
                 return 0 as libc::c_int;
             }
         }
-        msg[(j / 2 as libc::c_int) as usize] = (high << 4 as libc::c_int | low) as libc::c_uchar;
+        msg[(j / 2 as libc::c_int)
+            as usize] = (high << 4 as libc::c_int | low) as libc::c_uchar;
         j += 2 as libc::c_int;
     }
     decodeModesMessage(&mut mm, msg.as_mut_ptr());
     useModesMessage(&mut mm);
     return 0 as libc::c_int;
 }
-pub unsafe extern "C" fn aircraftsToJson(mut len: *mut libc::c_int) -> *mut libc::c_char {
+pub unsafe extern "C" fn aircraftsToJson(
+    mut len: *mut libc::c_int,
+) -> *mut libc::c_char {
     let mut a: *mut aircraft = 0 as *mut aircraft;
     let mut buflen: libc::c_int = 0;
     let mut buf: *mut libc::c_char = 0 as *mut libc::c_char;
@@ -4446,11 +4498,7 @@ pub unsafe extern "C" fn aircraftsToJson(mut len: *mut libc::c_int) -> *mut libc
     tmp = malloc(buflen as size_t);
     buf = tmp as *mut libc::c_char;
     p = buf;
-    l = snprintf(
-        p,
-        buflen as size_t,
-        b"[\n\0" as *const u8 as *const libc::c_char,
-    );
+    l = snprintf(p, buflen as size_t, b"[\n\0" as *const u8 as *const libc::c_char);
     p = p.offset(l as isize);
     buflen -= l;
     while !a.is_null() {
@@ -4480,7 +4528,10 @@ pub unsafe extern "C" fn aircraftsToJson(mut len: *mut libc::c_int) -> *mut libc
                 if buflen < 256 as libc::c_int {
                     used = p.offset_from(buf) as libc::c_long as libc::c_int;
                     buflen += 1024 as libc::c_int;
-                    tmp___0 = realloc(buf as *mut libc::c_void, (used + buflen) as size_t);
+                    tmp___0 = realloc(
+                        buf as *mut libc::c_void,
+                        (used + buflen) as size_t,
+                    );
                     buf = tmp___0 as *mut libc::c_char;
                     p = buf.offset(used as isize);
                 }
@@ -4493,11 +4544,7 @@ pub unsafe extern "C" fn aircraftsToJson(mut len: *mut libc::c_int) -> *mut libc
         p = p.offset(-1);
         buflen += 1;
     }
-    l = snprintf(
-        p,
-        buflen as size_t,
-        b"]\n\0" as *const u8 as *const libc::c_char,
-    );
+    l = snprintf(p, buflen as size_t, b"]\n\0" as *const u8 as *const libc::c_char);
     p = p.offset(l as isize);
     buflen -= l;
     *len = p.offset_from(buf) as libc::c_long as libc::c_int;
@@ -4528,18 +4575,9 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
         st_size: 0,
         st_blksize: 0,
         st_blocks: 0,
-        st_atim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
-        st_mtim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
-        st_ctim: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
+        st_atim: timespec { tv_sec: 0, tv_nsec: 0 },
+        st_mtim: timespec { tv_sec: 0, tv_nsec: 0 },
+        st_ctim: timespec { tv_sec: 0, tv_nsec: 0 },
         __glibc_reserved: [0; 3],
     };
     let mut fd: libc::c_int = 0;
@@ -4575,15 +4613,15 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
             ((*c).buf).as_mut_ptr() as *const libc::c_char,
             b"Connection: keep-alive\0" as *const u8 as *const libc::c_char,
         );
-        keepalive =
-            (tmp___1 as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int;
+        keepalive = (tmp___1 as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong)
+            as libc::c_int;
     } else if httpver == 11 as libc::c_int {
         tmp___2 = strstr(
             ((*c).buf).as_mut_ptr() as *const libc::c_char,
             b"Connection: close\0" as *const u8 as *const libc::c_char,
         );
-        keepalive =
-            (tmp___2 as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int;
+        keepalive = (tmp___2 as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong)
+            as libc::c_int;
     }
     p = strchr(((*c).buf).as_mut_ptr() as *const libc::c_char, ' ' as i32);
     if p.is_null() {
@@ -4601,10 +4639,7 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
             b"\nHTTP keep alive: %d\n\0" as *const u8 as *const libc::c_char,
             keepalive,
         );
-        printf(
-            b"HTTP requested URL: %s\n\n\0" as *const u8 as *const libc::c_char,
-            url,
-        );
+        printf(b"HTTP requested URL: %s\n\n\0" as *const u8 as *const libc::c_char, url);
     }
     tmp___10 = strstr(
         url as *const libc::c_char,
@@ -4635,7 +4670,8 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
                     snprintf(
                         content,
                         sbuf.st_size as size_t,
-                        b"Error reading from file: %s\0" as *const u8 as *const libc::c_char,
+                        b"Error reading from file: %s\0" as *const u8
+                            as *const libc::c_char,
                         tmp___5,
                     );
                 }
@@ -4665,8 +4701,8 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
         if fd != -(1 as libc::c_int) {
             close(fd);
         }
-        ctype =
-            b"text/html;charset=utf-8\0" as *const u8 as *const libc::c_char as *mut libc::c_char;
+        ctype = b"text/html;charset=utf-8\0" as *const u8 as *const libc::c_char
+            as *mut libc::c_char;
     }
     if keepalive != 0 {
         tmp___11 = b"keep-alive\0" as *const u8 as *const libc::c_char;
@@ -4688,11 +4724,7 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
             hdr.as_mut_ptr(),
         );
     }
-    tmp___12 = write(
-        (*c).fd,
-        hdr.as_mut_ptr() as *const libc::c_void,
-        hdrlen as size_t,
-    );
+    tmp___12 = write((*c).fd, hdr.as_mut_ptr() as *const libc::c_void, hdrlen as size_t);
     if tmp___12 != hdrlen as ssize_t {
         free(content as *mut libc::c_void);
         return 1 as libc::c_int;
@@ -4710,7 +4742,7 @@ pub unsafe extern "C" fn handleHTTPRequest(mut c: *mut client) -> libc::c_int {
 pub unsafe extern "C" fn modesReadFromClient(
     mut c: *mut client,
     mut sep: *mut libc::c_char,
-    mut handler: Option<unsafe extern "C" fn(*mut client) -> libc::c_int>,
+    mut handler: Option::<unsafe extern "C" fn(*mut client) -> libc::c_int>,
 ) {
     let mut left: libc::c_int = 0;
     let mut nread: libc::c_int = 0;
@@ -4751,7 +4783,8 @@ pub unsafe extern "C" fn modesReadFromClient(
                 if !(p as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
                     break;
                 }
-                i = p.offset_from(((*c).buf).as_mut_ptr()) as libc::c_long as libc::c_int;
+                i = p.offset_from(((*c).buf).as_mut_ptr()) as libc::c_long
+                    as libc::c_int;
                 (*c).buf[i as usize] = '\u{0}' as i32 as libc::c_char;
                 tmp___1 = (Some(handler.expect("non-null function pointer")))
                     .expect("non-null function pointer")(c);
@@ -4776,7 +4809,7 @@ pub unsafe extern "C" fn modesReadFromClient(
                 break;
             }
         }
-    }
+    };
 }
 pub unsafe extern "C" fn modesReadFromClients() {
     let mut j: libc::c_int = 0;
@@ -4789,13 +4822,20 @@ pub unsafe extern "C" fn modesReadFromClients() {
                 modesReadFromClient(
                     c,
                     b"\n\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-                    Some(decodeHexMessage as unsafe extern "C" fn(*mut client) -> libc::c_int),
+                    Some(
+                        decodeHexMessage
+                            as unsafe extern "C" fn(*mut client) -> libc::c_int,
+                    ),
                 );
             } else if (*c).service == Modes.https {
                 modesReadFromClient(
                     c,
-                    b"\r\n\r\n\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-                    Some(handleHTTPRequest as unsafe extern "C" fn(*mut client) -> libc::c_int),
+                    b"\r\n\r\n\0" as *const u8 as *const libc::c_char
+                        as *mut libc::c_char,
+                    Some(
+                        handleHTTPRequest
+                            as unsafe extern "C" fn(*mut client) -> libc::c_int,
+                    ),
                 );
             }
         }
@@ -4803,13 +4843,8 @@ pub unsafe extern "C" fn modesReadFromClients() {
     }
 }
 pub unsafe extern "C" fn modesWaitReadableClients(mut timeout_ms: libc::c_int) {
-    let mut tv: timeval = timeval {
-        tv_sec: 0,
-        tv_usec: 0,
-    };
-    let mut fds: fd_set = fd_set {
-        __fds_bits: [0; 16],
-    };
+    let mut tv: timeval = timeval { tv_sec: 0, tv_usec: 0 };
+    let mut fds: fd_set = fd_set { __fds_bits: [0; 16] };
     let mut j: libc::c_int = 0;
     let mut maxfd: libc::c_int = 0;
     let mut __d0: libc::c_int = 0;
@@ -4822,9 +4857,8 @@ pub unsafe extern "C" fn modesWaitReadableClients(mut timeout_ms: libc::c_int) {
         .wrapping_div(::std::mem::size_of::<__fd_mask>() as libc::c_ulong);
     let fresh3 = &mut __d1;
     let fresh4;
-    let fresh5 = &mut *(fds.__fds_bits)
-        .as_mut_ptr()
-        .offset(0 as libc::c_int as isize) as *mut __fd_mask;
+    let fresh5 = &mut *(fds.__fds_bits).as_mut_ptr().offset(0 as libc::c_int as isize)
+        as *mut __fd_mask;
     asm!(
         "cld; rep; stosq", inlateout("cx") c2rust_asm_casts::AsmCast::cast_in(fresh0,
         fresh2) => fresh1, inlateout("di") c2rust_asm_casts::AsmCast::cast_in(fresh3,
@@ -4836,33 +4870,41 @@ pub unsafe extern "C" fn modesWaitReadableClients(mut timeout_ms: libc::c_int) {
     j = 0 as libc::c_int;
     while j <= Modes.maxfd {
         if !(Modes.clients[j as usize]).is_null() {
-            fds.__fds_bits[(j
+            fds
+                .__fds_bits[(j
                 / (8 as libc::c_int
-                    * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-                as usize] |= ((1 as libc::c_ulong)
-                << j % (8 as libc::c_int
-                    * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-                as __fd_mask;
+                    * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong
+                        as libc::c_int)) as usize]
+                |= ((1 as libc::c_ulong)
+                    << j
+                        % (8 as libc::c_int
+                            * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong
+                                as libc::c_int)) as __fd_mask;
         }
         j += 1;
     }
     j = 0 as libc::c_int;
     while j < 4 as libc::c_int {
         s = *modesNetServices[j as usize].socket;
-        fds.__fds_bits[(s
+        fds
+            .__fds_bits[(s
             / (8 as libc::c_int
                 * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-            as usize] |= ((1 as libc::c_ulong)
-            << s % (8 as libc::c_int
-                * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-            as __fd_mask;
+            as usize]
+            |= ((1 as libc::c_ulong)
+                << s
+                    % (8 as libc::c_int
+                        * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong
+                            as libc::c_int)) as __fd_mask;
         if s > maxfd {
             maxfd = s;
         }
         j += 1;
     }
     tv.tv_sec = (timeout_ms / 1000 as libc::c_int) as __time_t;
-    tv.tv_usec = (timeout_ms % 1000 as libc::c_int * 1000 as libc::c_int) as __suseconds_t;
+    tv
+        .tv_usec = (timeout_ms % 1000 as libc::c_int * 1000 as libc::c_int)
+        as __suseconds_t;
     select(
         maxfd + 1 as libc::c_int,
         &mut fds as *mut fd_set,
@@ -4874,17 +4916,18 @@ pub unsafe extern "C" fn modesWaitReadableClients(mut timeout_ms: libc::c_int) {
 pub unsafe extern "C" fn sigWinchCallback() {
     signal(
         28 as libc::c_int,
-        ::std::mem::transmute::<libc::intptr_t, Option<unsafe extern "C" fn(libc::c_int) -> ()>>(
-            1 as libc::c_int as libc::intptr_t,
-        ),
+        ::std::mem::transmute::<
+            libc::intptr_t,
+            Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
+        >(1 as libc::c_int as libc::intptr_t),
     );
     Modes.interactive_rows = getTermRows();
     interactiveShowData();
     signal(
         28 as libc::c_int,
         ::std::mem::transmute::<
-            Option<unsafe extern "C" fn() -> ()>,
-            Option<unsafe extern "C" fn(libc::c_int) -> ()>,
+            Option::<unsafe extern "C" fn() -> ()>,
+            Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
         >(Some(sigWinchCallback as unsafe extern "C" fn() -> ())),
     );
 }
@@ -4895,11 +4938,7 @@ pub unsafe extern "C" fn getTermRows() -> libc::c_int {
         ws_xpixel: 0,
         ws_ypixel: 0,
     };
-    ioctl(
-        1 as libc::c_int,
-        21523 as libc::c_ulong,
-        &mut w as *mut winsize,
-    );
+    ioctl(1 as libc::c_int, 21523 as libc::c_ulong, &mut w as *mut winsize);
     return w.ws_row as libc::c_int;
 }
 pub unsafe extern "C" fn showHelp() {
@@ -4924,7 +4963,10 @@ pub unsafe extern "C" fn backgroundTasks() {
         }
     }
 }
-unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> libc::c_int {
+unsafe fn main_0(
+    mut argc: libc::c_int,
+    mut argv: *mut *mut libc::c_char,
+) -> libc::c_int {
     let mut j: libc::c_int = 0;
     let mut more: libc::c_int = 0;
     let mut tmp: libc::c_double = 0.;
@@ -4986,7 +5028,9 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                 } else if more != 0 {
                     j += 1;
                     tmp = atof(*argv.offset(j as isize) as *const libc::c_char);
-                    Modes.gain = (tmp * 10 as libc::c_int as libc::c_double) as libc::c_int;
+                    Modes
+                        .gain = (tmp * 10 as libc::c_int as libc::c_double)
+                        as libc::c_int;
                     current_block_146 = 7468767852762055642;
                 } else {
                     current_block_146 = 5816247937169455600;
@@ -5028,8 +5072,10 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                                         current_block_132 = 8122577082334716293;
                                     } else if more != 0 {
                                         j += 1;
-                                        Modes.filename =
-                                            strdup(*argv.offset(j as isize) as *const libc::c_char);
+                                        Modes
+                                            .filename = strdup(
+                                            *argv.offset(j as isize) as *const libc::c_char,
+                                        );
                                         current_block_132 = 5089124893069931607;
                                     } else {
                                         current_block_132 = 8122577082334716293;
@@ -5043,60 +5089,45 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                                             if tmp___21 != 0 {
                                                 tmp___20 = strcmp(
                                                     *argv.offset(j as isize) as *const libc::c_char,
-                                                    b"--no-fix\0" as *const u8
-                                                        as *const libc::c_char,
+                                                    b"--no-fix\0" as *const u8 as *const libc::c_char,
                                                 );
                                                 if tmp___20 != 0 {
                                                     tmp___19 = strcmp(
-                                                        *argv.offset(j as isize)
-                                                            as *const libc::c_char,
-                                                        b"--no-crc-check\0" as *const u8
-                                                            as *const libc::c_char,
+                                                        *argv.offset(j as isize) as *const libc::c_char,
+                                                        b"--no-crc-check\0" as *const u8 as *const libc::c_char,
                                                     );
                                                     if tmp___19 != 0 {
                                                         tmp___18 = strcmp(
-                                                            *argv.offset(j as isize)
-                                                                as *const libc::c_char,
-                                                            b"--raw\0" as *const u8
-                                                                as *const libc::c_char,
+                                                            *argv.offset(j as isize) as *const libc::c_char,
+                                                            b"--raw\0" as *const u8 as *const libc::c_char,
                                                         );
                                                         if tmp___18 != 0 {
                                                             tmp___17 = strcmp(
-                                                                *argv.offset(j as isize)
-                                                                    as *const libc::c_char,
-                                                                b"--net\0" as *const u8
-                                                                    as *const libc::c_char,
+                                                                *argv.offset(j as isize) as *const libc::c_char,
+                                                                b"--net\0" as *const u8 as *const libc::c_char,
                                                             );
                                                             if tmp___17 != 0 {
                                                                 tmp___16 = strcmp(
-                                                                    *argv.offset(j as isize)
-                                                                        as *const libc::c_char,
-                                                                    b"--net-only\0" as *const u8
-                                                                        as *const libc::c_char,
+                                                                    *argv.offset(j as isize) as *const libc::c_char,
+                                                                    b"--net-only\0" as *const u8 as *const libc::c_char,
                                                                 );
                                                                 if tmp___16 != 0 {
                                                                     tmp___15 = strcmp(
-                                                                        *argv.offset(j as isize)
-                                                                            as *const libc::c_char,
-                                                                        b"--net-ro-port\0"
-                                                                            as *const u8
-                                                                            as *const libc::c_char,
+                                                                        *argv.offset(j as isize) as *const libc::c_char,
+                                                                        b"--net-ro-port\0" as *const u8 as *const libc::c_char,
                                                                     );
                                                                     let mut current_block_103: u64;
                                                                     if tmp___15 != 0 {
-                                                                        current_block_103 =
-                                                                            6183997530727287201;
+                                                                        current_block_103 = 6183997530727287201;
                                                                     } else if more != 0 {
                                                                         j += 1;
                                                                         modesNetServices[0 as libc::c_int as usize]
                                                                             .port = atoi(
                                                                             *argv.offset(j as isize) as *const libc::c_char,
                                                                         );
-                                                                        current_block_103 =
-                                                                            16667286137552459707;
+                                                                        current_block_103 = 16667286137552459707;
                                                                     } else {
-                                                                        current_block_103 =
-                                                                            6183997530727287201;
+                                                                        current_block_103 = 6183997530727287201;
                                                                     }
                                                                     match current_block_103 {
                                                                         6183997530727287201 => {
@@ -5320,8 +5351,7 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                                                                     }
                                                                 } else {
                                                                     Modes.net = 1 as libc::c_int;
-                                                                    Modes.net_only =
-                                                                        1 as libc::c_int;
+                                                                    Modes.net_only = 1 as libc::c_int;
                                                                 }
                                                             } else {
                                                                 Modes.net = 1 as libc::c_int;
@@ -5359,8 +5389,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
         signal(
             28 as libc::c_int,
             ::std::mem::transmute::<
-                Option<unsafe extern "C" fn() -> ()>,
-                Option<unsafe extern "C" fn(libc::c_int) -> ()>,
+                Option::<unsafe extern "C" fn() -> ()>,
+                Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
             >(Some(sigWinchCallback as unsafe extern "C" fn() -> ())),
         );
     }
@@ -5368,13 +5398,17 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
     if Modes.net_only != 0 {
         fprintf(
             stderr,
-            b"Net-only mode, no RTL device or file open.\n\0" as *const u8 as *const libc::c_char,
+            b"Net-only mode, no RTL device or file open.\n\0" as *const u8
+                as *const libc::c_char,
         );
-    } else if Modes.filename as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
+    } else if Modes.filename as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong
+        {
         modesInitRTLSDR();
     } else {
         let mut current_block_169: u64;
-        if *(Modes.filename).offset(0 as libc::c_int as isize) as libc::c_int == 45 as libc::c_int {
+        if *(Modes.filename).offset(0 as libc::c_int as isize) as libc::c_int
+            == 45 as libc::c_int
+        {
             if *(Modes.filename).offset(1 as libc::c_int as isize) as libc::c_int
                 == 0 as libc::c_int
             {
@@ -5408,7 +5442,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
         &mut Modes.reader_thread as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
         Some(
-            readerThreadEntryPoint as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+            readerThreadEntryPoint
+                as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
         ),
         0 as *mut libc::c_void,
     );
@@ -5447,7 +5482,8 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
                 Modes.stat_out_of_phase,
             );
             printf(
-                b"%lld demodulated with zero errors\n\0" as *const u8 as *const libc::c_char,
+                b"%lld demodulated with zero errors\n\0" as *const u8
+                    as *const libc::c_char,
                 Modes.stat_demodulated,
             );
             printf(
@@ -5482,8 +5518,7 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
 #[inline]
 unsafe extern "C" fn __bswap_16(mut __bsx: __uint16_t) -> __uint16_t {
     return (__bsx as libc::c_int >> 8 as libc::c_int & 255 as libc::c_int
-        | (__bsx as libc::c_int & 255 as libc::c_int) << 8 as libc::c_int)
-        as __uint16_t;
+        | (__bsx as libc::c_int & 255 as libc::c_int) << 8 as libc::c_int) as __uint16_t;
 }
 #[inline]
 unsafe extern "C" fn __bswap_32(mut __bsx: __uint32_t) -> __uint32_t {
@@ -5649,7 +5684,8 @@ pub unsafe extern "C" fn anetResolve(
         }
         memcpy(
             &mut sa.sin_addr as *mut in_addr as *mut libc::c_void,
-            *((*he).h_addr_list).offset(0 as libc::c_int as isize) as *const libc::c_void,
+            *((*he).h_addr_list).offset(0 as libc::c_int as isize)
+                as *const libc::c_void,
             ::std::mem::size_of::<in_addr>() as libc::c_ulong,
         );
     }
@@ -5739,7 +5775,8 @@ unsafe extern "C" fn anetTcpGenericConnect(
         }
         memcpy(
             &mut sa.sin_addr as *mut in_addr as *mut libc::c_void,
-            *((*he).h_addr_list).offset(0 as libc::c_int as isize) as *const libc::c_void,
+            *((*he).h_addr_list).offset(0 as libc::c_int as isize)
+                as *const libc::c_void,
             ::std::mem::size_of::<in_addr>() as libc::c_ulong,
         );
     }
@@ -5763,11 +5800,7 @@ unsafe extern "C" fn anetTcpGenericConnect(
         }
         tmp___2 = __errno_location();
         tmp___3 = strerror(*tmp___2);
-        anetSetError(
-            err,
-            b"connect: %s\0" as *const u8 as *const libc::c_char,
-            tmp___3,
-        );
+        anetSetError(err, b"connect: %s\0" as *const u8 as *const libc::c_char, tmp___3);
         close(s);
         return -(1 as libc::c_int);
     }
@@ -5837,11 +5870,7 @@ pub unsafe extern "C" fn anetUnixGenericConnect(
         }
         tmp___1 = __errno_location();
         tmp___2 = strerror(*tmp___1);
-        anetSetError(
-            err,
-            b"connect: %s\0" as *const u8 as *const libc::c_char,
-            tmp___2,
-        );
+        anetSetError(err, b"connect: %s\0" as *const u8 as *const libc::c_char, tmp___2);
         close(s);
         return -(1 as libc::c_int);
     }
@@ -5925,11 +5954,7 @@ unsafe extern "C" fn anetListen(
     if tmp___1 == -(1 as libc::c_int) {
         tmp = __errno_location();
         tmp___0 = strerror(*tmp);
-        anetSetError(
-            err,
-            b"bind: %s\0" as *const u8 as *const libc::c_char,
-            tmp___0,
-        );
+        anetSetError(err, b"bind: %s\0" as *const u8 as *const libc::c_char, tmp___0);
         close(s);
         return -(1 as libc::c_int);
     }
@@ -5937,11 +5962,7 @@ unsafe extern "C" fn anetListen(
     if tmp___4 == -(1 as libc::c_int) {
         tmp___2 = __errno_location();
         tmp___3 = strerror(*tmp___2);
-        anetSetError(
-            err,
-            b"listen: %s\0" as *const u8 as *const libc::c_char,
-            tmp___3,
-        );
+        anetSetError(err, b"listen: %s\0" as *const u8 as *const libc::c_char, tmp___3);
         close(s);
         return -(1 as libc::c_int);
     }
@@ -6057,11 +6078,7 @@ unsafe extern "C" fn anetGenericAccept(
         }
         tmp = __errno_location();
         tmp___0 = strerror(*tmp);
-        anetSetError(
-            err,
-            b"accept: %s\0" as *const u8 as *const libc::c_char,
-            tmp___0,
-        );
+        anetSetError(err, b"accept: %s\0" as *const u8 as *const libc::c_char, tmp___0);
         return -(1 as libc::c_int);
     }
     return fd;
@@ -6199,7 +6216,7 @@ pub unsafe extern "C" fn anetSockName(
     return 0 as libc::c_int;
 }
 pub fn main() {
-    let mut args: Vec<*mut libc::c_char> = Vec::new();
+    let mut args: Vec::<*mut libc::c_char> = Vec::new();
     for arg in ::std::env::args() {
         args.push(
             (::std::ffi::CString::new(arg))
@@ -6209,17 +6226,20 @@ pub fn main() {
     }
     args.push(::std::ptr::null_mut());
     unsafe {
-        ::std::process::exit(main_0(
-            (args.len() - 1) as libc::c_int,
-            args.as_mut_ptr() as *mut *mut libc::c_char,
-        ) as i32)
+        ::std::process::exit(
+            main_0(
+                (args.len() - 1) as libc::c_int,
+                args.as_mut_ptr() as *mut *mut libc::c_char,
+            ) as i32,
+        )
     }
 }
 unsafe extern "C" fn run_static_initializers() {
     modesNetServices = [
         {
             let mut init = __anonstruct_modesNetServices_483049182 {
-                descr: b"Raw TCP output\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+                descr: b"Raw TCP output\0" as *const u8 as *const libc::c_char
+                    as *mut libc::c_char,
                 socket: &mut Modes.ros,
                 port: 30002 as libc::c_int,
             };
@@ -6227,7 +6247,8 @@ unsafe extern "C" fn run_static_initializers() {
         },
         {
             let mut init = __anonstruct_modesNetServices_483049182 {
-                descr: b"Raw TCP input\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+                descr: b"Raw TCP input\0" as *const u8 as *const libc::c_char
+                    as *mut libc::c_char,
                 socket: &mut Modes.ris,
                 port: 30001 as libc::c_int,
             };
@@ -6235,7 +6256,8 @@ unsafe extern "C" fn run_static_initializers() {
         },
         {
             let mut init = __anonstruct_modesNetServices_483049182 {
-                descr: b"HTTP server\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
+                descr: b"HTTP server\0" as *const u8 as *const libc::c_char
+                    as *mut libc::c_char,
                 socket: &mut Modes.https,
                 port: 8080 as libc::c_int,
             };

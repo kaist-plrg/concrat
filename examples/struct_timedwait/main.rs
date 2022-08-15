@@ -4,10 +4,15 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_mutex_lock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_mutex_unlock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_cond_signal(__cond: *mut pthread_cond_t) -> libc::c_int;
@@ -163,10 +168,7 @@ pub static mut s: __anonstruct_s_587009629 = {
     init
 };
 pub unsafe extern "C" fn f1() {
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     pthread_mutex_lock(&mut s.m1);
     s.n1 += 1;
     if s.n1 == 1 as libc::c_int {
@@ -183,10 +185,7 @@ pub unsafe extern "C" fn f1() {
     pthread_mutex_unlock(&mut s.m1);
 }
 pub unsafe extern "C" fn f2() {
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     pthread_mutex_lock(&mut s.m1);
     s.n2 += 1;
     if s.n2 == 1 as libc::c_int {
@@ -203,10 +202,7 @@ pub unsafe extern "C" fn f2() {
     pthread_mutex_unlock(&mut s.m1);
 }
 pub unsafe extern "C" fn f3() {
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     pthread_mutex_lock(&mut s.m1);
     s.n3 += 1;
     if s.n3 == 1 as libc::c_int {

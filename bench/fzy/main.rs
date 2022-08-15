@@ -1,8 +1,7 @@
-use std::arch::asm;
-
-use ::c2rust_asm_casts;
 use ::libc;
+use ::c2rust_asm_casts;
 use c2rust_asm_casts::AsmCastTrait;
+use std::arch::asm;
 extern "C" {
     pub type _IO_wide_data;
     pub type _IO_codecvt;
@@ -11,7 +10,11 @@ extern "C" {
     static mut stderr: *mut FILE;
     fn fprintf(_: *mut FILE, _: *const libc::c_char, _: ...) -> libc::c_int;
     fn printf(_: *const libc::c_char, _: ...) -> libc::c_int;
-    fn vfprintf(_: *mut FILE, _: *const libc::c_char, _: ::std::ffi::VaList) -> libc::c_int;
+    fn vfprintf(
+        _: *mut FILE,
+        _: *const libc::c_char,
+        _: ::std::ffi::VaList,
+    ) -> libc::c_int;
     fn exit(_: libc::c_int) -> !;
     fn __ctype_tolower_loc() -> *mut *const __int32_t;
     fn __ctype_toupper_loc() -> *mut *const __int32_t;
@@ -52,7 +55,7 @@ extern "C" {
     fn ioctl(__fd: libc::c_int, __request: libc::c_ulong, _: ...) -> libc::c_int;
     fn signal(
         __sig: libc::c_int,
-        __handler: Option<unsafe extern "C" fn(libc::c_int) -> ()>,
+        __handler: Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
     ) -> __sighandler_t;
     fn sigemptyset(__set: *mut sigset_t) -> libc::c_int;
     fn sigaddset(__set: *mut sigset_t, __signo: libc::c_int) -> libc::c_int;
@@ -64,7 +67,7 @@ extern "C" {
         __base: *mut libc::c_void,
         __nmemb: size_t,
         __size: size_t,
-        __compar: Option<
+        __compar: Option::<
             unsafe extern "C" fn(*const libc::c_void, *const libc::c_void) -> libc::c_int,
         >,
     );
@@ -78,10 +81,15 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_mutex_init(
         __mutex: *mut pthread_mutex_t,
         __mutexattr: *const pthread_mutexattr_t,
@@ -103,13 +111,23 @@ extern "C" {
     fn strcmp(_: *const libc::c_char, _: *const libc::c_char) -> libc::c_int;
     fn __ctype_b_loc() -> *mut *const libc::c_ushort;
     fn fputs(__s: *const libc::c_char, __stream: *mut FILE) -> libc::c_int;
-    fn memmove(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong)
-        -> *mut libc::c_void;
+    fn memmove(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
-    fn strncpy(_: *mut libc::c_char, _: *const libc::c_char, _: libc::c_ulong)
-        -> *mut libc::c_char;
+    fn strncpy(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
     fn strcat(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
-    fn strncmp(_: *const libc::c_char, _: *const libc::c_char, _: libc::c_ulong) -> libc::c_int;
+    fn strncmp(
+        _: *const libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> libc::c_int;
 }
 pub type __builtin_va_list = [__va_list_tag; 1];
 #[derive(Copy, Clone)]
@@ -279,7 +297,7 @@ pub struct winsize {
     pub ws_xpixel: libc::c_ushort,
     pub ws_ypixel: libc::c_ushort,
 }
-pub type __sighandler_t = Option<unsafe extern "C" fn(libc::c_int) -> ()>;
+pub type __sighandler_t = Option::<unsafe extern "C" fn(libc::c_int) -> ()>;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __pthread_internal_list {
@@ -356,7 +374,7 @@ pub struct option {
 #[repr(C)]
 pub struct __anonstruct_keybinding_t_984224788 {
     pub key: *const libc::c_char,
-    pub action: Option<unsafe extern "C" fn(*mut tty_interface_t) -> ()>,
+    pub action: Option::<unsafe extern "C" fn(*mut tty_interface_t) -> ()>,
 }
 pub type keybinding_t = __anonstruct_keybinding_t_984224788;
 #[inline]
@@ -391,7 +409,10 @@ unsafe extern "C" fn toupper(mut __c: libc::c_int) -> libc::c_int {
     }
     return tmp___0;
 }
-unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> libc::c_int {
+unsafe fn main_0(
+    mut argc: libc::c_int,
+    mut argv: *mut *mut libc::c_char,
+) -> libc::c_int {
     let mut ret: libc::c_int = 0;
     let mut options: options_t = options_t {
         benchmark: 0,
@@ -508,12 +529,13 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
             num_lines_adjustment += 1;
         }
         tmp___5 = tty_getheight(&mut tty);
-        if (options.num_lines).wrapping_add(num_lines_adjustment as libc::c_uint) as size_t
-            > tmp___5
+        if (options.num_lines).wrapping_add(num_lines_adjustment as libc::c_uint)
+            as size_t > tmp___5
         {
             tmp___4 = tty_getheight(&mut tty);
-            options.num_lines =
-                tmp___4.wrapping_sub(num_lines_adjustment as size_t) as libc::c_uint;
+            options
+                .num_lines = tmp___4.wrapping_sub(num_lines_adjustment as size_t)
+                as libc::c_uint;
         }
         tty_interface_init(&mut tty_interface, &mut tty, &mut choices, &mut options);
         ret = tty_interface_run(&mut tty_interface);
@@ -781,41 +803,520 @@ pub static mut bonus_states: [[score_t; 256]; 3] = [
         0.,
     ],
     [
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.8f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.8f64, 0.6f64, 0.9f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.8f64, 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.6f64,
+        0.9f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
     ],
     [
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.8f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.8f64, 0.6f64, 0.9f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64,
-        0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.8f64, 0.0f64, 0.7f64, 0.7f64,
-        0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64,
-        0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64, 0.7f64,
-        0.7f64, 0.7f64, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.6f64,
+        0.9f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.0f64,
+        0.8f64,
+        0.0f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.7f64,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
+        0.,
     ],
 ];
 pub static mut bonus_index: [size_t; 256] = [
@@ -1127,8 +1628,11 @@ unsafe extern "C" fn precompute_bonus(
     i = 0 as libc::c_int;
     while *haystack.offset(i as isize) != 0 {
         ch = *haystack.offset(i as isize);
-        *match_bonus.offset(i as isize) = bonus_states
-            [bonus_index[ch as libc::c_uchar as usize] as usize][last_ch as libc::c_uchar as usize];
+        *match_bonus
+            .offset(
+                i as isize,
+            ) = bonus_states[bonus_index[ch as libc::c_uchar as usize]
+            as usize][last_ch as libc::c_uchar as usize];
         last_ch = ch;
         i += 1;
     }
@@ -1151,7 +1655,7 @@ unsafe extern "C" fn setup_match_struct(
     tmp___0 = strlen(haystack);
     (*match___0).haystack_len = tmp___0 as libc::c_int;
     if (*match___0).haystack_len > 1024 as libc::c_int {
-        return;
+        return
     } else {
         if (*match___0).needle_len > (*match___0).haystack_len {
             return;
@@ -1163,7 +1667,8 @@ unsafe extern "C" fn setup_match_struct(
             __res = tolower(*needle.offset(i as isize) as libc::c_int);
         } else {
             tmp___2 = __ctype_tolower_loc();
-            __res = *(*tmp___2).offset(*needle.offset(i as isize) as libc::c_int as isize);
+            __res = *(*tmp___2)
+                .offset(*needle.offset(i as isize) as libc::c_int as isize);
         }
         (*match___0).lower_needle[i as usize] = __res as libc::c_char;
         i += 1;
@@ -1174,8 +1679,8 @@ unsafe extern "C" fn setup_match_struct(
             __res___0 = tolower(*haystack.offset(i___0 as isize) as libc::c_int);
         } else {
             tmp___4 = __ctype_tolower_loc();
-            __res___0 =
-                *(*tmp___4).offset(*haystack.offset(i___0 as isize) as libc::c_int as isize);
+            __res___0 = *(*tmp___4)
+                .offset(*haystack.offset(i___0 as isize) as libc::c_int as isize);
         }
         (*match___0).lower_haystack[i___0 as usize] = __res___0 as libc::c_char;
         i___0 += 1;
@@ -1227,9 +1732,11 @@ unsafe extern "C" fn match_row(
             tmp___1 = ::std::f32::INFINITY;
             score = -tmp___1 as score_t;
             if i == 0 {
-                score = j as libc::c_double * -0.005f64 + *match_bonus.offset(j as isize);
+                score = j as libc::c_double * -0.005f64
+                    + *match_bonus.offset(j as isize);
             } else if j != 0 {
-                if *last_M.offset((j - 1 as libc::c_int) as isize) + *match_bonus.offset(j as isize)
+                if *last_M.offset((j - 1 as libc::c_int) as isize)
+                    + *match_bonus.offset(j as isize)
                     > *last_D.offset((j - 1 as libc::c_int) as isize) + 1.0f64
                 {
                     score = *last_M.offset((j - 1 as libc::c_int) as isize)
@@ -1430,8 +1937,8 @@ pub unsafe extern "C" fn match_positions(
                     if match_required != 0 {
                         current_block_60 = 8217158745379213294;
                     } else if (*D.offset(i___1 as isize))[j as usize]
-                        == (*M.offset(i___1 as isize))[j as usize]
-                    {
+                            == (*M.offset(i___1 as isize))[j as usize]
+                        {
                         current_block_60 = 8217158745379213294;
                     } else {
                         current_block_60 = 9859671972921157070;
@@ -1442,9 +1949,10 @@ pub unsafe extern "C" fn match_positions(
                             if i___1 != 0 {
                                 if j != 0 {
                                     if (*M.offset(i___1 as isize))[j as usize]
-                                        == (*D.offset((i___1 - 1 as libc::c_int) as isize))
-                                            [(j - 1 as libc::c_int) as usize]
-                                            + 1.0f64
+                                        == (*D
+                                            .offset(
+                                                (i___1 - 1 as libc::c_int) as isize,
+                                            ))[(j - 1 as libc::c_int) as usize] + 1.0f64
                                     {
                                         tmp___4 = 1 as libc::c_int;
                                     } else {
@@ -1469,7 +1977,8 @@ pub unsafe extern "C" fn match_positions(
             i___1 -= 1;
         }
     }
-    result = (*M.offset((n - 1 as libc::c_int) as isize))[(m - 1 as libc::c_int) as usize];
+    result = (*M
+        .offset((n - 1 as libc::c_int) as isize))[(m - 1 as libc::c_int) as usize];
     free(M as *mut libc::c_void);
     free(D as *mut libc::c_void);
     return result;
@@ -1487,7 +1996,10 @@ pub unsafe extern "C" fn tty_close(mut tty: *mut tty_t) {
     close((*tty).fdin);
 }
 unsafe extern "C" fn handle_sigwinch(mut sig: libc::c_int) {}
-pub unsafe extern "C" fn tty_init(mut tty: *mut tty_t, mut tty_filename: *const libc::c_char) {
+pub unsafe extern "C" fn tty_init(
+    mut tty: *mut tty_t,
+    mut tty_filename: *const libc::c_char,
+) {
     let mut tmp: libc::c_int = 0;
     let mut tmp___0: libc::c_int = 0;
     let mut new_termios: termios = termios {
@@ -1579,7 +2091,7 @@ pub unsafe extern "C" fn tty_getchar(mut tty: *mut tty_t) -> libc::c_char {
     } else if size == 0 as libc::c_int {
         exit(1 as libc::c_int);
     } else {
-        return ch;
+        return ch
     };
 }
 pub unsafe extern "C" fn tty_input_ready(
@@ -1590,10 +2102,7 @@ pub unsafe extern "C" fn tty_input_ready(
     let mut readfs: fd_set = fd_set { fds_bits: [0; 16] };
     let mut __d0: libc::c_int = 0;
     let mut __d1: libc::c_int = 0;
-    let mut ts: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut ts: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     let mut mask: sigset_t = sigset_t { __val: [0; 16] };
     let mut err: libc::c_int = 0;
     let mut tmp: *mut sigset_t = 0 as *mut sigset_t;
@@ -1606,9 +2115,8 @@ pub unsafe extern "C" fn tty_input_ready(
         .wrapping_div(::std::mem::size_of::<__fd_mask>() as libc::c_ulong);
     let fresh3 = &mut __d1;
     let fresh4;
-    let fresh5 = &mut *(readfs.fds_bits)
-        .as_mut_ptr()
-        .offset(0 as libc::c_int as isize) as *mut __fd_mask;
+    let fresh5 = &mut *(readfs.fds_bits).as_mut_ptr().offset(0 as libc::c_int as isize)
+        as *mut __fd_mask;
     asm!(
         "cld; rep; stosq", inlateout("cx") c2rust_asm_casts::AsmCast::cast_in(fresh0,
         fresh2) => fresh1, inlateout("di") c2rust_asm_casts::AsmCast::cast_in(fresh3,
@@ -1617,13 +2125,16 @@ pub unsafe extern "C" fn tty_input_ready(
     );
     c2rust_asm_casts::AsmCast::cast_out(fresh0, fresh2, fresh1);
     c2rust_asm_casts::AsmCast::cast_out(fresh3, fresh5, fresh4);
-    readfs.fds_bits[((*tty).fdin
-        / (8 as libc::c_int * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-        as usize] |= ((1 as libc::c_ulong)
-        << (*tty).fdin
-            % (8 as libc::c_int
-                * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-        as __fd_mask;
+    readfs
+        .fds_bits[((*tty).fdin
+        / (8 as libc::c_int
+            * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
+        as usize]
+        |= ((1 as libc::c_ulong)
+            << (*tty).fdin
+                % (8 as libc::c_int
+                    * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong
+                        as libc::c_int)) as __fd_mask;
     ts.tv_sec = timeout / 1000 as libc::c_long;
     ts.tv_nsec = timeout % 1000 as libc::c_long * 1000000 as libc::c_long;
     sigemptyset(&mut mask);
@@ -1652,22 +2163,23 @@ pub unsafe extern "C" fn tty_input_ready(
     if err < 0 as libc::c_int {
         tmp___2 = __errno_location();
         if *tmp___2 == 4 as libc::c_int {
-            return 0 as libc::c_int;
+            return 0 as libc::c_int
         } else {
             perror(b"select\0" as *const u8 as *const libc::c_char);
             exit(1 as libc::c_int);
         }
     } else {
-        return (readfs.fds_bits[((*tty).fdin
+        return (readfs
+            .fds_bits[((*tty).fdin
             / (8 as libc::c_int
                 * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
             as usize]
             & ((1 as libc::c_ulong)
                 << (*tty).fdin
                     % (8 as libc::c_int
-                        * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong as libc::c_int))
-                as __fd_mask
-            != 0 as libc::c_long) as libc::c_int;
+                        * ::std::mem::size_of::<__fd_mask>() as libc::c_ulong
+                            as libc::c_int)) as __fd_mask != 0 as libc::c_long)
+            as libc::c_int
     };
 }
 unsafe extern "C" fn tty_sgr(mut tty: *mut tty_t, mut code: libc::c_int) {
@@ -1776,14 +2288,14 @@ unsafe extern "C" fn cmpchoice(
     b = _idx2 as *const scored_result;
     if (*a).score == (*b).score {
         if ((*a).str_0 as libc::c_ulong) < (*b).str_0 as libc::c_ulong {
-            return -(1 as libc::c_int);
+            return -(1 as libc::c_int)
         } else {
-            return 1 as libc::c_int;
+            return 1 as libc::c_int
         }
     } else if (*a).score < (*b).score {
-        return 1 as libc::c_int;
+        return 1 as libc::c_int
     } else {
-        return -(1 as libc::c_int);
+        return -(1 as libc::c_int)
     };
 }
 unsafe extern "C" fn safe_realloc(
@@ -1794,7 +2306,8 @@ unsafe extern "C" fn safe_realloc(
     if buffer.is_null() {
         fprintf(
             stderr,
-            b"Error: Can't allocate memory (%zu bytes)\n\0" as *const u8 as *const libc::c_char,
+            b"Error: Can't allocate memory (%zu bytes)\n\0" as *const u8
+                as *const libc::c_char,
             size,
         );
         abort();
@@ -1822,7 +2335,8 @@ pub unsafe extern "C" fn choices_fread(
     buffer_start = (*c).buffer_size;
     capacity = 4096 as libc::c_int as size_t;
     while capacity <= (*c).buffer_size {
-        capacity = (capacity as libc::c_ulong).wrapping_mul(2 as libc::c_ulong) as size_t as size_t;
+        capacity = (capacity as libc::c_ulong).wrapping_mul(2 as libc::c_ulong) as size_t
+            as size_t;
     }
     tmp = safe_realloc((*c).buffer as *mut libc::c_void, capacity);
     (*c).buffer = tmp as *mut libc::c_char;
@@ -1838,7 +2352,8 @@ pub unsafe extern "C" fn choices_fread(
         if !(tmp___2 == capacity) {
             break;
         }
-        capacity = (capacity as libc::c_ulong).wrapping_mul(2 as libc::c_ulong) as size_t as size_t;
+        capacity = (capacity as libc::c_ulong).wrapping_mul(2 as libc::c_ulong) as size_t
+            as size_t;
         tmp___0 = safe_realloc((*c).buffer as *mut libc::c_void, capacity);
         (*c).buffer = tmp___0 as *mut libc::c_char;
     }
@@ -1870,13 +2385,14 @@ pub unsafe extern "C" fn choices_fread(
         if !((line as libc::c_ulong) < line_end as libc::c_ulong) {
             break;
         }
-    }
+    };
 }
 unsafe extern "C" fn choices_resize(mut c: *mut choices_t, mut new_capacity: size_t) {
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     tmp = safe_realloc(
         (*c).strings as *mut libc::c_void,
-        new_capacity.wrapping_mul(::std::mem::size_of::<*const libc::c_char>() as libc::c_ulong),
+        new_capacity
+            .wrapping_mul(::std::mem::size_of::<*const libc::c_char>() as libc::c_ulong),
     );
     (*c).strings = tmp as *mut *const libc::c_char;
     (*c).capacity = new_capacity;
@@ -1889,7 +2405,10 @@ unsafe extern "C" fn choices_reset_search(mut c: *mut choices_t) {
     (*c).selection = tmp;
     (*c).results = 0 as *mut libc::c_void as *mut scored_result;
 }
-pub unsafe extern "C" fn choices_init(mut c: *mut choices_t, mut options: *mut options_t) {
+pub unsafe extern "C" fn choices_init(
+    mut c: *mut choices_t,
+    mut options: *mut options_t,
+) {
     let mut tmp: size_t = 0;
     let mut tmp___0: libc::c_long = 0;
     (*c).strings = 0 as *mut libc::c_void as *mut *const libc::c_char;
@@ -1925,7 +2444,10 @@ pub unsafe extern "C" fn choices_destroy(mut c: *mut choices_t) {
     (*c).selection = tmp___0;
     (*c).available = tmp___0;
 }
-pub unsafe extern "C" fn choices_add(mut c: *mut choices_t, mut choice: *const libc::c_char) {
+pub unsafe extern "C" fn choices_add(
+    mut c: *mut choices_t,
+    mut choice: *const libc::c_char,
+) {
     let mut tmp: size_t = 0;
     choices_reset_search(c);
     if (*c).size == (*c).capacity {
@@ -1946,15 +2468,19 @@ unsafe extern "C" fn worker_get_next_batch(
 ) {
     pthread_mutex_lock(&mut (*job).lock);
     *start = (*job).processed;
-    (*job).processed =
-        ((*job).processed as libc::c_ulong).wrapping_add(512 as libc::c_ulong) as size_t as size_t;
+    (*job)
+        .processed = ((*job).processed as libc::c_ulong)
+        .wrapping_add(512 as libc::c_ulong) as size_t as size_t;
     if (*job).processed > (*(*job).choices).size {
         (*job).processed = (*(*job).choices).size;
     }
     *end = (*job).processed;
     pthread_mutex_unlock(&mut (*job).lock);
 }
-unsafe extern "C" fn merge2(mut list1: result_list, mut list2: result_list) -> result_list {
+unsafe extern "C" fn merge2(
+    mut list1: result_list,
+    mut list2: result_list,
+) -> result_list {
     let mut result_index: size_t = 0;
     let mut index1: size_t = 0;
     let mut index2: size_t = 0;
@@ -1976,8 +2502,10 @@ unsafe extern "C" fn merge2(mut list1: result_list, mut list2: result_list) -> r
     index1 = 0 as libc::c_int as size_t;
     index2 = 0 as libc::c_int as size_t;
     result.size = (list1.size).wrapping_add(list2.size);
-    tmp =
-        malloc((result.size).wrapping_mul(::std::mem::size_of::<scored_result>() as libc::c_ulong));
+    tmp = malloc(
+        (result.size)
+            .wrapping_mul(::std::mem::size_of::<scored_result>() as libc::c_ulong),
+    );
     result.list = tmp as *mut scored_result;
     if (result.list).is_null() {
         fprintf(
@@ -1999,13 +2527,15 @@ unsafe extern "C" fn merge2(mut list1: result_list, mut list2: result_list) -> r
             result_index = result_index.wrapping_add(1);
             tmp___1 = index1;
             index1 = index1.wrapping_add(1);
-            *(result.list).offset(tmp___0 as isize) = *(list1.list).offset(tmp___1 as isize);
+            *(result.list)
+                .offset(tmp___0 as isize) = *(list1.list).offset(tmp___1 as isize);
         } else {
             tmp___2 = result_index;
             result_index = result_index.wrapping_add(1);
             tmp___3 = index2;
             index2 = index2.wrapping_add(1);
-            *(result.list).offset(tmp___2 as isize) = *(list2.list).offset(tmp___3 as isize);
+            *(result.list)
+                .offset(tmp___2 as isize) = *(list2.list).offset(tmp___3 as isize);
         }
     }
     while index1 < list1.size {
@@ -2026,7 +2556,9 @@ unsafe extern "C" fn merge2(mut list1: result_list, mut list2: result_list) -> r
     free(list2.list as *mut libc::c_void);
     return result;
 }
-unsafe extern "C" fn choices_search_worker(mut data: *mut libc::c_void) -> *mut libc::c_void {
+unsafe extern "C" fn choices_search_worker(
+    mut data: *mut libc::c_void,
+) -> *mut libc::c_void {
     let mut w: *mut worker = 0 as *mut worker;
     let mut job: *mut search_job = 0 as *mut search_job;
     let mut c: *const choices_t = 0 as *const choices_t;
@@ -2052,10 +2584,11 @@ unsafe extern "C" fn choices_search_worker(mut data: *mut libc::c_void) -> *mut 
         while i < end {
             tmp = has_match((*job).search, *((*c).strings).offset(i as isize));
             if tmp != 0 {
-                let ref mut fresh7 = (*((*result).list).offset((*result).size as isize)).str_0;
+                let ref mut fresh7 = (*((*result).list).offset((*result).size as isize))
+                    .str_0;
                 *fresh7 = *((*c).strings).offset(i as isize);
-                (*((*result).list).offset((*result).size as isize)).score =
-                    match_0((*job).search, *((*c).strings).offset(i as isize));
+                (*((*result).list).offset((*result).size as isize))
+                    .score = match_0((*job).search, *((*c).strings).offset(i as isize));
                 (*result).size = ((*result).size).wrapping_add(1);
             }
             i = i.wrapping_add(1);
@@ -2067,11 +2600,16 @@ unsafe extern "C" fn choices_search_worker(mut data: *mut libc::c_void) -> *mut 
         ::std::mem::size_of::<scored_result>() as libc::c_ulong,
         Some(
             cmpchoice
-                as unsafe extern "C" fn(*const libc::c_void, *const libc::c_void) -> libc::c_int,
+                as unsafe extern "C" fn(
+                    *const libc::c_void,
+                    *const libc::c_void,
+                ) -> libc::c_int,
         ),
     );
     step = 0 as libc::c_uint;
-    while ((*w).worker_num).wrapping_rem(((2 as libc::c_int) << step) as libc::c_uint) == 0 {
+    while ((*w).worker_num).wrapping_rem(((2 as libc::c_int) << step) as libc::c_uint)
+        == 0
+    {
         next_worker = (*w).worker_num | ((1 as libc::c_int) << step) as libc::c_uint;
         if next_worker >= (*c).worker_count {
             break;
@@ -2086,7 +2624,8 @@ unsafe extern "C" fn choices_search_worker(mut data: *mut libc::c_void) -> *mut 
             perror(b"pthread_join\0" as *const u8 as *const libc::c_char);
             exit(1 as libc::c_int);
         }
-        (*w).result = merge2(
+        (*w)
+            .result = merge2(
             (*w).result,
             (*((*job).workers).offset(next_worker as isize)).result,
         );
@@ -2094,7 +2633,10 @@ unsafe extern "C" fn choices_search_worker(mut data: *mut libc::c_void) -> *mut 
     }
     return 0 as *mut libc::c_void;
 }
-pub unsafe extern "C" fn choices_search(mut c: *mut choices_t, mut search: *const libc::c_char) {
+pub unsafe extern "C" fn choices_search(
+    mut c: *mut choices_t,
+    mut search: *const libc::c_char,
+) {
     let mut job: *mut search_job = 0 as *mut search_job;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___0: libc::c_int = 0;
@@ -2137,7 +2679,8 @@ pub unsafe extern "C" fn choices_search(mut c: *mut choices_t, mut search: *cons
         (*workers.offset(i as isize)).worker_num = i as libc::c_uint;
         (*workers.offset(i as isize)).result.size = 0 as libc::c_int as size_t;
         tmp___2 = malloc(
-            ((*c).size).wrapping_mul(::std::mem::size_of::<scored_result>() as libc::c_ulong),
+            ((*c).size)
+                .wrapping_mul(::std::mem::size_of::<scored_result>() as libc::c_ulong),
         );
         let ref mut fresh9 = (*workers.offset(i as isize)).result.list;
         *fresh9 = tmp___2 as *mut scored_result;
@@ -2172,19 +2715,26 @@ pub unsafe extern "C" fn choices_search(mut c: *mut choices_t, mut search: *cons
     pthread_mutex_destroy(&mut (*job).lock);
     free(job as *mut libc::c_void);
 }
-pub unsafe extern "C" fn choices_get(mut c: *mut choices_t, mut n: size_t) -> *const libc::c_char {
+pub unsafe extern "C" fn choices_get(
+    mut c: *mut choices_t,
+    mut n: size_t,
+) -> *const libc::c_char {
     if n < (*c).available {
-        return (*((*c).results).offset(n as isize)).str_0;
+        return (*((*c).results).offset(n as isize)).str_0
     } else {
-        return 0 as *mut libc::c_void as *const libc::c_char;
+        return 0 as *mut libc::c_void as *const libc::c_char
     };
 }
-pub unsafe extern "C" fn choices_getscore(mut c: *mut choices_t, mut n: size_t) -> score_t {
+pub unsafe extern "C" fn choices_getscore(
+    mut c: *mut choices_t,
+    mut n: size_t,
+) -> score_t {
     return (*((*c).results).offset(n as isize)).score;
 }
 pub unsafe extern "C" fn choices_prev(mut c: *mut choices_t) {
     if (*c).available != 0 {
-        (*c).selection = ((*c).selection)
+        (*c)
+            .selection = ((*c).selection)
             .wrapping_add((*c).available)
             .wrapping_sub(1 as libc::c_ulong)
             .wrapping_rem((*c).available);
@@ -2192,7 +2742,8 @@ pub unsafe extern "C" fn choices_prev(mut c: *mut choices_t) {
 }
 pub unsafe extern "C" fn choices_next(mut c: *mut choices_t) {
     if (*c).available != 0 {
-        (*c).selection = ((*c).selection)
+        (*c)
+            .selection = ((*c).selection)
             .wrapping_add(1 as libc::c_ulong)
             .wrapping_rem((*c).available);
     }
@@ -2386,7 +2937,10 @@ pub unsafe extern "C" fn options_parse(
                         &mut (*options).benchmark as *mut libc::c_int,
                     );
                     if tmp != 1 as libc::c_int {
-                        usage(*argv.offset(0 as libc::c_int as isize) as *const libc::c_char);
+                        usage(
+                            *argv.offset(0 as libc::c_int as isize)
+                                as *const libc::c_char,
+                        );
                         exit(1 as libc::c_int);
                     }
                 } else {
@@ -2406,7 +2960,9 @@ pub unsafe extern "C" fn options_parse(
                     &mut (*options).workers as *mut libc::c_uint,
                 );
                 if tmp___0 != 1 as libc::c_int {
-                    usage(*argv.offset(0 as libc::c_int as isize) as *const libc::c_char);
+                    usage(
+                        *argv.offset(0 as libc::c_int as isize) as *const libc::c_char,
+                    );
                     exit(1 as libc::c_int);
                 }
             }
@@ -2430,9 +2986,13 @@ pub unsafe extern "C" fn options_parse(
                         );
                         fprintf(
                             stderr,
-                            b"Must be integer in range 3..\n\0" as *const u8 as *const libc::c_char,
+                            b"Must be integer in range 3..\n\0" as *const u8
+                                as *const libc::c_char,
                         );
-                        usage(*argv.offset(0 as libc::c_int as isize) as *const libc::c_char);
+                        usage(
+                            *argv.offset(0 as libc::c_int as isize)
+                                as *const libc::c_char,
+                        );
                         exit(1 as libc::c_int);
                     } else {
                         if l < 3 as libc::c_int {
@@ -2447,7 +3007,10 @@ pub unsafe extern "C" fn options_parse(
                                 b"Must be integer in range 3..\n\0" as *const u8
                                     as *const libc::c_char,
                             );
-                            usage(*argv.offset(0 as libc::c_int as isize) as *const libc::c_char);
+                            usage(
+                                *argv.offset(0 as libc::c_int as isize)
+                                    as *const libc::c_char,
+                            );
                             exit(1 as libc::c_int);
                         }
                     }
@@ -2474,7 +3037,9 @@ unsafe extern "C" fn isprint_unicode(mut c: libc::c_char) -> libc::c_int {
     let mut tmp: *mut *const libc::c_ushort = 0 as *mut *const libc::c_ushort;
     let mut tmp___0: libc::c_int = 0;
     tmp = __ctype_b_loc();
-    if *(*tmp).offset(c as libc::c_int as isize) as libc::c_int & 16384 as libc::c_int != 0 {
+    if *(*tmp).offset(c as libc::c_int as isize) as libc::c_int & 16384 as libc::c_int
+        != 0
+    {
         tmp___0 = 1 as libc::c_int;
     } else if c as libc::c_int & (1 as libc::c_int) << 7 as libc::c_int != 0 {
         tmp___0 = 1 as libc::c_int;
@@ -2510,7 +3075,9 @@ unsafe extern "C" fn clear(mut state: *mut tty_interface_t) {
         } else {
             tmp___0 = 0 as libc::c_int;
         }
-        if !(tmp < ((*(*state).options).num_lines).wrapping_add(tmp___0 as libc::c_uint) as size_t)
+        if !(tmp
+            < ((*(*state).options).num_lines).wrapping_add(tmp___0 as libc::c_uint)
+                as size_t)
         {
             break;
         }
@@ -2563,11 +3130,7 @@ unsafe extern "C" fn draw_match(
         if score == -tmp___1 as score_t {
             tty_printf(tty, b"(     ) \0" as *const u8 as *const libc::c_char);
         } else {
-            tty_printf(
-                tty,
-                b"(%5.2f) \0" as *const u8 as *const libc::c_char,
-                score,
-            );
+            tty_printf(tty, b"(%5.2f) \0" as *const u8 as *const libc::c_char, score);
         }
     }
     if selected != 0 {
@@ -2616,7 +3179,9 @@ unsafe extern "C" fn draw(mut state: *mut tty_interface_t) {
     num_lines = (*options).num_lines;
     start = 0 as libc::c_int as size_t;
     current_selection = (*choices).selection;
-    if current_selection.wrapping_add((*options).scrolloff as size_t) >= num_lines as size_t {
+    if current_selection.wrapping_add((*options).scrolloff as size_t)
+        >= num_lines as size_t
+    {
         start = current_selection
             .wrapping_add((*options).scrolloff as size_t)
             .wrapping_sub(num_lines as size_t)
@@ -2733,15 +3298,11 @@ unsafe extern "C" fn action_del_char(mut state: *mut tty_interface_t) {
         }
     }
     memmove(
-        &mut *((*state).search)
-            .as_mut_ptr()
-            .offset((*state).cursor as isize) as *mut libc::c_char as *mut libc::c_void,
-        &mut *((*state).search)
-            .as_mut_ptr()
-            .offset(original_cursor as isize) as *mut libc::c_char as *const libc::c_void,
-        length
-            .wrapping_sub(original_cursor)
-            .wrapping_add(1 as libc::c_ulong),
+        &mut *((*state).search).as_mut_ptr().offset((*state).cursor as isize)
+            as *mut libc::c_char as *mut libc::c_void,
+        &mut *((*state).search).as_mut_ptr().offset(original_cursor as isize)
+            as *mut libc::c_char as *const libc::c_void,
+        length.wrapping_sub(original_cursor).wrapping_add(1 as libc::c_ulong),
     );
 }
 unsafe extern "C" fn action_del_word(mut state: *mut tty_interface_t) {
@@ -2754,12 +3315,11 @@ unsafe extern "C" fn action_del_word(mut state: *mut tty_interface_t) {
     cursor = (*state).cursor;
     while cursor != 0 {
         tmp = __ctype_b_loc();
-        if *(*tmp).offset(
-            (*state).search[cursor.wrapping_sub(1 as libc::c_ulong) as usize] as libc::c_int
-                as isize,
-        ) as libc::c_int
-            & 8192 as libc::c_int
-            == 0
+        if *(*tmp)
+            .offset(
+                (*state).search[cursor.wrapping_sub(1 as libc::c_ulong) as usize]
+                    as libc::c_int as isize,
+            ) as libc::c_int & 8192 as libc::c_int == 0
         {
             break;
         }
@@ -2767,12 +3327,11 @@ unsafe extern "C" fn action_del_word(mut state: *mut tty_interface_t) {
     }
     while cursor != 0 {
         tmp___0 = __ctype_b_loc();
-        if *(*tmp___0).offset(
-            (*state).search[cursor.wrapping_sub(1 as libc::c_ulong) as usize] as libc::c_int
-                as isize,
-        ) as libc::c_int
-            & 8192 as libc::c_int
-            != 0
+        if *(*tmp___0)
+            .offset(
+                (*state).search[cursor.wrapping_sub(1 as libc::c_ulong) as usize]
+                    as libc::c_int as isize,
+            ) as libc::c_int & 8192 as libc::c_int != 0
         {
             break;
         }
@@ -2782,12 +3341,9 @@ unsafe extern "C" fn action_del_word(mut state: *mut tty_interface_t) {
     memmove(
         &mut *((*state).search).as_mut_ptr().offset(cursor as isize) as *mut libc::c_char
             as *mut libc::c_void,
-        &mut *((*state).search)
-            .as_mut_ptr()
-            .offset(original_cursor as isize) as *mut libc::c_char as *const libc::c_void,
-        tmp___1
-            .wrapping_sub(original_cursor)
-            .wrapping_add(1 as libc::c_ulong),
+        &mut *((*state).search).as_mut_ptr().offset(original_cursor as isize)
+            as *mut libc::c_char as *const libc::c_void,
+        tmp___1.wrapping_sub(original_cursor).wrapping_add(1 as libc::c_ulong),
     );
     (*state).cursor = cursor;
 }
@@ -2796,11 +3352,9 @@ unsafe extern "C" fn action_del_all(mut state: *mut tty_interface_t) {
     tmp = strlen(((*state).search).as_mut_ptr() as *const libc::c_char);
     memmove(
         ((*state).search).as_mut_ptr() as *mut libc::c_void,
-        &mut *((*state).search)
-            .as_mut_ptr()
-            .offset((*state).cursor as isize) as *mut libc::c_char as *const libc::c_void,
-        tmp.wrapping_sub((*state).cursor)
-            .wrapping_add(1 as libc::c_ulong),
+        &mut *((*state).search).as_mut_ptr().offset((*state).cursor as isize)
+            as *mut libc::c_char as *const libc::c_void,
+        tmp.wrapping_sub((*state).cursor).wrapping_add(1 as libc::c_ulong),
     );
     (*state).cursor = 0 as libc::c_int as size_t;
 }
@@ -2885,11 +3439,7 @@ unsafe extern "C" fn action_autocomplete(mut state: *mut tty_interface_t) {
     current_selection = tmp;
     if !current_selection.is_null() {
         tmp___0 = choices_get((*state).choices, (*(*state).choices).selection);
-        strncpy(
-            ((*state).search).as_mut_ptr(),
-            tmp___0,
-            4096 as libc::c_int as size_t,
-        );
+        strncpy(((*state).search).as_mut_ptr(), tmp___0, 4096 as libc::c_int as size_t);
         (*state).cursor = strlen(((*state).search).as_mut_ptr() as *const libc::c_char);
     }
 }
@@ -2898,7 +3448,10 @@ unsafe extern "C" fn action_exit(mut state: *mut tty_interface_t) {
     tty_close((*state).tty);
     (*state).exit = 1 as libc::c_int;
 }
-unsafe extern "C" fn append_search(mut state: *mut tty_interface_t, mut ch: libc::c_char) {
+unsafe extern "C" fn append_search(
+    mut state: *mut tty_interface_t,
+    mut ch: libc::c_char,
+) {
     let mut search: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut search_size: size_t = 0;
     let mut tmp: size_t = 0;
@@ -2910,9 +3463,7 @@ unsafe extern "C" fn append_search(mut state: *mut tty_interface_t, mut ch: libc
             search.offset(((*state).cursor).wrapping_add(1 as libc::c_ulong) as isize)
                 as *mut libc::c_void,
             search.offset((*state).cursor as isize) as *const libc::c_void,
-            search_size
-                .wrapping_sub((*state).cursor)
-                .wrapping_add(1 as libc::c_ulong),
+            search_size.wrapping_sub((*state).cursor).wrapping_add(1 as libc::c_ulong),
         );
         *search.offset((*state).cursor as isize) = ch;
         (*state).cursor = ((*state).cursor).wrapping_add(1);
@@ -2928,14 +3479,8 @@ pub unsafe extern "C" fn tty_interface_init(
     (*state).choices = choices;
     (*state).options = options;
     (*state).ambiguous_key_pending = 0 as libc::c_int;
-    strcpy(
-        ((*state).input).as_mut_ptr(),
-        b"\0" as *const u8 as *const libc::c_char,
-    );
-    strcpy(
-        ((*state).search).as_mut_ptr(),
-        b"\0" as *const u8 as *const libc::c_char,
-    );
+    strcpy(((*state).input).as_mut_ptr(), b"\0" as *const u8 as *const libc::c_char);
+    strcpy(((*state).search).as_mut_ptr(), b"\0" as *const u8 as *const libc::c_char);
     strcpy(
         ((*state).last_search).as_mut_ptr(),
         b"\0" as *const u8 as *const libc::c_char,
@@ -3012,35 +3557,45 @@ static mut keybindings: [keybinding_t; 33] = unsafe {
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B\0" as *const u8 as *const libc::c_char,
-                action: Some(action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x7F\0" as *const u8 as *const libc::c_char,
-                action: Some(action_del_char as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_del_char as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_0.as_ptr(),
-                action: Some(action_del_char as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_del_char as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_1.as_ptr(),
-                action: Some(action_del_word as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_del_word as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_2.as_ptr(),
-                action: Some(action_del_all as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_del_all as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
@@ -3048,7 +3603,8 @@ static mut keybindings: [keybinding_t; 33] = unsafe {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_3.as_ptr(),
                 action: Some(
-                    action_autocomplete as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                    action_autocomplete
+                        as unsafe extern "C" fn(*mut tty_interface_t) -> (),
                 ),
             };
             init
@@ -3056,191 +3612,244 @@ static mut keybindings: [keybinding_t; 33] = unsafe {
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_4.as_ptr(),
-                action: Some(action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_5.as_ptr(),
-                action: Some(action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_6.as_ptr(),
-                action: Some(action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_exit as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_7.as_ptr(),
-                action: Some(action_emit as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_emit as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_8.as_ptr(),
-                action: Some(action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_9.as_ptr(),
-                action: Some(action_next as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_next as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_10.as_ptr(),
-                action: Some(action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_11.as_ptr(),
-                action: Some(action_next as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_next as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_12.as_ptr(),
-                action: Some(action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: __constr_expr_13.as_ptr(),
-                action: Some(action_end as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_end as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1BOD\0" as *const u8 as *const libc::c_char,
-                action: Some(action_left as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_left as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[D\0" as *const u8 as *const libc::c_char,
-                action: Some(action_left as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_left as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1BOC\0" as *const u8 as *const libc::c_char,
-                action: Some(action_right as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_right as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[C\0" as *const u8 as *const libc::c_char,
-                action: Some(action_right as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_right as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[1~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[H\0" as *const u8 as *const libc::c_char,
-                action: Some(action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_beginning as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[4~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_end as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_end as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[F\0" as *const u8 as *const libc::c_char,
-                action: Some(action_end as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_end as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[A\0" as *const u8 as *const libc::c_char,
-                action: Some(action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1BOA\0" as *const u8 as *const libc::c_char,
-                action: Some(action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_prev as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[B\0" as *const u8 as *const libc::c_char,
-                action: Some(action_next as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_next as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1BOB\0" as *const u8 as *const libc::c_char,
-                action: Some(action_next as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_next as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[5~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_pageup as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_pageup as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[6~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_pagedown as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_pagedown as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[200~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_ignore as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_ignore as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
                 key: b"\x1B[201~\0" as *const u8 as *const libc::c_char,
-                action: Some(action_ignore as unsafe extern "C" fn(*mut tty_interface_t) -> ()),
+                action: Some(
+                    action_ignore as unsafe extern "C" fn(*mut tty_interface_t) -> (),
+                ),
             };
             init
         },
         {
             let mut init = __anonstruct_keybinding_t_984224788 {
-                key: 0 as *const libc::c_void as *mut libc::c_void as *const libc::c_char,
+                key: 0 as *const libc::c_void as *mut libc::c_void
+                    as *const libc::c_char,
                 action: ::std::mem::transmute::<
                     *mut libc::c_void,
-                    Option<unsafe extern "C" fn(*mut tty_interface_t) -> ()>,
+                    Option::<unsafe extern "C" fn(*mut tty_interface_t) -> ()>,
                 >(0 as *const libc::c_void as *mut libc::c_void),
             };
             init
@@ -3290,7 +3899,7 @@ unsafe extern "C" fn handle_input(
                 ((*keybindings.as_ptr().offset(found_keybinding as isize)).action)
                     .expect("non-null function pointer"),
             ))
-            .expect("non-null function pointer")(state);
+                .expect("non-null function pointer")(state);
             strcpy(input, b"\0" as *const u8 as *const libc::c_char);
             return;
         } else {
@@ -3299,7 +3908,7 @@ unsafe extern "C" fn handle_input(
                     ((*keybindings.as_ptr().offset(found_keybinding as isize)).action)
                         .expect("non-null function pointer"),
                 ))
-                .expect("non-null function pointer")(state);
+                    .expect("non-null function pointer")(state);
                 strcpy(input, b"\0" as *const u8 as *const libc::c_char);
                 return;
             }
@@ -3324,7 +3933,9 @@ unsafe extern "C" fn handle_input(
     }
     strcpy(input, b"\0" as *const u8 as *const libc::c_char);
 }
-pub unsafe extern "C" fn tty_interface_run(mut state: *mut tty_interface_t) -> libc::c_int {
+pub unsafe extern "C" fn tty_interface_run(
+    mut state: *mut tty_interface_t,
+) -> libc::c_int {
     let mut tmp: libc::c_int = 0;
     let mut s: [libc::c_char; 2] = [0; 2];
     let mut tmp___0: libc::c_char = 0;
@@ -3335,7 +3946,11 @@ pub unsafe extern "C" fn tty_interface_run(mut state: *mut tty_interface_t) -> l
     loop {
         loop {
             loop {
-                tmp = tty_input_ready((*state).tty, -(1 as libc::c_long), 1 as libc::c_int);
+                tmp = tty_input_ready(
+                    (*state).tty,
+                    -(1 as libc::c_long),
+                    1 as libc::c_int,
+                );
                 if tmp != 0 {
                     break;
                 }
@@ -3344,11 +3959,7 @@ pub unsafe extern "C" fn tty_interface_run(mut state: *mut tty_interface_t) -> l
             tmp___0 = tty_getchar((*state).tty);
             s[0 as libc::c_int as usize] = tmp___0;
             s[1 as libc::c_int as usize] = '\u{0}' as i32 as libc::c_char;
-            handle_input(
-                state,
-                s.as_mut_ptr() as *const libc::c_char,
-                0 as libc::c_int,
-            );
+            handle_input(state, s.as_mut_ptr() as *const libc::c_char, 0 as libc::c_int);
             if (*state).exit >= 0 as libc::c_int {
                 return (*state).exit;
             }
@@ -3358,7 +3969,11 @@ pub unsafe extern "C" fn tty_interface_run(mut state: *mut tty_interface_t) -> l
             } else {
                 tmp___1 = 0 as libc::c_int;
             }
-            tmp___2 = tty_input_ready((*state).tty, tmp___1 as libc::c_long, 0 as libc::c_int);
+            tmp___2 = tty_input_ready(
+                (*state).tty,
+                tmp___1 as libc::c_long,
+                0 as libc::c_int,
+            );
             if tmp___2 == 0 {
                 break;
             }
@@ -3375,10 +3990,10 @@ pub unsafe extern "C" fn tty_interface_run(mut state: *mut tty_interface_t) -> l
             }
         }
         update_state(state);
-    }
+    };
 }
 pub fn main() {
-    let mut args: Vec<*mut libc::c_char> = Vec::new();
+    let mut args: Vec::<*mut libc::c_char> = Vec::new();
     for arg in ::std::env::args() {
         args.push(
             (::std::ffi::CString::new(arg))
@@ -3388,9 +4003,11 @@ pub fn main() {
     }
     args.push(::std::ptr::null_mut());
     unsafe {
-        ::std::process::exit(main_0(
-            (args.len() - 1) as libc::c_int,
-            args.as_mut_ptr() as *mut *mut libc::c_char,
-        ) as i32)
+        ::std::process::exit(
+            main_0(
+                (args.len() - 1) as libc::c_int,
+                args.as_mut_ptr() as *mut *mut libc::c_char,
+            ) as i32,
+        )
     }
 }

@@ -475,6 +475,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         entry_mutex,
                         node_mutex,
                         ret_mutex,
+                        ..
                     } = fs;
                     (entry_mutex, node_mutex, ret_mutex)
                 } else {

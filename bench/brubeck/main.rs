@@ -11,11 +11,23 @@ extern "C" {
     pub type rd_kafka_topic_s;
     pub type rd_kafka_conf_s;
     fn printf(_: *const libc::c_char, _: ...) -> libc::c_int;
-    fn vfprintf(_: *mut FILE, _: *const libc::c_char, _: ::std::ffi::VaList) -> libc::c_int;
+    fn vfprintf(
+        _: *mut FILE,
+        _: *const libc::c_char,
+        _: ::std::ffi::VaList,
+    ) -> libc::c_int;
     fn puts(__s: *const libc::c_char) -> libc::c_int;
     fn strtod(_: *const libc::c_char, _: *mut *mut libc::c_char) -> libc::c_double;
-    fn strtol(_: *const libc::c_char, _: *mut *mut libc::c_char, _: libc::c_int) -> libc::c_long;
-    fn memset(_: *mut libc::c_void, _: libc::c_int, _: libc::c_ulong) -> *mut libc::c_void;
+    fn strtol(
+        _: *const libc::c_char,
+        _: *mut *mut libc::c_char,
+        _: libc::c_int,
+    ) -> libc::c_long;
+    fn memset(
+        _: *mut libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     static mut optarg: *mut libc::c_char;
     fn getopt_long(
         ___argc: libc::c_int,
@@ -34,17 +46,31 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
     static mut stderr: *mut FILE;
     fn fprintf(_: *mut FILE, _: *const libc::c_char, _: ...) -> libc::c_int;
-    fn socket(__domain: libc::c_int, __type: libc::c_int, __protocol: libc::c_int) -> libc::c_int;
-    fn connect(__fd: libc::c_int, __addr: *const sockaddr, __len: socklen_t) -> libc::c_int;
+    fn socket(
+        __domain: libc::c_int,
+        __type: libc::c_int,
+        __protocol: libc::c_int,
+    ) -> libc::c_int;
+    fn connect(
+        __fd: libc::c_int,
+        __addr: *const sockaddr,
+        __len: socklen_t,
+    ) -> libc::c_int;
     fn __errno_location() -> *mut libc::c_int;
     fn malloc(_: libc::c_ulong) -> *mut libc::c_void;
     fn calloc(_: libc::c_ulong, _: libc::c_ulong) -> *mut libc::c_void;
-    fn memcpy(_: *mut libc::c_void, _: *const libc::c_void, _: libc::c_ulong) -> *mut libc::c_void;
+    fn memcpy(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn strchr(_: *const libc::c_char, _: libc::c_int) -> *mut libc::c_char;
     fn strlen(_: *const libc::c_char) -> libc::c_ulong;
     fn strerror(_: libc::c_int) -> *mut libc::c_char;
@@ -64,7 +90,7 @@ extern "C" {
         __base: *mut libc::c_void,
         __nmemb: size_t,
         __size: size_t,
-        __compar: Option<
+        __compar: Option::<
             unsafe extern "C" fn(*const libc::c_void, *const libc::c_void) -> libc::c_int,
         >,
     );
@@ -81,11 +107,16 @@ extern "C" {
         _: *mut ck_ht_iterator_t,
         entry: *mut *mut ck_ht_entry_t,
     ) -> bool;
-    fn ck_ht_hash(_: *mut ck_ht_hash_t, _: *mut ck_ht_t, _: *const libc::c_void, _: uint16_t);
+    fn ck_ht_hash(
+        _: *mut ck_ht_hash_t,
+        _: *mut ck_ht_t,
+        _: *const libc::c_void,
+        _: uint16_t,
+    );
     fn ck_ht_init(
         _: *mut ck_ht_t,
         _: libc::c_uint,
-        _: Option<ck_ht_hash_cb_t>,
+        _: Option::<ck_ht_hash_cb_t>,
         _: *mut ck_malloc,
         _: uint64_t,
         _: uint64_t,
@@ -110,11 +141,15 @@ extern "C" {
     fn MHD_start_daemon(
         flags: libc::c_uint,
         port: uint16_t,
-        apc: Option<
-            unsafe extern "C" fn(*mut libc::c_void, *const sockaddr, socklen_t) -> libc::c_int,
+        apc: Option::<
+            unsafe extern "C" fn(
+                *mut libc::c_void,
+                *const sockaddr,
+                socklen_t,
+            ) -> libc::c_int,
         >,
         apc_cls: *mut libc::c_void,
-        dh: Option<
+        dh: Option::<
             unsafe extern "C" fn(
                 *mut libc::c_void,
                 *mut MHD_Connection,
@@ -147,12 +182,19 @@ extern "C" {
     ) -> libc::c_int;
     fn exit(_: libc::c_int) -> !;
     fn closelog();
-    fn openlog(__ident: *const libc::c_char, __option: libc::c_int, __facility: libc::c_int);
+    fn openlog(
+        __ident: *const libc::c_char,
+        __option: libc::c_int,
+        __facility: libc::c_int,
+    );
     fn vsyslog(__pri: libc::c_int, __fmt: *const libc::c_char, __ap: ::std::ffi::VaList);
     fn fclose(__stream: *mut FILE) -> libc::c_int;
     fn fflush(__stream: *mut FILE) -> libc::c_int;
     fn fopen(_: *const libc::c_char, _: *const libc::c_char) -> *mut FILE;
-    fn pthread_spin_init(__lock: *mut pthread_spinlock_t, __pshared: libc::c_int) -> libc::c_int;
+    fn pthread_spin_init(
+        __lock: *mut pthread_spinlock_t,
+        __pshared: libc::c_int,
+    ) -> libc::c_int;
     fn pthread_spin_lock(__lock: *mut pthread_spinlock_t) -> libc::c_int;
     fn pthread_spin_unlock(__lock: *mut pthread_spinlock_t) -> libc::c_int;
     fn strndup(_: *const libc::c_char, _: libc::c_ulong) -> *mut libc::c_char;
@@ -174,12 +216,16 @@ extern "C" {
     ) -> libc::c_int;
     fn inet_ntoa(__in: in_addr) -> *mut libc::c_char;
     fn pthread_cancel(__th: pthread_t) -> libc::c_int;
-    fn memchr(_: *const libc::c_void, _: libc::c_int, _: libc::c_ulong) -> *mut libc::c_void;
+    fn memchr(
+        _: *const libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn pow(_: libc::c_double, _: libc::c_double) -> libc::c_double;
     fn poll(__fds: *mut pollfd, __nfds: nfds_t, __timeout: libc::c_int) -> libc::c_int;
     fn signal(
         __sig: libc::c_int,
-        __handler: Option<unsafe extern "C" fn(libc::c_int) -> ()>,
+        __handler: Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
     ) -> __sighandler_t;
     fn sigemptyset(__set: *mut sigset_t) -> libc::c_int;
     fn sigaddset(__set: *mut sigset_t, __signo: libc::c_int) -> libc::c_int;
@@ -188,7 +234,11 @@ extern "C" {
         __set: *const sigset_t,
         __oset: *mut sigset_t,
     ) -> libc::c_int;
-    fn signalfd(__fd: libc::c_int, __mask: *const sigset_t, __flags: libc::c_int) -> libc::c_int;
+    fn signalfd(
+        __fd: libc::c_int,
+        __mask: *const sigset_t,
+        __flags: libc::c_int,
+    ) -> libc::c_int;
     fn timerfd_create(__clock_id: __clockid_t, __flags: libc::c_int) -> libc::c_int;
     fn timerfd_settime(
         __ufd: libc::c_int,
@@ -236,7 +286,11 @@ extern "C" {
         __pai: *mut *mut addrinfo,
     ) -> libc::c_int;
     fn freeaddrinfo(__ai: *mut addrinfo);
-    fn strncmp(_: *const libc::c_char, _: *const libc::c_char, _: libc::c_ulong) -> libc::c_int;
+    fn strncmp(
+        _: *const libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> libc::c_int;
     fn json_object() -> *mut json_t;
     fn json_string(value: *const libc::c_char) -> *mut json_t;
     fn json_integer(value: json_int_t) -> *mut json_t;
@@ -249,7 +303,10 @@ extern "C" {
     fn json_object_clear(object: *mut json_t) -> libc::c_int;
     fn json_object_iter(object: *mut json_t) -> *mut libc::c_void;
     fn json_object_key_to_iter(key: *const libc::c_char) -> *mut libc::c_void;
-    fn json_object_iter_next(object: *mut json_t, iter: *mut libc::c_void) -> *mut libc::c_void;
+    fn json_object_iter_next(
+        object: *mut json_t,
+        iter: *mut libc::c_void,
+    ) -> *mut libc::c_void;
     fn json_object_iter_key(iter: *mut libc::c_void) -> *const libc::c_char;
     fn json_object_iter_value(iter: *mut libc::c_void) -> *mut json_t;
     fn rd_kafka_err2str(err: rd_kafka_resp_err_t) -> *const libc::c_char;
@@ -270,7 +327,7 @@ extern "C" {
     ) -> rd_kafka_conf_res_t;
     fn rd_kafka_conf_set_dr_msg_cb(
         conf: *mut rd_kafka_conf_t,
-        dr_msg_cb_0: Option<
+        dr_msg_cb_0: Option::<
             unsafe extern "C" fn(
                 *mut rd_kafka_t,
                 *const rd_kafka_message_t,
@@ -280,7 +337,7 @@ extern "C" {
     );
     fn rd_kafka_conf_set_error_cb(
         conf: *mut rd_kafka_conf_t,
-        error_cb_0: Option<
+        error_cb_0: Option::<
             unsafe extern "C" fn(
                 *mut rd_kafka_t,
                 libc::c_int,
@@ -299,7 +356,10 @@ extern "C" {
     fn rd_kafka_destroy(rk: *mut rd_kafka_t);
     fn rd_kafka_poll(rk: *mut rd_kafka_t, timeout_ms: libc::c_int) -> libc::c_int;
     fn rd_kafka_producev(rk: *mut rd_kafka_t, _: ...) -> rd_kafka_resp_err_t;
-    fn rd_kafka_flush(rk: *mut rd_kafka_t, timeout_ms: libc::c_int) -> rd_kafka_resp_err_t;
+    fn rd_kafka_flush(
+        rk: *mut rd_kafka_t,
+        timeout_ms: libc::c_int,
+    ) -> rd_kafka_resp_err_t;
 }
 pub type __builtin_va_list = [__va_list_tag; 1];
 #[derive(Copy, Clone)]
@@ -493,9 +553,9 @@ pub struct brubeck_backend {
     pub server: *mut brubeck_server,
     pub sample_freq: libc::c_int,
     pub shard_n: libc::c_int,
-    pub connect: Option<unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int>,
-    pub is_connected: Option<unsafe extern "C" fn(*mut libc::c_void) -> bool>,
-    pub sample: Option<
+    pub connect: Option::<unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int>,
+    pub is_connected: Option::<unsafe extern "C" fn(*mut libc::c_void) -> bool>,
+    pub sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -503,7 +563,7 @@ pub struct brubeck_backend {
             *mut libc::c_void,
         ) -> (),
     >,
-    pub flush: Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+    pub flush: Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
     pub tick_time: uint32_t,
     pub thread: pthread_t,
     pub queue: *mut brubeck_metric,
@@ -574,7 +634,7 @@ pub struct brubeck_sampler {
     pub addr: sockaddr_in,
     pub inflow: size_t,
     pub current_flow: size_t,
-    pub shutdown: Option<unsafe extern "C" fn(*mut brubeck_sampler) -> ()>,
+    pub shutdown: Option::<unsafe extern "C" fn(*mut brubeck_sampler) -> ()>,
 }
 pub type brubeck_sampler_t = libc::c_uint;
 pub const BRUBECK_SAMPLER_STATSD: brubeck_sampler_t = 0;
@@ -593,10 +653,14 @@ pub struct ck_ht {
     pub map: *mut ck_ht_map,
     pub mode: libc::c_uint,
     pub seed: uint64_t,
-    pub h: Option<ck_ht_hash_cb_t>,
+    pub h: Option::<ck_ht_hash_cb_t>,
 }
-pub type ck_ht_hash_cb_t =
-    unsafe extern "C" fn(*mut ck_ht_hash_t, *const libc::c_void, size_t, uint64_t) -> ();
+pub type ck_ht_hash_cb_t = unsafe extern "C" fn(
+    *mut ck_ht_hash_t,
+    *const libc::c_void,
+    size_t,
+    uint64_t,
+) -> ();
 pub type uint64_t = __uint64_t;
 pub type __uint64_t = libc::c_ulong;
 pub type ck_ht_hash_t = ck_ht_hash;
@@ -608,10 +672,16 @@ pub struct ck_ht_hash {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct ck_malloc {
-    pub malloc: Option<unsafe extern "C" fn(size_t) -> *mut libc::c_void>,
-    pub realloc:
-        Option<unsafe extern "C" fn(*mut libc::c_void, size_t, size_t, bool) -> *mut libc::c_void>,
-    pub free: Option<unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> ()>,
+    pub malloc: Option::<unsafe extern "C" fn(size_t) -> *mut libc::c_void>,
+    pub realloc: Option::<
+        unsafe extern "C" fn(
+            *mut libc::c_void,
+            size_t,
+            size_t,
+            bool,
+        ) -> *mut libc::c_void,
+    >,
+    pub free: Option::<unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> ()>,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -747,11 +817,13 @@ pub type va_list___0 = __gnuc_va_list;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct brubeck_metric__proto {
-    pub record: Option<unsafe extern "C" fn(*mut brubeck_metric, value_t, value_t, uint8_t) -> ()>,
-    pub sample: Option<
+    pub record: Option::<
+        unsafe extern "C" fn(*mut brubeck_metric, value_t, value_t, uint8_t) -> (),
+    >,
+    pub sample: Option::<
         unsafe extern "C" fn(
             *mut brubeck_metric,
-            Option<
+            Option::<
                 unsafe extern "C" fn(
                     *const brubeck_metric,
                     *const libc::c_char,
@@ -804,7 +876,7 @@ pub struct __anonstruct___sigset_t_991265788 {
 }
 pub type __sigset_t = __anonstruct___sigset_t_991265788;
 pub type sigset_t = __sigset_t;
-pub type __sighandler_t = Option<unsafe extern "C" fn(libc::c_int) -> ()>;
+pub type __sighandler_t = Option::<unsafe extern "C" fn(libc::c_int) -> ()>;
 pub type int32_t = __int32_t;
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -866,104 +938,75 @@ pub type rd_kafka_conf_t = rd_kafka_conf_s;
 pub type __anonenum_rd_kafka_resp_err_t_686298611 = libc::c_int;
 pub const RD_KAFKA_RESP_ERR_END_ALL: __anonenum_rd_kafka_resp_err_t_686298611 = 82;
 pub const RD_KAFKA_RESP_ERR_GROUP_MAX_SIZE_REACHED: __anonenum_rd_kafka_resp_err_t_686298611 = 81;
-pub const RD_KAFKA_RESP_ERR_PREFERRED_LEADER_NOT_AVAILABLE:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 80;
+pub const RD_KAFKA_RESP_ERR_PREFERRED_LEADER_NOT_AVAILABLE: __anonenum_rd_kafka_resp_err_t_686298611 = 80;
 pub const RD_KAFKA_RESP_ERR_MEMBER_ID_REQUIRED: __anonenum_rd_kafka_resp_err_t_686298611 = 79;
 pub const RD_KAFKA_RESP_ERR_OFFSET_NOT_AVAILABLE: __anonenum_rd_kafka_resp_err_t_686298611 = 78;
 pub const RD_KAFKA_RESP_ERR_STALE_BROKER_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 77;
-pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_COMPRESSION_TYPE: __anonenum_rd_kafka_resp_err_t_686298611 =
-    76;
+pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_COMPRESSION_TYPE: __anonenum_rd_kafka_resp_err_t_686298611 = 76;
 pub const RD_KAFKA_RESP_ERR_UNKNOWN_LEADER_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 75;
 pub const RD_KAFKA_RESP_ERR_FENCED_LEADER_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 74;
 pub const RD_KAFKA_RESP_ERR_TOPIC_DELETION_DISABLED: __anonenum_rd_kafka_resp_err_t_686298611 = 73;
 pub const RD_KAFKA_RESP_ERR_LISTENER_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 = 72;
-pub const RD_KAFKA_RESP_ERR_INVALID_FETCH_SESSION_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 =
-    71;
-pub const RD_KAFKA_RESP_ERR_FETCH_SESSION_ID_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 =
-    70;
+pub const RD_KAFKA_RESP_ERR_INVALID_FETCH_SESSION_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 71;
+pub const RD_KAFKA_RESP_ERR_FETCH_SESSION_ID_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 = 70;
 pub const RD_KAFKA_RESP_ERR_GROUP_ID_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 = 69;
 pub const RD_KAFKA_RESP_ERR_NON_EMPTY_GROUP: __anonenum_rd_kafka_resp_err_t_686298611 = 68;
 pub const RD_KAFKA_RESP_ERR_INVALID_PRINCIPAL_TYPE: __anonenum_rd_kafka_resp_err_t_686298611 = 67;
 pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_EXPIRED: __anonenum_rd_kafka_resp_err_t_686298611 = 66;
-pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_AUTHORIZATION_FAILED:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 65;
-pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_REQUEST_NOT_ALLOWED:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 64;
-pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_OWNER_MISMATCH:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 63;
-pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 =
-    62;
-pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_AUTH_DISABLED:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 61;
+pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 65;
+pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_REQUEST_NOT_ALLOWED: __anonenum_rd_kafka_resp_err_t_686298611 = 64;
+pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_OWNER_MISMATCH: __anonenum_rd_kafka_resp_err_t_686298611 = 63;
+pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 = 62;
+pub const RD_KAFKA_RESP_ERR_DELEGATION_TOKEN_AUTH_DISABLED: __anonenum_rd_kafka_resp_err_t_686298611 = 61;
 pub const RD_KAFKA_RESP_ERR_REASSIGNMENT_IN_PROGRESS: __anonenum_rd_kafka_resp_err_t_686298611 = 60;
 pub const RD_KAFKA_RESP_ERR_UNKNOWN_PRODUCER_ID: __anonenum_rd_kafka_resp_err_t_686298611 = 59;
-pub const RD_KAFKA_RESP_ERR_SASL_AUTHENTICATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 =
-    58;
+pub const RD_KAFKA_RESP_ERR_SASL_AUTHENTICATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 58;
 pub const RD_KAFKA_RESP_ERR_LOG_DIR_NOT_FOUND: __anonenum_rd_kafka_resp_err_t_686298611 = 57;
 pub const RD_KAFKA_RESP_ERR_KAFKA_STORAGE_ERROR: __anonenum_rd_kafka_resp_err_t_686298611 = 56;
 pub const RD_KAFKA_RESP_ERR_OPERATION_NOT_ATTEMPTED: __anonenum_rd_kafka_resp_err_t_686298611 = 55;
 pub const RD_KAFKA_RESP_ERR_SECURITY_DISABLED: __anonenum_rd_kafka_resp_err_t_686298611 = 54;
-pub const RD_KAFKA_RESP_ERR_TRANSACTIONAL_ID_AUTHORIZATION_FAILED:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 53;
-pub const RD_KAFKA_RESP_ERR_TRANSACTION_COORDINATOR_FENCED:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 52;
+pub const RD_KAFKA_RESP_ERR_TRANSACTIONAL_ID_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 53;
+pub const RD_KAFKA_RESP_ERR_TRANSACTION_COORDINATOR_FENCED: __anonenum_rd_kafka_resp_err_t_686298611 = 52;
 pub const RD_KAFKA_RESP_ERR_CONCURRENT_TRANSACTIONS: __anonenum_rd_kafka_resp_err_t_686298611 = 51;
-pub const RD_KAFKA_RESP_ERR_INVALID_TRANSACTION_TIMEOUT: __anonenum_rd_kafka_resp_err_t_686298611 =
-    50;
-pub const RD_KAFKA_RESP_ERR_INVALID_PRODUCER_ID_MAPPING: __anonenum_rd_kafka_resp_err_t_686298611 =
-    49;
+pub const RD_KAFKA_RESP_ERR_INVALID_TRANSACTION_TIMEOUT: __anonenum_rd_kafka_resp_err_t_686298611 = 50;
+pub const RD_KAFKA_RESP_ERR_INVALID_PRODUCER_ID_MAPPING: __anonenum_rd_kafka_resp_err_t_686298611 = 49;
 pub const RD_KAFKA_RESP_ERR_INVALID_TXN_STATE: __anonenum_rd_kafka_resp_err_t_686298611 = 48;
 pub const RD_KAFKA_RESP_ERR_INVALID_PRODUCER_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 47;
-pub const RD_KAFKA_RESP_ERR_DUPLICATE_SEQUENCE_NUMBER: __anonenum_rd_kafka_resp_err_t_686298611 =
-    46;
-pub const RD_KAFKA_RESP_ERR_OUT_OF_ORDER_SEQUENCE_NUMBER: __anonenum_rd_kafka_resp_err_t_686298611 =
-    45;
+pub const RD_KAFKA_RESP_ERR_DUPLICATE_SEQUENCE_NUMBER: __anonenum_rd_kafka_resp_err_t_686298611 = 46;
+pub const RD_KAFKA_RESP_ERR_OUT_OF_ORDER_SEQUENCE_NUMBER: __anonenum_rd_kafka_resp_err_t_686298611 = 45;
 pub const RD_KAFKA_RESP_ERR_POLICY_VIOLATION: __anonenum_rd_kafka_resp_err_t_686298611 = 44;
-pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_FOR_MESSAGE_FORMAT:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 43;
+pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_FOR_MESSAGE_FORMAT: __anonenum_rd_kafka_resp_err_t_686298611 = 43;
 pub const RD_KAFKA_RESP_ERR_INVALID_REQUEST: __anonenum_rd_kafka_resp_err_t_686298611 = 42;
 pub const RD_KAFKA_RESP_ERR_NOT_CONTROLLER: __anonenum_rd_kafka_resp_err_t_686298611 = 41;
 pub const RD_KAFKA_RESP_ERR_INVALID_CONFIG: __anonenum_rd_kafka_resp_err_t_686298611 = 40;
-pub const RD_KAFKA_RESP_ERR_INVALID_REPLICA_ASSIGNMENT: __anonenum_rd_kafka_resp_err_t_686298611 =
-    39;
-pub const RD_KAFKA_RESP_ERR_INVALID_REPLICATION_FACTOR: __anonenum_rd_kafka_resp_err_t_686298611 =
-    38;
+pub const RD_KAFKA_RESP_ERR_INVALID_REPLICA_ASSIGNMENT: __anonenum_rd_kafka_resp_err_t_686298611 = 39;
+pub const RD_KAFKA_RESP_ERR_INVALID_REPLICATION_FACTOR: __anonenum_rd_kafka_resp_err_t_686298611 = 38;
 pub const RD_KAFKA_RESP_ERR_INVALID_PARTITIONS: __anonenum_rd_kafka_resp_err_t_686298611 = 37;
 pub const RD_KAFKA_RESP_ERR_TOPIC_ALREADY_EXISTS: __anonenum_rd_kafka_resp_err_t_686298611 = 36;
 pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_VERSION: __anonenum_rd_kafka_resp_err_t_686298611 = 35;
 pub const RD_KAFKA_RESP_ERR_ILLEGAL_SASL_STATE: __anonenum_rd_kafka_resp_err_t_686298611 = 34;
-pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_SASL_MECHANISM: __anonenum_rd_kafka_resp_err_t_686298611 =
-    33;
+pub const RD_KAFKA_RESP_ERR_UNSUPPORTED_SASL_MECHANISM: __anonenum_rd_kafka_resp_err_t_686298611 = 33;
 pub const RD_KAFKA_RESP_ERR_INVALID_TIMESTAMP: __anonenum_rd_kafka_resp_err_t_686298611 = 32;
-pub const RD_KAFKA_RESP_ERR_CLUSTER_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 =
-    31;
-pub const RD_KAFKA_RESP_ERR_GROUP_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 =
-    30;
-pub const RD_KAFKA_RESP_ERR_TOPIC_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 =
-    29;
-pub const RD_KAFKA_RESP_ERR_INVALID_COMMIT_OFFSET_SIZE: __anonenum_rd_kafka_resp_err_t_686298611 =
-    28;
+pub const RD_KAFKA_RESP_ERR_CLUSTER_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 31;
+pub const RD_KAFKA_RESP_ERR_GROUP_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 30;
+pub const RD_KAFKA_RESP_ERR_TOPIC_AUTHORIZATION_FAILED: __anonenum_rd_kafka_resp_err_t_686298611 = 29;
+pub const RD_KAFKA_RESP_ERR_INVALID_COMMIT_OFFSET_SIZE: __anonenum_rd_kafka_resp_err_t_686298611 = 28;
 pub const RD_KAFKA_RESP_ERR_REBALANCE_IN_PROGRESS: __anonenum_rd_kafka_resp_err_t_686298611 = 27;
 pub const RD_KAFKA_RESP_ERR_INVALID_SESSION_TIMEOUT: __anonenum_rd_kafka_resp_err_t_686298611 = 26;
 pub const RD_KAFKA_RESP_ERR_UNKNOWN_MEMBER_ID: __anonenum_rd_kafka_resp_err_t_686298611 = 25;
 pub const RD_KAFKA_RESP_ERR_INVALID_GROUP_ID: __anonenum_rd_kafka_resp_err_t_686298611 = 24;
-pub const RD_KAFKA_RESP_ERR_INCONSISTENT_GROUP_PROTOCOL: __anonenum_rd_kafka_resp_err_t_686298611 =
-    23;
+pub const RD_KAFKA_RESP_ERR_INCONSISTENT_GROUP_PROTOCOL: __anonenum_rd_kafka_resp_err_t_686298611 = 23;
 pub const RD_KAFKA_RESP_ERR_ILLEGAL_GENERATION: __anonenum_rd_kafka_resp_err_t_686298611 = 22;
 pub const RD_KAFKA_RESP_ERR_INVALID_REQUIRED_ACKS: __anonenum_rd_kafka_resp_err_t_686298611 = 21;
-pub const RD_KAFKA_RESP_ERR_NOT_ENOUGH_REPLICAS_AFTER_APPEND:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 20;
+pub const RD_KAFKA_RESP_ERR_NOT_ENOUGH_REPLICAS_AFTER_APPEND: __anonenum_rd_kafka_resp_err_t_686298611 = 20;
 pub const RD_KAFKA_RESP_ERR_NOT_ENOUGH_REPLICAS: __anonenum_rd_kafka_resp_err_t_686298611 = 19;
 pub const RD_KAFKA_RESP_ERR_RECORD_LIST_TOO_LARGE: __anonenum_rd_kafka_resp_err_t_686298611 = 18;
 pub const RD_KAFKA_RESP_ERR_TOPIC_EXCEPTION: __anonenum_rd_kafka_resp_err_t_686298611 = 17;
-pub const RD_KAFKA_RESP_ERR_NOT_COORDINATOR_FOR_GROUP: __anonenum_rd_kafka_resp_err_t_686298611 =
-    16;
-pub const RD_KAFKA_RESP_ERR_GROUP_COORDINATOR_NOT_AVAILABLE:
-    __anonenum_rd_kafka_resp_err_t_686298611 = 15;
+pub const RD_KAFKA_RESP_ERR_NOT_COORDINATOR_FOR_GROUP: __anonenum_rd_kafka_resp_err_t_686298611 = 16;
+pub const RD_KAFKA_RESP_ERR_GROUP_COORDINATOR_NOT_AVAILABLE: __anonenum_rd_kafka_resp_err_t_686298611 = 15;
 pub const RD_KAFKA_RESP_ERR_GROUP_LOAD_IN_PROGRESS: __anonenum_rd_kafka_resp_err_t_686298611 = 14;
 pub const RD_KAFKA_RESP_ERR_NETWORK_EXCEPTION: __anonenum_rd_kafka_resp_err_t_686298611 = 13;
-pub const RD_KAFKA_RESP_ERR_OFFSET_METADATA_TOO_LARGE: __anonenum_rd_kafka_resp_err_t_686298611 =
-    12;
+pub const RD_KAFKA_RESP_ERR_OFFSET_METADATA_TOO_LARGE: __anonenum_rd_kafka_resp_err_t_686298611 = 12;
 pub const RD_KAFKA_RESP_ERR_STALE_CTRL_EPOCH: __anonenum_rd_kafka_resp_err_t_686298611 = 11;
 pub const RD_KAFKA_RESP_ERR_MSG_SIZE_TOO_LARGE: __anonenum_rd_kafka_resp_err_t_686298611 = 10;
 pub const RD_KAFKA_RESP_ERR_REPLICA_NOT_AVAILABLE: __anonenum_rd_kafka_resp_err_t_686298611 = 9;
@@ -1109,7 +1152,10 @@ static mut longopts: [option; 5] = [
         init
     },
 ];
-unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> libc::c_int {
+unsafe fn main_0(
+    mut argc: libc::c_int,
+    mut argv: *mut *mut libc::c_char,
+) -> libc::c_int {
     let mut server: brubeck_server = brubeck_server {
         name: 0 as *const libc::c_char,
         dump_path: 0 as *const libc::c_char,
@@ -1216,9 +1262,13 @@ unsafe fn main_0(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) -> lib
     return tmp;
 }
 #[inline]
-unsafe extern "C" fn brubeck_metric_get_state(mut metric: *const brubeck_metric) -> uint8_t {
+unsafe extern "C" fn brubeck_metric_get_state(
+    mut metric: *const brubeck_metric,
+) -> uint8_t {
     let mut tmp: uint8_t = 0;
-    tmp = ::std::intrinsics::atomic_load_seqcst(&(*metric).private_state as *const uint8_t);
+    tmp = ::std::intrinsics::atomic_load_seqcst(
+        &(*metric).private_state as *const uint8_t,
+    );
     return tmp;
 }
 #[inline]
@@ -1250,18 +1300,12 @@ pub unsafe extern "C" fn brubeck_backend_register_metric(
         if tmp {
             break;
         }
-    }
+    };
 }
 unsafe extern "C" fn backend__thread(mut _ptr: *mut libc::c_void) -> *mut libc::c_void {
     let mut self_0: *mut brubeck_backend = 0 as *mut brubeck_backend;
-    let mut now: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
-    let mut then: timespec = timespec {
-        tv_sec: 0,
-        tv_nsec: 0,
-    };
+    let mut now: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
+    let mut then: timespec = timespec { tv_sec: 0, tv_nsec: 0 };
     let mut mt: *mut brubeck_metric = 0 as *mut brubeck_metric;
     let mut state: uint8_t = 0;
     let mut tmp: uint8_t = 0;
@@ -1280,19 +1324,33 @@ unsafe extern "C" fn backend__thread(mut _ptr: *mut libc::c_void) -> *mut libc::
                 tmp = brubeck_metric_get_state(mt as *const brubeck_metric);
                 state = tmp;
                 if state as libc::c_int == 2 as libc::c_int {
-                    brubeck_metric_sample(mt, (*self_0).sample, self_0 as *mut libc::c_void);
-                    brubeck_metric_set_state_if_equal(mt, state, 1 as libc::c_int as uint8_t);
+                    brubeck_metric_sample(
+                        mt,
+                        (*self_0).sample,
+                        self_0 as *mut libc::c_void,
+                    );
+                    brubeck_metric_set_state_if_equal(
+                        mt,
+                        state,
+                        1 as libc::c_int as uint8_t,
+                    );
                 } else if state as libc::c_int == 1 as libc::c_int {
-                    brubeck_metric_sample(mt, (*self_0).sample, self_0 as *mut libc::c_void);
-                    brubeck_metric_set_state_if_equal(mt, state, 0 as libc::c_int as uint8_t);
+                    brubeck_metric_sample(
+                        mt,
+                        (*self_0).sample,
+                        self_0 as *mut libc::c_void,
+                    );
+                    brubeck_metric_set_state_if_equal(
+                        mt,
+                        state,
+                        0 as libc::c_int as uint8_t,
+                    );
                 }
                 mt = (*mt).next;
             }
             if ((*self_0).flush).is_some() {
                 (Some(((*self_0).flush).expect("non-null function pointer")))
-                    .expect("non-null function pointer")(
-                    self_0 as *mut libc::c_void
-                );
+                    .expect("non-null function pointer")(self_0 as *mut libc::c_void);
             }
         }
         clock_nanosleep(
@@ -1301,20 +1359,24 @@ unsafe extern "C" fn backend__thread(mut _ptr: *mut libc::c_void) -> *mut libc::
             &mut then as *mut timespec as *const timespec,
             0 as *mut libc::c_void as *mut timespec,
         );
-    }
+    };
 }
 pub unsafe extern "C" fn brubeck_backend_run_threaded(mut self_0: *mut brubeck_backend) {
     let mut tmp: libc::c_int = 0;
     tmp = pthread_create(
         &mut (*self_0).thread as *mut pthread_t,
         0 as *mut libc::c_void as *const pthread_attr_t,
-        Some(backend__thread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
+        Some(
+            backend__thread
+                as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        ),
         self_0 as *mut libc::c_void,
     );
     if tmp != 0 as libc::c_int {
         fprintf(
             stderr,
-            b"[FATAL]: failed to start backend thread\n\0" as *const u8 as *const libc::c_char,
+            b"[FATAL]: failed to start backend thread\n\0" as *const u8
+                as *const libc::c_char,
         );
         gh_log_die();
     }
@@ -1333,13 +1395,10 @@ unsafe extern "C" fn xcalloc(mut n: size_t, mut size: size_t) -> *mut libc::c_vo
     let mut tmp___0: libc::c_long = 0;
     tmp = calloc(n, size);
     ptr = tmp;
-    tmp___0 = (ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int
-        as libc::c_long;
+    tmp___0 = (ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong)
+        as libc::c_int as libc::c_long;
     if tmp___0 != 0 {
-        fprintf(
-            stderr,
-            b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char,
-        );
+        fprintf(stderr, b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char);
         gh_log_die();
     }
     return ptr;
@@ -1366,7 +1425,7 @@ unsafe extern "C" fn xwrite(
             }
         }
         return nr;
-    }
+    };
 }
 #[inline]
 unsafe extern "C" fn write_in_full(
@@ -1392,7 +1451,8 @@ unsafe extern "C" fn write_in_full(
             *tmp___0 = 28 as libc::c_int;
             return -(1 as libc::c_int) as ssize_t;
         }
-        count = (count as libc::c_ulong).wrapping_sub(written as size_t) as size_t as size_t;
+        count = (count as libc::c_ulong).wrapping_sub(written as size_t) as size_t
+            as size_t;
         p = p.offset(written as isize);
         total += written;
     }
@@ -1422,7 +1482,8 @@ unsafe extern "C" fn carbon_connect(mut backend: *mut libc::c_void) -> libc::c_i
     if (*self_0).out_sock >= 0 as libc::c_int {
         tmp___0 = connect(
             (*self_0).out_sock,
-            &mut (*self_0).out_sockaddr as *mut sockaddr_in as *mut sockaddr as *const sockaddr,
+            &mut (*self_0).out_sockaddr as *mut sockaddr_in as *mut sockaddr
+                as *const sockaddr,
             ::std::mem::size_of::<sockaddr_in>() as libc::c_ulong as socklen_t,
         );
         rc = tmp___0;
@@ -1444,8 +1505,8 @@ unsafe extern "C" fn carbon_connect(mut backend: *mut libc::c_void) -> libc::c_i
     tmp___4 = __errno_location();
     tmp___5 = gh_log_instance();
     gh_log_write(
-        b"instance=%s backend=carbon event=failed_to_connect errno=%d msg=\"%s\"\n\0" as *const u8
-            as *const libc::c_char,
+        b"instance=%s backend=carbon event=failed_to_connect errno=%d msg=\"%s\"\n\0"
+            as *const u8 as *const libc::c_char,
         tmp___5,
         *tmp___4,
         tmp___3,
@@ -1462,8 +1523,8 @@ unsafe extern "C" fn carbon_disconnect(mut self_0: *mut brubeck_carbon) {
     tmp___1 = __errno_location();
     tmp___2 = gh_log_instance();
     gh_log_write(
-        b"instance=%s backend=carbon event=disconnected errno=%d msg=\"%s\"\n\0" as *const u8
-            as *const libc::c_char,
+        b"instance=%s backend=carbon event=disconnected errno=%d msg=\"%s\"\n\0"
+            as *const u8 as *const libc::c_char,
         tmp___2,
         *tmp___1,
         tmp___0,
@@ -1502,11 +1563,7 @@ unsafe extern "C" fn plaintext_each(
     if tmp___1 as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
         return;
     }
-    memcpy(
-        ptr as *mut libc::c_void,
-        key as *const libc::c_void,
-        key_len,
-    );
+    memcpy(ptr as *mut libc::c_void, key as *const libc::c_void, key_len);
     ptr = ptr.offset(key_len as isize);
     tmp___2 = ptr;
     ptr = ptr.offset(1);
@@ -1530,8 +1587,9 @@ unsafe extern "C" fn plaintext_each(
         carbon_disconnect(carbon);
         return;
     }
-    (*carbon).bytes_sent =
-        ((*carbon).bytes_sent as libc::c_ulong).wrapping_add(wr as size_t) as size_t as size_t;
+    (*carbon)
+        .bytes_sent = ((*carbon).bytes_sent as libc::c_ulong).wrapping_add(wr as size_t)
+        as size_t as size_t;
 }
 #[inline]
 unsafe extern "C" fn pickle1_int32(
@@ -1557,22 +1615,38 @@ unsafe extern "C" fn pickle1_double(
     tmp = ptr;
     ptr = ptr.offset(1);
     *tmp = 'G' as i32 as libc::c_char;
-    *ptr.offset(0 as libc::c_int as isize) =
-        *source.offset(7 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(1 as libc::c_int as isize) =
-        *source.offset(6 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(2 as libc::c_int as isize) =
-        *source.offset(5 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(3 as libc::c_int as isize) =
-        *source.offset(4 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(4 as libc::c_int as isize) =
-        *source.offset(3 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(5 as libc::c_int as isize) =
-        *source.offset(2 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(6 as libc::c_int as isize) =
-        *source.offset(1 as libc::c_int as isize) as libc::c_char;
-    *ptr.offset(7 as libc::c_int as isize) =
-        *source.offset(0 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            0 as libc::c_int as isize,
+        ) = *source.offset(7 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            1 as libc::c_int as isize,
+        ) = *source.offset(6 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            2 as libc::c_int as isize,
+        ) = *source.offset(5 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            3 as libc::c_int as isize,
+        ) = *source.offset(4 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            4 as libc::c_int as isize,
+        ) = *source.offset(3 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            5 as libc::c_int as isize,
+        ) = *source.offset(2 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            6 as libc::c_int as isize,
+        ) = *source.offset(1 as libc::c_int as isize) as libc::c_char;
+    *ptr
+        .offset(
+            7 as libc::c_int as isize,
+        ) = *source.offset(0 as libc::c_int as isize) as libc::c_char;
     return 9 as libc::c_int as size_t;
 }
 unsafe extern "C" fn pickle1_push(
@@ -1610,11 +1684,7 @@ unsafe extern "C" fn pickle1_push(
     tmp___1 = ptr;
     ptr = ptr.offset(1);
     *tmp___1 = key_len as libc::c_char;
-    memcpy(
-        ptr as *mut libc::c_void,
-        key as *const libc::c_void,
-        key_len as size_t,
-    );
+    memcpy(ptr as *mut libc::c_void, key as *const libc::c_void, key_len as size_t);
     ptr = ptr.offset(key_len as libc::c_int as isize);
     tmp___2 = ptr;
     ptr = ptr.offset(1);
@@ -1668,7 +1738,8 @@ unsafe extern "C" fn pickle1_init(mut buf: *mut pickler) {
         lead.as_ptr() as *const libc::c_void,
         ::std::mem::size_of::<[uint8_t; 4]>() as libc::c_ulong,
     );
-    (*buf).pos = (4 as libc::c_ulong)
+    (*buf)
+        .pos = (4 as libc::c_ulong)
         .wrapping_add(::std::mem::size_of::<[uint8_t; 4]>() as libc::c_ulong)
         as uint16_t;
     (*buf).pt = 1 as libc::c_int as uint16_t;
@@ -1683,7 +1754,7 @@ unsafe extern "C" fn pickle1_flush(mut backend: *mut libc::c_void) {
     carbon = backend as *mut brubeck_carbon;
     buf = &mut (*carbon).pickler;
     if (*buf).pt as libc::c_int == 1 as libc::c_int {
-        return;
+        return
     } else {
         tmp = carbon_is_connected(carbon as *mut libc::c_void);
         if !tmp {
@@ -1695,7 +1766,8 @@ unsafe extern "C" fn pickle1_flush(mut backend: *mut libc::c_void) {
         trail.as_ptr() as *const libc::c_void,
         ::std::mem::size_of::<[uint8_t; 2]>() as libc::c_ulong,
     );
-    (*buf).pos = ((*buf).pos as libc::c_ulong)
+    (*buf)
+        .pos = ((*buf).pos as libc::c_ulong)
         .wrapping_add(::std::mem::size_of::<[uint8_t; 2]>() as libc::c_ulong)
         as uint16_t;
     buf_lead = (*buf).ptr as *mut uint32_t;
@@ -1710,8 +1782,9 @@ unsafe extern "C" fn pickle1_flush(mut backend: *mut libc::c_void) {
         carbon_disconnect(carbon);
         return;
     }
-    (*carbon).bytes_sent =
-        ((*carbon).bytes_sent as libc::c_ulong).wrapping_add(wr as size_t) as size_t as size_t;
+    (*carbon)
+        .bytes_sent = ((*carbon).bytes_sent as libc::c_ulong).wrapping_add(wr as size_t)
+        as size_t as size_t;
 }
 unsafe extern "C" fn pickle1_each(
     mut metric: *const brubeck_metric,
@@ -1731,8 +1804,8 @@ unsafe extern "C" fn pickle1_each(
     }
     tmp___0 = strlen(key);
     key_len = tmp___0 as uint8_t;
-    if (*carbon).pickler.pos as libc::c_int + (32 as libc::c_int + key_len as libc::c_int)
-        >= 4096 as libc::c_int
+    if (*carbon).pickler.pos as libc::c_int
+        + (32 as libc::c_int + key_len as libc::c_int) >= 4096 as libc::c_int
     {
         pickle1_flush(carbon as *mut libc::c_void);
     }
@@ -1799,12 +1872,20 @@ pub unsafe extern "C" fn brubeck_carbon_new(
     }
     (*carbon).backend.type_0 = BRUBECK_BACKEND_CARBON;
     (*carbon).backend.shard_n = shard_n;
-    (*carbon).backend.connect =
-        Some(carbon_connect as unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int);
-    (*carbon).backend.is_connected =
-        Some(carbon_is_connected as unsafe extern "C" fn(*mut libc::c_void) -> bool);
+    (*carbon)
+        .backend
+        .connect = Some(
+        carbon_connect as unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int,
+    );
+    (*carbon)
+        .backend
+        .is_connected = Some(
+        carbon_is_connected as unsafe extern "C" fn(*mut libc::c_void) -> bool,
+    );
     if pickle != 0 {
-        (*carbon).backend.sample = Some(
+        (*carbon)
+            .backend
+            .sample = Some(
             pickle1_each
                 as unsafe extern "C" fn(
                     *const brubeck_metric,
@@ -1813,13 +1894,18 @@ pub unsafe extern "C" fn brubeck_carbon_new(
                     *mut libc::c_void,
                 ) -> (),
         );
-        (*carbon).backend.flush =
-            Some(pickle1_flush as unsafe extern "C" fn(*mut libc::c_void) -> ());
+        (*carbon)
+            .backend
+            .flush = Some(
+            pickle1_flush as unsafe extern "C" fn(*mut libc::c_void) -> (),
+        );
         tmp___1 = malloc(4096 as libc::c_int as size_t);
         (*carbon).pickler.ptr = tmp___1 as *mut libc::c_char;
         pickle1_init(&mut (*carbon).pickler);
     } else {
-        (*carbon).backend.sample = Some(
+        (*carbon)
+            .backend
+            .sample = Some(
             plaintext_each
                 as unsafe extern "C" fn(
                     *const brubeck_metric,
@@ -1828,23 +1914,22 @@ pub unsafe extern "C" fn brubeck_carbon_new(
                     *mut libc::c_void,
                 ) -> (),
         );
-        (*carbon).backend.flush = ::std::mem::transmute::<
+        (*carbon)
+            .backend
+            .flush = ::std::mem::transmute::<
             *mut libc::c_void,
-            Option<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
+            Option::<unsafe extern "C" fn(*mut libc::c_void) -> ()>,
         >(0 as *mut libc::c_void);
     }
     (*carbon).backend.sample_freq = frequency;
     (*carbon).backend.server = server;
     (*carbon).out_sock = -(1 as libc::c_int);
-    url_to_inaddr2(
-        &mut (*carbon).out_sockaddr,
-        address as *const libc::c_char,
-        port,
-    );
+    url_to_inaddr2(&mut (*carbon).out_sockaddr, address as *const libc::c_char, port);
     brubeck_backend_run_threaded(carbon as *mut brubeck_backend);
     tmp___2 = gh_log_instance();
     gh_log_write(
-        b"instance=%s backend=carbon event=started\n\0" as *const u8 as *const libc::c_char,
+        b"instance=%s backend=carbon event=started\n\0" as *const u8
+            as *const libc::c_char,
         tmp___2,
     );
     return carbon as *mut brubeck_backend;
@@ -1856,13 +1941,10 @@ unsafe extern "C" fn xmalloc(mut size: size_t) -> *mut libc::c_void {
     let mut tmp___0: libc::c_long = 0;
     tmp = malloc(size);
     ptr = tmp;
-    tmp___0 = (ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int
-        as libc::c_long;
+    tmp___0 = (ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong)
+        as libc::c_int as libc::c_long;
     if tmp___0 != 0 {
-        fprintf(
-            stderr,
-            b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char,
-        );
+        fprintf(stderr, b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char);
         gh_log_die();
     }
     return ptr;
@@ -1899,7 +1981,10 @@ pub unsafe extern "C" fn multibloom_check(
     }
     return (hits == (*bloom).hashes) as libc::c_int;
 }
-pub unsafe extern "C" fn multibloom_reset(mut bloom: *mut multibloom, mut f: libc::c_int) {
+pub unsafe extern "C" fn multibloom_reset(
+    mut bloom: *mut multibloom,
+    mut f: libc::c_int,
+) {
     memset(
         *((*bloom).filters).as_mut_ptr().offset(f as isize) as *mut libc::c_void,
         0 as libc::c_int,
@@ -1922,10 +2007,13 @@ pub unsafe extern "C" fn multibloom_new(
     tmp = log(error);
     bpe = -(tmp / 0.480453013918201f64);
     tmp___0 = xmalloc(
-        (::std::mem::size_of::<multibloom>() as libc::c_ulong).wrapping_add(
-            (filters as libc::c_ulong)
-                .wrapping_mul(::std::mem::size_of::<*mut libc::c_void>() as libc::c_ulong),
-        ),
+        (::std::mem::size_of::<multibloom>() as libc::c_ulong)
+            .wrapping_add(
+                (filters as libc::c_ulong)
+                    .wrapping_mul(
+                        ::std::mem::size_of::<*mut libc::c_void>() as libc::c_ulong,
+                    ),
+            ),
     );
     bloom = tmp___0 as *mut multibloom;
     (*bloom).bits = (entries as libc::c_double * bpe) as libc::c_int;
@@ -1969,9 +2057,11 @@ static mut c1: libc::c_uint = 3432918353 as libc::c_uint;
 static mut c2: libc::c_uint = 461845907 as libc::c_int as uint32_t;
 unsafe extern "C" fn fmix(mut h: uint32_t) -> uint32_t {
     h ^= h >> 16 as libc::c_int;
-    h = (h as libc::c_uint).wrapping_mul(2246822507 as libc::c_uint) as uint32_t as uint32_t;
+    h = (h as libc::c_uint).wrapping_mul(2246822507 as libc::c_uint) as uint32_t
+        as uint32_t;
     h ^= h >> 13 as libc::c_int;
-    h = (h as libc::c_uint).wrapping_mul(3266489909 as libc::c_uint) as uint32_t as uint32_t;
+    h = (h as libc::c_uint).wrapping_mul(3266489909 as libc::c_uint) as uint32_t
+        as uint32_t;
     h ^= h >> 16 as libc::c_int;
     return h;
 }
@@ -1990,11 +2080,12 @@ unsafe extern "C" fn mur(mut a: uint32_t, mut h: uint32_t) -> uint32_t {
     a = (a as libc::c_uint).wrapping_mul(c2) as uint32_t as uint32_t;
     h ^= a;
     h = ror32(h, 19 as libc::c_int);
-    return h
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    return h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
 }
-unsafe extern "C" fn Hash32Len13to24(mut s: *const libc::c_char, mut len: size_t) -> uint32_t {
+unsafe extern "C" fn Hash32Len13to24(
+    mut s: *const libc::c_char,
+    mut len: size_t,
+) -> uint32_t {
     let mut a: uint32_t = 0;
     let mut tmp: uint32_t = 0;
     let mut b: uint32_t = 0;
@@ -2016,8 +2107,7 @@ unsafe extern "C" fn Hash32Len13to24(mut s: *const libc::c_char, mut len: size_t
     let mut tmp___10: uint32_t = 0;
     let mut tmp___11: uint32_t = 0;
     tmp = read32(
-        s.offset(-(4 as libc::c_int as isize))
-            .offset((len >> 1 as libc::c_int) as isize),
+        s.offset(-(4 as libc::c_int as isize)).offset((len >> 1 as libc::c_int) as isize),
     );
     a = tmp;
     tmp___0 = read32(s.offset(4 as libc::c_int as isize));
@@ -2040,7 +2130,10 @@ unsafe extern "C" fn Hash32Len13to24(mut s: *const libc::c_char, mut len: size_t
     tmp___11 = fmix(tmp___10);
     return tmp___11;
 }
-unsafe extern "C" fn Hash32Len0to4(mut s: *const libc::c_char, mut len: size_t) -> uint32_t {
+unsafe extern "C" fn Hash32Len0to4(
+    mut s: *const libc::c_char,
+    mut len: size_t,
+) -> uint32_t {
     let mut b: uint32_t = 0;
     let mut c: uint32_t = 0;
     let mut i: libc::c_int = 0;
@@ -2051,9 +2144,7 @@ unsafe extern "C" fn Hash32Len0to4(mut s: *const libc::c_char, mut len: size_t) 
     c = 9 as libc::c_int as uint32_t;
     i = 0 as libc::c_int;
     while (i as size_t) < len {
-        b = b
-            .wrapping_mul(c1)
-            .wrapping_add(*s.offset(i as isize) as uint32_t);
+        b = b.wrapping_mul(c1).wrapping_add(*s.offset(i as isize) as uint32_t);
         c ^= b;
         i += 1;
     }
@@ -2062,7 +2153,10 @@ unsafe extern "C" fn Hash32Len0to4(mut s: *const libc::c_char, mut len: size_t) 
     tmp___1 = fmix(tmp___0);
     return tmp___1;
 }
-unsafe extern "C" fn Hash32Len5to12(mut s: *const libc::c_char, mut len: size_t) -> uint32_t {
+unsafe extern "C" fn Hash32Len5to12(
+    mut s: *const libc::c_char,
+    mut len: size_t,
+) -> uint32_t {
     let mut a: uint32_t = 0;
     let mut b: uint32_t = 0;
     let mut c: uint32_t = 0;
@@ -2090,7 +2184,10 @@ unsafe extern "C" fn Hash32Len5to12(mut s: *const libc::c_char, mut len: size_t)
     tmp___5 = fmix(tmp___4);
     return tmp___5;
 }
-pub unsafe extern "C" fn CityHash32(mut s: *const libc::c_char, mut len: size_t) -> uint32_t {
+pub unsafe extern "C" fn CityHash32(
+    mut s: *const libc::c_char,
+    mut len: size_t,
+) -> uint32_t {
     let mut iters: size_t = 0;
     let mut a0: uint32_t = 0;
     let mut a1: uint32_t = 0;
@@ -2173,32 +2270,20 @@ pub unsafe extern "C" fn CityHash32(mut s: *const libc::c_char, mut len: size_t)
     a4 = tmp___13.wrapping_mul(c2);
     h ^= a0;
     h = ror32(h, 19 as libc::c_int);
-    h = h
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     h ^= a2;
     h = ror32(h, 19 as libc::c_int);
-    h = h
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     g ^= a1;
     g = ror32(g, 19 as libc::c_int);
-    g = g
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    g = g.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     g ^= a3;
     g = ror32(g, 19 as libc::c_int);
-    g = g
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    g = g.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     f = (f as libc::c_uint).wrapping_add(a4) as uint32_t as uint32_t;
     f = ror32(f, 19 as libc::c_int);
-    f = f
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
-    iters = len
-        .wrapping_sub(1 as libc::c_ulong)
-        .wrapping_div(20 as libc::c_ulong);
+    f = f.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
+    iters = len.wrapping_sub(1 as libc::c_ulong).wrapping_div(20 as libc::c_ulong);
     loop {
         tmp___14 = read32(s);
         tmp___15 = ror32(tmp___14.wrapping_mul(c1), 17 as libc::c_int);
@@ -2215,27 +2300,21 @@ pub unsafe extern "C" fn CityHash32(mut s: *const libc::c_char, mut len: size_t)
         a4___0 = tmp___21;
         h ^= a0___0;
         h = ror32(h, 18 as libc::c_int);
-        h = h
-            .wrapping_mul(5 as libc::c_uint)
-            .wrapping_add(3864292196 as libc::c_uint);
+        h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
         f = (f as libc::c_uint).wrapping_add(a1___0) as uint32_t as uint32_t;
         f = ror32(f, 19 as libc::c_int);
         f = (f as libc::c_uint).wrapping_mul(c1) as uint32_t as uint32_t;
         g = (g as libc::c_uint).wrapping_add(a2___0) as uint32_t as uint32_t;
         g = ror32(g, 18 as libc::c_int);
-        g = g
-            .wrapping_mul(5 as libc::c_uint)
-            .wrapping_add(3864292196 as libc::c_uint);
+        g = g.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
         h ^= a3___0.wrapping_add(a1___0);
         h = ror32(h, 19 as libc::c_int);
-        h = h
-            .wrapping_mul(5 as libc::c_uint)
-            .wrapping_add(3864292196 as libc::c_uint);
+        h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
         g ^= a4___0;
         tmp___22 = __bswap_32(g);
         g = tmp___22.wrapping_mul(5 as libc::c_uint);
-        h = (h as libc::c_uint).wrapping_add(a4___0.wrapping_mul(5 as libc::c_uint)) as uint32_t
-            as uint32_t;
+        h = (h as libc::c_uint).wrapping_add(a4___0.wrapping_mul(5 as libc::c_uint))
+            as uint32_t as uint32_t;
         h = __bswap_32(h);
         f = (f as libc::c_uint).wrapping_add(a0___0) as uint32_t as uint32_t;
         aux = f;
@@ -2259,33 +2338,29 @@ pub unsafe extern "C" fn CityHash32(mut s: *const libc::c_char, mut len: size_t)
     tmp___26 = ror32(f, 17 as libc::c_int);
     f = tmp___26.wrapping_mul(c1);
     h = ror32(h.wrapping_add(g), 19 as libc::c_int);
-    h = h
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     tmp___27 = ror32(h, 17 as libc::c_int);
     h = tmp___27.wrapping_mul(c1);
     h = ror32(h.wrapping_add(f), 19 as libc::c_int);
-    h = h
-        .wrapping_mul(5 as libc::c_uint)
-        .wrapping_add(3864292196 as libc::c_uint);
+    h = h.wrapping_mul(5 as libc::c_uint).wrapping_add(3864292196 as libc::c_uint);
     tmp___28 = ror32(h, 17 as libc::c_int);
     h = tmp___28.wrapping_mul(c1);
     return h;
 }
 #[inline]
-unsafe extern "C" fn xrealloc(mut ptr: *mut libc::c_void, mut size: size_t) -> *mut libc::c_void {
+unsafe extern "C" fn xrealloc(
+    mut ptr: *mut libc::c_void,
+    mut size: size_t,
+) -> *mut libc::c_void {
     let mut new_ptr: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___0: libc::c_long = 0;
     tmp = realloc(ptr, size);
     new_ptr = tmp;
-    tmp___0 = (new_ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int
-        as libc::c_long;
+    tmp___0 = (new_ptr as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong)
+        as libc::c_int as libc::c_long;
     if tmp___0 != 0 {
-        fprintf(
-            stderr,
-            b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char,
-        );
+        fprintf(stderr, b"[FATAL]: oom\n\0" as *const u8 as *const libc::c_char);
         gh_log_die();
     }
     return new_ptr;
@@ -2371,7 +2446,10 @@ unsafe extern "C" fn histo_sort(mut histo: *mut brubeck_histo) {
         ::std::mem::size_of::<value_t>() as libc::c_ulong,
         Some(
             value_cmp
-                as unsafe extern "C" fn(*const libc::c_void, *const libc::c_void) -> libc::c_int,
+                as unsafe extern "C" fn(
+                    *const libc::c_void,
+                    *const libc::c_void,
+                ) -> libc::c_int,
         ),
     );
 }
@@ -2390,8 +2468,9 @@ pub unsafe extern "C" fn brubeck_histo_sample(
     histo_sort(histo);
     (*sample).sum = histo_sum(histo);
     (*sample).min = *((*histo).values).offset(0 as libc::c_int as isize);
-    (*sample).max =
-        *((*histo).values).offset(((*histo).size as libc::c_int - 1 as libc::c_int) as isize);
+    (*sample)
+        .max = *((*histo).values)
+        .offset(((*histo).size as libc::c_int - 1 as libc::c_int) as isize);
     (*sample).mean = (*sample).sum / (*histo).size as value_t;
     (*sample).median = histo_percentile(histo, 0.5f32);
     (*sample).count = (*histo).count as value_t;
@@ -2413,7 +2492,9 @@ unsafe extern "C" fn ck_ht_entry_key_set(
     (*entry).key_length = key_length as uint64_t;
 }
 #[inline]
-unsafe extern "C" fn ck_ht_entry_value(mut entry: *mut ck_ht_entry_t) -> *mut libc::c_void {
+unsafe extern "C" fn ck_ht_entry_value(
+    mut entry: *mut ck_ht_entry_t,
+) -> *mut libc::c_void {
     return (*entry).value as *mut libc::c_void;
 }
 #[inline]
@@ -2441,11 +2522,15 @@ static mut ALLOCATOR: ck_malloc = {
     let mut init = ck_malloc {
         malloc: Some(ht_malloc as unsafe extern "C" fn(size_t) -> *mut libc::c_void),
         realloc: None,
-        free: Some(ht_free as unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> ()),
+        free: Some(
+            ht_free as unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> (),
+        ),
     };
     init
 };
-pub unsafe extern "C" fn brubeck_hashtable_new(size: uint64_t) -> *mut brubeck_hashtable_t {
+pub unsafe extern "C" fn brubeck_hashtable_new(
+    size: uint64_t,
+) -> *mut brubeck_hashtable_t {
     let mut ht: *mut brubeck_hashtable_t = 0 as *mut brubeck_hashtable_t;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___0: bool = false;
@@ -2458,7 +2543,10 @@ pub unsafe extern "C" fn brubeck_hashtable_new(size: uint64_t) -> *mut brubeck_h
     tmp___0 = ck_ht_init(
         &mut (*ht).table,
         2 as libc::c_uint,
-        ::std::mem::transmute::<*mut libc::c_void, Option<ck_ht_hash_cb_t>>(0 as *mut libc::c_void),
+        ::std::mem::transmute::<
+            *mut libc::c_void,
+            Option::<ck_ht_hash_cb_t>,
+        >(0 as *mut libc::c_void),
         &mut ALLOCATOR,
         size,
         3735928559 as libc::c_uint as uint64_t,
@@ -2484,12 +2572,7 @@ pub unsafe extern "C" fn brubeck_hashtable_find(
     };
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___0: bool = false;
-    ck_ht_hash(
-        &mut h,
-        &mut (*ht).table,
-        key as *const libc::c_void,
-        key_len,
-    );
+    ck_ht_hash(&mut h, &mut (*ht).table, key as *const libc::c_void, key_len);
     ck_ht_entry_key_set(&mut entry, key as *const libc::c_void, key_len);
     tmp___0 = ck_ht_get_spmc(&mut (*ht).table, h, &mut entry);
     if tmp___0 {
@@ -2512,12 +2595,7 @@ pub unsafe extern "C" fn brubeck_hashtable_insert(
         hash: 0,
     };
     let mut result: bool = false;
-    ck_ht_hash(
-        &mut h,
-        &mut (*ht).table,
-        key as *const libc::c_void,
-        key_len,
-    );
+    ck_ht_hash(&mut h, &mut (*ht).table, key as *const libc::c_void, key_len);
     ck_ht_entry_set(
         &mut entry,
         h,
@@ -2530,7 +2608,9 @@ pub unsafe extern "C" fn brubeck_hashtable_insert(
     pthread_mutex_unlock(&mut (*ht).write_mutex);
     return result;
 }
-pub unsafe extern "C" fn brubeck_hashtable_size(mut ht: *mut brubeck_hashtable_t) -> size_t {
+pub unsafe extern "C" fn brubeck_hashtable_size(
+    mut ht: *mut brubeck_hashtable_t,
+) -> size_t {
     let mut len: size_t = 0;
     pthread_mutex_lock(&mut (*ht).write_mutex);
     len = ck_ht_count(&mut (*ht).table);
@@ -2539,7 +2619,9 @@ pub unsafe extern "C" fn brubeck_hashtable_size(mut ht: *mut brubeck_hashtable_t
 }
 pub unsafe extern "C" fn brubeck_hashtable_foreach(
     mut ht: *mut brubeck_hashtable_t,
-    mut callback: Option<unsafe extern "C" fn(*mut brubeck_metric, *mut libc::c_void) -> ()>,
+    mut callback: Option::<
+        unsafe extern "C" fn(*mut brubeck_metric, *mut libc::c_void) -> (),
+    >,
     mut payload: *mut libc::c_void,
 ) {
     let mut iterator: ck_ht_iterator_t = ck_ht_iterator_t {
@@ -2558,10 +2640,8 @@ pub unsafe extern "C" fn brubeck_hashtable_foreach(
             break;
         }
         tmp = ck_ht_entry_value(entry);
-        (Some(callback.expect("non-null function pointer"))).expect("non-null function pointer")(
-            tmp as *mut brubeck_metric,
-            payload,
-        );
+        (Some(callback.expect("non-null function pointer")))
+            .expect("non-null function pointer")(tmp as *mut brubeck_metric, payload);
     }
     pthread_mutex_unlock(&mut (*ht).write_mutex);
 }
@@ -2586,7 +2666,8 @@ pub unsafe extern "C" fn brubeck_hashtable_to_a(
     pthread_mutex_lock(&mut (*ht).write_mutex);
     *length = ck_ht_count(&mut (*ht).table);
     tmp = xmalloc(
-        (*length).wrapping_mul(::std::mem::size_of::<*mut libc::c_void>() as libc::c_ulong),
+        (*length)
+            .wrapping_mul(::std::mem::size_of::<*mut libc::c_void>() as libc::c_ulong),
     );
     array = tmp as *mut *mut brubeck_metric;
     loop {
@@ -2606,8 +2687,7 @@ pub unsafe extern "C" fn brubeck_hashtable_to_a(
 #[inline]
 unsafe extern "C" fn __bswap_16(mut __bsx: __uint16_t) -> __uint16_t {
     return (__bsx as libc::c_int >> 8 as libc::c_int & 255 as libc::c_int
-        | (__bsx as libc::c_int & 255 as libc::c_int) << 8 as libc::c_int)
-        as __uint16_t;
+        | (__bsx as libc::c_int & 255 as libc::c_int) << 8 as libc::c_int) as __uint16_t;
 }
 #[inline]
 unsafe extern "C" fn json_decref(mut json: *mut json_t) {
@@ -2624,7 +2704,10 @@ unsafe extern "C" fn json_decref(mut json: *mut json_t) {
     }
 }
 #[inline]
-unsafe extern "C" fn brubeck_metric_set_state(mut metric: *mut brubeck_metric, state: uint8_t) {
+unsafe extern "C" fn brubeck_metric_set_state(
+    mut metric: *mut brubeck_metric,
+    state: uint8_t,
+) {
     ::std::intrinsics::atomic_store(
         &mut (*metric).private_state,
         state as libc::c_int as uint8_t,
@@ -2637,7 +2720,7 @@ unsafe extern "C" fn starts_with(
 ) -> libc::c_int {
     loop {
         if *prefix == 0 {
-            return 1 as libc::c_int;
+            return 1 as libc::c_int
         } else {
             if *str as libc::c_int != *prefix as libc::c_int {
                 return 0 as libc::c_int;
@@ -2645,7 +2728,7 @@ unsafe extern "C" fn starts_with(
         }
         str = str.offset(1);
         prefix = prefix.offset(1);
-    }
+    };
 }
 unsafe extern "C" fn flow_stats(mut server: *mut brubeck_server) -> *mut MHD_Response {
     return 0 as *mut libc::c_void as *mut MHD_Response;
@@ -2861,8 +2944,11 @@ unsafe extern "C" fn send_stats(mut brubeck: *mut brubeck_server) -> *mut MHD_Re
     jsonr = json_dumps(stats as *const json_t, 260 as libc::c_int as size_t);
     json_decref(stats);
     tmp___6 = strlen(jsonr as *const libc::c_char);
-    tmp___7 =
-        MHD_create_response_from_buffer(tmp___6, jsonr as *mut libc::c_void, MHD_RESPMEM_MUST_FREE);
+    tmp___7 = MHD_create_response_from_buffer(
+        tmp___6,
+        jsonr as *mut libc::c_void,
+        MHD_RESPMEM_MUST_FREE,
+    );
     return tmp___7;
 }
 unsafe extern "C" fn send_ping(mut brubeck: *mut brubeck_server) -> *mut MHD_Response {
@@ -2884,7 +2970,8 @@ unsafe extern "C" fn send_ping(mut brubeck: *mut brubeck_server) -> *mut MHD_Res
         tmp = (Some(((*backend).is_connected).expect("non-null function pointer")))
             .expect("non-null function pointer")(backend as *mut libc::c_void);
         if !tmp {
-            status = b"ERROR (backend disconnected)\0" as *const u8 as *const libc::c_char;
+            status = b"ERROR (backend disconnected)\0" as *const u8
+                as *const libc::c_char;
             break;
         } else {
             i += 1;
@@ -2909,11 +2996,15 @@ unsafe extern "C" fn send_ping(mut brubeck: *mut brubeck_server) -> *mut MHD_Res
     jsonr = json_dumps(stats as *const json_t, 260 as libc::c_int as size_t);
     json_decref(stats);
     tmp___1 = strlen(jsonr as *const libc::c_char);
-    tmp___2 =
-        MHD_create_response_from_buffer(tmp___1, jsonr as *mut libc::c_void, MHD_RESPMEM_MUST_FREE);
+    tmp___2 = MHD_create_response_from_buffer(
+        tmp___1,
+        jsonr as *mut libc::c_void,
+        MHD_RESPMEM_MUST_FREE,
+    );
     return tmp___2;
 }
-static mut NOT_FOUND: *const libc::c_char = b"404 not found\0" as *const u8 as *const libc::c_char;
+static mut NOT_FOUND: *const libc::c_char = b"404 not found\0" as *const u8
+    as *const libc::c_char;
 unsafe extern "C" fn handle_request(
     mut cls: *mut libc::c_void,
     mut connection: *mut MHD_Connection,
@@ -2942,7 +3033,10 @@ unsafe extern "C" fn handle_request(
     if tmp___6 != 0 {
         tmp___5 = strcmp(method, b"POST\0" as *const u8 as *const libc::c_char);
         if tmp___5 == 0 {
-            tmp___4 = starts_with(url, b"/expire/\0" as *const u8 as *const libc::c_char);
+            tmp___4 = starts_with(
+                url,
+                b"/expire/\0" as *const u8 as *const libc::c_char,
+            );
             if tmp___4 != 0 {
                 response = expire_metric(brubeck, url);
             }
@@ -2954,9 +3048,15 @@ unsafe extern "C" fn handle_request(
             if tmp___3 != 0 {
                 tmp___1 = strcmp(url, b"/stats\0" as *const u8 as *const libc::c_char);
                 if tmp___1 != 0 {
-                    tmp___0 = strcmp(url, b"/flow_stats\0" as *const u8 as *const libc::c_char);
+                    tmp___0 = strcmp(
+                        url,
+                        b"/flow_stats\0" as *const u8 as *const libc::c_char,
+                    );
                     if tmp___0 != 0 {
-                        tmp = starts_with(url, b"/metric/\0" as *const u8 as *const libc::c_char);
+                        tmp = starts_with(
+                            url,
+                            b"/metric/\0" as *const u8 as *const libc::c_char,
+                        );
                         if tmp != 0 {
                             response = send_metric(brubeck, url);
                         }
@@ -3024,8 +3124,12 @@ pub unsafe extern "C" fn brubeck_http_endpoint_init(
         tmp___0 as uint16_t,
         ::std::mem::transmute::<
             *mut libc::c_void,
-            Option<
-                unsafe extern "C" fn(*mut libc::c_void, *const sockaddr, socklen_t) -> libc::c_int,
+            Option::<
+                unsafe extern "C" fn(
+                    *mut libc::c_void,
+                    *const sockaddr,
+                    socklen_t,
+                ) -> libc::c_int,
             >,
         >(0 as *mut libc::c_void),
         0 as *mut libc::c_void,
@@ -3050,20 +3154,22 @@ pub unsafe extern "C" fn brubeck_http_endpoint_init(
     if daemon___0.is_null() {
         fprintf(
             stderr,
-            b"[FATAL]: failed to start HTTP endpoint\n\0" as *const u8 as *const libc::c_char,
+            b"[FATAL]: failed to start HTTP endpoint\n\0" as *const u8
+                as *const libc::c_char,
         );
         gh_log_die();
     }
     tmp___1 = gh_log_instance();
     gh_log_write(
-        b"instance=%s event=http_server listen=%s\n\0" as *const u8 as *const libc::c_char,
+        b"instance=%s event=http_server listen=%s\n\0" as *const u8
+            as *const libc::c_char,
         tmp___1,
         port,
     );
 }
 pub unsafe extern "C" fn brubeck_internal__sample(
     mut metric: *mut brubeck_metric,
-    mut sample: Option<
+    mut sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3085,9 +3191,8 @@ pub unsafe extern "C" fn brubeck_internal__sample(
     tmp = strlen(b".unique_keys\0" as *const u8 as *const libc::c_char);
     let mut fresh5 = ::std::vec::from_elem(
         0,
-        ((*metric).key_len as size_t)
-            .wrapping_add(tmp)
-            .wrapping_add(1 as libc::c_ulong) as usize,
+        ((*metric).key_len as size_t).wrapping_add(tmp).wrapping_add(1 as libc::c_ulong)
+            as usize,
     );
     tmp___0 = fresh5.as_mut_ptr();
     key = tmp___0 as *mut libc::c_char;
@@ -3107,7 +3212,10 @@ pub unsafe extern "C" fn brubeck_internal__sample(
         0 as libc::c_int as uint32_t,
     );
     (*stats).sample.metrics = value;
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         value as value_t,
@@ -3124,7 +3232,10 @@ pub unsafe extern "C" fn brubeck_internal__sample(
         0 as libc::c_int as uint32_t,
     );
     (*stats).sample.errors = value;
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         value as value_t,
@@ -3140,7 +3251,10 @@ pub unsafe extern "C" fn brubeck_internal__sample(
     let fresh7 = 0 as libc::c_int as uint32_t;
     value = ::std::intrinsics::atomic_xadd_seqcst(fresh6, fresh7) + fresh7;
     (*stats).sample.unique_keys = value;
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         value as value_t,
@@ -3153,7 +3267,12 @@ pub unsafe extern "C" fn brubeck_internal__init(mut server: *mut brubeck_server)
     let mut backend: *mut brubeck_backend = 0 as *mut brubeck_backend;
     let mut tmp: size_t = 0;
     tmp = strlen((*server).name);
-    internal = brubeck_metric_new(server, (*server).name, tmp, 5 as libc::c_int as uint8_t);
+    internal = brubeck_metric_new(
+        server,
+        (*server).name,
+        tmp,
+        5 as libc::c_int as uint8_t,
+    );
     if internal as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         fprintf(
             stderr,
@@ -3162,13 +3281,15 @@ pub unsafe extern "C" fn brubeck_internal__init(mut server: *mut brubeck_server)
         );
         gh_log_die();
     }
-    (*internal).as_0.other =
-        &mut (*server).internal_stats as *mut brubeck_internal_stats as *mut libc::c_void;
+    (*internal)
+        .as_0
+        .other = &mut (*server).internal_stats as *mut brubeck_internal_stats
+        as *mut libc::c_void;
     backend = brubeck_metric_shard(server, internal);
     (*server).internal_stats.sample_freq = (*backend).sample_freq;
 }
-static mut gh_log_path: *const libc::c_char =
-    0 as *const libc::c_void as *mut libc::c_void as *const libc::c_char;
+static mut gh_log_path: *const libc::c_char = 0 as *const libc::c_void
+    as *mut libc::c_void as *const libc::c_char;
 static mut gh_log_file: *mut FILE = 0 as *const FILE as *mut FILE;
 static mut gh_syslog_enabled: libc::c_int = 0;
 pub unsafe extern "C" fn gh_log_open(mut path: *const libc::c_char) {
@@ -3229,8 +3350,8 @@ pub unsafe extern "C" fn gh_log_write(mut message: *const libc::c_char, mut args
 pub unsafe extern "C" fn gh_log_die() -> ! {
     exit(1 as libc::c_int);
 }
-static mut _app_instance: *const libc::c_char =
-    0 as *const libc::c_void as *mut libc::c_void as *const libc::c_char;
+static mut _app_instance: *const libc::c_char = 0 as *const libc::c_void
+    as *mut libc::c_void as *const libc::c_char;
 pub unsafe extern "C" fn gh_log_instance() -> *const libc::c_char {
     return _app_instance;
 }
@@ -3251,8 +3372,8 @@ unsafe extern "C" fn new_metric(
     if !((*server).tags).is_null() {
         tags = brubeck_get_tag_set((*server).tags, key, key_len as uint16_t);
         if !tags.is_null() {
-            key_len = (key_len as libc::c_ulong).wrapping_sub((*tags).tag_len as size_t) as size_t
-                as size_t;
+            key_len = (key_len as libc::c_ulong).wrapping_sub((*tags).tag_len as size_t)
+                as size_t as size_t;
         }
     }
     tmp = brubeck_slab_alloc(
@@ -3273,7 +3394,9 @@ unsafe extern "C" fn new_metric(
         key as *const libc::c_void,
         key_len,
     );
-    *((*metric).key).as_mut_ptr().offset(key_len as isize) = '\u{0}' as i32 as libc::c_char;
+    *((*metric).key)
+        .as_mut_ptr()
+        .offset(key_len as isize) = '\u{0}' as i32 as libc::c_char;
     (*metric).key_len = key_len as uint16_t;
     brubeck_metric_set_state(metric, 2 as libc::c_int as uint8_t);
     (*metric).type_0 = type_0;
@@ -3296,7 +3419,7 @@ unsafe extern "C" fn gauge__record(
 }
 unsafe extern "C" fn gauge__sample(
     mut metric: *mut brubeck_metric,
-    mut sample: Option<
+    mut sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3310,7 +3433,10 @@ unsafe extern "C" fn gauge__sample(
     pthread_spin_lock(&mut (*metric).lock);
     value = (*metric).as_0.gauge.value;
     pthread_spin_unlock(&mut (*metric).lock);
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         ((*metric).key).as_mut_ptr() as *const libc::c_char,
         value,
@@ -3330,7 +3456,7 @@ unsafe extern "C" fn meter__record(
 }
 unsafe extern "C" fn meter__sample(
     mut metric: *mut brubeck_metric,
-    mut sample: Option<
+    mut sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3345,7 +3471,10 @@ unsafe extern "C" fn meter__sample(
     value = (*metric).as_0.meter.value;
     (*metric).as_0.meter.value = 0.0f64;
     pthread_spin_unlock(&mut (*metric).lock);
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         ((*metric).key).as_mut_ptr() as *const libc::c_char,
         value,
@@ -3376,7 +3505,7 @@ unsafe extern "C" fn counter__record(
 }
 unsafe extern "C" fn counter__sample(
     mut metric: *mut brubeck_metric,
-    mut sample: Option<
+    mut sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3391,7 +3520,10 @@ unsafe extern "C" fn counter__sample(
     value = (*metric).as_0.counter.value;
     (*metric).as_0.counter.value = 0.0f64;
     pthread_spin_unlock(&mut (*metric).lock);
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         ((*metric).key).as_mut_ptr() as *const libc::c_char,
         value,
@@ -3410,7 +3542,7 @@ unsafe extern "C" fn histogram__record(
 }
 unsafe extern "C" fn histogram__sample(
     mut metric: *mut brubeck_metric,
-    mut sample: Option<
+    mut sample: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3451,9 +3583,8 @@ unsafe extern "C" fn histogram__sample(
     tmp = strlen(b".percentile.999\0" as *const u8 as *const libc::c_char);
     let mut fresh8 = ::std::vec::from_elem(
         0,
-        ((*metric).key_len as size_t)
-            .wrapping_add(tmp)
-            .wrapping_add(1 as libc::c_ulong) as usize,
+        ((*metric).key_len as size_t).wrapping_add(tmp).wrapping_add(1 as libc::c_ulong)
+            as usize,
     );
     tmp___0 = fresh8.as_mut_ptr();
     key = tmp___0 as *mut libc::c_char;
@@ -3468,7 +3599,10 @@ unsafe extern "C" fn histogram__sample(
         b".count\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___1.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.count,
@@ -3481,7 +3615,10 @@ unsafe extern "C" fn histogram__sample(
         tmp___2.wrapping_add(1 as libc::c_ulong),
     );
     backend = opaque as *mut brubeck_backend;
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.count / (*backend).sample_freq as libc::c_double,
@@ -3496,7 +3633,10 @@ unsafe extern "C" fn histogram__sample(
         b".min\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___3.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.min,
@@ -3508,7 +3648,10 @@ unsafe extern "C" fn histogram__sample(
         b".max\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___4.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.max,
@@ -3520,7 +3663,10 @@ unsafe extern "C" fn histogram__sample(
         b".sum\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___5.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.sum,
@@ -3532,7 +3678,10 @@ unsafe extern "C" fn histogram__sample(
         b".mean\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___6.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.mean,
@@ -3544,7 +3693,10 @@ unsafe extern "C" fn histogram__sample(
         b".median\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___7.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.median,
@@ -3556,7 +3708,10 @@ unsafe extern "C" fn histogram__sample(
         b".percentile.75\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___8.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.percentile[0 as libc::c_int as usize],
@@ -3568,7 +3723,10 @@ unsafe extern "C" fn histogram__sample(
         b".percentile.95\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___9.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.percentile[1 as libc::c_int as usize],
@@ -3580,7 +3738,10 @@ unsafe extern "C" fn histogram__sample(
         b".percentile.98\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___10.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.percentile[2 as libc::c_int as usize],
@@ -3592,7 +3753,10 @@ unsafe extern "C" fn histogram__sample(
         b".percentile.99\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___11.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.percentile[3 as libc::c_int as usize],
@@ -3604,7 +3768,10 @@ unsafe extern "C" fn histogram__sample(
         b".percentile.999\0" as *const u8 as *const libc::c_char as *const libc::c_void,
         tmp___12.wrapping_add(1 as libc::c_ulong),
     );
-    (Some(sample.expect("non-null function pointer"))).expect("non-null function pointer")(
+    (Some(sample.expect("non-null function pointer")))
+        .expect(
+            "non-null function pointer",
+        )(
         metric as *const brubeck_metric,
         key as *const libc::c_char,
         hsample.percentile[4 as libc::c_int as usize],
@@ -3628,7 +3795,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
                     gauge__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3657,7 +3824,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
                     meter__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3686,7 +3853,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
                     counter__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3715,7 +3882,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
                     histogram__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3744,7 +3911,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
                     histogram__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3762,15 +3929,20 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
             let mut init = brubeck_metric__proto {
                 record: ::std::mem::transmute::<
                     *mut libc::c_void,
-                    Option<
-                        unsafe extern "C" fn(*mut brubeck_metric, value_t, value_t, uint8_t) -> (),
+                    Option::<
+                        unsafe extern "C" fn(
+                            *mut brubeck_metric,
+                            value_t,
+                            value_t,
+                            uint8_t,
+                        ) -> (),
                     >,
                 >(0 as *const libc::c_void as *mut libc::c_void),
                 sample: Some(
                     brubeck_internal__sample
                         as unsafe extern "C" fn(
                             *mut brubeck_metric,
-                            Option<
+                            Option::<
                                 unsafe extern "C" fn(
                                     *const brubeck_metric,
                                     *const libc::c_char,
@@ -3788,7 +3960,7 @@ static mut _prototypes: [brubeck_metric__proto; 6] = unsafe {
 };
 pub unsafe extern "C" fn brubeck_metric_sample(
     mut metric: *mut brubeck_metric,
-    mut cb: Option<
+    mut cb: Option::<
         unsafe extern "C" fn(
             *const brubeck_metric,
             *const libc::c_char,
@@ -3802,7 +3974,7 @@ pub unsafe extern "C" fn brubeck_metric_sample(
         ((*_prototypes.as_mut_ptr().offset((*metric).type_0 as isize)).sample)
             .expect("non-null function pointer"),
     ))
-    .expect("non-null function pointer")(metric, cb, backend);
+        .expect("non-null function pointer")(metric, cb, backend);
 }
 pub unsafe extern "C" fn brubeck_metric_record(
     mut metric: *mut brubeck_metric,
@@ -3815,7 +3987,7 @@ pub unsafe extern "C" fn brubeck_metric_record(
         ((*_prototypes.as_mut_ptr().offset((*metric).type_0 as isize)).record)
             .expect("non-null function pointer"),
     ))
-    .expect("non-null function pointer")(metric, value, sample_freq, modifiers);
+        .expect("non-null function pointer")(metric, value, sample_freq, modifiers);
 }
 pub unsafe extern "C" fn brubeck_metric_shard(
     mut server: *mut brubeck_server,
@@ -3829,7 +4001,8 @@ pub unsafe extern "C" fn brubeck_metric_shard(
             ((*metric).key).as_mut_ptr() as *const libc::c_char,
             (*metric).key_len as size_t,
         );
-        shard = tmp.wrapping_rem((*server).active_backends as libc::c_uint) as libc::c_int;
+        shard = tmp.wrapping_rem((*server).active_backends as libc::c_uint)
+            as libc::c_int;
     }
     return (*server).backends[shard as usize];
 }
@@ -3879,8 +4052,8 @@ pub unsafe extern "C" fn brubeck_metric_find(
     let mut tmp: *mut brubeck_metric = 0 as *mut brubeck_metric;
     let mut tmp___0: libc::c_long = 0;
     metric = brubeck_hashtable_find((*server).metrics, key, key_len as uint16_t);
-    tmp___0 = (metric as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong) as libc::c_int
-        as libc::c_long;
+    tmp___0 = (metric as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong)
+        as libc::c_int as libc::c_long;
     if tmp___0 != 0 {
         if (*server).at_capacity != 0 {
             return 0 as *mut libc::c_void as *mut brubeck_metric;
@@ -3947,7 +4120,10 @@ pub unsafe extern "C" fn brubeck_sampler_socket(
     }
     return sock;
 }
-unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut sock: libc::c_int) {
+unsafe extern "C" fn statsd_run_recvmmsg(
+    mut statsd: *mut brubeck_statsd,
+    mut sock: libc::c_int,
+) {
     let mut SIM_PACKETS: libc::c_uint = 0;
     let mut server: *mut brubeck_server = 0 as *mut brubeck_server;
     let mut i: libc::c_uint = 0;
@@ -3965,7 +4141,7 @@ unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut so
     SIM_PACKETS = (*statsd).mmsg_count;
     server = (*statsd).sampler.server;
     let vla = SIM_PACKETS as usize;
-    let mut iovecs: Vec<iovec> = ::std::vec::from_elem(
+    let mut iovecs: Vec::<iovec> = ::std::vec::from_elem(
         iovec {
             iov_base: 0 as *mut libc::c_void,
             iov_len: 0,
@@ -3973,7 +4149,7 @@ unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut so
         vla,
     );
     let vla_0 = SIM_PACKETS as usize;
-    let mut msgs: Vec<mmsghdr> = ::std::vec::from_elem(
+    let mut msgs: Vec::<mmsghdr> = ::std::vec::from_elem(
         mmsghdr {
             msg_hdr: msghdr {
                 msg_name: 0 as *mut libc::c_void,
@@ -3997,10 +4173,13 @@ unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut so
     while i < SIM_PACKETS {
         let ref mut fresh11 = (*iovecs.as_mut_ptr().offset(i as isize)).iov_base;
         *fresh11 = xmalloc(8192 as libc::c_int as size_t);
-        (*iovecs.as_mut_ptr().offset(i as isize)).iov_len = 8191 as libc::c_int as size_t;
+        (*iovecs.as_mut_ptr().offset(i as isize))
+            .iov_len = 8191 as libc::c_int as size_t;
         let ref mut fresh12 = (*msgs.as_mut_ptr().offset(i as isize)).msg_hdr.msg_iov;
         *fresh12 = &mut *iovecs.as_mut_ptr().offset(i as isize) as *mut iovec;
-        (*msgs.as_mut_ptr().offset(i as isize)).msg_hdr.msg_iovlen = 1 as libc::c_int as size_t;
+        (*msgs.as_mut_ptr().offset(i as isize))
+            .msg_hdr
+            .msg_iovlen = 1 as libc::c_int as size_t;
         i = i.wrapping_add(1);
     }
     tmp = gh_log_instance();
@@ -4033,8 +4212,8 @@ unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut so
             tmp___5 = __errno_location();
             tmp___6 = gh_log_instance();
             gh_log_write(
-                b"instance=%s sampler=statsd event=failed_read errno=%d msg=\"%s\"\n\0" as *const u8
-                    as *const libc::c_char,
+                b"instance=%s sampler=statsd event=failed_read errno=%d msg=\"%s\"\n\0"
+                    as *const u8 as *const libc::c_char,
                 tmp___6,
                 *tmp___5,
                 tmp___4,
@@ -4050,14 +4229,18 @@ unsafe extern "C" fn statsd_run_recvmmsg(mut statsd: *mut brubeck_statsd, mut so
             while i < res as libc::c_uint {
                 buf = (*(*msgs.as_mut_ptr().offset(i as isize)).msg_hdr.msg_iov).iov_base
                     as *mut libc::c_char;
-                end = buf.offset((*msgs.as_mut_ptr().offset(i as isize)).msg_len as isize);
+                end = buf
+                    .offset((*msgs.as_mut_ptr().offset(i as isize)).msg_len as isize);
                 brubeck_statsd_packet_parse(server, buf, end, (*statsd).scale_timers_by);
                 i = i.wrapping_add(1);
             }
         }
-    }
+    };
 }
-unsafe extern "C" fn statsd_run_recvmsg(mut statsd: *mut brubeck_statsd, mut sock: libc::c_int) {
+unsafe extern "C" fn statsd_run_recvmsg(
+    mut statsd: *mut brubeck_statsd,
+    mut sock: libc::c_int,
+) {
     let mut server: *mut brubeck_server = 0 as *mut brubeck_server;
     let mut buffer: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
@@ -4089,8 +4272,8 @@ unsafe extern "C" fn statsd_run_recvmsg(mut statsd: *mut brubeck_statsd, mut soc
     );
     tmp___0 = gh_log_instance();
     gh_log_write(
-        b"instance=%s sampler=statsd event=worker_online syscall=recvmsg socket=%d\n\0" as *const u8
-            as *const libc::c_char,
+        b"instance=%s sampler=statsd event=worker_online syscall=recvmsg socket=%d\n\0"
+            as *const u8 as *const libc::c_char,
         tmp___0,
         sock,
     );
@@ -4140,7 +4323,7 @@ unsafe extern "C" fn statsd_run_recvmsg(mut statsd: *mut brubeck_statsd, mut soc
                 (*statsd).scale_timers_by,
             );
         }
-    }
+    };
 }
 #[inline]
 unsafe extern "C" fn parse_float(
@@ -4171,7 +4354,8 @@ unsafe extern "C" fn parse_float(
         if !(*buffer as libc::c_int <= 57 as libc::c_int) {
             break;
         }
-        value = value * 10.0f64 + (*buffer as libc::c_int - 48 as libc::c_int) as value_t;
+        value = value * 10.0f64
+            + (*buffer as libc::c_int - 48 as libc::c_int) as value_t;
         buffer = buffer.offset(1);
     }
     if *buffer as libc::c_int == 46 as libc::c_int {
@@ -4182,7 +4366,8 @@ unsafe extern "C" fn parse_float(
             if !(*buffer as libc::c_int <= 57 as libc::c_int) {
                 break;
             }
-            f = f * 10.0f64 + (*buffer as libc::c_int - 48 as libc::c_int) as libc::c_double;
+            f = f * 10.0f64
+                + (*buffer as libc::c_int - 48 as libc::c_int) as libc::c_double;
             buffer = buffer.offset(1);
             n += 1;
         }
@@ -4235,8 +4420,7 @@ pub unsafe extern "C" fn brubeck_statsd_msg_parse(
     buffer = buffer.offset(1);
     *tmp = '\u{0}' as i32 as libc::c_char;
     if *((*msg).key).offset(((*msg).key_len as libc::c_int - 1 as libc::c_int) as isize)
-        as libc::c_int
-        == 46 as libc::c_int
+        as libc::c_int == 46 as libc::c_int
     {
         return -(1 as libc::c_int);
     }
@@ -4284,14 +4468,15 @@ pub unsafe extern "C" fn brubeck_statsd_msg_parse(
     }
     buffer = buffer.offset(1);
     if *buffer.offset(0 as libc::c_int as isize) as libc::c_int == 124 as libc::c_int {
-        if *buffer.offset(1 as libc::c_int as isize) as libc::c_int == 64 as libc::c_int {
+        if *buffer.offset(1 as libc::c_int as isize) as libc::c_int == 64 as libc::c_int
+        {
             buffer = parse_float(
                 buffer.offset(2 as libc::c_int as isize),
                 &mut sample_rate,
                 &mut dummy,
             );
             if sample_rate <= 0.0f64 {
-                return -(1 as libc::c_int);
+                return -(1 as libc::c_int)
             } else {
                 if sample_rate > 1.0f64 {
                     return -(1 as libc::c_int);
@@ -4305,10 +4490,13 @@ pub unsafe extern "C" fn brubeck_statsd_msg_parse(
         (*msg).sample_freq = 1.0f64;
     }
     if *buffer.offset(0 as libc::c_int as isize) as libc::c_int == 0 as libc::c_int {
-        return 0 as libc::c_int;
+        return 0 as libc::c_int
     } else {
-        if *buffer.offset(0 as libc::c_int as isize) as libc::c_int == 10 as libc::c_int {
-            if *buffer.offset(1 as libc::c_int as isize) as libc::c_int == 0 as libc::c_int {
+        if *buffer.offset(0 as libc::c_int as isize) as libc::c_int == 10 as libc::c_int
+        {
+            if *buffer.offset(1 as libc::c_int as isize) as libc::c_int
+                == 0 as libc::c_int
+            {
                 return 0 as libc::c_int;
             }
         }
@@ -4401,13 +4589,17 @@ unsafe extern "C" fn run_worker_threads(mut statsd: *mut brubeck_statsd) {
         tmp___0 = pthread_create(
             ((*statsd).workers).offset(i as isize),
             0 as *mut libc::c_void as *const pthread_attr_t,
-            Some(statsd__thread as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void),
+            Some(
+                statsd__thread
+                    as unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+            ),
             statsd as *mut libc::c_void,
         );
         if tmp___0 != 0 as libc::c_int {
             fprintf(
                 stderr,
-                b"[FATAL]: failed to start sampler thread\n\0" as *const u8 as *const libc::c_char,
+                b"[FATAL]: failed to start sampler thread\n\0" as *const u8
+                    as *const libc::c_char,
             );
             gh_log_die();
         }
@@ -4445,8 +4637,11 @@ pub unsafe extern "C" fn brubeck_statsd_new(
     std = tmp as *mut brubeck_statsd;
     multisock = 0 as libc::c_int;
     (*std).sampler.type_0 = BRUBECK_SAMPLER_STATSD;
-    (*std).sampler.shutdown =
-        Some(shutdown_sampler as unsafe extern "C" fn(*mut brubeck_sampler) -> ());
+    (*std)
+        .sampler
+        .shutdown = Some(
+        shutdown_sampler as unsafe extern "C" fn(*mut brubeck_sampler) -> (),
+    );
     (*std).sampler.in_sock = -(1 as libc::c_int);
     (*std).worker_count = 4 as libc::c_uint;
     (*std).mmsg_count = 1 as libc::c_uint;
@@ -4484,7 +4679,9 @@ pub unsafe extern "C" fn brubeck_statsd_new(
         port,
     );
     if multisock == 0 {
-        (*std).sampler.in_sock = brubeck_sampler_socket(&mut (*std).sampler, 0 as libc::c_int);
+        (*std)
+            .sampler
+            .in_sock = brubeck_sampler_socket(&mut (*std).sampler, 0 as libc::c_int);
     }
     run_worker_threads(std);
     return &mut (*std).sampler;
@@ -4650,7 +4847,10 @@ static mut METRIC_NAMES: [*const libc::c_char; 6] = [
     b"ms\0" as *const u8 as *const libc::c_char,
     b"internal\0" as *const u8 as *const libc::c_char,
 ];
-unsafe extern "C" fn dump_metric(mut mt: *mut brubeck_metric, mut out_file: *mut libc::c_void) {
+unsafe extern "C" fn dump_metric(
+    mut mt: *mut brubeck_metric,
+    mut out_file: *mut libc::c_void,
+) {
     fprintf(
         out_file as *mut FILE,
         b"%s|%s\n\0" as *const u8 as *const libc::c_char,
@@ -4672,10 +4872,7 @@ unsafe extern "C" fn dump_all_metrics(mut server: *mut brubeck_server) {
         tmp,
     );
     if !((*server).dump_path).is_null() {
-        dump = fopen(
-            (*server).dump_path,
-            b"w+\0" as *const u8 as *const libc::c_char,
-        );
+        dump = fopen((*server).dump_path, b"w+\0" as *const u8 as *const libc::c_char);
     }
     if dump.is_null() {
         tmp___0 = __errno_location();
@@ -4693,12 +4890,18 @@ unsafe extern "C" fn dump_all_metrics(mut server: *mut brubeck_server) {
     }
     brubeck_hashtable_foreach(
         (*server).metrics,
-        Some(dump_metric as unsafe extern "C" fn(*mut brubeck_metric, *mut libc::c_void) -> ()),
+        Some(
+            dump_metric
+                as unsafe extern "C" fn(*mut brubeck_metric, *mut libc::c_void) -> (),
+        ),
         dump as *mut libc::c_void,
     );
     fclose(dump);
 }
-unsafe extern "C" fn load_backends(mut server: *mut brubeck_server, mut backends: *mut json_t) {
+unsafe extern "C" fn load_backends(
+    mut server: *mut brubeck_server,
+    mut backends: *mut json_t,
+) {
     let mut idx: size_t = 0;
     let mut b: *mut json_t = 0 as *mut json_t;
     let mut type_0: *const libc::c_char = 0 as *const libc::c_char;
@@ -4746,17 +4949,24 @@ unsafe extern "C" fn load_backends(mut server: *mut brubeck_server, mut backends
         match current_block_27 {
             7757499455844833761 => {
                 if !type_0.is_null() {
-                    tmp___4 = strcmp(type_0, b"kafka\0" as *const u8 as *const libc::c_char);
+                    tmp___4 = strcmp(
+                        type_0,
+                        b"kafka\0" as *const u8 as *const libc::c_char,
+                    );
                     if tmp___4 != 0 {
                         tmp___3 = gh_log_instance();
                         gh_log_write(
-                            b"instance=%s backend=%s event=invalid_backend\n\0" as *const u8
-                                as *const libc::c_char,
+                            b"instance=%s backend=%s event=invalid_backend\n\0"
+                                as *const u8 as *const libc::c_char,
                             tmp___3,
                             type_0,
                         );
                     } else {
-                        backend = brubeck_kafka_new(server, b, (*server).active_backends);
+                        backend = brubeck_kafka_new(
+                            server,
+                            b,
+                            (*server).active_backends,
+                        );
                         tmp___2 = (*server).active_backends;
                         (*server).active_backends += 1;
                         (*server).backends[tmp___2 as usize] = backend;
@@ -4783,7 +4993,10 @@ unsafe extern "C" fn load_backends(mut server: *mut brubeck_server, mut backends
         gh_log_die();
     }
 }
-unsafe extern "C" fn load_samplers(mut server: *mut brubeck_server, mut samplers: *mut json_t) {
+unsafe extern "C" fn load_samplers(
+    mut server: *mut brubeck_server,
+    mut samplers: *mut json_t,
+) {
     let mut idx: size_t = 0;
     let mut s: *mut json_t = 0 as *mut json_t;
     let mut type_0: *const libc::c_char = 0 as *const libc::c_char;
@@ -4834,18 +5047,12 @@ unsafe extern "C" fn load_samplers(mut server: *mut brubeck_server, mut samplers
             );
         }
         idx = idx.wrapping_add(1);
-    }
+    };
 }
 unsafe extern "C" fn load_timerfd(mut interval: libc::c_int) -> libc::c_int {
     let mut timer: itimerspec = itimerspec {
-        it_interval: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
-        it_value: timespec {
-            tv_sec: 0,
-            tv_nsec: 0,
-        },
+        it_interval: timespec { tv_sec: 0, tv_nsec: 0 },
+        it_value: timespec { tv_sec: 0, tv_nsec: 0 },
     };
     let mut timerfd: libc::c_int = 0;
     let mut tmp: libc::c_int = 0;
@@ -4877,7 +5084,8 @@ unsafe extern "C" fn load_timerfd(mut interval: libc::c_int) -> libc::c_int {
     if tmp___0 < 0 as libc::c_int {
         fprintf(
             stderr,
-            b"[FATAL]: failed to set system timer\n\0" as *const u8 as *const libc::c_char,
+            b"[FATAL]: failed to set system timer\n\0" as *const u8
+                as *const libc::c_char,
         );
         gh_log_die();
     }
@@ -4912,7 +5120,9 @@ unsafe extern "C" fn load_signalfd() -> libc::c_int {
     );
     return tmp___0;
 }
-unsafe extern "C" fn get_config_name(mut full_path: *const libc::c_char) -> *mut libc::c_char {
+unsafe extern "C" fn get_config_name(
+    mut full_path: *const libc::c_char,
+) -> *mut libc::c_char {
     let mut filename: *const libc::c_char = 0 as *const libc::c_char;
     let mut tmp: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut config_name: *mut libc::c_char = 0 as *mut libc::c_char;
@@ -4936,7 +5146,10 @@ unsafe extern "C" fn get_config_name(mut full_path: *const libc::c_char) -> *mut
     }
     return config_name;
 }
-unsafe extern "C" fn load_config(mut server: *mut brubeck_server, mut path: *const libc::c_char) {
+unsafe extern "C" fn load_config(
+    mut server: *mut brubeck_server,
+    mut path: *const libc::c_char,
+) {
     let mut error: json_error_t = json_error_t {
         line: 0,
         column: 0,
@@ -5007,7 +5220,8 @@ unsafe extern "C" fn load_config(mut server: *mut brubeck_server, mut path: *con
         gh_log_die();
     }
     gh_log_set_instance((*server).name);
-    (*server).metrics = brubeck_hashtable_new(((1 as libc::c_int) << capacity) as uint64_t);
+    (*server)
+        .metrics = brubeck_hashtable_new(((1 as libc::c_int) << capacity) as uint64_t);
     if ((*server).metrics).is_null() {
         fprintf(
             stderr,
@@ -5018,7 +5232,10 @@ unsafe extern "C" fn load_config(mut server: *mut brubeck_server, mut path: *con
         gh_log_die();
     }
     if tag_capacity != 0 {
-        (*server).tags = brubeck_tags_create(((1 as libc::c_int) << tag_capacity) as uint64_t);
+        (*server)
+            .tags = brubeck_tags_create(
+            ((1 as libc::c_int) << tag_capacity) as uint64_t,
+        );
         if ((*server).tags).is_null() {
             fprintf(
                 stderr,
@@ -5030,7 +5247,8 @@ unsafe extern "C" fn load_config(mut server: *mut brubeck_server, mut path: *con
         }
         tmp___1 = gh_log_instance();
         gh_log_write(
-            b"instance=%s event=tagging_initialized\n\0" as *const u8 as *const libc::c_char,
+            b"instance=%s event=tagging_initialized\n\0" as *const u8
+                as *const libc::c_char,
             tmp___1,
         );
     }
@@ -5046,9 +5264,10 @@ pub unsafe extern "C" fn brubeck_server_init(
 ) {
     signal(
         13 as libc::c_int,
-        ::std::mem::transmute::<libc::intptr_t, Option<unsafe extern "C" fn(libc::c_int) -> ()>>(
-            1 as libc::c_int as libc::intptr_t,
-        ),
+        ::std::mem::transmute::<
+            libc::intptr_t,
+            Option::<unsafe extern "C" fn(libc::c_int) -> ()>,
+        >(1 as libc::c_int as libc::intptr_t),
     );
     (*server).fd_signal = load_signalfd();
     (*server).fd_update = load_timerfd(1 as libc::c_int);
@@ -5106,13 +5325,17 @@ unsafe extern "C" fn signal_triggered(mut fd: *mut pollfd) -> libc::c_int {
             ::std::mem::size_of::<signalfd_siginfo>() as libc::c_ulong,
         );
         s = tmp as libc::c_int;
-        if s as libc::c_ulong == ::std::mem::size_of::<signalfd_siginfo>() as libc::c_ulong {
+        if s as libc::c_ulong
+            == ::std::mem::size_of::<signalfd_siginfo>() as libc::c_ulong
+        {
             return fdsi.ssi_signo as libc::c_int;
         }
     }
     return -(1 as libc::c_int);
 }
-pub unsafe extern "C" fn brubeck_server_run(mut server: *mut brubeck_server) -> libc::c_int {
+pub unsafe extern "C" fn brubeck_server_run(
+    mut server: *mut brubeck_server,
+) -> libc::c_int {
     let mut fds: [pollfd; 2] = [pollfd {
         fd: 0,
         events: 0,
@@ -5148,13 +5371,16 @@ pub unsafe extern "C" fn brubeck_server_run(mut server: *mut brubeck_server) -> 
         if tmp___0 < 0 as libc::c_int {
             continue;
         }
-        tmp___1 = signal_triggered(&mut *fds.as_mut_ptr().offset(0 as libc::c_int as isize));
+        tmp___1 = signal_triggered(
+            &mut *fds.as_mut_ptr().offset(0 as libc::c_int as isize),
+        );
         match tmp___1 {
             1 => {
                 gh_log_reopen();
                 tmp___2 = gh_log_instance();
                 gh_log_write(
-                    b"instance=%s event=reload_log\n\0" as *const u8 as *const libc::c_char,
+                    b"instance=%s event=reload_log\n\0" as *const u8
+                        as *const libc::c_char,
                     tmp___2,
                 );
             }
@@ -5166,7 +5392,9 @@ pub unsafe extern "C" fn brubeck_server_run(mut server: *mut brubeck_server) -> 
             }
             _ => {}
         }
-        tmp___3 = timer_elapsed(&mut *fds.as_mut_ptr().offset(1 as libc::c_int as isize));
+        tmp___3 = timer_elapsed(
+            &mut *fds.as_mut_ptr().offset(1 as libc::c_int as isize),
+        );
         if tmp___3 != 0 {
             update_flows(server);
             update_proctitle(server);
@@ -5193,9 +5421,13 @@ pub unsafe extern "C" fn brubeck_server_run(mut server: *mut brubeck_server) -> 
     );
     return 0 as libc::c_int;
 }
-static mut argv0: *mut *mut libc::c_char = 0 as *const *mut libc::c_char as *mut *mut libc::c_char;
+static mut argv0: *mut *mut libc::c_char = 0 as *const *mut libc::c_char
+    as *mut *mut libc::c_char;
 static mut argv_lth: libc::c_int = 0;
-pub unsafe extern "C" fn initproctitle(mut argc: libc::c_int, mut argv: *mut *mut libc::c_char) {
+pub unsafe extern "C" fn initproctitle(
+    mut argc: libc::c_int,
+    mut argv: *mut *mut libc::c_char,
+) {
     let mut i: libc::c_int = 0;
     let mut envp: *mut *mut libc::c_char = 0 as *mut *mut libc::c_char;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
@@ -5204,7 +5436,9 @@ pub unsafe extern "C" fn initproctitle(mut argc: libc::c_int, mut argv: *mut *mu
     let mut tmp___2: size_t = 0;
     envp = environ;
     i = 0 as libc::c_int;
-    while *envp.offset(i as isize) as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+    while *envp.offset(i as isize) as libc::c_ulong
+        != 0 as *mut libc::c_void as libc::c_ulong
+    {
         i += 1;
     }
     tmp = malloc(
@@ -5216,7 +5450,9 @@ pub unsafe extern "C" fn initproctitle(mut argc: libc::c_int, mut argv: *mut *mu
         return;
     }
     i = 0 as libc::c_int;
-    while *envp.offset(i as isize) as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
+    while *envp.offset(i as isize) as libc::c_ulong
+        != 0 as *mut libc::c_void as libc::c_ulong
+    {
         tmp___0 = strdup(*envp.offset(i as isize) as *const libc::c_char);
         let ref mut fresh25 = *environ.offset(i as isize);
         *fresh25 = tmp___0;
@@ -5229,20 +5465,26 @@ pub unsafe extern "C" fn initproctitle(mut argc: libc::c_int, mut argv: *mut *mu
     *fresh26 = 0 as *mut libc::c_void as *mut libc::c_char;
     argv0 = argv;
     if i > 0 as libc::c_int {
-        tmp___1 = strlen(*envp.offset((i - 1 as libc::c_int) as isize) as *const libc::c_char);
+        tmp___1 = strlen(
+            *envp.offset((i - 1 as libc::c_int) as isize) as *const libc::c_char,
+        );
         argv_lth = (*envp.offset((i - 1 as libc::c_int) as isize))
             .offset(tmp___1 as isize)
-            .offset_from(*argv0.offset(0 as libc::c_int as isize))
-            as libc::c_long as libc::c_int;
+            .offset_from(*argv0.offset(0 as libc::c_int as isize)) as libc::c_long
+            as libc::c_int;
     } else {
-        tmp___2 = strlen(*argv0.offset((argc - 1 as libc::c_int) as isize) as *const libc::c_char);
+        tmp___2 = strlen(
+            *argv0.offset((argc - 1 as libc::c_int) as isize) as *const libc::c_char,
+        );
         argv_lth = (*argv0.offset((argc - 1 as libc::c_int) as isize))
             .offset(tmp___2 as isize)
-            .offset_from(*argv0.offset(0 as libc::c_int as isize))
-            as libc::c_long as libc::c_int;
+            .offset_from(*argv0.offset(0 as libc::c_int as isize)) as libc::c_long
+            as libc::c_int;
     };
 }
-pub unsafe extern "C" fn getproctitle(mut procbuffer: *mut *mut libc::c_char) -> libc::c_int {
+pub unsafe extern "C" fn getproctitle(
+    mut procbuffer: *mut *mut libc::c_char,
+) -> libc::c_int {
     if argv0.is_null() {
         return -(1 as libc::c_int);
     }
@@ -5256,7 +5498,10 @@ pub unsafe extern "C" fn getproctitle(mut procbuffer: *mut *mut libc::c_char) ->
     *procbuffer = *argv0.offset(0 as libc::c_int as isize);
     return argv_lth;
 }
-pub unsafe extern "C" fn setproctitle(mut prog: *const libc::c_char, mut txt: *const libc::c_char) {
+pub unsafe extern "C" fn setproctitle(
+    mut prog: *const libc::c_char,
+    mut txt: *const libc::c_char,
+) {
     let mut i: libc::c_int = 0;
     let mut buf: [libc::c_char; 2048] = [0; 2048];
     let mut tmp: size_t = 0;
@@ -5267,7 +5512,8 @@ pub unsafe extern "C" fn setproctitle(mut prog: *const libc::c_char, mut txt: *c
     }
     tmp = strlen(prog);
     tmp___0 = strlen(txt);
-    if tmp.wrapping_add(tmp___0).wrapping_add(5 as libc::c_ulong) > 2048 as libc::c_ulong {
+    if tmp.wrapping_add(tmp___0).wrapping_add(5 as libc::c_ulong) > 2048 as libc::c_ulong
+    {
         return;
     }
     sprintf(
@@ -5310,19 +5556,20 @@ pub unsafe extern "C" fn brubeck_slab_alloc(
 ) -> *mut libc::c_void {
     let mut node: *mut brubeck_slab_node = 0 as *mut brubeck_slab_node;
     let mut ptr: *mut libc::c_void = 0 as *mut libc::c_void;
-    need = need
-        .wrapping_add(32 as libc::c_ulong)
-        .wrapping_sub(1 as libc::c_ulong)
+    need = need.wrapping_add(32 as libc::c_ulong).wrapping_sub(1 as libc::c_ulong)
         & 0xffffffffffffffe0 as libc::c_ulong;
     pthread_mutex_lock(&mut (*slab).lock);
     node = (*slab).current;
     if ((*node).alloc).wrapping_add(need) > 4064 as libc::c_ulong {
         node = push_node(slab);
     }
-    (*slab).total_alloc =
-        ((*slab).total_alloc as libc::c_ulong).wrapping_add(need) as size_t as size_t;
-    ptr = ((*node).heap).as_mut_ptr().offset((*node).alloc as isize) as *mut libc::c_void;
-    (*node).alloc = ((*node).alloc as libc::c_ulong).wrapping_add(need) as size_t as size_t;
+    (*slab)
+        .total_alloc = ((*slab).total_alloc as libc::c_ulong).wrapping_add(need)
+        as size_t as size_t;
+    ptr = ((*node).heap).as_mut_ptr().offset((*node).alloc as isize)
+        as *mut libc::c_void;
+    (*node)
+        .alloc = ((*node).alloc as libc::c_ulong).wrapping_add(need) as size_t as size_t;
     pthread_mutex_unlock(&mut (*slab).lock);
     return ptr;
 }
@@ -5348,7 +5595,9 @@ static mut ALLOCATOR___0: ck_malloc = {
     let mut init = ck_malloc {
         malloc: Some(tags_malloc as unsafe extern "C" fn(size_t) -> *mut libc::c_void),
         realloc: None,
-        free: Some(tags_free as unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> ()),
+        free: Some(
+            tags_free as unsafe extern "C" fn(*mut libc::c_void, size_t, bool) -> (),
+        ),
     };
     init
 };
@@ -5370,7 +5619,10 @@ pub unsafe extern "C" fn brubeck_tags_create(size: uint64_t) -> *mut brubeck_tag
     tmp___0 = ck_ht_init(
         &mut (*tags).table,
         2 as libc::c_uint,
-        ::std::mem::transmute::<*mut libc::c_void, Option<ck_ht_hash_cb_t>>(0 as *mut libc::c_void),
+        ::std::mem::transmute::<
+            *mut libc::c_void,
+            Option::<ck_ht_hash_cb_t>,
+        >(0 as *mut libc::c_void),
         &mut ALLOCATOR___0,
         size,
         195948557 as libc::c_int as uint64_t,
@@ -5395,12 +5647,7 @@ pub unsafe extern "C" fn brubeck_tags_insert(
         hash: 0,
     };
     let mut result: bool = false;
-    ck_ht_hash(
-        &mut h,
-        &mut (*tags).table,
-        key as *const libc::c_void,
-        key_len,
-    );
+    ck_ht_hash(&mut h, &mut (*tags).table, key as *const libc::c_void, key_len);
     ck_ht_entry_set(
         &mut entry,
         h,
@@ -5431,12 +5678,7 @@ pub unsafe extern "C" fn brubeck_tags_find(
     };
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
     let mut tmp___0: bool = false;
-    ck_ht_hash(
-        &mut h,
-        &mut (*tags).table,
-        key as *const libc::c_void,
-        key_len,
-    );
+    ck_ht_hash(&mut h, &mut (*tags).table, key as *const libc::c_void, key_len);
     ck_ht_entry_key_set(&mut entry, key as *const libc::c_void, key_len);
     tmp___0 = ck_ht_get_spmc(&mut (*tags).table, h, &mut entry);
     if tmp___0 {
@@ -5468,7 +5710,8 @@ pub unsafe extern "C" fn count_char_in_str(
     let mut count: uint16_t = 0;
     count = 0 as libc::c_int as uint16_t;
     while *str.offset(count as libc::c_int as isize) != 0 {
-        if *str.offset(count as libc::c_int as isize) as libc::c_int == c as libc::c_int {
+        if *str.offset(count as libc::c_int as isize) as libc::c_int == c as libc::c_int
+        {
             count = (count as libc::c_int + 1 as libc::c_int) as uint16_t;
         } else {
             c = (c as libc::c_int + 1 as libc::c_int) as libc::c_char;
@@ -5518,10 +5761,11 @@ pub unsafe extern "C" fn brubeck_parse_tags(
         tmp___0 = 0 as libc::c_int;
     }
     num_possible_tags = tmp___0 as uint16_t;
-    alloc_size = (::std::mem::size_of::<brubeck_tag_set>() as libc::c_ulong).wrapping_add(
-        (num_possible_tags as libc::c_ulong)
-            .wrapping_mul(::std::mem::size_of::<*mut brubeck_tag>() as libc::c_ulong),
-    );
+    alloc_size = (::std::mem::size_of::<brubeck_tag_set>() as libc::c_ulong)
+        .wrapping_add(
+            (num_possible_tags as libc::c_ulong)
+                .wrapping_mul(::std::mem::size_of::<*mut brubeck_tag>() as libc::c_ulong),
+        );
     tmp___1 = malloc(alloc_size);
     tag_set = tmp___1 as *mut brubeck_tag_set;
     memset(tag_set as *mut libc::c_void, 0 as libc::c_int, alloc_size);
@@ -5531,13 +5775,12 @@ pub unsafe extern "C" fn brubeck_parse_tags(
         while !tag_str.is_null() {
             tmp___2 = parse_tag(
                 tag_str,
-                &mut *((*tag_set).tags)
-                    .as_mut_ptr()
-                    .offset((*tag_set).num_tags as isize),
+                &mut *((*tag_set).tags).as_mut_ptr().offset((*tag_set).num_tags as isize),
             );
             if tmp___2 {
-                (*tag_set).num_tags =
-                    ((*tag_set).num_tags as libc::c_int + 1 as libc::c_int) as uint16_t;
+                (*tag_set)
+                    .num_tags = ((*tag_set).num_tags as libc::c_int + 1 as libc::c_int)
+                    as uint16_t;
             }
             tag_str = strtok_r(
                 0 as *mut libc::c_void as *mut libc::c_char,
@@ -5621,7 +5864,7 @@ pub unsafe extern "C" fn find_substr(
                 s = s.offset(1);
                 sc = *tmp;
                 if sc as libc::c_int == 0 as libc::c_int {
-                    return 0 as *mut libc::c_void as *mut libc::c_char;
+                    return 0 as *mut libc::c_void as *mut libc::c_char
                 } else {
                     tmp___0 = slen;
                     slen = slen.wrapping_sub(1);
@@ -5671,7 +5914,8 @@ pub unsafe extern "C" fn sock_setreuse(mut fd: libc::c_int, mut reuse: libc::c_i
     if tmp == -(1 as libc::c_int) {
         fprintf(
             stderr,
-            b"[FATAL]: Failed to set SO_REUSEADDR\n\0" as *const u8 as *const libc::c_char,
+            b"[FATAL]: Failed to set SO_REUSEADDR\n\0" as *const u8
+                as *const libc::c_char,
         );
         gh_log_die();
     }
@@ -5714,7 +5958,10 @@ pub unsafe extern "C" fn sock_enlarge_out(mut fd: libc::c_int) {
         gh_log_die();
     }
 }
-pub unsafe extern "C" fn sock_setreuse_port(mut fd: libc::c_int, mut reuse: libc::c_int) {
+pub unsafe extern "C" fn sock_setreuse_port(
+    mut fd: libc::c_int,
+    mut reuse: libc::c_int,
+) {
     let mut tmp: libc::c_int = 0;
     tmp = setsockopt(
         fd,
@@ -5726,7 +5973,8 @@ pub unsafe extern "C" fn sock_setreuse_port(mut fd: libc::c_int, mut reuse: libc
     if tmp == -(1 as libc::c_int) {
         fprintf(
             stderr,
-            b"[FATAL]: failed to set SO_REUSEPORT\n\0" as *const u8 as *const libc::c_char,
+            b"[FATAL]: failed to set SO_REUSEPORT\n\0" as *const u8
+                as *const libc::c_char,
         );
         gh_log_die();
     }
@@ -5770,7 +6018,8 @@ pub unsafe extern "C" fn url_to_inaddr2(
         if tmp != 0 as libc::c_int {
             fprintf(
                 stderr,
-                b"[FATAL]: failed to resolve address '%s'\n\0" as *const u8 as *const libc::c_char,
+                b"[FATAL]: failed to resolve address '%s'\n\0" as *const u8
+                    as *const libc::c_char,
                 url,
             );
             gh_log_die();
@@ -5789,7 +6038,8 @@ pub unsafe extern "C" fn url_to_inaddr2(
         if rp.is_null() {
             fprintf(
                 stderr,
-                b"[FATAL]: address format not supported\n\0" as *const u8 as *const libc::c_char,
+                b"[FATAL]: address format not supported\n\0" as *const u8
+                    as *const libc::c_char,
             );
             gh_log_die();
         }
@@ -5820,10 +6070,10 @@ pub unsafe extern "C" fn brubeck_itoa(
     loop {
         tmp = ptr;
         ptr = ptr.offset(1);
-        *tmp = (48 as libc::c_ulong).wrapping_add(number.wrapping_rem(10 as libc::c_ulong))
-            as libc::c_char;
-        number =
-            (number as libc::c_ulong).wrapping_div(10 as libc::c_ulong) as uint64_t as uint64_t;
+        *tmp = (48 as libc::c_ulong)
+            .wrapping_add(number.wrapping_rem(10 as libc::c_ulong)) as libc::c_char;
+        number = (number as libc::c_ulong).wrapping_div(10 as libc::c_ulong) as uint64_t
+            as uint64_t;
         if number == 0 {
             break;
         }
@@ -5862,8 +6112,8 @@ pub unsafe extern "C" fn brubeck_ftoa(
     let mut tmp___4: *mut libc::c_char = 0 as *mut libc::c_char;
     x.F = f;
     p = outbuf;
-    exp2___0 = ((x.L >> 23 as libc::c_int) as libc::c_uchar as libc::c_int - 127 as libc::c_int)
-        as libc::c_short;
+    exp2___0 = ((x.L >> 23 as libc::c_int) as libc::c_uchar as libc::c_int
+        - 127 as libc::c_int) as libc::c_short;
     mantissa = (x.L & 16777215 as libc::c_int | 8388608 as libc::c_int) as uint64_t;
     frac_part = 0 as libc::c_int as uint64_t;
     int_part = 0 as libc::c_int as uint64_t;
@@ -5878,8 +6128,8 @@ pub unsafe extern "C" fn brubeck_ftoa(
         *tmp___0 = '0' as i32 as libc::c_char;
     } else {
         safe_shift = -(exp2___0 as libc::c_int + 1 as libc::c_int);
-        safe_mask = (18446744073709551615 as libc::c_ulonglong >> 40 as libc::c_int - safe_shift)
-            as uint64_t;
+        safe_mask = (18446744073709551615 as libc::c_ulonglong
+            >> 40 as libc::c_int - safe_shift) as uint64_t;
         if exp2___0 as libc::c_int >= 64 as libc::c_int {
             int_part = 18446744073709551615 as libc::c_ulonglong as uint64_t;
         } else if exp2___0 as libc::c_int >= 23 as libc::c_int {
@@ -5904,8 +6154,8 @@ pub unsafe extern "C" fn brubeck_ftoa(
             *tmp___3 = '.' as i32 as libc::c_char;
             m = 0 as libc::c_int;
             while m < 4 as libc::c_int {
-                frac_part =
-                    (frac_part << 3 as libc::c_int).wrapping_add(frac_part << 1 as libc::c_int);
+                frac_part = (frac_part << 3 as libc::c_int)
+                    .wrapping_add(frac_part << 1 as libc::c_int);
                 tmp___4 = p;
                 p = p.offset(1);
                 *tmp___4 = (frac_part >> 24 as libc::c_int + safe_shift)
@@ -5913,10 +6163,14 @@ pub unsafe extern "C" fn brubeck_ftoa(
                 frac_part &= safe_mask;
                 m += 1;
             }
-            while *p.offset(-(1 as libc::c_int) as isize) as libc::c_int == 48 as libc::c_int {
+            while *p.offset(-(1 as libc::c_int) as isize) as libc::c_int
+                == 48 as libc::c_int
+            {
                 p = p.offset(-1);
             }
-            if *p.offset(-(1 as libc::c_int) as isize) as libc::c_int == 46 as libc::c_int {
+            if *p.offset(-(1 as libc::c_int) as isize) as libc::c_int
+                == 46 as libc::c_int
+            {
                 p = p.offset(-1);
             }
         }
@@ -5961,7 +6215,8 @@ unsafe extern "C" fn kafka_shutdown(mut backend: *mut libc::c_void) -> libc::c_i
     i = 0 as libc::c_int;
     loop {
         if !((*self_0).documents).is_null() {
-            tmp = *((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize);
+            tmp = *((*self_0).documents as *mut size_t)
+                .offset(-(2 as libc::c_int) as isize);
         } else {
             tmp = 0 as libc::c_int as size_t;
         }
@@ -5984,8 +6239,8 @@ unsafe extern "C" fn kafka_shutdown(mut backend: *mut libc::c_void) -> libc::c_i
         tmp___0 = rd_kafka_err2name(err);
         tmp___1 = gh_log_instance();
         gh_log_write(
-            b"instance=%s backend=kafka event=fatal_error reason=%s msg=\"%s\"\n\0" as *const u8
-                as *const libc::c_char,
+            b"instance=%s backend=kafka event=fatal_error reason=%s msg=\"%s\"\n\0"
+                as *const u8 as *const libc::c_char,
             tmp___1,
             tmp___0,
             errstr.as_mut_ptr(),
@@ -6033,8 +6288,8 @@ unsafe extern "C" fn error_cb(
     tmp = rd_kafka_err2name(err as rd_kafka_resp_err_t);
     tmp___0 = gh_log_instance();
     gh_log_write(
-        b"instance=%s backend=kafka event=producer_error reason=%s msg=\"%s\"\n\0" as *const u8
-            as *const libc::c_char,
+        b"instance=%s backend=kafka event=producer_error reason=%s msg=\"%s\"\n\0"
+            as *const u8 as *const libc::c_char,
         tmp___0,
         tmp,
         reason,
@@ -6056,9 +6311,9 @@ unsafe extern "C" fn kafka_connect(mut backend: *mut libc::c_void) -> libc::c_in
     let mut self_0: *mut brubeck_kafka = 0 as *mut brubeck_kafka;
     self_0 = backend as *mut brubeck_kafka;
     if (*self_0).connected {
-        return 0 as libc::c_int;
+        return 0 as libc::c_int
     } else {
-        return -(1 as libc::c_int);
+        return -(1 as libc::c_int)
     };
 }
 unsafe extern "C" fn each_metric(
@@ -6093,7 +6348,8 @@ unsafe extern "C" fn each_metric(
         tag_index = (*(*metric).tags).index;
     }
     if !((*self_0).documents).is_null() {
-        tmp___1 = *((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize);
+        tmp___1 = *((*self_0).documents as *mut size_t)
+            .offset(-(2 as libc::c_int) as isize);
     } else {
         tmp___1 = 0 as libc::c_int as size_t;
     }
@@ -6104,12 +6360,15 @@ unsafe extern "C" fn each_metric(
     }
     doc = tmp___0;
     if doc as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
-        tmp___2 = malloc(::std::mem::size_of::<brubeck_kafka_document>() as libc::c_ulong);
+        tmp___2 = malloc(
+            ::std::mem::size_of::<brubeck_kafka_document>() as libc::c_ulong,
+        );
         doc = tmp___2 as *mut brubeck_kafka_document;
         (*doc).is_dirty = 0 as libc::c_int != 0;
         (*doc).json = json_object();
         if !((*self_0).documents).is_null() {
-            tmp___3 = *((*self_0).documents as *mut size_t).offset(-(1 as libc::c_int) as isize);
+            tmp___3 = *((*self_0).documents as *mut size_t)
+                .offset(-(1 as libc::c_int) as isize);
         } else {
             tmp___3 = 0 as libc::c_int as size_t;
         }
@@ -6122,7 +6381,9 @@ unsafe extern "C" fn each_metric(
                 __cap <<= 1 as libc::c_int;
             }
             __size = __cap
-                .wrapping_mul(::std::mem::size_of::<*mut brubeck_kafka_document>() as libc::c_ulong)
+                .wrapping_mul(
+                    ::std::mem::size_of::<*mut brubeck_kafka_document>() as libc::c_ulong,
+                )
                 .wrapping_add(
                     (::std::mem::size_of::<size_t>() as libc::c_ulong)
                         .wrapping_mul(2 as libc::c_ulong),
@@ -6131,52 +6392,61 @@ unsafe extern "C" fn each_metric(
                 tmp___4 = malloc(__size);
                 __p = tmp___4 as *mut size_t;
                 memset(__p as *mut libc::c_void, 0 as libc::c_int, __size);
-                (*self_0).documents = __p.offset(2 as libc::c_int as isize) as *mut libc::c_void
-                    as *mut *mut brubeck_kafka_document;
+                (*self_0)
+                    .documents = __p.offset(2 as libc::c_int as isize)
+                    as *mut libc::c_void as *mut *mut brubeck_kafka_document;
                 if !((*self_0).documents).is_null() {
-                    *((*self_0).documents as *mut size_t).offset(-(1 as libc::c_int) as isize) =
-                        __cap;
+                    *((*self_0).documents as *mut size_t)
+                        .offset(-(1 as libc::c_int) as isize) = __cap;
                 }
                 if !((*self_0).documents).is_null() {
-                    *((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize) =
-                        0 as libc::c_int as size_t;
+                    *((*self_0).documents as *mut size_t)
+                        .offset(
+                            -(2 as libc::c_int) as isize,
+                        ) = 0 as libc::c_int as size_t;
                 }
             } else {
                 if !((*self_0).documents).is_null() {
-                    tmp___5 =
-                        *((*self_0).documents as *mut size_t).offset(-(1 as libc::c_int) as isize);
+                    tmp___5 = *((*self_0).documents as *mut size_t)
+                        .offset(-(1 as libc::c_int) as isize);
                 } else {
                     tmp___5 = 0 as libc::c_int as size_t;
                 }
                 __prev_size = tmp___5
                     .wrapping_mul(
-                        ::std::mem::size_of::<*mut brubeck_kafka_document>() as libc::c_ulong
+                        ::std::mem::size_of::<*mut brubeck_kafka_document>()
+                            as libc::c_ulong,
                     )
                     .wrapping_add(
                         (::std::mem::size_of::<size_t>() as libc::c_ulong)
                             .wrapping_mul(2 as libc::c_ulong),
                     );
-                __p1 = ((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize);
+                __p1 = ((*self_0).documents as *mut size_t)
+                    .offset(-(2 as libc::c_int) as isize);
                 tmp___6 = realloc(__p1 as *mut libc::c_void, __size);
                 __p2 = tmp___6 as *mut size_t;
                 memset(
-                    (__p2 as *mut libc::c_char).offset(__prev_size as isize) as *mut libc::c_void,
+                    (__p2 as *mut libc::c_char).offset(__prev_size as isize)
+                        as *mut libc::c_void,
                     0 as libc::c_int,
                     __size.wrapping_sub(__prev_size),
                 );
-                (*self_0).documents = __p2.offset(2 as libc::c_int as isize) as *mut libc::c_void
-                    as *mut *mut brubeck_kafka_document;
+                (*self_0)
+                    .documents = __p2.offset(2 as libc::c_int as isize)
+                    as *mut libc::c_void as *mut *mut brubeck_kafka_document;
                 if !((*self_0).documents).is_null() {
-                    *((*self_0).documents as *mut size_t).offset(-(1 as libc::c_int) as isize) =
-                        __cap;
+                    *((*self_0).documents as *mut size_t)
+                        .offset(-(1 as libc::c_int) as isize) = __cap;
                 }
             }
         }
         let ref mut fresh31 = *((*self_0).documents).offset(tag_index as isize);
         *fresh31 = doc;
         if !((*self_0).documents).is_null() {
-            *((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize) =
-                tag_index.wrapping_add(1 as libc::c_uint) as size_t;
+            *((*self_0).documents as *mut size_t)
+                .offset(
+                    -(2 as libc::c_int) as isize,
+                ) = tag_index.wrapping_add(1 as libc::c_uint) as size_t;
         }
     }
     if (*doc).is_dirty as libc::c_int == 0 as libc::c_int {
@@ -6195,8 +6465,9 @@ unsafe extern "C" fn each_metric(
                 }
                 i = 0 as libc::c_int as uint16_t;
                 while (i as libc::c_int) < (*(*metric).tags).num_tags as libc::c_int {
-                    tmp___7 =
-                        json_string((*((*(*metric).tags).tags).as_ptr().offset(i as isize)).value);
+                    tmp___7 = json_string(
+                        (*((*(*metric).tags).tags).as_ptr().offset(i as isize)).value,
+                    );
                     json_object_set_new_nocheck(
                         tag_destination,
                         (*((*(*metric).tags).tags).as_ptr().offset(i as isize)).key,
@@ -6230,7 +6501,8 @@ unsafe extern "C" fn kafka_flush(mut backend: *mut libc::c_void) {
     i = 0 as libc::c_int;
     loop {
         if !((*self_0).documents).is_null() {
-            tmp___1 = *((*self_0).documents as *mut size_t).offset(-(2 as libc::c_int) as isize);
+            tmp___1 = *((*self_0).documents as *mut size_t)
+                .offset(-(2 as libc::c_int) as isize);
         } else {
             tmp___1 = 0 as libc::c_int as size_t;
         }
@@ -6245,7 +6517,10 @@ unsafe extern "C" fn kafka_flush(mut backend: *mut libc::c_void) {
                     b"@timestamp\0" as *const u8 as *const libc::c_char,
                     json_epoch_ms,
                 );
-                buf = json_dumps((*doc).json as *const json_t, 32 as libc::c_int as size_t);
+                buf = json_dumps(
+                    (*doc).json as *const json_t,
+                    32 as libc::c_int as size_t,
+                );
                 len = strlen(buf as *const libc::c_char);
                 err = rd_kafka_producev(
                     (*self_0).rk,
@@ -6271,8 +6546,9 @@ unsafe extern "C" fn kafka_flush(mut backend: *mut libc::c_void) {
                     );
                     free(buf as *mut libc::c_void);
                 } else {
-                    (*self_0).bytes_sent = ((*self_0).bytes_sent as libc::c_ulong).wrapping_add(len)
-                        as size_t as size_t;
+                    (*self_0)
+                        .bytes_sent = ((*self_0).bytes_sent as libc::c_ulong)
+                        .wrapping_add(len) as size_t as size_t;
                 }
                 json_object_clear((*doc).json);
                 (*doc).is_dirty = 0 as libc::c_int != 0;
@@ -6283,7 +6559,9 @@ unsafe extern "C" fn kafka_flush(mut backend: *mut libc::c_void) {
     }
     json_decref(json_epoch_ms);
 }
-unsafe extern "C" fn build_rdkafka_config(mut json: *mut json_t) -> *mut rd_kafka_conf_t {
+unsafe extern "C" fn build_rdkafka_config(
+    mut json: *mut json_t,
+) -> *mut rd_kafka_conf_t {
     let mut conf: *mut rd_kafka_conf_t = 0 as *mut rd_kafka_conf_t;
     let mut retval: libc::c_int = 0;
     let mut key: *const libc::c_char = 0 as *const libc::c_char;
@@ -6388,11 +6666,19 @@ pub unsafe extern "C" fn brubeck_kafka_new(
     conf = build_rdkafka_config(rdkafka_config);
     (*self_0).connected = 1 as libc::c_int != 0;
     (*self_0).backend.type_0 = BRUBECK_BACKEND_KAFKA;
-    (*self_0).backend.connect =
-        Some(kafka_connect as unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int);
-    (*self_0).backend.is_connected =
-        Some(kafka_is_connected as unsafe extern "C" fn(*mut libc::c_void) -> bool);
-    (*self_0).backend.sample = Some(
+    (*self_0)
+        .backend
+        .connect = Some(
+        kafka_connect as unsafe extern "C" fn(*mut libc::c_void) -> libc::c_int,
+    );
+    (*self_0)
+        .backend
+        .is_connected = Some(
+        kafka_is_connected as unsafe extern "C" fn(*mut libc::c_void) -> bool,
+    );
+    (*self_0)
+        .backend
+        .sample = Some(
         each_metric
             as unsafe extern "C" fn(
                 *const brubeck_metric,
@@ -6401,7 +6687,9 @@ pub unsafe extern "C" fn brubeck_kafka_new(
                 *mut libc::c_void,
             ) -> (),
     );
-    (*self_0).backend.flush = Some(kafka_flush as unsafe extern "C" fn(*mut libc::c_void) -> ());
+    (*self_0)
+        .backend
+        .flush = Some(kafka_flush as unsafe extern "C" fn(*mut libc::c_void) -> ());
     (*self_0).backend.sample_freq = frequency;
     (*self_0).backend.server = server;
     rd_kafka_conf_set_dr_msg_cb(
@@ -6428,7 +6716,8 @@ pub unsafe extern "C" fn brubeck_kafka_new(
         ),
     );
     rd_kafka_conf_set_opaque(conf, self_0 as *mut libc::c_void);
-    (*self_0).rk = rd_kafka_new(
+    (*self_0)
+        .rk = rd_kafka_new(
         RD_KAFKA_PRODUCER,
         conf,
         errstr.as_mut_ptr(),
@@ -6453,13 +6742,14 @@ pub unsafe extern "C" fn brubeck_kafka_new(
     brubeck_backend_run_threaded(self_0 as *mut brubeck_backend);
     tmp___3 = gh_log_instance();
     gh_log_write(
-        b"instance=%s backend=kafka event=started\n\0" as *const u8 as *const libc::c_char,
+        b"instance=%s backend=kafka event=started\n\0" as *const u8
+            as *const libc::c_char,
         tmp___3,
     );
     return self_0 as *mut brubeck_backend;
 }
 pub fn main() {
-    let mut args: Vec<*mut libc::c_char> = Vec::new();
+    let mut args: Vec::<*mut libc::c_char> = Vec::new();
     for arg in ::std::env::args() {
         args.push(
             (::std::ffi::CString::new(arg))
@@ -6469,9 +6759,11 @@ pub fn main() {
     }
     args.push(::std::ptr::null_mut());
     unsafe {
-        ::std::process::exit(main_0(
-            (args.len() - 1) as libc::c_int,
-            args.as_mut_ptr() as *mut *mut libc::c_char,
-        ) as i32)
+        ::std::process::exit(
+            main_0(
+                (args.len() - 1) as libc::c_int,
+                args.as_mut_ptr() as *mut *mut libc::c_char,
+            ) as i32,
+        )
     }
 }

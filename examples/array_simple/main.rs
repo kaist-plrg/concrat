@@ -3,10 +3,15 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_mutex_lock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
     fn pthread_mutex_unlock(__mutex: *mut pthread_mutex_t) -> libc::c_int;
 }
@@ -72,8 +77,10 @@ pub static mut num_mutex: [pthread_mutex_t; 5] = [
                 __elision: 0 as libc::c_int as libc::c_short,
                 __list: {
                     let mut init = __pthread_internal_list {
-                        __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                        __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                        __prev: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
+                        __next: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
                     };
                     init
                 },
@@ -93,8 +100,10 @@ pub static mut num_mutex: [pthread_mutex_t; 5] = [
                 __elision: 0 as libc::c_int as libc::c_short,
                 __list: {
                     let mut init = __pthread_internal_list {
-                        __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                        __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                        __prev: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
+                        __next: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
                     };
                     init
                 },
@@ -114,8 +123,10 @@ pub static mut num_mutex: [pthread_mutex_t; 5] = [
                 __elision: 0 as libc::c_int as libc::c_short,
                 __list: {
                     let mut init = __pthread_internal_list {
-                        __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                        __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                        __prev: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
+                        __next: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
                     };
                     init
                 },
@@ -135,8 +146,10 @@ pub static mut num_mutex: [pthread_mutex_t; 5] = [
                 __elision: 0 as libc::c_int as libc::c_short,
                 __list: {
                     let mut init = __pthread_internal_list {
-                        __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                        __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                        __prev: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
+                        __next: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
                     };
                     init
                 },
@@ -156,8 +169,10 @@ pub static mut num_mutex: [pthread_mutex_t; 5] = [
                 __elision: 0 as libc::c_int as libc::c_short,
                 __list: {
                     let mut init = __pthread_internal_list {
-                        __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                        __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                        __prev: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
+                        __next: 0 as *const __pthread_internal_list
+                            as *mut __pthread_internal_list,
                     };
                     init
                 },

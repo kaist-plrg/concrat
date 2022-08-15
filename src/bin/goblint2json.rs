@@ -25,10 +25,15 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{fs::File, path::PathBuf};
+use std::{
+    collections::{HashMap, HashSet},
+    fs::{self, File},
+    path::PathBuf,
+};
 
 use clap::{App, Arg};
 use concrat::*;
+use etrace::some_or;
 
 fn main() {
     let matches = App::new("Analysis")
@@ -52,6 +57,54 @@ fn main() {
     let mut input = PathBuf::from(matches.value_of("input").unwrap());
     let dep = PathBuf::from(matches.value_of("dependency").unwrap());
 
+    input.push("cfg.dot");
+    let cfg = fs::read_to_string(&input).unwrap();
+    input.pop();
+
+    let mut node_cline: HashMap<_, HashSet<_>> = HashMap::new();
+    for s in cfg.split('\n') {
+        let i = some_or!(s.find(" ->"), continue);
+        let node = &s[1..i];
+        let j = some_or!(s.find("label = \""), continue);
+        let k = some_or!(s.rfind('"'), continue);
+        let line = &s[(j + 9)..k];
+        let m = node_cline.entry(node.to_string()).or_default();
+        for l in line.split(',') {
+            if let Ok(l) = l.parse::<usize>() {
+                m.insert(l);
+            }
+        }
+    }
+
+    input.push("lines");
+    let lines = fs::read_to_string(&input).unwrap();
+    input.pop();
+
+    let mut cline_rline: HashMap<_, HashSet<_>> = HashMap::new();
+    for s in lines.split('\n') {
+        let i = some_or!(s.find('L'), continue);
+        let j = some_or!(s.find(' '), continue);
+        let cline = &s[(i + 1)..j];
+        let cline: usize = some_or!(cline.parse().ok(), continue);
+        let rline = &s[(j + 1)..];
+        let rline: usize = some_or!(rline.parse().ok(), continue);
+        cline_rline.entry(cline).or_default().insert(rline);
+    }
+
+    let empty = HashSet::new();
+    let node_rline: HashMap<_, HashSet<_>> = node_cline
+        .drain()
+        .map(|(n, c)| {
+            (
+                n,
+                c.iter()
+                    .flat_map(|l| cline_rline.get(l).unwrap_or(&empty))
+                    .cloned()
+                    .collect(),
+            )
+        })
+        .collect();
+
     input.push("a.xml");
     let elements = parse_xml::parse_file(input.to_str().unwrap());
     input.pop();
@@ -66,6 +119,6 @@ fn main() {
     let file = File::create(input.to_str().unwrap()).unwrap();
     input.pop();
 
-    let summary = analysis::summarize(elements, &structs);
+    let summary = analysis::summarize(elements, &structs, &node_rline);
     serde_json::to_writer_pretty(file, &summary).unwrap();
 }

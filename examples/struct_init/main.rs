@@ -4,10 +4,15 @@ extern "C" {
     fn pthread_create(
         __newthread: *mut pthread_t,
         __attr: *const pthread_attr_t,
-        __start_routine: Option<unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void>,
+        __start_routine: Option::<
+            unsafe extern "C" fn(*mut libc::c_void) -> *mut libc::c_void,
+        >,
         __arg: *mut libc::c_void,
     ) -> libc::c_int;
-    fn pthread_join(__th: pthread_t, __thread_return: *mut *mut libc::c_void) -> libc::c_int;
+    fn pthread_join(
+        __th: pthread_t,
+        __thread_return: *mut *mut libc::c_void,
+    ) -> libc::c_int;
     fn pthread_mutex_init(
         __mutex: *mut pthread_mutex_t,
         __mutexattr: *const pthread_mutexattr_t,
@@ -75,8 +80,10 @@ pub static mut s1: ss = ss {
             __spins: 0,
             __elision: 0,
             __list: __pthread_list_t {
-                __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                __prev: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
+                __next: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
             },
         },
     },
@@ -93,8 +100,10 @@ pub static mut s2: ss = ss {
             __spins: 0,
             __elision: 0,
             __list: __pthread_list_t {
-                __prev: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
-                __next: 0 as *const __pthread_internal_list as *mut __pthread_internal_list,
+                __prev: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
+                __next: 0 as *const __pthread_internal_list
+                    as *mut __pthread_internal_list,
             },
         },
     },
@@ -115,15 +124,9 @@ unsafe fn main_0() -> libc::c_int {
     let mut id1: pthread_t = 0;
     let mut id2: pthread_t = 0;
     let mut tmp: *mut libc::c_void = 0 as *mut libc::c_void;
-    pthread_mutex_init(
-        &mut s1.m,
-        0 as *mut libc::c_void as *const pthread_mutexattr_t,
-    );
+    pthread_mutex_init(&mut s1.m, 0 as *mut libc::c_void as *const pthread_mutexattr_t);
     s1.n = 0 as libc::c_int;
-    pthread_mutex_init(
-        &mut s2.m,
-        0 as *mut libc::c_void as *const pthread_mutexattr_t,
-    );
+    pthread_mutex_init(&mut s2.m, 0 as *mut libc::c_void as *const pthread_mutexattr_t);
     tmp = malloc(::std::mem::size_of::<ss>() as libc::c_ulong);
     s3 = tmp as *mut ss;
     (*s3).n = 0 as libc::c_int;

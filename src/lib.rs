@@ -28,6 +28,7 @@
 #![feature(hash_drain_filter)]
 #![feature(iter_intersperse)]
 #![feature(rustc_private)]
+#![feature(map_first_last)]
 
 extern crate rustc_data_structures;
 extern crate rustc_driver;
