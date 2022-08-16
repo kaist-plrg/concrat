@@ -13,6 +13,10 @@ use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::{Ty, TyCtxt, TyKind, TypeAndMut, TypeckResults};
 use rustc_mir_dataflow::fmt::DebugWithContext;
 use rustc_span::{def_id::DefId, Span};
+use serde::{
+    de::{Error, Visitor},
+    Deserialize, Serialize,
+};
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug, Hash, PartialOrd, Ord)]
 #[repr(transparent)]
@@ -129,6 +133,56 @@ impl Display for ExprPath {
 impl core::fmt::Debug for ExprPath {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         Display::fmt(self, fmt)
+    }
+}
+
+impl Serialize for ExprPath {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: serde::Serializer {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+
+impl<'de> Deserialize<'de> for ExprPath {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where D: serde::Deserializer<'de> {
+        deserializer.deserialize_string(PathVisitor)
+    }
+
+    fn deserialize_in_place<D>(deserializer: D, place: &mut Self) -> Result<(), D::Error>
+    where D: serde::Deserializer<'de> {
+        deserializer.deserialize_string(PathInPlaceVisitor(place))
+    }
+}
+
+struct PathVisitor;
+
+impl Visitor<'_> for PathVisitor {
+    type Value = ExprPath;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        formatter.write_str("ExprPath")
+    }
+
+    fn visit_borrowed_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where E: Error {
+        Ok(v.parse().unwrap())
+    }
+}
+
+struct PathInPlaceVisitor<'a>(&'a mut ExprPath);
+
+impl Visitor<'_> for PathInPlaceVisitor<'_> {
+    type Value = ();
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        formatter.write_str("ExprPath")
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where E: Error {
+        *self.0 = v.parse().unwrap();
+        Ok(())
     }
 }
 
@@ -267,6 +321,17 @@ mod tests {
         assert_eq!(p6, "a.b[i]".parse().unwrap());
         assert_eq!(p7, "a[i].b".parse().unwrap());
         assert_eq!(p8, "a.b[i].c[j]".parse().unwrap());
+
+        let arr = [p1, p2, p3, p4, p5, p6, p7, p8];
+        for (i, p) in arr.iter().enumerate() {
+            assert_eq!(
+                &serde_json::from_str::<ExprPath>(serde_json::to_string(p).unwrap().as_str())
+                    .unwrap(),
+                p,
+                "{}",
+                i + 1
+            );
+        }
     }
 }
 
