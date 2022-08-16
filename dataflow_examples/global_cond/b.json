@@ -5,7 +5,6 @@
   "function_map": {
     "f1": {
       "entry_mutex": [],
-      "node_mutex": ["m"],
       "ret_mutex": [],
       "mutex_line": {
         "m": [
@@ -19,7 +18,6 @@
     },
     "f2": {
       "entry_mutex": [],
-      "node_mutex": ["m"],
       "ret_mutex": ["m"],
       "mutex_line": {
         "m": [
@@ -33,7 +31,6 @@
     },
     "f3": {
       "entry_mutex": ["m"],
-      "node_mutex": ["m"],
       "ret_mutex": [],
       "mutex_line": {
         "m": [
@@ -47,7 +44,6 @@
     },
     "f4": {
       "entry_mutex": ["m"],
-      "node_mutex": ["m"],
       "ret_mutex": ["m"],
       "mutex_line": {
         "m": [
@@ -61,14 +57,12 @@
     },
     "main_0": {
       "entry_mutex": [],
-      "node_mutex": [],
       "ret_mutex": [],
       "mutex_line": {
       }
     },
     "main": {
       "entry_mutex": [],
-      "node_mutex": [],
       "ret_mutex": [],
       "mutex_line": {
       }

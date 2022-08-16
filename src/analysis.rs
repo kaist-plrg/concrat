@@ -42,7 +42,6 @@ impl AnalysisSummary {
 #[derive(Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<ExprPath>,
-    pub node_mutex: Vec<ExprPath>,
     pub ret_mutex: Vec<ExprPath>,
     pub mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
 }
@@ -50,19 +49,15 @@ pub struct FunctionSummary {
 impl FunctionSummary {
     pub fn new(
         mut entry_mutex: Vec<ExprPath>,
-        mut node_mutex: Vec<ExprPath>,
         mut ret_mutex: Vec<ExprPath>,
         mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
     ) -> Self {
         entry_mutex.sort();
         entry_mutex.dedup();
-        node_mutex.sort();
-        node_mutex.dedup();
         ret_mutex.sort();
         ret_mutex.dedup();
         Self {
             entry_mutex,
-            node_mutex,
             ret_mutex,
             mutex_line,
         }
@@ -375,7 +370,6 @@ fn generate_function_map(
                 let mutex_line = compute_mutex_line(&node_map, |n| {
                     node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
                 });
-                let node_mutex: Vec<_> = node_map.values().flatten().cloned().collect();
                 let name = if name == "main" {
                     "main_0".to_string()
                 } else {
@@ -383,7 +377,7 @@ fn generate_function_map(
                 };
                 (
                     name,
-                    FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
+                    FunctionSummary::new(entry_mutex, ret_mutex, mutex_line),
                 )
             },
         )

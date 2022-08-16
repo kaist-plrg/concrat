@@ -43,7 +43,6 @@ impl Arg {
 #[derive(Debug)]
 pub struct FunctionSummary {
     pub entry_mutex: BitSet<Id>,
-    pub node_mutex: BitSet<Id>,
     pub ret_mutex: BitSet<Id>,
     pub propagation_mutex: BitSet<Id>,
     pub propagation: HashMap<DefId, BitSet<Id>>,
@@ -56,7 +55,6 @@ pub struct FunctionSummary {
 impl FunctionSummary {
     pub fn new(
         entry_mutex: BitSet<Id>,
-        node_mutex: BitSet<Id>,
         ret_mutex: BitSet<Id>,
         propagation_raw: Vec<(DefId, BitSet<Id>)>,
         access_raw: Vec<(ExprPath, BitSet<Id>, bool)>,
@@ -80,7 +78,6 @@ impl FunctionSummary {
         }
         Self {
             entry_mutex,
-            node_mutex,
             ret_mutex,
             propagation_mutex: BitSet::new_empty(len),
             propagation,

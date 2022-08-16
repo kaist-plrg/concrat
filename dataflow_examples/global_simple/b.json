@@ -5,7 +5,6 @@
   "function_map": {
     "f1": {
       "entry_mutex": [],
-      "node_mutex": ["m"],
       "ret_mutex": [],
       "mutex_line": {
         "m": [
@@ -17,7 +16,6 @@
     },
     "f2": {
       "entry_mutex": [],
-      "node_mutex": ["m"],
       "ret_mutex": [],
       "mutex_line": {
         "m": [
@@ -28,7 +26,6 @@
     },
     "f3": {
       "entry_mutex": [],
-      "node_mutex": ["m"],
       "ret_mutex": [],
       "mutex_line": {
         "m": [
@@ -39,20 +36,17 @@
     },
     "t_fun": {
       "entry_mutex": [],
-      "node_mutex": [],
       "ret_mutex": [],
       "mutex_line": {}
     },
     "main_0": {
       "entry_mutex": [],
-      "node_mutex": [],
       "ret_mutex": [],
       "mutex_line": {
       }
     },
     "main": {
       "entry_mutex": [],
-      "node_mutex": [],
       "ret_mutex": [],
       "mutex_line": {
       }

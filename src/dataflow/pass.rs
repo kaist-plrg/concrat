@@ -317,10 +317,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 BitSet::new_empty(entry_mutex.domain_size())
             };
 
-            // set of guards held by function
-            let mut node_mutex = entry_mutex.clone();
-            node_mutex.union(&ret_mutex);
-
             // guards propagated by function calls
             let mut propagation: Vec<(DefId, BitSet<Id>)> = vec![];
             // for each basic block
@@ -329,24 +325,17 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let tm = some_or!(&bbd.terminator, continue);
                 // get callee
                 let func = some_or!(get_function_call(tm), continue);
+                // skip library functions
+                if !functions.contains(&func) {
+                    continue;
+                }
+
                 // location of function call
                 let statement_index = bbd.statements.len();
                 let location = Location {
                     block,
                     statement_index,
                 };
-
-                // find guards held after function call
-                results.seek_after_primary_effect(location);
-                let v = &results.get().0;
-                // update node_mutex
-                node_mutex.union(v);
-
-                // skip library functions
-                if !functions.contains(&func) {
-                    continue;
-                }
-
                 // find guards held before function call
                 results.seek_before_primary_effect(location);
                 let v = &results.get().0;
@@ -423,14 +412,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
 
             // create summary
-            let summary = FunctionSummary::new(
-                entry_mutex,
-                node_mutex,
-                ret_mutex,
-                propagation,
-                access,
-                span_mutex,
-            );
+            let summary =
+                FunctionSummary::new(entry_mutex, ret_mutex, propagation, access, span_mutex);
             // save summary
             function_summary_map.insert(*def_id, summary);
         }
@@ -764,7 +747,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             for (def_id, summary) in res {
                 let FunctionSummary {
                     entry_mutex,
-                    node_mutex,
                     ret_mutex,
                     propagation_mutex,
                     propagation,
@@ -773,7 +755,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 } = summary;
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
                 let start: Vec<_> = iv2mv(entry_mutex);
-                let mid: Vec<_> = iv2mv(node_mutex);
                 let end: Vec<_> = iv2mv(ret_mutex);
                 let prop: Vec<_> = iv2mv(propagation_mutex);
                 let propagation: HashMap<_, _> = propagation
@@ -785,8 +766,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .map(|(path, (v, w))| (path, (iv2mv(v), w)))
                     .collect();
                 println!(
-                    "{} {:?} {:?} {:?} {:?} {:?} {:?}",
-                    f, start, mid, end, prop, propagation, access
+                    "{} {:?} {:?} {:?} {:?} {:?}",
+                    f, start, end, prop, propagation, access
                 );
             }
         }
@@ -801,19 +782,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .map(|(def_id, summary)| {
                 let FunctionSummary {
                     entry_mutex,
-                    node_mutex,
                     ret_mutex,
                     propagation_mutex,
                     span_mutex,
                     ..
                 } = summary;
                 let mut entry_mutex = iv2mv(entry_mutex);
-                let mut node_mutex = iv2mv(node_mutex);
                 let mut ret_mutex = iv2mv(ret_mutex);
                 let prop = iv2mv(propagation_mutex);
                 for m in &prop {
                     entry_mutex.push(m.clone());
-                    node_mutex.push(m.clone());
                     ret_mutex.push(m.clone());
                 }
                 let mut span_mutex_map: BTreeMap<_, Vec<ExprPath>> = BTreeMap::new();
@@ -831,12 +809,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
                 let mutex_line = compute_mutex_line(&span_mutex_map, |span| span_lines(ctx, *span));
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
-                let summary = crate::analysis::FunctionSummary::new(
-                    entry_mutex,
-                    node_mutex,
-                    ret_mutex,
-                    mutex_line,
-                );
+                let summary =
+                    crate::analysis::FunctionSummary::new(entry_mutex, ret_mutex, mutex_line);
                 (f, summary)
             })
             .collect();
