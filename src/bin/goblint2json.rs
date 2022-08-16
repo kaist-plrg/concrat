@@ -113,12 +113,12 @@ fn main() {
     let args = util::compile_args(&input, &dep);
     input.pop();
 
-    let structs = validate::collect_definitions(args);
+    let code_summary = validate::collect_definitions(args);
 
     input.push("a.json");
     let file = File::create(input.to_str().unwrap()).unwrap();
     input.pop();
 
-    let summary = analysis::summarize(elements, &structs, &node_rline);
+    let summary = analysis::summarize(elements, &code_summary, &node_rline);
     serde_json::to_writer_pretty(file, &summary).unwrap();
 }

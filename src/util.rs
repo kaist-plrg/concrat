@@ -3,6 +3,7 @@ use std::{
     fmt::Display,
     path::{Path, PathBuf},
     process::Command,
+    str::FromStr,
 };
 
 use etrace::some_or;
@@ -29,7 +30,7 @@ impl Idx for Id {
 
 impl<T> DebugWithContext<T> for Id {}
 
-#[derive(Clone, Hash, PartialEq, Eq)]
+#[derive(Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ExprPath {
     pub base: String,
     pub projections: Vec<ExprPathProj>,
@@ -95,6 +96,13 @@ impl ExprPath {
         }
     }
 
+    pub fn replace_prefix(&self, old: &ExprPath, new: &ExprPath) -> Option<ExprPath> {
+        let mut suffix = self.strip_prefix(old)?;
+        suffix.add_base(String::new());
+        suffix.set_base(new);
+        Some(suffix)
+    }
+
     pub fn pop(&mut self) -> Option<ExprPathProj> {
         self.projections.pop()
     }
@@ -124,7 +132,7 @@ impl core::fmt::Debug for ExprPath {
     }
 }
 
-#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ExprPathProj {
     Field(String),
     Index(String),
@@ -136,6 +144,129 @@ impl Display for ExprPathProj {
             Self::Field(f) => write!(fmt, ".{}", f),
             Self::Index(i) => write!(fmt, "[{}]", i),
         }
+    }
+}
+
+impl FromStr for ExprPath {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let s = s
+            .replace("&mut", "")
+            .replace('&', "")
+            .replace('*', "")
+            .replace('(', "")
+            .replace(')', "")
+            .replace(' ', "");
+        if s.is_empty() {
+            return Err(());
+        }
+
+        let mut base = None;
+        let mut projections = vec![];
+        let mut s = s.as_str();
+        while let Some((s1, s2, b)) = find_delimiter(s) {
+            if !s1.is_empty() {
+                if base.is_none() {
+                    base = Some(s1.to_string());
+                } else {
+                    projections.push(ExprPathProj::Field(s1.to_string()));
+                }
+            }
+            if b {
+                s = s2;
+            } else {
+                let (i, s2) = s2.split_once(']').unwrap();
+                projections.push(ExprPathProj::Index(i.to_string()));
+                s = s2;
+            }
+        }
+        if !s.is_empty() {
+            if base.is_none() {
+                base = Some(s.to_string());
+            } else {
+                projections.push(ExprPathProj::Field(s.to_string()));
+            }
+        }
+        Ok(ExprPath::new(base.unwrap(), projections))
+    }
+}
+
+fn find_delimiter(s: &str) -> Option<(&str, &str, bool)> {
+    let l = s.len();
+    let i1 = s.find('.').unwrap_or(l);
+    let i2 = s.find("->").unwrap_or(l);
+    let i3 = s.find('[').unwrap_or(l);
+    if i1 == i2 && i1 == i3 {
+        None
+    } else if i1 < i2 && i1 < i3 {
+        Some((&s[..i1], &s[(i1 + 1)..], true))
+    } else if i2 < i3 {
+        Some((&s[..i2], &s[(i2 + 2)..], true))
+    } else {
+        Some((&s[..i3], &s[(i3 + 1)..], false))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{ExprPath, ExprPathProj};
+
+    #[test]
+    fn test1() {
+        let p1 = ExprPath::new("a".to_string(), vec![]);
+        let p2 = ExprPath::new("a".to_string(), vec![ExprPathProj::Field("b".to_string())]);
+        let p3 = ExprPath::new(
+            "a".to_string(),
+            vec![
+                ExprPathProj::Field("b".to_string()),
+                ExprPathProj::Field("c".to_string()),
+            ],
+        );
+        let p4 = ExprPath::new("a".to_string(), vec![ExprPathProj::Index("i".to_string())]);
+        let p5 = ExprPath::new(
+            "a".to_string(),
+            vec![
+                ExprPathProj::Index("i".to_string()),
+                ExprPathProj::Index("j".to_string()),
+            ],
+        );
+        let p6 = ExprPath::new(
+            "a".to_string(),
+            vec![
+                ExprPathProj::Field("b".to_string()),
+                ExprPathProj::Index("i".to_string()),
+            ],
+        );
+        let p7 = ExprPath::new(
+            "a".to_string(),
+            vec![
+                ExprPathProj::Index("i".to_string()),
+                ExprPathProj::Field("b".to_string()),
+            ],
+        );
+        let p8 = ExprPath::new(
+            "a".to_string(),
+            vec![
+                ExprPathProj::Field("b".to_string()),
+                ExprPathProj::Index("i".to_string()),
+                ExprPathProj::Field("c".to_string()),
+                ExprPathProj::Index("j".to_string()),
+            ],
+        );
+
+        assert_eq!(p1, "a".parse().unwrap());
+        assert_eq!(p2, "a.b".parse().unwrap());
+        assert_eq!(p2, "a->b".parse().unwrap());
+        assert_eq!(p3, "a.b.c".parse().unwrap());
+        assert_eq!(p3, "a.b->c".parse().unwrap());
+        assert_eq!(p3, "a->b.c".parse().unwrap());
+        assert_eq!(p3, "a->b->c".parse().unwrap());
+        assert_eq!(p4, "a[i]".parse().unwrap());
+        assert_eq!(p5, "a[i][j]".parse().unwrap());
+        assert_eq!(p6, "a.b[i]".parse().unwrap());
+        assert_eq!(p7, "a[i].b".parse().unwrap());
+        assert_eq!(p8, "a.b[i].c[j]".parse().unwrap());
     }
 }
 

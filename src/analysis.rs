@@ -5,11 +5,14 @@ use std::{
     path::Path,
 };
 
+use etrace::some_or;
 use serde::{Deserialize, Serialize};
 
 use crate::{
+    graph::compute_sccs,
     parse_xml::{Element, Name},
-    util::normalize_path,
+    util::ExprPath,
+    validate::CodeSummary,
 };
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -68,7 +71,7 @@ impl FunctionSummary {
 
 pub fn summarize(
     mut elements: Vec<Element>,
-    structs: &HashMap<String, HashMap<String, String>>,
+    summary: &CodeSummary,
     node_line: &HashMap<String, HashSet<usize>>,
 ) -> AnalysisSummary {
     let mut elements = elements
@@ -92,9 +95,10 @@ pub fn summarize(
         .flat_map(to_warning)
         .collect();
 
-    let (mutex_map, array_mutex_map, struct_mutex_map) = generate_mutex_maps(&warnings, structs);
+    let (mutex_map, array_mutex_map, struct_mutex_map) =
+        generate_mutex_maps(&warnings, &summary.struct_map);
     let node_map = generate_node_map(&calls);
-    let function_map = generate_function_map(&functions, &node_map, node_line);
+    let function_map = generate_function_map(&functions, &node_map, node_line, summary);
 
     AnalysisSummary {
         mutex_map,
@@ -182,7 +186,7 @@ fn generate_mutex_maps(
     (global_mutex_map, array_mutex_map, struct_mutex_map)
 }
 
-fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<String>> {
+fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<(Vec<Vec<ExprPath>>, Vec<ExprPath>)>> {
     let k1 = "symb_locks".to_string();
     let k2 = "var_eq".to_string();
     calls
@@ -200,50 +204,27 @@ fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<String>> {
                         .unwrap()
                         .as_map()
                         .iter()
-                        .flat_map(|(_, v)| {
-                            let mut v = v
-                                .as_set()
+                        .map(|(_, v)| {
+                            v.as_set()
                                 .iter()
-                                .map(|v| v.as_data().clone())
-                                .collect::<Vec<_>>();
-                            v.sort_by_key(|s| -(s.len() as isize));
-                            let var1 = v.pop().unwrap();
-                            v.drain(..)
-                                .filter_map(|var2| {
-                                    if var1 == var2 {
-                                        None
-                                    } else {
-                                        Some((var2, var1.clone()))
-                                    }
-                                })
+                                .map(|v| v.as_data().parse::<ExprPath>().unwrap())
                                 .collect::<Vec<_>>()
                         })
                         .collect::<Vec<_>>();
-                    ctx.analyses
+                    let symb_locks = ctx
+                        .analyses
                         .get(&k1)
                         .unwrap()
                         .as_set()
                         .iter()
-                        .cloned()
-                        .map(|v| normalize_path(&simplify(v.as_data().clone(), &var_eq)))
-                        .collect::<HashSet<_>>()
+                        .flat_map(|x| x.as_data().parse::<ExprPath>())
+                        .collect::<Vec<_>>();
+                    (var_eq, symb_locks)
                 })
-                .reduce(|s1, s2| s1.intersection(&s2).cloned().collect());
-            (id, ms.unwrap_or_default().drain().collect())
+                .collect::<Vec<_>>();
+            (id, ms)
         })
-        .collect()
-}
-
-fn simplify(s: String, var_eq: &Vec<(String, String)>) -> String {
-    if let Some((v1, v2)) = var_eq
-        .iter()
-        .filter(|(v, _)| s.contains(v))
-        .max_by_key(|(v, _)| v.len())
-    {
-        simplify(s.replace(v1, v2), var_eq)
-    } else {
-        s
-    }
+        .collect::<BTreeMap<String, Vec<_>>>()
 }
 
 pub fn compute_mutex_line<T: Ord, F>(
@@ -287,44 +268,130 @@ where
 
 fn generate_function_map(
     funcs: &[Function],
-    node_map: &BTreeMap<String, Vec<String>>,
+    node_map: &BTreeMap<String, Vec<(Vec<Vec<ExprPath>>, Vec<ExprPath>)>>,
     node_line: &HashMap<String, HashSet<usize>>,
+    summary: &CodeSummary,
 ) -> BTreeMap<String, FunctionSummary> {
-    let mut map: BTreeMap<String, FunctionSummary> = BTreeMap::new();
-    for f in funcs {
-        let Function {
-            name,
-            entry,
-            ret,
-            nodes,
-        } = f;
-        let entry_mutex = node_map.get(entry).unwrap().clone();
-        let ret_mutex = node_map.get(ret).unwrap().clone();
-        let node_map = node_map
-            .iter()
-            .filter_map(|(n, ms)| {
-                if nodes.contains(n) {
-                    Some((n.clone(), ms.clone()))
-                } else {
-                    None
+    funcs
+        .iter()
+        .map(
+            |Function {
+                 name,
+                 entry,
+                 ret,
+                 nodes,
+             }| {
+                let empty = HashSet::new();
+                let globals = &summary.global_set;
+                let params = summary.param_map.get(name).unwrap_or(&empty);
+                let locals = summary.local_map.get(name).unwrap_or(&empty);
+                let score = |p: &ExprPath| {
+                    let b = &p.base;
+                    if params.contains(b) {
+                        0
+                    } else if globals.contains(b) {
+                        1
+                    } else if locals.contains(b) {
+                        2
+                    } else {
+                        3
+                    }
+                };
+                let mut node_map: HashMap<_, _> = node_map
+                    .iter()
+                    .filter(|(n, _)| *n == entry || *n == ret || nodes.contains(n))
+                    .collect();
+                let var_eqs: Vec<_> = node_map
+                    .values()
+                    .flat_map(|v| *v)
+                    .flat_map(|(v, _)| v)
+                    .collect();
+                let mut graph: HashMap<ExprPath, HashSet<ExprPath>> = HashMap::new();
+                for v in var_eqs {
+                    for x in v {
+                        for y in v {
+                            graph.entry(x.clone()).or_default().insert(y.clone());
+                        }
+                    }
                 }
-            })
-            .collect();
-        let mutex_line = compute_mutex_line(&node_map, |n| {
-            node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
-        });
-        let node_mutex: Vec<_> = node_map.values().flatten().cloned().collect();
-        let name = if name == "main" {
-            "main_0".to_string()
-        } else {
-            name.clone()
-        };
-        map.insert(
-            name,
-            FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
-        );
-    }
-    map
+                let var_eqs: Vec<_> = compute_sccs(&graph)
+                    .1
+                    .drain()
+                    .map(|mut p| {
+                        let mut v: Vec<_> = p.1.drain().collect();
+                        v.sort_by_key(score);
+                        v
+                    })
+                    .collect();
+                let replace = |p: &ExprPath| {
+                    let prefix_opt = var_eqs
+                        .iter()
+                        .enumerate()
+                        .filter_map(|(i, v)| {
+                            v.iter()
+                                .find(|x| p.strip_prefix(x).is_some())
+                                .map(|x| (i, x))
+                        })
+                        .max_by_key(|(_, p)| p.projections.len());
+                    let (i, prefix) = some_or!(prefix_opt, return p.clone());
+                    let mut suffix = p.strip_prefix(prefix).unwrap();
+                    let new_prefix = &var_eqs[i][0];
+                    suffix.add_base(String::new());
+                    suffix.set_base(new_prefix);
+                    suffix
+                };
+                let node_map: HashMap<_, _> = node_map
+                    .drain()
+                    .map(|(n, v)| {
+                        let n = n.clone();
+                        if v.is_empty() {
+                            return (n, vec![]);
+                        }
+                        let mut ms = v
+                            .iter()
+                            .map(|(_, symb_locks)| {
+                                symb_locks
+                                    .iter()
+                                    .map(replace)
+                                    .map(|p| p.to_string())
+                                    .collect::<HashSet<_>>()
+                            })
+                            .reduce(|mut old, new| {
+                                old.retain(|p| new.contains(p));
+                                old
+                            })
+                            .unwrap();
+                        (n, ms.drain().collect::<Vec<_>>())
+                    })
+                    .collect();
+                let entry_mutex = node_map.get(entry).unwrap().clone();
+                let ret_mutex = node_map.get(ret).unwrap().clone();
+                let node_map = node_map
+                    .iter()
+                    .filter_map(|(n, ms)| {
+                        if nodes.contains(n) {
+                            Some((n.clone(), ms.clone()))
+                        } else {
+                            None
+                        }
+                    })
+                    .collect();
+                let mutex_line = compute_mutex_line(&node_map, |n| {
+                    node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
+                });
+                let node_mutex: Vec<_> = node_map.values().flatten().cloned().collect();
+                let name = if name == "main" {
+                    "main_0".to_string()
+                } else {
+                    name.clone()
+                };
+                (
+                    name,
+                    FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
+                )
+            },
+        )
+        .collect()
 }
 
 #[derive(Debug, Clone)]
