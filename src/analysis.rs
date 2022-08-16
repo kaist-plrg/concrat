@@ -5,7 +5,6 @@ use std::{
     path::Path,
 };
 
-use etrace::some_or;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -256,8 +255,7 @@ where
 {
     let lines: BTreeSet<_> = node_map.keys().flat_map(&f).collect();
     let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
-    for n in node_map.keys() {
-        let ms = some_or!(node_map.get(n), continue);
+    for (n, ms) in node_map {
         for m in ms {
             let s = mutex_line.entry(m.clone()).or_default();
             for l in f(n) {
@@ -302,13 +300,20 @@ fn generate_function_map(
         } = f;
         let entry_mutex = node_map.get(entry).unwrap().clone();
         let ret_mutex = node_map.get(ret).unwrap().clone();
-        let node_mutex: Vec<_> = nodes
+        let node_map = node_map
             .iter()
-            .flat_map(|n| node_map.get(n).unwrap().clone())
+            .filter_map(|(n, ms)| {
+                if nodes.contains(n) {
+                    Some((n.clone(), ms.clone()))
+                } else {
+                    None
+                }
+            })
             .collect();
-        let mutex_line = compute_mutex_line(node_map, |n| {
+        let mutex_line = compute_mutex_line(&node_map, |n| {
             node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
         });
+        let node_mutex: Vec<_> = node_map.values().flatten().cloned().collect();
         let name = if name == "main" {
             "main_0".to_string()
         } else {
