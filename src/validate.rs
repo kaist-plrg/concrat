@@ -10,7 +10,7 @@ use rustc_lint::{LateContext, LateLintPass, LintPass};
 
 use crate::{
     callback::{compile_with, LatePass},
-    util::{current_function, def_id_to_item_name, span_to_string},
+    util::{current_function, def_id_to_item_name, function_params, span_to_string},
 };
 
 lazy_static! {
@@ -70,14 +70,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 self.summary.struct_map.insert(name, fds);
             }
             ItemKind::Fn(_, _, bid) => {
-                let params = ctx
-                    .tcx
-                    .hir()
-                    .body(*bid)
-                    .params
-                    .iter()
-                    .map(|p| span_to_string(ctx, p.pat.span).replace("mut ", ""))
-                    .collect();
+                let mut params = function_params(ctx, *bid);
+                let params = params.drain(..).map(|p| p.0).collect();
                 self.summary.param_map.insert(name, params);
             }
             ItemKind::Static(_, _, _) => {

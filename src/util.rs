@@ -7,7 +7,7 @@ use std::{
 };
 
 use etrace::some_or;
-use rustc_hir::{def::Res, Expr, ExprKind, HirId, Node, UnOp};
+use rustc_hir::{def::Res, BodyId, Expr, ExprKind, HirId, Node, UnOp};
 use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::{Ty, TyCtxt, TyKind, TypeAndMut, TypeckResults};
@@ -574,4 +574,19 @@ pub fn span_lines(ctx: &LateContext<'_>, span: Span) -> HashSet<usize> {
     let lo = file.lookup_file_pos_with_col_display(span.lo());
     let hi = file.lookup_file_pos_with_col_display(span.hi());
     ((lo.0)..=(hi.0)).collect()
+}
+
+pub fn function_params(ctx: &LateContext<'_>, bid: BodyId) -> Vec<(String, String)> {
+    ctx.tcx
+        .hir()
+        .body(bid)
+        .params
+        .iter()
+        .map(|p| {
+            (
+                span_to_string(ctx, p.pat.span).replace("mut ", ""),
+                type_to_string(unwrap_ptr_from_type(type_of(ctx, p.pat.hir_id))),
+            )
+        })
+        .collect()
 }

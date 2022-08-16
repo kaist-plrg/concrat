@@ -18,8 +18,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::transitive_closure,
     util::{
-        expr_to_path, join, normalize_path, span_lines, span_to_string, type_of, type_to_string,
-        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
+        expr_to_path, function_params, join, normalize_path, span_lines, span_to_string, type_of,
+        type_to_string, unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
     },
 };
 
@@ -37,6 +37,7 @@ static MUTEX_INIT_MAP: Once<HashSet<(String, String, String)>> = Once::new();
 static PATH_TYPE_MAP: Once<HashMap<ExprPath, String>> = Once::new();
 static DURATION_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
 static TRYLOCK_MAP: Once<HashMap<(String, String), (String, String)>> = Once::new();
+static PARAMS_MAP: Once<HashMap<String, Vec<String>>> = Once::new();
 
 fn global_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
@@ -84,6 +85,10 @@ fn duration_map() -> &'static HashMap<(String, String, String), String> {
 
 fn trylock_map() -> &'static HashMap<(String, String), (String, String)> {
     TRYLOCK_MAP.get().unwrap()
+}
+
+fn params_map() -> &'static HashMap<String, Vec<String>> {
+    PARAMS_MAP.get().unwrap()
 }
 
 pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<Replacement> {
@@ -135,6 +140,7 @@ struct GlobalPass {
     path_type_map: HashMap<ExprPath, String>,
     duration_map: HashMap<(String, String, String), String>,
     trylock_map: HashMap<(String, String), (String, String)>,
+    params_map: HashMap<String, Vec<String>>,
 }
 
 impl GlobalPass {
@@ -152,10 +158,10 @@ impl LintPass for GlobalPass {
 
 impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
+        let name = i.ident.name.to_ident_string();
         match &i.kind {
             ItemKind::Struct(VariantData::Struct(fs, _), _)
             | ItemKind::Union(VariantData::Struct(fs, _), _) => {
-                let s = i.ident.name.to_ident_string();
                 let map = fs
                     .iter()
                     .map(|f| {
@@ -165,10 +171,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         )
                     })
                     .collect();
-                self.struct_def_map.insert(s, map);
+                self.struct_def_map.insert(name, map);
             }
             ItemKind::Static(t, _, b) => {
-                let name = i.ident.name.to_ident_string();
                 match t.kind {
                     // array
                     TyKind::Array(t, _) => {
@@ -197,6 +202,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         self.global_def_map.insert(name, (ty, init));
                     }
                 }
+            }
+            ItemKind::Fn(_, _, bid) => {
+                let mut params = function_params(ctx, *bid);
+                let params = params.drain(..).map(|p| p.0).collect();
+                self.params_map.insert(name, params);
             }
             _ => (),
         }
@@ -284,6 +294,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         PATH_TYPE_MAP.call_once(|| std::mem::take(&mut self.path_type_map));
         DURATION_MAP.call_once(|| std::mem::take(&mut self.duration_map));
         TRYLOCK_MAP.call_once(|| std::mem::take(&mut self.trylock_map));
+        PARAMS_MAP.call_once(|| std::mem::take(&mut self.params_map));
     }
 }
 
@@ -820,8 +831,23 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             ..
                         }) = function_mutex_map().get(f)
                         {
+                            let params = params_map().get(f).unwrap();
+                            // param-to-arg aliasing
+                            let alias_mutex = |m: &ExprPath| {
+                                let mut m = m.clone();
+                                if m.is_variable() {
+                                    return m;
+                                }
+                                let (i, _) = some_or!(
+                                    params.iter().enumerate().find(|(_, p)| &m.base == *p),
+                                    return m
+                                );
+                                let arg = some_or!(expr_to_path(ctx, &args[i]), return m);
+                                m.set_base(&arg);
+                                m
+                            };
                             if !entry.is_empty() {
-                                let guards = entry.iter().map(|m| m.guard()).collect();
+                                let guards = entry.iter().map(|m| alias_mutex(m).guard()).collect();
                                 self.use_guards(func_name(), &guards);
                                 let guards = join(guards, ", ");
                                 if let Some(arg) = args.last() {
@@ -837,23 +863,22 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             }
                             if !ret.is_empty() {
+                                let guards: Vec<_> =
+                                    ret.iter().map(|m| alias_mutex(m).guard()).collect();
+                                self.use_guards(func_name(), &guards);
                                 if type_of(ctx, e.hir_id).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
-                                        let guard = ret[0].guard();
-                                        self.use_guard(func_name(), guard.clone());
+                                        let guard = &guards[0];
                                         add_replacement(ctx, span, format!("{} = ", guard));
                                     } else {
                                         let span = e.span.shrink_to_lo();
                                         add_replacement(ctx, span, "{ let tmp = ".to_string());
                                         let span = e.span.shrink_to_hi();
-                                        for m in ret {
-                                            self.use_guard(func_name(), m.guard());
-                                        }
-                                        let guards: String = ret
+                                        let guards: String = guards
                                             .iter()
                                             .enumerate()
-                                            .map(|(i, m)| format!("{} = tmp.{}; ", m.guard(), i))
+                                            .map(|(i, g)| format!("{} = tmp.{}; ", g, i))
                                             .collect();
                                         add_replacement(ctx, span, format!("; {} }}", guards));
                                     }
@@ -861,13 +886,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     let span = e.span.shrink_to_lo();
                                     add_replacement(ctx, span, "{ let tmp = ".to_string());
                                     let span = e.span.shrink_to_hi();
-                                    for m in ret {
-                                        self.use_guard(func_name(), m.guard());
-                                    }
-                                    let guards: String = ret
+                                    let guards: String = guards
                                         .iter()
                                         .enumerate()
-                                        .map(|(i, m)| format!("{} = tmp.{}; ", m.guard(), i + 1))
+                                        .map(|(i, g)| format!("{} = tmp.{}; ", g, i + 1))
                                         .collect();
                                     add_replacement(ctx, span, format!("; {}tmp.0 }}", guards));
                                 }

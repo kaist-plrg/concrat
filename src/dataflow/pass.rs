@@ -26,9 +26,9 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
-        current_function, def_id_to_item_name, def_id_to_span, expr_to_path, resolve_path,
-        span_lines, span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
-        unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
+        current_function, def_id_to_item_name, def_id_to_span, expr_to_path, function_params,
+        resolve_path, span_lines, span_to_string, type_of, type_to_string, unwrap_call,
+        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
     },
 };
 
@@ -125,20 +125,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ItemKind::Fn(_, _, bid) => {
                 let def_id = i.def_id.to_def_id();
                 self.call_graph.insert(def_id, HashSet::new());
-                let params = ctx
-                    .tcx
-                    .hir()
-                    .body(*bid)
-                    .params
-                    .iter()
-                    .map(|p| {
-                        (
-                            span_to_string(ctx, p.pat.span).replace("mut ", ""),
-                            type_to_string(unwrap_ptr_from_type(type_of(ctx, p.pat.hir_id))),
-                        )
-                    })
-                    .collect();
-                self.params.insert(def_id, params);
+                self.params.insert(def_id, function_params(ctx, *bid));
             }
             ItemKind::Static(_, _, _) => {
                 self.globs.insert(i.ident.to_string());
