@@ -767,7 +767,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .map(|i| inv_mutexes.get(&i.index()).unwrap().to_string())
                 .collect::<Vec<_>>()
         };
-        let mut function_map: BTreeMap<_, _> = function_summary_map
+        let function_map: BTreeMap<_, _> = function_summary_map
             .iter()
             .map(|(def_id, summary)| {
                 let FunctionSummary {
@@ -811,9 +811,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 (f, summary)
             })
             .collect();
-        function_map.remove("main");
-        let summ = function_map.remove("main_0").unwrap();
-        function_map.insert("main".to_string(), summ);
         let summary = AnalysisSummary {
             mutex_map,
             array_mutex_map,

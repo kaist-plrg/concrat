@@ -309,8 +309,13 @@ fn generate_function_map(
         let mutex_line = compute_mutex_line(node_map, |n| {
             node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
         });
+        let name = if name == "main" {
+            "main_0".to_string()
+        } else {
+            name.clone()
+        };
         map.insert(
-            name.clone(),
+            name,
             FunctionSummary::new(entry_mutex, node_mutex, ret_mutex, mutex_line),
         );
     }

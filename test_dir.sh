@@ -23,8 +23,15 @@ fi
 mkdir -p $to
 cp -r $from/{*.rs,Cargo.toml,rust-toolchain} $to
 
+if [ "$GOBLINT" = "yes" ]; then
+  cp -r $from/{a.xml,cfg.dot,lines} $to
+  CMD=goblint2json
+else
+  CMD=dataflow
+fi
+
 echo Analyzing $from
-cargo run --release --bin dataflow -- -i $to -d deps $@
+cargo run --release --bin $CMD -- -i $to -d deps $@
 
 echo Translating $from
 cargo run --release --bin concrat -- -i $to -d deps $@

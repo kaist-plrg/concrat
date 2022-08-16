@@ -29,5 +29,7 @@ jobs:
         run: cargo test --release --lib
       - name: Run dataflow analysis tests
         run: ./test_dataflow.sh
-      - name: Run tests
-        run: ./test.sh
+      - name: Run tests (example)
+        run: ./test_examples.sh
+      - name: Run tests (benchmark)
+        run: ./test_bench.sh

@@ -463,12 +463,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     ) {
         match kind {
             intravisit::FnKind::ItemFn(id, _, _) => {
-                let name = &id.name.to_ident_string();
-                if name == "main" {
-                    return;
-                }
-                let name = correct_function_name(name);
-
+                let name = id.name.to_ident_string();
                 let empty = vec![];
                 let (entry, _, ret) = if let Some(fs) = function_mutex_map().get(&name) {
                     let FunctionSummary {
@@ -511,7 +506,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     add_replacement(ctx, span, sugg);
                 }
 
-                if !ret.is_empty() && name != "main" {
+                if !ret.is_empty() && name != "main_0" {
                     let mut ret_types = vec![];
                     if let FnRetTy::Return(t) = decl.output {
                         ret_types.push(span_to_string(ctx, t.span));
@@ -572,11 +567,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     ) {
         match kind {
             intravisit::FnKind::ItemFn(id, _, _) => {
-                let name = &id.name.to_ident_string();
-                if name == "main" {
-                    return;
-                }
-                let name = correct_function_name(name);
+                let name = id.name.to_ident_string();
                 let empty = vec![];
                 let entry = if let Some(fs) = function_mutex_map().get(&name) {
                     &fs.entry_mutex
@@ -767,6 +758,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         add_replacement(ctx, e.span, format!("{}.notify_all()", arg(0).0));
                     }
                     Some(f) => {
+                        if f == "main_0" {
+                            return;
+                        }
                         if let Some(FunctionSummary {
                             entry_mutex: entry,
                             ret_mutex: ret,
@@ -832,7 +826,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::Ret(v_opt) => {
                 let f = func_name();
-                if f == "main" {
+                if f == "main_0" {
                     return;
                 }
                 let ret = &func_summary().ret_mutex;
@@ -1115,16 +1109,11 @@ fn hid_to_string(ctx: &LateContext<'_>, hid: HirId) -> String {
     span_to_string(ctx, ctx.tcx.hir().span(hid))
 }
 
-fn correct_function_name(name: &str) -> String {
-    if name == "main_0" { "main" } else { name }.to_string()
-}
-
 fn current_function(ctx: &LateContext<'_>, hid: HirId) -> Option<String> {
     let hir = ctx.tcx.hir();
     if let Node::Item(item) = hir.get(hir.enclosing_body_owner(hid)) {
         if let ItemKind::Fn(_, _, _) = item.kind {
-            let func = item.ident.name.to_ident_string();
-            Some(correct_function_name(&func))
+            Some(item.ident.name.to_ident_string())
         } else {
             None
         }
