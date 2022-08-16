@@ -793,7 +793,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         let iv2mv = |is: &BitSet<Id>| {
             is.iter()
-                .map(|i| inv_mutexes.get(&i.index()).unwrap().to_string())
+                .map(|i| inv_mutexes.get(&i.index()).unwrap().clone())
                 .collect::<Vec<_>>()
         };
         let function_map: BTreeMap<_, _> = function_summary_map
@@ -816,7 +816,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     node_mutex.push(m.clone());
                     ret_mutex.push(m.clone());
                 }
-                let mut span_mutex_map: BTreeMap<_, Vec<_>> = BTreeMap::new();
+                let mut span_mutex_map: BTreeMap<_, Vec<ExprPath>> = BTreeMap::new();
                 for (span, v) in span_mutex {
                     let mut ms = iv2mv(v);
                     span_mutex_map.entry(*span).or_default().append(&mut ms);

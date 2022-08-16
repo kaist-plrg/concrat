@@ -41,18 +41,18 @@ impl AnalysisSummary {
 
 #[derive(Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct FunctionSummary {
-    pub entry_mutex: Vec<String>,
-    pub node_mutex: Vec<String>,
-    pub ret_mutex: Vec<String>,
-    pub mutex_line: BTreeMap<String, BTreeSet<usize>>,
+    pub entry_mutex: Vec<ExprPath>,
+    pub node_mutex: Vec<ExprPath>,
+    pub ret_mutex: Vec<ExprPath>,
+    pub mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
 }
 
 impl FunctionSummary {
     pub fn new(
-        mut entry_mutex: Vec<String>,
-        mut node_mutex: Vec<String>,
-        mut ret_mutex: Vec<String>,
-        mutex_line: BTreeMap<String, BTreeSet<usize>>,
+        mut entry_mutex: Vec<ExprPath>,
+        mut node_mutex: Vec<ExprPath>,
+        mut ret_mutex: Vec<ExprPath>,
+        mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
     ) -> Self {
         entry_mutex.sort();
         entry_mutex.dedup();
@@ -228,9 +228,9 @@ fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<(Vec<Vec<ExprPath>>
 }
 
 pub fn compute_mutex_line<T: Ord, F>(
-    node_map: &BTreeMap<T, Vec<String>>,
+    node_map: &BTreeMap<T, Vec<ExprPath>>,
     f: F,
-) -> BTreeMap<String, BTreeSet<usize>>
+) -> BTreeMap<ExprPath, BTreeSet<usize>>
 where
     F: Fn(&T) -> HashSet<usize>,
 {
@@ -350,11 +350,7 @@ fn generate_function_map(
                         let mut ms = v
                             .iter()
                             .map(|(_, symb_locks)| {
-                                symb_locks
-                                    .iter()
-                                    .map(replace)
-                                    .map(|p| p.to_string())
-                                    .collect::<HashSet<_>>()
+                                symb_locks.iter().map(replace).collect::<HashSet<_>>()
                             })
                             .reduce(|mut old, new| {
                                 old.retain(|p| new.contains(p));
@@ -366,7 +362,7 @@ fn generate_function_map(
                     .collect();
                 let entry_mutex = node_map.get(entry).unwrap().clone();
                 let ret_mutex = node_map.get(ret).unwrap().clone();
-                let node_map = node_map
+                let node_map: BTreeMap<String, Vec<ExprPath>> = node_map
                     .iter()
                     .filter_map(|(n, ms)| {
                         if nodes.contains(n) {

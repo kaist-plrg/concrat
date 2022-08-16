@@ -118,6 +118,44 @@ impl ExprPath {
             None
         }
     }
+
+    pub fn guard(&self) -> String {
+        let mut v = vec![self.base.clone()];
+        for p in &self.projections {
+            v.push(p.inner().clone());
+        }
+        v.push("guard".to_string());
+        join(v, "_")
+    }
+
+    pub fn with_cast(&self) -> String {
+        let mut v = vec![self.base.clone()];
+        for p in &self.projections {
+            v.push(p.with_cast());
+        }
+        join(v, "")
+    }
+}
+
+#[derive(Clone, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
+pub enum ExprPathProj {
+    Field(String),
+    Index(String),
+}
+
+impl ExprPathProj {
+    pub fn inner(&self) -> &String {
+        match self {
+            Self::Field(s) | Self::Index(s) => s,
+        }
+    }
+
+    pub fn with_cast(&self) -> String {
+        match self {
+            Self::Field(s) => format!(".{}", s),
+            Self::Index(s) => format!("[{} as usize]", s),
+        }
+    }
 }
 
 impl Display for ExprPath {
@@ -127,6 +165,15 @@ impl Display for ExprPath {
             write!(fmt, "{}", p)?;
         }
         Ok(())
+    }
+}
+
+impl Display for ExprPathProj {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Field(f) => write!(fmt, ".{}", f),
+            Self::Index(i) => write!(fmt, "[{}]", i),
+        }
     }
 }
 
@@ -164,7 +211,7 @@ impl Visitor<'_> for PathVisitor {
         formatter.write_str("ExprPath")
     }
 
-    fn visit_borrowed_str<E>(self, v: &str) -> Result<Self::Value, E>
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
     where E: Error {
         Ok(v.parse().unwrap())
     }
@@ -183,21 +230,6 @@ impl Visitor<'_> for PathInPlaceVisitor<'_> {
     where E: Error {
         *self.0 = v.parse().unwrap();
         Ok(())
-    }
-}
-
-#[derive(Clone, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
-pub enum ExprPathProj {
-    Field(String),
-    Index(String),
-}
-
-impl Display for ExprPathProj {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::Field(f) => write!(fmt, ".{}", f),
-            Self::Index(i) => write!(fmt, "[{}]", i),
-        }
     }
 }
 

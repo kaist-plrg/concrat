@@ -5,6 +5,7 @@ use std::{
     sync::Mutex,
 };
 
+use etrace::some_or;
 use lazy_static::lazy_static;
 use rustc_hir::*;
 use rustc_lint::{LateContext, LateLintPass, LintContext, LintPass};
@@ -17,8 +18,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::transitive_closure,
     util::{
-        join, normalize_path, span_to_string, type_of, type_to_string, unwrap_cast_recursively,
-        unwrap_ptr_from_type,
+        expr_to_path, join, normalize_path, span_to_string, type_of, type_to_string,
+        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
     },
 };
 
@@ -35,7 +36,7 @@ lazy_static! {
     static ref MUTEX_INIT_MAP: Mutex<HashSet<(String, String, String)>> =
         Mutex::new(HashSet::default());
     static ref GUARD_MAP: Mutex<HashMap<String, Vec<String>>> = Mutex::new(HashMap::default());
-    static ref ID_TYPE_MAP: Mutex<HashMap<String, String>> = Mutex::new(HashMap::default());
+    static ref PATH_TYPE_MAP: Mutex<HashMap<ExprPath, String>> = Mutex::new(HashMap::default());
     static ref DURATION_MAP: Mutex<HashMap<(String, String, String), String>> =
         Mutex::new(HashMap::default());
     static ref TRYLOCK_MAP: Mutex<HashMap<(String, String), (String, String)>> =
@@ -232,10 +233,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 _ => (),
             },
             ExprKind::Path(_) | ExprKind::Field(_, _) => {
-                let n = normalize_path(&span_to_string(ctx, e.span));
-                let ty = type_to_string(type_of(ctx, e.hir_id));
+                let path = some_or!(expr_to_path(ctx, e), return);
+                let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
                 if !ty.contains("fn(") {
-                    ID_TYPE_MAP.lock().unwrap().insert(n, ty);
+                    PATH_TYPE_MAP.lock().unwrap().insert(path, ty);
                 }
             }
             _ => (),
@@ -483,8 +484,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         .map(|m| {
                             format!(
                                 "mut {}: MutexGuard<'static, {}>",
-                                guard_of(m),
-                                struct_of_path(&name, m)
+                                m.guard(),
+                                struct_of_path(m)
                             )
                         })
                         .collect();
@@ -512,8 +513,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         ret_types.push(span_to_string(ctx, t.span));
                     }
                     for m in ret {
-                        ret_types
-                            .push(format!("MutexGuard<'static, {}>", struct_of_path(&name, m)));
+                        ret_types.push(format!("MutexGuard<'static, {}>", struct_of_path(m)));
                     }
                     let ret_type = make_tuple(ret_types);
                     let sugg = if let FnRetTy::Return(_) = decl.output {
@@ -545,7 +545,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     };
 
                     if let Some(span) = span {
-                        let ret_vals: Vec<_> = ret.iter().map(guard_of).collect();
+                        let ret_vals: Vec<_> = ret.iter().map(|m| m.guard()).collect();
                         use_guards(name.clone(), &ret_vals);
                         let ret_val = make_tuple(ret_vals);
                         add_replacement(ctx, span.shrink_to_hi(), format!("\n    {}", ret_val));
@@ -574,7 +574,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 } else {
                     &empty
                 };
-                let entry: HashSet<_> = entry.iter().map(guard_of).collect();
+                let entry: HashSet<_> = entry.iter().map(|m| m.guard()).collect();
                 let mut guards = GUARD_MAP
                     .lock()
                     .unwrap()
@@ -768,7 +768,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         }) = function_mutex_map().get(f)
                         {
                             if !entry.is_empty() {
-                                let guards = entry.iter().map(guard_of).collect();
+                                let guards = entry.iter().map(|m| m.guard()).collect();
                                 use_guards(func_name(), &guards);
                                 let guards = join(guards, ", ");
                                 if let Some(arg) = args.last() {
@@ -787,7 +787,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 if type_of(ctx, e.hir_id).is_unit() {
                                     if ret.len() == 1 {
                                         let span = e.span.shrink_to_lo();
-                                        let guard = guard_of(&ret[0]);
+                                        let guard = ret[0].guard();
                                         use_guard(func_name(), guard.clone());
                                         add_replacement(ctx, span, format!("{} = ", guard));
                                     } else {
@@ -795,12 +795,12 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                         add_replacement(ctx, span, "{ let tmp = ".to_string());
                                         let span = e.span.shrink_to_hi();
                                         for m in ret {
-                                            use_guard(func_name(), guard_of(m));
+                                            use_guard(func_name(), m.guard());
                                         }
                                         let guards: String = ret
                                             .iter()
                                             .enumerate()
-                                            .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i))
+                                            .map(|(i, m)| format!("{} = tmp.{}; ", m.guard(), i))
                                             .collect();
                                         add_replacement(ctx, span, format!("; {} }}", guards));
                                     }
@@ -809,12 +809,12 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     add_replacement(ctx, span, "{ let tmp = ".to_string());
                                     let span = e.span.shrink_to_hi();
                                     for m in ret {
-                                        use_guard(func_name(), guard_of(m));
+                                        use_guard(func_name(), m.guard());
                                     }
                                     let guards: String = ret
                                         .iter()
                                         .enumerate()
-                                        .map(|(i, m)| format!("{} = tmp.{}; ", guard_of(m), i + 1))
+                                        .map(|(i, m)| format!("{} = tmp.{}; ", m.guard(), i + 1))
                                         .collect();
                                     add_replacement(ctx, span, format!("; {}tmp.0 }}", guards));
                                 }
@@ -831,7 +831,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
                 let ret = &func_summary().ret_mutex;
                 if !ret.is_empty() {
-                    let ret_vals = ret.iter().map(guard_of).collect();
+                    let ret_vals = ret.iter().map(|m| m.guard()).collect();
                     use_guards(f, &ret_vals);
                     match v_opt {
                         Some(v) => {
@@ -906,8 +906,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Path(_) => {
                 if let Some(x) = name(e) {
                     if let Some(m) = global_mutex_map().get(&x) {
-                        let new_e = if func_summary().node_mutex.contains(m) {
-                            let guard = guard_of(m);
+                        let mutex = ExprPath::new(m.clone(), vec![]);
+                        let new_e = if func_summary().node_mutex.contains(&mutex) {
+                            let guard = mutex.guard();
                             use_guard(func_name(), guard.clone());
                             format!("(*{}).{}", guard, x)
                         } else {
@@ -923,9 +924,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let ind = unwrap_cast_recursively(i);
                     let ind = span_to_string(ctx, ind.span);
                     if let Some(m) = array_mutex_map().get(&a) {
-                        let mutex = format!("{}[{}]", m, ind);
+                        let mutex = ExprPath::new(m.clone(), vec![ExprPathProj::Index(ind)]);
                         let new_e = if func_summary().node_mutex.contains(&mutex) {
-                            let guard = guard_of(&mutex);
+                            let guard = mutex.guard();
                             use_guard(func_name(), guard.clone());
                             format!("(*{}).{}", guard, a)
                         } else {
@@ -941,6 +942,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, s.hir_id)));
                 let f = f.name.to_ident_string();
                 if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
+                    let s_path_opt = expr_to_path(ctx, s);
                     let s = span_to_string(ctx, s.span);
                     let hir = ctx.tcx.hir();
                     let parent_is_assignment =
@@ -958,9 +960,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     {
                         return;
                     }
-                    let mutex = format!("{}.{}", normalize_path(&s), m);
+                    let mut mutex = s_path_opt.unwrap();
+                    mutex.add_suffix(ExprPathProj::Field(m.clone()));
                     let new_e = if func_summary().node_mutex.contains(&mutex) {
-                        let guard = guard_of(&mutex);
+                        let guard = mutex.guard();
                         use_guard(func_name(), guard.clone());
                         format!("(*{}).{}", guard, f)
                     } else {
@@ -1157,6 +1160,8 @@ fn unwrap_addr<'tcx>(e: &'tcx Expr<'tcx>) -> Option<&'tcx Expr<'tcx>> {
 }
 
 fn normalize_arg<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) -> (String, String) {
+    let path = expr_to_path(ctx, e).unwrap();
+    let guard = path.guard();
     let arg = unwrap_addr(unwrap_cast_recursively(e)).unwrap();
     match &arg.kind {
         ExprKind::Unary(
@@ -1179,12 +1184,10 @@ fn normalize_arg<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) ->
             let ind = unwrap_cast_recursively(&args[1]);
             let ind = span_to_string(ctx, ind.span);
             let arg = format!("{}[{} as usize]", arr, ind);
-            let guard = guard_of(&format!("{}[{}]", arr, ind));
             (arg, guard)
         }
         _ => {
             let arg = span_to_string(ctx, arg.span);
-            let guard = guard_of(&arg);
             (arg, guard)
         }
     }
@@ -1197,11 +1200,6 @@ fn path_to_id(p: &str) -> String {
         .join("_")
 }
 
-#[allow(clippy::ptr_arg)]
-fn guard_of(m: &String) -> String {
-    format!("{}_guard", path_to_id(m))
-}
-
 fn struct_of(m: &str) -> String {
     format!("{}Data", path_to_id(m))
 }
@@ -1210,21 +1208,15 @@ fn struct_of2(s: &str, m: &str) -> String {
     format!("{}{}Data", path_to_id(s), path_to_id(m))
 }
 
-fn struct_of_path(_func: &str, s: &str) -> String {
-    if let Some(i) = s.rfind('.') {
-        let (s, f) = s.split_at(i);
-        struct_of2(
-            &ID_TYPE_MAP
-                .lock()
-                .unwrap()
-                .get(&s.to_string())
-                .unwrap()
-                .replace("*mut", "")
-                .replace("const ", ""),
-            f,
-        )
+fn struct_of_path(s: &ExprPath) -> String {
+    if s.is_variable() {
+        struct_of(&s.base)
     } else {
-        struct_of(s)
+        let mut s = s.clone();
+        let f = s.pop().unwrap();
+        let map = PATH_TYPE_MAP.lock().unwrap();
+        let ty = map.get(&s).unwrap();
+        struct_of2(ty, f.inner())
     }
 }
 
