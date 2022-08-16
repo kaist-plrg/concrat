@@ -250,6 +250,11 @@ pub fn def_id_to_item_name(tcx: TyCtxt<'_>, def_id: DefId) -> String {
     }
 }
 
+pub fn def_id_to_span(tcx: TyCtxt<'_>, def_id: DefId) -> Span {
+    let hir = tcx.hir();
+    hir.span_with_body(hir.local_def_id_to_hir_id(def_id.expect_local()))
+}
+
 pub fn normalize_path(p: &str) -> String {
     p.replace("&mut ", "")
         .split(&[' ', '-', '>', '.', '(', ')', '*', '&'])

@@ -26,8 +26,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
-        current_function, def_id_to_item_name, expr_to_path, resolve_path, span_lines,
-        span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
+        current_function, def_id_to_item_name, def_id_to_span, expr_to_path, resolve_path,
+        span_lines, span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
         unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
     },
 };
@@ -50,7 +50,7 @@ pub fn run(args: Vec<String>, verbose: bool) -> AnalysisSummary {
 struct GlobalPass {
     mutexes: HashMap<DefId, HashSet<ExprPath>>,
     params: HashMap<DefId, Vec<(String, String)>>,
-    args_per_type: HashMap<String, HashSet<String>>,
+    args_per_type: HashMap<String, HashSet<ExprPath>>,
     calls: HashMap<Span, Vec<Arg>>,
     accesses: HashMap<DefId, Vec<(Span, ExprPath, bool)>>,
     call_graph: HashMap<DefId, HashSet<DefId>>,
@@ -87,8 +87,15 @@ impl GlobalPass {
                 let args = some_or!(self.args_per_type.get(t), continue);
                 for arg in args {
                     let mut m = m.clone();
-                    m.base = arg.clone();
+                    m.set_base(arg);
                     mutexes.insert(m);
+                }
+                for (x, t1) in self.params.values().flatten() {
+                    if t == t1 {
+                        let mut m = m.clone();
+                        m.set_base(&ExprPath::new(x.clone(), vec![]));
+                        mutexes.insert(m);
+                    }
                 }
             }
         }
@@ -213,10 +220,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
 
                 for arg in &args {
-                    self.args_per_type
-                        .entry(arg.typ.clone())
-                        .or_default()
-                        .insert(arg.expr.clone());
+                    if let Some(path) = arg.path.as_ref() {
+                        self.args_per_type
+                            .entry(arg.typ.clone())
+                            .or_default()
+                            .insert(path.clone());
+                    }
                 }
 
                 self.calls.insert(e.span, args);
@@ -341,36 +350,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 // find guards held before function call
                 results.seek_before_primary_effect(location);
                 let v = &results.get().0;
-
-                // arguments for this call
-                let args = self.calls.get(&tm.source_info.span).unwrap();
-                // parameters of callee
-                let params = self.params.get(&func).unwrap();
-                // consider aliasing
-                let alias_id = |id: Id| {
-                    let m = inv_mutexes.get(&id.index()).unwrap().clone();
-                    if m.is_variable() {
-                        return id;
-                    }
-                    let (i, mut m) = some_or!(
-                        args.iter().enumerate().find_map(|(i, arg)| {
-                            let m = m.strip_prefix(arg.path.as_ref()?)?;
-                            Some((i, m))
-                        }),
-                        return id
-                    );
-                    let arg = &params[i].0;
-                    m.add_base(arg.clone());
-                    Id::new(*mutexes.get(&m).unwrap())
-                };
-
-                // propagated guards
-                let mut nv = BitSet::new_empty(mutexes.len());
-                for id in v.iter() {
-                    nv.insert(alias_id(id));
-                }
                 // update list
-                propagation.push((func, nv));
+                propagation.push((func, v.clone()));
             }
 
             // guards held for each access
@@ -464,8 +445,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         // initialize work list with reverse post order traversal
         let mut work_list: VecDeque<_> = po
             .iter()
-            .rev()
             .flatten()
+            .rev()
             .flat_map(|n| component_elems.get(n).unwrap())
             .cloned()
             .collect();
@@ -480,14 +461,62 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             abs_states.insert(*func, init_st);
         }
 
+        // arg-to-param aliasing
+        let alias_id = |id: Id, args: &[Arg], params: &[(String, String)]| {
+            let m = inv_mutexes.get(&id.index()).unwrap().clone();
+            if m.is_variable() {
+                return id;
+            }
+            let (i, mut m) = some_or!(
+                args.iter().enumerate().find_map(|(i, arg)| {
+                    let m = m.strip_prefix(arg.path.as_ref()?)?;
+                    Some((i, m))
+                }),
+                return id
+            );
+            let arg = &params[i].0;
+            m.add_base(arg.clone());
+            Id::new(*mutexes.get(&m).unwrap())
+        };
+
         // compute fixed point
         while let Some(func) = work_list.pop_front() {
+            let propagation = &function_summary_map.get(&func).unwrap().propagation;
             let st = abs_states.get(&func).unwrap().clone();
             let succs = self.call_graph.get(&func).unwrap();
             for succ in succs {
-                let propagation = &function_summary_map.get(&func).unwrap().propagation;
+                // compute held mutexes
                 let mut ms = propagation.get(succ).unwrap().clone();
                 ms.union(&st);
+
+                // consider aliasing
+                let func_span = def_id_to_span(ctx.tcx, func);
+                let succ_name = def_id_to_item_name(ctx.tcx, *succ);
+                let prefix = format!("{}(", succ_name);
+                let params = self.params.get(succ).unwrap();
+                let ms = self
+                    .calls
+                    .iter()
+                    .filter_map(|(span, args)| {
+                        if span.overlaps(func_span)
+                            && span_to_string(ctx, *span).starts_with(&prefix)
+                        {
+                            let mut ams = BitSet::new_empty(ms.domain_size());
+                            for i in ms.iter() {
+                                ams.insert(alias_id(i, args, params));
+                            }
+                            Some(ams)
+                        } else {
+                            None
+                        }
+                    })
+                    .reduce(|mut ov, nv| {
+                        ov.intersect(&nv);
+                        ov
+                    })
+                    .unwrap();
+
+                // update state
                 let succ_st = abs_states.get_mut(succ).unwrap();
                 if succ_st.intersect(&ms) && !work_list.contains(succ) {
                     work_list.push_back(*succ);

@@ -21,6 +21,7 @@ if [ ! -d "$from" ]; then
 fi
 
 mkdir -p $to
+rm -f $to/{*.rs,Cargo.toml,rust-toolchain,a.xml,cfg.dot,lines}
 cp -r $from/{*.rs,Cargo.toml,rust-toolchain} $to
 
 if [ "$GOBLINT" = "yes" ]; then

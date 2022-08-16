@@ -17,9 +17,10 @@ use crate::util::{
 
 #[derive(Debug)]
 pub struct Arg {
-    expr: String,
     path: Option<ExprPath>,
     typ: String,
+    #[allow(unused)]
+    expr: String,
     #[allow(unused)]
     hir_id: HirId,
 }
