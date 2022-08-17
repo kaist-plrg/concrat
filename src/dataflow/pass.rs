@@ -13,12 +13,12 @@ use rustc_hir::{
 };
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
-use rustc_middle::mir::{BasicBlock, Location, TerminatorKind};
+use rustc_middle::mir::BasicBlock;
 use rustc_span::{def_id::DefId, Span};
 
 use super::{
-    get_function_call,
     intra::{available_guards, live_guards, AnalysisContext},
+    visitor::Visitor,
     Arg, FunctionSummary,
 };
 use crate::{
@@ -269,7 +269,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let funcs = component_elems.get(component).unwrap();
             assert_eq!(funcs.len(), 1);
             let def_id = funcs.iter().next().unwrap();
-            assert!(!self.call_graph.get(def_id).unwrap().contains(def_id));
+            let recursive = self.call_graph.get(def_id).unwrap().contains(def_id);
 
             // analysis context
             let tcx = ctx.tcx;
@@ -284,119 +284,52 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 ctx,
             );
 
-            // live guard analysis
-            let mut results = live_guards(ana_ctx.clone());
-            results.seek_to_block_start(BasicBlock::from_usize(0));
-            let entry_mutex = results.get().clone();
-
-            // available guard analysis
-            let mut results = available_guards(ana_ctx, &entry_mutex);
-            let return_opt = body.basic_blocks().iter_enumerated().find(|(_, bbd)| {
-                matches!(
-                    bbd.terminator.as_ref().unwrap().kind,
-                    TerminatorKind::Return
-                )
-            });
-            let ret_mutex = if let Some((return_bb, _)) = return_opt {
-                results.seek_to_block_end(return_bb);
-                results.get().0.clone()
+            let (entry_mutex, return_state, mut propagation, span_mutex) = if recursive {
+                todo!()
             } else {
-                BitSet::new_empty(entry_mutex.domain_size())
+                // live guard analysis
+                let mut results = live_guards(ana_ctx.clone()).into_results_cursor(body);
+                results.seek_to_block_start(BasicBlock::from_usize(0));
+                let entry_mutex = results.get().clone();
+
+                // available guard analysis
+                let results = available_guards(ana_ctx, entry_mutex.clone());
+                let mut visitor = Visitor::default();
+                results.visit_reachable_with(body, &mut visitor);
+                let Visitor {
+                    return_state,
+                    propagation,
+                    span_mutex,
+                } = visitor;
+
+                (entry_mutex, return_state, propagation, span_mutex)
             };
 
+            // guards held at return
+            let ret_mutex = return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
             // guards propagated by function calls
-            let mut propagation: Vec<(DefId, BitSet<Id>)> = vec![];
-            // for each basic block
-            for (block, bbd) in body.basic_blocks().iter_enumerated() {
-                // get terminator
-                let tm = some_or!(&bbd.terminator, continue);
-                // get callee
-                let func = some_or!(get_function_call(tm), continue);
-                // skip library functions
-                if !functions.contains(&func) {
-                    continue;
-                }
-
-                // location of function call
-                let statement_index = bbd.statements.len();
-                let location = Location {
-                    block,
-                    statement_index,
-                };
-                // find guards held before function call
-                results.seek_before_primary_effect(location);
-                let v = &results.get().0;
-                // update list
-                propagation.push((func, v.clone()));
-            }
-
+            propagation.retain(|(f, _)| functions.contains(f));
             // guards held for each access
-            let mut access: Vec<(ExprPath, BitSet<Id>, bool)> = vec![];
-            // if function has any access
-            if let Some(accesses) = self.accesses.get(def_id) {
-                // for each basic block
-                for (block, bbd) in body.basic_blocks().iter_enumerated() {
-                    // for each statement
-                    for (statement_index, stmt) in bbd.statements.iter().enumerate() {
-                        // find guards held before each statement
-                        let location = Location {
-                            block,
-                            statement_index,
-                        };
-                        results.seek_before_primary_effect(location);
-                        let v = results.get().0.clone();
-
-                        // get span of statement
-                        let span = stmt.source_info.span;
-                        // for each access
-                        for (s, path, write) in accesses {
-                            // if spans overlap
-                            if s.overlaps(span) {
-                                access.push((path.clone(), v.clone(), *write));
-                            }
-                        }
-                    }
-                }
-            }
-
-            // guards held at each span
-            let mut span_mutex: Vec<(Span, BitSet<Id>)> = vec![];
-            // for each basic block
-            for (block, bbd) in body.basic_blocks().iter_enumerated() {
-                // for each statement
-                for (statement_index, stmt) in bbd.statements.iter().enumerate() {
-                    // find guards held before each statement
-                    let location = Location {
-                        block,
-                        statement_index,
-                    };
-                    results.seek_before_primary_effect(location);
-                    let v = results.get().0.clone();
-                    // get span of statement
-                    let span = stmt.source_info.span;
-                    // add to list
-                    span_mutex.push((span, v.clone()));
-                }
-
-                // if terminator exists
-                if let Some(tm) = &bbd.terminator {
-                    match &tm.kind {
-                        TerminatorKind::Call { .. } | TerminatorKind::Return => (),
-                        _ => continue,
-                    }
-                    // find guards held before each statement
-                    let location = Location {
-                        block,
-                        statement_index: bbd.statements.len(),
-                    };
-                    results.seek_before_primary_effect(location);
-                    let v = results.get().0.clone();
-                    // get span of statement
-                    let span = tm.source_info.span;
-                    // add to list
-                    span_mutex.push((span, v.clone()));
-                }
-            }
+            let access: Vec<(ExprPath, BitSet<Id>, bool)> =
+                if let Some(accesses) = self.accesses.get(def_id) {
+                    span_mutex
+                        .iter()
+                        .flat_map(|(span, v)| {
+                            accesses
+                                .iter()
+                                .filter_map(|(s, path, w)| {
+                                    if s.overlaps(*span) {
+                                        Some((path.clone(), v.clone(), *w))
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .collect::<Vec<_>>()
+                        })
+                        .collect()
+                } else {
+                    vec![]
+                };
 
             // create summary
             let summary =

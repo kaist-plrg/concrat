@@ -9,9 +9,5 @@ for d in examples/*; do
     td=`mktemp -d`
     ./test_dir.sh $d $td
     rm -rf $td
-
-    td=`mktemp -d`
-    GOBLINT=yes ./test_dir.sh $d $td
-    rm -rf $td
   fi
 done

@@ -8,6 +8,7 @@ use rustc_span::{def_id::DefId, Span};
 
 pub mod intra;
 pub mod pass;
+pub mod visitor;
 
 pub use pass::run;
 
