@@ -25,12 +25,10 @@
   },
   "sem": {
     "unknown_function": {
+      "spawn": false,
       "invalidate": {
         "globals": false
       }
     }
-  },
-  "exp": {
-    "privatization": "protection"
   }
 }

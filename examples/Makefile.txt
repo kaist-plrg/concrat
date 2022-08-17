@@ -1,7 +1,6 @@
 CFLAGS = -pthread
 
-all:
-	make main.rs a.xml
+all: main.rs a.xml
 
 main: a.o b.o
 	$(CC) $(CFLAGS) -o $@ $^

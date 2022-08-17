@@ -1,10 +1,9 @@
 CFLAGS = -pthread
 
-all:
-	make main.rs a.xml
+all: main.rs
 
 a.xml: main.c conf.json
-	goblint --conf conf.json \
+	goblint --conf ../../conf.json \
 		--enable allglobs \
 		--enable justcfg \
 		--set result fast_xml \
