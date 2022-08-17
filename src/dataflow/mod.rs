@@ -78,6 +78,10 @@ impl FunctionSummary {
             span_mutex,
         }
     }
+
+    pub fn mutex_only(entry_mutex: BitSet<Id>, ret_mutex: BitSet<Id>) -> Self {
+        Self::new(entry_mutex, ret_mutex, vec![], vec![], vec![])
+    }
 }
 
 fn get_function_call(tm: &Terminator<'_>) -> Option<DefId> {

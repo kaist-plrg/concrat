@@ -8,6 +8,7 @@ main: a.o b.o
 
 main.c: a.c
 	CC="cilly --gcc=/usr/bin/clang-14 --merge --keepmerged --noPrintLn" make main && \
+	rm main *.o && \
 	mv main_comb.c main.c
 
 main.rs: main.c

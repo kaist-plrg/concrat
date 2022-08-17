@@ -271,22 +271,69 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let def_id = funcs.iter().next().unwrap();
             let recursive = self.call_graph.get(def_id).unwrap().contains(def_id);
 
-            // analysis context
             let tcx = ctx.tcx;
             let body = tcx.optimized_mir(def_id);
-            let ana_ctx = AnalysisContext::new(
-                &mutexes,
-                &inv_mutexes,
-                &function_summary_map,
-                &self.params,
-                &self.calls,
-                body,
-                ctx,
-            );
 
-            let (entry_mutex, return_state, mut propagation, span_mutex) = if recursive {
-                todo!()
+            let (entry_mutex, ret_mutex, mut propagation, span_mutex) = if recursive {
+                let mut entry_mutex = BitSet::new_empty(mutexes.len());
+                let mut ret_mutex = BitSet::new_filled(mutexes.len());
+
+                loop {
+                    // analysis context
+                    let summary =
+                        FunctionSummary::mutex_only(entry_mutex.clone(), ret_mutex.clone());
+                    function_summary_map.insert(*def_id, summary);
+                    let ana_ctx = AnalysisContext::new(
+                        &mutexes,
+                        &inv_mutexes,
+                        &function_summary_map,
+                        &self.params,
+                        &self.calls,
+                        body,
+                        ctx,
+                    );
+
+                    // live guard analysis
+                    let mut results = live_guards(ana_ctx.clone()).into_results_cursor(body);
+                    results.seek_to_block_start(BasicBlock::from_usize(0));
+                    let new_entry_mutex = results.get().clone();
+
+                    if entry_mutex != new_entry_mutex {
+                        entry_mutex = new_entry_mutex;
+                        continue;
+                    }
+
+                    // available guard analysis
+                    let results = available_guards(ana_ctx, entry_mutex.clone());
+                    let mut visitor = Visitor::default();
+                    results.visit_reachable_with(body, &mut visitor);
+                    let Visitor {
+                        return_state,
+                        propagation,
+                        span_mutex,
+                    } = visitor;
+                    let new_ret_mutex =
+                        return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
+
+                    if ret_mutex != new_ret_mutex {
+                        ret_mutex = new_ret_mutex;
+                        continue;
+                    }
+
+                    break (entry_mutex, ret_mutex, propagation, span_mutex);
+                }
             } else {
+                // analysis context
+                let ana_ctx = AnalysisContext::new(
+                    &mutexes,
+                    &inv_mutexes,
+                    &function_summary_map,
+                    &self.params,
+                    &self.calls,
+                    body,
+                    ctx,
+                );
+
                 // live guard analysis
                 let mut results = live_guards(ana_ctx.clone()).into_results_cursor(body);
                 results.seek_to_block_start(BasicBlock::from_usize(0));
@@ -301,12 +348,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     propagation,
                     span_mutex,
                 } = visitor;
+                let ret_mutex = return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
 
-                (entry_mutex, return_state, propagation, span_mutex)
+                (entry_mutex, ret_mutex, propagation, span_mutex)
             };
 
-            // guards held at return
-            let ret_mutex = return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
             // guards propagated by function calls
             propagation.retain(|(f, _)| functions.contains(f));
             // guards held for each access
