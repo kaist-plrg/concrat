@@ -510,7 +510,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         // classify accesses
         for (def_id, summary) in &function_summary_map {
             let prop = &summary.propagation_mutex;
-            for (path, (v, w)) in &summary.access {
+            for (path, v, w) in &summary.access {
                 let mut v = v.clone();
                 v.union(prop);
                 if path.is_struct() {
@@ -748,9 +748,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .iter()
                     .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
                     .collect();
-                let access: HashMap<_, _> = access
+                let access: Vec<_> = access
                     .iter()
-                    .map(|(path, (v, w))| (path, (iv2mv(v), w)))
+                    .map(|(path, v, w)| (path, iv2mv(v), w))
                     .collect();
                 println!(
                     "{} {:?} {:?} {:?} {:?} {:?}",

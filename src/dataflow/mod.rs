@@ -47,8 +47,7 @@ pub struct FunctionSummary {
     pub propagation_mutex: BitSet<Id>,
     pub propagation: HashMap<DefId, BitSet<Id>>,
     pub propagation_raw: Vec<(DefId, BitSet<Id>)>,
-    pub access: HashMap<ExprPath, (BitSet<Id>, bool)>,
-    pub access_raw: Vec<(ExprPath, BitSet<Id>, bool)>,
+    pub access: Vec<(ExprPath, BitSet<Id>, bool)>,
     pub span_mutex: Vec<(Span, BitSet<Id>)>,
 }
 
@@ -57,7 +56,7 @@ impl FunctionSummary {
         entry_mutex: BitSet<Id>,
         ret_mutex: BitSet<Id>,
         propagation_raw: Vec<(DefId, BitSet<Id>)>,
-        access_raw: Vec<(ExprPath, BitSet<Id>, bool)>,
+        access: Vec<(ExprPath, BitSet<Id>, bool)>,
         span_mutex: Vec<(Span, BitSet<Id>)>,
     ) -> Self {
         let len = entry_mutex.domain_size();
@@ -68,14 +67,6 @@ impl FunctionSummary {
                 .or_insert_with(|| BitSet::new_filled(len));
             ov.intersect(v);
         }
-        let mut access = HashMap::new();
-        for (path, v, w) in &access_raw {
-            let (ov, ow) = access
-                .entry(path.clone())
-                .or_insert_with(|| (BitSet::new_filled(len), false));
-            ov.intersect(v);
-            *ow |= w;
-        }
         Self {
             entry_mutex,
             ret_mutex,
@@ -83,7 +74,6 @@ impl FunctionSummary {
             propagation,
             propagation_raw,
             access,
-            access_raw,
             span_mutex,
         }
     }

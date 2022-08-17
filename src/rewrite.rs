@@ -238,10 +238,28 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 match lhs.kind {
                     ExprKind::Field(s, f) => {
                         let func = func_name();
-                        let s = normalize_path(&span_to_string(ctx, s.span));
+                        let func_summary = some_or!(function_mutex_map().get(&func), return);
+                        let is_protected = |mutex: &ExprPath| {
+                            if let Some(lines) = func_summary.mutex_line.get(mutex) {
+                                let expr_lines = span_lines(ctx, e.span);
+                                expr_lines.iter().any(|l| lines.contains(l))
+                            } else {
+                                false
+                            }
+                        };
+                        let ty = type_to_string(type_of(ctx, s.hir_id));
                         let f = f.name.to_ident_string();
+                        let map = some_or!(struct_mutex_map().get(&ty), return);
+                        let m = some_or!(map.get(&f), return);
+                        let s_path_opt = expr_to_path(ctx, s);
+                        let mut mutex = s_path_opt.unwrap();
+                        mutex.add_suffix(ExprPathProj::Field(m.clone()));
+                        if is_protected(&mutex) {
+                            return;
+                        }
+                        let s = normalize_path(&span_to_string(ctx, s.span));
                         let i = span_to_string(ctx, rhs.span);
-                        self.init_map.insert((func, s, f), i);
+                        self.init_map.entry((func, s, f)).or_insert(i);
                     }
                     _ => (),
                 }
@@ -1016,11 +1034,19 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Field(s, f) => {
                 let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, s.hir_id)));
                 let f = f.name.to_ident_string();
-                if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
-                    let s_path_opt = expr_to_path(ctx, s);
-                    let s = span_to_string(ctx, s.span);
+                let map = some_or!(struct_mutex_map().get(&ty), return);
+                let m = some_or!(map.get(&f), return);
+                let s_path_opt = expr_to_path(ctx, s);
+                let mut mutex = s_path_opt.unwrap();
+                mutex.add_suffix(ExprPathProj::Field(m.clone()));
+                if is_protected(&mutex) {
+                    let guard = mutex.guard();
+                    self.use_guard(func_name(), guard.clone());
+                    let new_e = format!("(*{}).{}", guard, f);
+                    add_replacement(ctx, e.span, new_e);
+                } else {
                     let hir = ctx.tcx.hir();
-                    let parent_is_assignment =
+                    let assigned =
                         if let Node::Expr(parent) = hir.get(hir.get_parent_node(e.hir_id)) {
                             if let ExprKind::Assign(l, _, _) = &parent.kind {
                                 l.hir_id == e.hir_id
@@ -1030,32 +1056,31 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         } else {
                             false
                         };
-                    if parent_is_assignment
-                        && mutex_init_map().contains(&(func_name(), normalize_path(&s), m.clone()))
-                    {
+                    let s = span_to_string(ctx, s.span);
+                    let initialized =
+                        mutex_init_map().contains(&(func_name(), normalize_path(&s), m.clone()));
+                    if assigned && initialized {
                         return;
                     }
-                    let mut mutex = s_path_opt.unwrap();
-                    mutex.add_suffix(ExprPathProj::Field(m.clone()));
-                    let new_e = if is_protected(&mutex) {
-                        let guard = mutex.guard();
-                        self.use_guard(func_name(), guard.clone());
-                        format!("(*{}).{}", guard, f)
-                    } else {
-                        format!("{}.{}.get_mut().unwrap().{}", s, m, f)
-                    };
+                    let new_e = format!("{}.{}.get_mut().unwrap().{}", s, m, f);
                     add_replacement(ctx, e.span, new_e);
                 }
             }
             ExprKind::Assign(lhs, _, _) => match lhs.kind {
                 ExprKind::Field(s, f) => {
                     let ty = type_to_string(type_of(ctx, s.hir_id));
-                    let s = normalize_path(&span_to_string(ctx, s.span));
                     let f = f.name.to_ident_string();
-                    if let Some(m) = struct_mutex_map().get(&ty).and_then(|m| m.get(&f)) {
-                        if mutex_init_map().contains(&(func_name(), s, m.clone())) {
-                            add_replacement(ctx, e.span, "()".to_string());
-                        }
+                    let map = some_or!(struct_mutex_map().get(&ty), return);
+                    let m = some_or!(map.get(&f), return);
+                    let s_path_opt = expr_to_path(ctx, s);
+                    let mut mutex = s_path_opt.unwrap();
+                    mutex.add_suffix(ExprPathProj::Field(m.clone()));
+                    if is_protected(&mutex) {
+                        return;
+                    }
+                    let s = normalize_path(&span_to_string(ctx, s.span));
+                    if mutex_init_map().contains(&(func_name(), s, m.clone())) {
+                        add_replacement(ctx, e.span, "()".to_string());
                     }
                 }
                 _ => (),
