@@ -1021,8 +1021,12 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let s = span_to_string(ctx, s.span);
                     let hir = ctx.tcx.hir();
                     let parent_is_assignment =
-                        if let Node::Expr(e) = hir.get(hir.get_parent_node(e.hir_id)) {
-                            matches!(e.kind, ExprKind::Assign(_, _, _))
+                        if let Node::Expr(parent) = hir.get(hir.get_parent_node(e.hir_id)) {
+                            if let ExprKind::Assign(l, _, _) = &parent.kind {
+                                l.hir_id == e.hir_id
+                            } else {
+                                false
+                            }
                         } else {
                             false
                         };

@@ -561,10 +561,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .filter_map(|(i, x)| {
                     if x > 0 {
                         let m = inv_mutexes.get(&i).unwrap();
-                        if index == m.index() {
-                            Some((i, m, x))
-                        } else {
+                        if m.is_struct() || index != m.index() {
                             None
+                        } else {
+                            Some((i, m, x))
                         }
                     } else {
                         None
