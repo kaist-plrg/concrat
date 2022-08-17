@@ -612,6 +612,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         unreachable!()
                     };
 
+                    if matches!(decl.output, FnRetTy::Return(_)) {
+                        return;
+                    }
+
                     let span = if let Some(e) = b.expr {
                         Some(e.span)
                     } else {

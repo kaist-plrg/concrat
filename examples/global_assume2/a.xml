@@ -1,0 +1,2660 @@
+<run><result>
+<file name="main.c" path="main.c">
+<function name="main">
+<node name="17"/>
+<node name="15"/>
+<node name="16"/>
+<node name="fun343"/>
+<node name="ret343"/>
+<node name="18"/>
+<node name="14"/>
+</function>
+<function name="t_fun">
+<node name="ret340"/>
+<node name="12"/>
+<node name="11"/>
+<node name="fun340"/>
+</function>
+<function name="f1">
+<node name="6"/>
+<node name="7"/>
+<node name="9"/>
+<node name="ret338"/>
+<node name="fun338"/>
+<node name="8"/>
+</function>
+<function name="inc">
+<node name="1"/>
+<node name="3"/>
+<node name="4"/>
+<node name="2"/>
+<node name="fun336"/>
+<node name="ret336"/>
+</function>
+</file>
+<call id="8" file="main.c" line="61" order="2057" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="fun338" file="main.c" line="54" order="1989" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="ret338" file="main.c" line="54" order="1989" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="14" file="main.c" line="80" order="2232" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="ret336" file="main.c" line="41" order="1889" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="fun340" file="main.c" line="65" order="2106" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="fun336" file="main.c" line="41" order="1889" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="2" file="main.c" line="47" order="1922" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="18" file="main.c" line="86" order="2638" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="11" file="main.c" line="70" order="2140" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="12" file="main.c" line="71" order="2148" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="9" file="main.c" line="62" order="2094" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="4" file="main.c" line="50" order="1964" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="3" file="main.c" line="48" order="1936" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="ret343" file="main.c" line="74" order="2172" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="fun343" file="main.c" line="74" order="2172" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="16" file="main.c" line="84" order="2552" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="7" file="main.c" line="60" order="2048" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="15" file="main.c" line="82" order="2392" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="17" file="main.c" line="85" order="2595" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="ret340" file="main.c" line="65" order="2106" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="1" file="main.c" line="46" order="1913" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+inc</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; num_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</value><key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+<call id="6" file="main.c" line="59" order="2013" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+<key>
+f1</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value><key>
+main</key>
+<value><analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</value></map>
+</value>
+
+</analysis></path></call>
+
+<warning><group name="n1;int ">
+<text>lock:num_mutex</text></group>
+</warning></result></run>
