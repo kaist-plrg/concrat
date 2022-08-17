@@ -1,0 +1,77 @@
+{
+  "mutex_map": {"n":"m"},
+  "array_mutex_map": {},
+  "struct_mutex_map": {},
+  "function_map": {
+    "f1": {
+      "entry_mutex": [],
+      "ret_mutex": ["m"],
+      "mutex_line": {
+        "m": [
+          60,
+          61,
+          62
+        ]
+      }
+    },
+    "f2": {
+      "entry_mutex": [],
+      "ret_mutex": ["m"],
+      "mutex_line": {
+        "m": [
+          68,
+          69,
+          70
+        ]
+      }
+    },
+    "g1": {
+      "entry_mutex": ["m"],
+      "ret_mutex": [],
+      "mutex_line": {
+        "m": [
+          72,
+          73,
+          74,
+          75,
+          76
+        ]
+      }
+    },
+    "g2": {
+      "entry_mutex": ["m"],
+      "ret_mutex": [],
+      "mutex_line": {
+        "m": [
+          80,
+          81,
+          82,
+          83,
+          84
+        ]
+      }
+    },
+    "h": {
+      "entry_mutex": [],
+      "ret_mutex": [],
+      "mutex_line": {
+        "m": [
+          89,
+          91
+        ]
+      }
+    },
+    "main_0": {
+      "entry_mutex": [],
+      "ret_mutex": [],
+      "mutex_line": {
+      }
+    },
+    "main": {
+      "entry_mutex": [],
+      "ret_mutex": [],
+      "mutex_line": {
+      }
+    }
+  }
+}

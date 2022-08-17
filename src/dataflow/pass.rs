@@ -266,23 +266,38 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // post order traversal of call graph
         for component in po.iter().flatten() {
-            let funcs = component_elems.get(component).unwrap();
-            assert_eq!(funcs.len(), 1);
-            let def_id = funcs.iter().next().unwrap();
-            let recursive = self.call_graph.get(def_id).unwrap().contains(def_id);
+            let mut funcs: Vec<_> = component_elems
+                .get(component)
+                .unwrap()
+                .iter()
+                .cloned()
+                .collect();
 
-            let tcx = ctx.tcx;
-            let body = tcx.optimized_mir(def_id);
+            let mut entry_mutexes = vec![];
+            let mut ret_mutexes = vec![];
+            let mut propagations = vec![];
+            let mut span_mutexes = vec![];
+            for _ in &funcs {
+                entry_mutexes.push(BitSet::new_empty(mutexes.len()));
+                ret_mutexes.push(BitSet::new_filled(mutexes.len()));
+                propagations.push(vec![]);
+                span_mutexes.push(vec![]);
+            }
 
-            let (entry_mutex, ret_mutex, mut propagation, span_mutex) = if recursive {
-                let mut entry_mutex = BitSet::new_empty(mutexes.len());
-                let mut ret_mutex = BitSet::new_filled(mutexes.len());
-
-                loop {
-                    // analysis context
-                    let summary =
-                        FunctionSummary::mutex_only(entry_mutex.clone(), ret_mutex.clone());
+            loop {
+                for (i, def_id) in funcs.iter().enumerate() {
+                    let summary = FunctionSummary::mutex_only(
+                        entry_mutexes[i].clone(),
+                        ret_mutexes[i].clone(),
+                    );
                     function_summary_map.insert(*def_id, summary);
+                }
+
+                let mut changed = false;
+
+                for (i, def_id) in funcs.iter().enumerate() {
+                    // analysis context
+                    let body = ctx.tcx.optimized_mir(def_id);
                     let ana_ctx = AnalysisContext::new(
                         &mutexes,
                         &inv_mutexes,
@@ -296,15 +311,15 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     // live guard analysis
                     let mut results = live_guards(ana_ctx.clone()).into_results_cursor(body);
                     results.seek_to_block_start(BasicBlock::from_usize(0));
-                    let new_entry_mutex = results.get().clone();
+                    let entry_mutex = results.get().clone();
 
-                    if entry_mutex != new_entry_mutex {
-                        entry_mutex = new_entry_mutex;
-                        continue;
+                    if entry_mutexes[i] != entry_mutex {
+                        entry_mutexes[i] = entry_mutex;
+                        changed = true;
                     }
 
                     // available guard analysis
-                    let results = available_guards(ana_ctx, entry_mutex.clone());
+                    let results = available_guards(ana_ctx, entry_mutexes[i].clone());
                     let mut visitor = Visitor::default();
                     results.visit_reachable_with(body, &mut visitor);
                     let Visitor {
@@ -312,76 +327,59 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         propagation,
                         span_mutex,
                     } = visitor;
-                    let new_ret_mutex =
+                    let ret_mutex =
                         return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
 
-                    if ret_mutex != new_ret_mutex {
-                        ret_mutex = new_ret_mutex;
-                        continue;
+                    if ret_mutexes[i] != ret_mutex {
+                        ret_mutexes[i] = ret_mutex;
+                        changed = true;
                     }
 
-                    break (entry_mutex, ret_mutex, propagation, span_mutex);
+                    propagations[i] = propagation;
+                    span_mutexes[i] = span_mutex;
                 }
-            } else {
-                // analysis context
-                let ana_ctx = AnalysisContext::new(
-                    &mutexes,
-                    &inv_mutexes,
-                    &function_summary_map,
-                    &self.params,
-                    &self.calls,
-                    body,
-                    ctx,
+
+                if !changed {
+                    break;
+                }
+            }
+
+            for ((((def_id, entry_mutex), ret_mutex), mut propagation), span_mutex) in funcs
+                .drain(..)
+                .zip(entry_mutexes.drain(..))
+                .zip(ret_mutexes.drain(..))
+                .zip(propagations.drain(..))
+                .zip(span_mutexes.drain(..))
+            {
+                // guards propagated by function calls
+                propagation.retain(|(f, _)| functions.contains(f));
+                // guards held for each access
+                let access: Vec<(ExprPath, BitSet<Id>, bool)> =
+                    if let Some(accesses) = self.accesses.get(&def_id) {
+                        span_mutex
+                            .iter()
+                            .flat_map(|(span, v)| {
+                                accesses
+                                    .iter()
+                                    .filter_map(|(s, path, w)| {
+                                        if s.overlaps(*span) {
+                                            Some((path.clone(), v.clone(), *w))
+                                        } else {
+                                            None
+                                        }
+                                    })
+                                    .collect::<Vec<_>>()
+                            })
+                            .collect()
+                    } else {
+                        vec![]
+                    };
+                // create summary
+                function_summary_map.insert(
+                    def_id,
+                    FunctionSummary::new(entry_mutex, ret_mutex, propagation, access, span_mutex),
                 );
-
-                // live guard analysis
-                let mut results = live_guards(ana_ctx.clone()).into_results_cursor(body);
-                results.seek_to_block_start(BasicBlock::from_usize(0));
-                let entry_mutex = results.get().clone();
-
-                // available guard analysis
-                let results = available_guards(ana_ctx, entry_mutex.clone());
-                let mut visitor = Visitor::default();
-                results.visit_reachable_with(body, &mut visitor);
-                let Visitor {
-                    return_state,
-                    propagation,
-                    span_mutex,
-                } = visitor;
-                let ret_mutex = return_state.unwrap_or_else(|| BitSet::new_empty(mutexes.len()));
-
-                (entry_mutex, ret_mutex, propagation, span_mutex)
-            };
-
-            // guards propagated by function calls
-            propagation.retain(|(f, _)| functions.contains(f));
-            // guards held for each access
-            let access: Vec<(ExprPath, BitSet<Id>, bool)> =
-                if let Some(accesses) = self.accesses.get(def_id) {
-                    span_mutex
-                        .iter()
-                        .flat_map(|(span, v)| {
-                            accesses
-                                .iter()
-                                .filter_map(|(s, path, w)| {
-                                    if s.overlaps(*span) {
-                                        Some((path.clone(), v.clone(), *w))
-                                    } else {
-                                        None
-                                    }
-                                })
-                                .collect::<Vec<_>>()
-                        })
-                        .collect()
-                } else {
-                    vec![]
-                };
-
-            // create summary
-            let summary =
-                FunctionSummary::new(entry_mutex, ret_mutex, propagation, access, span_mutex);
-            // save summary
-            function_summary_map.insert(*def_id, summary);
+            }
         }
 
         // find root nodes
