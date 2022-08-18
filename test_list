@@ -15,3 +15,4 @@ bench/wrk
 bench/the_silver_searcher
 bench/vanitygen
 bench/dnspod-sr
+bench/streem

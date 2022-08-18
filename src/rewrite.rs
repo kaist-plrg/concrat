@@ -34,7 +34,7 @@ static STRUCT_DEF_MAP: Once<HashMap<String, HashMap<String, String>>> = Once::ne
 static TRANS_STRUCT_DEF_MAP: Once<HashMap<String, HashSet<String>>> = Once::new();
 static INIT_MAP: Once<HashMap<(String, ExprPath, String), String>> = Once::new();
 static MUTEX_INIT_MAP: Once<HashSet<(String, ExprPath, String)>> = Once::new();
-static PATH_TYPE_MAP: Once<HashMap<ExprPath, String>> = Once::new();
+static PATH_TYPE_MAP: Once<HashMap<ExprPath, HashMap<String, String>>> = Once::new();
 static DURATION_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
 static TRYLOCK_MAP: Once<HashMap<(String, String, usize), String>> = Once::new();
 static PARAMS_MAP: Once<HashMap<String, Vec<String>>> = Once::new();
@@ -75,7 +75,7 @@ fn mutex_init_map() -> &'static HashSet<(String, ExprPath, String)> {
     MUTEX_INIT_MAP.get().unwrap()
 }
 
-fn path_type_map() -> &'static HashMap<ExprPath, String> {
+fn path_type_map() -> &'static HashMap<ExprPath, HashMap<String, String>> {
     PATH_TYPE_MAP.get().unwrap()
 }
 
@@ -131,7 +131,7 @@ struct GlobalPass {
     struct_def_map: HashMap<String, HashMap<String, String>>,
     init_map: HashMap<(String, ExprPath, String), String>,
     mutex_init_map: HashSet<(String, ExprPath, String)>,
-    path_type_map: HashMap<ExprPath, String>,
+    path_type_map: HashMap<ExprPath, HashMap<String, String>>,
     duration_map: HashMap<(String, String, String), String>,
     trylock_map: HashMap<(String, String), Vec<(usize, String)>>,
     if_map: HashMap<(String, String), Vec<usize>>,
@@ -212,13 +212,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
-        let func_name = || current_function(ctx, e.hir_id).unwrap();
-        if let Some(path) = expr_to_path(ctx, e) {
-            let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
-            if !ty.contains("fn(") {
-                self.path_type_map.insert(path, ty);
+        if let Some(func) = current_function(ctx, e.hir_id) {
+            if let Some(path) = expr_to_path(ctx, e) {
+                let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
+                self.path_type_map.entry(path).or_default().insert(func, ty);
             }
         }
+
+        let func_name = || current_function(ctx, e.hir_id).unwrap();
         match e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
@@ -601,7 +602,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             format!(
                                 "mut {}: MutexGuard<'static, {}>",
                                 m.guard(),
-                                struct_of_path(m)
+                                struct_of_path(&name, m)
                             )
                         })
                         .collect();
@@ -629,7 +630,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         ret_types.push(span_to_string(ctx, t.span));
                     }
                     for m in ret {
-                        ret_types.push(format!("MutexGuard<'static, {}>", struct_of_path(m)));
+                        ret_types
+                            .push(format!("MutexGuard<'static, {}>", struct_of_path(&name, m)));
                     }
                     let ret_type = make_tuple(ret_types);
                     let sugg = if let FnRetTy::Return(_) = decl.output {
@@ -750,7 +752,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     break f;
                                 }
                             };
-                            let typ = path_type_map().get(&path).unwrap();
+                            let typ = get_type(&path, &func_name());
                             let empty = BTreeMap::new();
                             let map = struct_mutex_map().get(typ).unwrap_or(&empty);
                             let init_map = init_map();
@@ -1116,7 +1118,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Assign(lhs, _, _) => {
                 if let Some(mut path) = expr_to_path(ctx, lhs) {
                     while path.pop().is_some() {
-                        let ty = some_or!(path_type_map().get(&path), continue);
+                        let ty = get_type(&path, &func_name());
                         if ty.contains("pthread_cond_t") {
                             add_replacement(ctx, e.span, "()".to_string());
                         }
@@ -1380,15 +1382,20 @@ fn struct_of2(s: &str, m: &str) -> String {
     format!("{}{}Data", path_to_id(s), path_to_id(m))
 }
 
-fn struct_of_path(s: &ExprPath) -> String {
+fn struct_of_path(func: &String, s: &ExprPath) -> String {
     if s.is_variable() {
         struct_of(&s.base)
     } else {
         let mut s = s.clone();
         let f = s.pop().unwrap();
-        let ty = path_type_map().get(&s).unwrap();
+        let ty = get_type(&s, func);
         struct_of2(ty, f.inner())
     }
+}
+
+fn get_type(s: &ExprPath, f: &String) -> &'static String {
+    let map = path_type_map().get(s).unwrap();
+    map.get(f).unwrap_or_else(|| map.iter().next().unwrap().1)
 }
 
 fn default_value(typ: &str) -> String {
