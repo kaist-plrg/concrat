@@ -25,12 +25,14 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{fs::File, io::Write, path::PathBuf};
+use std::{fs::File, io::Write, path::PathBuf, time::Instant};
 
 use clap::{App, Arg};
 use concrat::*;
 
 fn main() {
+    let start = Instant::now();
+
     let matches = App::new("Concrat")
         .arg(
             Arg::with_name("input")
@@ -102,4 +104,6 @@ fn main() {
         let mut file = File::create(input.to_str().unwrap()).unwrap();
         file.write_all(fixed_source_code.as_bytes()).unwrap();
     }
+
+    println!("{:?}", start.elapsed());
 }

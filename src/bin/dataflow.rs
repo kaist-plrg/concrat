@@ -25,12 +25,14 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{collections::HashSet, fs::File, path::PathBuf};
+use std::{collections::HashSet, fs::File, path::PathBuf, time::Instant};
 
 use clap::{App, Arg};
 use concrat::*;
 
 fn main() {
+    let start = Instant::now();
+
     let matches = App::new("Analysis")
         .arg(
             Arg::with_name("input")
@@ -108,4 +110,6 @@ fn main() {
 
         serde_json::to_writer_pretty(file, &summary).unwrap();
     }
+
+    println!("{:?}", start.elapsed());
 }
