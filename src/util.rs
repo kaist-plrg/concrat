@@ -501,18 +501,22 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> 
         ExprKind::MethodCall(m, args, _) => match m.ident.to_string().as_str() {
             "offset" => {
                 let index = &args[1];
+                let index = unwrap_cast_recursively(index);
+                let index = span_to_string(ctx, index.span);
                 match args[0].kind {
                     ExprKind::MethodCall(m, args, _) => match m.ident.to_string().as_str() {
                         "as_mut_ptr" => {
                             let mut base = expr_to_path(ctx, &args[0])?;
-                            let index = unwrap_cast_recursively(index);
-                            let index = span_to_string(ctx, index.span);
                             base.add_suffix(ExprPathProj::Index(index));
                             Some(base)
                         }
                         _ => None,
                     },
-                    _ => None,
+                    _ => {
+                        let mut base = expr_to_path(ctx, &args[0])?;
+                        base.add_suffix(ExprPathProj::Index(index));
+                        Some(base)
+                    }
                 }
             }
             _ => None,

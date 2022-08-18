@@ -36,7 +36,7 @@ static INIT_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
 static MUTEX_INIT_MAP: Once<HashSet<(String, String, String)>> = Once::new();
 static PATH_TYPE_MAP: Once<HashMap<ExprPath, String>> = Once::new();
 static DURATION_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
-static TRYLOCK_MAP: Once<HashMap<(String, String), Vec<(usize, String)>>> = Once::new();
+static TRYLOCK_MAP: Once<HashMap<(String, String, usize), String>> = Once::new();
 static PARAMS_MAP: Once<HashMap<String, Vec<String>>> = Once::new();
 
 fn global_mutex_map() -> &'static BTreeMap<String, String> {
@@ -83,7 +83,7 @@ fn duration_map() -> &'static HashMap<(String, String, String), String> {
     DURATION_MAP.get().unwrap()
 }
 
-fn trylock_map() -> &'static HashMap<(String, String), Vec<(usize, String)>> {
+fn trylock_map() -> &'static HashMap<(String, String, usize), String> {
     TRYLOCK_MAP.get().unwrap()
 }
 
@@ -140,6 +140,7 @@ struct GlobalPass {
     path_type_map: HashMap<ExprPath, String>,
     duration_map: HashMap<(String, String, String), String>,
     trylock_map: HashMap<(String, String), Vec<(usize, String)>>,
+    if_map: HashMap<(String, String), Vec<usize>>,
     params_map: HashMap<String, Vec<String>>,
 }
 
@@ -214,6 +215,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let func_name = || current_function(ctx, e.hir_id).unwrap();
+        if let Some(path) = expr_to_path(ctx, e) {
+            let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
+            if !ty.contains("fn(") {
+                self.path_type_map.insert(path, ty);
+            }
+        }
         match e.kind {
             ExprKind::Call(func, args) => {
                 let f = name(func);
@@ -297,12 +304,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 },
                 _ => (),
             },
-            ExprKind::Path(_) | ExprKind::Field(_, _) => {
-                let path = some_or!(expr_to_path(ctx, e), return);
-                let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
-                if !ty.contains("fn(") {
-                    self.path_type_map.insert(path, ty);
-                }
+            ExprKind::If(c, _, _) => {
+                let (expr, _) = some_or!(read_condition(ctx, c), return);
+                let f = func_name();
+                let line = span_lines(ctx, c.span).drain().min().unwrap();
+                self.if_map.entry((f, expr)).or_default().push(line);
             }
             _ => (),
         }
@@ -316,11 +322,28 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         MUTEX_INIT_MAP.call_once(|| std::mem::take(&mut self.mutex_init_map));
         PATH_TYPE_MAP.call_once(|| std::mem::take(&mut self.path_type_map));
         DURATION_MAP.call_once(|| std::mem::take(&mut self.duration_map));
-        for v in self.trylock_map.values_mut() {
-            v.sort_by_key(|(l, _)| *l);
-        }
-        TRYLOCK_MAP.call_once(|| std::mem::take(&mut self.trylock_map));
         PARAMS_MAP.call_once(|| std::mem::take(&mut self.params_map));
+
+        let mut trylock_map = HashMap::new();
+        for (k, v) in &mut self.trylock_map {
+            let lines = some_or!(self.if_map.get(k), continue);
+            for l in lines {
+                v.push((*l, String::new()));
+            }
+            v.sort_by_key(|(l, _)| *l);
+
+            let mut guard = String::new();
+            for (l, g) in v {
+                if !guard.is_empty() && g.is_empty() {
+                    let (f, expr) = k;
+                    trylock_map.insert((f.clone(), expr.clone(), *l), guard);
+                    guard = String::new();
+                } else if guard.is_empty() && !g.is_empty() {
+                    guard = g.clone();
+                }
+            }
+        }
+        TRYLOCK_MAP.call_once(|| trylock_map);
     }
 }
 
@@ -746,11 +769,12 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                         ", ",
                                     );
                                     let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
-                                    let new_init = format!(
-                                        "{{ {} = Mutex::new({}); 0 }}",
-                                        span_to_string(ctx, m.span),
-                                        st
-                                    );
+                                    let m = span_to_string(ctx, m.span);
+                                    let new_init = if in_assignment(ctx, e, false) {
+                                        format!("{{ {} = Mutex::new({}); 0 }}", m, st)
+                                    } else {
+                                        format!("{} = Mutex::new({})", m, st)
+                                    };
                                     add_replacement(ctx, e.span, new_init);
                                 }
                             }
@@ -769,7 +793,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             let new_e = format!(
                                 "{{
         {0}_opt = {1}.lock().ok();
-        if {0}_opt.is_some() {{ 0 }} else {{ libc::EOWNERDEAD }}
+        if {0}_opt.is_some() {{ 0 }} else {{ libc::ENOTRECOVERABLE }}
     }}",
                                 guard, arg
                             );
@@ -799,14 +823,20 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     Some("pthread_mutex_unlock" | "pthread_spin_unlock") => {
                         let guard = arg(0).1;
                         self.use_guard(func_name(), guard.clone());
-                        add_replacement(ctx, e.span, format!("{{ drop({}); 0 }}", guard));
+                        let new_e = if in_assignment(ctx, e, false) {
+                            format!("{{ drop({}); 0 }}", guard)
+                        } else {
+                            format!("drop({})", guard)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                     Some("pthread_cond_init") => {
-                        add_replacement(
-                            ctx,
-                            e.span,
-                            format!("{{ {} = Condvar::new(); 0 }}", arg(0).0),
-                        );
+                        let new_e = if in_assignment(ctx, e, false) {
+                            format!("{{ {} = Condvar::new(); 0 }}", arg(0).0)
+                        } else {
+                            format!("{} = Condvar::new()", arg(0).0)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                     Some("pthread_cond_destroy") => {
                         add_replacement(ctx, e.span, "0".to_string());
@@ -840,9 +870,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             e.span,
                             format!(
                                 "{{
-        let tmp = {0}.wait_timeout({1}, Duration::new({2} as u64, {3} as u32)).unwrap();
-        {1} = tmp.0;
-        if tmp.1.timed_out() {{ libc::ETIMEDOUT }} else {{ 0 }}
+        let {1}_tmp = {0}.wait_timeout({1}, Duration::new({2} as u64, {3} as u32)).unwrap();
+        {1} = {1}_tmp.0;
+        if {1}_tmp.1.timed_out() {{ libc::ETIMEDOUT }} else {{ 0 }}
     }}",
                                 c, g, tv_sec, tv_nsec
                             ),
@@ -1090,66 +1120,44 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 }
                 _ => (),
             },
-            ExprKind::If(c, t, f) => match c.kind {
-                ExprKind::DropTemps(e) => match e.kind {
-                    ExprKind::Binary(op, lhs, rhs) => {
-                        let lhs = span_to_string(ctx, lhs.span);
-                        let rhs = span_to_string(ctx, rhs.span);
-                        if !lhs.starts_with('0') && !rhs.starts_with('0') {
-                            return;
-                        }
-                        let trylock_map = trylock_map();
-                        let line = span_lines(ctx, e.span).drain().min().unwrap();
-                        let g = if let Some(v) = trylock_map.get(&(func_name(), lhs)) {
-                            v.iter().rfind(|(l, _)| *l < line).unwrap().1.clone()
-                        } else if let Some(v) = trylock_map.get(&(func_name(), rhs)) {
-                            v.iter().rfind(|(l, _)| *l < line).unwrap().1.clone()
-                        } else {
-                            return;
-                        };
-                        let eq = match op.node {
-                            BinOpKind::Eq => true,
-                            BinOpKind::Ne => false,
-                            op => panic!("{:?}", op),
-                        };
-                        let span = c
-                            .span
-                            .with_lo(c.span.lo() - BytePos(3))
-                            .with_hi(c.span.hi() + BytePos(2));
-                        let true_branch = if eq {
-                            format!("Some(g) => {{ {} = g;", g)
-                        } else {
-                            "None => {".to_string()
-                        };
-                        add_replacement(ctx, span, format!("match {}_opt {{ {}", g, true_branch));
-                        if let Some(f) = f {
-                            let span = t
-                                .span
-                                .with_lo(t.span.hi())
-                                .with_hi(f.span.lo() + BytePos(1));
-                            let false_branch = if eq {
-                                "None => {".to_string()
-                            } else {
-                                format!("Some(g) => {{ {} = g;", g)
-                            };
-                            add_replacement(ctx, span, false_branch);
+            ExprKind::If(c, t, f) => {
+                let (expr, eq) = some_or!(read_condition(ctx, c), return);
+                let line = span_lines(ctx, c.span).drain().min().unwrap();
+                let g = some_or!(trylock_map().get(&(func_name(), expr, line)), return);
+                let span = c
+                    .span
+                    .with_lo(c.span.lo() - BytePos(3))
+                    .with_hi(c.span.hi() + BytePos(2));
+                let true_branch = if eq {
+                    format!("Some(g) => {{ {} = g;", g)
+                } else {
+                    "None => {".to_string()
+                };
+                add_replacement(ctx, span, format!("match {}_opt {{ {}", g, true_branch));
+                if let Some(f) = f {
+                    let span = t
+                        .span
+                        .with_lo(t.span.hi())
+                        .with_hi(f.span.lo() + BytePos(1));
+                    let false_branch = if eq {
+                        "None => {".to_string()
+                    } else {
+                        format!("Some(g) => {{ {} = g;", g)
+                    };
+                    add_replacement(ctx, span, false_branch);
 
-                            let span = f.span.with_lo(f.span.hi());
-                            add_replacement(ctx, span, "}".to_string());
-                        } else {
-                            let span = t.span.with_lo(t.span.hi());
-                            let false_branch = if eq {
-                                "None => {} }".to_string()
-                            } else {
-                                format!("Some(g) => {{ {} = g; }} }}", g)
-                            };
-                            add_replacement(ctx, span, false_branch);
-                        }
-                    }
-                    _ => (),
-                },
-                _ => (),
-            },
+                    let span = f.span.with_lo(f.span.hi());
+                    add_replacement(ctx, span, "}".to_string());
+                } else {
+                    let span = t.span.with_lo(t.span.hi());
+                    let false_branch = if eq {
+                        "None => {} }".to_string()
+                    } else {
+                        format!("Some(g) => {{ {} = g; }} }}", g)
+                    };
+                    add_replacement(ctx, span, false_branch);
+                }
+            }
             _ => (),
         }
     }
@@ -1295,6 +1303,43 @@ fn in_assignment<'tcx>(ctx: &LateContext<'tcx>, e: &Expr<'tcx>, lhs: bool) -> bo
         }
     } else {
         false
+    }
+}
+
+fn read_condition<'a, 'tcx>(ctx: &LateContext<'tcx>, e: &'a Expr<'tcx>) -> Option<(String, bool)> {
+    let e = match e.kind {
+        ExprKind::DropTemps(e) => e,
+        _ => e,
+    };
+    let (e, not) = match e.kind {
+        ExprKind::Unary(op, e) => {
+            if op == UnOp::Not {
+                (e, true)
+            } else {
+                return None;
+            }
+        }
+        _ => (e, false),
+    };
+    match e.kind {
+        ExprKind::Binary(op, lhs, rhs) => {
+            let eq = match op.node {
+                BinOpKind::Eq => true,
+                BinOpKind::Ne => false,
+                _ => return None,
+            };
+            let lhs = unwrap_cast_recursively(lhs);
+            let rhs = unwrap_cast_recursively(rhs);
+            let e = if span_to_string(ctx, lhs.span) == "0" {
+                rhs
+            } else if span_to_string(ctx, rhs.span) == "0" {
+                lhs
+            } else {
+                return None;
+            };
+            Some((span_to_string(ctx, e.span), not ^ eq))
+        }
+        _ => None,
     }
 }
 

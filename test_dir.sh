@@ -31,6 +31,8 @@ else
   CMD=dataflow
 fi
 
+cp $to/main.rs $to/main_old.rs
+
 echo Analyzing $from
 cargo run --release --bin $CMD -- -i $to -d deps $@
 
@@ -40,3 +42,8 @@ cargo run --release --bin concrat -- -i $to -d deps $@
 echo Compiling $from
 nightly=`cat $to/rust-toolchain`
 RUSTFLAGS=-Awarnings cargo +$nightly build --manifest-path $to/Cargo.toml
+
+if [ -x "$(command -v diffstat)" ]; then
+  cargo fmt -- $to/main.rs $to/main_old.rs
+  diff -u $to/main_old.rs $to/main.rs | diffstat
+fi
