@@ -946,25 +946,33 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                         add_replacement(ctx, span, format!("{} = ", guard));
                                     } else {
                                         let span = e.span.shrink_to_lo();
-                                        add_replacement(ctx, span, "{ let tmp = ".to_string());
+                                        add_replacement(
+                                            ctx,
+                                            span,
+                                            format!("{{ let {}_res_tmp = ", f),
+                                        );
                                         let span = e.span.shrink_to_hi();
                                         let guards: String = guards
                                             .iter()
                                             .enumerate()
-                                            .map(|(i, g)| format!("{} = tmp.{}; ", g, i))
+                                            .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i))
                                             .collect();
                                         add_replacement(ctx, span, format!("; {} }}", guards));
                                     }
                                 } else {
                                     let span = e.span.shrink_to_lo();
-                                    add_replacement(ctx, span, "{ let tmp = ".to_string());
+                                    add_replacement(ctx, span, format!("{{ let {}_res_tmp = ", f));
                                     let span = e.span.shrink_to_hi();
                                     let guards: String = guards
                                         .iter()
                                         .enumerate()
-                                        .map(|(i, g)| format!("{} = tmp.{}; ", g, i + 1))
+                                        .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i + 1))
                                         .collect();
-                                    add_replacement(ctx, span, format!("; {}tmp.0 }}", guards));
+                                    add_replacement(
+                                        ctx,
+                                        span,
+                                        format!("; {}{}_res_tmp.0 }}", guards, f),
+                                    );
                                 }
                             }
                         }

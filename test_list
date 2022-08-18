@@ -13,3 +13,4 @@ bench/pg_repack
 bench/pianobar
 bench/wrk
 bench/the_silver_searcher
+bench/vanitygen
