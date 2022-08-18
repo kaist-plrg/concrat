@@ -433,7 +433,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let succs = self.call_graph.get(&func).unwrap();
             for succ in succs {
                 // compute held mutexes
-                let mut ms = propagation.get(succ).unwrap().clone();
+                let empty = BitSet::new_empty(mutexes.len());
+                let mut ms = propagation.get(succ).unwrap_or(&empty).clone();
                 ms.union(&st);
 
                 // consider aliasing

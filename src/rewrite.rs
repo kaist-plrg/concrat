@@ -170,8 +170,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 self.struct_def_map.insert(name, map);
             }
             ItemKind::Static(t, _, b) => {
+                // global
+                let ty = span_to_string(ctx, t.span);
+                let init = hid_to_string(ctx, b.hir_id);
+                self.global_def_map.insert(name.clone(), (ty, init));
+
+                // array
                 match t.kind {
-                    // array
                     TyKind::Array(t, _) => {
                         let ty = span_to_string(ctx, t.span);
                         let init = match &ctx.tcx.hir().body(*b).value.kind {
@@ -191,12 +196,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         };
                         self.array_def_map.insert(name, (ty, init));
                     }
-                    // global
-                    _ => {
-                        let ty = span_to_string(ctx, t.span);
-                        let init = hid_to_string(ctx, b.hir_id);
-                        self.global_def_map.insert(name, (ty, init));
-                    }
+                    _ => (),
                 }
             }
             ItemKind::Fn(_, _, bid) => {
@@ -731,7 +731,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 .unwrap_or(&empty_summary)
         };
         let is_protected = |mutex: &ExprPath| {
-            if let Some(lines) = func_summary().mutex_line.get(mutex) {
+            if func_name_opt.is_none() {
+                false
+            } else if let Some(lines) = func_summary().mutex_line.get(mutex) {
                 let expr_lines = span_lines(ctx, e.span);
                 expr_lines.iter().any(|l| lines.contains(l))
             } else {
@@ -787,7 +789,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                 }
                             }
                             ExprKind::Path(_) => {
-                                add_replacement(ctx, e.span, "".to_string());
+                                add_replacement(ctx, e.span, "0".to_string());
                             }
                             _ => unreachable!(),
                         }
