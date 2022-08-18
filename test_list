@@ -16,3 +16,10 @@ bench/the_silver_searcher
 bench/vanitygen
 bench/dnspod-sr
 bench/streem
+bench/snoopy
+bench/klib
+bench/nnn
+bench/libqrencode
+bench/libfreenect
+bench/minimap2
+bench/kona
