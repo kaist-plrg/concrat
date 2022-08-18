@@ -1,6 +1,7 @@
 use std::{
-    collections::HashSet,
+    collections::{HashMap, HashSet},
     fmt::Display,
+    fs,
     path::{Path, PathBuf},
     process::Command,
     str::FromStr,
@@ -368,17 +369,26 @@ mod tests {
 }
 
 pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
+    let files: HashMap<_, _> = fs::read_dir(dep)
+        .unwrap()
+        .filter_map(|f| {
+            let f = f.ok()?;
+            let f = f.file_name().to_str().unwrap().to_string();
+            if !f.ends_with(".rlib") {
+                return None;
+            }
+            let i = f.find('-')?;
+            Some((f[3..i].to_string(), f))
+        })
+        .collect();
     let dep = dep.to_str().unwrap();
     let dependency = format!("dependency={}", dep);
-    let asm_casts = format!(
-        "c2rust_asm_casts={}/libc2rust_asm_casts-5452fb8e557bf4f0.rlib",
-        dep
-    );
-    let bitfields = format!(
-        "c2rust_bitfields={}/libc2rust_bitfields-dea51de3183f0659.rlib",
-        dep
-    );
-    vec![
+    let mut deps = vec!["c2rust_asm_casts", "c2rust_bitfields", "f128", "num_traits"]
+        .drain(..)
+        .map(|s| format!("{}={}/{}", s, dep, files.get(s).unwrap()))
+        .intersperse("--extern".to_string())
+        .collect();
+    let mut v: Vec<_> = vec![
         "create-initial-program",
         input.to_str().unwrap(),
         "--sysroot",
@@ -390,13 +400,12 @@ pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
         "-L",
         &dependency,
         "--extern",
-        &asm_casts,
-        "--extern",
-        &bitfields,
     ]
     .iter()
     .map(|s| s.to_string())
-    .collect()
+    .collect();
+    v.append(&mut deps);
+    v
 }
 
 fn sys_root() -> String {

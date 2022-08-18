@@ -11,3 +11,4 @@ bench/sshfs
 bench/cava
 bench/pg_repack
 bench/pianobar
+bench/wrk

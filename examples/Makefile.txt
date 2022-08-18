@@ -30,8 +30,5 @@ else
 CMD = dataflow
 endif
 
-a.json: main.rs $(XML)
-	cargo run --release --manifest-path ../../Cargo.toml --bin ${CMD} -- -i . -d ../../deps
-
 clean:
 	rm -rf main *.o *.xml *.json *.rs *.rlib Cargo.* rust-toolchain target lines *.dot main.c

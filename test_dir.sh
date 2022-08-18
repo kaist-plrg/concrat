@@ -34,10 +34,10 @@ fi
 cp $to/main.rs $to/main_old.rs
 
 echo Analyzing $from
-cargo run --release --bin $CMD -- -i $to -d deps $@
+cargo run --release --bin $CMD -- -i $to -d deps_crate/target/debug/deps $@
 
 echo Translating $from
-cargo run --release --bin concrat -- -i $to -d deps $@
+cargo run --release --bin concrat -- -i $to -d deps_crate/target/debug/deps $@
 
 echo Compiling $from
 nightly=`cat $to/rust-toolchain`

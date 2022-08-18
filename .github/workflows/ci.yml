@@ -25,6 +25,8 @@ jobs:
         run: cargo clippy -- -D warnings -A clippy::type-complexity -A clippy::single-match
       - name: Build
         run: cargo build --release
+      - name: Build deps
+        run: cargo build --manifest-path deps_crate/Cargo.toml
       - name: Run Cargo tests
         run: cargo test --release --lib
       - name: Run dataflow analysis tests
