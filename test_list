@@ -8,3 +8,6 @@ bench/ProcDump-for-Linux
 bench/level-ip
 bench/axel
 bench/sshfs
+bench/cava
+bench/pg_repack
+bench/pianobar

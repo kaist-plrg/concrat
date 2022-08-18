@@ -97,12 +97,6 @@ pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<
     let exit_code = compile_with(args.clone(), vec![GlobalPass::new]);
     assert_eq!(exit_code, 0);
 
-    let map: HashMap<_, HashSet<_>> = struct_def_map()
-        .iter()
-        .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
-        .collect();
-    TRANS_STRUCT_DEF_MAP.call_once(|| transitive_closure(map));
-
     let exit_code = compile_with(args, vec![RewritePass::new]);
     assert_eq!(exit_code, 0);
 
@@ -142,6 +136,7 @@ struct GlobalPass {
     trylock_map: HashMap<(String, String), Vec<(usize, String)>>,
     if_map: HashMap<(String, String), Vec<usize>>,
     params_map: HashMap<String, Vec<String>>,
+    ty_alias_map: HashMap<String, String>,
 }
 
 impl GlobalPass {
@@ -208,6 +203,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let mut params = function_params(ctx, *bid);
                 let params = params.drain(..).map(|p| p.0).collect();
                 self.params_map.insert(name, params);
+            }
+            ItemKind::TyAlias(t, _) => {
+                self.ty_alias_map.insert(name, span_to_string(ctx, t.span));
             }
             _ => (),
         }
@@ -315,6 +313,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 
     fn check_crate_post(&mut self, _: &LateContext<'tcx>) {
+        let mut map: HashMap<_, HashSet<_>> = self
+            .struct_def_map
+            .iter()
+            .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
+            .collect();
+        for (lt, rt) in self.ty_alias_map.drain() {
+            map.insert(lt, HashSet::from([rt]));
+        }
+        TRANS_STRUCT_DEF_MAP.call_once(|| transitive_closure(map));
+
         GLOBAL_DEF_MAP.call_once(|| std::mem::take(&mut self.global_def_map));
         ARRAY_DEF_MAP.call_once(|| std::mem::take(&mut self.array_def_map));
         STRUCT_DEF_MAP.call_once(|| std::mem::take(&mut self.struct_def_map));
