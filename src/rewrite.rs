@@ -881,10 +881,20 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         );
                     }
                     Some("pthread_cond_signal") => {
-                        add_replacement(ctx, e.span, format!("{}.notify_one()", arg(0).0));
+                        let new_e = if in_assignment(ctx, e, false) {
+                            format!("{{ {}.notify_one(); 0 }}", arg(0).0)
+                        } else {
+                            format!("{}.notify_one()", arg(0).0)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                     Some("pthread_cond_broadcast") => {
-                        add_replacement(ctx, e.span, format!("{}.notify_all()", arg(0).0));
+                        let new_e = if in_assignment(ctx, e, false) {
+                            format!("{{ {}.notify_all(); 0 }}", arg(0).0)
+                        } else {
+                            format!("{}.notify_all()", arg(0).0)
+                        };
+                        add_replacement(ctx, e.span, new_e);
                     }
                     Some(f) => {
                         if f == "main_0" {
