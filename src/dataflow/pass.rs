@@ -432,31 +432,67 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let st = abs_states.get(&func).unwrap().clone();
             let succs = self.call_graph.get(&func).unwrap();
             for succ in succs {
-                // compute held mutexes
-                let empty = BitSet::new_empty(mutexes.len());
-                let mut ms = propagation.get(succ).unwrap_or(&empty).clone();
-                ms.union(&st);
-
-                // consider aliasing
+                // find arguments
                 let func_span = def_id_to_span(ctx.tcx, func);
                 let succ_name = def_id_to_item_name(ctx.tcx, *succ);
                 let prefix = format!("{}(", succ_name);
-                let params = self.params.get(succ).unwrap();
-                let ms = self
+                let argss: Vec<_> = self
                     .calls
                     .iter()
                     .filter_map(|(span, args)| {
                         if span.overlaps(func_span)
                             && span_to_string(ctx, *span).starts_with(&prefix)
                         {
-                            let mut ams = BitSet::new_empty(ms.domain_size());
-                            for i in ms.iter() {
-                                ams.insert(alias_id(i, args, params));
-                            }
-                            Some(ams)
+                            Some(args)
                         } else {
                             None
                         }
+                    })
+                    .collect();
+
+                // compute possible prefixes of propagated mutexes
+                let mut possible_prefixes = argss
+                    .iter()
+                    .map(|v| {
+                        v.iter()
+                            .filter_map(|arg| arg.path.clone())
+                            .collect::<HashSet<_>>()
+                    })
+                    .reduce(|mut os, ns| {
+                        os.retain(|a| ns.contains(a));
+                        os
+                    })
+                    .unwrap();
+                for g in &self.globs {
+                    possible_prefixes.insert(ExprPath::new(g.clone(), vec![]));
+                }
+
+                // compute held mutexes
+                let empty = BitSet::new_empty(mutexes.len());
+                let mut ms0 = propagation.get(succ).unwrap_or(&empty).clone();
+                ms0.union(&st);
+
+                let mut ms = BitSet::new_empty(mutexes.len());
+                for i in ms0.iter() {
+                    let m = inv_mutexes.get(&i.index()).unwrap();
+                    let propagated = possible_prefixes
+                        .iter()
+                        .any(|p| m == p || m.strip_prefix(p).is_some());
+                    if propagated {
+                        ms.insert(i);
+                    }
+                }
+
+                // consider aliasing
+                let params = self.params.get(succ).unwrap();
+                let ms = argss
+                    .iter()
+                    .map(|args| {
+                        let mut ams = BitSet::new_empty(ms.domain_size());
+                        for i in ms.iter() {
+                            ams.insert(alias_id(i, args, params));
+                        }
+                        ams
                     })
                     .reduce(|mut ov, nv| {
                         ov.intersect(&nv);
