@@ -492,14 +492,6 @@ pub fn def_id_to_span(tcx: TyCtxt<'_>, def_id: DefId) -> Span {
     hir.span_with_body(hir.local_def_id_to_hir_id(def_id.expect_local()))
 }
 
-pub fn normalize_path(p: &str) -> String {
-    p.replace("&mut ", "")
-        .split(&[' ', '-', '>', '.', '(', ')', '*', '&'])
-        .filter(|s| !s.is_empty())
-        .collect::<Vec<_>>()
-        .join(".")
-}
-
 pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> {
     match &expr.kind {
         ExprKind::Box(e)

@@ -18,8 +18,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::transitive_closure,
     util::{
-        expr_to_path, function_params, join, normalize_path, span_lines, span_to_string, type_of,
-        type_to_string, unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
+        expr_to_path, function_params, join, span_lines, span_to_string, type_of, type_to_string,
+        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
     },
 };
 
@@ -32,8 +32,8 @@ static GLOBAL_DEF_MAP: Once<HashMap<String, (String, String)>> = Once::new();
 static ARRAY_DEF_MAP: Once<HashMap<String, (String, Vec<String>)>> = Once::new();
 static STRUCT_DEF_MAP: Once<HashMap<String, HashMap<String, String>>> = Once::new();
 static TRANS_STRUCT_DEF_MAP: Once<HashMap<String, HashSet<String>>> = Once::new();
-static INIT_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
-static MUTEX_INIT_MAP: Once<HashSet<(String, String, String)>> = Once::new();
+static INIT_MAP: Once<HashMap<(String, ExprPath, String), String>> = Once::new();
+static MUTEX_INIT_MAP: Once<HashSet<(String, ExprPath, String)>> = Once::new();
 static PATH_TYPE_MAP: Once<HashMap<ExprPath, String>> = Once::new();
 static DURATION_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
 static TRYLOCK_MAP: Once<HashMap<(String, String, usize), String>> = Once::new();
@@ -67,11 +67,11 @@ fn struct_def_map() -> &'static HashMap<String, HashMap<String, String>> {
     STRUCT_DEF_MAP.get().unwrap()
 }
 
-fn init_map() -> &'static HashMap<(String, String, String), String> {
+fn init_map() -> &'static HashMap<(String, ExprPath, String), String> {
     INIT_MAP.get().unwrap()
 }
 
-fn mutex_init_map() -> &'static HashSet<(String, String, String)> {
+fn mutex_init_map() -> &'static HashSet<(String, ExprPath, String)> {
     MUTEX_INIT_MAP.get().unwrap()
 }
 
@@ -129,8 +129,8 @@ struct GlobalPass {
     global_def_map: HashMap<String, (String, String)>,
     array_def_map: HashMap<String, (String, Vec<String>)>,
     struct_def_map: HashMap<String, HashMap<String, String>>,
-    init_map: HashMap<(String, String, String), String>,
-    mutex_init_map: HashSet<(String, String, String)>,
+    init_map: HashMap<(String, ExprPath, String), String>,
+    mutex_init_map: HashSet<(String, ExprPath, String)>,
     path_type_map: HashMap<ExprPath, String>,
     duration_map: HashMap<(String, String, String), String>,
     trylock_map: HashMap<(String, String), Vec<(usize, String)>>,
@@ -224,16 +224,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let f = name(func);
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
-                        let m = unwrap_addr(unwrap_cast_recursively(&args[0]));
-                        match m.kind {
-                            ExprKind::Field(s, f) => {
-                                let func = func_name();
-                                let s = normalize_path(&span_to_string(ctx, s.span));
-                                let f = f.name.to_ident_string();
-                                self.mutex_init_map.insert((func, s, f));
-                            }
-                            ExprKind::Path(_) => (),
-                            _ => unreachable!(),
+                        let mut path = some_or!(expr_to_path(ctx, &args[0]), return);
+                        let f = some_or!(path.pop(), return);
+                        if let ExprPathProj::Field(f) = f {
+                            let func = func_name();
+                            self.mutex_init_map.insert((func, path, f));
                         }
                     }
                     _ => (),
@@ -256,13 +251,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             let f = f.name.to_ident_string();
                             let map = some_or!(struct_mutex_map().get(&ty), return);
                             let m = some_or!(map.get(&f), return);
-                            let s_path_opt = expr_to_path(ctx, s);
-                            let mut mutex = s_path_opt.unwrap();
+                            let mut mutex = expr_to_path(ctx, s).unwrap();
                             mutex.add_suffix(ExprPathProj::Field(m.clone()));
                             if !is_protected(&mutex) {
-                                let s = normalize_path(&span_to_string(ctx, s.span));
-                                let i = span_to_string(ctx, rhs.span);
-                                self.init_map.entry((func, s, f)).or_insert(i);
+                                mutex.pop();
+                                let init = span_to_string(ctx, rhs.span);
+                                self.init_map.entry((func, mutex, f)).or_insert(init);
                             }
                         }
                     }
@@ -746,52 +740,48 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let arg = |idx| normalize_arg(ctx, &args[idx]);
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
-                        let m = unwrap_addr(unwrap_cast_recursively(&args[0]));
-                        match m.kind {
-                            ExprKind::Field(s, f) => {
-                                let func = func_name();
-                                let typ = type_to_string(type_of(ctx, s.hir_id));
-                                let s = normalize_path(&span_to_string(ctx, s.span));
-                                let f = f.name.to_ident_string();
-                                let empty = BTreeMap::new();
-                                if global_def_map().contains_key(&s) {
-                                    add_replacement(ctx, e.span, "0".to_string());
-                                } else {
-                                    let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
-                                    let init_map = init_map();
-                                    let struct_map = struct_def_map();
-                                    let init = join(
-                                        map.iter()
-                                            .filter_map(|(x, m)| {
-                                                let default = default_value(
-                                                    struct_map.get(&typ).unwrap().get(x).unwrap(),
-                                                );
-                                                if *m == f {
-                                                    let i = init_map
-                                                        .get(&(func.clone(), s.clone(), x.clone()))
-                                                        .unwrap_or(&default);
-                                                    Some(format!("{}: {}", x, i))
-                                                } else {
-                                                    None
-                                                }
-                                            })
-                                            .collect(),
-                                        ", ",
-                                    );
-                                    let st = format!("{} {{ {} }}", struct_of2(&typ, &f), init);
-                                    let m = span_to_string(ctx, m.span);
-                                    let new_init = if in_assignment(ctx, e, false) {
-                                        format!("{{ {} = Mutex::new({}); 0 }}", m, st)
-                                    } else {
-                                        format!("{} = Mutex::new({})", m, st)
-                                    };
-                                    add_replacement(ctx, e.span, new_init);
+                        let mut path = expr_to_path(ctx, &args[0]).unwrap();
+                        if global_def_map().contains_key(&path.base) {
+                            add_replacement(ctx, e.span, "0".to_string());
+                        } else {
+                            let func = func_name();
+                            let f = loop {
+                                if let ExprPathProj::Field(f) = path.pop().unwrap() {
+                                    break f;
                                 }
-                            }
-                            ExprKind::Path(_) => {
-                                add_replacement(ctx, e.span, "0".to_string());
-                            }
-                            _ => unreachable!(),
+                            };
+                            let typ = path_type_map().get(&path).unwrap();
+                            let empty = BTreeMap::new();
+                            let map = struct_mutex_map().get(typ).unwrap_or(&empty);
+                            let init_map = init_map();
+                            let struct_map = struct_def_map();
+                            let init = join(
+                                map.iter()
+                                    .filter_map(|(x, m)| {
+                                        let default = default_value(
+                                            struct_map.get(typ).unwrap().get(x).unwrap(),
+                                        );
+                                        if *m == f {
+                                            let i = init_map
+                                                .get(&(func.clone(), path.clone(), x.clone()))
+                                                .unwrap_or(&default);
+                                            Some(format!("{}: {}", x, i))
+                                        } else {
+                                            None
+                                        }
+                                    })
+                                    .collect(),
+                                ", ",
+                            );
+                            let st = format!("{} {{ {} }}", struct_of2(typ, &f), init);
+                            let m = unwrap_addr(unwrap_cast_recursively(&args[0]));
+                            let m = span_to_string(ctx, m.span);
+                            let new_init = if in_assignment(ctx, e, false) {
+                                format!("{{ {} = Mutex::new({}); 0 }}", m, st)
+                            } else {
+                                format!("{} = Mutex::new({})", m, st)
+                            };
+                            add_replacement(ctx, e.span, new_init);
                         }
                     }
                     Some("pthread_mutex_destroy" | "pthread_spin_destroy") => {
@@ -1109,12 +1099,16 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     add_replacement(ctx, e.span, new_e);
                 } else {
                     let assigned = in_assignment(ctx, e, true);
-                    let s = span_to_string(ctx, s.span);
-                    let initialized =
-                        mutex_init_map().contains(&(func_name(), normalize_path(&s), m.clone()));
+                    let path = expr_to_path(ctx, s);
+                    let initialized = if let Some(path) = path {
+                        mutex_init_map().contains(&(func_name(), path, m.clone()))
+                    } else {
+                        false
+                    };
                     if assigned && initialized {
                         return;
                     }
+                    let s = span_to_string(ctx, s.span);
                     let new_e = format!("{}.{}.get_mut().unwrap().{}", s, m, f);
                     add_replacement(ctx, e.span, new_e);
                 }
@@ -1140,7 +1134,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         if is_protected(&mutex) {
                             return;
                         }
-                        let s = normalize_path(&span_to_string(ctx, s.span));
+                        let s = some_or!(expr_to_path(ctx, s), return);
                         if mutex_init_map().contains(&(func_name(), s, m.clone())) {
                             add_replacement(ctx, e.span, "()".to_string());
                         }
