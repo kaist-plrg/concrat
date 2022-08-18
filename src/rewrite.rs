@@ -226,7 +226,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let f = name(func);
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
-                        let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
+                        let m = unwrap_addr(unwrap_cast_recursively(&args[0]));
                         match m.kind {
                             ExprKind::Field(s, f) => {
                                 let func = func_name();
@@ -736,7 +736,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let arg = |idx| normalize_arg(ctx, &args[idx]);
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
-                        let m = unwrap_addr(unwrap_cast_recursively(&args[0])).unwrap();
+                        let m = unwrap_addr(unwrap_cast_recursively(&args[0]));
                         match m.kind {
                             ExprKind::Field(s, f) => {
                                 let func = func_name();
@@ -1101,25 +1101,35 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     add_replacement(ctx, e.span, new_e);
                 }
             }
-            ExprKind::Assign(lhs, _, _) => match lhs.kind {
-                ExprKind::Field(s, f) => {
-                    let ty = type_to_string(type_of(ctx, s.hir_id));
-                    let f = f.name.to_ident_string();
-                    let map = some_or!(struct_mutex_map().get(&ty), return);
-                    let m = some_or!(map.get(&f), return);
-                    let s_path_opt = expr_to_path(ctx, s);
-                    let mut mutex = s_path_opt.unwrap();
-                    mutex.add_suffix(ExprPathProj::Field(m.clone()));
-                    if is_protected(&mutex) {
-                        return;
-                    }
-                    let s = normalize_path(&span_to_string(ctx, s.span));
-                    if mutex_init_map().contains(&(func_name(), s, m.clone())) {
-                        add_replacement(ctx, e.span, "()".to_string());
+            ExprKind::Assign(lhs, _, _) => {
+                if let Some(mut path) = expr_to_path(ctx, lhs) {
+                    while path.pop().is_some() {
+                        let ty = some_or!(path_type_map().get(&path), continue);
+                        if ty.contains("pthread_cond_t") {
+                            add_replacement(ctx, e.span, "()".to_string());
+                        }
                     }
                 }
-                _ => (),
-            },
+                match lhs.kind {
+                    ExprKind::Field(s, f) => {
+                        let ty = type_to_string(type_of(ctx, s.hir_id));
+                        let f = f.name.to_ident_string();
+                        let map = some_or!(struct_mutex_map().get(&ty), return);
+                        let m = some_or!(map.get(&f), return);
+                        let s_path_opt = expr_to_path(ctx, s);
+                        let mut mutex = s_path_opt.unwrap();
+                        mutex.add_suffix(ExprPathProj::Field(m.clone()));
+                        if is_protected(&mutex) {
+                            return;
+                        }
+                        let s = normalize_path(&span_to_string(ctx, s.span));
+                        if mutex_init_map().contains(&(func_name(), s, m.clone())) {
+                            add_replacement(ctx, e.span, "()".to_string());
+                        }
+                    }
+                    _ => (),
+                }
+            }
             ExprKind::If(c, t, f) => {
                 let (expr, eq) = some_or!(read_condition(ctx, c), return);
                 let line = span_lines(ctx, c.span).drain().min().unwrap();
@@ -1248,17 +1258,17 @@ fn name<'tcx>(e: &'tcx Expr<'tcx>) -> Option<String> {
     name_symbol(e).map(|s| s.to_ident_string())
 }
 
-fn unwrap_addr<'tcx>(e: &'tcx Expr<'tcx>) -> Option<&'tcx Expr<'tcx>> {
+fn unwrap_addr<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
     match &e.kind {
-        ExprKind::AddrOf(_, _, e) => Some(e),
-        _ => None,
+        ExprKind::AddrOf(_, _, e) => e,
+        _ => e,
     }
 }
 
 fn normalize_arg<'a, 'b, 'tcx>(ctx: &'a LateContext<'b>, e: &'tcx Expr<'tcx>) -> (String, String) {
     let path = expr_to_path(ctx, e).unwrap();
     let guard = path.guard();
-    let arg = unwrap_addr(unwrap_cast_recursively(e)).unwrap();
+    let arg = unwrap_addr(unwrap_cast_recursively(e));
     match &arg.kind {
         ExprKind::Unary(
             UnOp::Deref,
