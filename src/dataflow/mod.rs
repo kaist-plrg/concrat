@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use rustc_hir::{Expr, HirId};
 use rustc_index::bit_set::BitSet;
@@ -46,7 +46,7 @@ pub struct FunctionSummary {
     pub entry_mutex: BitSet<Id>,
     pub ret_mutex: BitSet<Id>,
     pub propagation_mutex: BitSet<Id>,
-    pub propagation: HashMap<DefId, BitSet<Id>>,
+    pub propagation: BTreeMap<DefId, BitSet<Id>>,
     pub propagation_raw: Vec<(DefId, BitSet<Id>)>,
     pub access: Vec<(ExprPath, BitSet<Id>, bool)>,
     pub span_mutex: Vec<(Span, BitSet<Id>)>,
@@ -61,7 +61,7 @@ impl FunctionSummary {
         span_mutex: Vec<(Span, BitSet<Id>)>,
     ) -> Self {
         let len = entry_mutex.domain_size();
-        let mut propagation = HashMap::new();
+        let mut propagation = BTreeMap::new();
         for (def_id, v) in &propagation_raw {
             let ov = propagation
                 .entry(*def_id)

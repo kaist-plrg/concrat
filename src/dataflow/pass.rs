@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashMap, HashSet, VecDeque},
+    collections::{BTreeMap, BTreeSet, VecDeque},
     sync::{
         atomic::{AtomicBool, Ordering},
         Mutex,
@@ -48,17 +48,17 @@ pub fn run(args: Vec<String>, verbose: bool) -> AnalysisSummary {
 
 #[derive(Default, Debug)]
 struct GlobalPass {
-    mutexes: HashMap<DefId, HashSet<ExprPath>>,
-    params: HashMap<DefId, Vec<(String, String)>>,
-    args_per_type: HashMap<String, HashSet<ExprPath>>,
-    calls: HashMap<Span, Vec<Arg>>,
-    accesses: HashMap<DefId, Vec<(Span, ExprPath, bool)>>,
-    call_graph: HashMap<DefId, HashSet<DefId>>,
-    path_types: HashMap<(DefId, ExprPath), String>,
-    mutexes_per_struct: HashMap<String, HashSet<String>>,
-    thread_entries: HashSet<DefId>,
-    init_or_destory: HashMap<DefId, HashSet<ExprPath>>,
-    globs: HashSet<String>,
+    mutexes: BTreeMap<DefId, BTreeSet<ExprPath>>,
+    params: BTreeMap<DefId, Vec<(String, String)>>,
+    args_per_type: BTreeMap<String, BTreeSet<ExprPath>>,
+    calls: BTreeMap<Span, Vec<Arg>>,
+    accesses: BTreeMap<DefId, Vec<(Span, ExprPath, bool)>>,
+    call_graph: BTreeMap<DefId, BTreeSet<DefId>>,
+    path_types: BTreeMap<(DefId, ExprPath), String>,
+    mutexes_per_struct: BTreeMap<String, BTreeSet<String>>,
+    thread_entries: BTreeSet<DefId>,
+    init_or_destory: BTreeMap<DefId, BTreeSet<ExprPath>>,
+    globs: BTreeSet<String>,
 }
 
 impl GlobalPass {
@@ -75,8 +75,8 @@ impl LintPass for GlobalPass {
 }
 
 impl GlobalPass {
-    fn possible_mutexes(&self) -> HashSet<ExprPath> {
-        let mut mutexes: HashSet<_> = self.mutexes.values().flatten().cloned().collect();
+    fn possible_mutexes(&self) -> BTreeSet<ExprPath> {
+        let mut mutexes: BTreeSet<_> = self.mutexes.values().flatten().cloned().collect();
         for (def_id, ms) in &self.mutexes {
             let params = self.params.get(def_id).unwrap();
             for m in ms {
@@ -102,9 +102,9 @@ impl GlobalPass {
         mutexes
     }
 
-    fn thread_functions(&self) -> HashSet<DefId> {
+    fn thread_functions(&self) -> BTreeSet<DefId> {
         if self.thread_entries.is_empty() {
-            return HashSet::new();
+            return BTreeSet::new();
         }
         let graph = transitive_closure(self.call_graph.clone());
         let mut thread_entries = self.thread_entries.clone();
@@ -124,7 +124,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         match &i.kind {
             ItemKind::Fn(_, _, bid) => {
                 let def_id = i.def_id.to_def_id();
-                self.call_graph.insert(def_id, HashSet::new());
+                self.call_graph.insert(def_id, BTreeSet::new());
                 self.params.insert(def_id, function_params(ctx, *bid));
             }
             ItemKind::Static(_, _, _) => {
@@ -239,7 +239,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // user-defined functions
-        let functions: HashSet<_> = self.call_graph.iter().map(|(f, _)| f).cloned().collect();
+        let functions: BTreeSet<_> = self.call_graph.iter().map(|(f, _)| f).cloned().collect();
         // remove library functions from call graph
         for callees in self.call_graph.values_mut() {
             callees.retain(|f| functions.contains(f));
@@ -251,18 +251,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         let po = post_order(&component_graph, &inv_component_graph);
 
         // find possible mutex expressions
-        let mutexes: HashSet<_> = self.possible_mutexes();
+        let mutexes: BTreeSet<_> = self.possible_mutexes();
         // expression-to-id map
-        let mutexes: HashMap<_, _> = mutexes
+        let mutexes: BTreeMap<_, _> = mutexes
             .iter()
             .enumerate()
             .map(|(i, s)| (s.clone(), i))
             .collect();
         // id-to-expression map
-        let inv_mutexes: HashMap<_, _> = mutexes.iter().map(|(s, i)| (*i, s.clone())).collect();
+        let inv_mutexes: BTreeMap<_, _> = mutexes.iter().map(|(s, i)| (*i, s.clone())).collect();
 
         // function-to-summary map
-        let mut function_summary_map: HashMap<DefId, FunctionSummary> = HashMap::new();
+        let mut function_summary_map: BTreeMap<DefId, FunctionSummary> = BTreeMap::new();
 
         // post order traversal of call graph
         for component in po.iter().flatten() {
@@ -383,7 +383,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // find root nodes
-        let iter_roots: HashSet<_> = inv_component_graph
+        let iter_roots: BTreeSet<_> = inv_component_graph
             .iter()
             .filter(|(_, preds)| preds.is_empty())
             .flat_map(|(n, _)| component_elems.get(n).unwrap())
@@ -398,7 +398,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .cloned()
             .collect();
         // initialize abstract states
-        let mut abs_states: HashMap<DefId, BitSet<Id>> = HashMap::new();
+        let mut abs_states: BTreeMap<DefId, BitSet<Id>> = BTreeMap::new();
         for func in &work_list {
             let init_st = if iter_roots.contains(func) {
                 function_summary_map.get(func).unwrap().entry_mutex.clone()
@@ -456,7 +456,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .map(|v| {
                         v.iter()
                             .filter_map(|arg| arg.path.clone())
-                            .collect::<HashSet<_>>()
+                            .collect::<BTreeSet<_>>()
                     })
                     .reduce(|mut os, ns| {
                         os.retain(|a| ns.contains(a));
@@ -517,7 +517,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // accesses to global variables
-        let mut global_access: HashMap<ExprPath, Vec<(DefId, BitSet<Id>, bool)>> = HashMap::new();
+        let mut global_access: BTreeMap<ExprPath, Vec<(DefId, BitSet<Id>, bool)>> = BTreeMap::new();
         // accesses to struct fields
         let mut struct_access: Vec<(ExprPath, DefId, BitSet<Id>, bool)> = vec![];
 
@@ -626,7 +626,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // find init or destroy functions per type
-        let mut init_or_destroy_map: HashMap<_, HashSet<_>> = HashMap::new();
+        let mut init_or_destroy_map: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
         for (def_id, paths) in &mut self.init_or_destory {
             for path in paths.iter() {
                 let ty = some_or!(self.path_types.get(&(*def_id, path.clone())), continue);
@@ -638,7 +638,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // group struct field accesses by type and field name
-        let mut struct_access_per_type: HashMap<_, Vec<_>> = HashMap::new();
+        let mut struct_access_per_type: BTreeMap<_, Vec<_>> = BTreeMap::new();
         for (mut path, def_id, v, w) in struct_access {
             // find longest prefix whose type has mutex
             let opt = loop {
@@ -670,7 +670,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let mut accesses: Vec<_> = accesses
                 .drain(..)
                 .map(|(def_id, path, v, w)| {
-                    let held: HashSet<_> = v
+                    let held: BTreeSet<_> = v
                         .iter()
                         .filter_map(|i| {
                             let mutex = inv_mutexes.get(&i.index()).unwrap().clone();
@@ -687,14 +687,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .collect();
 
             // find candidate mutex
-            let mut counts: HashMap<String, usize> = HashMap::new();
+            let mut counts: BTreeMap<String, usize> = BTreeMap::new();
             for (_, _, ms, _) in &accesses {
                 for m in ms {
                     let x = counts.entry(m.clone()).or_default();
                     *x += 1;
                 }
             }
-            let cand_opt = counts.drain().max_by_key(|(_, x)| *x);
+            let cand_opt = counts.drain_filter(|_, _| true).max_by_key(|(_, x)| *x);
             let (cand, x) = some_or!(cand_opt, continue);
 
             // function updating mutex map
@@ -712,7 +712,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
 
             // try filtering only when thread functions exist
-            let empty = HashSet::new();
+            let empty = BTreeSet::new();
             let init_or_destroy = some_or!(init_or_destroy_map.get(&typ), &empty);
             if thread_functions.is_empty() && init_or_destroy.is_empty() {
                 continue;
@@ -758,7 +758,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let start: Vec<_> = iv2mv(entry_mutex);
                 let end: Vec<_> = iv2mv(ret_mutex);
                 let prop: Vec<_> = iv2mv(propagation_mutex);
-                let propagation: HashMap<_, _> = propagation
+                let propagation: BTreeMap<_, _> = propagation
                     .iter()
                     .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), iv2mv(v)))
                     .collect();

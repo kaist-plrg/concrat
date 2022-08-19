@@ -1,5 +1,5 @@
 use std::{
-    collections::{HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet},
     fmt::Display,
     fs,
     path::{Path, PathBuf},
@@ -369,7 +369,7 @@ mod tests {
 }
 
 pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
-    let files: HashMap<_, _> = fs::read_dir(dep)
+    let files: BTreeMap<_, _> = fs::read_dir(dep)
         .unwrap()
         .filter_map(|f| {
             let f = f.ok()?;
@@ -572,7 +572,7 @@ pub fn unwrap_call<'a, 'tcx>(e: &'a Expr<'tcx>) -> &'a Expr<'tcx> {
     }
 }
 
-pub fn span_lines(ctx: &LateContext<'_>, span: Span) -> HashSet<usize> {
+pub fn span_lines(ctx: &LateContext<'_>, span: Span) -> BTreeSet<usize> {
     let source_map = ctx.sess().source_map();
     let fname = source_map.span_to_filename(span);
     let file = source_map.get_source_file(&fname).unwrap();

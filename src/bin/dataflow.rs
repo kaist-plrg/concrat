@@ -25,7 +25,7 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 
-use std::{collections::HashSet, fs::File, path::PathBuf, time::Instant};
+use std::{collections::BTreeSet, fs::File, path::PathBuf, time::Instant};
 
 use clap::{App, Arg};
 use concrat::*;
@@ -92,8 +92,8 @@ fn main() {
             "struct_mutex_map"
         );
         assert_eq!(
-            summary.function_map.keys().collect::<HashSet<_>>(),
-            summary2.function_map.keys().collect::<HashSet<_>>()
+            summary.function_map.keys().collect::<BTreeSet<_>>(),
+            summary2.function_map.keys().collect::<BTreeSet<_>>()
         );
         for f in summary.function_map.keys() {
             assert_eq!(

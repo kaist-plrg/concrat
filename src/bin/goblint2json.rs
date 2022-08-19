@@ -24,9 +24,10 @@
 #![deny(unused_lifetimes)]
 #![deny(unused_qualifications)]
 #![deny(warnings)]
+#![feature(btree_drain_filter)]
 
 use std::{
-    collections::{HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet},
     fs::{self, File},
     path::PathBuf,
 };
@@ -61,7 +62,7 @@ fn main() {
     let cfg = fs::read_to_string(&input).unwrap();
     input.pop();
 
-    let mut node_cline: HashMap<_, HashSet<_>> = HashMap::new();
+    let mut node_cline: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
     for s in cfg.split('\n') {
         let i = some_or!(s.find(" ->"), continue);
         let node = &s[1..i];
@@ -80,7 +81,7 @@ fn main() {
     let lines = fs::read_to_string(&input).unwrap();
     input.pop();
 
-    let mut cline_rline: HashMap<_, HashSet<_>> = HashMap::new();
+    let mut cline_rline: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
     for s in lines.split('\n') {
         let i = some_or!(s.find('L'), continue);
         let j = some_or!(s.find(' '), continue);
@@ -91,9 +92,9 @@ fn main() {
         cline_rline.entry(cline).or_default().insert(rline);
     }
 
-    let empty = HashSet::new();
-    let node_rline: HashMap<_, HashSet<_>> = node_cline
-        .drain()
+    let empty = BTreeSet::new();
+    let node_rline: BTreeMap<_, BTreeSet<_>> = node_cline
+        .drain_filter(|_, _| true)
         .map(|(n, c)| {
             (
                 n,

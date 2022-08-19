@@ -25,7 +25,7 @@
 #![deny(unused_qualifications)]
 #![deny(warnings)]
 #![feature(drain_filter)]
-#![feature(hash_drain_filter)]
+#![feature(btree_drain_filter)]
 #![feature(iter_intersperse)]
 #![feature(rustc_private)]
 #![feature(map_first_last)]

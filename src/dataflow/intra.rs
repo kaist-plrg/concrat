@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use etrace::some_or;
 use rustc_index::{bit_set::BitSet, vec::Idx};
@@ -16,22 +16,22 @@ use crate::util::{ExprPath, Id};
 #[allow(missing_debug_implementations)]
 #[derive(Clone)]
 pub struct AnalysisContext<'a, 'tcx> {
-    mutexes: &'a HashMap<ExprPath, usize>,
-    inv_mutexes: &'a HashMap<usize, ExprPath>,
-    function_mutex_map: &'a HashMap<DefId, FunctionSummary>,
-    params: &'a HashMap<DefId, Vec<(String, String)>>,
-    calls: &'a HashMap<Span, Vec<Arg>>,
+    mutexes: &'a BTreeMap<ExprPath, usize>,
+    inv_mutexes: &'a BTreeMap<usize, ExprPath>,
+    function_mutex_map: &'a BTreeMap<DefId, FunctionSummary>,
+    params: &'a BTreeMap<DefId, Vec<(String, String)>>,
+    calls: &'a BTreeMap<Span, Vec<Arg>>,
     body: &'a Body<'tcx>,
     ctx: &'a LateContext<'tcx>,
 }
 
 impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     pub fn new(
-        mutexes: &'a HashMap<ExprPath, usize>,
-        inv_mutexes: &'a HashMap<usize, ExprPath>,
-        function_mutex_map: &'a HashMap<DefId, FunctionSummary>,
-        params: &'a HashMap<DefId, Vec<(String, String)>>,
-        calls: &'a HashMap<Span, Vec<Arg>>,
+        mutexes: &'a BTreeMap<ExprPath, usize>,
+        inv_mutexes: &'a BTreeMap<usize, ExprPath>,
+        function_mutex_map: &'a BTreeMap<DefId, FunctionSummary>,
+        params: &'a BTreeMap<DefId, Vec<(String, String)>>,
+        calls: &'a BTreeMap<Span, Vec<Arg>>,
         body: &'a Body<'tcx>,
         ctx: &'a LateContext<'tcx>,
     ) -> Self {

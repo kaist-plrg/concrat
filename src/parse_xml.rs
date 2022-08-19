@@ -1,5 +1,5 @@
 use std::{
-    collections::HashMap,
+    collections::BTreeMap,
     fs::File,
     io::{BufReader, Read},
 };
@@ -9,7 +9,7 @@ use xml::reader::{EventReader, XmlEvent};
 #[derive(Debug)]
 pub struct Element {
     pub name: Name,
-    pub attributes: HashMap<String, String>,
+    pub attributes: BTreeMap<String, String>,
     pub children: Vec<Element>,
 }
 
@@ -43,7 +43,7 @@ pub fn parse_file(file_name: &str) -> Vec<Element> {
 }
 
 fn parse_document<T: Read>(parser: &mut EventReader<T>) -> Vec<Element> {
-    let mut stack = vec![(Name::Tag(String::new()), HashMap::new(), vec![])];
+    let mut stack = vec![(Name::Tag(String::new()), BTreeMap::new(), vec![])];
     loop {
         match parser.next().unwrap() {
             XmlEvent::StartElement {
@@ -70,7 +70,7 @@ fn parse_document<T: Read>(parser: &mut EventReader<T>) -> Vec<Element> {
             XmlEvent::Characters(s) => {
                 let elem = Element {
                     name: Name::Data(s.trim().to_string()),
-                    attributes: HashMap::new(),
+                    attributes: BTreeMap::new(),
                     children: vec![],
                 };
                 stack.last_mut().unwrap().2.push(elem);

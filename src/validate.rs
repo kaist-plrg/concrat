@@ -1,5 +1,5 @@
 use std::{
-    collections::{HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet},
     sync::Mutex,
 };
 
@@ -25,10 +25,10 @@ pub fn collect_definitions(args: Vec<String>) -> CodeSummary {
 
 #[derive(Default, Debug)]
 pub struct CodeSummary {
-    pub global_set: HashSet<String>,
-    pub param_map: HashMap<String, HashSet<String>>,
-    pub local_map: HashMap<String, HashSet<String>>,
-    pub struct_map: HashMap<String, HashMap<String, String>>,
+    pub global_set: BTreeSet<String>,
+    pub param_map: BTreeMap<String, BTreeSet<String>>,
+    pub local_map: BTreeMap<String, BTreeSet<String>>,
+    pub struct_map: BTreeMap<String, BTreeMap<String, String>>,
 }
 
 #[derive(Default)]

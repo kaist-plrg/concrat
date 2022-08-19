@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet},
     fs::File,
     io::Read,
     sync::Mutex,
@@ -28,16 +28,16 @@ lazy_static! {
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
-static GLOBAL_DEF_MAP: Once<HashMap<String, (String, String)>> = Once::new();
-static ARRAY_DEF_MAP: Once<HashMap<String, (String, Vec<String>)>> = Once::new();
-static STRUCT_DEF_MAP: Once<HashMap<String, HashMap<String, String>>> = Once::new();
-static TRANS_STRUCT_DEF_MAP: Once<HashMap<String, HashSet<String>>> = Once::new();
-static INIT_MAP: Once<HashMap<(String, ExprPath, String), String>> = Once::new();
-static MUTEX_INIT_MAP: Once<HashSet<(String, ExprPath, String)>> = Once::new();
-static PATH_TYPE_MAP: Once<HashMap<ExprPath, HashMap<String, String>>> = Once::new();
-static DURATION_MAP: Once<HashMap<(String, String, String), String>> = Once::new();
-static TRYLOCK_MAP: Once<HashMap<(String, String, usize), String>> = Once::new();
-static PARAMS_MAP: Once<HashMap<String, Vec<String>>> = Once::new();
+static GLOBAL_DEF_MAP: Once<BTreeMap<String, (String, String)>> = Once::new();
+static ARRAY_DEF_MAP: Once<BTreeMap<String, (String, Vec<String>)>> = Once::new();
+static STRUCT_DEF_MAP: Once<BTreeMap<String, BTreeMap<String, String>>> = Once::new();
+static TRANS_STRUCT_DEF_MAP: Once<BTreeMap<String, BTreeSet<String>>> = Once::new();
+static INIT_MAP: Once<BTreeMap<(String, ExprPath, String), String>> = Once::new();
+static MUTEX_INIT_MAP: Once<BTreeSet<(String, ExprPath, String)>> = Once::new();
+static PATH_TYPE_MAP: Once<BTreeMap<ExprPath, BTreeMap<String, String>>> = Once::new();
+static DURATION_MAP: Once<BTreeMap<(String, String, String), String>> = Once::new();
+static TRYLOCK_MAP: Once<BTreeMap<(String, String, usize), String>> = Once::new();
+static PARAMS_MAP: Once<BTreeMap<String, Vec<String>>> = Once::new();
 
 fn global_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
@@ -55,39 +55,39 @@ fn function_mutex_map() -> &'static BTreeMap<String, FunctionSummary> {
     &SUMMARY.get().unwrap().function_map
 }
 
-fn global_def_map() -> &'static HashMap<String, (String, String)> {
+fn global_def_map() -> &'static BTreeMap<String, (String, String)> {
     GLOBAL_DEF_MAP.get().unwrap()
 }
 
-fn array_def_map() -> &'static HashMap<String, (String, Vec<String>)> {
+fn array_def_map() -> &'static BTreeMap<String, (String, Vec<String>)> {
     ARRAY_DEF_MAP.get().unwrap()
 }
 
-fn struct_def_map() -> &'static HashMap<String, HashMap<String, String>> {
+fn struct_def_map() -> &'static BTreeMap<String, BTreeMap<String, String>> {
     STRUCT_DEF_MAP.get().unwrap()
 }
 
-fn init_map() -> &'static HashMap<(String, ExprPath, String), String> {
+fn init_map() -> &'static BTreeMap<(String, ExprPath, String), String> {
     INIT_MAP.get().unwrap()
 }
 
-fn mutex_init_map() -> &'static HashSet<(String, ExprPath, String)> {
+fn mutex_init_map() -> &'static BTreeSet<(String, ExprPath, String)> {
     MUTEX_INIT_MAP.get().unwrap()
 }
 
-fn path_type_map() -> &'static HashMap<ExprPath, HashMap<String, String>> {
+fn path_type_map() -> &'static BTreeMap<ExprPath, BTreeMap<String, String>> {
     PATH_TYPE_MAP.get().unwrap()
 }
 
-fn duration_map() -> &'static HashMap<(String, String, String), String> {
+fn duration_map() -> &'static BTreeMap<(String, String, String), String> {
     DURATION_MAP.get().unwrap()
 }
 
-fn trylock_map() -> &'static HashMap<(String, String, usize), String> {
+fn trylock_map() -> &'static BTreeMap<(String, String, usize), String> {
     TRYLOCK_MAP.get().unwrap()
 }
 
-fn params_map() -> &'static HashMap<String, Vec<String>> {
+fn params_map() -> &'static BTreeMap<String, Vec<String>> {
     PARAMS_MAP.get().unwrap()
 }
 
@@ -126,17 +126,17 @@ pub fn apply_suggestions(mut replacements: Vec<Replacement>) -> String {
 
 #[derive(Default)]
 struct GlobalPass {
-    global_def_map: HashMap<String, (String, String)>,
-    array_def_map: HashMap<String, (String, Vec<String>)>,
-    struct_def_map: HashMap<String, HashMap<String, String>>,
-    init_map: HashMap<(String, ExprPath, String), String>,
-    mutex_init_map: HashSet<(String, ExprPath, String)>,
-    path_type_map: HashMap<ExprPath, HashMap<String, String>>,
-    duration_map: HashMap<(String, String, String), String>,
-    trylock_map: HashMap<(String, String), Vec<(usize, String)>>,
-    if_map: HashMap<(String, String), Vec<usize>>,
-    params_map: HashMap<String, Vec<String>>,
-    ty_alias_map: HashMap<String, String>,
+    global_def_map: BTreeMap<String, (String, String)>,
+    array_def_map: BTreeMap<String, (String, Vec<String>)>,
+    struct_def_map: BTreeMap<String, BTreeMap<String, String>>,
+    init_map: BTreeMap<(String, ExprPath, String), String>,
+    mutex_init_map: BTreeSet<(String, ExprPath, String)>,
+    path_type_map: BTreeMap<ExprPath, BTreeMap<String, String>>,
+    duration_map: BTreeMap<(String, String, String), String>,
+    trylock_map: BTreeMap<(String, String), Vec<(usize, String)>>,
+    if_map: BTreeMap<(String, String), Vec<usize>>,
+    params_map: BTreeMap<String, Vec<String>>,
+    ty_alias_map: BTreeMap<String, String>,
 }
 
 impl GlobalPass {
@@ -273,7 +273,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             {
                                 let f = func_name();
                                 let l = span_to_string(ctx, lhs.span);
-                                let line = span_lines(ctx, args[0].span).drain().max().unwrap();
+                                let line = span_lines(ctx, args[0].span)
+                                    .drain_filter(|_| true)
+                                    .max()
+                                    .unwrap();
                                 let (_, g) = normalize_arg(ctx, &args[0]);
                                 self.trylock_map.entry((f, l)).or_default().push((line, g));
                             }
@@ -300,7 +303,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             ExprKind::If(c, _, _) => {
                 let (expr, _) = some_or!(read_condition(ctx, c), return);
                 let f = func_name();
-                let line = span_lines(ctx, c.span).drain().min().unwrap();
+                let line = span_lines(ctx, c.span)
+                    .drain_filter(|_| true)
+                    .min()
+                    .unwrap();
                 self.if_map.entry((f, expr)).or_default().push(line);
             }
             _ => (),
@@ -308,13 +314,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
     }
 
     fn check_crate_post(&mut self, _: &LateContext<'tcx>) {
-        let mut map: HashMap<_, HashSet<_>> = self
+        let mut map: BTreeMap<_, BTreeSet<_>> = self
             .struct_def_map
             .iter()
             .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
             .collect();
-        for (lt, rt) in self.ty_alias_map.drain() {
-            map.insert(lt, HashSet::from([rt]));
+        for (lt, rt) in self.ty_alias_map.drain_filter(|_, _| true) {
+            map.insert(lt, BTreeSet::from([rt]));
         }
         TRANS_STRUCT_DEF_MAP.call_once(|| transitive_closure(map));
 
@@ -327,7 +333,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         DURATION_MAP.call_once(|| std::mem::take(&mut self.duration_map));
         PARAMS_MAP.call_once(|| std::mem::take(&mut self.params_map));
 
-        let mut trylock_map = HashMap::new();
+        let mut trylock_map = BTreeMap::new();
         for (k, v) in &mut self.trylock_map {
             let lines = some_or!(self.if_map.get(k), continue);
             for l in lines {
@@ -352,7 +358,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
 #[derive(Default)]
 struct RewritePass {
-    guard_map: HashMap<String, Vec<String>>,
+    guard_map: BTreeMap<String, Vec<String>>,
 }
 
 impl RewritePass {
@@ -696,7 +702,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 } else {
                     &empty
                 };
-                let entry: HashSet<_> = entry.iter().map(|m| m.guard()).collect();
+                let entry: BTreeSet<_> = entry.iter().map(|m| m.guard()).collect();
                 let mut guards = self.guard_map.get(&name).cloned().unwrap_or_default();
                 guards.sort();
                 guards.dedup();
@@ -1019,7 +1025,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         )
                     })
                     .collect();
-                let init_map: HashMap<_, _> = fs
+                let init_map: BTreeMap<_, _> = fs
                     .iter()
                     .map(|f| {
                         (
@@ -1156,7 +1162,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             }
             ExprKind::If(c, t, f) => {
                 let (expr, eq) = some_or!(read_condition(ctx, c), return);
-                let line = span_lines(ctx, c.span).drain().min().unwrap();
+                let line = span_lines(ctx, c.span)
+                    .drain_filter(|_| true)
+                    .min()
+                    .unwrap();
                 let g = some_or!(trylock_map().get(&(func_name(), expr, line)), return);
                 let span = c
                     .span

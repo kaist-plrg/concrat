@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, BTreeSet, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet},
     fs::File,
     io::stdout,
     path::Path,
@@ -67,7 +67,7 @@ impl FunctionSummary {
 pub fn summarize(
     mut elements: Vec<Element>,
     summary: &CodeSummary,
-    node_line: &HashMap<String, HashSet<usize>>,
+    node_line: &BTreeMap<String, BTreeSet<usize>>,
 ) -> AnalysisSummary {
     let mut elements = elements
         .pop()
@@ -107,7 +107,7 @@ fn find_protected<'a>(
     typ: &'a String,
     path: &'a [String],
     mutex: &String,
-    structs: &'a HashMap<String, HashMap<String, String>>,
+    structs: &'a BTreeMap<String, BTreeMap<String, String>>,
 ) -> (&'a String, &'a String) {
     let fs = structs.get(typ).unwrap();
     let f = &path[0];
@@ -124,7 +124,7 @@ fn avoid_keyword(s: &str) -> String {
 
 fn generate_mutex_maps(
     warnings: &[WarningGroup],
-    structs: &HashMap<String, HashMap<String, String>>,
+    structs: &BTreeMap<String, BTreeMap<String, String>>,
 ) -> (
     BTreeMap<String, String>,
     BTreeMap<String, String>,
@@ -227,7 +227,7 @@ pub fn compute_mutex_line<T: Ord, F>(
     f: F,
 ) -> BTreeMap<ExprPath, BTreeSet<usize>>
 where
-    F: Fn(&T) -> HashSet<usize>,
+    F: Fn(&T) -> BTreeSet<usize>,
 {
     let lines: BTreeSet<_> = node_map.keys().flat_map(&f).collect();
     let mut mutex_line: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
@@ -264,7 +264,7 @@ where
 fn generate_function_map(
     funcs: &[Function],
     node_map: &BTreeMap<String, Vec<(Vec<Vec<ExprPath>>, Vec<ExprPath>)>>,
-    node_line: &HashMap<String, HashSet<usize>>,
+    node_line: &BTreeMap<String, BTreeSet<usize>>,
     summary: &CodeSummary,
 ) -> BTreeMap<String, FunctionSummary> {
     funcs
@@ -276,7 +276,7 @@ fn generate_function_map(
                  ret,
                  nodes,
              }| {
-                let empty = HashSet::new();
+                let empty = BTreeSet::new();
                 let globals = &summary.global_set;
                 let params = summary.param_map.get(name).unwrap_or(&empty);
                 let locals = summary.local_map.get(name).unwrap_or(&empty);
@@ -292,7 +292,7 @@ fn generate_function_map(
                         3
                     }
                 };
-                let mut node_map: HashMap<_, _> = node_map
+                let mut node_map: BTreeMap<_, _> = node_map
                     .iter()
                     .filter(|(n, _)| *n == entry || *n == ret || nodes.contains(n))
                     .collect();
@@ -301,7 +301,7 @@ fn generate_function_map(
                     .flat_map(|v| *v)
                     .flat_map(|(v, _)| v)
                     .collect();
-                let mut graph: HashMap<ExprPath, HashSet<ExprPath>> = HashMap::new();
+                let mut graph: BTreeMap<ExprPath, BTreeSet<ExprPath>> = BTreeMap::new();
                 for v in var_eqs {
                     for x in v {
                         for y in v {
@@ -311,9 +311,9 @@ fn generate_function_map(
                 }
                 let var_eqs: Vec<_> = compute_sccs(&graph)
                     .1
-                    .drain()
+                    .drain_filter(|_, _| true)
                     .map(|mut p| {
-                        let mut v: Vec<_> = p.1.drain().collect();
+                        let mut v: Vec<_> = p.1.drain_filter(|_| true).collect();
                         v.sort_by_key(score);
                         v
                     })
@@ -335,8 +335,8 @@ fn generate_function_map(
                     suffix.set_base(new_prefix);
                     suffix
                 };
-                let node_map: HashMap<_, _> = node_map
-                    .drain()
+                let node_map: BTreeMap<_, _> = node_map
+                    .drain_filter(|_, _| true)
                     .map(|(n, v)| {
                         let n = n.clone();
                         if v.is_empty() {
@@ -345,14 +345,14 @@ fn generate_function_map(
                         let mut ms = v
                             .iter()
                             .map(|(_, symb_locks)| {
-                                symb_locks.iter().map(replace).collect::<HashSet<_>>()
+                                symb_locks.iter().map(replace).collect::<BTreeSet<_>>()
                             })
                             .reduce(|mut old, new| {
                                 old.retain(|p| new.contains(p));
                                 old
                             })
                             .unwrap();
-                        (n, ms.drain().collect::<Vec<_>>())
+                        (n, ms.drain_filter(|_| true).collect::<Vec<_>>())
                     })
                     .collect();
                 let entry_mutex = node_map.get(entry).unwrap().clone();
@@ -368,7 +368,7 @@ fn generate_function_map(
                     })
                     .collect();
                 let mutex_line = compute_mutex_line(&node_map, |n| {
-                    node_line.get(n).map_or_else(HashSet::new, |s| s.clone())
+                    node_line.get(n).map_or_else(BTreeSet::new, |s| s.clone())
                 });
                 let name = if name == "main" {
                     "main_0".to_string()
@@ -408,14 +408,14 @@ pub enum Protection {
 
 #[derive(Debug, Clone)]
 pub struct Call {
-    pub attributes: HashMap<String, String>,
+    pub attributes: BTreeMap<String, String>,
     pub ctxs: Vec<Ctx>,
 }
 
 #[derive(Debug, Clone)]
 pub struct Ctx {
     pub name: String,
-    pub analyses: HashMap<String, Value>,
+    pub analyses: BTreeMap<String, Value>,
 }
 
 #[derive(Debug, Clone)]
@@ -423,7 +423,7 @@ pub enum Value {
     Data(String),
     Map(Vec<(String, Value)>),
     Set(Vec<Value>),
-    Analyses(HashMap<String, Value>),
+    Analyses(BTreeMap<String, Value>),
 }
 
 fn to_file(element: Element) -> Vec<Function> {

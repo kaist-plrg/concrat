@@ -1,17 +1,14 @@
-use std::{
-    collections::{HashMap, HashSet},
-    hash::Hash,
-};
+use std::collections::{BTreeMap, BTreeSet};
 
 use rustc_data_structures::graph::{scc::Sccs, vec_graph::VecGraph};
 use rustc_index::vec::Idx;
 
 use crate::util::Id;
 
-pub fn transitive_closure<T: Clone + Eq + Hash>(
-    mut map: HashMap<T, HashSet<T>>,
-) -> HashMap<T, HashSet<T>> {
-    let empty = HashSet::new();
+pub fn transitive_closure<T: Clone + Eq + PartialOrd + Ord>(
+    mut map: BTreeMap<T, BTreeSet<T>>,
+) -> BTreeMap<T, BTreeSet<T>> {
+    let empty = BTreeSet::new();
     loop {
         let new = map
             .iter()
@@ -30,9 +27,9 @@ pub fn transitive_closure<T: Clone + Eq + Hash>(
     }
 }
 
-pub fn symmetric_closure<T: Clone + Eq + Hash>(
-    map: &HashMap<T, HashSet<T>>,
-) -> HashMap<T, HashSet<T>> {
+pub fn symmetric_closure<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+) -> BTreeMap<T, BTreeSet<T>> {
     let mut clo = map.clone();
     for (node, succs) in map {
         for succ in succs {
@@ -42,10 +39,12 @@ pub fn symmetric_closure<T: Clone + Eq + Hash>(
     clo
 }
 
-pub fn inverse<T: Clone + Eq + Hash>(map: &HashMap<T, HashSet<T>>) -> HashMap<T, HashSet<T>> {
-    let mut inv: HashMap<_, HashSet<_>> = HashMap::new();
+pub fn inverse<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+) -> BTreeMap<T, BTreeSet<T>> {
+    let mut inv: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
     for node in map.keys() {
-        inv.insert(node.clone(), HashSet::new());
+        inv.insert(node.clone(), BTreeSet::new());
     }
     for (node, succs) in map {
         for succ in succs {
@@ -56,9 +55,9 @@ pub fn inverse<T: Clone + Eq + Hash>(map: &HashMap<T, HashSet<T>>) -> HashMap<T,
 }
 
 /// `map` must not have a cycle.
-pub fn post_order<T: Clone + Eq + Hash>(
-    map: &HashMap<T, HashSet<T>>,
-    inv_map: &HashMap<T, HashSet<T>>,
+pub fn post_order<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+    inv_map: &BTreeMap<T, BTreeSet<T>>,
 ) -> Vec<Vec<T>> {
     let mut res = vec![];
     let clo = symmetric_closure(map);
@@ -66,7 +65,7 @@ pub fn post_order<T: Clone + Eq + Hash>(
 
     for (_, component) in components {
         let mut v = vec![];
-        let mut reached = HashSet::new();
+        let mut reached = BTreeSet::new();
         for node in component {
             if inv_map.get(&node).unwrap().is_empty() {
                 dfs_walk(&node, &mut v, &mut reached, map);
@@ -78,11 +77,11 @@ pub fn post_order<T: Clone + Eq + Hash>(
     res
 }
 
-fn dfs_walk<T: Clone + Eq + Hash>(
+fn dfs_walk<T: Clone + Eq + PartialOrd + Ord>(
     node: &T,
     v: &mut Vec<T>,
-    reached: &mut HashSet<T>,
-    map: &HashMap<T, HashSet<T>>,
+    reached: &mut BTreeSet<T>,
+    map: &BTreeMap<T, BTreeSet<T>>,
 ) {
     reached.insert(node.clone());
     for succ in map.get(node).unwrap() {
@@ -94,9 +93,9 @@ fn dfs_walk<T: Clone + Eq + Hash>(
 }
 
 /// `map` must not have a cycle.
-pub fn reverse_post_order<T: Clone + Eq + Hash>(
-    map: &HashMap<T, HashSet<T>>,
-    inv_map: &HashMap<T, HashSet<T>>,
+pub fn reverse_post_order<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+    inv_map: &BTreeMap<T, BTreeSet<T>>,
 ) -> Vec<Vec<T>> {
     let mut po = post_order(map, inv_map);
     for v in &mut po {
@@ -105,15 +104,15 @@ pub fn reverse_post_order<T: Clone + Eq + Hash>(
     po
 }
 
-pub fn compute_sccs<T: Clone + Eq + Hash>(
-    map: &HashMap<T, HashSet<T>>,
-) -> (HashMap<Id, HashSet<Id>>, HashMap<Id, HashSet<T>>) {
-    let id_map: HashMap<_, _> = map
+pub fn compute_sccs<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+) -> (BTreeMap<Id, BTreeSet<Id>>, BTreeMap<Id, BTreeSet<T>>) {
+    let id_map: BTreeMap<_, _> = map
         .keys()
         .enumerate()
         .map(|(i, f)| (i, f.clone()))
         .collect();
-    let inv_id_map: HashMap<_, _> = id_map.iter().map(|(i, f)| (f.clone(), *i)).collect();
+    let inv_id_map: BTreeMap<_, _> = id_map.iter().map(|(i, f)| (f.clone(), *i)).collect();
     let edges = map
         .iter()
         .flat_map(|(node, succs)| {
@@ -127,12 +126,12 @@ pub fn compute_sccs<T: Clone + Eq + Hash>(
         .collect();
     let sccs: Sccs<Id, Id> = Sccs::new(&VecGraph::new(map.len(), edges));
 
-    let component_graph: HashMap<_, _> = sccs
+    let component_graph: BTreeMap<_, _> = sccs
         .all_sccs()
         .map(|node| (node, sccs.successors(node).iter().cloned().collect()))
         .collect();
 
-    let mut component_elems: HashMap<_, HashSet<_>> = HashMap::new();
+    let mut component_elems: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
     for i in 0..(map.len()) {
         let scc = sccs.scc(Id::new(i));
         let node = id_map.get(&i).unwrap().clone();
@@ -144,50 +143,50 @@ pub fn compute_sccs<T: Clone + Eq + Hash>(
 
 #[cfg(test)]
 mod tests {
-    use std::collections::{HashMap, HashSet};
+    use std::collections::{BTreeMap, BTreeSet};
 
     #[test]
     fn test1() {
-        let mut graph = HashMap::new();
-        graph.insert(1, HashSet::from([2]));
-        graph.insert(2, HashSet::from([3]));
-        graph.insert(3, HashSet::from([4, 5]));
-        graph.insert(4, HashSet::from([6]));
-        graph.insert(5, HashSet::from([6]));
-        graph.insert(6, HashSet::from([]));
+        let mut graph = BTreeMap::new();
+        graph.insert(1, BTreeSet::from([2]));
+        graph.insert(2, BTreeSet::from([3]));
+        graph.insert(3, BTreeSet::from([4, 5]));
+        graph.insert(4, BTreeSet::from([6]));
+        graph.insert(5, BTreeSet::from([6]));
+        graph.insert(6, BTreeSet::from([]));
 
         let closure = super::transitive_closure(graph.clone());
-        assert_eq!(closure.get(&1).unwrap(), &HashSet::from([2, 3, 4, 5, 6]));
-        assert_eq!(closure.get(&2).unwrap(), &HashSet::from([3, 4, 5, 6]));
-        assert_eq!(closure.get(&3).unwrap(), &HashSet::from([4, 5, 6]));
-        assert_eq!(closure.get(&4).unwrap(), &HashSet::from([6]));
-        assert_eq!(closure.get(&5).unwrap(), &HashSet::from([6]));
-        assert_eq!(closure.get(&6).unwrap(), &HashSet::from([]));
+        assert_eq!(closure.get(&1).unwrap(), &BTreeSet::from([2, 3, 4, 5, 6]));
+        assert_eq!(closure.get(&2).unwrap(), &BTreeSet::from([3, 4, 5, 6]));
+        assert_eq!(closure.get(&3).unwrap(), &BTreeSet::from([4, 5, 6]));
+        assert_eq!(closure.get(&4).unwrap(), &BTreeSet::from([6]));
+        assert_eq!(closure.get(&5).unwrap(), &BTreeSet::from([6]));
+        assert_eq!(closure.get(&6).unwrap(), &BTreeSet::from([]));
 
         let inv_graph = super::inverse(&graph);
-        assert_eq!(inv_graph.get(&1).unwrap(), &HashSet::from([]));
-        assert_eq!(inv_graph.get(&2).unwrap(), &HashSet::from([1]));
-        assert_eq!(inv_graph.get(&3).unwrap(), &HashSet::from([2]));
-        assert_eq!(inv_graph.get(&4).unwrap(), &HashSet::from([3]));
-        assert_eq!(inv_graph.get(&5).unwrap(), &HashSet::from([3]));
-        assert_eq!(inv_graph.get(&6).unwrap(), &HashSet::from([4, 5]));
+        assert_eq!(inv_graph.get(&1).unwrap(), &BTreeSet::from([]));
+        assert_eq!(inv_graph.get(&2).unwrap(), &BTreeSet::from([1]));
+        assert_eq!(inv_graph.get(&3).unwrap(), &BTreeSet::from([2]));
+        assert_eq!(inv_graph.get(&4).unwrap(), &BTreeSet::from([3]));
+        assert_eq!(inv_graph.get(&5).unwrap(), &BTreeSet::from([3]));
+        assert_eq!(inv_graph.get(&6).unwrap(), &BTreeSet::from([4, 5]));
 
         let mut rpo = super::reverse_post_order(&graph, &inv_graph);
         assert_eq!(rpo.len(), 1);
         let v = rpo.pop().unwrap();
         assert_eq!(&v[0..3], &vec![1, 2, 3]);
         assert_eq!(
-            v[3..5].iter().cloned().collect::<HashSet<_>>(),
-            HashSet::from([4, 5])
+            v[3..5].iter().cloned().collect::<BTreeSet<_>>(),
+            BTreeSet::from([4, 5])
         );
         assert_eq!(&v[5], &6);
     }
 
     #[test]
     fn test2() {
-        let mut graph = HashMap::new();
-        graph.insert(1, HashSet::from([1, 2]));
-        graph.insert(2, HashSet::from([2, 1]));
+        let mut graph = BTreeMap::new();
+        graph.insert(1, BTreeSet::from([1, 2]));
+        graph.insert(2, BTreeSet::from([2, 1]));
 
         let closure = super::transitive_closure(graph.clone());
         assert_eq!(graph, closure);
@@ -198,9 +197,9 @@ mod tests {
 
     #[test]
     fn test3() {
-        let mut graph = HashMap::new();
-        graph.insert(1, HashSet::from([]));
-        graph.insert(2, HashSet::from([]));
+        let mut graph = BTreeMap::new();
+        graph.insert(1, BTreeSet::from([]));
+        graph.insert(2, BTreeSet::from([]));
 
         let closure = super::transitive_closure(graph.clone());
         assert_eq!(graph, closure);
@@ -215,51 +214,54 @@ mod tests {
         assert_eq!(v1.len(), 1);
         assert_eq!(v2.len(), 1);
         v1.append(&mut v2);
-        assert_eq!(v1.drain(..).collect::<HashSet<_>>(), HashSet::from([1, 2]));
+        assert_eq!(
+            v1.drain(..).collect::<BTreeSet<_>>(),
+            BTreeSet::from([1, 2])
+        );
     }
 
     #[test]
     fn test4() {
-        let mut graph = HashMap::new();
-        graph.insert(1, HashSet::from([3]));
-        graph.insert(2, HashSet::from([3]));
-        graph.insert(3, HashSet::from([]));
+        let mut graph = BTreeMap::new();
+        graph.insert(1, BTreeSet::from([3]));
+        graph.insert(2, BTreeSet::from([3]));
+        graph.insert(3, BTreeSet::from([]));
 
         let closure = super::transitive_closure(graph.clone());
         assert_eq!(graph, closure);
 
         let inv_graph = super::inverse(&graph);
-        assert_eq!(inv_graph.get(&1).unwrap(), &HashSet::from([]));
-        assert_eq!(inv_graph.get(&2).unwrap(), &HashSet::from([]));
-        assert_eq!(inv_graph.get(&3).unwrap(), &HashSet::from([1, 2]));
+        assert_eq!(inv_graph.get(&1).unwrap(), &BTreeSet::from([]));
+        assert_eq!(inv_graph.get(&2).unwrap(), &BTreeSet::from([]));
+        assert_eq!(inv_graph.get(&3).unwrap(), &BTreeSet::from([1, 2]));
 
         let mut rpo = super::reverse_post_order(&graph, &inv_graph);
         assert_eq!(rpo.len(), 1);
         let v = rpo.pop().unwrap();
         assert!(v == vec![1, 2, 3] || v == vec![2, 1, 3]);
         assert_eq!(
-            v[0..2].iter().cloned().collect::<HashSet<_>>(),
-            HashSet::from([1, 2])
+            v[0..2].iter().cloned().collect::<BTreeSet<_>>(),
+            BTreeSet::from([1, 2])
         );
         assert_eq!(&v[2], &3);
     }
 
     #[test]
     fn test5() {
-        let mut graph = HashMap::new();
-        graph.insert(1, HashSet::from([2, 3, 4]));
-        graph.insert(2, HashSet::from([3, 4]));
-        graph.insert(3, HashSet::from([4]));
-        graph.insert(4, HashSet::from([]));
+        let mut graph = BTreeMap::new();
+        graph.insert(1, BTreeSet::from([2, 3, 4]));
+        graph.insert(2, BTreeSet::from([3, 4]));
+        graph.insert(3, BTreeSet::from([4]));
+        graph.insert(4, BTreeSet::from([]));
 
         let closure = super::transitive_closure(graph.clone());
         assert_eq!(graph, closure);
 
         let inv_graph = super::inverse(&graph);
-        assert_eq!(inv_graph.get(&1).unwrap(), &HashSet::from([]));
-        assert_eq!(inv_graph.get(&2).unwrap(), &HashSet::from([1]));
-        assert_eq!(inv_graph.get(&3).unwrap(), &HashSet::from([1, 2]));
-        assert_eq!(inv_graph.get(&4).unwrap(), &HashSet::from([1, 2, 3]));
+        assert_eq!(inv_graph.get(&1).unwrap(), &BTreeSet::from([]));
+        assert_eq!(inv_graph.get(&2).unwrap(), &BTreeSet::from([1]));
+        assert_eq!(inv_graph.get(&3).unwrap(), &BTreeSet::from([1, 2]));
+        assert_eq!(inv_graph.get(&4).unwrap(), &BTreeSet::from([1, 2, 3]));
 
         let mut rpo = super::reverse_post_order(&graph, &inv_graph);
         assert_eq!(rpo.len(), 1);
