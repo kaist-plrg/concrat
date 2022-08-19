@@ -19,16 +19,16 @@ use rustc_span::{def_id::DefId, Span};
 use super::{
     intra::{available_guards, live_guards, AnalysisContext},
     visitor::Visitor,
-    Arg, FunctionSummary,
+    Arg, FunctionCodeSummary, FunctionSummary,
 };
 use crate::{
     analysis::{compute_mutex_line, AnalysisSummary},
     callback::{compile_with, LatePass},
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
-        current_function, def_id_to_item_name, def_id_to_span, expr_to_path, function_params,
-        resolve_path, span_lines, span_to_string, type_of, type_to_string, unwrap_call,
-        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
+        current_function, def_id_to_item_name, expr_to_path, function_params, resolve_path,
+        span_lines, span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
+        unwrap_ptr_from_type, ExprPath, ExprPathProj, Id,
     },
 };
 
@@ -48,16 +48,12 @@ pub fn run(args: Vec<String>, verbose: bool) -> AnalysisSummary {
 
 #[derive(Default, Debug)]
 struct GlobalPass {
-    mutexes: BTreeMap<DefId, BTreeSet<ExprPath>>,
+    functions: BTreeMap<DefId, FunctionCodeSummary>,
     params: BTreeMap<DefId, Vec<(String, String)>>,
-    args_per_type: BTreeMap<String, BTreeSet<ExprPath>>,
     calls: BTreeMap<Span, Vec<Arg>>,
-    accesses: BTreeMap<DefId, Vec<(Span, ExprPath, bool)>>,
     call_graph: BTreeMap<DefId, BTreeSet<DefId>>,
-    path_types: BTreeMap<(DefId, ExprPath), String>,
     mutexes_per_struct: BTreeMap<String, BTreeSet<String>>,
     thread_entries: BTreeSet<DefId>,
-    init_or_destory: BTreeMap<DefId, BTreeSet<ExprPath>>,
     globs: BTreeSet<String>,
 }
 
@@ -76,21 +72,30 @@ impl LintPass for GlobalPass {
 
 impl GlobalPass {
     fn possible_mutexes(&self) -> BTreeSet<ExprPath> {
-        let mut mutexes: BTreeSet<_> = self.mutexes.values().flatten().cloned().collect();
-        for (def_id, ms) in &self.mutexes {
-            let params = self.params.get(def_id).unwrap();
-            for m in ms {
+        let mut mutexes: BTreeSet<_> = self
+            .functions
+            .values()
+            .flat_map(|s| &s.mutexes)
+            .cloned()
+            .collect();
+        for summary in self.functions.values() {
+            for m in &summary.mutexes {
                 if m.is_variable() {
                     continue;
                 }
-                let (_, t) = some_or!(params.iter().find(|(p, _)| p == &m.base), continue);
-                let args = some_or!(self.args_per_type.get(t), continue);
+                let (_, t) = some_or!(summary.params.iter().find(|(p, _)| p == &m.base), continue);
+                let args = summary
+                    .calls
+                    .iter()
+                    .flat_map(|x| &x.3)
+                    .filter(|a| &a.typ == t)
+                    .filter_map(|a| a.path.as_ref());
                 for arg in args {
                     let mut m = m.clone();
                     m.set_base(arg);
                     mutexes.insert(m);
                 }
-                for (x, t1) in self.params.values().flatten() {
+                for (x, t1) in self.functions.values().flat_map(|s| &s.params) {
                     if t == t1 {
                         let mut m = m.clone();
                         m.set_base(&ExprPath::new(x.clone(), vec![]));
@@ -126,6 +131,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let def_id = i.def_id.to_def_id();
                 self.call_graph.insert(def_id, BTreeSet::new());
                 self.params.insert(def_id, function_params(ctx, *bid));
+                let summary = FunctionCodeSummary {
+                    params: function_params(ctx, *bid),
+                    ..Default::default()
+                };
+                self.functions.insert(def_id, summary);
             }
             ItemKind::Static(_, _, _) => {
                 self.globs.insert(i.ident.to_string());
@@ -147,14 +157,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         let curr = some_or!(current_function(ctx), return);
+        let summary = some_or!(self.functions.get_mut(&curr), return);
         if let Some(path) = expr_to_path(ctx, e) {
             let typ = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
-            self.path_types.insert((curr, path.clone()), typ);
+            summary.add_path(path.clone(), typ);
             if !path.is_variable() || self.globs.contains(&path.base) {
-                self.accesses
-                    .entry(curr)
-                    .or_default()
-                    .push((e.span, path, false));
+                summary.add_access(e.span, path, false);
             }
         }
         match &e.kind {
@@ -167,14 +175,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
                 let args: Vec<_> = arg_exprs.iter().map(|arg| Arg::new(ctx, arg)).collect();
 
-                let f = span_to_string(ctx, f.span);
                 let mut add_mutex = |i: usize| {
-                    self.mutexes
-                        .entry(curr)
-                        .or_default()
-                        .insert(args[i].path.clone().unwrap())
+                    let mutex = args[i].path.clone().unwrap();
+                    summary.add_mutex(mutex);
                 };
-                match f.as_str() {
+
+                let f_name = span_to_string(ctx, f.span);
+                match f_name.as_str() {
                     "pthread_mutex_lock"
                     | "pthread_mutex_unlock"
                     | "pthread_mutex_trylock"
@@ -199,31 +206,22 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         add_mutex(0);
                         if let Some(mut path) = args[0].path.clone() {
                             if path.pop().is_some() {
-                                self.init_or_destory.entry(curr).or_default().insert(path);
+                                summary.add_init_or_destroy(path);
                             }
                         }
                     }
                     _ => (),
                 }
 
-                for arg in &args {
-                    if let Some(path) = arg.path.as_ref() {
-                        self.args_per_type
-                            .entry(arg.typ.clone())
-                            .or_default()
-                            .insert(path.clone());
-                    }
+                self.calls.insert(e.span, args.clone());
+                if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
+                    summary.add_call(e.span, def_id, f_name, args);
                 }
-
-                self.calls.insert(e.span, args);
             }
             ExprKind::Assign(e, _, _) | ExprKind::AssignOp(_, e, _) => {
                 let mut path = some_or!(expr_to_path(ctx, e), return);
                 while !path.is_variable() || self.globs.contains(&path.base) {
-                    self.accesses
-                        .entry(curr)
-                        .or_default()
-                        .push((e.span, path.clone(), true));
+                    summary.add_access(e.span, path.clone(), true);
                     if path.pop().is_none() {
                         break;
                     }
@@ -354,26 +352,26 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 // guards propagated by function calls
                 propagation.retain(|(f, _)| functions.contains(f));
                 // guards held for each access
-                let access: Vec<(ExprPath, BitSet<Id>, bool)> =
-                    if let Some(accesses) = self.accesses.get(&def_id) {
-                        span_mutex
-                            .iter()
-                            .flat_map(|(span, v)| {
-                                accesses
-                                    .iter()
-                                    .filter_map(|(s, path, w)| {
-                                        if s.overlaps(*span) {
-                                            Some((path.clone(), v.clone(), *w))
-                                        } else {
-                                            None
-                                        }
-                                    })
-                                    .collect::<Vec<_>>()
-                            })
-                            .collect()
-                    } else {
-                        vec![]
-                    };
+                let accesses = &self.functions.get(&def_id).unwrap().accesses;
+                let access: Vec<(ExprPath, BitSet<Id>, bool)> = if accesses.is_empty() {
+                    vec![]
+                } else {
+                    span_mutex
+                        .iter()
+                        .flat_map(|(span, v)| {
+                            accesses
+                                .iter()
+                                .filter_map(|(s, path, w)| {
+                                    if s.overlaps(*span) {
+                                        Some((path.clone(), v.clone(), *w))
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .collect::<Vec<_>>()
+                        })
+                        .collect()
+                };
                 // create summary
                 function_summary_map.insert(
                     def_id,
@@ -433,21 +431,14 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let succs = self.call_graph.get(&func).unwrap();
             for succ in succs {
                 // find arguments
-                let func_span = def_id_to_span(ctx.tcx, func);
-                let succ_name = def_id_to_item_name(ctx.tcx, *succ);
-                let prefix = format!("{}(", succ_name);
                 let argss: Vec<_> = self
+                    .functions
+                    .get(&func)
+                    .unwrap()
                     .calls
                     .iter()
-                    .filter_map(|(span, args)| {
-                        if span.overlaps(func_span)
-                            && span_to_string(ctx, *span).starts_with(&prefix)
-                        {
-                            Some(args)
-                        } else {
-                            None
-                        }
-                    })
+                    .filter(|x| x.1 == *succ)
+                    .map(|x| &x.3)
                     .collect();
 
                 // compute possible prefixes of propagated mutexes
@@ -484,7 +475,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
 
                 // consider aliasing
-                let params = self.params.get(succ).unwrap();
+                let params = &self.functions.get(succ).unwrap().params;
                 let ms = argss
                     .iter()
                     .map(|args| {
@@ -627,9 +618,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // find init or destroy functions per type
         let mut init_or_destroy_map: BTreeMap<_, BTreeSet<_>> = BTreeMap::new();
-        for (def_id, paths) in &mut self.init_or_destory {
-            for path in paths.iter() {
-                let ty = some_or!(self.path_types.get(&(*def_id, path.clone())), continue);
+        for (def_id, summary) in &mut self.functions {
+            for path in &summary.init_or_destroy {
+                let ty = some_or!(summary.path_types.get(path), continue);
                 init_or_destroy_map
                     .entry(ty.clone())
                     .or_default()
@@ -640,6 +631,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         // group struct field accesses by type and field name
         let mut struct_access_per_type: BTreeMap<_, Vec<_>> = BTreeMap::new();
         for (mut path, def_id, v, w) in struct_access {
+            let path_types = &self.functions.get(&def_id).unwrap().path_types;
             // find longest prefix whose type has mutex
             let opt = loop {
                 let last = some_or!(path.pop(), break None);
@@ -647,7 +639,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     ExprPathProj::Field(f) => f,
                     _ => break None,
                 };
-                let typ = self.path_types.get(&(def_id, path.clone())).unwrap();
+                let typ = path_types.get(&path).unwrap();
                 if self.mutexes_per_struct.get(typ).is_some() {
                     break Some((typ.clone(), path, last));
                 }

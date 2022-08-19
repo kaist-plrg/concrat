@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use rustc_hir::{Expr, HirId};
 use rustc_index::bit_set::BitSet;
@@ -16,9 +16,10 @@ use crate::util::{
     expr_to_path, span_to_string, type_of, type_to_string, unwrap_ptr_from_type, ExprPath, Id,
 };
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Arg {
     path: Option<ExprPath>,
+    #[allow(unused)]
     typ: String,
     #[allow(unused)]
     expr: String,
@@ -38,6 +39,39 @@ impl Arg {
             path,
             hir_id,
         }
+    }
+}
+
+#[derive(Debug, Default, Clone)]
+struct FunctionCodeSummary {
+    mutexes: BTreeSet<ExprPath>,
+    #[allow(unused)]
+    params: Vec<(String, String)>,
+    calls: Vec<(Span, DefId, String, Vec<Arg>)>,
+    accesses: Vec<(Span, ExprPath, bool)>,
+    path_types: BTreeMap<ExprPath, String>,
+    init_or_destroy: BTreeSet<ExprPath>,
+}
+
+impl FunctionCodeSummary {
+    fn add_mutex(&mut self, mutex: ExprPath) {
+        self.mutexes.insert(mutex);
+    }
+
+    fn add_call(&mut self, span: Span, callee: DefId, callee_name: String, args: Vec<Arg>) {
+        self.calls.push((span, callee, callee_name, args));
+    }
+
+    fn add_access(&mut self, span: Span, path: ExprPath, write: bool) {
+        self.accesses.push((span, path, write));
+    }
+
+    fn add_path(&mut self, path: ExprPath, ty: String) {
+        self.path_types.insert(path, ty);
+    }
+
+    fn add_init_or_destroy(&mut self, path: ExprPath) {
+        self.init_or_destroy.insert(path);
     }
 }
 
