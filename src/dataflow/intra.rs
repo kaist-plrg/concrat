@@ -10,7 +10,7 @@ use rustc_mir_dataflow::{
 };
 use rustc_span::{def_id::DefId, Span};
 
-use super::{get_function_call, Arg, FunctionSummary};
+use super::{get_function_call, Arg, FunctionCodeSummary, FunctionSummary};
 use crate::util::{ExprPath, Id};
 
 #[allow(missing_debug_implementations)]
@@ -19,7 +19,7 @@ pub struct AnalysisContext<'a, 'tcx> {
     mutexes: &'a BTreeMap<ExprPath, usize>,
     inv_mutexes: &'a BTreeMap<usize, ExprPath>,
     function_mutex_map: &'a BTreeMap<DefId, FunctionSummary>,
-    params: &'a BTreeMap<DefId, Vec<(String, String)>>,
+    functions: &'a BTreeMap<DefId, FunctionCodeSummary>,
     calls: &'a BTreeMap<Span, Vec<Arg>>,
     body: &'a Body<'tcx>,
     ctx: &'a LateContext<'tcx>,
@@ -30,7 +30,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         mutexes: &'a BTreeMap<ExprPath, usize>,
         inv_mutexes: &'a BTreeMap<usize, ExprPath>,
         function_mutex_map: &'a BTreeMap<DefId, FunctionSummary>,
-        params: &'a BTreeMap<DefId, Vec<(String, String)>>,
+        functions: &'a BTreeMap<DefId, FunctionCodeSummary>,
         calls: &'a BTreeMap<Span, Vec<Arg>>,
         body: &'a Body<'tcx>,
         ctx: &'a LateContext<'tcx>,
@@ -39,7 +39,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
             mutexes,
             inv_mutexes,
             function_mutex_map,
-            params,
+            functions,
             calls,
             body,
             ctx,
@@ -51,7 +51,7 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         if m.is_variable() {
             return id;
         }
-        let params = self.params.get(func).unwrap();
+        let params = &self.functions.get(func).unwrap().params;
         let (i, _) = some_or!(
             params.iter().enumerate().find(|(_, (p, _))| &m.base == p),
             return id

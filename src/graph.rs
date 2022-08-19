@@ -141,6 +141,43 @@ pub fn compute_sccs<T: Clone + Eq + PartialOrd + Ord>(
     (component_graph, component_elems)
 }
 
+pub fn all_paths<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+    src: &T,
+    dst: &T,
+) -> Vec<Vec<T>> {
+    let mut visited: BTreeSet<T> = BTreeSet::new();
+    let mut path: Vec<T> = vec![src.clone()];
+    let mut paths: Vec<Vec<T>> = vec![];
+    all_paths_walk(map, src, dst, &mut visited, &mut path, &mut paths);
+    paths
+}
+
+fn all_paths_walk<T: Clone + Eq + PartialOrd + Ord>(
+    map: &BTreeMap<T, BTreeSet<T>>,
+    src: &T,
+    dst: &T,
+    visited: &mut BTreeSet<T>,
+    path: &mut Vec<T>,
+    paths: &mut Vec<Vec<T>>,
+) {
+    if src == dst {
+        paths.push(path.clone());
+        return;
+    }
+    visited.insert(src.clone());
+    if let Some(succs) = map.get(src) {
+        for succ in succs {
+            if !visited.contains(succ) {
+                path.push(succ.clone());
+                all_paths_walk(map, succ, dst, visited, path, paths);
+                path.pop();
+            }
+        }
+    }
+    visited.remove(src);
+}
+
 #[cfg(test)]
 mod tests {
     use std::collections::{BTreeMap, BTreeSet};

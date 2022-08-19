@@ -43,9 +43,8 @@ impl Arg {
 }
 
 #[derive(Debug, Default, Clone)]
-struct FunctionCodeSummary {
+pub struct FunctionCodeSummary {
     mutexes: BTreeSet<ExprPath>,
-    #[allow(unused)]
     params: Vec<(String, String)>,
     calls: Vec<(Span, DefId, String, Vec<Arg>)>,
     accesses: Vec<(Span, ExprPath, bool)>,

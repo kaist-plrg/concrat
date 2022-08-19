@@ -14,7 +14,7 @@ use rustc_hir::{
 use rustc_index::{bit_set::BitSet, vec::Idx};
 use rustc_lint::{LateContext, LateLintPass, LintPass};
 use rustc_middle::mir::BasicBlock;
-use rustc_span::{def_id::DefId, Span};
+use rustc_span::def_id::DefId;
 
 use super::{
     intra::{available_guards, live_guards, AnalysisContext},
@@ -49,9 +49,6 @@ pub fn run(args: Vec<String>, verbose: bool) -> AnalysisSummary {
 #[derive(Default, Debug)]
 struct GlobalPass {
     functions: BTreeMap<DefId, FunctionCodeSummary>,
-    params: BTreeMap<DefId, Vec<(String, String)>>,
-    calls: BTreeMap<Span, Vec<Arg>>,
-    call_graph: BTreeMap<DefId, BTreeSet<DefId>>,
     mutexes_per_struct: BTreeMap<String, BTreeSet<String>>,
     thread_entries: BTreeSet<DefId>,
     globs: BTreeSet<String>,
@@ -107,11 +104,11 @@ impl GlobalPass {
         mutexes
     }
 
-    fn thread_functions(&self) -> BTreeSet<DefId> {
+    fn thread_functions(&self, call_graph: &BTreeMap<DefId, BTreeSet<DefId>>) -> BTreeSet<DefId> {
         if self.thread_entries.is_empty() {
             return BTreeSet::new();
         }
-        let graph = transitive_closure(self.call_graph.clone());
+        let graph = transitive_closure(call_graph.clone());
         let mut thread_entries = self.thread_entries.clone();
         for f in self
             .thread_entries
@@ -129,8 +126,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         match &i.kind {
             ItemKind::Fn(_, _, bid) => {
                 let def_id = i.def_id.to_def_id();
-                self.call_graph.insert(def_id, BTreeSet::new());
-                self.params.insert(def_id, function_params(ctx, *bid));
                 let summary = FunctionCodeSummary {
                     params: function_params(ctx, *bid),
                     ..Default::default()
@@ -167,12 +162,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
         match &e.kind {
             ExprKind::Call(f, arg_exprs) => {
-                if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
-                    if let Some(v) = self.call_graph.get_mut(&curr) {
-                        v.insert(def_id);
-                    }
-                }
-
                 let args: Vec<_> = arg_exprs.iter().map(|arg| Arg::new(ctx, arg)).collect();
 
                 let mut add_mutex = |i: usize| {
@@ -213,7 +202,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     _ => (),
                 }
 
-                self.calls.insert(e.span, args.clone());
                 if let Some(Res::Def(DefKind::Fn, def_id)) = resolve_path(ctx, f) {
                     summary.add_call(e.span, def_id, f_name, args);
                 }
@@ -236,14 +224,24 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             println!("{:#?}", self);
         }
 
-        // user-defined functions
-        let functions: BTreeSet<_> = self.call_graph.iter().map(|(f, _)| f).cloned().collect();
-        // remove library functions from call graph
-        for callees in self.call_graph.values_mut() {
-            callees.retain(|f| functions.contains(f));
-        }
+        // call graph
+        let call_graph: BTreeMap<_, BTreeSet<_>> = self
+            .functions
+            .iter()
+            .map(|(f, s)| {
+                (
+                    *f,
+                    s.calls
+                        .iter()
+                        .map(|x| &x.1)
+                        .filter(|f| self.functions.contains_key(f))
+                        .cloned()
+                        .collect(),
+                )
+            })
+            .collect();
         // find strongly connected components
-        let (component_graph, component_elems) = compute_sccs(&self.call_graph);
+        let (component_graph, component_elems) = compute_sccs(&call_graph);
         // compute post order traversal
         let inv_component_graph = inverse(&component_graph);
         let po = post_order(&component_graph, &inv_component_graph);
@@ -282,6 +280,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 span_mutexes.push(vec![]);
             }
 
+            let span_args_map = self
+                .functions
+                .values()
+                .flat_map(|s| {
+                    s.calls
+                        .iter()
+                        .map(|(span, _, _, args)| (*span, args.clone()))
+                        .collect::<Vec<_>>()
+                })
+                .collect();
             loop {
                 for (i, def_id) in funcs.iter().enumerate() {
                     let summary = FunctionSummary::mutex_only(
@@ -300,8 +308,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         &mutexes,
                         &inv_mutexes,
                         &function_summary_map,
-                        &self.params,
-                        &self.calls,
+                        &self.functions,
+                        &span_args_map,
                         body,
                         ctx,
                     );
@@ -350,7 +358,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .zip(span_mutexes.drain(..))
             {
                 // guards propagated by function calls
-                propagation.retain(|(f, _)| functions.contains(f));
+                propagation.retain(|(f, _)| self.functions.contains_key(f));
                 // guards held for each access
                 let accesses = &self.functions.get(&def_id).unwrap().accesses;
                 let access: Vec<(ExprPath, BitSet<Id>, bool)> = if accesses.is_empty() {
@@ -428,7 +436,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         while let Some(func) = work_list.pop_front() {
             let propagation = &function_summary_map.get(&func).unwrap().propagation;
             let st = abs_states.get(&func).unwrap().clone();
-            let succs = self.call_graph.get(&func).unwrap();
+            let succs = call_graph.get(&func).unwrap();
             for succ in succs {
                 // find arguments
                 let argss: Vec<_> = self
@@ -536,7 +544,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         };
 
         // find functions reachable from pthread_create
-        let thread_functions = self.thread_functions();
+        let thread_functions = self.thread_functions(&call_graph);
         if verbose() {
             println!("thread_functions: {:#?}", thread_functions);
         }
