@@ -9,6 +9,7 @@ use etrace::some_or;
 use lazy_static::lazy_static;
 use rustc_hir::*;
 use rustc_lint::{LateContext, LateLintPass, LintContext, LintPass};
+use rustc_middle::hir::nested_filter::OnlyBodies;
 use rustc_span::{BytePos, Span, Symbol};
 use rustfix::{Replacement, Snippet, Solution, Suggestion};
 use spin::once::Once;
@@ -28,16 +29,6 @@ lazy_static! {
 }
 
 static SUMMARY: Once<AnalysisSummary> = Once::new();
-static GLOBAL_DEF_MAP: Once<BTreeMap<String, (String, String)>> = Once::new();
-static ARRAY_DEF_MAP: Once<BTreeMap<String, (String, Vec<String>)>> = Once::new();
-static STRUCT_DEF_MAP: Once<BTreeMap<String, BTreeMap<String, String>>> = Once::new();
-static TRANS_STRUCT_DEF_MAP: Once<BTreeMap<String, BTreeSet<String>>> = Once::new();
-static INIT_MAP: Once<BTreeMap<(String, ExprPath, String), String>> = Once::new();
-static MUTEX_INIT_MAP: Once<BTreeSet<(String, ExprPath, String)>> = Once::new();
-static PATH_TYPE_MAP: Once<BTreeMap<ExprPath, BTreeMap<String, String>>> = Once::new();
-static DURATION_MAP: Once<BTreeMap<(String, String, String), String>> = Once::new();
-static TRYLOCK_MAP: Once<BTreeMap<(String, String, usize), String>> = Once::new();
-static PARAMS_MAP: Once<BTreeMap<String, Vec<String>>> = Once::new();
 
 fn global_mutex_map() -> &'static BTreeMap<String, String> {
     &SUMMARY.get().unwrap().mutex_map
@@ -55,47 +46,8 @@ fn function_mutex_map() -> &'static BTreeMap<String, FunctionSummary> {
     &SUMMARY.get().unwrap().function_map
 }
 
-fn global_def_map() -> &'static BTreeMap<String, (String, String)> {
-    GLOBAL_DEF_MAP.get().unwrap()
-}
-
-fn array_def_map() -> &'static BTreeMap<String, (String, Vec<String>)> {
-    ARRAY_DEF_MAP.get().unwrap()
-}
-
-fn struct_def_map() -> &'static BTreeMap<String, BTreeMap<String, String>> {
-    STRUCT_DEF_MAP.get().unwrap()
-}
-
-fn init_map() -> &'static BTreeMap<(String, ExprPath, String), String> {
-    INIT_MAP.get().unwrap()
-}
-
-fn mutex_init_map() -> &'static BTreeSet<(String, ExprPath, String)> {
-    MUTEX_INIT_MAP.get().unwrap()
-}
-
-fn path_type_map() -> &'static BTreeMap<ExprPath, BTreeMap<String, String>> {
-    PATH_TYPE_MAP.get().unwrap()
-}
-
-fn duration_map() -> &'static BTreeMap<(String, String, String), String> {
-    DURATION_MAP.get().unwrap()
-}
-
-fn trylock_map() -> &'static BTreeMap<(String, String, usize), String> {
-    TRYLOCK_MAP.get().unwrap()
-}
-
-fn params_map() -> &'static BTreeMap<String, Vec<String>> {
-    PARAMS_MAP.get().unwrap()
-}
-
 pub fn collect_replacements(args: Vec<String>, summary: AnalysisSummary) -> Vec<Replacement> {
     SUMMARY.call_once(|| summary);
-
-    let exit_code = compile_with(args.clone(), vec![GlobalPass::new]);
-    assert_eq!(exit_code, 0);
 
     let exit_code = compile_with(args, vec![RewritePass::new]);
     assert_eq!(exit_code, 0);
@@ -125,7 +77,8 @@ pub fn apply_suggestions(mut replacements: Vec<Replacement>) -> String {
 }
 
 #[derive(Default)]
-struct GlobalPass {
+struct Visitor<'a, 'tcx> {
+    ctx: Option<&'a LateContext<'tcx>>,
     global_def_map: BTreeMap<String, (String, String)>,
     array_def_map: BTreeMap<String, (String, Vec<String>)>,
     struct_def_map: BTreeMap<String, BTreeMap<String, String>>,
@@ -139,21 +92,15 @@ struct GlobalPass {
     ty_alias_map: BTreeMap<String, String>,
 }
 
-impl GlobalPass {
-    #[allow(clippy::new_ret_no_self)]
-    fn new() -> Box<LatePass> {
-        Box::new(Self::default())
-    }
-}
+impl<'tcx> intravisit::Visitor<'tcx> for Visitor<'_, 'tcx> {
+    type NestedFilter = OnlyBodies;
 
-impl LintPass for GlobalPass {
-    fn name(&self) -> &'static str {
-        "GlobalPass"
+    fn nested_visit_map(&mut self) -> Self::Map {
+        self.ctx.unwrap().tcx.hir()
     }
-}
 
-impl<'tcx> LateLintPass<'tcx> for GlobalPass {
-    fn check_item(&mut self, ctx: &LateContext<'tcx>, i: &'tcx Item<'tcx>) {
+    fn visit_item(&mut self, i: &'tcx Item<'tcx>) {
+        let ctx = self.ctx.unwrap();
         let name = i.ident.name.to_ident_string();
         match &i.kind {
             ItemKind::Struct(VariantData::Struct(fs, _), _)
@@ -209,9 +156,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
             _ => (),
         }
+        intravisit::walk_item(self, i);
     }
 
-    fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
+    fn visit_expr(&mut self, e: &'tcx Expr<'tcx>) {
+        let ctx = self.ctx.unwrap();
         if let Some(func) = current_function(ctx, e.hir_id) {
             if let Some(path) = expr_to_path(ctx, e) {
                 let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, e.hir_id)));
@@ -225,11 +174,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 let f = name(func);
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
-                        let mut path = some_or!(expr_to_path(ctx, &args[0]), return);
-                        let f = some_or!(path.pop(), return);
-                        if let ExprPathProj::Field(f) = f {
-                            let func = func_name();
-                            self.mutex_init_map.insert((func, path, f));
+                        if let Some(mut path) = expr_to_path(ctx, &args[0]) {
+                            if let Some(ExprPathProj::Field(f)) = path.pop() {
+                                let func = func_name();
+                                self.mutex_init_map.insert((func, path, f));
+                            }
                         }
                     }
                     _ => (),
@@ -250,14 +199,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             };
                             let ty = type_to_string(type_of(ctx, s.hir_id));
                             let f = f.name.to_ident_string();
-                            let map = some_or!(struct_mutex_map().get(&ty), return);
-                            let m = some_or!(map.get(&f), return);
-                            let mut mutex = expr_to_path(ctx, s).unwrap();
-                            mutex.add_suffix(ExprPathProj::Field(m.clone()));
-                            if !is_protected(&mutex) {
-                                mutex.pop();
-                                let init = span_to_string(ctx, rhs.span);
-                                self.init_map.entry((func, mutex, f)).or_insert(init);
+                            if let Some(map) = struct_mutex_map().get(&ty) {
+                                if let Some(m) = map.get(&f) {
+                                    let mut mutex = expr_to_path(ctx, s).unwrap();
+                                    mutex.add_suffix(ExprPathProj::Field(m.clone()));
+                                    if !is_protected(&mutex) {
+                                        mutex.pop();
+                                        let init = span_to_string(ctx, rhs.span);
+                                        self.init_map.entry((func, mutex, f)).or_insert(init);
+                                    }
+                                }
                             }
                         }
                     }
@@ -310,63 +261,34 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 _ => (),
             },
             ExprKind::If(c, _, _) => {
-                let (expr, _) = some_or!(read_condition(ctx, c), return);
-                let f = func_name();
-                let line = span_lines(ctx, c.span)
-                    .drain_filter(|_| true)
-                    .min()
-                    .unwrap();
-                self.if_map.entry((f, expr)).or_default().push(line);
+                if let Some((expr, _)) = read_condition(ctx, c) {
+                    let f = func_name();
+                    let line = span_lines(ctx, c.span)
+                        .drain_filter(|_| true)
+                        .min()
+                        .unwrap();
+                    self.if_map.entry((f, expr)).or_default().push(line);
+                }
             }
             _ => (),
         }
-    }
-
-    fn check_crate_post(&mut self, _: &LateContext<'tcx>) {
-        let mut map: BTreeMap<_, BTreeSet<_>> = self
-            .struct_def_map
-            .iter()
-            .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
-            .collect();
-        for (lt, rt) in self.ty_alias_map.drain_filter(|_, _| true) {
-            map.insert(lt, BTreeSet::from([rt]));
-        }
-        TRANS_STRUCT_DEF_MAP.call_once(|| transitive_closure(map));
-
-        GLOBAL_DEF_MAP.call_once(|| std::mem::take(&mut self.global_def_map));
-        ARRAY_DEF_MAP.call_once(|| std::mem::take(&mut self.array_def_map));
-        STRUCT_DEF_MAP.call_once(|| std::mem::take(&mut self.struct_def_map));
-        INIT_MAP.call_once(|| std::mem::take(&mut self.init_map));
-        MUTEX_INIT_MAP.call_once(|| std::mem::take(&mut self.mutex_init_map));
-        PATH_TYPE_MAP.call_once(|| std::mem::take(&mut self.path_type_map));
-        DURATION_MAP.call_once(|| std::mem::take(&mut self.duration_map));
-        PARAMS_MAP.call_once(|| std::mem::take(&mut self.params_map));
-
-        let mut trylock_map = BTreeMap::new();
-        for (k, v) in &mut self.trylock_map {
-            let lines = some_or!(self.if_map.get(k), continue);
-            for l in lines {
-                v.push((*l, String::new()));
-            }
-            v.sort_by_key(|(l, _)| *l);
-
-            let mut guard = String::new();
-            for (l, g) in v {
-                if !guard.is_empty() && g.is_empty() {
-                    let (f, expr) = k;
-                    trylock_map.insert((f.clone(), expr.clone(), *l), guard);
-                    guard = String::new();
-                } else if guard.is_empty() && !g.is_empty() {
-                    guard = g.clone();
-                }
-            }
-        }
-        TRYLOCK_MAP.call_once(|| trylock_map);
+        intravisit::walk_expr(self, e);
     }
 }
 
 #[derive(Default)]
 struct RewritePass {
+    global_def_map: BTreeMap<String, (String, String)>,
+    array_def_map: BTreeMap<String, (String, Vec<String>)>,
+    struct_def_map: BTreeMap<String, BTreeMap<String, String>>,
+    trans_struct_def_map: BTreeMap<String, BTreeSet<String>>,
+    init_map: BTreeMap<(String, ExprPath, String), String>,
+    mutex_init_map: BTreeSet<(String, ExprPath, String)>,
+    path_type_map: BTreeMap<ExprPath, BTreeMap<String, String>>,
+    duration_map: BTreeMap<(String, String, String), String>,
+    trylock_map: BTreeMap<(String, String, usize), String>,
+    params_map: BTreeMap<String, Vec<String>>,
+
     guard_map: BTreeMap<String, Vec<String>>,
     replaced: BTreeSet<Span>,
 }
@@ -395,6 +317,53 @@ impl LintPass for RewritePass {
 }
 
 impl<'tcx> LateLintPass<'tcx> for RewritePass {
+    fn check_crate(&mut self, ctx: &LateContext<'tcx>) {
+        let mut visitor = Visitor {
+            ctx: Some(ctx),
+            ..Default::default()
+        };
+        ctx.tcx.hir().deep_visit_all_item_likes(&mut visitor);
+
+        self.global_def_map = visitor.global_def_map;
+        self.array_def_map = visitor.array_def_map;
+        self.struct_def_map = visitor.struct_def_map;
+        self.init_map = visitor.init_map;
+        self.mutex_init_map = visitor.mutex_init_map;
+        self.path_type_map = visitor.path_type_map;
+        self.duration_map = visitor.duration_map;
+        self.params_map = visitor.params_map;
+
+        let mut map: BTreeMap<_, _> = self
+            .struct_def_map
+            .iter()
+            .map(|(k, m)| (k.clone(), m.values().cloned().collect()))
+            .collect();
+        for (lt, rt) in visitor.ty_alias_map {
+            map.insert(lt, BTreeSet::from([rt]));
+        }
+        self.trans_struct_def_map = transitive_closure(map);
+
+        for (k, v) in &mut visitor.trylock_map {
+            let lines = some_or!(visitor.if_map.get(k), continue);
+            for l in lines {
+                v.push((*l, String::new()));
+            }
+            v.sort_by_key(|(l, _)| *l);
+
+            let mut guard = String::new();
+            for (l, g) in v {
+                if !guard.is_empty() && g.is_empty() {
+                    let (f, expr) = k;
+                    self.trylock_map
+                        .insert((f.clone(), expr.clone(), *l), guard);
+                    guard = String::new();
+                } else if guard.is_empty() && !g.is_empty() {
+                    guard = g.clone();
+                }
+            }
+        }
+    }
+
     fn check_mod(&mut self, ctx: &LateContext<'tcx>, m: &'tcx Mod<'tcx>, _: Span, _: HirId) {
         let hir = ctx.tcx.hir();
         if m.item_ids
@@ -419,7 +388,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                         TyKind::Path(QPath::Resolved(_, p)) => path_to_string(p),
                         _ => unreachable!(),
                     };
-                    if let Some(map) = TRANS_STRUCT_DEF_MAP.get().unwrap().get(&s) {
+                    if let Some(map) = self.trans_struct_def_map.get(&s) {
                         if map.iter().any(|t| {
                             t == "pthread_mutex_t"
                                 || t == "pthread_spinlock_t"
@@ -441,13 +410,12 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&s).unwrap_or(&empty);
                 let mut new_structs = String::new();
-                let struct_def_map = struct_def_map();
                 let v: Vec<_> = map
                     .iter()
                     .map(|(x, m)| {
                         (
                             x.clone(),
-                            struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
+                            self.struct_def_map.get(&s).unwrap().get(x).unwrap().clone(),
                             m.clone(),
                         )
                     })
@@ -512,7 +480,7 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                     let mut init = String::new();
                     for (x, m) in global_mutex_map() {
                         if *m == name {
-                            let (t, i) = global_def_map().get(x).unwrap().clone();
+                            let (t, i) = self.global_def_map.get(x).unwrap().clone();
                             decl.push_str(format!("pub {}: {}, ", x, t).as_str());
                             init.push_str(format!("{}: {}, ", x, i).as_str());
                         }
@@ -539,7 +507,7 @@ pub static mut {2}: Mutex<{0}> = Mutex::new(
                             .iter()
                             .filter_map(|(x, m)| {
                                 if **m == name {
-                                    let (t, i) = array_def_map().get(x).unwrap().clone();
+                                    let (t, i) = self.array_def_map.get(x).unwrap().clone();
                                     Some((x, t, i))
                                 } else {
                                     None
@@ -618,7 +586,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             format!(
                                 "mut {}: MutexGuard<'static, {}>",
                                 m.guard(),
-                                struct_of_path(&name, m)
+                                self.struct_of_path(&name, m)
                             )
                         })
                         .collect();
@@ -646,8 +614,10 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         ret_types.push(span_to_string(ctx, t.span));
                     }
                     for m in ret {
-                        ret_types
-                            .push(format!("MutexGuard<'static, {}>", struct_of_path(&name, m)));
+                        ret_types.push(format!(
+                            "MutexGuard<'static, {}>",
+                            self.struct_of_path(&name, m)
+                        ));
                     }
                     let ret_type = make_tuple(ret_types);
                     let sugg = if let FnRetTy::Return(_) = decl.output {
@@ -740,7 +710,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 match f.as_deref() {
                     Some("pthread_mutex_init" | "pthread_spin_init") => {
                         let mut path = expr_to_path(ctx, &args[0]).unwrap();
-                        if global_def_map().contains_key(&path.base) {
+                        if self.global_def_map.contains_key(&path.base) {
                             add_replacement(ctx, e.span, "0".to_string());
                         } else {
                             let func = func_name();
@@ -749,19 +719,18 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                                     break f;
                                 }
                             };
-                            let typ = get_type(&path, &func_name());
+                            let typ = self.get_type(&path, &func_name());
                             let empty = BTreeMap::new();
                             let map = struct_mutex_map().get(typ).unwrap_or(&empty);
-                            let init_map = init_map();
-                            let struct_map = struct_def_map();
                             let init = join(
                                 map.iter()
                                     .filter_map(|(x, m)| {
                                         let default = default_value(
-                                            struct_map.get(typ).unwrap().get(x).unwrap(),
+                                            self.struct_def_map.get(typ).unwrap().get(x).unwrap(),
                                         );
                                         if *m == f {
-                                            let i = init_map
+                                            let i = self
+                                                .init_map
                                                 .get(&(func.clone(), path.clone(), x.clone()))
                                                 .unwrap_or(&default);
                                             Some(format!("{}: {}", x, i))
@@ -855,13 +824,14 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                         let g = arg(1).1;
                         let t = arg(2).0;
                         self.use_guard(func_name(), g.clone());
-                        let duration_map = duration_map();
                         let f = func_name();
                         let zero = "0".to_string();
-                        let tv_sec = duration_map
+                        let tv_sec = self
+                            .duration_map
                             .get(&(f.clone(), t.clone(), "tv_sec".to_string()))
                             .unwrap_or(&zero);
-                        let tv_nsec = duration_map
+                        let tv_nsec = self
+                            .duration_map
                             .get(&(f, t, "tv_nsec".to_string()))
                             .unwrap_or(&zero);
                         add_replacement(
@@ -903,7 +873,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             ..
                         }) = function_mutex_map().get(f)
                         {
-                            let params = params_map().get(f).unwrap();
+                            let params = self.params_map.get(f).unwrap().clone();
                             // param-to-arg aliasing
                             let alias_mutex = |m: &ExprPath| {
                                 let mut m = m.clone();
@@ -1005,13 +975,17 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let typ = type_to_string(type_of(ctx, e.hir_id));
                 let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
-                let struct_def_map = struct_def_map();
                 let v: Vec<_> = map
                     .iter()
                     .map(|(x, m)| {
                         (
                             x.clone(),
-                            struct_def_map.get(&typ).unwrap().get(x).unwrap().clone(),
+                            self.struct_def_map
+                                .get(&typ)
+                                .unwrap()
+                                .get(x)
+                                .unwrap()
+                                .clone(),
                             m.clone(),
                         )
                     })
@@ -1110,7 +1084,8 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let assigned = in_assignment(ctx, e, true);
                     let path = expr_to_path(ctx, s);
                     let initialized = if let Some(path) = path {
-                        mutex_init_map().contains(&(func_name(), path, m.clone()))
+                        self.mutex_init_map
+                            .contains(&(func_name(), path, m.clone()))
                     } else {
                         false
                     };
@@ -1125,7 +1100,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
             ExprKind::Assign(lhs, _, _) => {
                 if let Some(mut path) = expr_to_path(ctx, lhs) {
                     while path.pop().is_some() {
-                        let ty = get_type(&path, &func_name());
+                        let ty = self.get_type(&path, &func_name());
                         if ty.contains("pthread_cond_t") {
                             add_replacement(ctx, e.span, "()".to_string());
                         }
@@ -1144,7 +1119,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                             return;
                         }
                         let s = some_or!(expr_to_path(ctx, s), return);
-                        if mutex_init_map().contains(&(func_name(), s, m.clone())) {
+                        if self.mutex_init_map.contains(&(func_name(), s, m.clone())) {
                             add_replacement(ctx, e.span, "()".to_string());
                         }
                     }
@@ -1157,7 +1132,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     .drain_filter(|_| true)
                     .min()
                     .unwrap();
-                let g = some_or!(trylock_map().get(&(func_name(), expr, line)), return);
+                let g = some_or!(self.trylock_map.get(&(func_name(), expr, line)), return);
                 let span = c
                     .span
                     .with_lo(c.span.lo() - BytePos(3))
@@ -1246,6 +1221,24 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 self.replaced.insert(e.span);
             }
             _ => (),
+        }
+    }
+}
+
+impl RewritePass {
+    fn get_type(&self, s: &ExprPath, f: &String) -> &String {
+        let map = self.path_type_map.get(s).unwrap();
+        map.get(f).unwrap_or_else(|| map.iter().next().unwrap().1)
+    }
+
+    fn struct_of_path(&self, func: &String, s: &ExprPath) -> String {
+        if s.is_variable() {
+            struct_of(&s.base)
+        } else {
+            let mut s = s.clone();
+            let f = s.pop().unwrap();
+            let ty = self.get_type(&s, func);
+            struct_of2(ty, f.inner())
         }
     }
 }
@@ -1443,22 +1436,6 @@ fn struct_of(m: &str) -> String {
 
 fn struct_of2(s: &str, m: &str) -> String {
     format!("{}{}Data", path_to_id(s), path_to_id(m))
-}
-
-fn struct_of_path(func: &String, s: &ExprPath) -> String {
-    if s.is_variable() {
-        struct_of(&s.base)
-    } else {
-        let mut s = s.clone();
-        let f = s.pop().unwrap();
-        let ty = get_type(&s, func);
-        struct_of2(ty, f.inner())
-    }
-}
-
-fn get_type(s: &ExprPath, f: &String) -> &'static String {
-    let map = path_type_map().get(s).unwrap();
-    map.get(f).unwrap_or_else(|| map.iter().next().unwrap().1)
 }
 
 fn default_value(typ: &str) -> String {

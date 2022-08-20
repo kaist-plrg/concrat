@@ -438,6 +438,7 @@ pub fn compile_args(input: &Path, dep: &Path) -> Vec<String> {
     let mut v: Vec<_> = vec![
         "create-initial-program",
         input.to_str().unwrap(),
+        "-Zno-codegen",
         "--sysroot",
         sys_root().as_str(),
         "--crate-type",
