@@ -29,5 +29,6 @@ bench/libqrencode
 bench/sysbench
 bench/libfreenect
 bench/minimap2
+bench/Chipmunk2D
 bench/kona
 bench/sc

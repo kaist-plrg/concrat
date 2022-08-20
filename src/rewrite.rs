@@ -90,7 +90,8 @@ struct Visitor<'a, 'tcx> {
     if_map: BTreeMap<(String, String), Vec<usize>>,
     params_map: BTreeMap<String, Vec<String>>,
     ty_alias_map: BTreeMap<String, String>,
-    mutex_assign_map: BTreeMap<(String, String), String>,
+    rmutex_assign_map: BTreeMap<(String, String), String>,
+    lmutex_assign_set: BTreeSet<(String, String)>,
 }
 
 impl<'tcx> intravisit::Visitor<'tcx> for Visitor<'_, 'tcx> {
@@ -187,6 +188,12 @@ impl<'tcx> intravisit::Visitor<'tcx> for Visitor<'_, 'tcx> {
             }
             ExprKind::Assign(lhs, rhs, _) => {
                 match lhs.kind {
+                    ExprKind::Path(_) => {
+                        if type_to_string(type_of(ctx, lhs.hir_id)).contains("pthread_mutex_t") {
+                            let lhs = span_to_string(ctx, lhs.span);
+                            self.lmutex_assign_set.insert((func_name(), lhs));
+                        }
+                    }
                     ExprKind::Field(s, f) => {
                         let func = func_name();
                         if let Some(func_summary) = function_mutex_map().get(&func) {
@@ -217,7 +224,7 @@ impl<'tcx> intravisit::Visitor<'tcx> for Visitor<'_, 'tcx> {
                             if type_to_string(type_of(ctx, lhs.hir_id)).contains("pthread_mutex_t")
                             {
                                 let rhs = span_to_string(ctx, rhs.span);
-                                self.mutex_assign_map
+                                self.rmutex_assign_map
                                     .insert((func, rhs), struct_of2(&ty, &f));
                             }
                         }
@@ -298,7 +305,8 @@ struct RewritePass {
     duration_map: BTreeMap<(String, String, String), String>,
     trylock_map: BTreeMap<(String, String, usize), String>,
     params_map: BTreeMap<String, Vec<String>>,
-    mutex_assign_map: BTreeMap<(String, String), String>,
+    rmutex_assign_map: BTreeMap<(String, String), String>,
+    lmutex_assign_set: BTreeSet<(String, String)>,
 
     guard_map: BTreeMap<String, Vec<String>>,
     replaced: BTreeSet<Span>,
@@ -343,7 +351,8 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
         self.path_type_map = visitor.path_type_map;
         self.duration_map = visitor.duration_map;
         self.params_map = visitor.params_map;
-        self.mutex_assign_map = visitor.mutex_assign_map;
+        self.rmutex_assign_map = visitor.rmutex_assign_map;
+        self.lmutex_assign_set = visitor.lmutex_assign_set;
 
         let mut map: BTreeMap<_, _> = self
             .struct_def_map
@@ -705,7 +714,11 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 let x = span_to_string(ctx, pat.span).replace("mut ", "");
                 let ty = span_to_string(ctx, ty.span);
                 if ty.contains("pthread_mutex_t") {
-                    let init = if let Some(t) = self.mutex_assign_map.get(&(func, x.clone())) {
+                    if self.lmutex_assign_set.contains(&(func.clone(), x.clone())) {
+                        add_replacement(ctx, s.span, format!("let mut {};", x));
+                        return;
+                    }
+                    let init = if let Some(t) = self.rmutex_assign_map.get(&(func, x.clone())) {
                         format!("{} {{}}", t)
                     } else {
                         "()".to_string()
