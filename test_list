@@ -30,3 +30,4 @@ bench/sysbench
 bench/libfreenect
 bench/minimap2
 bench/kona
+bench/sc
