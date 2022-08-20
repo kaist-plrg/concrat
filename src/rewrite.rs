@@ -684,6 +684,26 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
         }
     }
 
+    fn check_stmt(&mut self, ctx: &LateContext<'tcx>, s: &'tcx Stmt<'tcx>) {
+        if current_function(ctx, s.hir_id).is_none() {
+            return;
+        }
+        match &s.kind {
+            StmtKind::Local(Local {
+                pat, ty: Some(ty), ..
+            }) => {
+                let x = span_to_string(ctx, pat.span).replace("mut ", "");
+                let ty = span_to_string(ctx, ty.span);
+                if ty.contains("pthread_mutex_t") {
+                    add_replacement(ctx, s.span, format!("let mut {} = Mutex::new(());", x));
+                } else if ty.contains("pthread_cond_t") {
+                    add_replacement(ctx, s.span, format!("let mut {} = Condvar::new();", x));
+                }
+            }
+            _ => (),
+        }
+    }
+
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
         if self.replaced.iter().any(|s| s.overlaps(e.span)) {
             return;
