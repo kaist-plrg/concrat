@@ -282,6 +282,15 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                             }
                         }
                     }
+                    ExprKind::Path(_) => {
+                        let f = func_name();
+                        let x = span_to_string(ctx, rhs.span);
+                        if let Some(v) = self.trylock_map.get(&(f.clone(), x)) {
+                            let v = v.last().unwrap().clone();
+                            let l = span_to_string(ctx, lhs.span);
+                            self.trylock_map.entry((f, l)).or_default().push(v);
+                        }
+                    }
                     _ => (),
                 }
             }
@@ -647,37 +656,15 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     };
                     add_replacement(ctx, decl.output.span(), sugg);
 
-                    let b = if let ExprKind::Block(b, _) = body.value.kind {
-                        b
-                    } else {
-                        unreachable!()
-                    };
-
                     if matches!(decl.output, FnRetTy::Return(_)) {
                         return;
                     }
 
-                    let span = if let Some(e) = b.expr {
-                        Some(e.span)
-                    } else {
-                        let last = b.stmts.last().unwrap();
-                        if let StmtKind::Semi(e) = last.kind {
-                            if matches!(e.kind, ExprKind::Ret(_)) {
-                                None
-                            } else {
-                                Some(last.span)
-                            }
-                        } else {
-                            unreachable!();
-                        }
-                    };
-
-                    if let Some(span) = span {
-                        let ret_vals: Vec<_> = ret.iter().map(|m| m.guard()).collect();
-                        self.use_guards(name.clone(), &ret_vals);
-                        let ret_val = make_tuple(ret_vals);
-                        add_replacement(ctx, span.shrink_to_hi(), format!("\n    {}", ret_val));
-                    }
+                    let ret_vals: Vec<_> = ret.iter().map(|m| m.guard()).collect();
+                    self.use_guards(name.clone(), &ret_vals);
+                    let ret_val = make_tuple(ret_vals);
+                    let span = span.with_hi(span.hi() - BytePos(1)).shrink_to_hi();
+                    add_replacement(ctx, span, format!("    {}\n", ret_val));
                 }
             }
             _ => (),
@@ -1172,7 +1159,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     .with_lo(c.span.lo() - BytePos(3))
                     .with_hi(c.span.hi() + BytePos(2));
                 let true_branch = if eq {
-                    format!("Some(g) => {{ {} = g;", g)
+                    format!("Some({0}_tmp) => {{ {0} = {0}_tmp;", g)
                 } else {
                     "None => {".to_string()
                 };
@@ -1185,7 +1172,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let false_branch = if eq {
                         "None => {".to_string()
                     } else {
-                        format!("Some(g) => {{ {} = g;", g)
+                        format!("Some({0}_tmp) => {{ {0} = {0}_tmp;", g)
                     };
                     add_replacement(ctx, span, false_branch);
 
@@ -1196,7 +1183,7 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     let false_branch = if eq {
                         "None => {} }".to_string()
                     } else {
-                        format!("Some(g) => {{ {} = g; }} }}", g)
+                        format!("Some({0}_tmp) => {{ {0} = {0}_tmp; }} }}", g)
                     };
                     add_replacement(ctx, span, false_branch);
                 }

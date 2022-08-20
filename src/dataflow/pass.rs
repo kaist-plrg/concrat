@@ -81,9 +81,10 @@ impl GlobalPass {
                     continue;
                 }
                 let (_, t) = some_or!(summary.params.iter().find(|(p, _)| p == &m.base), continue);
-                let args = summary
-                    .calls
-                    .iter()
+                let args = self
+                    .functions
+                    .values()
+                    .flat_map(|s| &s.calls)
                     .flat_map(|x| &x.3)
                     .filter(|a| &a.typ == t)
                     .filter_map(|a| a.path.as_ref());
@@ -396,17 +397,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .cloned()
             .collect();
         // initialize work list with reverse post order traversal
-        let mut work_list: VecDeque<_> = po
-            .iter()
-            .flatten()
-            .rev()
-            .flat_map(|n| component_elems.get(n).unwrap())
-            .cloned()
-            .collect();
+        let mut work_list: VecDeque<_> = VecDeque::new();
         // initialize abstract states
         let mut abs_states: BTreeMap<DefId, BitSet<Id>> = BTreeMap::new();
-        for func in &work_list {
+        for func in self.functions.keys() {
             let init_st = if iter_roots.contains(func) {
+                work_list.push_back(*func);
                 function_summary_map.get(func).unwrap().entry_mutex.clone()
             } else {
                 BitSet::new_filled(mutexes.len())

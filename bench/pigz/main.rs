@@ -12092,7 +12092,8 @@ unsafe extern "C" fn fail(
     mut file: *const libc::c_char,
     mut line: libc::c_long,
     mut func: *const libc::c_char,
-) {
+// ) {
+) -> ! {
     fprintf(stderr, b"%s: \0" as *const u8 as *const libc::c_char, yarn_prefix);
     match err {
         1 => {
