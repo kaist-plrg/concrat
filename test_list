@@ -18,11 +18,13 @@ bench/the_silver_searcher
 bench/vanitygen
 bench/dnspod-sr
 bench/streem
+bench/Mirai-Source-Code
 bench/pigz
 bench/snoopy
 bench/klib
 bench/nnn
 bench/libqrencode
+bench/sysbench
 bench/libfreenect
 bench/minimap2
 bench/kona

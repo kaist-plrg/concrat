@@ -1020,13 +1020,17 @@ pub struct __anonstruct_internal_script_t_141024058 {
 pub type internal_script_t = __anonstruct_internal_script_t_141024058;
 #[inline]
 unsafe extern "C" fn ck_pr_stall() {
-    asm!("pause", options(preserves_flags, att_syntax));
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_fas_uint(
     mut target: *mut libc::c_uint,
     mut v: libc::c_uint,
 ) -> libc::c_uint {
+
+
+
+
     return v;
 }
 #[inline]
@@ -1034,16 +1038,28 @@ unsafe extern "C" fn ck_pr_md_load_uint(
     mut target: *const libc::c_uint,
 ) -> libc::c_uint {
     let mut r: libc::c_uint = 0;
+
+
+
+
     return r;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_md_load_int(mut target: *const libc::c_int) -> libc::c_int {
     let mut r: libc::c_int = 0;
+
+
+
+
     return r;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_md_load_64(mut target: *const uint64_t) -> uint64_t {
     let mut r: uint64_t = 0;
+
+
+
+
     return r;
 }
 #[inline]
@@ -1051,26 +1067,36 @@ unsafe extern "C" fn ck_pr_md_store_uint(
     mut target: *mut libc::c_uint,
     mut v: libc::c_uint,
 ) {
-    return;
+
+
+
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_md_store_64(mut target: *mut uint64_t, mut v: uint64_t) {
-    return;
+
+
+
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_faa_64(
     mut target: *mut uint64_t,
     mut d: uint64_t,
 ) -> uint64_t {
+
+
+
+
     return d;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_inc_int(mut target: *mut libc::c_int) {
-    return;
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_dec_int(mut target: *mut libc::c_int) {
-    return;
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_cas_uint_value(
@@ -1080,11 +1106,17 @@ unsafe extern "C" fn ck_pr_cas_uint_value(
     mut v: *mut libc::c_uint,
 ) -> bool {
     let mut z: bool = false;
+
+
+
+
+
+
     return z;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_barrier() {
-    asm!("", options(preserves_flags, att_syntax));
+
 }
 #[inline]
 unsafe extern "C" fn ck_pr_fence_store_atomic() {
@@ -5724,11 +5756,18 @@ unsafe extern "C" fn oper_handler_done() -> libc::c_int {
 #[inline]
 unsafe extern "C" fn ck_pr_md_load_8(mut target: *const uint8_t) -> uint8_t {
     let mut r: uint8_t = 0;
+
+
+
+
     return r;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_md_store_8(mut target: *mut uint8_t, mut v: uint8_t) {
-    return;
+
+
+
+
 }
 pub static mut db_globals: db_globals_t = db_globals_t {
     ps_mode: DB_PS_MODE_AUTO,
@@ -5945,16 +5984,16 @@ pub unsafe extern "C" fn db_create(mut name: *const libc::c_char) -> *mut db_dri
                     current_block = 4519071079872203859;
                 }
             } else {
-                current_block = 10394926462389514359;
+                current_block = 5043415446234504278;
             }
         } else {
-            current_block = 10394926462389514359;
+            current_block = 5043415446234504278;
         }
         match current_block {
             4519071079872203859 => {}
             _ => {
                 match current_block {
-                    10394926462389514359 => {
+                    5043415446234504278 => {
                         if name as libc::c_ulong
                             == 0 as *mut libc::c_void as libc::c_ulong
                         {
@@ -5996,40 +6035,30 @@ pub unsafe extern "C" fn db_create(mut name: *const libc::c_char) -> *mut db_dri
                             .expect("non-null function pointer")();
                         if tmp___1 != 0 {
                             pthread_mutex_unlock(&mut (*drv).mutex);
-                            current_block = 4519071079872203859;
-                        } else {
-                            (*drv).initialized = 1 as libc::c_int != 0;
-                            current_block = 5689316957504528238;
+                            return 0 as *mut libc::c_void as *mut db_driver_t;
                         }
-                    } else {
-                        current_block = 5689316957504528238;
+                        (*drv).initialized = 1 as libc::c_int != 0;
                     }
-                    match current_block {
-                        4519071079872203859 => {}
-                        _ => {
-                            pthread_mutex_unlock(&mut (*drv).mutex);
-                            if ::std::mem::transmute::<
-                                Option::<drv_op_thread_init>,
-                                libc::c_ulong,
-                            >((*drv).ops.thread_init)
-                                != 0 as *mut libc::c_void as libc::c_ulong
-                            {
-                                tmp___2 = (Some(
-                                    ((*drv).ops.thread_init).expect("non-null function pointer"),
-                                ))
-                                    .expect("non-null function pointer")(sb_tls_thread_id);
-                                if tmp___2 != 0 {
-                                    log_text(
-                                        LOG_FATAL,
-                                        b"thread-local driver initialization failed.\0" as *const u8
-                                            as *const libc::c_char,
-                                    );
-                                    return 0 as *mut libc::c_void as *mut db_driver_t;
-                                }
-                            }
-                            return drv;
+                    pthread_mutex_unlock(&mut (*drv).mutex);
+                    if ::std::mem::transmute::<
+                        Option::<drv_op_thread_init>,
+                        libc::c_ulong,
+                    >((*drv).ops.thread_init) != 0 as *mut libc::c_void as libc::c_ulong
+                    {
+                        tmp___2 = (Some(
+                            ((*drv).ops.thread_init).expect("non-null function pointer"),
+                        ))
+                            .expect("non-null function pointer")(sb_tls_thread_id);
+                        if tmp___2 != 0 {
+                            log_text(
+                                LOG_FATAL,
+                                b"thread-local driver initialization failed.\0" as *const u8
+                                    as *const libc::c_char,
+                            );
+                            return 0 as *mut libc::c_void as *mut db_driver_t;
                         }
                     }
+                    return drv;
                 }
             }
         }
@@ -6965,14 +6994,14 @@ unsafe extern "C" fn db_bulk_do_insert(
         (*con).bulk_commit_cnt = ((*con).bulk_commit_cnt).wrapping_add((*con).bulk_cnt);
         let mut current_block_16: u64;
         if is_last != 0 {
-            current_block_16 = 10217124275089150897;
+            current_block_16 = 7177995817771013126;
         } else if (*con).bulk_commit_cnt >= (*con).bulk_commit_max {
-            current_block_16 = 10217124275089150897;
+            current_block_16 = 7177995817771013126;
         } else {
             current_block_16 = 7149356873433890176;
         }
         match current_block_16 {
-            10217124275089150897 => {
+            7177995817771013126 => {
                 tmp___0 = db_query(
                     con,
                     b"COMMIT\0" as *const u8 as *const libc::c_char,
@@ -7239,11 +7268,15 @@ unsafe extern "C" fn ck_pr_fas_64(
     mut target: *mut uint64_t,
     mut v: uint64_t,
 ) -> uint64_t {
+
+
+
+
     return v;
 }
 #[inline]
 unsafe extern "C" fn ck_pr_inc_64(mut target: *mut uint64_t) {
-    return;
+
 }
 pub static mut sb_latency_histogram: sb_histogram_t = sb_histogram_t {
     cumulative_array: 0 as *const uint64_t as *mut uint64_t,
@@ -7614,6 +7647,10 @@ unsafe extern "C" fn ck_pr_faa_32(
     mut target: *mut uint32_t,
     mut d: uint32_t,
 ) -> uint32_t {
+
+
+
+
     return d;
 }
 static mut rand_args: [sb_arg_t; 5] = [
@@ -8067,7 +8104,7 @@ unsafe extern "C" fn helper2(mut x: libc::c_double) -> libc::c_double {
 pub static mut sb_thread_attr: pthread_attr_t = pthread_attr_t { __size: [0; 56] };
 #[inline]
 unsafe extern "C" fn ck_pr_dec_uint(mut target: *mut libc::c_uint) {
-    return;
+
 }
 static mut threads: *mut sb_thread_ctxt_t = 0 as *const sb_thread_ctxt_t
     as *mut sb_thread_ctxt_t;
@@ -39436,7 +39473,8 @@ static mut internal_scripts: [internal_script_t; 6] = unsafe {
         {
             let mut init = __anonstruct_internal_script_t_141024058 {
                 name: b"sysbench.histogram.lua\0" as *const u8 as *const libc::c_char,
-                source: sysbench_histogram_lua.as_ptr() as *const libc::c_uchar,
+                source: sysbench_histogram_lua.as_ptr()
+                    as *const libc::c_uchar,
                 source_len: &sysbench_histogram_lua_len as *const size_t as *mut size_t,
             };
             init

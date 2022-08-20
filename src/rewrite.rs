@@ -368,6 +368,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 #[derive(Default)]
 struct RewritePass {
     guard_map: BTreeMap<String, Vec<String>>,
+    replaced: BTreeSet<Span>,
 }
 
 impl RewritePass {
@@ -711,6 +712,9 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
     }
 
     fn check_expr(&mut self, ctx: &LateContext<'tcx>, e: &'tcx Expr<'tcx>) {
+        if self.replaced.iter().any(|s| s.overlaps(e.span)) {
+            return;
+        }
         let func_name_opt = current_function(ctx, e.hir_id);
         let func_name = || func_name_opt.as_ref().unwrap().clone();
         let empty_summary = FunctionSummary::default();
@@ -1187,6 +1191,59 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                     };
                     add_replacement(ctx, span, false_branch);
                 }
+            }
+            ExprKind::MethodCall(method, args, _) => {
+                // ((*a).b[(*a).c as usize]).as_mut_ptr()
+                // ==>
+                // {
+                //     let c_index_tmp = (*guard).c;
+                //     (*guard).b[c_index_tmp as usize].as_mut_ptr()
+                // }
+                if method.ident.to_string() != "as_mut_ptr" {
+                    return;
+                }
+                let (arr, ind) = if let ExprKind::Index(arr, ind) = &args[0].kind {
+                    (arr, ind)
+                } else {
+                    return;
+                };
+                let (s1, f1) = if let ExprKind::Field(s, f) = &arr.kind {
+                    (s, f)
+                } else {
+                    return;
+                };
+                let ind = unwrap_cast_recursively(ind);
+                let (s2, f2) = if let ExprKind::Field(s, f) = &ind.kind {
+                    (s, f)
+                } else {
+                    return;
+                };
+                if span_to_string(ctx, s1.span) != span_to_string(ctx, s2.span) {
+                    return;
+                }
+                let ty = type_to_string(unwrap_ptr_from_type(type_of(ctx, s1.hir_id)));
+                let map = some_or!(struct_mutex_map().get(&ty), return);
+                let m1 = some_or!(map.get(&f1.to_string()), return);
+                let m2 = some_or!(map.get(&f2.to_string()), return);
+                if m1 != m2 {
+                    return;
+                }
+                let mut mutex = expr_to_path(ctx, s1).unwrap();
+                mutex.add_suffix(ExprPathProj::Field(m1.clone()));
+                if !is_protected(&mutex) {
+                    return;
+                }
+                let guard = mutex.guard();
+                self.use_guard(func_name(), guard.clone());
+                let new_e = format!(
+                    "{{
+        let {0}_index_tmp = (*{1}).{0};
+        (*{1}).{2}[{0}_index_tmp as usize].as_mut_ptr()
+    }}",
+                    f2, guard, f1
+                );
+                add_replacement(ctx, e.span, new_e);
+                self.replaced.insert(e.span);
             }
             _ => (),
         }
