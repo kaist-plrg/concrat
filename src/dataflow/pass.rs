@@ -68,41 +68,80 @@ impl LintPass for GlobalPass {
 }
 
 impl GlobalPass {
-    fn possible_mutexes(&self) -> BTreeSet<ExprPath> {
-        let mut mutexes: BTreeSet<_> = self
-            .functions
-            .values()
-            .flat_map(|s| &s.mutexes)
-            .cloned()
-            .collect();
-        for summary in self.functions.values() {
-            for m in &summary.mutexes {
-                if m.is_variable() {
-                    continue;
-                }
-                let (_, t) = some_or!(summary.params.iter().find(|(p, _)| p == &m.base), continue);
-                let args = self
-                    .functions
-                    .values()
-                    .flat_map(|s| &s.calls)
-                    .flat_map(|x| &x.3)
-                    .filter(|a| &a.typ == t)
-                    .filter_map(|a| a.path.as_ref());
-                for arg in args {
-                    let mut m = m.clone();
-                    m.set_base(arg);
-                    mutexes.insert(m);
-                }
-                for (x, t1) in self.functions.values().flat_map(|s| &s.params) {
-                    if t == t1 {
-                        let mut m = m.clone();
-                        m.set_base(&ExprPath::new(x.clone(), vec![]));
-                        mutexes.insert(m);
+    fn possible_mutexes(
+        &self,
+        call_graph: &BTreeMap<DefId, BTreeSet<DefId>>,
+    ) -> BTreeSet<ExprPath> {
+        let mut abs_states = BTreeMap::new();
+        let mut work_list = VecDeque::new();
+        for (f, summary) in &self.functions {
+            abs_states.insert(*f, summary.mutexes.clone());
+            work_list.push_back(*f);
+        }
+
+        let inv_cg = inverse(call_graph);
+        while let Some(f) = work_list.pop_front() {
+            let st = abs_states.get(&f).unwrap().clone();
+            let summary = self.functions.get(&f).unwrap();
+            let preds = inv_cg.get(&f).unwrap();
+            let succs = call_graph.get(&f).unwrap();
+
+            for f1 in preds.union(succs) {
+                let f1_summary = self.functions.get(f1).unwrap();
+                let f1_st = abs_states.get_mut(f1).unwrap();
+                let f1_st_len = f1_st.len();
+                let mut add = |path: ExprPath| {
+                    let mut v = path.projections.clone();
+                    let len = v.len();
+                    v.sort();
+                    v.dedup();
+                    if len - v.len() < 3 {
+                        f1_st.insert(path);
                     }
+                };
+
+                if preds.contains(f1) {
+                    let params = &summary.params;
+                    for (_, callee, _, args) in &f1_summary.calls {
+                        if *callee != f {
+                            continue;
+                        }
+                        for path in &st {
+                            if let Some(p) = path.clone().param_to_arg_aliasing(params, args) {
+                                add(p);
+                            } else if self.globs.contains(&path.base) {
+                                add(path.clone());
+                            }
+                        }
+                    }
+                }
+
+                if succs.contains(f1) {
+                    let params = &f1_summary.params;
+                    for (_, callee, _, args) in &summary.calls {
+                        if callee != f1 {
+                            continue;
+                        }
+                        for path in &st {
+                            if let Some(p) = path.clone().arg_to_param_aliasing(args, params) {
+                                add(p);
+                            } else if self.globs.contains(&path.base) {
+                                add(path.clone());
+                            }
+                        }
+                    }
+                }
+
+                if f1_st_len < f1_st.len() && !work_list.contains(f1) {
+                    work_list.push_back(*f1);
                 }
             }
         }
-        mutexes
+
+        abs_states
+            .drain_filter(|_, _| true)
+            .flat_map(|x| x.1)
+            .collect()
     }
 
     fn thread_functions(&self, call_graph: &BTreeMap<DefId, BTreeSet<DefId>>) -> BTreeSet<DefId> {
@@ -248,7 +287,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         let po = post_order(&component_graph, &inv_component_graph);
 
         // find possible mutex expressions
-        let mutexes: BTreeSet<_> = self.possible_mutexes();
+        let mutexes: BTreeSet<_> = self.possible_mutexes(&call_graph);
         // expression-to-id map
         let mutexes: BTreeMap<_, _> = mutexes
             .iter()
@@ -410,24 +449,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             abs_states.insert(*func, init_st);
         }
 
-        // arg-to-param aliasing
-        let alias_id = |id: Id, args: &[Arg], params: &[(String, String)]| {
-            let m = inv_mutexes.get(&id.index()).unwrap().clone();
-            if m.is_variable() {
-                return id;
-            }
-            let (i, mut m) = some_or!(
-                args.iter().enumerate().find_map(|(i, arg)| {
-                    let m = m.strip_prefix(arg.path.as_ref()?)?;
-                    Some((i, m))
-                }),
-                return id
-            );
-            let arg = &params[i].0;
-            m.add_base(arg.clone());
-            Id::new(*mutexes.get(&m).unwrap())
-        };
-
         // compute fixed point
         while let Some(func) = work_list.pop_front() {
             let propagation = &function_summary_map.get(&func).unwrap().propagation;
@@ -485,7 +506,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     .map(|args| {
                         let mut ams = BitSet::new_empty(ms.domain_size());
                         for i in ms.iter() {
-                            ams.insert(alias_id(i, args, params));
+                            let m = inv_mutexes.get(&i.index()).unwrap().clone();
+                            if let Some(m) = m.clone().arg_to_param_aliasing(args, params) {
+                                ams.insert(Id::new(*mutexes.get(&m).unwrap()));
+                            } else if self.globs.contains(&m.base) {
+                                ams.insert(i);
+                            };
                         }
                         ams
                     })

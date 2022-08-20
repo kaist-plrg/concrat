@@ -18,13 +18,13 @@ use crate::util::{
 
 #[derive(Debug, Clone)]
 pub struct Arg {
-    path: Option<ExprPath>,
+    pub path: Option<ExprPath>,
     #[allow(unused)]
-    typ: String,
+    pub typ: String,
     #[allow(unused)]
-    expr: String,
+    pub expr: String,
     #[allow(unused)]
-    hir_id: HirId,
+    pub hir_id: HirId,
 }
 
 impl Arg {

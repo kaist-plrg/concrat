@@ -47,18 +47,10 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
     }
 
     fn alias_id(&self, id: Id, func: &DefId, args: &[Arg]) -> Id {
-        let mut m = self.inv_mutexes.get(&id.index()).unwrap().clone();
-        if m.is_variable() {
-            return id;
-        }
+        let m = self.inv_mutexes.get(&id.index()).unwrap().clone();
         let params = &self.functions.get(func).unwrap().params;
-        let (i, _) = some_or!(
-            params.iter().enumerate().find(|(_, (p, _))| &m.base == p),
-            return id
-        );
-        let arg = some_or!(args[i].path.as_ref(), return id);
-        m.set_base(arg);
-        Id::new(*self.mutexes.get(&m).unwrap())
+        let nm = some_or!(m.param_to_arg_aliasing(params, args), return id);
+        Id::new(*some_or!(self.mutexes.get(&nm), return id))
     }
 
     fn terminator_effect(

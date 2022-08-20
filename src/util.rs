@@ -19,6 +19,8 @@ use serde::{
     Deserialize, Serialize,
 };
 
+use crate::dataflow::Arg;
+
 #[derive(Clone, Copy, Eq, PartialEq, Debug, Hash, PartialOrd, Ord)]
 #[repr(transparent)]
 pub struct Id(usize);
@@ -92,6 +94,15 @@ impl ExprPath {
         if self.base != path.base {
             return None;
         }
+        if self.projections.len() <= path.projections.len() {
+            return None;
+        }
+        if matches!(
+            self.projections[path.projections.len()],
+            ExprPathProj::Index(_)
+        ) {
+            return None;
+        }
         let new_self = self.suffix()?;
         if path.is_variable() {
             Some(new_self)
@@ -135,6 +146,42 @@ impl ExprPath {
             v.push(p.with_cast());
         }
         join(v, "")
+    }
+
+    pub fn arg_to_param_aliasing(self, args: &[Arg], params: &[(String, String)]) -> Option<Self> {
+        if self.is_variable() {
+            return None;
+        }
+        let (i, mut m) = some_or!(
+            args.iter().enumerate().find_map(|(i, arg)| {
+                let m = self.strip_prefix(arg.path.as_ref()?)?;
+                Some((i, m))
+            }),
+            return None
+        );
+        let arg = &params.get(i)?.0;
+        m.add_base(arg.clone());
+        Some(m)
+    }
+
+    pub fn param_to_arg_aliasing(
+        mut self,
+        params: &[(String, String)],
+        args: &[Arg],
+    ) -> Option<Self> {
+        if self.is_variable() {
+            return None;
+        }
+        let (i, _) = some_or!(
+            params
+                .iter()
+                .enumerate()
+                .find(|(_, (p, _))| &self.base == p),
+            return None
+        );
+        let arg = args[i].path.as_ref()?;
+        self.set_base(arg);
+        Some(self)
     }
 }
 
