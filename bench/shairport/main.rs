@@ -3862,7 +3862,7 @@ unsafe extern "C" fn rtsp_conversation_thread_func(
         rtp_shutdown();
         player_stop();
         please_shutdown = 0 as libc::c_int;
-        // pthread_mutex_unlock(&mut playing_mutex);
+        pthread_mutex_unlock(&mut playing_mutex);
     }
     if !auth_nonce.is_null() {
         free(auth_nonce as *mut libc::c_void);

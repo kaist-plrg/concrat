@@ -448,7 +448,7 @@ struct author {
    struct list *el ;
    int bdepfd ;
    struct log_info *loginfo ;
-   pthread_spinlock_t dblock[101] ;
+//   pthread_spinlock_t dblock[101] ;
    uchar databuffer[65528] ;
    uchar randombuffer[3000] ;
    uchar tmpbuffer[2000] ;
@@ -795,9 +795,9 @@ struct sockaddr_un {
 #pragma pack()
 #pragma pack(1)
 #pragma pack()
-/* compiler builtin: 
+/* compiler builtin:
    void __builtin_va_start(__builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void __builtin_va_end(__builtin_va_list  ) ;  */
 #pragma merger("0","/tmp/cil-7JmtMyBq.i","-g,-Wall")
 extern  __attribute__((__nothrow__)) long random(void) ;
@@ -819,7 +819,7 @@ extern  __attribute__((__nothrow__)) size_t ( __attribute__((__nonnull__(1))) st
 extern int close(int __fd ) ;
 extern ssize_t read(int __fd , void *__buf , size_t __nbytes ) ;
 extern ssize_t write(int __fd , void const   *__buf , size_t __n ) ;
-extern int ( __attribute__((__nonnull__(1))) open)(char const   *__file , int __oflag 
+extern int ( __attribute__((__nonnull__(1))) open)(char const   *__file , int __oflag
                                                    , ...) ;
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) gettimeofday)(struct timeval * __restrict  __tv ,
                                                                                          void * __restrict  __tz ) ;
@@ -850,7 +850,7 @@ int to_lowercase(uchar *msg , int len ) ;
 int fix_tail(char *domain ) ;
 int empty_function(int i ) ;
 void insert_mem_bar(void) ;
-int test_lock(pthread_spinlock_t *l ) ;
+//int test_lock(pthread_spinlock_t *l ) ;
 int set_bit(unsigned short *bit , int off ) ;
 int clr_bit(unsigned short *bit , int off ) ;
 int tst_bit(unsigned short const   bit , int off ) ;
@@ -867,16 +867,16 @@ struct server *global_serv  ;
 char *g_nameservers[2]  ;
 struct global_query_info *global_out_info  ;
 int query_type_map[256]  ;
-int slog(uchar *msg , int fd , pthread_spinlock_t *lock ) 
-{ 
+int slog(uchar *msg , int fd , pthread_spinlock_t *lock )
+{
 
 
   {
   return (0);
 }
 }
-int get_random_data(uchar *buffer , int len ) 
-{ 
+int get_random_data(uchar *buffer , int len )
+{
   int fd ;
   int ret ;
   ssize_t tmp ;
@@ -903,8 +903,8 @@ int get_random_data(uchar *buffer , int len )
   return (0);
 }
 }
-uchar *get_str(uchar *str , int len ) 
-{ 
+uchar *get_str(uchar *str , int len )
+{
   uchar *ret ;
   void *tmp ;
 
@@ -917,8 +917,8 @@ uchar *get_str(uchar *str , int len )
   return (ret);
 }
 }
-void put_str(uchar *str ) 
-{ 
+void put_str(uchar *str )
+{
 
 
   {
@@ -926,8 +926,8 @@ void put_str(uchar *str )
   return;
 }
 }
-int flush_all_to_disk(struct server *s ) 
-{ 
+int flush_all_to_disk(struct server *s )
+{
   int i ;
   int ret ;
   struct log_info *log ;
@@ -963,8 +963,8 @@ int flush_all_to_disk(struct server *s )
   return (0);
 }
 }
-static void sig_segment_fault(int signo ) 
-{ 
+static void sig_segment_fault(int signo )
+{
 
 
   {
@@ -973,8 +973,8 @@ static void sig_segment_fault(int signo )
   exit(0);
 }
 }
-int trig_signals(int sig ) 
-{ 
+int trig_signals(int sig )
+{
   sigset_t bset ;
   sigset_t oset ;
   int sigs[4] ;
@@ -1007,8 +1007,8 @@ int trig_signals(int sig )
   return (0);
 }
 }
-void drop_privilege(char *root ) 
-{ 
+void drop_privilege(char *root )
+{
 
 
   {
@@ -1018,8 +1018,8 @@ void drop_privilege(char *root )
   return;
 }
 }
-int dict_comp_uint_equ(void *a , void *b ) 
-{ 
+int dict_comp_uint_equ(void *a , void *b )
+{
   uint___0 *u1 ;
   uint___0 *u2 ;
   int tmp ;
@@ -1044,8 +1044,8 @@ int dict_comp_uint_equ(void *a , void *b )
   return (tmp);
 }
 }
-int dict_comp_str_equ(void *a , void *b ) 
-{ 
+int dict_comp_str_equ(void *a , void *b )
+{
   uchar *d1 ;
   uchar *d2 ;
   int to ;
@@ -1095,8 +1095,8 @@ int dict_comp_str_equ(void *a , void *b )
   return (1);
 }
 }
-int rbt_comp_ttl_gt(void *v1 , void *v2 , void *argv ) 
-{ 
+int rbt_comp_ttl_gt(void *v1 , void *v2 , void *argv )
+{
   int ret ;
   struct ttlnode *n1 ;
   struct ttlnode *n2 ;
@@ -1132,8 +1132,8 @@ int rbt_comp_ttl_gt(void *v1 , void *v2 , void *argv )
   return (0);
 }
 }
-int rbt_comp_uint_gt(void *v1 , void *v2 , void *argv ) 
-{ 
+int rbt_comp_uint_gt(void *v1 , void *v2 , void *argv )
+{
   uint___0 n1 ;
   uint___0 n2 ;
   int tmp ;
@@ -1158,138 +1158,138 @@ int rbt_comp_uint_gt(void *v1 , void *v2 , void *argv )
   return (tmp);
 }
 }
-unsigned char LowerTable[256]  = 
-  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)3, 
-        (unsigned char)4,      (unsigned char)5,      (unsigned char)6,      (unsigned char)7, 
-        (unsigned char)8,      (unsigned char)9,      (unsigned char)10,      (unsigned char)11, 
-        (unsigned char)12,      (unsigned char)13,      (unsigned char)14,      (unsigned char)15, 
-        (unsigned char)16,      (unsigned char)17,      (unsigned char)18,      (unsigned char)19, 
-        (unsigned char)20,      (unsigned char)21,      (unsigned char)22,      (unsigned char)23, 
-        (unsigned char)24,      (unsigned char)25,      (unsigned char)26,      (unsigned char)27, 
-        (unsigned char)28,      (unsigned char)29,      (unsigned char)30,      (unsigned char)31, 
-        (unsigned char)32,      (unsigned char)33,      (unsigned char)34,      (unsigned char)35, 
-        (unsigned char)36,      (unsigned char)37,      (unsigned char)38,      (unsigned char)39, 
-        (unsigned char)40,      (unsigned char)41,      (unsigned char)42,      (unsigned char)43, 
-        (unsigned char)44,      (unsigned char)45,      (unsigned char)46,      (unsigned char)47, 
-        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51, 
-        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55, 
-        (unsigned char)56,      (unsigned char)57,      (unsigned char)58,      (unsigned char)59, 
-        (unsigned char)60,      (unsigned char)61,      (unsigned char)62,      (unsigned char)63, 
-        (unsigned char)64,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99, 
-        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103, 
-        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107, 
-        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111, 
-        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115, 
-        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119, 
-        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)91, 
-        (unsigned char)92,      (unsigned char)93,      (unsigned char)94,      (unsigned char)95, 
-        (unsigned char)96,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99, 
-        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103, 
-        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107, 
-        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111, 
-        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115, 
-        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119, 
-        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)123, 
-        (unsigned char)124,      (unsigned char)125,      (unsigned char)126,      (unsigned char)127, 
-        (unsigned char)128,      (unsigned char)129,      (unsigned char)130,      (unsigned char)131, 
-        (unsigned char)132,      (unsigned char)133,      (unsigned char)134,      (unsigned char)135, 
-        (unsigned char)136,      (unsigned char)137,      (unsigned char)138,      (unsigned char)139, 
-        (unsigned char)140,      (unsigned char)141,      (unsigned char)142,      (unsigned char)143, 
-        (unsigned char)144,      (unsigned char)145,      (unsigned char)146,      (unsigned char)147, 
-        (unsigned char)148,      (unsigned char)149,      (unsigned char)150,      (unsigned char)151, 
-        (unsigned char)152,      (unsigned char)153,      (unsigned char)154,      (unsigned char)155, 
-        (unsigned char)156,      (unsigned char)157,      (unsigned char)158,      (unsigned char)159, 
-        (unsigned char)160,      (unsigned char)161,      (unsigned char)162,      (unsigned char)163, 
-        (unsigned char)164,      (unsigned char)165,      (unsigned char)166,      (unsigned char)167, 
-        (unsigned char)168,      (unsigned char)169,      (unsigned char)170,      (unsigned char)171, 
-        (unsigned char)172,      (unsigned char)173,      (unsigned char)174,      (unsigned char)175, 
-        (unsigned char)176,      (unsigned char)177,      (unsigned char)178,      (unsigned char)179, 
-        (unsigned char)180,      (unsigned char)181,      (unsigned char)182,      (unsigned char)183, 
-        (unsigned char)184,      (unsigned char)185,      (unsigned char)186,      (unsigned char)187, 
-        (unsigned char)188,      (unsigned char)189,      (unsigned char)190,      (unsigned char)191, 
-        (unsigned char)192,      (unsigned char)193,      (unsigned char)194,      (unsigned char)195, 
-        (unsigned char)196,      (unsigned char)197,      (unsigned char)198,      (unsigned char)199, 
-        (unsigned char)200,      (unsigned char)201,      (unsigned char)202,      (unsigned char)203, 
-        (unsigned char)204,      (unsigned char)205,      (unsigned char)206,      (unsigned char)207, 
-        (unsigned char)208,      (unsigned char)209,      (unsigned char)210,      (unsigned char)211, 
-        (unsigned char)212,      (unsigned char)213,      (unsigned char)214,      (unsigned char)215, 
-        (unsigned char)216,      (unsigned char)217,      (unsigned char)218,      (unsigned char)219, 
-        (unsigned char)220,      (unsigned char)221,      (unsigned char)222,      (unsigned char)223, 
-        (unsigned char)224,      (unsigned char)225,      (unsigned char)226,      (unsigned char)227, 
-        (unsigned char)228,      (unsigned char)229,      (unsigned char)230,      (unsigned char)231, 
-        (unsigned char)232,      (unsigned char)233,      (unsigned char)234,      (unsigned char)235, 
-        (unsigned char)236,      (unsigned char)237,      (unsigned char)238,      (unsigned char)239, 
-        (unsigned char)240,      (unsigned char)241,      (unsigned char)242,      (unsigned char)243, 
-        (unsigned char)244,      (unsigned char)245,      (unsigned char)246,      (unsigned char)247, 
-        (unsigned char)248,      (unsigned char)249,      (unsigned char)250,      (unsigned char)251, 
+unsigned char LowerTable[256]  =
+  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)3,
+        (unsigned char)4,      (unsigned char)5,      (unsigned char)6,      (unsigned char)7,
+        (unsigned char)8,      (unsigned char)9,      (unsigned char)10,      (unsigned char)11,
+        (unsigned char)12,      (unsigned char)13,      (unsigned char)14,      (unsigned char)15,
+        (unsigned char)16,      (unsigned char)17,      (unsigned char)18,      (unsigned char)19,
+        (unsigned char)20,      (unsigned char)21,      (unsigned char)22,      (unsigned char)23,
+        (unsigned char)24,      (unsigned char)25,      (unsigned char)26,      (unsigned char)27,
+        (unsigned char)28,      (unsigned char)29,      (unsigned char)30,      (unsigned char)31,
+        (unsigned char)32,      (unsigned char)33,      (unsigned char)34,      (unsigned char)35,
+        (unsigned char)36,      (unsigned char)37,      (unsigned char)38,      (unsigned char)39,
+        (unsigned char)40,      (unsigned char)41,      (unsigned char)42,      (unsigned char)43,
+        (unsigned char)44,      (unsigned char)45,      (unsigned char)46,      (unsigned char)47,
+        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51,
+        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55,
+        (unsigned char)56,      (unsigned char)57,      (unsigned char)58,      (unsigned char)59,
+        (unsigned char)60,      (unsigned char)61,      (unsigned char)62,      (unsigned char)63,
+        (unsigned char)64,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99,
+        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103,
+        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107,
+        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111,
+        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115,
+        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119,
+        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)91,
+        (unsigned char)92,      (unsigned char)93,      (unsigned char)94,      (unsigned char)95,
+        (unsigned char)96,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99,
+        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103,
+        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107,
+        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111,
+        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115,
+        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119,
+        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)123,
+        (unsigned char)124,      (unsigned char)125,      (unsigned char)126,      (unsigned char)127,
+        (unsigned char)128,      (unsigned char)129,      (unsigned char)130,      (unsigned char)131,
+        (unsigned char)132,      (unsigned char)133,      (unsigned char)134,      (unsigned char)135,
+        (unsigned char)136,      (unsigned char)137,      (unsigned char)138,      (unsigned char)139,
+        (unsigned char)140,      (unsigned char)141,      (unsigned char)142,      (unsigned char)143,
+        (unsigned char)144,      (unsigned char)145,      (unsigned char)146,      (unsigned char)147,
+        (unsigned char)148,      (unsigned char)149,      (unsigned char)150,      (unsigned char)151,
+        (unsigned char)152,      (unsigned char)153,      (unsigned char)154,      (unsigned char)155,
+        (unsigned char)156,      (unsigned char)157,      (unsigned char)158,      (unsigned char)159,
+        (unsigned char)160,      (unsigned char)161,      (unsigned char)162,      (unsigned char)163,
+        (unsigned char)164,      (unsigned char)165,      (unsigned char)166,      (unsigned char)167,
+        (unsigned char)168,      (unsigned char)169,      (unsigned char)170,      (unsigned char)171,
+        (unsigned char)172,      (unsigned char)173,      (unsigned char)174,      (unsigned char)175,
+        (unsigned char)176,      (unsigned char)177,      (unsigned char)178,      (unsigned char)179,
+        (unsigned char)180,      (unsigned char)181,      (unsigned char)182,      (unsigned char)183,
+        (unsigned char)184,      (unsigned char)185,      (unsigned char)186,      (unsigned char)187,
+        (unsigned char)188,      (unsigned char)189,      (unsigned char)190,      (unsigned char)191,
+        (unsigned char)192,      (unsigned char)193,      (unsigned char)194,      (unsigned char)195,
+        (unsigned char)196,      (unsigned char)197,      (unsigned char)198,      (unsigned char)199,
+        (unsigned char)200,      (unsigned char)201,      (unsigned char)202,      (unsigned char)203,
+        (unsigned char)204,      (unsigned char)205,      (unsigned char)206,      (unsigned char)207,
+        (unsigned char)208,      (unsigned char)209,      (unsigned char)210,      (unsigned char)211,
+        (unsigned char)212,      (unsigned char)213,      (unsigned char)214,      (unsigned char)215,
+        (unsigned char)216,      (unsigned char)217,      (unsigned char)218,      (unsigned char)219,
+        (unsigned char)220,      (unsigned char)221,      (unsigned char)222,      (unsigned char)223,
+        (unsigned char)224,      (unsigned char)225,      (unsigned char)226,      (unsigned char)227,
+        (unsigned char)228,      (unsigned char)229,      (unsigned char)230,      (unsigned char)231,
+        (unsigned char)232,      (unsigned char)233,      (unsigned char)234,      (unsigned char)235,
+        (unsigned char)236,      (unsigned char)237,      (unsigned char)238,      (unsigned char)239,
+        (unsigned char)240,      (unsigned char)241,      (unsigned char)242,      (unsigned char)243,
+        (unsigned char)244,      (unsigned char)245,      (unsigned char)246,      (unsigned char)247,
+        (unsigned char)248,      (unsigned char)249,      (unsigned char)250,      (unsigned char)251,
         (unsigned char)252,      (unsigned char)253,      (unsigned char)254,      (unsigned char)255};
-unsigned char UpperTable[256]  = 
-  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)3, 
-        (unsigned char)4,      (unsigned char)5,      (unsigned char)6,      (unsigned char)7, 
-        (unsigned char)8,      (unsigned char)9,      (unsigned char)10,      (unsigned char)11, 
-        (unsigned char)12,      (unsigned char)13,      (unsigned char)14,      (unsigned char)15, 
-        (unsigned char)16,      (unsigned char)17,      (unsigned char)18,      (unsigned char)19, 
-        (unsigned char)20,      (unsigned char)21,      (unsigned char)22,      (unsigned char)23, 
-        (unsigned char)24,      (unsigned char)25,      (unsigned char)26,      (unsigned char)27, 
-        (unsigned char)28,      (unsigned char)29,      (unsigned char)30,      (unsigned char)31, 
-        (unsigned char)32,      (unsigned char)33,      (unsigned char)34,      (unsigned char)35, 
-        (unsigned char)36,      (unsigned char)37,      (unsigned char)38,      (unsigned char)39, 
-        (unsigned char)40,      (unsigned char)41,      (unsigned char)42,      (unsigned char)43, 
-        (unsigned char)44,      (unsigned char)45,      (unsigned char)46,      (unsigned char)47, 
-        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51, 
-        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55, 
-        (unsigned char)56,      (unsigned char)57,      (unsigned char)58,      (unsigned char)59, 
-        (unsigned char)60,      (unsigned char)61,      (unsigned char)62,      (unsigned char)63, 
-        (unsigned char)64,      (unsigned char)65,      (unsigned char)66,      (unsigned char)67, 
-        (unsigned char)68,      (unsigned char)69,      (unsigned char)70,      (unsigned char)71, 
-        (unsigned char)72,      (unsigned char)73,      (unsigned char)74,      (unsigned char)75, 
-        (unsigned char)76,      (unsigned char)77,      (unsigned char)78,      (unsigned char)79, 
-        (unsigned char)80,      (unsigned char)81,      (unsigned char)82,      (unsigned char)83, 
-        (unsigned char)84,      (unsigned char)85,      (unsigned char)86,      (unsigned char)87, 
-        (unsigned char)88,      (unsigned char)89,      (unsigned char)90,      (unsigned char)91, 
-        (unsigned char)92,      (unsigned char)93,      (unsigned char)94,      (unsigned char)95, 
-        (unsigned char)96,      (unsigned char)65,      (unsigned char)66,      (unsigned char)67, 
-        (unsigned char)68,      (unsigned char)69,      (unsigned char)70,      (unsigned char)71, 
-        (unsigned char)72,      (unsigned char)73,      (unsigned char)74,      (unsigned char)75, 
-        (unsigned char)76,      (unsigned char)77,      (unsigned char)78,      (unsigned char)79, 
-        (unsigned char)80,      (unsigned char)81,      (unsigned char)82,      (unsigned char)83, 
-        (unsigned char)84,      (unsigned char)85,      (unsigned char)86,      (unsigned char)87, 
-        (unsigned char)88,      (unsigned char)89,      (unsigned char)90,      (unsigned char)123, 
-        (unsigned char)124,      (unsigned char)125,      (unsigned char)126,      (unsigned char)127, 
-        (unsigned char)128,      (unsigned char)129,      (unsigned char)130,      (unsigned char)131, 
-        (unsigned char)132,      (unsigned char)133,      (unsigned char)134,      (unsigned char)135, 
-        (unsigned char)136,      (unsigned char)137,      (unsigned char)138,      (unsigned char)139, 
-        (unsigned char)140,      (unsigned char)141,      (unsigned char)142,      (unsigned char)143, 
-        (unsigned char)144,      (unsigned char)145,      (unsigned char)146,      (unsigned char)147, 
-        (unsigned char)148,      (unsigned char)149,      (unsigned char)150,      (unsigned char)151, 
-        (unsigned char)152,      (unsigned char)153,      (unsigned char)154,      (unsigned char)155, 
-        (unsigned char)156,      (unsigned char)157,      (unsigned char)158,      (unsigned char)159, 
-        (unsigned char)160,      (unsigned char)161,      (unsigned char)162,      (unsigned char)163, 
-        (unsigned char)164,      (unsigned char)165,      (unsigned char)166,      (unsigned char)167, 
-        (unsigned char)168,      (unsigned char)169,      (unsigned char)170,      (unsigned char)171, 
-        (unsigned char)172,      (unsigned char)173,      (unsigned char)174,      (unsigned char)175, 
-        (unsigned char)176,      (unsigned char)177,      (unsigned char)178,      (unsigned char)179, 
-        (unsigned char)180,      (unsigned char)181,      (unsigned char)182,      (unsigned char)183, 
-        (unsigned char)184,      (unsigned char)185,      (unsigned char)186,      (unsigned char)187, 
-        (unsigned char)188,      (unsigned char)189,      (unsigned char)190,      (unsigned char)191, 
-        (unsigned char)192,      (unsigned char)193,      (unsigned char)194,      (unsigned char)195, 
-        (unsigned char)196,      (unsigned char)197,      (unsigned char)198,      (unsigned char)199, 
-        (unsigned char)200,      (unsigned char)201,      (unsigned char)202,      (unsigned char)203, 
-        (unsigned char)204,      (unsigned char)205,      (unsigned char)206,      (unsigned char)207, 
-        (unsigned char)208,      (unsigned char)209,      (unsigned char)210,      (unsigned char)211, 
-        (unsigned char)212,      (unsigned char)213,      (unsigned char)214,      (unsigned char)215, 
-        (unsigned char)216,      (unsigned char)217,      (unsigned char)218,      (unsigned char)219, 
-        (unsigned char)220,      (unsigned char)221,      (unsigned char)222,      (unsigned char)223, 
-        (unsigned char)224,      (unsigned char)225,      (unsigned char)226,      (unsigned char)227, 
-        (unsigned char)228,      (unsigned char)229,      (unsigned char)230,      (unsigned char)231, 
-        (unsigned char)232,      (unsigned char)233,      (unsigned char)234,      (unsigned char)235, 
-        (unsigned char)236,      (unsigned char)237,      (unsigned char)238,      (unsigned char)239, 
-        (unsigned char)240,      (unsigned char)241,      (unsigned char)242,      (unsigned char)243, 
-        (unsigned char)244,      (unsigned char)245,      (unsigned char)246,      (unsigned char)247, 
-        (unsigned char)248,      (unsigned char)249,      (unsigned char)250,      (unsigned char)251, 
+unsigned char UpperTable[256]  =
+  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)3,
+        (unsigned char)4,      (unsigned char)5,      (unsigned char)6,      (unsigned char)7,
+        (unsigned char)8,      (unsigned char)9,      (unsigned char)10,      (unsigned char)11,
+        (unsigned char)12,      (unsigned char)13,      (unsigned char)14,      (unsigned char)15,
+        (unsigned char)16,      (unsigned char)17,      (unsigned char)18,      (unsigned char)19,
+        (unsigned char)20,      (unsigned char)21,      (unsigned char)22,      (unsigned char)23,
+        (unsigned char)24,      (unsigned char)25,      (unsigned char)26,      (unsigned char)27,
+        (unsigned char)28,      (unsigned char)29,      (unsigned char)30,      (unsigned char)31,
+        (unsigned char)32,      (unsigned char)33,      (unsigned char)34,      (unsigned char)35,
+        (unsigned char)36,      (unsigned char)37,      (unsigned char)38,      (unsigned char)39,
+        (unsigned char)40,      (unsigned char)41,      (unsigned char)42,      (unsigned char)43,
+        (unsigned char)44,      (unsigned char)45,      (unsigned char)46,      (unsigned char)47,
+        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51,
+        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55,
+        (unsigned char)56,      (unsigned char)57,      (unsigned char)58,      (unsigned char)59,
+        (unsigned char)60,      (unsigned char)61,      (unsigned char)62,      (unsigned char)63,
+        (unsigned char)64,      (unsigned char)65,      (unsigned char)66,      (unsigned char)67,
+        (unsigned char)68,      (unsigned char)69,      (unsigned char)70,      (unsigned char)71,
+        (unsigned char)72,      (unsigned char)73,      (unsigned char)74,      (unsigned char)75,
+        (unsigned char)76,      (unsigned char)77,      (unsigned char)78,      (unsigned char)79,
+        (unsigned char)80,      (unsigned char)81,      (unsigned char)82,      (unsigned char)83,
+        (unsigned char)84,      (unsigned char)85,      (unsigned char)86,      (unsigned char)87,
+        (unsigned char)88,      (unsigned char)89,      (unsigned char)90,      (unsigned char)91,
+        (unsigned char)92,      (unsigned char)93,      (unsigned char)94,      (unsigned char)95,
+        (unsigned char)96,      (unsigned char)65,      (unsigned char)66,      (unsigned char)67,
+        (unsigned char)68,      (unsigned char)69,      (unsigned char)70,      (unsigned char)71,
+        (unsigned char)72,      (unsigned char)73,      (unsigned char)74,      (unsigned char)75,
+        (unsigned char)76,      (unsigned char)77,      (unsigned char)78,      (unsigned char)79,
+        (unsigned char)80,      (unsigned char)81,      (unsigned char)82,      (unsigned char)83,
+        (unsigned char)84,      (unsigned char)85,      (unsigned char)86,      (unsigned char)87,
+        (unsigned char)88,      (unsigned char)89,      (unsigned char)90,      (unsigned char)123,
+        (unsigned char)124,      (unsigned char)125,      (unsigned char)126,      (unsigned char)127,
+        (unsigned char)128,      (unsigned char)129,      (unsigned char)130,      (unsigned char)131,
+        (unsigned char)132,      (unsigned char)133,      (unsigned char)134,      (unsigned char)135,
+        (unsigned char)136,      (unsigned char)137,      (unsigned char)138,      (unsigned char)139,
+        (unsigned char)140,      (unsigned char)141,      (unsigned char)142,      (unsigned char)143,
+        (unsigned char)144,      (unsigned char)145,      (unsigned char)146,      (unsigned char)147,
+        (unsigned char)148,      (unsigned char)149,      (unsigned char)150,      (unsigned char)151,
+        (unsigned char)152,      (unsigned char)153,      (unsigned char)154,      (unsigned char)155,
+        (unsigned char)156,      (unsigned char)157,      (unsigned char)158,      (unsigned char)159,
+        (unsigned char)160,      (unsigned char)161,      (unsigned char)162,      (unsigned char)163,
+        (unsigned char)164,      (unsigned char)165,      (unsigned char)166,      (unsigned char)167,
+        (unsigned char)168,      (unsigned char)169,      (unsigned char)170,      (unsigned char)171,
+        (unsigned char)172,      (unsigned char)173,      (unsigned char)174,      (unsigned char)175,
+        (unsigned char)176,      (unsigned char)177,      (unsigned char)178,      (unsigned char)179,
+        (unsigned char)180,      (unsigned char)181,      (unsigned char)182,      (unsigned char)183,
+        (unsigned char)184,      (unsigned char)185,      (unsigned char)186,      (unsigned char)187,
+        (unsigned char)188,      (unsigned char)189,      (unsigned char)190,      (unsigned char)191,
+        (unsigned char)192,      (unsigned char)193,      (unsigned char)194,      (unsigned char)195,
+        (unsigned char)196,      (unsigned char)197,      (unsigned char)198,      (unsigned char)199,
+        (unsigned char)200,      (unsigned char)201,      (unsigned char)202,      (unsigned char)203,
+        (unsigned char)204,      (unsigned char)205,      (unsigned char)206,      (unsigned char)207,
+        (unsigned char)208,      (unsigned char)209,      (unsigned char)210,      (unsigned char)211,
+        (unsigned char)212,      (unsigned char)213,      (unsigned char)214,      (unsigned char)215,
+        (unsigned char)216,      (unsigned char)217,      (unsigned char)218,      (unsigned char)219,
+        (unsigned char)220,      (unsigned char)221,      (unsigned char)222,      (unsigned char)223,
+        (unsigned char)224,      (unsigned char)225,      (unsigned char)226,      (unsigned char)227,
+        (unsigned char)228,      (unsigned char)229,      (unsigned char)230,      (unsigned char)231,
+        (unsigned char)232,      (unsigned char)233,      (unsigned char)234,      (unsigned char)235,
+        (unsigned char)236,      (unsigned char)237,      (unsigned char)238,      (unsigned char)239,
+        (unsigned char)240,      (unsigned char)241,      (unsigned char)242,      (unsigned char)243,
+        (unsigned char)244,      (unsigned char)245,      (unsigned char)246,      (unsigned char)247,
+        (unsigned char)248,      (unsigned char)249,      (unsigned char)250,      (unsigned char)251,
         (unsigned char)252,      (unsigned char)253,      (unsigned char)254,      (unsigned char)255};
-int to_lowercase(uchar *msg , int len ) 
-{ 
+int to_lowercase(uchar *msg , int len )
+{
   int i ;
 
   {
@@ -1301,8 +1301,8 @@ int to_lowercase(uchar *msg , int len )
   return (0);
 }
 }
-int to_uppercase(uchar *buf , int n ) 
-{ 
+int to_uppercase(uchar *buf , int n )
+{
   int i ;
 
   {
@@ -1314,8 +1314,8 @@ int to_uppercase(uchar *buf , int n )
   return (0);
 }
 }
-int str_to_uchar4(char const   *addr , uchar *val ) 
-{ 
+int str_to_uchar4(char const   *addr , uchar *val )
+{
   uint___0 tv[4] ;
   unsigned int tmp ;
   uint___0 idx ;
@@ -1342,7 +1342,7 @@ int str_to_uchar4(char const   *addr , uchar *val )
         goto _L;
       }
     } else {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       idx ++;
       if ((int const   )*(addr + i) != 46) {
         *val = (uchar )0;
@@ -1363,8 +1363,8 @@ int str_to_uchar4(char const   *addr , uchar *val )
   return (0);
 }
 }
-int str_to_uchar6(uchar *addr , uchar *val ) 
-{ 
+int str_to_uchar6(uchar *addr , uchar *val )
+{
   ushort___0 tv[8] ;
   unsigned int tmp ;
   int idx ;
@@ -1405,7 +1405,7 @@ int str_to_uchar6(uchar *addr , uchar *val )
         goto _L___1;
       }
     } else
-    _L___1: /* CIL Label */ 
+    _L___1: /* CIL Label */
     if ((int )tmp___1 >= 97) {
       if ((int )tmp___1 <= 122) {
         gap = 0;
@@ -1414,7 +1414,7 @@ int str_to_uchar6(uchar *addr , uchar *val )
         goto _L___0;
       }
     } else {
-      _L___0: /* CIL Label */ 
+      _L___0: /* CIL Label */
       idx ++;
       if (gap == 1) {
         if (hasgap == 1) {
@@ -1430,7 +1430,7 @@ int str_to_uchar6(uchar *addr , uchar *val )
         goto _L;
       } else
       if (idx == 8) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         tmp___4 = (uchar )0;
         *(val + 3) = tmp___4;
         tmp___3 = tmp___4;
@@ -1467,8 +1467,8 @@ int str_to_uchar6(uchar *addr , uchar *val )
   return (0);
 }
 }
-int fix_tail(char *domain ) 
-{ 
+int fix_tail(char *domain )
+{
   int len ;
   size_t tmp ;
   uchar c ;
@@ -1498,8 +1498,8 @@ int fix_tail(char *domain )
   return (0);
 }
 }
-int opr_bit(unsigned short *bit , int off , int set ) 
-{ 
+int opr_bit(unsigned short *bit , int off , int set )
+{
   unsigned short mask ;
 
   {
@@ -1522,8 +1522,8 @@ int opr_bit(unsigned short *bit , int off , int set )
   return (0);
 }
 }
-int set_bit(unsigned short *bit , int off ) 
-{ 
+int set_bit(unsigned short *bit , int off )
+{
 
 
   {
@@ -1531,8 +1531,8 @@ int set_bit(unsigned short *bit , int off )
   return (0);
 }
 }
-int clr_bit(unsigned short *bit , int off ) 
-{ 
+int clr_bit(unsigned short *bit , int off )
+{
 
 
   {
@@ -1540,8 +1540,8 @@ int clr_bit(unsigned short *bit , int off )
   return (0);
 }
 }
-int tst_bit(unsigned short const   bit , int off ) 
-{ 
+int tst_bit(unsigned short const   bit , int off )
+{
   unsigned short mask ;
 
   {
@@ -1559,8 +1559,8 @@ int tst_bit(unsigned short const   bit , int off )
   return (1);
 }
 }
-int get_time_usage(struct timeval *tv , int start ) 
-{ 
+int get_time_usage(struct timeval *tv , int start )
+{
   ulong___0 msec ;
   struct timeval tmp ;
 
@@ -1584,8 +1584,8 @@ int get_time_usage(struct timeval *tv , int start )
   return (0);
 }
 }
-int is_uppercase(int c ) 
-{ 
+int is_uppercase(int c )
+{
 
 
   {
@@ -1597,8 +1597,8 @@ int is_uppercase(int c )
   return (0);
 }
 }
-int is_lowercase(int c ) 
-{ 
+int is_lowercase(int c )
+{
 
 
   {
@@ -1610,16 +1610,16 @@ int is_lowercase(int c )
   return (0);
 }
 }
-int empty_function(int i ) 
-{ 
+int empty_function(int i )
+{
 
 
   {
   return (0);
 }
 }
-void insert_mem_bar(void) 
-{ 
+void insert_mem_bar(void)
+{
   int i ;
   int size ;
   long tmp ;
@@ -1643,21 +1643,21 @@ void insert_mem_bar(void)
   return;
 }
 }
-int test_lock(pthread_spinlock_t *l ) 
-{ 
-  int tmp ;
-
-  {
-  tmp = pthread_spin_trylock(l);
-  if (tmp < 0) {
-    return (-1);
-  }
-  pthread_spin_unlock(l);
-  return (0);
-}
-}
-void dbg_print_bit(unsigned short bit ) 
-{ 
+//int test_lock(pthread_spinlock_t *l )
+//{
+//  int tmp ;
+//
+//  {
+//  tmp = pthread_spin_trylock(l);
+//  if (tmp < 0) {
+//    return (-1);
+//  }
+//  pthread_spin_unlock(l);
+//  return (0);
+//}
+//}
+void dbg_print_bit(unsigned short bit )
+{
   int i ;
   unsigned short val ;
 
@@ -1682,8 +1682,8 @@ void dbg_print_bit(unsigned short bit )
   return;
 }
 }
-void print_hex(uchar *val , int n ) 
-{ 
+void print_hex(uchar *val , int n )
+{
   int i ;
 
   {
@@ -1696,8 +1696,8 @@ void print_hex(uchar *val , int n )
   return;
 }
 }
-void dns_error(int level , char *msg ) 
-{ 
+void dns_error(int level , char *msg )
+{
 
 
   {
@@ -1709,8 +1709,8 @@ void dns_error(int level , char *msg )
   return;
 }
 }
-int dbg(char const   *format  , ...) 
-{ 
+int dbg(char const   *format  , ...)
+{
   int ret ;
   va_list___0 ap ;
 
@@ -1722,8 +1722,8 @@ int dbg(char const   *format  , ...)
   return (ret);
 }
 }
-hashval_t uint_hash_function(void *ptr ) 
-{ 
+hashval_t uint_hash_function(void *ptr )
+{
   uint___0 key ;
 
   {
@@ -1737,8 +1737,8 @@ hashval_t uint_hash_function(void *ptr )
   return (key);
 }
 }
-hashval_t nocase_char_hash_function(void *argv , int klen ) 
-{ 
+hashval_t nocase_char_hash_function(void *argv , int klen )
+{
   int len ;
   int tmp ;
   uchar *buf ;
@@ -1779,8 +1779,8 @@ struct rbnode *find_node(struct rbtree *rbt , void *key ) ;
 struct rbnode *min_node(struct rbtree *rbt ) ;
 uint___0 get_rbt_size(struct rbtree *rbt ) ;
 int rbtree_test(void) ;
-static void left_rotate(struct rbtree *rbt , struct rbnode *node ) 
-{ 
+static void left_rotate(struct rbtree *rbt , struct rbnode *node )
+{
   struct rbnode *tmp ;
 
   {
@@ -1803,8 +1803,8 @@ static void left_rotate(struct rbtree *rbt , struct rbnode *node )
   return;
 }
 }
-static void right_rotate(struct rbtree *rbt , struct rbnode *node ) 
-{ 
+static void right_rotate(struct rbtree *rbt , struct rbnode *node )
+{
   struct rbnode *tmp ;
 
   {
@@ -1827,8 +1827,8 @@ static void right_rotate(struct rbtree *rbt , struct rbnode *node )
   return;
 }
 }
-static void insert_fixup(struct rbtree *rbt , struct rbnode *nd ) 
-{ 
+static void insert_fixup(struct rbtree *rbt , struct rbnode *nd )
+{
   struct rbnode *tmp ;
   int tmp___0 ;
   int tmp___1 ;
@@ -1875,8 +1875,8 @@ static void insert_fixup(struct rbtree *rbt , struct rbnode *nd )
   return;
 }
 }
-struct rbnode *find_node(struct rbtree *rbt , void *key ) 
-{ 
+struct rbnode *find_node(struct rbtree *rbt , void *key )
+{
   struct rbnode *nd ;
   int i ;
 
@@ -1901,8 +1901,8 @@ struct rbnode *find_node(struct rbtree *rbt , void *key )
   return ((struct rbnode *)((void *)0));
 }
 }
-int insert_node(struct rbtree *rbt , struct rbnode *pnd ) 
-{ 
+int insert_node(struct rbtree *rbt , struct rbnode *pnd )
+{
   struct rbnode *tmp ;
   struct rbnode *itor ;
   struct rbnode *nd ;
@@ -1949,8 +1949,8 @@ int insert_node(struct rbtree *rbt , struct rbnode *pnd )
   return (0);
 }
 }
-static struct rbnode *rbt_successor(struct rbtree *rbt , struct rbnode *nd ) 
-{ 
+static struct rbnode *rbt_successor(struct rbtree *rbt , struct rbnode *nd )
+{
   struct rbnode *min ;
 
   {
@@ -1977,8 +1977,8 @@ static struct rbnode *rbt_successor(struct rbtree *rbt , struct rbnode *nd )
   return (min);
 }
 }
-static void delete_fixup(struct rbtree *rbt , struct rbnode *nd ) 
-{ 
+static void delete_fixup(struct rbtree *rbt , struct rbnode *nd )
+{
   struct rbnode *tmp ;
 
   {
@@ -2007,7 +2007,7 @@ static void delete_fixup(struct rbtree *rbt , struct rbnode *nd )
           goto _L;
         }
       } else {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         if ((tmp->right)->color == 0) {
           (tmp->left)->color = 0;
           tmp->color = 1;
@@ -2036,7 +2036,7 @@ static void delete_fixup(struct rbtree *rbt , struct rbnode *nd )
           goto _L___0;
         }
       } else {
-        _L___0: /* CIL Label */ 
+        _L___0: /* CIL Label */
         if ((tmp->left)->color == 0) {
           (tmp->right)->color = 0;
           tmp->color = 1;
@@ -2055,8 +2055,8 @@ static void delete_fixup(struct rbtree *rbt , struct rbnode *nd )
   return;
 }
 }
-struct rbnode *min_node(struct rbtree *rbt ) 
-{ 
+struct rbnode *min_node(struct rbtree *rbt )
+{
   struct rbnode *tmp ;
   struct rbnode *ret ;
 
@@ -2076,8 +2076,8 @@ struct rbnode *min_node(struct rbtree *rbt )
   return (ret);
 }
 }
-void *delete_node(struct rbtree *rbt , struct rbnode *nd ) 
-{ 
+void *delete_node(struct rbtree *rbt , struct rbnode *nd )
+{
   struct ttlnode *val ;
   struct rbnode *ret ;
   struct rbnode *tmp ;
@@ -2129,8 +2129,8 @@ void *delete_node(struct rbtree *rbt , struct rbnode *nd )
   return ((void *)val);
 }
 }
-struct rbtree *create_rbtree(comprbt *c , void *argv ) 
-{ 
+struct rbtree *create_rbtree(comprbt *c , void *argv )
+{
   struct rbtree *rbt ;
   void *tmp ;
 
@@ -2153,16 +2153,16 @@ struct rbtree *create_rbtree(comprbt *c , void *argv )
   return (rbt);
 }
 }
-uint___0 get_rbt_size(struct rbtree *rbt ) 
-{ 
+uint___0 get_rbt_size(struct rbtree *rbt )
+{
 
 
   {
   return (rbt->size);
 }
 }
-int free_rbtree(struct rbtree *rbt ) 
-{ 
+int free_rbtree(struct rbtree *rbt )
+{
   uint___0 tmp ;
 
   {
@@ -2174,8 +2174,8 @@ int free_rbtree(struct rbtree *rbt )
   return (0);
 }
 }
-int rbtree_test(void) 
-{ 
+int rbtree_test(void)
+{
   int i ;
   int j ;
   int len ;
@@ -2286,16 +2286,16 @@ int check_client_addr(struct sockaddr_in *addr ) ;
 int dbg_print_addr(struct sockaddr_in *addr ) ;
 int make_bin_from_str(uchar *bin , char const   *str ) ;
 int make_addr_from_bin(struct sockaddr_in *addr , uchar *data ) ;
-int check_client_addr(struct sockaddr_in *addr ) 
-{ 
+int check_client_addr(struct sockaddr_in *addr )
+{
 
 
   {
   return (0);
 }
 }
-int add_backdoor(int fd ) 
-{ 
+int add_backdoor(int fd )
+{
   int epfd ;
   int ret ;
   struct epoll_event ev ;
@@ -2316,8 +2316,8 @@ int add_backdoor(int fd )
   return (epfd);
 }
 }
-int set_recv_timeout(int fd , int sec , int usec ) 
-{ 
+int set_recv_timeout(int fd , int sec , int usec )
+{
   int ret ;
   struct timeval tv ;
 
@@ -2328,8 +2328,8 @@ int set_recv_timeout(int fd , int sec , int usec )
   return (ret);
 }
 }
-int create_socket(int port , int proto , uchar *addr ) 
-{ 
+int create_socket(int port , int proto , uchar *addr )
+{
   int fd ;
   int pt ;
   struct sockaddr_in srv ;
@@ -2366,8 +2366,8 @@ int create_socket(int port , int proto , uchar *addr )
   return (fd);
 }
 }
-int connect_to(struct sockinfo *si ) 
-{ 
+int connect_to(struct sockinfo *si )
+{
   int ret ;
   socklen_t len ;
   int *tmp ;
@@ -2390,8 +2390,8 @@ int connect_to(struct sockinfo *si )
   return (0);
 }
 }
-int tcp_write_info(mbuf_type *mbuf , int vi ) 
-{ 
+int tcp_write_info(mbuf_type *mbuf , int vi )
+{
   int i ;
   int ret ;
   ssize_t tmp ;
@@ -2417,8 +2417,8 @@ int tcp_write_info(mbuf_type *mbuf , int vi )
   return (ret);
 }
 }
-int udp_write_info(mbuf_type *mbuf , int vi ) 
-{ 
+int udp_write_info(mbuf_type *mbuf , int vi )
+{
   int i ;
   int ret ;
   socklen_t len ;
@@ -2445,8 +2445,8 @@ int udp_write_info(mbuf_type *mbuf , int vi )
   return (ret);
 }
 }
-int tcp_read_dns_msg(mbuf_type *mbuf , uint___0 max , int vi ) 
-{ 
+int tcp_read_dns_msg(mbuf_type *mbuf , uint___0 max , int vi )
+{
   int ret ;
   int tp ;
   int rcvnum ;
@@ -2512,8 +2512,8 @@ int tcp_read_dns_msg(mbuf_type *mbuf , uint___0 max , int vi )
   return (ret);
 }
 }
-int udp_read_msg(mbuf_type *mbuf , int visible ) 
-{ 
+int udp_read_msg(mbuf_type *mbuf , int visible )
+{
   int ret ;
   int i ;
   socklen_t len ;
@@ -2538,8 +2538,8 @@ int udp_read_msg(mbuf_type *mbuf , int visible )
   return (ret);
 }
 }
-int set_sock_buff(int fd , int m ) 
-{ 
+int set_sock_buff(int fd , int m )
+{
   int ret ;
   int bufsize ;
 
@@ -2552,8 +2552,8 @@ int set_sock_buff(int fd , int m )
   return (ret);
 }
 }
-int set_non_block(int fd ) 
-{ 
+int set_non_block(int fd )
+{
   int opt ;
   int tmp ;
   int tmp___0 ;
@@ -2569,8 +2569,8 @@ int set_non_block(int fd )
   return (tmp___0);
 }
 }
-int make_bin_from_str(uchar *bin , char const   *str ) 
-{ 
+int make_bin_from_str(uchar *bin , char const   *str )
+{
   int i ;
   uchar val ;
 
@@ -2598,8 +2598,8 @@ int make_bin_from_str(uchar *bin , char const   *str )
   return (0);
 }
 }
-int make_addr_from_bin(struct sockaddr_in *addr , uchar *data ) 
-{ 
+int make_addr_from_bin(struct sockaddr_in *addr , uchar *data )
+{
   uchar ipv4[16] ;
   unsigned int tmp ;
   int idx ;
@@ -2646,8 +2646,8 @@ int make_addr_from_bin(struct sockaddr_in *addr , uchar *data )
   return (0);
 }
 }
-int dbg_print_addr(struct sockaddr_in *addr ) 
-{ 
+int dbg_print_addr(struct sockaddr_in *addr )
+{
   uint___0 i ;
 
   {
@@ -2662,7 +2662,7 @@ int dbg_print_addr(struct sockaddr_in *addr )
 }
 }
 #pragma merger("0","/tmp/cil-T50FJM8Y.i","-g,-Wall")
-extern  __attribute__((__nothrow__)) int sprintf(char * __restrict  __s , char const   * __restrict  __format 
+extern  __attribute__((__nothrow__)) int sprintf(char * __restrict  __s , char const   * __restrict  __format
                                                  , ...) ;
 extern  __attribute__((__nothrow__)) int getpagesize(void)  __attribute__((__const__)) ;
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,3))) pthread_create)(pthread_t * __restrict  __newthread ,
@@ -2699,8 +2699,8 @@ int htable_insert_list(struct htable *ht , uchar *key , int klen , int type , uc
                        int replace , struct mvalue *mv , hashval_t *hashd ) ;
 int check_support_type(ushort___0 type ) ;
 unsigned int const   MAX_ELE_NUM  =    (uint___0 const   )1000000;
-struct msgcache *init_msgcache(int n ) 
-{ 
+struct msgcache *init_msgcache(int n )
+{
   struct msgcache *mc ;
   int pgsz ;
   void *tmp ;
@@ -2729,8 +2729,8 @@ struct msgcache *init_msgcache(int n )
   return (mc);
 }
 }
-void free_msgcache(struct msgcache *mc ) 
-{ 
+void free_msgcache(struct msgcache *mc )
+{
 
 
   {
@@ -2740,8 +2740,8 @@ void free_msgcache(struct msgcache *mc )
   return;
 }
 }
-int get_mvalue_len(uchar *val ) 
-{ 
+int get_mvalue_len(uchar *val )
+{
   struct mvalue *mv ;
 
   {
@@ -2749,8 +2749,8 @@ int get_mvalue_len(uchar *val )
   return ((int )mv->len);
 }
 }
-int ttl_expired(uchar *val ) 
-{ 
+int ttl_expired(uchar *val )
+{
   struct mvalue *mv ;
   uint___0 tx ;
 
@@ -2766,8 +2766,8 @@ int ttl_expired(uchar *val )
   return (0);
 }
 }
-static int deep_copy(uchar *from , uchar *to , int tlen ) 
-{ 
+static int deep_copy(uchar *from , uchar *to , int tlen )
+{
   struct mvalue *mv ;
   int sz ;
 
@@ -2782,8 +2782,8 @@ static int deep_copy(uchar *from , uchar *to , int tlen )
   return (sz);
 }
 }
-uint___0 get_pre_mem_hash(void *argv , int klen , hashval_t *hash ) 
-{ 
+uint___0 get_pre_mem_hash(void *argv , int klen , hashval_t *hash )
+{
   uint___0 ret ;
 
   {
@@ -2795,8 +2795,8 @@ uint___0 get_pre_mem_hash(void *argv , int klen , hashval_t *hash )
   return (ret);
 }
 }
-struct htable *htable_create(hashfunc *h , comparefunc *c , int size , int num ) 
-{ 
+struct htable *htable_create(hashfunc *h , comparefunc *c , int size , int num )
+{
   int i ;
   int j ;
   struct htable *ht ;
@@ -2849,8 +2849,8 @@ struct htable *htable_create(hashfunc *h , comparefunc *c , int size , int num )
   return (ht);
 }
 }
-void find_io_from_he(struct hentry *he , uint32_t limit , struct rbtree *rbt , int ttl_update ) 
-{ 
+void find_io_from_he(struct hentry *he , uint32_t limit , struct rbtree *rbt , int ttl_update )
+{
   struct mvalue *mv ;
   int i ;
   int val_num ;
@@ -2904,15 +2904,15 @@ void find_io_from_he(struct hentry *he , uint32_t limit , struct rbtree *rbt , i
     if (0 == he->count) {
       break;
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   return;
 }
 }
 int htable_find_io(struct htable *ht , int idx , uint32_t limit , struct rbtree *rbt ,
-                   int ttl_update ) 
-{ 
+                   int ttl_update )
+{
   int debug ;
   struct hdata *hd ;
   struct hentry *he ;
@@ -2961,8 +2961,8 @@ int htable_find_io(struct htable *ht , int idx , uint32_t limit , struct rbtree 
   return (-1);
 }
 }
-uchar *get_val_from_he(struct hentry *he , int type ) 
-{ 
+uchar *get_val_from_he(struct hentry *he , int type )
+{
   uchar *val ;
 
   {
@@ -2970,34 +2970,34 @@ uchar *get_val_from_he(struct hentry *he , int type )
     __assert_fail("he->count > 0", "storage.c", 263U, "get_val_from_he");
   }
   switch (type) {
-  case 1: 
+  case 1:
   val = he->__annonCompField4.val.A;
   break;
-  case 2: 
+  case 2:
   val = he->__annonCompField4.val.NS;
   break;
-  case 5: 
+  case 5:
   val = he->__annonCompField4.val.CNAME;
   break;
-  case 6: 
+  case 6:
   val = he->__annonCompField4.val.SOA;
   break;
-  case 15: 
+  case 15:
   val = he->__annonCompField4.val.MX;
   break;
-  case 16: 
+  case 16:
   val = he->__annonCompField4.val.TXT;
   break;
-  case 28: 
+  case 28:
   val = he->__annonCompField4.val.AAAA;
   break;
-  case 33: 
+  case 33:
   val = he->__annonCompField4.val.SRV;
   break;
-  case 12: 
+  case 12:
   val = he->__annonCompField4.val.PTR;
   break;
-  default: 
+  default:
   val = (uchar *)((void *)0);
   break;
   }
@@ -3005,8 +3005,8 @@ uchar *get_val_from_he(struct hentry *he , int type )
 }
 }
 int htable_find(struct htable *ht , uchar *key , int klen , int type , uchar *buffer ,
-                int vlen , struct mvalue *md , hashval_t *hashd ) 
-{ 
+                int vlen , struct mvalue *md , hashval_t *hashd )
+{
   int idx ;
   int debug ;
   int ret ;
@@ -3064,8 +3064,8 @@ int htable_find(struct htable *ht , uchar *key , int klen , int type , uchar *bu
   return (-1);
 }
 }
-int find_list_io_from_he(struct hentry *he , int *typeoff , uchar **buffer ) 
-{ 
+int find_list_io_from_he(struct hentry *he , int *typeoff , uchar **buffer )
+{
   int i ;
   int val_num ;
   uchar *val ;
@@ -3084,14 +3084,14 @@ int find_list_io_from_he(struct hentry *he , int *typeoff , uchar **buffer )
     *buffer = val;
     *typeoff = i;
     return (1);
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   return (0);
 }
 }
-int htable_find_list_io(struct htable *ht , int idx , int off , int *typeoff , uchar **buffer ) 
-{ 
+int htable_find_list_io(struct htable *ht , int idx , int off , int *typeoff , uchar **buffer )
+{
   int debug ;
   int ret ;
   struct hdata *hd ;
@@ -3128,8 +3128,8 @@ int htable_find_list_io(struct htable *ht , int idx , int off , int *typeoff , u
   return (-1);
 }
 }
-int get_list_val_from_he(struct hentry *he , int typeoff , uchar **buffer ) 
-{ 
+int get_list_val_from_he(struct hentry *he , int typeoff , uchar **buffer )
+{
   uchar *val ;
 
   {
@@ -3144,8 +3144,8 @@ int get_list_val_from_he(struct hentry *he , int typeoff , uchar **buffer )
   return (1);
 }
 }
-int htable_find_list(struct htable *ht , uchar *key , int typeoff , int idx , uchar **buffer ) 
-{ 
+int htable_find_list(struct htable *ht , uchar *key , int typeoff , int idx , uchar **buffer )
+{
   int debug ;
   struct hdata *hd ;
   struct hentry *he ;
@@ -3186,8 +3186,8 @@ int htable_find_list(struct htable *ht , uchar *key , int typeoff , int idx , uc
   return (-1);
 }
 }
-uchar *delete_val_from_he(struct hentry *he , int type ) 
-{ 
+uchar *delete_val_from_he(struct hentry *he , int type )
+{
   uchar **oval ;
   uchar *val ;
 
@@ -3197,34 +3197,34 @@ uchar *delete_val_from_he(struct hentry *he , int type )
     __assert_fail("he->count > 0", "storage.c", 453U, "delete_val_from_he");
   }
   switch (type) {
-  case 1: 
+  case 1:
   oval = & he->__annonCompField4.val.A;
   break;
-  case 2: 
+  case 2:
   oval = & he->__annonCompField4.val.NS;
   break;
-  case 5: 
+  case 5:
   oval = & he->__annonCompField4.val.CNAME;
   break;
-  case 6: 
+  case 6:
   oval = & he->__annonCompField4.val.SOA;
   break;
-  case 15: 
+  case 15:
   oval = & he->__annonCompField4.val.MX;
   break;
-  case 16: 
+  case 16:
   oval = & he->__annonCompField4.val.TXT;
   break;
-  case 28: 
+  case 28:
   oval = & he->__annonCompField4.val.AAAA;
   break;
-  case 33: 
+  case 33:
   oval = & he->__annonCompField4.val.SRV;
   break;
-  case 12: 
+  case 12:
   oval = & he->__annonCompField4.val.PTR;
   break;
-  default: 
+  default:
   return ((uchar *)((void *)0));
   break;
   }
@@ -3236,8 +3236,8 @@ uchar *delete_val_from_he(struct hentry *he , int type )
   return (val);
 }
 }
-uchar *htable_delete(struct htable *ht , uchar *key , int klen , int type , hashval_t hashd ) 
-{ 
+uchar *htable_delete(struct htable *ht , uchar *key , int klen , int type , hashval_t hashd )
+{
   hashval_t h ;
   hashval_t tmp ;
   hashval_t tmp___0 ;
@@ -3300,8 +3300,8 @@ uchar *htable_delete(struct htable *ht , uchar *key , int klen , int type , hash
   return ((uchar *)((void *)0));
 }
 }
-uchar *delete_list_val_from_he(struct hentry *he , int typeoff ) 
-{ 
+uchar *delete_list_val_from_he(struct hentry *he , int typeoff )
+{
   uchar **oval ;
   uchar *val ;
 
@@ -3319,8 +3319,8 @@ uchar *delete_list_val_from_he(struct hentry *he , int typeoff )
   return (val);
 }
 }
-uchar *htable_delete_list_io(struct htable *ht , int typeoff , int idx , int off ) 
-{ 
+uchar *htable_delete_list_io(struct htable *ht , int typeoff , int idx , int off )
+{
   int debug ;
   struct hdata *hd ;
   struct hentry *he ;
@@ -3372,8 +3372,8 @@ uchar *htable_delete_list_io(struct htable *ht , int typeoff , int idx , int off
   return ((uchar *)((void *)0));
 }
 }
-uchar *htable_delete_list(struct htable *ht , uchar *key , int typeoff , int idx ) 
-{ 
+uchar *htable_delete_list(struct htable *ht , uchar *key , int typeoff , int idx )
+{
   int debug ;
   struct hdata *hd ;
   struct hentry *he ;
@@ -3426,41 +3426,41 @@ uchar *htable_delete_list(struct htable *ht , uchar *key , int typeoff , int idx
   return ((uchar *)((void *)0));
 }
 }
-int append_value_to_he(struct hentry *he , uchar *val , int type , int replace , struct mvalue *mv ) 
-{ 
+int append_value_to_he(struct hentry *he , uchar *val , int type , int replace , struct mvalue *mv )
+{
   int ret ;
   uchar **oval ;
 
   {
   switch (type) {
-  case 1: 
+  case 1:
   oval = & he->__annonCompField4.val.A;
   break;
-  case 2: 
+  case 2:
   oval = & he->__annonCompField4.val.NS;
   break;
-  case 5: 
+  case 5:
   oval = & he->__annonCompField4.val.CNAME;
   break;
-  case 6: 
+  case 6:
   oval = & he->__annonCompField4.val.SOA;
   break;
-  case 15: 
+  case 15:
   oval = & he->__annonCompField4.val.MX;
   break;
-  case 16: 
+  case 16:
   oval = & he->__annonCompField4.val.TXT;
   break;
-  case 28: 
+  case 28:
   oval = & he->__annonCompField4.val.AAAA;
   break;
-  case 33: 
+  case 33:
   oval = & he->__annonCompField4.val.SRV;
   break;
-  case 12: 
+  case 12:
   oval = & he->__annonCompField4.val.PTR;
   break;
-  default: 
+  default:
   return (-1);
   break;
   }
@@ -3495,8 +3495,8 @@ int append_value_to_he(struct hentry *he , uchar *val , int type , int replace ,
 }
 }
 int htable_insert(struct htable *ht , uchar *key , int klen , int type , uchar *val ,
-                  int replace , struct mvalue *mv , hashval_t *hashd ) 
-{ 
+                  int replace , struct mvalue *mv , hashval_t *hashd )
+{
   int idx ;
   int ret ;
   int debug ;
@@ -3567,8 +3567,8 @@ int htable_insert(struct htable *ht , uchar *key , int klen , int type , uchar *
 }
 }
 int htable_insert_list(struct htable *ht , uchar *key , int klen , int type , uchar *val ,
-                       int replace , struct mvalue *mv , hashval_t *hashd ) 
-{ 
+                       int replace , struct mvalue *mv , hashval_t *hashd )
+{
   int idx ;
   int ret ;
   int debug ;
@@ -3641,8 +3641,8 @@ int htable_insert_list(struct htable *ht , uchar *key , int klen , int type , uc
 }
 }
 int find_record_with_ttl(struct htable *ht , uchar *key , int klen , int type , uchar *val ,
-                         int vlen , struct mvalue *md , hashval_t *hash ) 
-{ 
+                         int vlen , struct mvalue *md , hashval_t *hash )
+{
   int idx ;
   int ret ;
   uchar *oval ;
@@ -3667,8 +3667,8 @@ int find_record_with_ttl(struct htable *ht , uchar *key , int klen , int type , 
   return (-1);
 }
 }
-void *st_th(void *arg ) 
-{ 
+void *st_th(void *arg )
+{
   int i ;
   int idx ;
   uchar key[50] ;
@@ -3739,8 +3739,8 @@ void *st_th(void *arg )
   return ((void *)0);
 }
 }
-int storage_test(void) 
-{ 
+int storage_test(void)
+{
   struct htable *ht ;
   pthread_t pt[5] ;
   int i ;
@@ -3810,12 +3810,12 @@ void dbg_print_ip(uchar *ip , enum rrtype type ) ;
 int dbg_print_td(uchar *td ) ;
 int insert_into_ttltree(struct rbtree *rbt , uchar *td , int len , int type , uint___0 ttl ,
                         packet_type *lowerdomain ) ;
-enum rrtype  const  support_type[9]  = 
-  {      (enum rrtype  const  )1,      (enum rrtype  const  )2,      (enum rrtype  const  )5,      (enum rrtype  const  )6, 
-        (enum rrtype  const  )15,      (enum rrtype  const  )16,      (enum rrtype  const  )28,      (enum rrtype  const  )33, 
+enum rrtype  const  support_type[9]  =
+  {      (enum rrtype  const  )1,      (enum rrtype  const  )2,      (enum rrtype  const  )5,      (enum rrtype  const  )6,
+        (enum rrtype  const  )15,      (enum rrtype  const  )16,      (enum rrtype  const  )28,      (enum rrtype  const  )33,
         (enum rrtype  const  )12};
-uchar *str_to_len_label(uchar *domain , int len ) 
-{ 
+uchar *str_to_len_label(uchar *domain , int len )
+{
   uchar l ;
   int i ;
 
@@ -3841,73 +3841,73 @@ uchar *str_to_len_label(uchar *domain , int len )
   return (domain);
 }
 }
-unsigned char SupportTypeTable[256]  = 
-  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)5,      (unsigned char)6,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)12,      (unsigned char)0,      (unsigned char)0,      (unsigned char)15, 
-        (unsigned char)16,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)28,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)33,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
+unsigned char SupportTypeTable[256]  =
+  {      (unsigned char)0,      (unsigned char)1,      (unsigned char)2,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)5,      (unsigned char)6,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)12,      (unsigned char)0,      (unsigned char)0,      (unsigned char)15,
+        (unsigned char)16,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)28,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)33,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
         (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0};
-int check_support_type(ushort___0 type ) 
-{ 
+int check_support_type(ushort___0 type )
+{
 
 
   {
@@ -3920,8 +3920,8 @@ int check_support_type(ushort___0 type )
   return (-1);
 }
 }
-void passer_dns_data(mbuf_type *mbuf ) 
-{ 
+void passer_dns_data(mbuf_type *mbuf )
+{
   uchar *buf ;
   int num ;
   int dlen ;
@@ -3984,8 +3984,8 @@ void passer_dns_data(mbuf_type *mbuf )
   return;
 }
 }
-int send_tc_to_client(mbuf_type *mbuf ) 
-{ 
+int send_tc_to_client(mbuf_type *mbuf )
+{
   uchar *itor ;
   dnsheader *hdr ;
   qdns *qd ;
@@ -4023,8 +4023,8 @@ int send_tc_to_client(mbuf_type *mbuf )
   return (0);
 }
 }
-int get_domain_from_msg(uchar *itor , uchar *hdr , uchar *to , int *tmplen ) 
-{ 
+int get_domain_from_msg(uchar *itor , uchar *hdr , uchar *to , int *tmplen )
+{
   uchar len ;
   ushort___0 offset ;
   int dlen ;
@@ -4093,8 +4093,8 @@ int get_domain_from_msg(uchar *itor , uchar *hdr , uchar *to , int *tmplen )
 }
 }
 int insert_into_ttltree(struct rbtree *rbt , uchar *td , int len , int type , uint___0 ttl ,
-                        packet_type *lowerdomain ) 
-{ 
+                        packet_type *lowerdomain )
+{
   struct rbnode node ;
   struct ttlnode *tn ;
   void *tmp ;
@@ -4138,8 +4138,8 @@ int insert_into_ttltree(struct rbtree *rbt , uchar *td , int len , int type , ui
   return (0);
 }
 }
-uint___0 random_ttl(uint___0 ttl ) 
-{ 
+uint___0 random_ttl(uint___0 ttl )
+{
   uint___0 ret ;
 
   {
@@ -4151,8 +4151,8 @@ uint___0 random_ttl(uint___0 ttl )
   return (ttl);
 }
 }
-int is_parent(uchar *parent , uchar *son ) 
-{ 
+int is_parent(uchar *parent , uchar *son )
+{
   int sp ;
   int ss ;
   int x ;
@@ -4177,16 +4177,16 @@ int is_parent(uchar *parent , uchar *son )
   return (-1);
 }
 }
-int check_dms(uchar *ck , uchar *dms , int num ) 
-{ 
+int check_dms(uchar *ck , uchar *dms , int num )
+{
 
 
   {
   return (0);
 }
 }
-uchar *process_rdata(struct hlpp *hlp , uchar *label , int n ) 
-{ 
+uchar *process_rdata(struct hlpp *hlp , uchar *label , int n )
+{
   uchar *buffer ;
   ushort___0 type ;
   ushort___0 classin ;
@@ -4262,7 +4262,7 @@ uchar *process_rdata(struct hlpp *hlp , uchar *label , int n )
       goto _L;
     } else
     if ((int )tmptype == 5) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       if (i == n - 1) {
         *stype = (int )tmptype;
       }
@@ -4281,7 +4281,7 @@ uchar *process_rdata(struct hlpp *hlp , uchar *label , int n )
       goto _L___0;
     } else
     if ((int )type != (int )tmptype) {
-      _L___0: /* CIL Label */ 
+      _L___0: /* CIL Label */
       tmp___1 = random_ttl((tmpttl + (uint___0 )i) + tx % 5U);
       mv->ttl = tmp___1 + tx;
       if ((int )*(dm + ((int )*(dm + 0) + 2)) != 0) {
@@ -4323,8 +4323,8 @@ uchar *process_rdata(struct hlpp *hlp , uchar *label , int n )
   return (label);
 }
 }
-int check_domain_mask(uchar *domain , uchar *origin , int len ) 
-{ 
+int check_domain_mask(uchar *domain , uchar *origin , int len )
+{
   int tmp ;
 
   {
@@ -4333,8 +4333,8 @@ int check_domain_mask(uchar *domain , uchar *origin , int len )
 }
 }
 int get_dns_info(uchar *label , ushort___0 *tp , ushort___0 *cls , uint___0 *ttl ,
-                 ushort___0 *lth ) 
-{ 
+                 ushort___0 *lth )
+{
   ushort___0 *us ;
   uint___0 *ui ;
 
@@ -4362,138 +4362,138 @@ int get_dns_info(uchar *label , ushort___0 *tp , ushort___0 *cls , uint___0 *ttl
   return (0);
 }
 }
-unsigned char DnsNameTable[256]  = 
-  {      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)42,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)45,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51, 
-        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55, 
-        (unsigned char)56,      (unsigned char)57,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99, 
-        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103, 
-        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107, 
-        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111, 
-        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115, 
-        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119, 
-        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)95, 
-        (unsigned char)0,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99, 
-        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103, 
-        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107, 
-        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111, 
-        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115, 
-        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119, 
-        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
+unsigned char DnsNameTable[256]  =
+  {      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)42,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)45,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)48,      (unsigned char)49,      (unsigned char)50,      (unsigned char)51,
+        (unsigned char)52,      (unsigned char)53,      (unsigned char)54,      (unsigned char)55,
+        (unsigned char)56,      (unsigned char)57,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99,
+        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103,
+        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107,
+        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111,
+        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115,
+        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119,
+        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)95,
+        (unsigned char)0,      (unsigned char)97,      (unsigned char)98,      (unsigned char)99,
+        (unsigned char)100,      (unsigned char)101,      (unsigned char)102,      (unsigned char)103,
+        (unsigned char)104,      (unsigned char)105,      (unsigned char)106,      (unsigned char)107,
+        (unsigned char)108,      (unsigned char)109,      (unsigned char)110,      (unsigned char)111,
+        (unsigned char)112,      (unsigned char)113,      (unsigned char)114,      (unsigned char)115,
+        (unsigned char)116,      (unsigned char)117,      (unsigned char)118,      (unsigned char)119,
+        (unsigned char)120,      (unsigned char)121,      (unsigned char)122,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
         (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0};
-unsigned char InvalidDnsNameTable[256]  = 
-  {      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)0,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)0,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)0, 
-        (unsigned char)1,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
+unsigned char InvalidDnsNameTable[256]  =
+  {      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)0,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)0,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)0,
+        (unsigned char)1,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
         (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1};
-int check_dns_name(uchar *domain , packet_type *lowerdomain ) 
-{ 
+int check_dns_name(uchar *domain , packet_type *lowerdomain )
+{
   uchar len ;
   uchar i ;
   int tlen ;
@@ -4559,8 +4559,8 @@ int check_dns_name(uchar *domain , packet_type *lowerdomain )
   return (tlen);
 }
 }
-int make_type_domain(uchar *domain , int dlen , int type , uchar *buffer ) 
-{ 
+int make_type_domain(uchar *domain , int dlen , int type , uchar *buffer )
+{
 
 
   {
@@ -4575,8 +4575,8 @@ int make_type_domain(uchar *domain , int dlen , int type , uchar *buffer )
   return (0);
 }
 }
-int check_memcpy(uchar *to , uchar *from , int vlen ) 
-{ 
+int check_memcpy(uchar *to , uchar *from , int vlen )
+{
   int i ;
 
   {
@@ -4591,8 +4591,8 @@ int check_memcpy(uchar *to , uchar *from , int vlen )
 }
 }
 int insert_kv_mem(struct rbtree *rbt , struct htable *ds , uchar *k , int klen , int type ,
-                  uchar *v , int vlen , int hijack___0 , packet_type *lowerdomain ) 
-{ 
+                  uchar *v , int vlen , int hijack___0 , packet_type *lowerdomain )
+{
   uchar *val ;
   struct mvalue *mv ;
   struct mvalue tmp ;
@@ -4683,8 +4683,8 @@ int insert_kv_mem(struct rbtree *rbt , struct htable *ds , uchar *k , int klen ,
   return (0);
 }
 }
-int get_level(uchar *itor ) 
-{ 
+int get_level(uchar *itor )
+{
   int lvl ;
   uchar len ;
 
@@ -4702,8 +4702,8 @@ int get_level(uchar *itor )
   return (lvl);
 }
 }
-uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx ) 
-{ 
+uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx )
+{
   int step ;
   uint16_t txtlen ;
   uchar *tmp ;
@@ -4736,14 +4736,14 @@ uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx )
     step = 16;
   }
   switch ((int )hf->type) {
-  case 28: 
-  case 1: 
+  case 28:
+  case 1:
   fm->len = htons((uint16_t )step);
   memcpy((void * __restrict  )to, (void const   * __restrict  )from, (size_t )step);
   to += step;
   break;
-  case 2: 
-  case 5: 
+  case 2:
+  case 5:
   idx ++;
   *pidx = idx;
   (h + idx)->name = from;
@@ -4757,7 +4757,7 @@ uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx )
   fm->len = htons((uint16_t )(tmp - to));
   to = tmp;
   break;
-  case 15: 
+  case 15:
   memcpy((void * __restrict  )to, (void const   * __restrict  )from, sizeof(uint16_t ));
   from += sizeof(uint16_t );
   to += sizeof(uint16_t );
@@ -4774,14 +4774,14 @@ uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx )
   fm->len = htons((uint16_t )((unsigned long )(tmp - to) + sizeof(uint16_t )));
   to = tmp;
   break;
-  case 16: 
+  case 16:
   txtlen = *((uint16_t *)from);
   from += sizeof(uint16_t );
   memcpy((void * __restrict  )to, (void const   * __restrict  )from, (size_t )txtlen);
   fm->len = htons(txtlen);
   to += (int )txtlen;
   break;
-  case 33: 
+  case 33:
   memcpy((void * __restrict  )to, (void const   * __restrict  )from, sizeof(uint16_t ) * 3UL);
   from += sizeof(uint16_t ) * 3UL;
   to += sizeof(uint16_t ) * 3UL;
@@ -4798,14 +4798,14 @@ uchar *fill_all_records_in_msg(struct hlpc *h , struct hlpf *hf , int *pidx )
   fm->len = htons((uint16_t )((unsigned long )(tmp - to) + sizeof(uint16_t ) * 3UL));
   to = tmp;
   break;
-  default: 
+  default:
   break;
   }
   return (to);
 }
 }
-int reverse_compare(uchar *from , int flen , uchar *to , int tolen ) 
-{ 
+int reverse_compare(uchar *from , int flen , uchar *to , int tolen )
+{
   uchar fi ;
   uchar ti ;
   uchar rec ;
@@ -4840,8 +4840,8 @@ int reverse_compare(uchar *from , int flen , uchar *to , int tolen )
   return (match);
 }
 }
-uchar *fill_name_in_msg(struct hlpc *h , uchar *to , int idx ) 
-{ 
+uchar *fill_name_in_msg(struct hlpc *h , uchar *to , int idx )
+{
   int i ;
   int m ;
   int len ;
@@ -4907,8 +4907,8 @@ uchar *fill_name_in_msg(struct hlpc *h , uchar *to , int idx )
   return (to);
 }
 }
-uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uchar *hdr ) 
-{ 
+uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uchar *hdr )
+{
   uchar type ;
   int i ;
   int step ;
@@ -4946,8 +4946,8 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
     step = 16;
   }
   switch ((int )type) {
-  case 28: 
-  case 1: 
+  case 28:
+  case 1:
   i = 0;
   while (i < num) {
     to = fill_name_in_msg(h, to, n);
@@ -4959,7 +4959,7 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   }
   return (to);
   break;
-  case 5: 
+  case 5:
   to = fill_name_in_msg(h, to, n);
   hf.from = from;
   hf.to = to;
@@ -4968,7 +4968,7 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   to = fill_all_records_in_msg(h, & hf, pn);
   return (to);
   break;
-  case 2: 
+  case 2:
   i = 0;
   while (i < num) {
     to = fill_name_in_msg(h, to, n);
@@ -4982,7 +4982,7 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   }
   return (to);
   break;
-  case 15: 
+  case 15:
   i = 0;
   while (i < num) {
     to = fill_name_in_msg(h, to, n);
@@ -4997,7 +4997,7 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   }
   return (to);
   break;
-  case 16: 
+  case 16:
   i = 0;
   while (i < num) {
     txtlen = *((uint16_t *)from);
@@ -5011,7 +5011,7 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   }
   return (to);
   break;
-  case 33: 
+  case 33:
   i = 0;
   while (i < num) {
     to = fill_name_in_msg(h, to, n);
@@ -5026,15 +5026,15 @@ uchar *fill_rrset_in_msg(struct hlpc *h , uchar *from , uchar *to , int *pn , uc
   }
   return (to);
   break;
-  default: 
+  default:
   printf((char const   * __restrict  )"not support or error in fill msg\n");
   break;
   }
   return ((uchar *)((void *)0));
 }
 }
-uchar *fill_header_in_msg(struct setheader *sh ) 
-{ 
+uchar *fill_header_in_msg(struct setheader *sh )
+{
   uchar *itor ;
   dnsheader *hdr ;
   qdns *qd ;
@@ -5058,8 +5058,8 @@ uchar *fill_header_in_msg(struct setheader *sh )
   return (itor);
 }
 }
-int make_dns_msg_for_new(uchar *itor , ushort___0 msgid , uchar *d , int len , ushort___0 type ) 
-{ 
+int make_dns_msg_for_new(uchar *itor , ushort___0 msgid , uchar *d , int len , ushort___0 type )
+{
   uchar *buf ;
   dnsheader *hdr ;
   qdns *qd ;
@@ -5091,8 +5091,8 @@ int make_dns_msg_for_new(uchar *itor , ushort___0 msgid , uchar *d , int len , u
 }
 }
 int fill_rrset_in_buffer(uchar *buffer , uchar *label , uchar *hdr , int lth , int type ,
-                         struct hlpp *hlp ) 
-{ 
+                         struct hlpp *hlp )
+{
   int mlen ;
   uint16_t len ;
   struct srv *from ;
@@ -5102,30 +5102,30 @@ int fill_rrset_in_buffer(uchar *buffer , uchar *label , uchar *hdr , int lth , i
   mlen = 0;
   len = (uint16_t )lth;
   switch (type) {
-  case 1: 
+  case 1:
   mlen = 4;
   memcpy((void * __restrict  )buffer, (void const   * __restrict  )label, (size_t )4);
   break;
-  case 5: 
-  case 2: 
+  case 5:
+  case 2:
   get_domain_from_msg(label, hdr, buffer, & mlen);
   to_lowercase(buffer, mlen);
   break;
-  case 6: 
+  case 6:
   mlen = 0;
   break;
-  case 28: 
+  case 28:
   mlen = 16;
   memcpy((void * __restrict  )buffer, (void const   * __restrict  )label, (size_t )16);
   break;
-  case 15: 
+  case 15:
   memcpy((void * __restrict  )buffer, (void const   * __restrict  )label, (size_t )2);
   label += 2;
   buffer += 2;
   get_domain_from_msg(label, hdr, buffer, & mlen);
   mlen += 2;
   break;
-  case 33: 
+  case 33:
   from = (struct srv *)label;
   to = (struct srv *)buffer;
   to->pri = from->pri;
@@ -5136,20 +5136,20 @@ int fill_rrset_in_buffer(uchar *buffer , uchar *label , uchar *hdr , int lth , i
   get_domain_from_msg(label, hdr, buffer, & mlen);
   mlen = (int )((unsigned long )mlen + sizeof(uint16_t ) * 3UL);
   break;
-  case 16: 
+  case 16:
   memcpy((void * __restrict  )buffer, (void const   * __restrict  )(& len), sizeof(uint16_t ));
   buffer += sizeof(uint16_t );
   memcpy((void * __restrict  )buffer, (void const   * __restrict  )label, (size_t )lth);
   mlen = (int )((unsigned long )lth + sizeof(uint16_t ));
   break;
-  default: 
+  default:
   return (-1);
   }
   return (mlen);
 }
 }
-int check_an_msg(ushort___0 flag , uchar *domain , int *bk ) 
-{ 
+int check_an_msg(ushort___0 flag , uchar *domain , int *bk )
+{
   uint___0 get ;
 
   {
@@ -5171,13 +5171,13 @@ int check_an_msg(ushort___0 flag , uchar *domain , int *bk )
   if (get != 0U) {
     if (get != 3U) {
       switch (get) {
-      case 2U: 
+      case 2U:
       break;
-      case 1U: 
+      case 1U:
       break;
-      case 4U: 
+      case 4U:
       break;
-      case 5U: 
+      case 5U:
       break;
       }
       return (2);
@@ -5186,8 +5186,8 @@ int check_an_msg(ushort___0 flag , uchar *domain , int *bk )
   return (0);
 }
 }
-int check_out_msg(ushort___0 cid , uchar *buf , int len ) 
-{ 
+int check_out_msg(ushort___0 cid , uchar *buf , int len )
+{
   dnsheader *hdr ;
 
   {
@@ -5198,8 +5198,8 @@ int check_out_msg(ushort___0 cid , uchar *buf , int len )
   return (0);
 }
 }
-int check_td(uchar *td ) 
-{ 
+int check_td(uchar *td )
+{
   uchar type ;
   uchar *itor ;
   uchar len ;
@@ -5225,8 +5225,8 @@ int check_td(uchar *td )
   return (0);
 }
 }
-int is_glue(uchar *domain , uchar *ns ) 
-{ 
+int is_glue(uchar *domain , uchar *ns )
+{
   uchar d ;
   uchar n ;
   int dlen ;
@@ -5258,8 +5258,8 @@ int is_glue(uchar *domain , uchar *ns )
   return (0);
 }
 }
-int pre_find(mbuf_type *mbuf , struct htable *fwd , struct htable *ht , uchar *ip ) 
-{ 
+int pre_find(mbuf_type *mbuf , struct htable *fwd , struct htable *ht , uchar *ip )
+{
   uchar *td ;
   uchar *itor ;
   int xlen ;
@@ -5361,8 +5361,8 @@ int pre_find(mbuf_type *mbuf , struct htable *fwd , struct htable *ht , uchar *i
   return (0);
 }
 }
-int transfer_record_to_msg(uchar *buff , uchar *key , uchar *msg , int msglen , uint16_t *ttloff ) 
-{ 
+int transfer_record_to_msg(uchar *buff , uchar *key , uchar *msg , int msglen , uint16_t *ttloff )
+{
   uint16_t segs ;
   uint16_t totallen ;
   uchar *itor ;
@@ -5395,8 +5395,8 @@ int transfer_record_to_msg(uchar *buff , uchar *key , uchar *msg , int msglen , 
   return (0);
 }
 }
-int make_A_record_from_segment(uchar *ipmsg , uchar *iitor ) 
-{ 
+int make_A_record_from_segment(uchar *ipmsg , uchar *iitor )
+{
   int reallen ;
   uchar *ipto ;
   uchar *ipfrom ;
@@ -5429,8 +5429,8 @@ int make_A_record_from_segment(uchar *ipmsg , uchar *iitor )
 }
 }
 int retrive_ip(mbuf_type *mbuf , uchar *itor , int num , uchar *ip , struct htable *ht ,
-               int *fq ) 
-{ 
+               int *fq )
+{
   struct mvalue *mi ;
   int i ;
   int xlen ;
@@ -5487,8 +5487,8 @@ int retrive_ip(mbuf_type *mbuf , uchar *itor , int num , uchar *ip , struct htab
   return (-1);
 }
 }
-int fill_extra_addr(uchar *ip ) 
-{ 
+int fill_extra_addr(uchar *ip )
+{
   char const   *extra[2] ;
   int i ;
   int n ;
@@ -5527,8 +5527,8 @@ int fill_extra_addr(uchar *ip )
 }
 }
 int find_addr(struct htable *fwd , struct htable *ht , mbuf_type *mbuf , uchar *ip ,
-              int forward ) 
-{ 
+              int forward )
+{
   int ret ;
   int xlen ;
   int dbg___0 ;
@@ -5707,8 +5707,8 @@ int find_addr(struct htable *fwd , struct htable *ht , mbuf_type *mbuf , uchar *
   return (0);
 }
 }
-int check_qo(struct qoutinfo *qo ) 
-{ 
+int check_qo(struct qoutinfo *qo )
+{
 
 
   {
@@ -5724,8 +5724,8 @@ int check_qo(struct qoutinfo *qo )
   return (0);
 }
 }
-uchar *dbg_print_label(uchar *label , int visible ) 
-{ 
+uchar *dbg_print_label(uchar *label , int visible )
+{
   uchar i ;
   uchar len ;
 
@@ -5741,8 +5741,8 @@ uchar *dbg_print_label(uchar *label , int visible )
   return ((label + (int )*(label + 0)) + 1);
 }
 }
-uchar *dbg_print_domain(uchar *hdr , uchar *itor ) 
-{ 
+uchar *dbg_print_domain(uchar *hdr , uchar *itor )
+{
   uchar len ;
   uchar *tmp ;
   ushort___0 offset ;
@@ -5794,8 +5794,8 @@ uchar *dbg_print_domain(uchar *hdr , uchar *itor )
   return (tmp);
 }
 }
-void dbg_print_ip(uchar *ip , enum rrtype type ) 
-{ 
+void dbg_print_ip(uchar *ip , enum rrtype type )
+{
   int i ;
   uint___0 ipv4[4] ;
   unsigned int tmp ;
@@ -5841,8 +5841,8 @@ void dbg_print_ip(uchar *ip , enum rrtype type )
   return;
 }
 }
-int dbg_print_td(uchar *td ) 
-{ 
+int dbg_print_td(uchar *td )
+{
   uchar c ;
 
   {
@@ -5857,9 +5857,9 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) atoi)
 extern FILE *stderr ;
 extern int fclose(FILE *__stream ) ;
 extern FILE *fopen(char const   * __restrict  __filename , char const   * __restrict  __modes ) ;
-extern int fprintf(FILE * __restrict  __stream , char const   * __restrict  __format 
+extern int fprintf(FILE * __restrict  __stream , char const   * __restrict  __format
                    , ...) ;
-extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format 
+extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format
                                                 , ...)  __asm__("__isoc99_sscanf")  ;
 extern char *fgets(char * __restrict  __s , int __n , FILE * __restrict  __stream ) ;
 extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1))) strdup)(char const   *__s )  __attribute__((__malloc__)) ;
@@ -5875,8 +5875,8 @@ int read_root(struct htable *ds , struct rbtree *rbt ) ;
 int refresh_records(struct htable *ds , struct rbtree *rbt ) ;
 uchar *jump_space(uchar *itor ) ;
 int add_query_info(int log_type , int idx , uint16_t type ) ;
-uchar *jump_space(uchar *itor ) 
-{ 
+uchar *jump_space(uchar *itor )
+{
   int t ;
   int tmp ;
   int tmp___0 ;
@@ -5919,8 +5919,8 @@ uchar *jump_space(uchar *itor )
 }
 }
 int read_records_from_file(char const   *fn , struct htable *ds , struct rbtree *rbt ,
-                           int hijack___0 ) 
-{ 
+                           int hijack___0 )
+{
   FILE *fd ;
   uchar vbuffer[5000] ;
   unsigned int tmp ;
@@ -6060,7 +6060,7 @@ int read_records_from_file(char const   *fn , struct htable *ds , struct rbtree 
     } else {
       tmp___14 = strcmp((char const   *)ps[3], (char const   *)(tmptype));
       if (tmp___14 != 0) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         tmp___8 = strcmp((char const   *)(tmptype), "NS");
         if (tmp___8 == 0) {
           type = 2;
@@ -6109,7 +6109,7 @@ int read_records_from_file(char const   *fn , struct htable *ds , struct rbtree 
     } else {
       tmp___19 = strcmp((char const   *)ps[3], "CNAME");
       if (tmp___19 == 0) {
-        _L___0: /* CIL Label */ 
+        _L___0: /* CIL Label */
         tmp___15 = strlen((char const   *)ps[4]);
         str_to_len_label(ps[4], (int )(tmp___15 + 1UL));
         tmplen = check_dns_name(ps[4], & lowerns);
@@ -6167,8 +6167,8 @@ int read_records_from_file(char const   *fn , struct htable *ds , struct rbtree 
   return (0);
 }
 }
-int read_root(struct htable *ds , struct rbtree *rbt ) 
-{ 
+int read_root(struct htable *ds , struct rbtree *rbt )
+{
   int tmp ;
 
   {
@@ -6176,8 +6176,8 @@ int read_root(struct htable *ds , struct rbtree *rbt )
   return (tmp);
 }
 }
-int refresh_records(struct htable *ds , struct rbtree *rbt ) 
-{ 
+int refresh_records(struct htable *ds , struct rbtree *rbt )
+{
   int tmp ;
 
   {
@@ -6186,8 +6186,8 @@ int refresh_records(struct htable *ds , struct rbtree *rbt )
   return (tmp);
 }
 }
-int create_transfer_point(uchar *name , struct htable *fwd , int n ) 
-{ 
+int create_transfer_point(uchar *name , struct htable *fwd , int n )
+{
   int i ;
   int dlen ;
   int ret ;
@@ -6254,8 +6254,8 @@ int create_transfer_point(uchar *name , struct htable *fwd , int n )
   return (0);
 }
 }
-int read_resolve(FILE *fd , char **nameservers , int n ) 
-{ 
+int read_resolve(FILE *fd , char **nameservers , int n )
+{
   char buf[1024] ;
   unsigned int tmp ;
   char *tmp___0 ;
@@ -6333,8 +6333,8 @@ int read_resolve(FILE *fd , char **nameservers , int n )
   return (i);
 }
 }
-int read_logpath(FILE *fd , char *path ) 
-{ 
+int read_logpath(FILE *fd , char *path )
+{
   char *tmp ;
   int *tmp___0 ;
   int tmp___1 ;
@@ -6358,8 +6358,8 @@ int read_logpath(FILE *fd , char *path )
   return (0);
 }
 }
-int read_transfer(FILE *fd , struct htable *fwd ) 
-{ 
+int read_transfer(FILE *fd , struct htable *fwd )
+{
   char buf[1024] ;
   unsigned int tmp ;
   char *tmp___0 ;
@@ -6415,8 +6415,8 @@ int read_transfer(FILE *fd , struct htable *fwd )
   return (0);
 }
 }
-int read_config(char const   *fn , char *logpath , struct htable *forward , char **nameservers ) 
-{ 
+int read_config(char const   *fn , char *logpath , struct htable *forward , char **nameservers )
+{
   FILE *fd ;
   char buf[1024] ;
   unsigned int tmp ;
@@ -6466,8 +6466,8 @@ int read_config(char const   *fn , char *logpath , struct htable *forward , char
   return (0);
 }
 }
-int fill_domain_to_len_label(char const   *from , char *to ) 
-{ 
+int fill_domain_to_len_label(char const   *from , char *to )
+{
   int len ;
   char const   *itor ;
 
@@ -6491,8 +6491,8 @@ int fill_domain_to_len_label(char const   *from , char *to )
 }
 }
 int write_loginfo_into_file(struct log_info *log , uchar const   *domain , int dlen ,
-                            int type , struct sockaddr_in *addr ) 
-{ 
+                            int type , struct sockaddr_in *addr )
+{
   uchar tp ;
   int fd ;
   int tmplen ;
@@ -6535,8 +6535,8 @@ int write_loginfo_into_file(struct log_info *log , uchar const   *domain , int d
 }
 }
 static char pf[50]  = {      (char)0};
-int create_new_log(uchar *prefix , int idx , int type ) 
-{ 
+int create_new_log(uchar *prefix , int idx , int type )
+{
   char filename[80] ;
   unsigned int tmp ;
   char final[130] ;
@@ -6602,8 +6602,8 @@ int create_new_log(uchar *prefix , int idx , int type )
 }
 }
 int write_log(struct log_info *log , int idx , uchar const   *domain , int dlen ,
-              int type , struct sockaddr_in *addr ) 
-{ 
+              int type , struct sockaddr_in *addr )
+{
   int lfd ;
 
   {
@@ -6621,7 +6621,7 @@ int write_log(struct log_info *log , int idx , uchar const   *domain , int dlen 
   return (0);
 }
 }
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin_memset(void * , int  , int  ) ;  */
 #pragma merger("0","/tmp/cil-Ekft9TMn.i","-g,-Wall")
 extern  __attribute__((__nothrow__)) pthread_t pthread_self(void)  __attribute__((__const__)) ;
@@ -6638,8 +6638,8 @@ int run_sentinel(struct server *s ) ;
 struct event *create_event(int size ) ;
 int add_event(struct event *ev , struct event_help *help___0 ) ;
 int del_event(struct event *ev , struct event_help *help___0 ) ;
-struct event *create_event(int size ) 
-{ 
+struct event *create_event(int size )
+{
   struct event *ev ;
   void *tmp ;
   int epfd ;
@@ -6665,8 +6665,8 @@ struct event *create_event(int size )
   return (ev);
 }
 }
-int add_event(struct event *ev , struct event_help *help___0 ) 
-{ 
+int add_event(struct event *ev , struct event_help *help___0 )
+{
   struct epoll_event e ;
   int ret ;
   int epfd ;
@@ -6698,8 +6698,8 @@ int add_event(struct event *ev , struct event_help *help___0 )
   return (ret);
 }
 }
-int del_event(struct event *ev , struct event_help *help___0 ) 
-{ 
+int del_event(struct event *ev , struct event_help *help___0 )
+{
   struct epoll_event e ;
   struct iner_event *ie ;
   int ret ;
@@ -6712,8 +6712,8 @@ int del_event(struct event *ev , struct event_help *help___0 )
   return (ret);
 }
 }
-int handle_event(struct event *ev , int to ) 
-{ 
+int handle_event(struct event *ev , int to )
+{
   int num ;
   struct iner_event *ie ;
   int *tmp ;
@@ -6742,8 +6742,8 @@ int handle_event(struct event *ev , int to )
   return (num);
 }
 }
-int cb_get_tcp_msg(struct event_data *data , void *v , int idx ) 
-{ 
+int cb_get_tcp_msg(struct event_data *data , void *v , int idx )
+{
   int ret ;
   int szhdr ;
   struct msgcache *mc ;
@@ -6774,7 +6774,7 @@ int cb_get_tcp_msg(struct event_data *data , void *v , int idx )
       goto _L;
     }
   } else
-  _L: /* CIL Label */ 
+  _L: /* CIL Label */
   if (mc->tail == mc->head) {
     if (mc->pkt != 0U) {
       close(data->fd);
@@ -6807,8 +6807,8 @@ int cb_get_tcp_msg(struct event_data *data , void *v , int idx )
   return (0);
 }
 }
-int fake_recv(struct event_data *data , void *v , int idx ) 
-{ 
+int fake_recv(struct event_data *data , void *v , int idx )
+{
   struct fetcher *f ;
   struct sockaddr_in addr ;
   uchar buffer[512] ;
@@ -6840,8 +6840,8 @@ int fake_recv(struct event_data *data , void *v , int idx )
   return (0);
 }
 }
-int cb_get_udp_msg(struct event_data *data , void *v , int idx ) 
-{ 
+int cb_get_udp_msg(struct event_data *data , void *v , int idx )
+{
   int ret ;
   int szhdr ;
   struct msgcache *mc ;
@@ -6870,7 +6870,7 @@ int cb_get_udp_msg(struct event_data *data , void *v , int idx )
         goto _L;
       }
     } else
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (mc->tail == mc->head) {
       if (mc->pkt != 0U) {
         ((f + idx)->miss) ++;
@@ -6904,8 +6904,8 @@ int cb_get_udp_msg(struct event_data *data , void *v , int idx )
   return (0);
 }
 }
-int insert_events(struct event *ev , int fd , int type ) 
-{ 
+int insert_events(struct event *ev , int fd , int type )
+{
   struct event_help h ;
   int tmp ;
 
@@ -6927,8 +6927,8 @@ int insert_events(struct event *ev , int fd , int type )
   return (0);
 }
 }
-int run_sentinel(struct server *s ) 
-{ 
+int run_sentinel(struct server *s )
+{
   int num ;
   int i ;
   int ls ;
@@ -7007,7 +7007,7 @@ int run_sentinel(struct server *s )
       } else {
         dns_error(1, (char *)"call back func is null");
       }
-      __Cont: /* CIL Label */ 
+      __Cont: /* CIL Label */
       i ++;
     }
   }
@@ -7020,15 +7020,15 @@ extern  __attribute__((__nothrow__)) int pthread_detach(pthread_t __th ) ;
 void *run_quizzer(void *arg ) ;
 int run_fetcher(struct fetcher *f ) ;
 int write_back_to_client(mbuf_type *mbuf , uchar *fr , int vlen ) ;
-uchar qlist_val[10]  = 
-  {      (uchar )'q',      (uchar )'l',      (uchar )'i',      (uchar )'s', 
-        (uchar )'t',      (uchar )' ',      (uchar )'v',      (uchar )'a', 
+uchar qlist_val[10]  =
+  {      (uchar )'q',      (uchar )'l',      (uchar )'i',      (uchar )'s',
+        (uchar )'t',      (uchar )' ',      (uchar )'v',      (uchar )'a',
         (uchar )'l',      (uchar )'\000'};
 int find_record_from_mem(uchar *otd , int dlen , int type , struct htable *datasets ,
                          uchar *tdbuffer , uchar *databuffer , hashval_t *hash ) ;
 int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx ) ;
-int add_query_info(int log_type , int idx , uint16_t type ) 
-{ 
+int add_query_info(int log_type , int idx , uint16_t type )
+{
   int thread_num ;
   int query_type_num ;
 
@@ -7050,8 +7050,8 @@ int add_query_info(int log_type , int idx , uint16_t type )
   return (0);
 }
 }
-int get_random_int_from_author(struct author *author ) 
-{ 
+int get_random_int_from_author(struct author *author )
+{
   int val ;
   union grifa tmp ;
 
@@ -7068,8 +7068,8 @@ int get_random_int_from_author(struct author *author )
   return (val);
 }
 }
-int delete_close_event(int fd , struct fetcher *f ) 
-{ 
+int delete_close_event(int fd , struct fetcher *f )
+{
   struct list *el ;
   struct list_node *nd ;
   void *tmp ;
@@ -7099,8 +7099,8 @@ int delete_close_event(int fd , struct fetcher *f )
   return (0);
 }
 }
-int write_back_to_client(mbuf_type *mbuf , uchar *fr , int vlen ) 
-{ 
+int write_back_to_client(mbuf_type *mbuf , uchar *fr , int vlen )
+{
   struct setheader sh ;
   int main_val ;
   int dnslen ;
@@ -7160,7 +7160,7 @@ int write_back_to_client(mbuf_type *mbuf , uchar *fr , int vlen )
           goto _L;
         } else
         if ((int )*(from + 0) == 5) {
-          _L: /* CIL Label */ 
+          _L: /* CIL Label */
           main_val ++;
           hlp[main_val].name = hlp[main_val - 1].name;
           hlp[main_val].off = hlp[main_val - 1].off;
@@ -7202,8 +7202,8 @@ int write_back_to_client(mbuf_type *mbuf , uchar *fr , int vlen )
   return (0);
 }
 }
-int passer_related_data(struct sockinfo *si , mbuf_type *mbuf , struct author *author ) 
-{ 
+int passer_related_data(struct sockinfo *si , mbuf_type *mbuf , struct author *author )
+{
   uchar *buf ;
   uchar *tail ;
   int stype ;
@@ -7269,8 +7269,8 @@ int passer_related_data(struct sockinfo *si , mbuf_type *mbuf , struct author *a
   return (stype);
 }
 }
-int send_msg_tcp(struct author *author , int fd ) 
-{ 
+int send_msg_tcp(struct author *author , int fd )
+{
   ushort___0 id ;
   ushort___0 typeoff ;
   ushort___0 temp ;
@@ -7309,8 +7309,8 @@ int send_msg_tcp(struct author *author , int fd )
   return (0);
 }
 }
-int query_from_auth_tcp(struct author *author , mbuf_type *mbuf ) 
-{ 
+int query_from_auth_tcp(struct author *author , mbuf_type *mbuf )
+{
   struct sockinfo si ;
   int i ;
   int st ;
@@ -7346,8 +7346,8 @@ int query_from_auth_tcp(struct author *author , mbuf_type *mbuf )
   return (0);
 }
 }
-int query_from_auth_server(mbuf_type *mbuf , struct author *author ) 
-{ 
+int query_from_auth_server(mbuf_type *mbuf , struct author *author )
+{
   ushort___0 id ;
   ushort___0 type ;
   uchar *buffer ;
@@ -7402,8 +7402,8 @@ int query_from_auth_server(mbuf_type *mbuf , struct author *author )
   return (0);
 }
 }
-int release_qoutinfo(struct author *author , mbuf_type *mbuf , uint32_t idx ) 
-{ 
+int release_qoutinfo(struct author *author , mbuf_type *mbuf , uint32_t idx )
+{
   int fd ;
   int epfd ;
   int id ;
@@ -7437,8 +7437,8 @@ int release_qoutinfo(struct author *author , mbuf_type *mbuf , uint32_t idx )
   return (0);
 }
 }
-int init_qoutinfo(mbuf_type *mbuf ) 
-{ 
+int init_qoutinfo(mbuf_type *mbuf )
+{
   struct timeval tv ;
 
   {
@@ -7461,8 +7461,8 @@ int init_qoutinfo(mbuf_type *mbuf )
 }
 }
 int check_enter(struct author *author , uchar *buf , int *idx , mbuf_type **mbuf ,
-                packet_type *lowerdomain ) 
-{ 
+                packet_type *lowerdomain )
+{
   int32_t id ;
   int32_t typeoff ;
   int ret ;
@@ -7509,8 +7509,8 @@ int check_enter(struct author *author , uchar *buf , int *idx , mbuf_type **mbuf
   return (1);
 }
 }
-int passer_auth_data(struct author *author , uchar *buf , struct sockinfo *si ) 
-{ 
+int passer_auth_data(struct author *author , uchar *buf , struct sockinfo *si )
+{
   int idx ;
   int ret ;
   int pret ;
@@ -7580,7 +7580,7 @@ int passer_auth_data(struct author *author , uchar *buf , struct sockinfo *si )
   } else {
     tmp = ntohs(hdr->ancount);
     if ((int )tmp > 0) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       if (mbuf->fd != -1) {
         if ((int )mbuf->hascname == 0) {
           *((ushort___0 *)buf) = mbuf->cid;
@@ -7620,8 +7620,8 @@ int passer_auth_data(struct author *author , uchar *buf , struct sockinfo *si )
   return (0);
 }
 }
-int cb_read_auth(struct epoll_event *ev , struct sockinfo *si ) 
-{ 
+int cb_read_auth(struct epoll_event *ev , struct sockinfo *si )
+{
   int ret ;
   int szhdr ;
   mbuf_type *mbuf ;
@@ -7656,8 +7656,8 @@ int cb_read_auth(struct epoll_event *ev , struct sockinfo *si )
   return (ret);
 }
 }
-int launch_new_query(struct author *author ) 
-{ 
+int launch_new_query(struct author *author )
+{
   int new_query ;
   int i ;
   int start ;
@@ -7750,8 +7750,8 @@ int launch_new_query(struct author *author )
   return (new_query);
 }
 }
-int after_pass_data(int ret , struct author *author , mbuf_type *mbuf ) 
-{ 
+int after_pass_data(int ret , struct author *author , mbuf_type *mbuf )
+{
   struct epoll_event ev ;
   int fd ;
 
@@ -7810,8 +7810,8 @@ int after_pass_data(int ret , struct author *author , mbuf_type *mbuf )
   return (0);
 }
 }
-int handle_back_event(struct author *author ) 
-{ 
+int handle_back_event(struct author *author )
+{
   int infinite ;
   int ret ;
   int i ;
@@ -7905,8 +7905,8 @@ int handle_back_event(struct author *author )
   return (0);
 }
 }
-int dup_data_into_db(struct author *a ) 
-{ 
+int dup_data_into_db(struct author *a )
+{
   uint___0 i ;
   uint___0 limit ;
   struct rbtree *rbt ;
@@ -7939,8 +7939,8 @@ int dup_data_into_db(struct author *a )
 }
 int check_mm_cache(struct author *author ) ;
 static int tmx  =    0;
-int check_mm_cache(struct author *author ) 
-{ 
+int check_mm_cache(struct author *author )
+{
   uint___0 total ;
   int i ;
 
@@ -7960,8 +7960,8 @@ int check_mm_cache(struct author *author )
   return (0);
 }
 }
-int check_ttl_expire(struct author *author ) 
-{ 
+int check_ttl_expire(struct author *author )
+{
   time_t now ;
   struct ttlnode *tn ;
   struct rbnode *pn ;
@@ -8032,8 +8032,8 @@ int check_ttl_expire(struct author *author )
   return (0);
 }
 }
-int check_refresh_flag(struct author *author ) 
-{ 
+int check_refresh_flag(struct author *author )
+{
   struct server *s ;
 
   {
@@ -8049,8 +8049,8 @@ int check_refresh_flag(struct author *author )
   return (0);
 }
 }
-void *run_quizzer(void *arg ) 
-{ 
+void *run_quizzer(void *arg )
+{
   struct author *author ;
   int epfd ;
   pthread_t tmp ;
@@ -8078,8 +8078,8 @@ void *run_quizzer(void *arg )
   }
 }
 }
-int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx ) 
-{ 
+int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
+{
   int i ;
   int j ;
   int randomoff ;
@@ -8107,7 +8107,7 @@ int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
         pthread_spin_unlock(& (s->authors + j)->lock);
         return (0);
       }
-      __Cont: /* CIL Label */ 
+      __Cont: /* CIL Label */
       i ++;
     }
     i = 0;
@@ -8123,7 +8123,7 @@ int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
         pthread_spin_unlock(& (s->authors + j)->lock);
         return (0);
       }
-      __Cont___0: /* CIL Label */ 
+      __Cont___0: /* CIL Label */
       i ++;
     }
     j ++;
@@ -8143,7 +8143,7 @@ int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
         pthread_spin_unlock(& (s->authors + j)->lock);
         return (0);
       }
-      __Cont___1: /* CIL Label */ 
+      __Cont___1: /* CIL Label */
       i ++;
     }
     i = 0;
@@ -8159,7 +8159,7 @@ int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
         pthread_spin_unlock(& (s->authors + j)->lock);
         return (0);
       }
-      __Cont___2: /* CIL Label */ 
+      __Cont___2: /* CIL Label */
       i ++;
     }
     j ++;
@@ -8167,8 +8167,8 @@ int add_to_quizzer(struct qoutinfo *qo , struct server *s , int qidx )
   return (-1);
 }
 }
-int lock_and_add_to_quizz(mbuf_type *mbuf , struct fetcher *f ) 
-{ 
+int lock_and_add_to_quizz(mbuf_type *mbuf , struct fetcher *f )
+{
   int ret ;
 
   {
@@ -8191,8 +8191,8 @@ int lock_and_add_to_quizz(mbuf_type *mbuf , struct fetcher *f )
 }
 }
 int find_record_from_mem(uchar *otd , int dlen , int type , struct htable *datasets ,
-                         uchar *tdbuffer , uchar *databuffer , hashval_t *hash ) 
-{ 
+                         uchar *tdbuffer , uchar *databuffer , hashval_t *hash )
+{
   uchar *td ;
   int ret ;
   int dataidx ;
@@ -8243,8 +8243,8 @@ int find_record_from_mem(uchar *otd , int dlen , int type , struct htable *datas
   return (-1);
 }
 }
-int global_cron(struct server *s ) 
-{ 
+int global_cron(struct server *s )
+{
   int fd ;
   struct list_node *nds ;
   struct list_node *tmp ;
@@ -8270,8 +8270,8 @@ int global_cron(struct server *s )
   return (0);
 }
 }
-int run_fetcher(struct fetcher *f ) 
-{ 
+int run_fetcher(struct fetcher *f )
+{
   struct msgcache *mc ;
   int ret ;
   mbuf_type *mbuf ;
@@ -8350,8 +8350,8 @@ int start_local_server(struct server *s ) ;
 time_t global_now  =    (time_t )0;
 pthread_mutex_t gnlock  ;
 int volatile   refresh_record  =    (sig_atomic_t volatile   )0;
-static int daemonrize(int dm ) 
-{ 
+static int daemonrize(int dm )
+{
   int tmp ;
 
   {
@@ -8366,8 +8366,8 @@ static int daemonrize(int dm )
   return (0);
 }
 }
-static int create_listen_ports(int port , int proto , uchar *addr ) 
-{ 
+static int create_listen_ports(int port , int proto , uchar *addr )
+{
   int fd ;
   int tmp ;
 
@@ -8387,8 +8387,8 @@ static int create_listen_ports(int port , int proto , uchar *addr )
   return (fd);
 }
 }
-int create_author(struct server *s , int n ) 
-{ 
+int create_author(struct server *s , int n )
+{
   int i ;
   int j ;
   struct author *authors ;
@@ -8457,7 +8457,7 @@ int create_author(struct server *s , int n )
     ((authors + i)->loginfo)->logfd = create_new_log(s->logpath, i, 233);
     j = 0;
     while (j < 101) {
-      pthread_spin_init(& (authors + i)->dblock[j], 0);
+//      pthread_spin_init(& (authors + i)->dblock[j], 0);
       j ++;
     }
     j = 0;
@@ -8505,8 +8505,8 @@ int create_author(struct server *s , int n )
   return (0);
 }
 }
-static int create_fetcher(struct server *s , int n ) 
-{ 
+static int create_fetcher(struct server *s , int n )
+{
   int i ;
   struct fetcher *ws ;
   struct fetcher *tmp ;
@@ -8579,8 +8579,8 @@ static int create_fetcher(struct server *s , int n )
   return (0);
 }
 }
-static struct server *server_init(void) 
-{ 
+static struct server *server_init(void)
+{
   struct server *s ;
   void *tmp ;
   int tmp___0 ;
@@ -8634,8 +8634,8 @@ static struct server *server_init(void)
   return (s);
 }
 }
-void *time_cron(void *arg ) 
-{ 
+void *time_cron(void *arg )
+{
   struct server *s ;
   struct timespec tv ;
   sigset_t waitset ;
@@ -8662,8 +8662,8 @@ void *time_cron(void *arg )
   return ((void *)0);
 }
 }
-void *recv_update(void *arg ) 
-{ 
+void *recv_update(void *arg )
+{
   struct server *s ;
 
   {
@@ -8672,8 +8672,8 @@ void *recv_update(void *arg )
   return ((void *)0);
 }
 }
-int sanity_test(int exi ) 
-{ 
+int sanity_test(int exi )
+{
 
 
   {
@@ -8683,8 +8683,8 @@ int sanity_test(int exi )
   return (0);
 }
 }
-int print_basic_debug(void) 
-{ 
+int print_basic_debug(void)
+{
 
 
   {
@@ -8699,8 +8699,8 @@ int print_basic_debug(void)
   return (0);
 }
 }
-void help(char const   *progname ) 
-{ 
+void help(char const   *progname )
+{
 
 
   {
@@ -8710,8 +8710,8 @@ void help(char const   *progname )
   return;
 }
 }
-int init_globe(void) 
-{ 
+int init_globe(void)
+{
   int shmid ;
   void *tmp ;
   int i ;
@@ -8744,8 +8744,8 @@ int init_globe(void)
   return (0);
 }
 }
-void init_mempool(void) 
-{ 
+void init_mempool(void)
+{
   int ret ;
 
   {
@@ -8756,8 +8756,8 @@ void init_mempool(void)
   return;
 }
 }
-int main(int argc , char **argv ) 
-{ 
+int main(int argc , char **argv )
+{
   struct server *s ;
   pthread_t pt ;
   pthread_t ctl ;
@@ -8782,28 +8782,28 @@ int main(int argc , char **argv )
       break;
     }
     switch (c) {
-    case 99: 
+    case 99:
     config = (char const   *)optarg;
     break;
-    case 104: 
+    case 104:
     help((char const   *)*(argv + 0));
     exit(0);
     break;
-    case 102: 
+    case 102:
     is_forward = 1;
     break;
-    case 100: 
+    case 100:
     daemon___0 = 1;
     break;
-    case 63: 
+    case 63:
     printf((char const   * __restrict  )"Try -h please\n");
     exit(0);
     break;
-    case 118: 
+    case 118:
     printf((char const   * __restrict  )"dnspod-sr 0.01\n");
     exit(0);
     break;
-    default: 
+    default:
     exit(0);
     break;
     }
@@ -8873,8 +8873,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2))) sta
 int cache_flush(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp ) ;
 int hijack(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp ) ;
 char const   *local_socket_name  =    "/tmp/foo.socket";
-int create_local_server(char const   *path ) 
-{ 
+int create_local_server(char const   *path )
+{
   int sock ;
   int size ;
   int ret ;
@@ -8908,8 +8908,8 @@ int create_local_server(char const   *path )
   return (sock);
 }
 }
-int ctl_fd(int epfd , int fd , int ctl , uint32_t events ) 
-{ 
+int ctl_fd(int epfd , int fd , int ctl , uint32_t events )
+{
   int ret ;
   struct epoll_event ev ;
 
@@ -8929,8 +8929,8 @@ int ctl_fd(int epfd , int fd , int ctl , uint32_t events )
   return (0);
 }
 }
-int accept_client(int epfd , int sock ) 
-{ 
+int accept_client(int epfd , int sock )
+{
   int clifd ;
   socklen_t len ;
   struct sockaddr_un cli_addr ;
@@ -8985,8 +8985,8 @@ int accept_client(int epfd , int sock )
   return (clifd);
 }
 }
-void disconnect_client(int epfd , int client ) 
-{ 
+void disconnect_client(int epfd , int client )
+{
 
 
   {
@@ -8996,8 +8996,8 @@ void disconnect_client(int epfd , int client )
   return;
 }
 }
-uint16_t get_type_from_str(char const   *str_type ) 
-{ 
+uint16_t get_type_from_str(char const   *str_type )
+{
   uint16_t type ;
   int tmp ;
   int tmp___0 ;
@@ -9067,8 +9067,8 @@ uint16_t get_type_from_str(char const   *str_type )
   return (type);
 }
 }
-int cmd_analyze(char *str , uchar *domain , uint16_t *type ) 
-{ 
+int cmd_analyze(char *str , uchar *domain , uint16_t *type )
+{
   uchar *p ;
   char *tmp ;
   uchar *temp ;
@@ -9121,8 +9121,8 @@ int cmd_analyze(char *str , uchar *domain , uint16_t *type )
   return (cmd_type);
 }
 }
-int talk_with_client(int epfd , int client , struct server *s ) 
-{ 
+int talk_with_client(int epfd , int client , struct server *s )
+{
   char buffer[8192] ;
   unsigned int tmp ;
   int ret ;
@@ -9176,8 +9176,8 @@ int talk_with_client(int epfd , int client , struct server *s )
   return (0);
 }
 }
-int start_local_server(struct server *s ) 
-{ 
+int start_local_server(struct server *s )
+{
   int server ;
   int ret ;
   int epfd ;
@@ -9230,8 +9230,8 @@ int start_local_server(struct server *s )
 extern  __attribute__((__nothrow__)) __pid_t getpid(void) ;
 extern  __attribute__((__nothrow__)) int kill(__pid_t __pid , int __sig ) ;
 int refresh_ttl_with_td(uchar *key , int len , int type , struct htable *ht , struct rbtree *ttlexp ,
-                        packet_type *lowerdomain ) 
-{ 
+                        packet_type *lowerdomain )
+{
   uint___0 tmp ;
   uint___0 tmp___0 ;
 
@@ -9247,8 +9247,8 @@ int refresh_ttl_with_td(uchar *key , int len , int type , struct htable *ht , st
   return (0);
 }
 }
-int hijack(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp ) 
-{ 
+int hijack(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp )
+{
   __pid_t tmp ;
 
   {
@@ -9273,8 +9273,8 @@ int hijack(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *tt
   return (0);
 }
 }
-int cache_flush(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp ) 
-{ 
+int cache_flush(uchar *domain , uint16_t type , struct htable *ht , struct rbtree *ttlexp )
+{
   int dlen ;
   size_t tmp ;
   hashval_t hash ;
@@ -9338,8 +9338,8 @@ int cache_flush(uchar *domain , uint16_t type , struct htable *ht , struct rbtre
 }
 #pragma merger("0","/tmp/cil-FXNdOcB_.i","-g,-Wall")
 struct mbuf_ring *mbuf_ring  =    (struct mbuf_ring *)((void *)0);
-struct mbuf_ring *mbuf_ring_create(uint32_t count ) 
-{ 
+struct mbuf_ring *mbuf_ring_create(uint32_t count )
+{
   struct mbuf_ring *r ;
   uint64_t ring_size ;
   void *tmp ;
@@ -9371,8 +9371,8 @@ struct mbuf_ring *mbuf_ring_create(uint32_t count )
   return (r);
 }
 }
-int mempool_create(uint32_t num ) 
-{ 
+int mempool_create(uint32_t num )
+{
   mbuf_type *tmp ;
   int i ;
   void *tmp___0 ;
@@ -9401,8 +9401,8 @@ int mempool_create(uint32_t num )
 }
 }
 __inline static int rte_atomic32_cmpset(uint32_t volatile   *dst , uint32_t exp ,
-                                        uint32_t src ) 
-{ 
+                                        uint32_t src )
+{
   uint8_t res ;
 
   {
@@ -9413,8 +9413,8 @@ __inline static int rte_atomic32_cmpset(uint32_t volatile   *dst , uint32_t exp 
   return ((int )res);
 }
 }
-mbuf_type *mbuf_alloc(void) 
-{ 
+mbuf_type *mbuf_alloc(void)
+{
   uint32_t cons_head ;
   uint32_t prod_tail ;
   uint32_t cons_next ;
@@ -9452,8 +9452,8 @@ mbuf_type *mbuf_alloc(void)
   return (mbuf);
 }
 }
-int mbuf_free(mbuf_type *mbuf ) 
-{ 
+int mbuf_free(mbuf_type *mbuf )
+{
   uint32_t prod_head ;
   uint32_t prod_next ;
   uint32_t cons_tail ;

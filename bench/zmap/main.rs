@@ -1,9 +1,4 @@
-use ::libc;
-use libc::strcat;
-use libc::strcpy;
-use libc::strncpy;
-use libc::memcpy;
-use libc::memset;
+use ::libc; use libc::strcat; use libc::strcpy; use libc::strncpy; use libc::memcpy; use libc::memset;
 use ::c2rust_bitfields;
 extern "C" {
     pub type _IO_wide_data;
@@ -1833,9 +1828,9 @@ unsafe extern "C" fn fgets(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: *mut libc::c_char = 0 as *mut libc::c_char;
-    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
+    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
+        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
         tmp___0 = __fgets_chk(__s, tmp, __n, __stream);
         return tmp___0;
     }
@@ -1856,9 +1851,9 @@ unsafe extern "C" fn fread(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: size_t = 0;
-    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
+    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
+        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
         tmp___0 = __fread_chk(__ptr, tmp, __size, __n, __stream);
         return tmp___0;
     }
@@ -4769,6 +4764,7 @@ pub unsafe extern "C" fn monitor_run(
             }
         }
         update_pcap_stats(lock);
+
         log_drop_warnings(export_status);
         check_min_hitrate(export_status);
         check_max_sendto_failures(export_status);
@@ -4899,6 +4895,7 @@ pub unsafe extern "C" fn handle_packet(
         .expect(
             "non-null function pointer",
         )(bytes, buflen, fs, validation.as_mut_ptr(), ts);
+
     success_index = zconf.fsconf.success_index;
     if !(success_index < (*fs).len) {
         __assert_fail(
@@ -5007,6 +5004,7 @@ pub unsafe extern "C" fn recv_run(
         zconf.iface,
     );
     if zconf.dryrun == 0 {
+
     }
     if zconf.send_ip_pkts != 0 {
         eth = fake_eth_hdr.as_mut_ptr() as *mut ether_header;
@@ -8481,6 +8479,7 @@ unsafe extern "C" fn start_send(mut arg: *mut libc::c_void) -> *mut libc::c_void
         (*s).cpu,
     );
     set_cpu((*s).cpu);
+
     free(s as *mut libc::c_void);
     return 0 as *mut libc::c_void;
 }
@@ -8839,6 +8838,7 @@ unsafe extern "C" fn start_zmap() {
         }
     }
     if !(zconf.metadata_filename).is_null() {
+
     }
     if !(zconf.output_module).is_null() {
         if ((*zconf.output_module).close).is_some() {
@@ -18244,6 +18244,13 @@ pub unsafe extern "C" fn udp_make_templated_packet(
     );
     aes = arg as *mut aesrand_t;
     tmp___0 = 0;
+
+
+
+
+
+
+
     payload_len = tmp___0;
     if payload_len <= 0 as libc::c_int {
         log_fatal(
@@ -22350,6 +22357,12 @@ pub unsafe extern "C" fn dns_process_packet(
                     break;
                 }
                 err = 0;
+
+
+
+
+
+
                 i___1 += 1;
             }
             fs_add_repeated(
@@ -22368,6 +22381,12 @@ pub unsafe extern "C" fn dns_process_packet(
                     break;
                 }
                 err = 0;
+
+
+
+
+
+
                 i___2 += 1;
             }
             fs_add_repeated(
@@ -22386,6 +22405,12 @@ pub unsafe extern "C" fn dns_process_packet(
                     break;
                 }
                 err = 0;
+
+
+
+
+
+
                 i___3 += 1;
             }
             fs_add_repeated(
@@ -23397,7 +23422,10 @@ pub unsafe extern "C" fn field_to_jsonobj(mut f: *mut field_t) -> *mut json_obje
         tmp___1 = json_object_new_boolean((*f).value.num as json_bool);
         return tmp___1;
     } else if (*f).type_0 == 3 as libc::c_int {
-        tmp___2 = 0 as _;
+        tmp___2 = 0 as *mut _;
+
+
+
         encoded = tmp___2;
         tmp___3 = json_object_new_string(encoded as *const libc::c_char);
         t = tmp___3;
@@ -23715,6 +23743,14 @@ pub fn main() {
         );
     }
     args.push(::std::ptr::null_mut());
+    unsafe {
+        ::std::process::exit(
+            0
+
+
+
+        )
+    }
 }
 unsafe extern "C" fn run_static_initializers() {
     module_tcp_synscan = {

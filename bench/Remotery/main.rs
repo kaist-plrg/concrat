@@ -161,7 +161,7 @@ pub struct Remotery {
     >,
     pub map_message_queue_data: *mut libc::c_void,
     pub threadProfilers: *mut ThreadProfilers,
-    pub propertyMutex: pthread_mutex_t,
+    pub propertyMutex: rmtMutex,
     pub rootProperty: rmtProperty,
     pub propertyAllocator: *mut ObjectAllocator,
     pub propertyFrame: rmtU32,
@@ -281,6 +281,7 @@ pub const RMT_PropertyType_rmtU32: __anonenum_rmtPropertyType_767673012 = 3;
 pub const RMT_PropertyType_rmtS32: __anonenum_rmtPropertyType_767673012 = 2;
 pub const RMT_PropertyType_rmtBool: __anonenum_rmtPropertyType_767673012 = 1;
 pub const RMT_PropertyType_rmtGroup: __anonenum_rmtPropertyType_767673012 = 0;
+pub type rmtMutex = pthread_mutex_t;
 pub type pthread_mutex_t = __anonunion_pthread_mutex_t_335460617;
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -319,7 +320,7 @@ pub struct ThreadProfilers {
     pub threadProfilers: [ThreadProfiler; 256],
     pub nbThreadProfilers: rmtAtomicU32,
     pub maxNbThreadProfilers: rmtU32,
-    pub threadProfilerMutex: pthread_mutex_t,
+    pub threadProfilerMutex: rmtMutex,
     pub threadSampleThread: *mut rmtThread,
     pub threadGatherThread: *mut rmtThread,
 }
@@ -1119,6 +1120,50 @@ pub unsafe extern "C" fn rmt_GetLastErrorMessage() -> rmtPStr {
         return b"No error message\0" as *const u8 as *const libc::c_char;
     }
     return thread_message_ptr;
+}
+unsafe extern "C" fn mtxInit(mut mutex: *mut rmtMutex) {
+    if !(mutex as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
+        __assert_fail(
+            b"mutex != NULL\0" as *const u8 as *const libc::c_char,
+            b"lib/Remotery.c\0" as *const u8 as *const libc::c_char,
+            571 as libc::c_uint,
+            b"mtxInit\0" as *const u8 as *const libc::c_char,
+        );
+    }
+    pthread_mutex_init(mutex, 0 as *mut libc::c_void as *const pthread_mutexattr_t);
+}
+unsafe extern "C" fn mtxLock(mut mutex: *mut rmtMutex) {
+    if !(mutex as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
+        __assert_fail(
+            b"mutex != NULL\0" as *const u8 as *const libc::c_char,
+            b"lib/Remotery.c\0" as *const u8 as *const libc::c_char,
+            581 as libc::c_uint,
+            b"mtxLock\0" as *const u8 as *const libc::c_char,
+        );
+    }
+    pthread_mutex_lock(mutex);
+}
+unsafe extern "C" fn mtxUnlock(mut mutex: *mut rmtMutex) {
+    if !(mutex as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
+        __assert_fail(
+            b"mutex != NULL\0" as *const u8 as *const libc::c_char,
+            b"lib/Remotery.c\0" as *const u8 as *const libc::c_char,
+            591 as libc::c_uint,
+            b"mtxUnlock\0" as *const u8 as *const libc::c_char,
+        );
+    }
+    pthread_mutex_unlock(mutex);
+}
+unsafe extern "C" fn mtxDelete(mut mutex: *mut rmtMutex) {
+    if !(mutex as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong) {
+        __assert_fail(
+            b"mutex != NULL\0" as *const u8 as *const libc::c_char,
+            b"lib/Remotery.c\0" as *const u8 as *const libc::c_char,
+            601 as libc::c_uint,
+            b"mtxDelete\0" as *const u8 as *const libc::c_char,
+        );
+    }
+    pthread_mutex_destroy(mutex);
 }
 unsafe extern "C" fn AtomicCompareAndSwapU32(
     mut val: *mut rmtU32,
@@ -6351,7 +6396,7 @@ unsafe extern "C" fn ThreadProfilers_Constructor(
         as libc::c_ulong)
         .wrapping_div(::std::mem::size_of::<ThreadProfiler>() as libc::c_ulong)
         as rmtU32;
-    pthread_mutex_init(&mut (*thread_profilers).threadProfilerMutex, 0 as _);
+    mtxInit(&mut (*thread_profilers).threadProfilerMutex);
     (*thread_profilers).threadSampleThread = 0 as *mut libc::c_void as *mut rmtThread;
     (*thread_profilers).threadGatherThread = 0 as *mut libc::c_void as *mut rmtThread;
     tmp = tlsAlloc(&mut (*thread_profilers).threadProfilerTlsHandle);
@@ -6413,7 +6458,7 @@ unsafe extern "C" fn ThreadProfilers_Destructor(
     if (*thread_profilers).threadProfilerTlsHandle != 4294967295 as libc::c_uint {
         tlsFree((*thread_profilers).threadProfilerTlsHandle);
     }
-    pthread_mutex_destroy(&mut (*thread_profilers).threadProfilerMutex);
+    mtxDelete(&mut (*thread_profilers).threadProfilerMutex);
 }
 unsafe extern "C" fn ThreadProfilers_GetThreadProfiler(
     mut thread_profilers: *mut ThreadProfilers,
@@ -6423,7 +6468,7 @@ unsafe extern "C" fn ThreadProfilers_GetThreadProfiler(
     let mut profiler_index: rmtU32 = 0;
     let mut thread_profiler: *mut ThreadProfiler = 0 as *mut ThreadProfiler;
     let mut error: rmtError = RMT_ERROR_NONE;
-    pthread_mutex_lock(&mut (*thread_profilers).threadProfilerMutex);
+    mtxLock(&mut (*thread_profilers).threadProfilerMutex);
     profiler_index = 0 as libc::c_int as rmtU32;
     while profiler_index < (*thread_profilers).nbThreadProfilers {
         thread_profiler = ((*thread_profilers).threadProfilers)
@@ -6431,7 +6476,7 @@ unsafe extern "C" fn ThreadProfilers_GetThreadProfiler(
             .offset(profiler_index as isize);
         if (*thread_profiler).threadId == thread_id {
             *out_thread_profiler = thread_profiler;
-            pthread_mutex_unlock(&mut (*thread_profilers).threadProfilerMutex);
+            mtxUnlock(&mut (*thread_profilers).threadProfilerMutex);
             return RMT_ERROR_NONE;
         }
         profiler_index = profiler_index.wrapping_add(1);
@@ -6446,7 +6491,7 @@ unsafe extern "C" fn ThreadProfilers_GetThreadProfiler(
     );
     if error as libc::c_uint != 0 as libc::c_uint {
         ThreadProfiler_Destructor(thread_profiler);
-        pthread_mutex_unlock(&mut (*thread_profilers).threadProfilerMutex);
+        mtxUnlock(&mut (*thread_profilers).threadProfilerMutex);
         return error;
     }
     *out_thread_profiler = thread_profiler;
@@ -6454,7 +6499,7 @@ unsafe extern "C" fn ThreadProfilers_GetThreadProfiler(
         &mut (*thread_profilers).nbThreadProfilers,
         ((*thread_profilers).nbThreadProfilers).wrapping_add(1 as libc::c_int as rmtU32),
     );
-    pthread_mutex_unlock(&mut (*thread_profilers).threadProfilerMutex);
+    mtxUnlock(&mut (*thread_profilers).threadProfilerMutex);
     return RMT_ERROR_NONE;
 }
 unsafe extern "C" fn ThreadProfilers_GetCurrentThreadProfiler(
@@ -8166,7 +8211,7 @@ unsafe extern "C" fn Remotery_Constructor(mut rmt: *mut Remotery) -> rmtError {
     >(0 as *mut libc::c_void);
     (*rmt).map_message_queue_data = 0 as *mut libc::c_void;
     (*rmt).threadProfilers = 0 as *mut libc::c_void as *mut ThreadProfilers;
-    pthread_mutex_init(&mut (*rmt).propertyMutex, 0 as _);
+    mtxInit(&mut (*rmt).propertyMutex);
     (*rmt).propertyAllocator = 0 as *mut libc::c_void as *mut ObjectAllocator;
     (*rmt).propertyFrame = 0 as libc::c_int as rmtU32;
     root_property = &mut (*rmt).rootProperty;
@@ -8518,7 +8563,7 @@ unsafe extern "C" fn Remotery_Destructor(mut rmt: *mut Remotery) {
         tlsFree(g_lastErrorMessageTlsHandle);
         g_lastErrorMessageTlsHandle = 4294967295 as libc::c_uint;
     }
-    pthread_mutex_destroy(&mut (*rmt).propertyMutex);
+    mtxDelete(&mut (*rmt).propertyMutex);
 }
 unsafe extern "C" fn CRTMalloc(
     mut mm_context: *mut libc::c_void,
@@ -9093,7 +9138,7 @@ unsafe extern "C" fn RegisterProperty(
     let mut parent_property: *mut rmtProperty = 0 as *mut rmtProperty;
     if (*property).initialised == 0 as libc::c_uint {
         if can_lock != 0 {
-            pthread_mutex_lock(&mut (*g_Remotery).propertyMutex);
+            mtxLock(&mut (*g_Remotery).propertyMutex);
         }
         if (*property).initialised == 0 as libc::c_uint {
             parent_property = (*property).parent;
@@ -9136,7 +9181,7 @@ unsafe extern "C" fn RegisterProperty(
             (*property).initialised = 1 as libc::c_int as rmtBool;
         }
         if can_lock != 0 {
-            pthread_mutex_unlock(&mut (*g_Remotery).propertyMutex);
+            mtxUnlock(&mut (*g_Remotery).propertyMutex);
         }
     }
 }
@@ -9225,7 +9270,7 @@ pub unsafe extern "C" fn _rmt_PropertySnapshotAll() -> rmtError {
     nb_snapshot_allocs = (*(*g_Remotery).propertyAllocator).nb_inuse as rmtU32;
     first_snapshot = 0 as *mut libc::c_void as *mut PropertySnapshot;
     prev_snapshot = 0 as *mut libc::c_void as *mut PropertySnapshot;
-    pthread_mutex_lock(&mut (*g_Remotery).propertyMutex);
+    mtxLock(&mut (*g_Remotery).propertyMutex);
     error = TakePropertySnapshot(
         &mut (*g_Remotery).rootProperty,
         0 as *mut libc::c_void as *mut PropertySnapshot,
@@ -9243,7 +9288,7 @@ pub unsafe extern "C" fn _rmt_PropertySnapshotAll() -> rmtError {
                 "non-null function pointer",
             )(g_Settings.snapshot_context, &mut (*g_Remotery).rootProperty);
     }
-    pthread_mutex_unlock(&mut (*g_Remotery).propertyMutex);
+    mtxUnlock(&mut (*g_Remotery).propertyMutex);
     if error as libc::c_uint != 0 as libc::c_uint {
         FreePropertySnapshots(first_snapshot);
         return error;
@@ -9306,9 +9351,9 @@ pub unsafe extern "C" fn _rmt_PropertyFrameResetAll() {
     if g_Remotery as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         return;
     }
-    pthread_mutex_lock(&mut (*g_Remotery).propertyMutex);
+    mtxLock(&mut (*g_Remotery).propertyMutex);
     PropertyFrameReset(g_Remotery, (*g_Remotery).rootProperty.firstChild);
-    pthread_mutex_unlock(&mut (*g_Remotery).propertyMutex);
+    mtxUnlock(&mut (*g_Remotery).propertyMutex);
     (*g_Remotery).propertyFrame = ((*g_Remotery).propertyFrame).wrapping_add(1);
 }
 pub fn main() {

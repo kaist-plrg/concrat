@@ -4254,10 +4254,7 @@ pub static mut time_units_us: units = {
         units: [
             b"ms\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
             b"s\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
         ],
     };
     init
@@ -4269,10 +4266,7 @@ pub static mut time_units_s: units = {
         units: [
             b"m\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
             b"h\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
         ],
     };
     init

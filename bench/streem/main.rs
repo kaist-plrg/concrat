@@ -12601,7 +12601,6 @@ unsafe extern "C" fn kvs_update(
         &mut val,
     );
     if tmp___2 == 1 as libc::c_int {
-        // pthread_mutex_unlock(&mut (*k).lock);
         return 1 as libc::c_int;
     }
     pthread_mutex_lock(&mut (*k).lock);
@@ -17551,10 +17550,10 @@ unsafe fn main_0(
             match *s as libc::c_int {
                 118 => {
                     verbose = 1 as libc::c_int;
-                    current_block_19 = 12115198652510248209;
+                    current_block_19 = 12096367485426368963;
                 }
                 119 => {
-                    current_block_19 = 12115198652510248209;
+                    current_block_19 = 12096367485426368963;
                 }
                 99 => {
                     check = 1 as libc::c_int;
@@ -17584,7 +17583,7 @@ unsafe fn main_0(
                 }
             }
             match current_block_19 {
-                12115198652510248209 => {
+                12096367485426368963 => {
                     strm_option_verbose = 1 as libc::c_int;
                 }
                 _ => {}
@@ -17685,9 +17684,9 @@ unsafe extern "C" fn count_fields(
         } else {
             match *ptr as libc::c_int {
                 34 => {
-                    current_block = 12175670764318419474;
+                    current_block = 7056156764025611863;
                     match current_block {
-                        16278189721555175857 => {
+                        17780730044932900546 => {
                             if *ptr as libc::c_int == sep as libc::c_int {
                                 cnt += 1;
                             }
@@ -17698,9 +17697,9 @@ unsafe extern "C" fn count_fields(
                     }
                 }
                 9 | 44 => {
-                    current_block = 16278189721555175857;
+                    current_block = 17780730044932900546;
                     match current_block {
-                        16278189721555175857 => {
+                        17780730044932900546 => {
                             if *ptr as libc::c_int == sep as libc::c_int {
                                 cnt += 1;
                             }
@@ -18004,9 +18003,9 @@ unsafe extern "C" fn sv_accept(
         } else {
             match *ptr as libc::c_int {
                 34 => {
-                    current_block = 15828358185396788427;
+                    current_block = 1393633903314574829;
                     match current_block {
-                        10016701046616925287 => {
+                        9644440189028477373 => {
                             if !(*ptr as libc::c_int != sep as libc::c_int) {
                                 *bp = csv_value(
                                     fbeg,
@@ -18039,9 +18038,9 @@ unsafe extern "C" fn sv_accept(
                     }
                 }
                 9 | 44 => {
-                    current_block = 10016701046616925287;
+                    current_block = 9644440189028477373;
                     match current_block {
-                        10016701046616925287 => {
+                        9644440189028477373 => {
                             if !(*ptr as libc::c_int != sep as libc::c_int) {
                                 *bp = csv_value(
                                     fbeg,
@@ -25567,7 +25566,7 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
         {
             yysize = yyssp.offset_from(yyss) as libc::c_long + 1 as libc::c_long;
             if 10000 as libc::c_long <= yystacksize {
-                current_block = 13342544653041511775;
+                current_block = 11272788175565445533;
                 break;
             }
             yystacksize *= 2 as libc::c_long;
@@ -25586,7 +25585,7 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
             );
             yyptr = tmp as *mut yyalloc;
             if yyptr.is_null() {
-                current_block = 13342544653041511775;
+                current_block = 11272788175565445533;
                 break;
             }
             libc::memcpy(
@@ -25641,18 +25640,18 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
             if yyss.offset(yystacksize as isize).offset(-(1 as libc::c_int as isize))
                 as libc::c_ulong <= yyssp as libc::c_ulong
             {
-                current_block = 4430764852341165693;
+                current_block = 11759030215371582369;
                 break;
             }
         }
         if yystate == 82 as libc::c_int {
             yyresult = 0 as libc::c_int;
-            current_block = 10004390119110940820;
+            current_block = 12630558296545974488;
             break;
         } else {
             yyn = yypact[yystate as usize] as libc::c_int;
             if yyn == -(211 as libc::c_int) {
-                current_block = 310681801089420760;
+                current_block = 16868362135681402871;
             } else {
                 if yychar == -(2 as libc::c_int) {
                     if yydebug != 0 {
@@ -25700,19 +25699,19 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
                 }
                 yyn += yytoken;
                 if yyn < 0 as libc::c_int {
-                    current_block = 310681801089420760;
+                    current_block = 16868362135681402871;
                 } else if (793 as libc::c_int) < yyn {
-                    current_block = 310681801089420760;
+                    current_block = 16868362135681402871;
                 } else if yycheck[yyn as usize] as libc::c_int != yytoken {
-                    current_block = 310681801089420760;
+                    current_block = 16868362135681402871;
                 } else {
                     yyn = yytable[yyn as usize] as libc::c_int;
                     if yyn <= 0 as libc::c_int {
                         if yyn == -(122 as libc::c_int) {
-                            current_block = 9018535857082161032;
+                            current_block = 10633346033552459047;
                         } else {
                             yyn = -yyn;
-                            current_block = 2499609384077834464;
+                            current_block = 9725136241171245068;
                         }
                     } else {
                         if yyerrstatus != 0 {
@@ -25736,23 +25735,23 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
                         yyvsp = yyvsp.offset(1);
                         *yyvsp = yylval;
                         yychar = -(2 as libc::c_int);
-                        current_block = 3697158595018051672;
+                        current_block = 9883609252466990884;
                     }
                 }
             }
             match current_block {
-                310681801089420760 => {
+                16868362135681402871 => {
                     yyn = yydefact[yystate as usize] as libc::c_int;
                     if yyn == 0 as libc::c_int {
-                        current_block = 9018535857082161032;
+                        current_block = 10633346033552459047;
                     } else {
-                        current_block = 2499609384077834464;
+                        current_block = 9725136241171245068;
                     }
                 }
                 _ => {}
             }
             match current_block {
-                2499609384077834464 => {
+                9725136241171245068 => {
                     yylen = yyr2[yyn as usize] as libc::c_int;
                     yyval = *yyvsp.offset((1 as libc::c_int - yylen) as isize);
                     if yydebug != 0 {
@@ -26542,7 +26541,7 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
                         yystate = yydefgoto[yylhs as usize] as yy_state_fast_t;
                     }
                 }
-                9018535857082161032 => {
+                10633346033552459047 => {
                     if yychar == -(2 as libc::c_int) {
                         yytoken = -(2 as libc::c_int);
                     } else {
@@ -26593,14 +26592,14 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
                         }
                         yyerror(p, yymsgp);
                         if yysyntax_error_status == 2 as libc::c_int {
-                            current_block = 13342544653041511775;
+                            current_block = 11272788175565445533;
                             break;
                         }
                     }
                     if yyerrstatus == 3 as libc::c_int {
                         if yychar <= 0 as libc::c_int {
                             if yychar == 0 as libc::c_int {
-                                current_block = 4430764852341165693;
+                                current_block = 11759030215371582369;
                                 break;
                             }
                         } else {
@@ -26631,7 +26630,7 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
                             }
                         }
                         if yyssp as libc::c_ulong == yyss as libc::c_ulong {
-                            current_block = 4430764852341165693;
+                            current_block = 11759030215371582369;
                             break '_yysetstate;
                         }
                         yydestruct(
@@ -26671,11 +26670,11 @@ pub unsafe extern "C" fn yyparse(mut p: *mut parser_state) -> libc::c_int {
         }
     }
     match current_block {
-        13342544653041511775 => {
+        11272788175565445533 => {
             yyerror(p, b"memory exhausted\0" as *const u8 as *const libc::c_char);
             yyresult = 2 as libc::c_int;
         }
-        4430764852341165693 => {
+        11759030215371582369 => {
             yyresult = 1 as libc::c_int;
         }
         _ => {}

@@ -1,9 +1,4 @@
-use ::libc;
-use libc::memset;
-use libc::strcpy;
-use libc::snprintf;
-use libc::memcpy;
-use libc::memmove;
+use ::libc; use libc::memset; use libc::strcpy; use libc::snprintf; use libc::memcpy; use libc::memmove;
 use std::arch::asm;
 extern "C" {
     pub type _IO_wide_data;
@@ -2176,6 +2171,7 @@ unsafe extern "C" fn fprintf(
     mut args: ...
 ) -> libc::c_int {
     let mut tmp___0: libc::c_int = 0;
+
     return tmp___0;
 }
 #[inline(always)]
@@ -2184,6 +2180,7 @@ unsafe extern "C" fn printf(
     mut args: ...
 ) -> libc::c_int {
     let mut tmp___0: libc::c_int = 0;
+
     return tmp___0;
 }
 #[inline(always)]

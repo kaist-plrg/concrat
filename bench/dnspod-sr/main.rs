@@ -29,7 +29,6 @@ extern "C" {
     fn write(__fd: libc::c_int, __buf: *const libc::c_void, __n: size_t) -> ssize_t;
     fn open(__file: *const libc::c_char, __oflag: libc::c_int, _: ...) -> libc::c_int;
     fn gettimeofday(__tv: *mut timeval, __tz: *mut libc::c_void) -> libc::c_int;
-    fn pthread_spin_trylock(__lock: *mut pthread_spinlock_t) -> libc::c_int;
     fn pthread_spin_unlock(__lock: *mut pthread_spinlock_t) -> libc::c_int;
     fn sigemptyset(__set: *mut sigset_t) -> libc::c_int;
     fn sigaddset(__set: *mut sigset_t, __signo: libc::c_int) -> libc::c_int;
@@ -761,7 +760,6 @@ pub struct author {
     pub el: *mut list,
     pub bdepfd: libc::c_int,
     pub loginfo: *mut log_info,
-    // pub dblock: [pthread_spinlock_t; 101],
     pub databuffer: [uchar; 65528],
     pub randombuffer: [uchar; 3000],
     pub tmpbuffer: [uchar; 2000],
@@ -1942,13 +1940,13 @@ pub unsafe extern "C" fn str_to_uchar4(
                     .wrapping_sub(48 as libc::c_uint);
                 current_block_20 = 4495394744059808450;
             } else {
-                current_block_20 = 9667575034259535015;
+                current_block_20 = 10984991978767072429;
             }
         } else {
-            current_block_20 = 9667575034259535015;
+            current_block_20 = 10984991978767072429;
         }
         match current_block_20 {
-            9667575034259535015 => {
+            10984991978767072429 => {
                 idx = idx.wrapping_add(1);
                 if *addr.offset(i as isize) as libc::c_int != 46 as libc::c_int {
                     *val = 0 as libc::c_int as uchar;
@@ -2014,13 +2012,13 @@ pub unsafe extern "C" fn str_to_uchar6(
                     + tmp___1 as libc::c_int - 48 as libc::c_int) as ushort___0;
                 current_block_42 = 3938820862080741272;
             } else {
-                current_block_42 = 15547988767264126066;
+                current_block_42 = 7093012730509100491;
             }
         } else {
-            current_block_42 = 15547988767264126066;
+            current_block_42 = 7093012730509100491;
         }
         match current_block_42 {
-            15547988767264126066 => {
+            7093012730509100491 => {
                 let mut current_block_41: u64;
                 if tmp___1 as libc::c_int >= 97 as libc::c_int {
                     if tmp___1 as libc::c_int <= 122 as libc::c_int {
@@ -2031,13 +2029,13 @@ pub unsafe extern "C" fn str_to_uchar6(
                             - 97 as libc::c_int + 10 as libc::c_int) as ushort___0;
                         current_block_41 = 2543120759711851213;
                     } else {
-                        current_block_41 = 9809238161333413355;
+                        current_block_41 = 12433222595922472940;
                     }
                 } else {
-                    current_block_41 = 9809238161333413355;
+                    current_block_41 = 12433222595922472940;
                 }
                 match current_block_41 {
-                    9809238161333413355 => {
+                    12433222595922472940 => {
                         idx += 1;
                         if gap == 1 as libc::c_int {
                             if hasgap == 1 as libc::c_int {
@@ -2267,15 +2265,6 @@ pub unsafe extern "C" fn insert_mem_bar() {
     }
     free(ptr as *mut libc::c_void);
 }
-// pub unsafe extern "C" fn test_lock(mut l: *mut pthread_spinlock_t) -> libc::c_int {
-//     let mut tmp: libc::c_int = 0;
-//     tmp = pthread_spin_trylock(l);
-//     if tmp < 0 as libc::c_int {
-//         return -(1 as libc::c_int);
-//     }
-//     pthread_spin_unlock(l);
-//     return 0 as libc::c_int;
-// }
 pub unsafe extern "C" fn dbg_print_bit(mut bit: libc::c_ushort) {
     let mut i: libc::c_int = 0;
     let mut val: libc::c_ushort = 0;
@@ -2578,13 +2567,13 @@ unsafe extern "C" fn delete_fixup(mut rbt: *mut rbtree, mut nd: *mut rbnode) {
                     nd = (*nd).parent;
                     current_block_21 = 10043043949733653460;
                 } else {
-                    current_block_21 = 8410686024737438156;
+                    current_block_21 = 3372268626923495262;
                 }
             } else {
-                current_block_21 = 8410686024737438156;
+                current_block_21 = 3372268626923495262;
             }
             match current_block_21 {
-                8410686024737438156 => {
+                3372268626923495262 => {
                     if (*(*tmp).right).color == 0 as libc::c_int {
                         (*(*tmp).left).color = 0 as libc::c_int;
                         (*tmp).color = 1 as libc::c_int;
@@ -2614,13 +2603,13 @@ unsafe extern "C" fn delete_fixup(mut rbt: *mut rbtree, mut nd: *mut rbnode) {
                     nd = (*nd).parent;
                     current_block_44 = 12997042908615822766;
                 } else {
-                    current_block_44 = 5591790895087476119;
+                    current_block_44 = 18445440013362716614;
                 }
             } else {
-                current_block_44 = 5591790895087476119;
+                current_block_44 = 18445440013362716614;
             }
             match current_block_44 {
-                5591790895087476119 => {
+                18445440013362716614 => {
                     if (*(*tmp).left).color == 0 as libc::c_int {
                         (*(*tmp).right).color = 0 as libc::c_int;
                         (*tmp).color = 1 as libc::c_int;
@@ -5249,14 +5238,14 @@ pub unsafe extern "C" fn process_rdata(
         label = label.offset(10 as libc::c_int as isize);
         let mut current_block_43: u64;
         if tmptype as libc::c_int == 6 as libc::c_int {
-            current_block_43 = 1370985878501326100;
+            current_block_43 = 10487702048277371187;
         } else if tmptype as libc::c_int == 5 as libc::c_int {
-            current_block_43 = 1370985878501326100;
+            current_block_43 = 10487702048277371187;
         } else {
             current_block_43 = 1847472278776910194;
         }
         match current_block_43 {
-            1370985878501326100 => {
+            10487702048277371187 => {
                 if i == n - 1 as libc::c_int {
                     *stype = tmptype as libc::c_int;
                 }
@@ -5278,14 +5267,14 @@ pub unsafe extern "C" fn process_rdata(
         );
         let mut current_block_63: u64;
         if tmp___2 != 0 as libc::c_int {
-            current_block_63 = 14848998955190965439;
+            current_block_63 = 16673356851124233062;
         } else if type_0 as libc::c_int != tmptype as libc::c_int {
-            current_block_63 = 14848998955190965439;
+            current_block_63 = 16673356851124233062;
         } else {
             current_block_63 = 16203797167131938757;
         }
         match current_block_63 {
-            14848998955190965439 => {
+            16673356851124233062 => {
                 tmp___1 = random_ttl(
                     tmpttl
                         .wrapping_add(i as uint___0)
@@ -7844,20 +7833,20 @@ pub unsafe extern "C" fn read_records_from_file(
         );
         let mut current_block_115: u64;
         if tmp___13 != 0 as libc::c_int {
-            current_block_115 = 13489891472770870993;
+            current_block_115 = 14497901293369978339;
         } else {
             tmp___14 = strcmp(
                 ps[3 as libc::c_int as usize] as *const libc::c_char,
                 tmptype.as_mut_ptr() as *const libc::c_char,
             );
             if tmp___14 != 0 as libc::c_int {
-                current_block_115 = 13489891472770870993;
+                current_block_115 = 14497901293369978339;
             } else {
                 current_block_115 = 14155412868135599428;
             }
         }
         match current_block_115 {
-            13489891472770870993 => {
+            14497901293369978339 => {
                 tmp___8 = strcmp(
                     tmptype.as_mut_ptr() as *const libc::c_char,
                     b"NS\0" as *const u8 as *const libc::c_char,
@@ -7939,14 +7928,14 @@ pub unsafe extern "C" fn read_records_from_file(
         );
         let mut current_block_148: u64;
         if tmp___18 == 0 as libc::c_int {
-            current_block_148 = 12027190957106789002;
+            current_block_148 = 6368670679351153452;
         } else {
             tmp___19 = strcmp(
                 ps[3 as libc::c_int as usize] as *const libc::c_char,
                 b"CNAME\0" as *const u8 as *const libc::c_char,
             );
             if tmp___19 == 0 as libc::c_int {
-                current_block_148 = 12027190957106789002;
+                current_block_148 = 6368670679351153452;
             } else {
                 tmp___17 = strcmp(
                     ps[3 as libc::c_int as usize] as *const libc::c_char,
@@ -7992,7 +7981,7 @@ pub unsafe extern "C" fn read_records_from_file(
             }
         }
         match current_block_148 {
-            12027190957106789002 => {
+            6368670679351153452 => {
                 tmp___15 = strlen(ps[4 as libc::c_int as usize] as *const libc::c_char);
                 str_to_len_label(
                     ps[4 as libc::c_int as usize],
@@ -11094,15 +11083,9 @@ pub unsafe extern "C" fn create_author(
         (*(*authors.offset(i as isize)).loginfo)
             .logfd = create_new_log(((*s).logpath).as_mut_ptr(), i, 233 as libc::c_int);
         j = 0 as libc::c_int;
-        // while j < 101 as libc::c_int {
-        //     pthread_spin_init(
-        //         &mut *((*authors.offset(i as isize)).dblock)
-        //             .as_mut_ptr()
-        //             .offset(j as isize),
-        //         0 as libc::c_int,
-        //     );
-        //     j += 1;
-        // }
+        while j < 101 as libc::c_int {
+            j += 1;
+        }
         j = 0 as libc::c_int;
         while j < 10000 as libc::c_int {
             let ref mut fresh32 = (*authors.offset(i as isize)).list[j as usize];
@@ -12486,8 +12469,12 @@ unsafe extern "C" fn rte_atomic32_cmpset(
     mut exp: uint32_t,
     mut src: uint32_t,
 ) -> libc::c_int {
-    let mut res: uint32_t = 0;
-    res = std::intrinsics::atomic_cxchg(dst, exp, src).0;
+    let mut res: uint8_t = 0;
+
+
+
+
+
     return res as libc::c_int;
 }
 pub unsafe extern "C" fn mbuf_alloc() -> *mut mbuf_type {

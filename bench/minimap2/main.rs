@@ -1,10 +1,4 @@
-use ::libc;
-use libc::memset;
-use libc::memcpy;
-use libc::memmove;
-use libc::snprintf;
-use libc::strcpy;
-use libc::sprintf;
+use ::libc; use libc::memset; use libc::memcpy; use libc::memmove; use libc::snprintf; use libc::strcpy; use libc::sprintf;
 use ::c2rust_bitfields;
 use ::c2rust_asm_casts;
 #[cfg(target_arch = "x86")]
@@ -1175,6 +1169,7 @@ unsafe extern "C" fn fprintf(
     mut args: ...
 ) -> libc::c_int {
     let mut tmp: libc::c_int = 0;
+
     return tmp;
 }
 #[inline(always)]
@@ -1183,6 +1178,7 @@ unsafe extern "C" fn printf(
     mut args: ...
 ) -> libc::c_int {
     let mut tmp: libc::c_int = 0;
+
     return tmp;
 }
 #[inline(always)]
@@ -7613,6 +7609,16 @@ unsafe extern "C" fn open(
     let mut tmp___3: libc::c_int = 0;
     let mut tmp___4: libc::c_int = 0;
     let mut tmp___5: libc::c_int = 0;
+
+
+
+
+
+
+
+
+
+
     return tmp___5;
 }
 static mut __ac_HASH_UPPER: libc::c_double = 0.77f64;
@@ -30686,6 +30692,18 @@ pub unsafe extern "C" fn __cpuidex(
     let fresh63 = func_id;
     let fresh64 = &mut *cpuid.offset(2 as libc::c_int as isize);
     let fresh66 = subfunc_id;
+
+
+
+
+
+
+
+
+
+
+
+
 }
 static mut ksw_simd: libc::c_int = -(1 as libc::c_int);
 unsafe extern "C" fn x86_simd() -> libc::c_int {
