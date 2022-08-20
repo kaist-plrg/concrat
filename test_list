@@ -6,6 +6,7 @@ bench/brubeck
 bench/dump1090
 bench/neural-redis
 bench/stud
+bench/proxychains-ng
 bench/ProcDump-for-Linux
 bench/level-ip
 bench/axel

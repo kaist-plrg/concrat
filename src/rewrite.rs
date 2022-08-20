@@ -475,7 +475,10 @@ impl<'tcx> LateLintPass<'tcx> for RewritePass {
                 }
 
                 // mutex
-                if typ == "pthread_mutex_t" || typ == "pthread_spinlock_t" {
+                if typ == "pthread_mutex_t"
+                    || typ == "*mut pthread_mutex_t"
+                    || typ == "pthread_spinlock_t"
+                {
                     let mut decl = String::new();
                     let mut init = String::new();
                     for (x, m) in global_mutex_map() {
@@ -1101,8 +1104,16 @@ pub static mut {2}: [Mutex<{0}>; {3}] = [{4}
                 if let Some(mut path) = expr_to_path(ctx, lhs) {
                     while path.pop().is_some() {
                         let ty = self.get_type(&path, &func_name());
-                        if ty.contains("pthread_cond_t") {
+                        if ty.contains("pthread_mutex_t") || ty.contains("pthread_cond_t") {
                             add_replacement(ctx, e.span, "()".to_string());
+                        }
+                    }
+
+                    if path.is_variable() {
+                        if let Some((ty, _)) = self.global_def_map.get(&path.base) {
+                            if ty.contains("pthread_mutex_t") {
+                                add_replacement(ctx, e.span, "()".to_string());
+                            }
                         }
                     }
                 }

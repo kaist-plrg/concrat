@@ -80,7 +80,13 @@ impl GlobalPass {
         }
 
         let inv_cg = inverse(call_graph);
+        let mut i = 0;
         while let Some(f) = work_list.pop_front() {
+            i += 1;
+            if i > call_graph.len() * 3 {
+                break;
+            }
+
             let st = abs_states.get(&f).unwrap().clone();
             let summary = self.functions.get(&f).unwrap();
             let preds = inv_cg.get(&f).unwrap();
@@ -95,7 +101,7 @@ impl GlobalPass {
                     let len = v.len();
                     v.sort();
                     v.dedup();
-                    if len - v.len() < 3 {
+                    if len - v.len() < 2 {
                         f1_st.insert(path);
                     }
                 };

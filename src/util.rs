@@ -179,7 +179,7 @@ impl ExprPath {
                 .find(|(_, (p, _))| &self.base == p),
             return None
         );
-        let arg = args[i].path.as_ref()?;
+        let arg = args.get(i)?.path.as_ref()?;
         self.set_base(arg);
         Some(self)
     }
