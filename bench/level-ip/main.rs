@@ -1201,7 +1201,7 @@ unsafe extern "C" fn alloc_socket(mut pid: pid_t) -> *mut socket {
 pub unsafe extern "C" fn socket_rd_acquire(mut sock: *mut socket) -> libc::c_int {
     let mut rc: libc::c_int = 0;
     let mut tmp: libc::c_int = 0;
-    tmp = pthread_rwlock_wrlock(&mut (*sock).lock);
+    tmp = pthread_rwlock_rdlock(&mut (*sock).lock);
     rc = tmp;
     (*sock).refcnt += 1;
     return rc;

@@ -831,7 +831,7 @@ int socket_rd_acquire(struct socket *sock )
   int tmp ;
 
   {
-  tmp = pthread_rwlock_wrlock(& sock->lock);
+  tmp = pthread_rwlock_rdlock(& sock->lock);
   rc = tmp;
   (sock->refcnt) ++;
   return (rc);

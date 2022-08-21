@@ -13,14 +13,14 @@ use rustc_hir::{
 };
 use rustc_lint::{LateContext, LateLintPass, LintPass};
 use rustc_middle::mir::BasicBlock;
-use rustc_mir_dataflow::{GenKill, JoinSemiLattice};
+use rustc_mir_dataflow::JoinSemiLattice;
 use rustc_span::def_id::DefId;
 
 use super::{
-    domain::{HasBottom, MayMutexSet, MustMutexSet},
+    domain::{MayMutexSetPair, MustMutexSetTriple},
     intra::{available_guards, live_guards, AnalysisContext},
     visitor::Visitor,
-    Arg, FunctionCodeSummary, FunctionSummary, MutexSet,
+    Arg, FunctionCodeSummary, FunctionSummary,
 };
 use crate::{
     analysis::{compute_mutex_line, AnalysisSummary},
@@ -28,8 +28,8 @@ use crate::{
     graph::{compute_sccs, inverse, post_order, transitive_closure},
     util::{
         current_function, def_id_to_item_name, expr_to_path, function_params, resolve_path,
-        span_lines, span_to_string, type_of, type_to_string, union, unwrap_call,
-        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
+        span_lines, span_to_string, type_of, type_to_string, unwrap_call, unwrap_cast_recursively,
+        unwrap_ptr_from_type, ExprPath, ExprPathProj,
     },
 };
 
@@ -228,8 +228,8 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let mut propagations = vec![];
             let mut span_mutexes = vec![];
             for _ in &funcs {
-                entry_mutexes.push(MayMutexSet::bottom());
-                ret_mutexes.push(MustMutexSet::bottom());
+                entry_mutexes.push(MayMutexSetPair::bottom());
+                ret_mutexes.push(MustMutexSetTriple::bottom());
                 propagations.push(vec![]);
                 span_mutexes.push(vec![]);
             }
@@ -277,7 +277,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     }
 
                     // available guard analysis
-                    let results = available_guards(ana_ctx, entry_mutexes[i].0.clone());
+                    let results = available_guards(ana_ctx, entry_mutexes[i].clone());
                     let mut visitor = Visitor::default();
                     results.visit_reachable_with(body, &mut visitor);
                     let Visitor {
@@ -285,7 +285,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         propagation,
                         span_mutex,
                     } = visitor;
-                    let ret_mutex = return_state.unwrap_or_else(MustMutexSet::empty);
+                    let ret_mutex = return_state.unwrap_or_else(MustMutexSetTriple::empty);
 
                     if ret_mutexes[i] != ret_mutex {
                         ret_mutexes[i] = ret_mutex;
@@ -301,7 +301,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 }
             }
 
-            for ((((def_id, entry_mutex), ret_mutex), mut propagation), mut span_mutex) in funcs
+            for ((((def_id, entry_mutex), ret_mutex), mut propagation), span_mutex) in funcs
                 .drain(..)
                 .zip(entry_mutexes.drain(..))
                 .zip(ret_mutexes.drain(..))
@@ -311,17 +311,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 // guards propagated by function calls
                 let propagation = propagation
                     .drain(..)
-                    .filter_map(|(f, ms)| {
-                        if self.functions.contains_key(&f) {
-                            Some((f, ms.into_set()))
-                        } else {
-                            None
-                        }
-                    })
+                    .filter(|(f, _)| self.functions.contains_key(f))
                     .collect();
                 // guards held for each access
                 let accesses = &self.functions.get(&def_id).unwrap().accesses;
-                let access: Vec<(ExprPath, MutexSet, bool)> = if accesses.is_empty() {
+                let access: Vec<_> = if accesses.is_empty() {
                     vec![]
                 } else {
                     span_mutex
@@ -331,7 +325,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                                 .iter()
                                 .filter_map(|(s, path, w)| {
                                     if s.overlaps(*span) {
-                                        Some((path.clone(), v.clone().into_set(), *w))
+                                        Some((path.clone(), v.clone(), *w))
                                     } else {
                                         None
                                     }
@@ -340,11 +334,6 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                         })
                         .collect()
                 };
-                // guards held in each span
-                let span_mutex = span_mutex
-                    .drain(..)
-                    .map(|(s, ms)| (s, ms.into_set()))
-                    .collect();
                 // create summary
                 function_summary_map.insert(
                     def_id,
@@ -363,20 +352,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         // initialize work list with reverse post order traversal
         let mut work_list: VecDeque<_> = VecDeque::new();
         // initialize abstract states
-        let mut abs_states: BTreeMap<DefId, MustMutexSet> = BTreeMap::new();
+        let mut abs_states: BTreeMap<DefId, MustMutexSetTriple> = BTreeMap::new();
         for func in self.functions.keys() {
             let init_st = if iter_roots.contains(func) {
                 work_list.push_back(*func);
-                MustMutexSet::new(
-                    function_summary_map
-                        .get(func)
-                        .unwrap()
-                        .entry_mutex
-                        .0
-                        .clone(),
-                )
+                MustMutexSetTriple::new(function_summary_map.get(func).unwrap().entry_mutex.clone())
             } else {
-                MustMutexSet::bottom()
+                MustMutexSetTriple::bottom()
             };
             abs_states.insert(*func, init_st);
         }
@@ -418,7 +400,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 // compute held mutexes
                 let mut ms = st.clone();
                 if let Some(props) = propagation.get(succ) {
-                    ms.gen_all(props.iter().cloned());
+                    ms.append(props.clone());
                 }
                 ms.retain(|m| {
                     possible_prefixes
@@ -449,30 +431,59 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         }
 
         // update function summaries
-        for (def_id, abs_st) in abs_states {
-            let mut abs_st = abs_st.into_set();
+        for (def_id, mut abs_st) in abs_states {
+            let MustMutexSetTriple {
+                mutex,
+                rdlock,
+                wrlock,
+            } = &mut abs_st;
             let summary = function_summary_map.get_mut(&def_id).unwrap();
-            abs_st.retain(|x| !summary.entry_mutex.0.contains(x));
+            let MayMutexSetPair {
+                mutex: emutex,
+                rwlock,
+            } = &summary.entry_mutex;
+            mutex.retain(|x| !emutex.0.contains(x));
+            rdlock.retain(|x| !rwlock.0.contains(x));
+            wrlock.retain(|x| !rwlock.0.contains(x));
             summary.propagation_mutex = abs_st;
         }
 
         // accesses to global variables
-        let mut global_access: BTreeMap<ExprPath, Vec<(DefId, MutexSet, bool)>> = BTreeMap::new();
+        let mut global_access: BTreeMap<_, Vec<_>> = BTreeMap::new();
         // accesses to struct fields
-        let mut struct_access: Vec<(ExprPath, DefId, MutexSet, bool)> = vec![];
+        let mut struct_access: Vec<_> = vec![];
 
         // classify accesses
         for (def_id, summary) in &function_summary_map {
             let prop = &summary.propagation_mutex;
             for (path, v, w) in &summary.access {
-                let v = union(v.clone(), prop.clone());
+                let mut v = v.clone();
+                v.append(prop.clone());
+                let MustMutexSetTriple {
+                    mut mutex,
+                    rdlock,
+                    wrlock,
+                } = v;
+                mutex.append(wrlock);
+                let mut ms: Vec<_> = mutex
+                    .into_set()
+                    .drain_filter(|_| true)
+                    .map(|m| (m, true))
+                    .collect();
+                ms.append(
+                    &mut rdlock
+                        .into_set()
+                        .drain_filter(|_| true)
+                        .map(|m| (m, false))
+                        .collect(),
+                );
                 if path.is_struct() {
-                    struct_access.push((path.clone(), *def_id, v, *w));
+                    struct_access.push((path.clone(), *def_id, ms, *w));
                 } else {
                     global_access
                         .entry(path.clone())
                         .or_default()
-                        .push((*def_id, v, *w));
+                        .push((*def_id, ms, *w));
                 }
             }
         }
@@ -497,7 +508,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             // find candidate mutex
             let mut counts: BTreeMap<_, usize> = BTreeMap::new();
             for (_, v, _) in &accesses {
-                for m in v.iter() {
+                for (m, _) in v.iter() {
                     *counts.entry(m.clone()).or_default() += 1;
                 }
             }
@@ -516,9 +527,18 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     }
                 })
                 .max_by_key(|(_, x)| *x);
-            let (cand, x) = some_or!(cand_opt, continue);
+            let (cand, _) = some_or!(cand_opt, continue);
 
-            // function updating mutex map
+            // split accesses into safe/unsafe accesses
+            let (safe, usafe): (Vec<_>, _) = accesses
+                .drain(..)
+                .partition(|(_, ms, w)| ms.iter().any(|(m, w0)| m == &cand && !w || *w0));
+
+            // skip read-only
+            if safe.iter().all(|(_, _, w)| !w) {
+                continue;
+            }
+
             let mut add = || {
                 let map = if index.is_none() {
                     &mut mutex_map
@@ -529,23 +549,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             };
 
             // if every access is safe, update mutex map
-            if x == accesses.len() {
+            if usafe.is_empty() {
                 add();
                 continue;
             }
 
-            // try filtering only when thread functions exist
+            // no thread functions; skip
             if thread_functions.is_empty() {
-                continue;
-            }
-
-            // split accesses into safe/unsafe accesses
-            let (safe, usafe): (Vec<_>, _) =
-                accesses.drain(..).partition(|(_, v, _)| v.contains(&cand));
-            assert_eq!(safe.len(), x);
-
-            // skip read-only
-            if safe.iter().all(|(_, _, w)| !w) {
                 continue;
             }
 
@@ -603,10 +613,10 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 .map(|(def_id, path, mut v, w)| {
                     let held: BTreeSet<_> = v
                         .drain_filter(|_| true)
-                        .filter_map(|mutex| {
+                        .filter_map(|(mutex, w)| {
                             let mutex = mutex.strip_prefix(&path)?;
                             if mutex.is_variable() {
-                                Some(mutex.base)
+                                Some((mutex.base, w))
                             } else {
                                 None
                             }
@@ -619,15 +629,27 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             // find candidate mutex
             let mut counts: BTreeMap<String, usize> = BTreeMap::new();
             for (_, _, ms, _) in &accesses {
-                for m in ms {
-                    let x = counts.entry(m.clone()).or_default();
-                    *x += 1;
+                for (m, _) in ms {
+                    *counts.entry(m.clone()).or_default() += 1;
                 }
             }
             let cand_opt = counts.drain_filter(|_, _| true).max_by_key(|(_, x)| *x);
-            let (cand, x) = some_or!(cand_opt, continue);
+            let (cand, _) = some_or!(cand_opt, continue);
 
-            // function updating mutex map
+            // try filtering only when thread functions exist
+            let empty = BTreeSet::new();
+            let init_or_destroy = some_or!(init_or_destroy_map.get(&typ), &empty);
+
+            // split accesses into safe/unsafe accesses
+            let (safe, usafe): (Vec<_>, _) = accesses
+                .drain(..)
+                .partition(|(_, _, ms, w)| ms.iter().any(|(m, w0)| m == &cand && !w || *w0));
+
+            // skip read-only
+            if safe.iter().all(|(_, _, _, w)| !w) {
+                continue;
+            }
+
             let mut add = || {
                 struct_mutex_map
                     .entry(typ.clone())
@@ -636,34 +658,22 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             };
 
             // if every access is safe, update mutex map
-            if x == accesses.len() {
+            if usafe.is_empty() {
                 add();
                 continue;
             }
 
-            // try filtering only when thread functions exist
-            let empty = BTreeSet::new();
-            let init_or_destroy = some_or!(init_or_destroy_map.get(&typ), &empty);
-            if thread_functions.is_empty() && init_or_destroy.is_empty() {
+            // no thread functions; skip
+            let b = thread_functions.is_empty();
+            if b && init_or_destroy.is_empty() {
                 continue;
             }
 
-            // split accesses into safe/unsafe accesses
-            let (safe, usafe): (Vec<_>, _) = accesses
-                .drain(..)
-                .partition(|(_, _, ms, _)| ms.contains(&cand));
-            assert_eq!(safe.len(), x);
-
-            // skip read-only
-            if safe.iter().all(|(_, _, _, w)| !w) {
-                continue;
-            }
+            let is_thread_func =
+                |f: &DefId| (!b && !thread_functions.contains(f)) || init_or_destroy.contains(f);
 
             // if every unsafe access is in non-thread function, update mutex map
-            if usafe
-                .iter()
-                .all(|(f, _, _, _)| !thread_functions.contains(f) || init_or_destroy.contains(f))
-            {
+            if usafe.iter().all(|(f, _, _, _)| is_thread_func(f)) {
                 add();
             }
         }
@@ -685,17 +695,13 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     ..
                 } = summary;
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
-                let start = &entry_mutex.0;
-                let end = ret_mutex.clone().into_set();
-                let prop = propagation_mutex;
                 let propagation: BTreeMap<_, _> = propagation
                     .iter()
                     .map(|(succ, v)| (def_id_to_item_name(ctx.tcx, *succ), v))
                     .collect();
-                let access: Vec<_> = access.iter().map(|(path, v, w)| (path, v, w)).collect();
                 println!(
                     "{} {:?} {:?} {:?} {:?} {:?}",
-                    f, start, end, prop, propagation, access
+                    f, entry_mutex, ret_mutex, propagation_mutex, propagation, access
                 );
             }
         }
@@ -710,20 +716,16 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                     span_mutex,
                     ..
                 } = summary;
-                let mut entry_mutex: Vec<_> = entry_mutex.0.iter().cloned().collect();
-                let mut ret_mutex: Vec<_> = ret_mutex
-                    .clone()
-                    .into_set()
-                    .drain_filter(|_| true)
-                    .collect();
-                let prop: Vec<_> = propagation_mutex.iter().cloned().collect();
+                let mut entry_mutex = entry_mutex.clone().mutex.into_vec();
+                let mut ret_mutex = ret_mutex.clone().mutex.into_vec();
+                let prop = propagation_mutex.clone().mutex.into_vec();
                 for m in &prop {
                     entry_mutex.push(m.clone());
                     ret_mutex.push(m.clone());
                 }
                 let mut span_mutex_map: BTreeMap<_, Vec<ExprPath>> = BTreeMap::new();
                 for (span, v) in span_mutex {
-                    let mut ms = v.iter().cloned().collect();
+                    let mut ms = v.mutex.clone().into_vec();
                     span_mutex_map.entry(*span).or_default().append(&mut ms);
                     span_mutex_map
                         .entry(*span)

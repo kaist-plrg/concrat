@@ -8,7 +8,6 @@ bench/neural-redis
 bench/stud
 bench/proxychains-ng
 bench/ProcDump-for-Linux
-bench/level-ip
 bench/axel
 bench/sshfs
 bench/cava
@@ -26,7 +25,6 @@ bench/snoopy
 bench/klib
 bench/nnn
 bench/libqrencode
-bench/sysbench
 bench/libfreenect
 bench/minimap2
 bench/Chipmunk2D

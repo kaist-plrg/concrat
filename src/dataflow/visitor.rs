@@ -3,18 +3,18 @@ use rustc_middle::mir::{Location, Statement, Terminator, TerminatorKind};
 use rustc_mir_dataflow::ResultsVisitor;
 use rustc_span::{def_id::DefId, Span};
 
-use super::domain::MustMutexSet;
+use super::domain::MustMutexSetTriple;
 use crate::dataflow::get_function_call;
 
 #[derive(Default, Debug)]
 pub struct Visitor {
-    pub return_state: Option<MustMutexSet>,
-    pub propagation: Vec<(DefId, MustMutexSet)>,
-    pub span_mutex: Vec<(Span, MustMutexSet)>,
+    pub return_state: Option<MustMutexSetTriple>,
+    pub propagation: Vec<(DefId, MustMutexSetTriple)>,
+    pub span_mutex: Vec<(Span, MustMutexSetTriple)>,
 }
 
 impl<'mir, 'tcx> ResultsVisitor<'mir, 'tcx> for Visitor {
-    type FlowState = MustMutexSet;
+    type FlowState = MustMutexSetTriple;
 
     fn visit_terminator_before_primary_effect(
         &mut self,

@@ -1,18 +1,15 @@
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::BTreeMap;
 
 use etrace::some_or;
 use rustc_lint::LateContext;
 use rustc_middle::mir::{self, BasicBlock, Body, Location, Terminator};
-use rustc_mir_dataflow::{
-    Analysis, AnalysisDomain, Backward, CallReturnPlaces, Forward, GenKill, Results,
-};
+use rustc_mir_dataflow::{Analysis, AnalysisDomain, Backward, CallReturnPlaces, Forward, Results};
 use rustc_span::{def_id::DefId, Span};
 
 use super::{
-    domain::{HasBottom, MayMutexSet, MustMutexSet},
+    domain::{Domain, MayMutexSetPair, MustMutexSetTriple},
     get_function_call, Arg, FunctionCodeSummary, FunctionSummary,
 };
-use crate::util::ExprPath;
 
 #[allow(missing_debug_implementations)]
 #[derive(Clone)]
@@ -41,34 +38,34 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         }
     }
 
-    fn terminator_effect<T>(&self, trans: &mut T, terminator: &Terminator<'_>, forward: bool)
-    where T: GenKill<ExprPath> + HasBottom {
+    fn terminator_effect(&self, domain: &mut impl Domain, terminator: &Terminator<'_>) {
         let f = some_or!(get_function_call(terminator), return);
         let args = some_or!(self.calls.get(&terminator.source_info.span), return);
+        let arg = |i: usize| args[i].path.clone().unwrap();
         match self.ctx.tcx.def_path_str(f).as_str() {
             "main::pthread_mutex_lock"
             | "main::pthread_mutex_trylock"
             | "main::pthread_spin_lock"
             | "main::pthread_spin_trylock" => {
-                let mutex = args[0].path.clone().unwrap();
-                if forward {
-                    trans.gen(mutex);
-                } else {
-                    trans.kill(mutex);
-                }
+                domain.lock(arg(0));
             }
             "main::pthread_mutex_unlock" | "main::pthread_spin_unlock" => {
-                let mutex = args[0].path.clone().unwrap();
-                if forward {
-                    trans.kill(mutex);
-                } else {
-                    trans.gen(mutex);
-                }
+                domain.unlock(arg(0));
             }
             "main::pthread_cond_wait" | "main::pthread_cond_timedwait" => {
-                let mutex = args[1].path.clone().unwrap();
-                trans.gen(mutex);
+                domain.wait(arg(1));
             }
+
+            "main::pthread_rwlock_rdlock" | "main::pthread_rwlock_tryrdlock" => {
+                domain.lock_rd(arg(0));
+            }
+            "main::pthread_rwlock_wrlock" | "main::pthread_rwlock_trywrlock" => {
+                domain.lock_wr(arg(0));
+            }
+            "main::pthread_rwlock_unlock" => {
+                domain.unlock_rw(arg(0));
+            }
+
             _ => (),
         }
         if let Some(summary) = self.function_mutex_map.get(&f) {
@@ -78,29 +75,13 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
                 ..
             } = summary;
             let params = &self.functions.get(&f).unwrap().params;
-            let start = entry_mutex.0.iter().map(|m| {
-                m.clone()
-                    .param_to_arg_aliasing(params, args)
-                    .into_ok_or_err()
-            });
-            let end = ret_mutex
+            let entry_mutex = entry_mutex
                 .clone()
                 .map(|m| m.param_to_arg_aliasing(params, args).into_ok_or_err());
-            if forward {
-                trans.kill_all(start);
-                if let MustMutexSet::Set(end) = end {
-                    trans.gen_all(end);
-                } else {
-                    *trans = <T as HasBottom>::bottom();
-                }
-            } else {
-                if let MustMutexSet::Set(end) = end {
-                    trans.kill_all(end);
-                } else {
-                    *trans = <T as HasBottom>::bottom();
-                }
-                trans.gen_all(start);
-            }
+            let ret_mutex = ret_mutex
+                .clone()
+                .map(|m| m.param_to_arg_aliasing(params, args).into_ok_or_err());
+            domain.custom(entry_mutex, ret_mutex);
         }
     }
 }
@@ -122,12 +103,12 @@ pub struct LiveGuards<'a, 'tcx> {
 
 impl AnalysisDomain<'_> for LiveGuards<'_, '_> {
     type Direction = Backward;
-    type Domain = MayMutexSet;
+    type Domain = MayMutexSetPair;
 
     const NAME: &'static str = "live guards";
 
     fn bottom_value(&self, _: &Body<'_>) -> Self::Domain {
-        MayMutexSet::bottom()
+        MayMutexSetPair::bottom()
     }
 
     fn initialize_start_block(&self, _: &Body<'_>, _: &mut Self::Domain) {}
@@ -148,7 +129,7 @@ impl Analysis<'_> for LiveGuards<'_, '_> {
         terminator: &Terminator<'_>,
         _location: Location,
     ) {
-        self.ctx.terminator_effect(state, terminator, false);
+        self.ctx.terminator_effect(state, terminator);
     }
 
     fn apply_call_return_effect(
@@ -162,7 +143,7 @@ impl Analysis<'_> for LiveGuards<'_, '_> {
 
 pub fn available_guards<'a, 'tcx>(
     ctx: AnalysisContext<'a, 'tcx>,
-    start: BTreeSet<ExprPath>,
+    start: MayMutexSetPair,
 ) -> Results<'tcx, AvailableGuards<'a, 'tcx>> {
     let tcx = ctx.ctx.tcx;
     let body = ctx.body;
@@ -174,21 +155,21 @@ pub fn available_guards<'a, 'tcx>(
 #[allow(missing_debug_implementations)]
 pub struct AvailableGuards<'a, 'tcx> {
     ctx: AnalysisContext<'a, 'tcx>,
-    start: BTreeSet<ExprPath>,
+    start: MayMutexSetPair,
 }
 
 impl AnalysisDomain<'_> for AvailableGuards<'_, '_> {
     type Direction = Forward;
-    type Domain = MustMutexSet;
+    type Domain = MustMutexSetTriple;
 
     const NAME: &'static str = "available guards";
 
     fn bottom_value(&self, _: &Body<'_>) -> Self::Domain {
-        MustMutexSet::bottom()
+        MustMutexSetTriple::bottom()
     }
 
     fn initialize_start_block(&self, _: &Body<'_>, state: &mut Self::Domain) {
-        *state = MustMutexSet::new(self.start.clone());
+        *state = MustMutexSetTriple::new(self.start.clone());
     }
 }
 
@@ -207,7 +188,7 @@ impl Analysis<'_> for AvailableGuards<'_, '_> {
         terminator: &Terminator<'_>,
         _location: Location,
     ) {
-        self.ctx.terminator_effect(state, terminator, true);
+        self.ctx.terminator_effect(state, terminator);
     }
 
     fn apply_call_return_effect(
