@@ -1,19 +1,21 @@
 use std::collections::{BTreeMap, BTreeSet};
 
 use rustc_hir::{Expr, HirId};
-use rustc_index::bit_set::BitSet;
 use rustc_lint::LateContext;
 use rustc_middle::mir::{Operand, Terminator, TerminatorKind};
 use rustc_span::{def_id::DefId, Span};
 
+pub mod domain;
 pub mod intra;
 pub mod pass;
 pub mod visitor;
 
 pub use pass::run;
 
+use self::domain::{MayMutexSet, MustMutexSet};
 use crate::util::{
-    expr_to_path, span_to_string, type_of, type_to_string, unwrap_ptr_from_type, ExprPath, Id,
+    expr_to_path, intersection, span_to_string, type_of, type_to_string, unwrap_ptr_from_type,
+    ExprPath,
 };
 
 #[derive(Debug, Clone)]
@@ -74,37 +76,39 @@ impl FunctionCodeSummary {
     }
 }
 
+pub type MutexSet = BTreeSet<ExprPath>;
+
 #[derive(Debug)]
 pub struct FunctionSummary {
-    pub entry_mutex: BitSet<Id>,
-    pub ret_mutex: BitSet<Id>,
-    pub propagation_mutex: BitSet<Id>,
-    pub propagation: BTreeMap<DefId, BitSet<Id>>,
-    pub propagation_raw: Vec<(DefId, BitSet<Id>)>,
-    pub access: Vec<(ExprPath, BitSet<Id>, bool)>,
-    pub span_mutex: Vec<(Span, BitSet<Id>)>,
+    pub entry_mutex: MayMutexSet,
+    pub ret_mutex: MustMutexSet,
+    pub propagation_mutex: MutexSet,
+    pub propagation: BTreeMap<DefId, MutexSet>,
+    pub propagation_raw: Vec<(DefId, MutexSet)>,
+    pub access: Vec<(ExprPath, MutexSet, bool)>,
+    pub span_mutex: Vec<(Span, MutexSet)>,
 }
 
 impl FunctionSummary {
     pub fn new(
-        entry_mutex: BitSet<Id>,
-        ret_mutex: BitSet<Id>,
-        propagation_raw: Vec<(DefId, BitSet<Id>)>,
-        access: Vec<(ExprPath, BitSet<Id>, bool)>,
-        span_mutex: Vec<(Span, BitSet<Id>)>,
+        entry_mutex: MayMutexSet,
+        ret_mutex: MustMutexSet,
+        propagation_raw: Vec<(DefId, MutexSet)>,
+        access: Vec<(ExprPath, MutexSet, bool)>,
+        span_mutex: Vec<(Span, MutexSet)>,
     ) -> Self {
-        let len = entry_mutex.domain_size();
-        let mut propagation = BTreeMap::new();
+        let mut propagation: BTreeMap<DefId, MutexSet> = BTreeMap::new();
         for (def_id, v) in &propagation_raw {
-            let ov = propagation
-                .entry(*def_id)
-                .or_insert_with(|| BitSet::new_filled(len));
-            ov.intersect(v);
+            if let Some(s) = propagation.get_mut(def_id) {
+                *s = intersection(s.clone(), v);
+            } else {
+                propagation.insert(*def_id, v.clone());
+            }
         }
         Self {
             entry_mutex,
             ret_mutex,
-            propagation_mutex: BitSet::new_empty(len),
+            propagation_mutex: BTreeSet::new(),
             propagation,
             propagation_raw,
             access,
@@ -112,7 +116,7 @@ impl FunctionSummary {
         }
     }
 
-    pub fn mutex_only(entry_mutex: BitSet<Id>, ret_mutex: BitSet<Id>) -> Self {
+    pub fn mutex_only(entry_mutex: MayMutexSet, ret_mutex: MustMutexSet) -> Self {
         Self::new(entry_mutex, ret_mutex, vec![], vec![], vec![])
     }
 }

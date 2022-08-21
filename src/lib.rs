@@ -29,6 +29,7 @@
 #![feature(iter_intersperse)]
 #![feature(rustc_private)]
 #![feature(map_first_last)]
+#![feature(result_into_ok_or_err)]
 
 extern crate rustc_data_structures;
 extern crate rustc_driver;

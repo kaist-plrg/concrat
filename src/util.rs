@@ -148,40 +148,45 @@ impl ExprPath {
         join(v, "")
     }
 
-    pub fn arg_to_param_aliasing(self, args: &[Arg], params: &[(String, String)]) -> Option<Self> {
+    pub fn arg_to_param_aliasing(
+        self,
+        args: &[Arg],
+        params: &[(String, String)],
+    ) -> Result<Self, Self> {
         if self.is_variable() {
-            return None;
+            return Err(self);
         }
         let (i, mut m) = some_or!(
             args.iter().enumerate().find_map(|(i, arg)| {
                 let m = self.strip_prefix(arg.path.as_ref()?)?;
                 Some((i, m))
             }),
-            return None
+            return Err(self)
         );
-        let arg = &params.get(i)?.0;
+        let arg = &some_or!(params.get(i), return Err(self)).0;
         m.add_base(arg.clone());
-        Some(m)
+        Ok(m)
     }
 
     pub fn param_to_arg_aliasing(
         mut self,
         params: &[(String, String)],
         args: &[Arg],
-    ) -> Option<Self> {
+    ) -> Result<Self, Self> {
         if self.is_variable() {
-            return None;
+            return Err(self);
         }
         let (i, _) = some_or!(
             params
                 .iter()
                 .enumerate()
                 .find(|(_, (p, _))| &self.base == p),
-            return None
+            return Err(self)
         );
-        let arg = args.get(i)?.path.as_ref()?;
+        let arg = some_or!(args.get(i), return Err(self));
+        let arg = some_or!(arg.path.as_ref(), return Err(self));
         self.set_base(arg);
-        Some(self)
+        Ok(self)
     }
 }
 
@@ -642,4 +647,24 @@ pub fn function_params(ctx: &LateContext<'_>, bid: BodyId) -> Vec<(String, Strin
             )
         })
         .collect()
+}
+
+#[inline]
+pub fn union<T: Ord + PartialOrd + Eq + PartialEq>(
+    mut s1: BTreeSet<T>,
+    s2: BTreeSet<T>,
+) -> BTreeSet<T> {
+    for x in s2 {
+        s1.insert(x);
+    }
+    s1
+}
+
+#[inline]
+pub fn intersection<T: Ord + PartialOrd + Eq + PartialEq>(
+    mut s1: BTreeSet<T>,
+    s2: &BTreeSet<T>,
+) -> BTreeSet<T> {
+    s1.retain(|x| s2.contains(x));
+    s1
 }
