@@ -24,7 +24,9 @@ bench/pigz
 bench/snoopy
 bench/klib
 bench/nnn
+bench/uthash
 bench/libqrencode
+bench/sysbench
 bench/libfreenect
 bench/minimap2
 bench/Chipmunk2D
