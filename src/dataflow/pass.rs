@@ -14,10 +14,10 @@ use rustc_hir::{
 use rustc_lint::{LateContext, LateLintPass, LintPass};
 use rustc_middle::mir::BasicBlock;
 use rustc_mir_dataflow::JoinSemiLattice;
-use rustc_span::def_id::DefId;
+use rustc_span::{def_id::DefId, Span};
 
 use super::{
-    domain::{MayMutexSetPair, MustMutexSetTriple},
+    domain::{MayMutexSetPair, MustMutexSet, MustMutexSetTriple},
     intra::{available_guards, live_guards, AnalysisContext},
     visitor::Visitor,
     Arg, FunctionCodeSummary, FunctionSummary,
@@ -356,7 +356,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
         for func in self.functions.keys() {
             let init_st = if iter_roots.contains(func) {
                 work_list.push_back(*func);
-                MustMutexSetTriple::new(function_summary_map.get(func).unwrap().entry_mutex.clone())
+                MustMutexSetTriple::new(function_summary_map.get(func).unwrap().entry_lock.clone())
             } else {
                 MustMutexSetTriple::bottom()
             };
@@ -441,11 +441,11 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             let MayMutexSetPair {
                 mutex: emutex,
                 rwlock,
-            } = &summary.entry_mutex;
+            } = &summary.entry_lock;
             mutex.retain(|x| !emutex.0.contains(x));
             rdlock.retain(|x| !rwlock.0.contains(x));
             wrlock.retain(|x| !rwlock.0.contains(x));
-            summary.propagation_mutex = abs_st;
+            summary.propagation_lock = abs_st;
         }
 
         // accesses to global variables
@@ -455,7 +455,7 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
 
         // classify accesses
         for (def_id, summary) in &function_summary_map {
-            let prop = &summary.propagation_mutex;
+            let prop = &summary.propagation_lock;
             for (path, v, w) in &summary.access {
                 let mut v = v.clone();
                 v.append(prop.clone());
@@ -687,9 +687,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             res.sort_by_key(|(def_id, _)| *def_id);
             for (def_id, summary) in res {
                 let FunctionSummary {
-                    entry_mutex,
-                    ret_mutex,
-                    propagation_mutex,
+                    entry_lock: entry_mutex,
+                    ret_lock: ret_mutex,
+                    propagation_lock: propagation_mutex,
                     propagation,
                     access,
                     ..
@@ -710,36 +710,69 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             .iter()
             .map(|(def_id, summary)| {
                 let FunctionSummary {
-                    entry_mutex,
-                    ret_mutex,
-                    propagation_mutex,
-                    span_mutex,
+                    entry_lock,
+                    ret_lock,
+                    propagation_lock,
+                    span_lock,
                     ..
                 } = summary;
-                let mut entry_mutex = entry_mutex.clone().mutex.into_vec();
-                let mut ret_mutex = ret_mutex.clone().mutex.into_vec();
-                let prop = propagation_mutex.clone().mutex.into_vec();
-                for m in &prop {
+                let mut entry_mutex = entry_lock.clone().mutex.into_vec();
+                let mut entry_rwlock = entry_lock.clone().rwlock.into_vec();
+                let mut ret_mutex = ret_lock.clone().mutex.into_vec();
+                let mut ret_rdlock = ret_lock.clone().rdlock.into_vec();
+                let mut ret_wrlock = ret_lock.clone().wrlock.into_vec();
+                let prop_mutex = propagation_lock.clone().mutex.into_vec();
+                for m in &prop_mutex {
                     entry_mutex.push(m.clone());
                     ret_mutex.push(m.clone());
                 }
-                let mut span_mutex_map: BTreeMap<_, Vec<ExprPath>> = BTreeMap::new();
-                for (span, v) in span_mutex {
-                    let mut ms = v.mutex.clone().into_vec();
-                    span_mutex_map.entry(*span).or_default().append(&mut ms);
-                    span_mutex_map
-                        .entry(*span)
-                        .or_default()
-                        .append(&mut prop.clone());
+                let prop_rdlock = propagation_lock.clone().rdlock.into_vec();
+                for m in &prop_rdlock {
+                    entry_rwlock.push(m.clone());
+                    ret_rdlock.push(m.clone());
                 }
-                for v in span_mutex_map.values_mut() {
-                    v.sort();
-                    v.dedup();
+                let prop_wrlock = propagation_lock.clone().wrlock.into_vec();
+                for m in &prop_wrlock {
+                    entry_rwlock.push(m.clone());
+                    ret_wrlock.push(m.clone());
                 }
-                let mutex_line = compute_mutex_line(&span_mutex_map, |span| span_lines(ctx, *span));
+                let mut span_mutex_map: BTreeMap<_, Vec<_>> = BTreeMap::new();
+                let mut span_rdlock_map: BTreeMap<_, Vec<_>> = BTreeMap::new();
+                let mut span_wrlock_map: BTreeMap<_, Vec<_>> = BTreeMap::new();
+                for (span, v) in span_lock {
+                    let add = |ms: &MustMutexSet,
+                               span_map: &mut BTreeMap<Span, Vec<ExprPath>>,
+                               prop: &Vec<ExprPath>| {
+                        let mut ms = ms.clone().into_vec();
+                        let v = span_map.entry(*span).or_default();
+                        v.append(&mut ms);
+                        v.append(&mut prop.clone());
+                    };
+                    add(&v.mutex, &mut span_mutex_map, &prop_mutex);
+                    add(&v.rdlock, &mut span_rdlock_map, &prop_rdlock);
+                    add(&v.wrlock, &mut span_wrlock_map, &prop_wrlock);
+                }
+                let compute_line = |mut span_map: BTreeMap<Span, Vec<ExprPath>>| {
+                    for v in span_map.values_mut() {
+                        v.sort();
+                        v.dedup();
+                    }
+                    compute_mutex_line(&span_map, |span| span_lines(ctx, *span))
+                };
+                let mutex_line = compute_line(span_mutex_map);
+                let rdlock_line = compute_line(span_rdlock_map);
+                let wrlock_line = compute_line(span_wrlock_map);
                 let f = def_id_to_item_name(ctx.tcx, *def_id);
-                let summary =
-                    crate::analysis::FunctionSummary::new(entry_mutex, ret_mutex, mutex_line);
+                let summary = crate::analysis::FunctionSummary::new(
+                    entry_mutex,
+                    entry_rwlock,
+                    ret_mutex,
+                    ret_rdlock,
+                    ret_wrlock,
+                    mutex_line,
+                    rdlock_line,
+                    wrlock_line,
+                );
                 (f, summary)
             })
             .collect();

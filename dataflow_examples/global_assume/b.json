@@ -15,7 +15,12 @@
           63,
           64
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "f2": {
       "entry_mutex": [],
@@ -25,7 +30,12 @@
           68,
           69
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "a1": {
       "entry_mutex": ["m"],
@@ -36,7 +46,12 @@
           74,
           75
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "a2": {
       "entry_mutex": ["m"],
@@ -46,29 +61,52 @@
           77,
           78
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "b1": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {}
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "b2": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {}
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "main_0": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {
-      }
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "main": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {
-      }
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     }
   }
 }

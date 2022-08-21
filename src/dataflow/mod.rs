@@ -78,22 +78,22 @@ impl FunctionCodeSummary {
 
 #[derive(Debug)]
 pub struct FunctionSummary {
-    pub entry_mutex: MayMutexSetPair,
-    pub ret_mutex: MustMutexSetTriple,
-    pub propagation_mutex: MustMutexSetTriple,
+    pub entry_lock: MayMutexSetPair,
+    pub ret_lock: MustMutexSetTriple,
+    pub propagation_lock: MustMutexSetTriple,
     pub propagation: BTreeMap<DefId, MustMutexSetTriple>,
     pub propagation_raw: Vec<(DefId, MustMutexSetTriple)>,
     pub access: Vec<(ExprPath, MustMutexSetTriple, bool)>,
-    pub span_mutex: Vec<(Span, MustMutexSetTriple)>,
+    pub span_lock: Vec<(Span, MustMutexSetTriple)>,
 }
 
 impl FunctionSummary {
     pub fn new(
-        entry_mutex: MayMutexSetPair,
-        ret_mutex: MustMutexSetTriple,
+        entry_lock: MayMutexSetPair,
+        ret_lock: MustMutexSetTriple,
         propagation_raw: Vec<(DefId, MustMutexSetTriple)>,
         access: Vec<(ExprPath, MustMutexSetTriple, bool)>,
-        span_mutex: Vec<(Span, MustMutexSetTriple)>,
+        span_lock: Vec<(Span, MustMutexSetTriple)>,
     ) -> Self {
         let mut propagation: BTreeMap<DefId, MustMutexSetTriple> = BTreeMap::new();
         for (def_id, v) in &propagation_raw {
@@ -104,13 +104,13 @@ impl FunctionSummary {
             }
         }
         Self {
-            entry_mutex,
-            ret_mutex,
-            propagation_mutex: MustMutexSetTriple::empty(),
+            entry_lock,
+            ret_lock,
+            propagation_lock: MustMutexSetTriple::empty(),
             propagation,
             propagation_raw,
             access,
-            span_mutex,
+            span_lock,
         }
     }
 

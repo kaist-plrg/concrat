@@ -70,18 +70,18 @@ impl<'a, 'tcx> AnalysisContext<'a, 'tcx> {
         }
         if let Some(summary) = self.function_mutex_map.get(&f) {
             let FunctionSummary {
-                entry_mutex,
-                ret_mutex,
+                entry_lock,
+                ret_lock,
                 ..
             } = summary;
             let params = &self.functions.get(&f).unwrap().params;
-            let entry_mutex = entry_mutex
+            let entry_lock = entry_lock
                 .clone()
                 .map(|m| m.param_to_arg_aliasing(params, args).into_ok_or_err());
-            let ret_mutex = ret_mutex
+            let ret_lock = ret_lock
                 .clone()
                 .map(|m| m.param_to_arg_aliasing(params, args).into_ok_or_err());
-            domain.custom(entry_mutex, ret_mutex);
+            domain.custom(entry_lock, ret_lock);
         }
     }
 }

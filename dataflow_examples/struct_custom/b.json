@@ -10,7 +10,12 @@
         "s.m": [
           42
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "unlock": {
       "entry_mutex": ["s.m"],
@@ -19,7 +24,12 @@
         "s.m": [
           44
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "lock1": {
       "entry_mutex": [],
@@ -28,7 +38,12 @@
         "t.m": [
           48
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "unlock1": {
       "entry_mutex": ["t.m"],
@@ -37,7 +52,12 @@
         "t.m": [
           50
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "lock2": {
       "entry_mutex": [],
@@ -46,7 +66,12 @@
         "r.m": [
           54
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "unlock2": {
       "entry_mutex": ["r.m"],
@@ -55,7 +80,12 @@
         "r.m": [
           56
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "f1": {
       "entry_mutex": [],
@@ -69,7 +99,12 @@
           66,
           67
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "f2": {
       "entry_mutex": [],
@@ -83,19 +118,32 @@
           96,
           97
         ]
-      }
+      },
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "main_0": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {
-      }
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     },
     "main": {
       "entry_mutex": [],
       "ret_mutex": [],
-      "mutex_line": {
-      }
+      "mutex_line": {},
+      "entry_rwlock": [],
+      "ret_rdlock": [],
+      "ret_wrlock": [],
+      "rdlock_line": {},
+      "wrlock_line": {}
     }
   }
 }

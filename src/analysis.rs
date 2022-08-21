@@ -42,24 +42,45 @@ impl AnalysisSummary {
 #[derive(Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct FunctionSummary {
     pub entry_mutex: Vec<ExprPath>,
+    pub entry_rwlock: Vec<ExprPath>,
     pub ret_mutex: Vec<ExprPath>,
+    pub ret_rdlock: Vec<ExprPath>,
+    pub ret_wrlock: Vec<ExprPath>,
     pub mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
+    pub rdlock_line: BTreeMap<ExprPath, BTreeSet<usize>>,
+    pub wrlock_line: BTreeMap<ExprPath, BTreeSet<usize>>,
 }
 
 impl FunctionSummary {
     pub fn new(
         mut entry_mutex: Vec<ExprPath>,
+        mut entry_rwlock: Vec<ExprPath>,
         mut ret_mutex: Vec<ExprPath>,
+        mut ret_rdlock: Vec<ExprPath>,
+        mut ret_wrlock: Vec<ExprPath>,
         mutex_line: BTreeMap<ExprPath, BTreeSet<usize>>,
+        rdlock_line: BTreeMap<ExprPath, BTreeSet<usize>>,
+        wrlock_line: BTreeMap<ExprPath, BTreeSet<usize>>,
     ) -> Self {
         entry_mutex.sort();
         entry_mutex.dedup();
+        entry_rwlock.sort();
+        entry_rwlock.dedup();
         ret_mutex.sort();
         ret_mutex.dedup();
+        ret_rdlock.sort();
+        ret_rdlock.dedup();
+        ret_wrlock.sort();
+        ret_wrlock.dedup();
         Self {
             entry_mutex,
+            entry_rwlock,
             ret_mutex,
+            ret_rdlock,
+            ret_wrlock,
             mutex_line,
+            rdlock_line,
+            wrlock_line,
         }
     }
 }
@@ -377,7 +398,16 @@ fn generate_function_map(
                 };
                 (
                     name,
-                    FunctionSummary::new(entry_mutex, ret_mutex, mutex_line),
+                    FunctionSummary::new(
+                        entry_mutex,
+                        vec![],
+                        ret_mutex,
+                        vec![],
+                        vec![],
+                        mutex_line,
+                        BTreeMap::new(),
+                        BTreeMap::new(),
+                    ),
                 )
             },
         )
