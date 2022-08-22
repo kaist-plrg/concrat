@@ -30,8 +30,8 @@
 </function>
 <function name="f1">
 <node name="1"/>
-<node name="10"/>
 <node name="15"/>
+<node name="10"/>
 <node name="16"/>
 <node name="9"/>
 <node name="12"/>
@@ -79,35 +79,7 @@
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -146,35 +118,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -215,35 +159,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -282,35 +198,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -351,35 +239,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -418,35 +278,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -482,21 +314,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -532,21 +350,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -580,21 +384,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -630,35 +420,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -692,85 +454,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
-</value>
-
-</analysis></path></call>
-<call id="41" file="main.c" line="95" order="2817" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -811,35 +495,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -878,9 +534,13 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
+</map>
+</value>
+
+</analysis></path></call>
+<call id="41" file="main.c" line="95" order="2817" column="3">
+<context>
+<analysis name="var_eq">
 <value>
 <map>
 </map>
@@ -892,9 +552,10 @@ f1</key>
 </set>
 </value>
 </analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
+</context>
+
+<path>
+<analysis name="var_eq">
 <value>
 <map>
 </map>
@@ -906,7 +567,10 @@ main</key>
 </set>
 </value>
 </analysis>
-</value></map>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
 </value>
 
 </analysis></path></call>
@@ -942,35 +606,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1004,35 +640,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1068,21 +676,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1118,35 +712,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1180,35 +746,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1244,35 +782,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1306,35 +816,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1375,35 +857,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1442,35 +896,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1506,35 +932,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1568,35 +966,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1632,35 +1002,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1694,35 +1036,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1758,35 +1072,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1820,35 +1106,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1884,21 +1142,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -1934,21 +1178,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -1982,21 +1212,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2037,35 +1253,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2104,35 +1292,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2173,35 +1333,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2240,35 +1372,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2304,35 +1408,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2366,35 +1442,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2430,21 +1478,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2485,35 +1519,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2552,35 +1558,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2616,21 +1594,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2664,21 +1628,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2714,21 +1664,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -2764,35 +1700,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2826,9 +1734,13 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
+</map>
+</value>
+
+</analysis></path></call>
+<call id="10" file="main.c" line="50" order="2030" column="5">
+<context>
+<analysis name="var_eq">
 <value>
 <map>
 </map>
@@ -2840,9 +1752,10 @@ f1</key>
 </set>
 </value>
 </analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
+</context>
+
+<path>
+<analysis name="var_eq">
 <value>
 <map>
 </map>
@@ -2854,7 +1767,44 @@ main</key>
 </set>
 </value>
 </analysis>
-</value></map>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
 </value>
 
 </analysis></path></call>
@@ -2895,35 +1845,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -2962,161 +1884,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
-</value>
-
-</analysis></path></call>
-<call id="10" file="main.c" line="50" order="2030" column="5">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
-</value>
-
-</analysis></path><context>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -3152,21 +1920,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -3202,35 +1956,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -3264,35 +1990,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f1</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -3328,21 +2026,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -3376,21 +2060,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -3431,35 +2101,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -3498,35 +2140,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-f2</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value><key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>
@@ -3562,21 +2176,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path><context>
@@ -3610,21 +2210,7 @@ main</key>
 <analysis name="widen-context">
 <value>
 <map>
-<key>
-main</key>
-<value><analysis name="var_eq">
-<value>
-<map>
 </map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</value></map>
 </value>
 
 </analysis></path></call>

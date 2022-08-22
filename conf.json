@@ -2,32 +2,25 @@
   "ana": {
     "int": {
       "def_exc": true,
-      "interval": false,
-      "enums": true
+      "enums": false,
+      "interval": true
     },
     "activated": [
-      "expRelation",
       "base",
       "threadid",
       "threadflag",
-      "threadreturn",
-      "escape",
-      "mutex",
       "mallocWrapper",
+      "mutex",
+      "escape",
+      "expRelation",
       "var_eq",
       "symb_locks",
       "region",
       "thread"
     ],
-    "context": {
-      "widen": true
-    }
-  },
-  "sem": {
-    "unknown_function": {
-      "spawn": false,
-      "invalidate": {
-        "globals": false
+    "base": {
+      "arrays": {
+        "domain": "partitioned"
       }
     }
   }
