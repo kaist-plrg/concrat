@@ -39,11 +39,12 @@ cargo run --release --bin $CMD -- -i $to -d deps_crate/target/debug/deps $@
 echo Translating $from
 cargo run --release --bin concrat -- -i $to -d deps_crate/target/debug/deps $@
 
+if [ -x "$(command -v diffstat)" ]; then
+  diff -u $to/main_old.rs $to/main.rs | diffstat
+fi
+
+cargo fmt -- $to/main.rs $to/main_old.rs
+
 echo Compiling $from
 nightly=`cat $to/rust-toolchain`
 RUSTFLAGS=-Awarnings cargo +$nightly build --manifest-path $to/Cargo.toml
-
-if [ -x "$(command -v diffstat)" ]; then
-  cargo fmt -- $to/main.rs $to/main_old.rs
-  diff -u $to/main_old.rs $to/main.rs | diffstat
-fi
