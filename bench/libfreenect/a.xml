@@ -1,0 +1,13235 @@
+<run><result>
+<file name="libfreenect.c" path="experiment/progs/libfreenect.c">
+<function name="main">
+<node name="297"/>
+<node name="260"/>
+<node name="283"/>
+<node name="309"/>
+<node name="275"/>
+<node name="263"/>
+<node name="256"/>
+<node name="302"/>
+<node name="292"/>
+<node name="255"/>
+<node name="299"/>
+<node name="300"/>
+<node name="fun725"/>
+<node name="257"/>
+<node name="262"/>
+<node name="316"/>
+<node name="296"/>
+<node name="290"/>
+<node name="277"/>
+<node name="259"/>
+<node name="305"/>
+<node name="285"/>
+<node name="280"/>
+<node name="293"/>
+<node name="312"/>
+<node name="258"/>
+<node name="291"/>
+<node name="314"/>
+<node name="317"/>
+<node name="274"/>
+<node name="261"/>
+<node name="294"/>
+<node name="276"/>
+<node name="270"/>
+<node name="264"/>
+<node name="ret725"/>
+<node name="273"/>
+<node name="303"/>
+<node name="282"/>
+<node name="313"/>
+<node name="265"/>
+<node name="306"/>
+<node name="286"/>
+<node name="307"/>
+<node name="266"/>
+<node name="288"/>
+<node name="281"/>
+<node name="310"/>
+<node name="289"/>
+</function>
+<function name="freenect_threadfunc">
+<node name="230"/>
+<node name="231"/>
+<node name="fun718"/>
+<node name="239"/>
+<node name="225"/>
+<node name="253"/>
+<node name="224"/>
+<node name="252"/>
+<node name="241"/>
+<node name="223"/>
+<node name="247"/>
+<node name="240"/>
+<node name="235"/>
+<node name="243"/>
+<node name="229"/>
+<node name="226"/>
+<node name="227"/>
+<node name="249"/>
+<node name="228"/>
+<node name="250"/>
+<node name="248"/>
+<node name="238"/>
+<node name="222"/>
+<node name="251"/>
+<node name="ret718"/>
+</function>
+<function name="rgb_cb">
+<node name="214"/>
+<node name="215"/>
+<node name="219"/>
+<node name="218"/>
+<node name="220"/>
+<node name="212"/>
+<node name="ret711"/>
+<node name="217"/>
+<node name="216"/>
+<node name="fun711"/>
+<node name="210"/>
+<node name="209"/>
+</function>
+<function name="depth_cb">
+<node name="184"/>
+<node name="181"/>
+<node name="144"/>
+<node name="ret700"/>
+<node name="189"/>
+<node name="136"/>
+<node name="180"/>
+<node name="166"/>
+<node name="152"/>
+<node name="205"/>
+<node name="146"/>
+<node name="164"/>
+<node name="150"/>
+<node name="154"/>
+<node name="145"/>
+<node name="148"/>
+<node name="195"/>
+<node name="156"/>
+<node name="176"/>
+<node name="179"/>
+<node name="191"/>
+<node name="fun700"/>
+<node name="134"/>
+<node name="165"/>
+<node name="197"/>
+<node name="135"/>
+<node name="175"/>
+<node name="207"/>
+<node name="158"/>
+<node name="140"/>
+<node name="169"/>
+<node name="206"/>
+<node name="160"/>
+<node name="186"/>
+<node name="201"/>
+<node name="143"/>
+<node name="204"/>
+<node name="174"/>
+<node name="171"/>
+<node name="190"/>
+<node name="194"/>
+<node name="170"/>
+<node name="196"/>
+<node name="185"/>
+</function>
+<function name="gl_threadfunc">
+<node name="fun696"/>
+<node name="130"/>
+<node name="125"/>
+<node name="123"/>
+<node name="126"/>
+<node name="122"/>
+<node name="127"/>
+<node name="ret696"/>
+<node name="132"/>
+<node name="121"/>
+<node name="124"/>
+<node name="131"/>
+<node name="120"/>
+<node name="129"/>
+<node name="128"/>
+</function>
+<function name="InitGL">
+<node name="110"/>
+<node name="117"/>
+<node name="102"/>
+<node name="114"/>
+<node name="115"/>
+<node name="99"/>
+<node name="100"/>
+<node name="112"/>
+<node name="118"/>
+<node name="108"/>
+<node name="105"/>
+<node name="113"/>
+<node name="ret691"/>
+<node name="111"/>
+<node name="116"/>
+<node name="107"/>
+<node name="106"/>
+<node name="104"/>
+<node name="109"/>
+<node name="fun691"/>
+<node name="103"/>
+<node name="101"/>
+</function>
+<function name="ReSizeGLScene">
+<node name="95"/>
+<node name="93"/>
+<node name="91"/>
+<node name="fun686"/>
+<node name="92"/>
+<node name="ret686"/>
+<node name="94"/>
+<node name="96"/>
+<node name="97"/>
+</function>
+<function name="keyPressed">
+<node name="82"/>
+<node name="88"/>
+<node name="86"/>
+<node name="84"/>
+<node name="79"/>
+<node name="fun679"/>
+<node name="80"/>
+<node name="89"/>
+<node name="ret679"/>
+<node name="81"/>
+<node name="83"/>
+<node name="77"/>
+<node name="75"/>
+<node name="85"/>
+<node name="87"/>
+</function>
+<function name="DrawGLScene">
+<node name="49"/>
+<node name="61"/>
+<node name="36"/>
+<node name="58"/>
+<node name="65"/>
+<node name="30"/>
+<node name="32"/>
+<node name="44"/>
+<node name="57"/>
+<node name="43"/>
+<node name="71"/>
+<node name="25"/>
+<node name="34"/>
+<node name="39"/>
+<node name="35"/>
+<node name="42"/>
+<node name="68"/>
+<node name="59"/>
+<node name="74"/>
+<node name="56"/>
+<node name="47"/>
+<node name="67"/>
+<node name="fun674"/>
+<node name="73"/>
+<node name="70"/>
+<node name="53"/>
+<node name="51"/>
+<node name="62"/>
+<node name="52"/>
+<node name="54"/>
+<node name="45"/>
+<node name="64"/>
+<node name="55"/>
+<node name="ret674"/>
+<node name="66"/>
+<node name="41"/>
+<node name="31"/>
+<node name="72"/>
+<node name="48"/>
+<node name="37"/>
+<node name="63"/>
+<node name="40"/>
+<node name="46"/>
+<node name="60"/>
+<node name="50"/>
+<node name="29"/>
+<node name="28"/>
+<node name="26"/>
+</function>
+<function name="idle">
+<node name="6"/>
+<node name="1"/>
+<node name="10"/>
+<node name="15"/>
+<node name="16"/>
+<node name="21"/>
+<node name="22"/>
+<node name="ret672"/>
+<node name="12"/>
+<node name="fun672"/>
+<node name="18"/>
+<node name="5"/>
+<node name="14"/>
+<node name="19"/>
+<node name="23"/>
+</function>
+</file>
+<call id="185" file="experiment/progs/libfreenect.c" line="493" order="19642" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="26" file="experiment/progs/libfreenect.c" line="315" order="14704" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="28" file="experiment/progs/libfreenect.c" line="316" order="14725" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret718" file="experiment/progs/libfreenect.c" line="534" order="20716" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="289" file="experiment/progs/libfreenect.c" line="617" order="23152" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="196" file="experiment/progs/libfreenect.c" line="504" order="20019" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="87" file="experiment/progs/libfreenect.c" line="383" order="16810" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="23" file="experiment/progs/libfreenect.c" line="304" order="14574" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="170" file="experiment/progs/libfreenect.c" line="478" order="19162" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="85" file="experiment/progs/libfreenect.c" line="381" order="16755" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="97" file="experiment/progs/libfreenect.c" line="401" order="17176" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="310" file="experiment/progs/libfreenect.c" line="637" order="23946" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="281" file="experiment/progs/libfreenect.c" line="610" order="22925" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="288" file="experiment/progs/libfreenect.c" line="616" order="23096" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="251" file="experiment/progs/libfreenect.c" line="567" order="21915" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="266" file="experiment/progs/libfreenect.c" line="601" order="22700" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="29" file="experiment/progs/libfreenect.c" line="317" order="14748" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="101" file="experiment/progs/libfreenect.c" line="411" order="17296" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="307" file="experiment/progs/libfreenect.c" line="633" order="23730" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="103" file="experiment/progs/libfreenect.c" line="413" order="17355" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="194" file="experiment/progs/libfreenect.c" line="502" order="19933" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="286" file="experiment/progs/libfreenect.c" line="614" order="23078" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun691" file="experiment/progs/libfreenect.c" line="404" order="17188" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="96" file="experiment/progs/libfreenect.c" line="400" order="17156" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="222" file="experiment/progs/libfreenect.c" line="542" order="20851" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="306" file="experiment/progs/libfreenect.c" line="632" order="23700" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="190" file="experiment/progs/libfreenect.c" line="498" order="19808" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="50" file="experiment/progs/libfreenect.c" line="338" order="15468" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="60" file="experiment/progs/libfreenect.c" line="348" order="15928" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="75" file="experiment/progs/libfreenect.c" line="370" order="16454" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="46" file="experiment/progs/libfreenect.c" line="334" order="15272" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="265" file="experiment/progs/libfreenect.c" line="600" order="22640" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="40" file="experiment/progs/libfreenect.c" line="328" order="14966" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="63" file="experiment/progs/libfreenect.c" line="351" order="16082" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="19" file="experiment/progs/libfreenect.c" line="300" order="14493" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="313" file="experiment/progs/libfreenect.c" line="639" order="24026" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="171" file="experiment/progs/libfreenect.c" line="479" order="19209" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="174" file="experiment/progs/libfreenect.c" line="482" order="19278" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="128" file="experiment/progs/libfreenect.c" line="444" order="18304" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="282" file="experiment/progs/libfreenect.c" line="611" order="22942" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="77" file="experiment/progs/libfreenect.c" line="373" order="16501" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="14" file="experiment/progs/libfreenect.c" line="295" order="14361" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="303" file="experiment/progs/libfreenect.c" line="630" order="23612" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="37" file="experiment/progs/libfreenect.c" line="325" order="14903" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="273" file="experiment/progs/libfreenect.c" line="603" order="22733" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="204" file="experiment/progs/libfreenect.c" line="510" order="20140" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="48" file="experiment/progs/libfreenect.c" line="336" order="15369" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="143" file="experiment/progs/libfreenect.c" line="464" order="18706" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="209" file="experiment/progs/libfreenect.c" line="521" order="20330" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="72" file="experiment/progs/libfreenect.c" line="359" order="16305" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+ms
+</data>
+</value>
+<value>
+<data>
+tmp___0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret725" file="experiment/progs/libfreenect.c" line="572" order="22017" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="31" file="experiment/progs/libfreenect.c" line="319" order="14798" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="129" file="experiment/progs/libfreenect.c" line="445" order="18340" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="238" file="experiment/progs/libfreenect.c" line="553" order="21505" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="41" file="experiment/progs/libfreenect.c" line="329" order="15010" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="5" file="experiment/progs/libfreenect.c" line="285" order="14106" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="109" file="experiment/progs/libfreenect.c" line="419" order="17539" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="264" file="experiment/progs/libfreenect.c" line="599" order="22606" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="270" file="experiment/progs/libfreenect.c" line="602" order="22709" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="94" file="experiment/progs/libfreenect.c" line="397" order="17006" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="248" file="experiment/progs/libfreenect.c" line="564" order="21823" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="276" file="experiment/progs/libfreenect.c" line="606" order="22835" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="120" file="experiment/progs/libfreenect.c" line="436" order="18009" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="294" file="experiment/progs/libfreenect.c" line="622" order="23388" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+0
+</data>
+</value>
+<value>
+<data>
+user_device_number
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+nr_devices
+</data>
+</value>
+<value>
+<data>
+tmp___6
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="250" file="experiment/progs/libfreenect.c" line="566" order="21883" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="261" file="experiment/progs/libfreenect.c" line="596" order="22500" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="104" file="experiment/progs/libfreenect.c" line="414" order="17383" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="66" file="experiment/progs/libfreenect.c" line="354" order="16190" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="131" file="experiment/progs/libfreenect.c" line="447" order="18394" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="274" file="experiment/progs/libfreenect.c" line="604" order="22772" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="106" file="experiment/progs/libfreenect.c" line="416" order="17438" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="83" file="experiment/progs/libfreenect.c" line="379" order="16695" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="210" file="experiment/progs/libfreenect.c" line="522" order="20372" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="201" file="experiment/progs/libfreenect.c" line="508" order="20128" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="317" file="experiment/progs/libfreenect.c" line="643" order="24102" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret674" file="experiment/progs/libfreenect.c" line="307" order="14586" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="55" file="experiment/progs/libfreenect.c" line="343" order="15731" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="64" file="experiment/progs/libfreenect.c" line="352" order="16124" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun711" file="experiment/progs/libfreenect.c" line="516" order="20252" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="45" file="experiment/progs/libfreenect.c" line="333" order="15219" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="54" file="experiment/progs/libfreenect.c" line="342" order="15622" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="81" file="experiment/progs/libfreenect.c" line="377" order="16622" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret679" file="experiment/progs/libfreenect.c" line="365" order="16392" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="107" file="experiment/progs/libfreenect.c" line="417" order="17465" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="186" file="experiment/progs/libfreenect.c" line="494" order="19697" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="160" file="experiment/progs/libfreenect.c" line="496" order="19756" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="206" file="experiment/progs/libfreenect.c" line="512" order="20196" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="18" file="experiment/progs/libfreenect.c" line="299" order="14447" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="216" file="experiment/progs/libfreenect.c" line="527" order="20578" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="52" file="experiment/progs/libfreenect.c" line="340" order="15565" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="124" file="experiment/progs/libfreenect.c" line="440" order="18150" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="169" file="experiment/progs/libfreenect.c" line="477" order="19120" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="314" file="experiment/progs/libfreenect.c" line="640" order="24056" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="140" file="experiment/progs/libfreenect.c" line="463" order="18681" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="62" file="experiment/progs/libfreenect.c" line="350" order="16025" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="116" file="experiment/progs/libfreenect.c" line="426" order="17867" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="291" file="experiment/progs/libfreenect.c" line="619" order="23257" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="158" file="experiment/progs/libfreenect.c" line="491" order="19590" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="258" file="experiment/progs/libfreenect.c" line="593" order="22394" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="228" file="experiment/progs/libfreenect.c" line="548" order="21235" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="249" file="experiment/progs/libfreenect.c" line="565" order="21853" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="111" file="experiment/progs/libfreenect.c" line="421" order="17621" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="207" file="experiment/progs/libfreenect.c" line="513" order="20240" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="175" file="experiment/progs/libfreenect.c" line="483" order="19327" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="121" file="experiment/progs/libfreenect.c" line="437" order="18060" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="135" file="experiment/progs/libfreenect.c" line="461" order="18630" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+v_depth
+</data>
+</value>
+<value>
+<data>
+depth
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="217" file="experiment/progs/libfreenect.c" line="528" order="20606" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="312" file="experiment/progs/libfreenect.c" line="638" order="23961" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="293" file="experiment/progs/libfreenect.c" line="621" order="23362" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+nr_devices
+</data>
+</value>
+<value>
+<data>
+tmp___6
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret691" file="experiment/progs/libfreenect.c" line="404" order="17188" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret711" file="experiment/progs/libfreenect.c" line="516" order="20252" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="227" file="experiment/progs/libfreenect.c" line="547" order="21164" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="226" file="experiment/progs/libfreenect.c" line="546" order="21074" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="51" file="experiment/progs/libfreenect.c" line="339" order="15510" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="53" file="experiment/progs/libfreenect.c" line="341" order="15576" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="197" file="experiment/progs/libfreenect.c" line="505" order="20065" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="132" file="experiment/progs/libfreenect.c" line="448" order="18412" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun672" file="experiment/progs/libfreenect.c" line="278" order="14022" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="12" file="experiment/progs/libfreenect.c" line="294" order="14338" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="280" file="experiment/progs/libfreenect.c" line="609" order="22908" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="285" file="experiment/progs/libfreenect.c" line="613" order="23012" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="70" file="experiment/progs/libfreenect.c" line="357" order="16250" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="89" file="experiment/progs/libfreenect.c" line="386" order="16854" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="305" file="experiment/progs/libfreenect.c" line="631" order="23635" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="229" file="experiment/progs/libfreenect.c" line="549" order="21289" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="165" file="experiment/progs/libfreenect.c" line="473" order="18987" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="134" file="experiment/progs/libfreenect.c" line="460" order="18599" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret686" file="experiment/progs/libfreenect.c" line="389" order="16866" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="80" file="experiment/progs/libfreenect.c" line="376" order="16565" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="113" file="experiment/progs/libfreenect.c" line="423" order="17733" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun700" file="experiment/progs/libfreenect.c" line="452" order="18462" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="92" file="experiment/progs/libfreenect.c" line="395" order="16955" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="191" file="experiment/progs/libfreenect.c" line="499" order="19854" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret672" file="experiment/progs/libfreenect.c" line="278" order="14022" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="259" file="experiment/progs/libfreenect.c" line="594" order="22430" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="212" file="experiment/progs/libfreenect.c" line="523" order="20435" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="277" file="experiment/progs/libfreenect.c" line="607" order="22896" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="179" file="experiment/progs/libfreenect.c" line="487" order="19444" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="290" file="experiment/progs/libfreenect.c" line="618" order="23216" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="105" file="experiment/progs/libfreenect.c" line="415" order="17410" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="73" file="experiment/progs/libfreenect.c" line="360" order="16359" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+ms
+</data>
+</value>
+<value>
+<data>
+tmp___0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="176" file="experiment/progs/libfreenect.c" line="484" order="19375" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="243" file="experiment/progs/libfreenect.c" line="557" order="21617" column="9">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+res
+</data>
+</value>
+<value>
+<data>
+tmp___1
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="156" file="experiment/progs/libfreenect.c" line="486" order="19432" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="195" file="experiment/progs/libfreenect.c" line="503" order="19973" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="296" file="experiment/progs/libfreenect.c" line="623" order="23408" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+0
+</data>
+</value>
+<value>
+<data>
+user_device_number
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+nr_devices
+</data>
+</value>
+<value>
+<data>
+tmp___6
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="316" file="experiment/progs/libfreenect.c" line="642" order="24074" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="220" file="experiment/progs/libfreenect.c" line="531" order="20704" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun679" file="experiment/progs/libfreenect.c" line="365" order="16392" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun674" file="experiment/progs/libfreenect.c" line="307" order="14586" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="262" file="experiment/progs/libfreenect.c" line="597" order="22537" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="257" file="experiment/progs/libfreenect.c" line="592" order="22356" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret696" file="experiment/progs/libfreenect.c" line="431" order="17967" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="218" file="experiment/progs/libfreenect.c" line="529" order="20620" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="67" file="experiment/progs/libfreenect.c" line="355" order="16211" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="108" file="experiment/progs/libfreenect.c" line="418" order="17508" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="118" file="experiment/progs/libfreenect.c" line="428" order="17955" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="47" file="experiment/progs/libfreenect.c" line="335" order="15314" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="56" file="experiment/progs/libfreenect.c" line="344" order="15754" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun725" file="experiment/progs/libfreenect.c" line="572" order="22017" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="74" file="experiment/progs/libfreenect.c" line="362" order="16380" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="59" file="experiment/progs/libfreenect.c" line="347" order="15886" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="68" file="experiment/progs/libfreenect.c" line="356" order="16223" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="42" file="experiment/progs/libfreenect.c" line="330" order="15117" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="235" file="experiment/progs/libfreenect.c" line="552" order="21485" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="300" file="experiment/progs/libfreenect.c" line="627" order="23524" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun686" file="experiment/progs/libfreenect.c" line="389" order="16866" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="112" file="experiment/progs/libfreenect.c" line="422" order="17677" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="299" file="experiment/progs/libfreenect.c" line="626" order="23494" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="22" file="experiment/progs/libfreenect.c" line="303" order="14551" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="255" file="experiment/progs/libfreenect.c" line="590" order="22292" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="148" file="experiment/progs/libfreenect.c" line="468" order="18856" column="7">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="100" file="experiment/progs/libfreenect.c" line="410" order="17275" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="35" file="experiment/progs/libfreenect.c" line="323" order="14859" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="39" file="experiment/progs/libfreenect.c" line="327" order="14922" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="34" file="experiment/progs/libfreenect.c" line="322" order="14838" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="21" file="experiment/progs/libfreenect.c" line="302" order="14507" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="25" file="experiment/progs/libfreenect.c" line="314" order="14662" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="145" file="experiment/progs/libfreenect.c" line="466" order="18771" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="127" file="experiment/progs/libfreenect.c" line="443" order="18280" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="122" file="experiment/progs/libfreenect.c" line="438" order="18090" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="99" file="experiment/progs/libfreenect.c" line="409" order="17235" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="91" file="experiment/progs/libfreenect.c" line="394" order="16920" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="79" file="experiment/progs/libfreenect.c" line="375" order="16537" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="240" file="experiment/progs/libfreenect.c" line="555" order="21570" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+res
+</data>
+</value>
+<value>
+<data>
+tmp___1
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="16" file="experiment/progs/libfreenect.c" line="298" order="14426" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="219" file="experiment/progs/libfreenect.c" line="530" order="20660" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="292" file="experiment/progs/libfreenect.c" line="620" order="23281" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+nr_devices
+</data>
+</value>
+<value>
+<data>
+tmp___6
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="215" file="experiment/progs/libfreenect.c" line="526" order="20526" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="154" file="experiment/progs/libfreenect.c" line="481" order="19266" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="115" file="experiment/progs/libfreenect.c" line="425" order="17811" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="150" file="experiment/progs/libfreenect.c" line="471" order="18933" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="15" file="experiment/progs/libfreenect.c" line="296" order="14407" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="302" file="experiment/progs/libfreenect.c" line="629" order="23542" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="10" file="experiment/progs/libfreenect.c" line="292" order="14211" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="71" file="experiment/progs/libfreenect.c" line="358" order="16287" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="247" file="experiment/progs/libfreenect.c" line="563" order="21755" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="223" file="experiment/progs/libfreenect.c" line="543" order="20901" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="114" file="experiment/progs/libfreenect.c" line="424" order="17767" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="164" file="experiment/progs/libfreenect.c" line="472" order="18945" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="241" file="experiment/progs/libfreenect.c" line="556" order="21591" column="7">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+res
+</data>
+</value>
+<value>
+<data>
+tmp___1
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="84" file="experiment/progs/libfreenect.c" line="380" order="16724" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="126" file="experiment/progs/libfreenect.c" line="442" order="18246" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="43" file="experiment/progs/libfreenect.c" line="331" order="15140" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="57" file="experiment/progs/libfreenect.c" line="345" order="15791" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="146" file="experiment/progs/libfreenect.c" line="467" order="18819" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="1" file="experiment/progs/libfreenect.c" line="283" order="14048" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="256" file="experiment/progs/libfreenect.c" line="591" order="22326" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="86" file="experiment/progs/libfreenect.c" line="382" order="16783" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="252" file="experiment/progs/libfreenect.c" line="568" order="21943" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="263" file="experiment/progs/libfreenect.c" line="598" order="22569" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="123" file="experiment/progs/libfreenect.c" line="439" order="18118" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="224" file="experiment/progs/libfreenect.c" line="544" order="20949" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="102" file="experiment/progs/libfreenect.c" line="412" order="17325" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="205" file="experiment/progs/libfreenect.c" line="511" order="20156" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="152" file="experiment/progs/libfreenect.c" line="476" order="19108" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="166" file="experiment/progs/libfreenect.c" line="474" order="19042" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="125" file="experiment/progs/libfreenect.c" line="441" order="18182" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="117" file="experiment/progs/libfreenect.c" line="427" order="17923" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="44" file="experiment/progs/libfreenect.c" line="332" order="15177" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="32" file="experiment/progs/libfreenect.c" line="321" order="14819" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="214" file="experiment/progs/libfreenect.c" line="525" order="20504" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="275" file="experiment/progs/libfreenect.c" line="605" order="22806" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="88" file="experiment/progs/libfreenect.c" line="384" order="16839" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="130" file="experiment/progs/libfreenect.c" line="446" order="18374" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="30" file="experiment/progs/libfreenect.c" line="318" order="14777" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="65" file="experiment/progs/libfreenect.c" line="353" order="16179" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="309" file="experiment/progs/libfreenect.c" line="635" order="23748" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="283" file="experiment/progs/libfreenect.c" line="612" order="22989" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="58" file="experiment/progs/libfreenect.c" line="346" order="15833" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun696" file="experiment/progs/libfreenect.c" line="431" order="17967" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+arg
+</data>
+</value>
+<value>
+<data>
+(void *)0
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="253" file="experiment/progs/libfreenect.c" line="569" order="21993" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="180" file="experiment/progs/libfreenect.c" line="488" order="19484" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="260" file="experiment/progs/libfreenect.c" line="595" order="22467" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="36" file="experiment/progs/libfreenect.c" line="324" order="14884" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="136" file="experiment/progs/libfreenect.c" line="462" order="18672" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+v_depth
+</data>
+</value>
+<value>
+<data>
+depth
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="61" file="experiment/progs/libfreenect.c" line="349" order="15983" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="189" file="experiment/progs/libfreenect.c" line="497" order="19768" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="225" file="experiment/progs/libfreenect.c" line="545" order="21035" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret700" file="experiment/progs/libfreenect.c" line="452" order="18462" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="110" file="experiment/progs/libfreenect.c" line="420" order="17575" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+480
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+640
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="144" file="experiment/progs/libfreenect.c" line="465" order="18750" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="181" file="experiment/progs/libfreenect.c" line="489" order="19532" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="184" file="experiment/progs/libfreenect.c" line="492" order="19602" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="239" file="experiment/progs/libfreenect.c" line="554" order="21551" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun718" file="experiment/progs/libfreenect.c" line="534" order="20716" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="231" file="experiment/progs/libfreenect.c" line="551" order="21351" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="93" file="experiment/progs/libfreenect.c" line="396" order="16986" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="82" file="experiment/progs/libfreenect.c" line="378" order="16664" column="5">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="297" file="experiment/progs/libfreenect.c" line="625" order="23468" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+&quot;__unknown_value__&quot;
+</data>
+</value>
+<value>
+<data>
+argc
+</data>
+</value>
+<value>
+<data>
+argv
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="95" file="experiment/progs/libfreenect.c" line="399" order="17125" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path><context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Width
+</data>
+</value>
+<value>
+<data>
+Width
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+Height
+</data>
+</value>
+<value>
+<data>
+Height
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="230" file="experiment/progs/libfreenect.c" line="550" order="21320" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="49" file="experiment/progs/libfreenect.c" line="337" order="15411" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="6" file="experiment/progs/libfreenect.c" line="286" order="14131" column="7">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; gl_backbuf_mutex
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+
+<warning><group name="got_depth;int ">
+<text>lock:gl_backbuf_mutex</text></group>
+</warning>
+<warning><group name="got_rgb;int ">
+<text>lock:gl_backbuf_mutex</text></group>
+</warning>
+<warning><group name="(alloc@sid:256);uint8_t ">
+<text>lock:gl_backbuf_mutex</text>
+<text>lock:gl_backbuf_mutex</text></group>
+</warning>
+<warning><group name="(alloc@sid:258);uint8_t ">
+<text>lock:gl_backbuf_mutex</text>
+<text>lock:gl_backbuf_mutex</text></group>
+</warning></result></run>
