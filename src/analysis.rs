@@ -223,7 +223,9 @@ fn generate_node_map(calls: &[Call]) -> BTreeMap<String, Vec<(Vec<Vec<ExprPath>>
                         .map(|(_, v)| {
                             v.as_set()
                                 .iter()
-                                .map(|v| v.as_data().parse::<ExprPath>().unwrap())
+                                .map(|v| v.as_data())
+                                .filter(|s| !s.contains('"'))
+                                .map(|s| s.parse::<ExprPath>().unwrap())
                                 .collect::<Vec<_>>()
                         })
                         .collect::<Vec<_>>();
@@ -513,7 +515,7 @@ fn to_warning(element: Element) -> Option<WarningGroup> {
             let protections = children.drain(..).map(to_protection).collect();
             Some(WarningGroup {
                 name,
-                typ: typ.to_string(),
+                typ: typ.replace("[?]", ""),
                 protections,
             })
         }

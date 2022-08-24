@@ -545,7 +545,9 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
                 } else {
                     &mut array_mutex_map
                 };
-                map.insert(path.base.clone(), cand.base.clone());
+                if path.base != cand.base {
+                    map.insert(path.base.clone(), cand.base.clone());
+                }
             };
 
             // if every access is safe, update mutex map
@@ -651,10 +653,12 @@ impl<'tcx> LateLintPass<'tcx> for GlobalPass {
             }
 
             let mut add = || {
-                struct_mutex_map
-                    .entry(typ.clone())
-                    .or_default()
-                    .insert(field.clone(), cand.clone());
+                if field != cand {
+                    struct_mutex_map
+                        .entry(typ.clone())
+                        .or_default()
+                        .insert(field.clone(), cand.clone());
+                }
             };
 
             // if every access is safe, update mutex map

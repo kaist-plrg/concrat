@@ -820,7 +820,7 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                             "RwLock"
                         };
                         let mut path = expr_to_path(ctx, &args[0]).unwrap();
-                        if self.global_def_map.contains_key(&path.base) {
+                        if self.global_def_map.contains_key(&path.base) || path.is_variable() {
                             add_replacement(ctx, e.span, "0".to_string());
                         } else {
                             let func = func_name();
@@ -1001,67 +1001,51 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                         if f == "main_0" {
                             return;
                         }
-                        if let Some(FunctionSummary {
+                        let FunctionSummary {
                             entry_mutex: entry,
                             ret_mutex: ret,
                             ..
-                        }) = function_mutex_map().get(f)
-                        {
-                            let params = self.params_map.get(f).unwrap().clone();
-                            // param-to-arg aliasing
-                            let alias_mutex = |m: &ExprPath| {
-                                let mut m = m.clone();
-                                if m.is_variable() {
-                                    return m;
-                                }
-                                let (i, _) = some_or!(
-                                    params.iter().enumerate().find(|(_, p)| &m.base == *p),
-                                    return m
-                                );
-                                let arg = some_or!(expr_to_path(ctx, &args[i]), return m);
-                                m.set_base(&arg);
-                                m
-                            };
-                            if !entry.is_empty() {
-                                let guards = entry.iter().map(|m| alias_mutex(m).guard()).collect();
-                                self.use_guards(func_name(), &guards);
-                                let guards = join(guards, ", ");
-                                if let Some(arg) = args.last() {
-                                    let span = arg.span.shrink_to_hi();
-                                    add_replacement(ctx, span, format!(", {}", guards));
-                                } else {
-                                    let span = ctx
-                                        .sess()
-                                        .source_map()
-                                        .span_through_char(e.span, '(')
-                                        .shrink_to_hi();
-                                    add_replacement(ctx, span, guards);
-                                }
+                        } = some_or!(function_mutex_map().get(f), return);
+                        let params = some_or!(self.params_map.get(f), return).clone();
+                        // param-to-arg aliasing
+                        let alias_mutex = |m: &ExprPath| {
+                            let mut m = m.clone();
+                            if m.is_variable() {
+                                return m;
                             }
-                            if !ret.is_empty() {
-                                let guards: Vec<_> =
-                                    ret.iter().map(|m| alias_mutex(m).guard()).collect();
-                                self.use_guards(func_name(), &guards);
-                                if type_of(ctx, e.hir_id).is_unit() {
-                                    if ret.len() == 1 {
-                                        let span = e.span.shrink_to_lo();
-                                        let guard = &guards[0];
-                                        add_replacement(ctx, span, format!("{} = ", guard));
-                                    } else {
-                                        let span = e.span.shrink_to_lo();
-                                        add_replacement(
-                                            ctx,
-                                            span,
-                                            format!("{{ let {}_res_tmp = ", f),
-                                        );
-                                        let span = e.span.shrink_to_hi();
-                                        let guards: String = guards
-                                            .iter()
-                                            .enumerate()
-                                            .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i))
-                                            .collect();
-                                        add_replacement(ctx, span, format!("; {} }}", guards));
-                                    }
+                            let (i, _) = some_or!(
+                                params.iter().enumerate().find(|(_, p)| &m.base == *p),
+                                return m
+                            );
+                            let arg = some_or!(expr_to_path(ctx, &args[i]), return m);
+                            m.set_base(&arg);
+                            m
+                        };
+                        if !entry.is_empty() {
+                            let guards = entry.iter().map(|m| alias_mutex(m).guard()).collect();
+                            self.use_guards(func_name(), &guards);
+                            let guards = join(guards, ", ");
+                            if let Some(arg) = args.last() {
+                                let span = arg.span.shrink_to_hi();
+                                add_replacement(ctx, span, format!(", {}", guards));
+                            } else {
+                                let span = ctx
+                                    .sess()
+                                    .source_map()
+                                    .span_through_char(e.span, '(')
+                                    .shrink_to_hi();
+                                add_replacement(ctx, span, guards);
+                            }
+                        }
+                        if !ret.is_empty() {
+                            let guards: Vec<_> =
+                                ret.iter().map(|m| alias_mutex(m).guard()).collect();
+                            self.use_guards(func_name(), &guards);
+                            if type_of(ctx, e.hir_id).is_unit() {
+                                if ret.len() == 1 {
+                                    let span = e.span.shrink_to_lo();
+                                    let guard = &guards[0];
+                                    add_replacement(ctx, span, format!("{} = ", guard));
                                 } else {
                                     let span = e.span.shrink_to_lo();
                                     add_replacement(ctx, span, format!("{{ let {}_res_tmp = ", f));
@@ -1069,14 +1053,24 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                                     let guards: String = guards
                                         .iter()
                                         .enumerate()
-                                        .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i + 1))
+                                        .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i))
                                         .collect();
-                                    add_replacement(
-                                        ctx,
-                                        span,
-                                        format!("; {}{}_res_tmp.0 }}", guards, f),
-                                    );
+                                    add_replacement(ctx, span, format!("; {} }}", guards));
                                 }
+                            } else {
+                                let span = e.span.shrink_to_lo();
+                                add_replacement(ctx, span, format!("{{ let {}_res_tmp = ", f));
+                                let span = e.span.shrink_to_hi();
+                                let guards: String = guards
+                                    .iter()
+                                    .enumerate()
+                                    .map(|(i, g)| format!("{} = {}_res_tmp.{}; ", g, f, i + 1))
+                                    .collect();
+                                add_replacement(
+                                    ctx,
+                                    span,
+                                    format!("; {}{}_res_tmp.0 }}", guards, f),
+                                );
                             }
                         }
                     }
@@ -1248,6 +1242,7 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                             || ty.contains("pthread_rwlock_t")
                         {
                             add_replacement(ctx, e.span, "()".to_string());
+                            self.replaced.insert(e.span);
                         }
                     }
 
@@ -1258,6 +1253,7 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                                 || ty.contains("pthread_rwlock_t")
                             {
                                 add_replacement(ctx, e.span, "()".to_string());
+                                self.replaced.insert(e.span);
                             }
                         }
                     }
@@ -1277,6 +1273,7 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                         let s = some_or!(expr_to_path(ctx, s), return);
                         if self.mutex_init_map.contains(&(func_name(), s, m.clone())) {
                             add_replacement(ctx, e.span, "()".to_string());
+                            self.replaced.insert(e.span);
                         }
                     }
                     _ => (),
@@ -1383,8 +1380,19 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
 
 impl RewritePass {
     fn get_type(&self, s: &ExprPath, f: &String) -> &String {
-        let map = self.path_type_map.get(s).unwrap();
-        map.get(f).unwrap_or_else(|| map.iter().next().unwrap().1)
+        if let Some(map) = self.path_type_map.get(s) {
+            map.get(f).unwrap_or_else(|| map.iter().next().unwrap().1)
+        } else {
+            self.path_type_map
+                .iter()
+                .find(|(path, _)| s.projections.last() == path.projections.last())
+                .unwrap()
+                .1
+                .iter()
+                .next()
+                .unwrap()
+                .1
+        }
     }
 
     fn struct_of_path(&self, func: &String, s: &ExprPath) -> String {

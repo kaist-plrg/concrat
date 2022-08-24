@@ -573,6 +573,7 @@ pub fn expr_to_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<ExprPath> 
                     }
                 }
             }
+            "as_mut_ptr" => expr_to_path(ctx, &args[0]),
             _ => None,
         },
         ExprKind::Field(e, f) => {
