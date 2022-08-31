@@ -19,8 +19,8 @@ use crate::{
     callback::{compile_with, LatePass},
     graph::transitive_closure,
     util::{
-        expr_to_path, function_params, join, span_lines, span_to_string, type_of, type_to_string,
-        unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
+        expr_to_path, function_params, join, resolve_struct, span_lines, span_to_string, type_of,
+        type_to_string, unwrap_cast_recursively, unwrap_ptr_from_type, ExprPath, ExprPathProj,
     },
 };
 
@@ -1100,7 +1100,9 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                 }
             }
             ExprKind::Struct(_, fs, _) => {
-                let typ = type_to_string(type_of(ctx, e.hir_id));
+                let ty = type_of(ctx, e.hir_id);
+                let field_ty_map_opt = resolve_struct(ctx, ty);
+                let typ = type_to_string(ty);
                 let empty = BTreeMap::new();
                 let map = struct_mutex_map().get(&typ).unwrap_or(&empty);
                 let v: Vec<_> = map
@@ -1129,7 +1131,11 @@ pub static mut {2}: [{3}<{0}>; {4}] = [{5}
                     .collect();
                 for f in fs.iter() {
                     let name = f.ident.name.to_ident_string();
-                    let ftyp = type_to_string(type_of(ctx, f.expr.hir_id));
+                    let ftyp = if let Some(field_ty_map) = &field_ty_map_opt {
+                        field_ty_map.get(&name).unwrap().clone()
+                    } else {
+                        type_to_string(type_of(ctx, f.expr.hir_id))
+                    };
                     if ftyp.contains("pthread_cond_t") {
                         add_replacement(ctx, f.expr.span, "Condvar::new()".to_string());
                         continue;

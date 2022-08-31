@@ -8,7 +8,7 @@ use std::{
 };
 
 use etrace::some_or;
-use rustc_hir::{def::Res, BodyId, Expr, ExprKind, HirId, Node, UnOp};
+use rustc_hir::{def::Res, BodyId, Expr, ExprKind, HirId, ItemKind, Node, UnOp, VariantData};
 use rustc_index::vec::Idx;
 use rustc_lint::{LateContext, LintContext};
 use rustc_middle::ty::{Ty, TyCtxt, TyKind, TypeAndMut, TypeckResults};
@@ -530,6 +530,25 @@ pub fn resolve_path(ctx: &LateContext<'_>, expr: &Expr<'_>) -> Option<Res> {
         Some(typeck_res.qpath_res(p, expr.hir_id))
     } else {
         None
+    }
+}
+
+pub fn resolve_struct(ctx: &LateContext<'_>, ty: Ty<'_>) -> Option<BTreeMap<String, String>> {
+    match ctx.tcx.hir().get_if_local(ty.ty_adt_def()?.did())? {
+        Node::Item(i) => match &i.kind {
+            ItemKind::Struct(VariantData::Struct(fs, _), _) => Some(
+                fs.iter()
+                    .map(|f| {
+                        (
+                            f.ident.name.to_ident_string(),
+                            span_to_string(ctx, f.ty.span),
+                        )
+                    })
+                    .collect(),
+            ),
+            _ => None,
+        },
+        _ => None,
     }
 }
 
