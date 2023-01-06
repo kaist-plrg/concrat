@@ -67,7 +67,7 @@
 <node name="8"/>
 </function>
 </file>
-<call id="26" file="experiment/progs/sc.c" line="93" order="3737" column="5">
+<call id="26" file="main.c" line="93" order="3737" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -194,7 +194,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="28" file="experiment/progs/sc.c" line="95" order="3756" column="3">
+<call id="28" file="main.c" line="95" order="3756" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -321,7 +321,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="23" file="experiment/progs/sc.c" line="90" order="3661" column="3">
+<call id="23" file="main.c" line="90" order="3661" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -448,7 +448,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="8" file="experiment/progs/sc.c" line="55" order="1832" column="3">
+<call id="8" file="main.c" line="55" order="1832" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -484,7 +484,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="29" file="experiment/progs/sc.c" line="96" order="3801" column="3">
+<call id="29" file="main.c" line="96" order="3801" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -611,7 +611,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="50" file="experiment/progs/sc.c" line="122" order="4351" column="5">
+<call id="50" file="main.c" line="122" order="4351" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -681,7 +681,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="60" file="experiment/progs/sc.c" line="145" order="4694" column="3">
+<call id="60" file="main.c" line="145" order="4694" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -756,7 +756,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="46" file="experiment/progs/sc.c" line="119" order="4307" column="3">
+<call id="46" file="main.c" line="119" order="4307" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -826,7 +826,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="40" file="experiment/progs/sc.c" line="105" order="4122" column="5">
+<call id="40" file="main.c" line="105" order="4122" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -953,7 +953,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="19" file="experiment/progs/sc.c" line="86" order="3461" column="3">
+<call id="19" file="main.c" line="86" order="3461" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1060,7 +1060,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="63" file="experiment/progs/sc.c" line="148" order="4788" column="3">
+<call id="63" file="main.c" line="148" order="4788" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1135,7 +1135,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="14" file="experiment/progs/sc.c" line="81" order="3330" column="3">
+<call id="14" file="main.c" line="81" order="3330" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1205,204 +1205,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="37" file="experiment/progs/sc.c" line="102" order="4035" column="5">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-0
-</data>
-</value>
-<value>
-<data>
-mut.__data.__count
-</data>
-</value>
-<value>
-<data>
-mut.__data.__elision
-</data>
-</value>
-<value>
-<data>
-mut.__data.__kind
-</data>
-</value>
-<value>
-<data>
-mut.__data.__list.__next
-</data>
-</value>
-<value>
-<data>
-mut.__data.__list.__prev
-</data>
-</value>
-<value>
-<data>
-mut.__data.__lock
-</data>
-</value>
-<value>
-<data>
-mut.__data.__nusers
-</data>
-</value>
-<value>
-<data>
-mut.__data.__owner
-</data>
-</value>
-<value>
-<data>
-mut.__data.__spins
-</data>
-</value>
-</set>
-</value>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="48" file="experiment/progs/sc.c" line="120" order="4326" column="5">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="31" file="experiment/progs/sc.c" line="97" order="3824" column="5">
+<call id="37" file="main.c" line="102" order="4035" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1529,43 +1332,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="2" file="experiment/progs/sc.c" line="50" order="1670" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="fun320" file="experiment/progs/sc.c" line="127" order="4384" column="1">
+<call id="48" file="main.c" line="120" order="4326" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1635,7 +1402,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="24" file="experiment/progs/sc.c" line="91" order="3679" column="3">
+<call id="31" file="main.c" line="97" order="3824" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1762,7 +1529,240 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="54" file="experiment/progs/sc.c" line="133" order="4485" column="3">
+<call id="2" file="main.c" line="50" order="1670" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="fun320" file="main.c" line="127" order="4384" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="24" file="main.c" line="91" order="3679" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+0
+</data>
+</value>
+<value>
+<data>
+mut.__data.__count
+</data>
+</value>
+<value>
+<data>
+mut.__data.__elision
+</data>
+</value>
+<value>
+<data>
+mut.__data.__kind
+</data>
+</value>
+<value>
+<data>
+mut.__data.__list.__next
+</data>
+</value>
+<value>
+<data>
+mut.__data.__list.__prev
+</data>
+</value>
+<value>
+<data>
+mut.__data.__lock
+</data>
+</value>
+<value>
+<data>
+mut.__data.__nusers
+</data>
+</value>
+<value>
+<data>
+mut.__data.__owner
+</data>
+</value>
+<value>
+<data>
+mut.__data.__spins
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="54" file="main.c" line="133" order="4485" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1842,7 +1842,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="45" file="experiment/progs/sc.c" line="118" order="4265" column="3">
+<call id="45" file="main.c" line="118" order="4265" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1912,7 +1912,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="fun333" file="experiment/progs/sc.c" line="42" order="1552" column="1">
+<call id="fun333" file="main.c" line="42" order="1552" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -1948,7 +1948,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="18" file="experiment/progs/sc.c" line="85" order="3436" column="3">
+<call id="18" file="main.c" line="85" order="3436" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2050,7 +2050,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="62" file="experiment/progs/sc.c" line="146" order="4717" column="5">
+<call id="62" file="main.c" line="146" order="4717" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2125,7 +2125,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="11" file="experiment/progs/sc.c" line="57" order="1896" column="5">
+<call id="11" file="main.c" line="57" order="1896" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2161,263 +2161,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="fun323" file="experiment/progs/sc.c" line="139" order="4589" column="1">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-<value>
-<data>
-&amp; (&amp; mutex)-&gt;mtx
-</data>
-</value>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-<value>
-<data>
-&amp; (&amp; mutex)-&gt;mtx
-</data>
-</value>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="51" file="experiment/progs/sc.c" line="124" order="4366" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="53" file="experiment/progs/sc.c" line="132" order="4446" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="12" file="experiment/progs/sc.c" line="59" order="1976" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="ret323" file="experiment/progs/sc.c" line="139" order="4589" column="1">
+<call id="fun323" file="main.c" line="139" order="4589" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2459,6 +2203,98 @@ mtx
 <analysis name="var_eq">
 <value>
 <map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; (&amp; mutex)-&gt;mtx
+</data>
+</value>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="51" file="main.c" line="124" order="4366" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
 </map>
 </value>
 </analysis>
@@ -2475,7 +2311,77 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="9" file="experiment/progs/sc.c" line="56" order="1868" column="3">
+<call id="53" file="main.c" line="132" order="4446" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="12" file="main.c" line="59" order="1976" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2511,7 +2417,101 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="ret317" file="experiment/progs/sc.c" line="112" order="4192" column="1">
+<call id="ret323" file="main.c" line="139" order="4589" column="1">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+<value>
+<data>
+&amp; (&amp; mutex)-&gt;mtx
+</data>
+</value>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="9" file="main.c" line="56" order="1868" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret317" file="main.c" line="112" order="4192" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2564,7 +2564,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="33" file="experiment/progs/sc.c" line="99" order="3892" column="3">
+<call id="33" file="main.c" line="99" order="3892" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2691,7 +2691,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="ret333" file="experiment/progs/sc.c" line="42" order="1552" column="1">
+<call id="ret333" file="main.c" line="42" order="1552" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2727,7 +2727,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="4" file="experiment/progs/sc.c" line="51" order="1698" column="5">
+<call id="4" file="main.c" line="51" order="1698" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2763,7 +2763,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="56" file="experiment/progs/sc.c" line="134" order="4508" column="5">
+<call id="56" file="main.c" line="134" order="4508" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2796,7 +2796,7 @@ mtx
 </analysis>
 </context>
 </call>
-<call id="fun314" file="experiment/progs/sc.c" line="72" order="3189" column="1">
+<call id="fun314" file="main.c" line="72" order="3189" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2866,7 +2866,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="42" file="experiment/progs/sc.c" line="107" order="4151" column="5">
+<call id="42" file="main.c" line="107" order="4151" column="5">
 <context>
 <analysis name="var_eq">
 <value>
@@ -2993,7 +2993,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="59" file="experiment/progs/sc.c" line="144" order="4653" column="3">
+<call id="59" file="main.c" line="144" order="4653" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3073,7 +3073,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="22" file="experiment/progs/sc.c" line="89" order="3595" column="3">
+<call id="22" file="main.c" line="89" order="3595" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3195,7 +3195,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="35" file="experiment/progs/sc.c" line="101" order="4012" column="3">
+<call id="35" file="main.c" line="101" order="4012" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3322,7 +3322,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="34" file="experiment/progs/sc.c" line="100" order="3970" column="3">
+<call id="34" file="main.c" line="100" order="3970" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3449,7 +3449,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="21" file="experiment/progs/sc.c" line="88" order="3529" column="3">
+<call id="21" file="main.c" line="88" order="3529" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3566,134 +3566,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="25" file="experiment/progs/sc.c" line="92" order="3718" column="3">
-<context>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-</context>
-
-<path>
-<analysis name="var_eq">
-<value>
-<map>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-0
-</data>
-</value>
-<value>
-<data>
-mut.__data.__count
-</data>
-</value>
-<value>
-<data>
-mut.__data.__elision
-</data>
-</value>
-<value>
-<data>
-mut.__data.__kind
-</data>
-</value>
-<value>
-<data>
-mut.__data.__list.__next
-</data>
-</value>
-<value>
-<data>
-mut.__data.__list.__prev
-</data>
-</value>
-<value>
-<data>
-mut.__data.__lock
-</data>
-</value>
-<value>
-<data>
-mut.__data.__nusers
-</data>
-</value>
-<value>
-<data>
-mut.__data.__owner
-</data>
-</value>
-<value>
-<data>
-mut.__data.__spins
-</data>
-</value>
-</set>
-</value>
-<key>
-Cluster
-</key>
-<value>
-<set>
-<value>
-<data>
-mtx
-</data>
-</value>
-<value>
-<data>
-&amp; mutex
-</data>
-</value>
-</set>
-</value>
-</map>
-</value>
-</analysis>
-<analysis name="symb_locks">
-<value>
-<set>
-</set>
-</value>
-</analysis>
-<analysis name="widen-context">
-<value>
-<map>
-</map>
-</value>
-
-</analysis></path></call>
-<call id="38" file="experiment/progs/sc.c" line="104" order="4103" column="3">
+<call id="25" file="main.c" line="92" order="3718" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3820,7 +3693,134 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="ret320" file="experiment/progs/sc.c" line="127" order="4384" column="1">
+<call id="38" file="main.c" line="104" order="4103" column="3">
+<context>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+</context>
+
+<path>
+<analysis name="var_eq">
+<value>
+<map>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+0
+</data>
+</value>
+<value>
+<data>
+mut.__data.__count
+</data>
+</value>
+<value>
+<data>
+mut.__data.__elision
+</data>
+</value>
+<value>
+<data>
+mut.__data.__kind
+</data>
+</value>
+<value>
+<data>
+mut.__data.__list.__next
+</data>
+</value>
+<value>
+<data>
+mut.__data.__list.__prev
+</data>
+</value>
+<value>
+<data>
+mut.__data.__lock
+</data>
+</value>
+<value>
+<data>
+mut.__data.__nusers
+</data>
+</value>
+<value>
+<data>
+mut.__data.__owner
+</data>
+</value>
+<value>
+<data>
+mut.__data.__spins
+</data>
+</value>
+</set>
+</value>
+<key>
+Cluster
+</key>
+<value>
+<set>
+<value>
+<data>
+mtx
+</data>
+</value>
+<value>
+<data>
+&amp; mutex
+</data>
+</value>
+</set>
+</value>
+</map>
+</value>
+</analysis>
+<analysis name="symb_locks">
+<value>
+<set>
+</set>
+</value>
+</analysis>
+<analysis name="widen-context">
+<value>
+<map>
+</map>
+</value>
+
+</analysis></path></call>
+<call id="ret320" file="main.c" line="127" order="4384" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3878,7 +3878,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="16" file="experiment/progs/sc.c" line="83" order="3382" column="3">
+<call id="16" file="main.c" line="83" order="3382" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -3970,7 +3970,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="7" file="experiment/progs/sc.c" line="54" order="1804" column="3">
+<call id="7" file="main.c" line="54" order="1804" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4011,7 +4011,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="15" file="experiment/progs/sc.c" line="82" order="3355" column="3">
+<call id="15" file="main.c" line="82" order="3355" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4098,7 +4098,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="17" file="experiment/progs/sc.c" line="84" order="3408" column="3">
+<call id="17" file="main.c" line="84" order="3408" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4195,7 +4195,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="ret314" file="experiment/progs/sc.c" line="72" order="3189" column="1">
+<call id="ret314" file="main.c" line="72" order="3189" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4248,7 +4248,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="43" file="experiment/progs/sc.c" line="109" order="4170" column="3">
+<call id="43" file="main.c" line="109" order="4170" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4318,7 +4318,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="57" file="experiment/progs/sc.c" line="136" order="4577" column="3">
+<call id="57" file="main.c" line="136" order="4577" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4398,7 +4398,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="1" file="experiment/progs/sc.c" line="49" order="1634" column="3">
+<call id="1" file="main.c" line="49" order="1634" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4434,7 +4434,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="20" file="experiment/progs/sc.c" line="87" order="3494" column="3">
+<call id="20" file="main.c" line="87" order="3494" column="3">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4546,7 +4546,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="fun317" file="experiment/progs/sc.c" line="112" order="4192" column="1">
+<call id="fun317" file="main.c" line="112" order="4192" column="1">
 <context>
 <analysis name="var_eq">
 <value>
@@ -4616,7 +4616,7 @@ mtx
 </value>
 
 </analysis></path></call>
-<call id="6" file="experiment/progs/sc.c" line="53" order="1778" column="3">
+<call id="6" file="main.c" line="53" order="1778" column="3">
 <context>
 <analysis name="var_eq">
 <value>

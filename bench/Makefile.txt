@@ -1,26 +1,22 @@
 CFLAGS = -pthread
 
-all: main.rs
+main.rs: main.c
+	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json && \
+	rm -f main.rs && \
+	c2rust transpile -e compile_commands.json > lines && \
+	if [ -f "fix_rust_code.sh" ]; then ./fix_rust_code.sh; fi
 
-a.xml: main.c conf.json
-	goblint --conf ../../conf.json \
+ifeq ($(LIB),yes)
+FLAG = --enable allfuns --enable exp.earlyglobs
+endif
+
+a.xml: main.c
+	goblint --conf ../../conf.json $(FLAG) \
 		--enable allglobs \
 		--enable justcfg \
 		--set result fast_xml \
 		--set outfile a.xml \
 		main.c
-
-main.rs: main.c
-	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json && \
-	rm -f main.rs && \
-	c2rust transpile -e compile_commands.json > lines
-
-ifeq ($(GOBLINT),yes)
-XML = a.xml
-CMD = goblint2json
-else
-CMD = dataflow
-endif
 
 clean:
 	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib *.dot lines
