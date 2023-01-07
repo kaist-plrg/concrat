@@ -1020,7 +1020,7 @@ pub struct __anonstruct_internal_script_t_141024058 {
 pub type internal_script_t = __anonstruct_internal_script_t_141024058;
 #[inline]
 unsafe extern "C" fn ck_pr_stall() {
-
+    asm!("pause", options(preserves_flags, att_syntax));
 }
 #[inline]
 unsafe extern "C" fn ck_pr_fas_uint(
@@ -1116,7 +1116,7 @@ unsafe extern "C" fn ck_pr_cas_uint_value(
 }
 #[inline]
 unsafe extern "C" fn ck_pr_barrier() {
-
+    asm!("", options(preserves_flags, att_syntax));
 }
 #[inline]
 unsafe extern "C" fn ck_pr_fence_store_atomic() {

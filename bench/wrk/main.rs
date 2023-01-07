@@ -831,7 +831,7 @@ pub type table_field = __anonstruct_table_field_66454024;
 pub struct __anonstruct_units_255056401 {
     pub scale: libc::c_int,
     pub base: *mut libc::c_char,
-    pub units: [*mut libc::c_char; 6],
+    pub units: [*mut libc::c_char; 0],
 }
 pub type units = __anonstruct_units_255056401;
 pub type nfds_t = libc::c_ulong;
@@ -4252,9 +4252,9 @@ pub static mut time_units_us: units = {
         scale: 1000 as libc::c_int,
         base: b"us\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
         units: [
-            b"ms\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"s\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+
+
+
         ],
     };
     init
@@ -4264,9 +4264,9 @@ pub static mut time_units_s: units = {
         scale: 60 as libc::c_int,
         base: b"s\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
         units: [
-            b"m\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"h\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+
+
+
         ],
     };
     init
@@ -4276,12 +4276,12 @@ pub static mut binary_units: units = {
         scale: 1024 as libc::c_int,
         base: b"\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
         units: [
-            b"K\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"M\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"G\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"T\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"P\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+
+
+
+
+
+
         ],
     };
     init
@@ -4291,12 +4291,12 @@ pub static mut metric_units: units = {
         scale: 1000 as libc::c_int,
         base: b"\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
         units: [
-            b"k\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"M\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"G\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"T\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            b"P\0" as *const u8 as *const libc::c_char as *mut libc::c_char,
-            0 as *const libc::c_void as *mut libc::c_void as *mut libc::c_char,
+
+
+
+
+
+
         ],
     };
     init

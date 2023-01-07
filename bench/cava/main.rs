@@ -5577,7 +5577,7 @@ unsafe extern "C" fn initialize_audio_parameters(
     let mut tmp___0: *const libc::c_char = 0 as *const libc::c_char;
     let mut params: *mut snd_pcm_hw_params_t = 0 as *mut snd_pcm_hw_params_t;
     let mut tmp___1: size_t = 0;
-    let mut tmp___2 = 0 as *mut _;
+    let mut tmp___2: *mut _ = 0 as *mut _;
     let mut tmp___3: size_t = 0;
     let mut sample_rate: libc::c_uint = 0;
     let mut tmp___4: *const libc::c_char = 0 as *const libc::c_char;

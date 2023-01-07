@@ -1,4 +1,4 @@
-use ::libc; use libc::strcat; use libc::strcpy; use libc::strncpy; use libc::memcpy; use libc::memset;
+use ::libc;
 use ::c2rust_bitfields;
 extern "C" {
     pub type _IO_wide_data;
@@ -75,6 +75,16 @@ extern "C" {
     );
     fn random_bytes(dst: *mut libc::c_void, n: size_t) -> libc::c_int;
     fn xmalloc(size: size_t) -> *mut libc::c_void;
+    fn memset(
+        _: *mut libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn memcpy(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn __assert_fail(
         __assertion: *const libc::c_char,
         __file: *const libc::c_char,
@@ -175,6 +185,11 @@ extern "C" {
         __ifname: *mut libc::c_char,
     ) -> *mut libc::c_char;
     fn ioctl(__fd: libc::c_int, __request: libc::c_ulong, _: ...) -> libc::c_int;
+    fn strncpy(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
     fn pthread_mutex_init(
         __mutex: *mut pthread_mutex_t,
         __mutexattr: *const pthread_mutexattr_t,
@@ -333,6 +348,8 @@ extern "C" {
         __longopts: *const option,
         __longind: *mut libc::c_int,
     ) -> libc::c_int;
+    fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
+    fn strcat(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
     fn fwrite(
         _: *const libc::c_void,
         _: libc::c_ulong,
@@ -1828,9 +1845,9 @@ unsafe extern "C" fn fgets(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: *mut libc::c_char = 0 as *mut libc::c_char;
-    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
         tmp___0 = __fgets_chk(__s, tmp, __n, __stream);
         return tmp___0;
     }
@@ -1851,9 +1868,9 @@ unsafe extern "C" fn fread(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: size_t = 0;
-    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
         tmp___0 = __fread_chk(__ptr, tmp, __size, __n, __stream);
         return tmp___0;
     }
@@ -1869,7 +1886,7 @@ unsafe extern "C" fn _aesrand_init(mut key: *mut uint8_t) -> *mut aesrand_t {
     memset(
         &mut (*aes).input as *mut [uint32_t; 4] as *mut libc::c_void,
         0 as libc::c_int,
-        16 as libc::c_int as size_t as _,
+        16 as libc::c_int as size_t,
     );
     tmp___0 = rijndaelKeySetupEnc(
         ((*aes).sched).as_mut_ptr(),
@@ -1885,7 +1902,7 @@ unsafe extern "C" fn _aesrand_init(mut key: *mut uint8_t) -> *mut aesrand_t {
     memset(
         ((*aes).output).as_mut_ptr() as *mut libc::c_void,
         0 as libc::c_int,
-        16 as libc::c_int as size_t as _,
+        16 as libc::c_int as size_t,
     );
     return aes;
 }
@@ -1896,7 +1913,7 @@ pub unsafe extern "C" fn aesrand_init_from_seed(mut seed: uint64_t) -> *mut aesr
     memset(
         key.as_mut_ptr() as *mut libc::c_void,
         0 as libc::c_int,
-        16 as libc::c_int as size_t as _,
+        16 as libc::c_int as size_t,
     );
     i = 0 as libc::c_int as uint8_t;
     while (i as libc::c_ulong) < ::std::mem::size_of::<uint64_t>() as libc::c_ulong {
@@ -1930,7 +1947,7 @@ pub unsafe extern "C" fn aesrand_getword(mut aes: *mut aesrand_t) -> uint64_t {
     memcpy(
         ((*aes).input).as_mut_ptr() as *mut libc::c_void,
         ((*aes).output).as_mut_ptr() as *const libc::c_void,
-        ::std::mem::size_of::<[uint32_t; 4]>() as libc::c_ulong as _,
+        ::std::mem::size_of::<[uint32_t; 4]>() as libc::c_ulong,
     );
     rijndaelEncrypt(
         ((*aes).sched).as_mut_ptr() as *const u32_0,
@@ -1941,7 +1958,7 @@ pub unsafe extern "C" fn aesrand_getword(mut aes: *mut aesrand_t) -> uint64_t {
     memcpy(
         &mut retval as *mut uint64_t as *mut libc::c_void,
         ((*aes).output).as_mut_ptr() as *const libc::c_void,
-        ::std::mem::size_of::<uint64_t>() as libc::c_ulong as _,
+        ::std::mem::size_of::<uint64_t>() as libc::c_ulong,
     );
     return retval;
 }
@@ -1975,9 +1992,9 @@ unsafe extern "C" fn recv(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: ssize_t = 0;
-    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+    tmp___4 = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+        tmp = (if 0 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
         tmp___0 = __recv_chk(__fd, __buf, __n, tmp, __flags);
         return tmp___0;
     }
@@ -2513,7 +2530,7 @@ pub unsafe extern "C" fn gen_fielddef_set(
         open as *mut libc::c_void,
         fs as *const libc::c_void,
         (len as libc::c_ulong)
-            .wrapping_mul(::std::mem::size_of::<fielddef_t>() as libc::c_ulong) as _,
+            .wrapping_mul(::std::mem::size_of::<fielddef_t>() as libc::c_ulong),
     );
     (*fds).len += len;
 }
@@ -2725,7 +2742,7 @@ unsafe extern "C" fn sanitize_utf8(mut buf: *const libc::c_char) -> *mut libc::c
     safe_buf = tmp___9 as *mut libc::c_char;
     safe_ptr = 0 as *mut libc::c_void as *mut libc::c_char;
     tmp___10 = strlen(buf);
-    memcpy(safe_buf as *mut libc::c_void, buf as *const libc::c_void, tmp___10 as _);
+    memcpy(safe_buf as *mut libc::c_void, buf as *const libc::c_void, tmp___10);
     j = 0 as libc::c_int as uint32_t;
     while j < i {
         tmp___11 = strlen(safe_buf as *const libc::c_char);
@@ -2772,7 +2789,7 @@ unsafe extern "C" fn sanitize_utf8(mut buf: *const libc::c_char) -> *mut libc::c
                 memcpy(
                     safe_ptr.offset(3 as libc::c_int as isize) as *mut libc::c_void,
                     safe_ptr.offset(1 as libc::c_int as isize) as *const libc::c_void,
-                    tmp___18 as _,
+                    tmp___18,
                 );
             }
             *safe_ptr
@@ -3174,7 +3191,7 @@ pub unsafe extern "C" fn fs_generate_fieldset_translation(
     memset(
         t as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<translation_t>() as libc::c_ulong as _,
+        ::std::mem::size_of::<translation_t>() as libc::c_ulong,
     );
     if t.is_null() {
         log_fatal(
@@ -3209,7 +3226,7 @@ pub unsafe extern "C" fn fs_generate_full_fieldset_translation(
     memset(
         t as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<translation_t>() as libc::c_ulong as _,
+        ::std::mem::size_of::<translation_t>() as libc::c_ulong,
     );
     if t.is_null() {
         log_fatal(
@@ -3250,7 +3267,7 @@ pub unsafe extern "C" fn translate_fieldset(
                 as *mut libc::c_void,
             &mut *((*fs).fields).as_mut_ptr().offset(o as isize) as *mut field_t
                 as *const libc::c_void,
-            ::std::mem::size_of::<field_t>() as libc::c_ulong as _,
+            ::std::mem::size_of::<field_t>() as libc::c_ulong,
         );
         i += 1;
     }
@@ -3269,9 +3286,9 @@ unsafe extern "C" fn gethostname(
     let mut tmp___3: libc::c_ulong = 0;
     let mut tmp___4: libc::c_ulong = 0;
     let mut tmp___5: libc::c_int = 0;
-    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+    tmp___4 = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
     if tmp___4 != 0xffffffffffffffff as libc::c_ulong {
-        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as libc::size_t as _;
+        tmp = (if 1 as libc::c_int & 2 == 0 { -1isize } else { 0isize }) as _;
         tmp___0 = __gethostname_chk(__buf, __buflen, tmp);
         return tmp___0;
     }
@@ -3589,7 +3606,7 @@ pub unsafe extern "C" fn send_nl_req(
                     as libc::c_int as uint32_t,
             )
             .wrapping_add(4 as libc::c_uint)
-            .wrapping_sub(1 as libc::c_uint) & 4294967292 as libc::c_uint) as size_t as _,
+            .wrapping_sub(1 as libc::c_uint) & 4294967292 as libc::c_uint) as size_t,
     );
     memcpy(
         (nlmsg as *mut libc::c_char)
@@ -3600,7 +3617,7 @@ pub unsafe extern "C" fn send_nl_req(
                     as libc::c_int as isize,
             ) as *mut libc::c_void,
         payload as *const libc::c_void,
-        payload_len as size_t as _,
+        payload_len as size_t,
     );
     (*nlmsg).nlmsg_type = msg_type;
     (*nlmsg)
@@ -3666,7 +3683,7 @@ pub unsafe extern "C" fn get_hw_addr(
     memset(
         &mut req as *mut ndmsg as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<ndmsg>() as libc::c_ulong as _,
+        ::std::mem::size_of::<ndmsg>() as libc::c_ulong,
     );
     if gw_ip.is_null() {
         return -(1 as libc::c_int)
@@ -3778,7 +3795,7 @@ pub unsafe extern "C" fn get_hw_addr(
                                     .wrapping_sub(1 as libc::c_ulong)
                                     & 4294967292 as libc::c_ulong) as isize,
                             ) as *mut libc::c_void as *const libc::c_void,
-                        6 as libc::c_int as size_t as _,
+                        6 as libc::c_int as size_t,
                     );
                 }
                 1 => {
@@ -3812,7 +3829,7 @@ pub unsafe extern "C" fn get_hw_addr(
                                     .wrapping_sub(1 as libc::c_ulong)
                                     & 4294967292 as libc::c_ulong) as isize,
                             ) as *mut libc::c_void as *const libc::c_void,
-                        ::std::mem::size_of::<in_addr>() as libc::c_ulong as _,
+                        ::std::mem::size_of::<in_addr>() as libc::c_ulong,
                     );
                     tmp___3 = memcmp(
                         &mut dst_ip as *mut in_addr as *const libc::c_void,
@@ -3843,7 +3860,7 @@ pub unsafe extern "C" fn get_hw_addr(
             memcpy(
                 hw_mac as *mut libc::c_void,
                 mac.as_mut_ptr() as *const libc::c_void,
-                6 as libc::c_int as size_t as _,
+                6 as libc::c_int as size_t,
             );
             free(buf as *mut libc::c_void);
             return 0 as libc::c_int;
@@ -3900,7 +3917,7 @@ pub unsafe extern "C" fn _get_default_gw(
     memset(
         &mut req as *mut rtmsg as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<rtmsg>() as libc::c_ulong as _,
+        ::std::mem::size_of::<rtmsg>() as libc::c_ulong,
     );
     tmp = send_nl_req(
         26 as libc::c_int as uint16_t,
@@ -4068,7 +4085,7 @@ pub unsafe extern "C" fn get_default_gw(
     memset(
         _iface.as_mut_ptr() as *mut libc::c_void,
         0 as libc::c_int,
-        16 as libc::c_int as size_t as _,
+        16 as libc::c_int as size_t,
     );
     _get_default_gw(gw, _iface.as_mut_ptr());
     tmp = strcmp(
@@ -4110,7 +4127,7 @@ pub unsafe extern "C" fn get_iface_ip(
     memset(
         &mut ifr as *mut ifreq as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<ifreq>() as libc::c_ulong as _,
+        ::std::mem::size_of::<ifreq>() as libc::c_ulong,
     );
     sock = socket(2 as libc::c_int, 2 as libc::c_int, 0 as libc::c_int);
     if sock < 0 as libc::c_int {
@@ -4126,7 +4143,7 @@ pub unsafe extern "C" fn get_iface_ip(
     strncpy(
         (ifr.ifr_ifrn.ifrn_name).as_mut_ptr(),
         iface as *const libc::c_char,
-        15 as libc::c_int as size_t as _,
+        15 as libc::c_int as size_t,
     );
     tmp___3 = ioctl(sock, 35093 as libc::c_ulong, &mut ifr as *mut ifreq);
     if tmp___3 < 0 as libc::c_int {
@@ -4180,19 +4197,19 @@ pub unsafe extern "C" fn get_iface_hw_addr(
     memset(
         &mut buffer as *mut ifreq as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<ifreq>() as libc::c_ulong as _,
+        ::std::mem::size_of::<ifreq>() as libc::c_ulong,
     );
     strncpy(
         (buffer.ifr_ifrn.ifrn_name).as_mut_ptr(),
         iface as *const libc::c_char,
-        16 as libc::c_int as size_t as _,
+        16 as libc::c_int as size_t,
     );
     ioctl(s, 35111 as libc::c_ulong, &mut buffer as *mut ifreq);
     close(s);
     memcpy(
         hw_mac as *mut libc::c_void,
         (buffer.ifr_ifru.ifru_hwaddr.sa_data).as_mut_ptr() as *const libc::c_void,
-        6 as libc::c_int as size_t as _,
+        6 as libc::c_int as size_t,
     );
     return 0 as libc::c_int;
 }
@@ -4887,7 +4904,7 @@ pub unsafe extern "C" fn handle_packet(
                 .offset(::std::mem::size_of::<ether_header>() as libc::c_ulong as isize)
                 as *mut u_char as *mut libc::c_void,
             bytes.offset(zconf.data_link_size as isize) as *const libc::c_void,
-            buflen as size_t as _,
+            buflen as size_t,
         );
         bytes = fake_eth_hdr.as_mut_ptr() as *const libc::c_uchar;
     }
@@ -4936,7 +4953,7 @@ pub unsafe extern "C" fn handle_packet(
     o = 0 as *mut libc::c_void as *mut fieldset_t;
     if is_success == 0 {
         if zconf.default_mode != 0 {
-            current_block = 10480706514085580365;
+            current_block = 877344425305679040;
         } else {
             current_block = 11441799814184323368;
         }
@@ -4947,7 +4964,7 @@ pub unsafe extern "C" fn handle_packet(
         11441799814184323368 => {
             if is_repeat != 0 {
                 if zconf.default_mode != 0 {
-                    current_block = 10480706514085580365;
+                    current_block = 877344425305679040;
                 } else {
                     current_block = 4888910987971495881;
                 }
@@ -4955,7 +4972,7 @@ pub unsafe extern "C" fn handle_packet(
                 current_block = 4888910987971495881;
             }
             match current_block {
-                10480706514085580365 => {}
+                877344425305679040 => {}
                 _ => {
                     tmp___8 = evaluate_expression(zconf.filter.expression, fs);
                     if !(tmp___8 == 0) {
@@ -5011,7 +5028,7 @@ pub unsafe extern "C" fn recv_run(
         memset(
             fake_eth_hdr.as_mut_ptr() as *mut libc::c_void,
             0 as libc::c_int,
-            ::std::mem::size_of::<[u_char; 65535]>() as libc::c_ulong as _,
+            ::std::mem::size_of::<[u_char; 65535]>() as libc::c_ulong,
         );
         (*eth).ether_type = __bswap_16(2048 as libc::c_int as __uint16_t);
     }
@@ -5108,7 +5125,7 @@ unsafe extern "C" fn send_run_init(mut s: sock_t) -> libc::c_int {
     memset(
         &mut if_idx as *mut ifreq as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<ifreq>() as libc::c_ulong as _,
+        ::std::mem::size_of::<ifreq>() as libc::c_ulong,
     );
     tmp = strlen(zconf.iface as *const libc::c_char);
     if tmp >= 16 as libc::c_ulong {
@@ -5123,7 +5140,7 @@ unsafe extern "C" fn send_run_init(mut s: sock_t) -> libc::c_int {
     strncpy(
         (if_idx.ifr_ifrn.ifrn_name).as_mut_ptr(),
         zconf.iface as *const libc::c_char,
-        15 as libc::c_int as size_t as _,
+        15 as libc::c_int as size_t,
     );
     tmp___0 = ioctl(sock, 35123 as libc::c_ulong, &mut if_idx as *mut ifreq);
     if tmp___0 < 0 as libc::c_int {
@@ -5134,7 +5151,7 @@ unsafe extern "C" fn send_run_init(mut s: sock_t) -> libc::c_int {
     memset(
         &mut sockaddr as *mut sockaddr_ll as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<sockaddr_ll>() as libc::c_ulong as _,
+        ::std::mem::size_of::<sockaddr_ll>() as libc::c_ulong,
     );
     sockaddr.sll_ifindex = ifindex;
     sockaddr.sll_halen = 6 as libc::c_int as libc::c_uchar;
@@ -5144,7 +5161,7 @@ unsafe extern "C" fn send_run_init(mut s: sock_t) -> libc::c_int {
     memcpy(
         (sockaddr.sll_addr).as_mut_ptr() as *mut libc::c_void,
         (zconf.gw_mac).as_mut_ptr() as *const libc::c_void,
-        6 as libc::c_int as size_t as _,
+        6 as libc::c_int as size_t,
     );
     return 0 as libc::c_int;
 }
@@ -8225,7 +8242,7 @@ pub unsafe extern "C" fn init_empty_global_configuration(mut c: *mut state_conf)
     memset(
         ((*c).source_ip_addresses).as_mut_ptr() as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<[in_addr_t; 256]>() as libc::c_ulong as _,
+        ::std::mem::size_of::<[in_addr_t; 256]>() as libc::c_ulong,
     );
 }
 pub static mut zsend: state_send = {
@@ -8327,13 +8344,13 @@ pub unsafe extern "C" fn parse_source_ip_addresses(mut given_string: *mut libc::
             parse_source_ip_addresses(comma.offset(1 as libc::c_int as isize));
             current_block_38 = 10692455896603418738;
         } else {
-            current_block_38 = 5826895839038035959;
+            current_block_38 = 7571601939420918088;
         }
     } else {
-        current_block_38 = 5826895839038035959;
+        current_block_38 = 7571601939420918088;
     }
     match current_block_38 {
-        5826895839038035959 => {
+        7571601939420918088 => {
             if !comma.is_null() {
                 while !comma.is_null() {
                     *comma = '\u{0}' as i32 as libc::c_char;
@@ -8582,7 +8599,7 @@ unsafe extern "C" fn start_zmap() {
         memset(
             &mut gw_ip as *mut in_addr as *mut libc::c_void,
             0 as libc::c_int,
-            ::std::mem::size_of::<in_addr>() as libc::c_ulong as _,
+            ::std::mem::size_of::<in_addr>() as libc::c_ulong,
         );
         tmp___2 = get_default_gw(&mut gw_ip, zconf.iface);
         if tmp___2 < 0 as libc::c_int {
@@ -8604,7 +8621,7 @@ unsafe extern "C" fn start_zmap() {
         memset(
             &mut zconf.gw_mac as *mut [macaddr_t; 6] as *mut libc::c_void,
             0 as libc::c_int,
-            6 as libc::c_int as size_t as _,
+            6 as libc::c_int as size_t,
         );
         tmp___5 = get_hw_addr(&mut gw_ip, zconf.iface, (zconf.gw_mac).as_mut_ptr());
         if tmp___5 != 0 {
@@ -8817,14 +8834,14 @@ unsafe extern "C" fn start_zmap() {
         }
         let mut current_block_135: u64;
         if zconf.quiet == 0 {
-            current_block_135 = 3156627316214790248;
+            current_block_135 = 1824340867017426753;
         } else if !(zconf.status_updates_file).is_null() {
-            current_block_135 = 3156627316214790248;
+            current_block_135 = 1824340867017426753;
         } else {
             current_block_135 = 10109057886293123569;
         }
         match current_block_135 {
-            3156627316214790248 => {
+            1824340867017426753 => {
                 pthread_join(tmon, 0 as *mut libc::c_void as *mut *mut libc::c_void);
                 if r != 0 as libc::c_int {
                     log_fatal(
@@ -10009,7 +10026,7 @@ unsafe extern "C" fn update_arg(
                 if !(*prev_given != 0) {
                     if check_ambiguity != 0 {
                         if *field_given != 0 {
-                            current_block_19 = 8583738727092093706;
+                            current_block_19 = 16878247351586534670;
                         } else {
                             current_block_19 = 11194104282611034094;
                         }
@@ -10017,7 +10034,7 @@ unsafe extern "C" fn update_arg(
                         current_block_19 = 11194104282611034094;
                     }
                     match current_block_19 {
-                        8583738727092093706 => {}
+                        16878247351586534670 => {}
                         _ => {
                             break 's_122;
                         }
@@ -10976,7 +10993,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11000,7 +11017,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___0 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11024,7 +11041,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___1 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11048,7 +11065,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___2 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11072,7 +11089,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___3 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11095,7 +11112,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___4 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11119,7 +11136,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___5 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11143,7 +11160,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___6 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11167,7 +11184,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___7 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11191,7 +11208,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___8 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11215,7 +11232,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___9 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11239,7 +11256,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___10 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11262,7 +11279,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___11 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11285,7 +11302,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___12 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11309,7 +11326,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___13 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11333,7 +11350,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___14 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11357,7 +11374,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___15 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11381,7 +11398,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___16 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11404,7 +11421,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___17 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11428,7 +11445,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___18 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11452,7 +11469,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___19 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11476,7 +11493,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___20 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11500,7 +11517,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___21 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11524,7 +11541,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___22 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11548,7 +11565,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___23 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11572,7 +11589,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___24 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11596,7 +11613,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___25 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11619,7 +11636,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___26 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11643,7 +11660,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___27 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11667,7 +11684,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___28 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11690,7 +11707,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___29 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11713,7 +11730,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                     additional_error,
                 );
                 if tmp___30 != 0 {
-                    current_block = 7544259138455594556;
+                    current_block = 18020887494656759876;
                     break;
                 }
             }
@@ -11742,7 +11759,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                         additional_error,
                     );
                     if tmp___31 != 0 {
-                        current_block = 7544259138455594556;
+                        current_block = 18020887494656759876;
                         break;
                     }
                 } else {
@@ -11770,7 +11787,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                             additional_error,
                         );
                         if tmp___32 != 0 {
-                            current_block = 7544259138455594556;
+                            current_block = 18020887494656759876;
                             break;
                         }
                     } else {
@@ -11798,7 +11815,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                 additional_error,
                             );
                             if tmp___33 != 0 {
-                                current_block = 7544259138455594556;
+                                current_block = 18020887494656759876;
                                 break;
                             }
                         } else {
@@ -11826,7 +11843,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                     additional_error,
                                 );
                                 if tmp___34 != 0 {
-                                    current_block = 7544259138455594556;
+                                    current_block = 18020887494656759876;
                                     break;
                                 }
                             } else {
@@ -11854,7 +11871,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                         additional_error,
                                     );
                                     if tmp___35 != 0 {
-                                        current_block = 7544259138455594556;
+                                        current_block = 18020887494656759876;
                                         break;
                                     }
                                 } else {
@@ -11882,7 +11899,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                             additional_error,
                                         );
                                         if tmp___36 != 0 {
-                                            current_block = 7544259138455594556;
+                                            current_block = 18020887494656759876;
                                             break;
                                         }
                                     } else {
@@ -11910,7 +11927,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                 additional_error,
                                             );
                                             if tmp___37 != 0 {
-                                                current_block = 7544259138455594556;
+                                                current_block = 18020887494656759876;
                                                 break;
                                             }
                                         } else {
@@ -11937,7 +11954,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                     additional_error,
                                                 );
                                                 if tmp___38 != 0 {
-                                                    current_block = 7544259138455594556;
+                                                    current_block = 18020887494656759876;
                                                     break;
                                                 }
                                             } else {
@@ -11965,7 +11982,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                         additional_error,
                                                     );
                                                     if tmp___39 != 0 {
-                                                        current_block = 7544259138455594556;
+                                                        current_block = 18020887494656759876;
                                                         break;
                                                     }
                                                 } else {
@@ -11993,7 +12010,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                             additional_error,
                                                         );
                                                         if tmp___40 != 0 {
-                                                            current_block = 7544259138455594556;
+                                                            current_block = 18020887494656759876;
                                                             break;
                                                         }
                                                     } else {
@@ -12021,7 +12038,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                 additional_error,
                                                             );
                                                             if tmp___41 != 0 {
-                                                                current_block = 7544259138455594556;
+                                                                current_block = 18020887494656759876;
                                                                 break;
                                                             }
                                                         } else {
@@ -12048,7 +12065,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                     additional_error,
                                                                 );
                                                                 if tmp___42 != 0 {
-                                                                    current_block = 7544259138455594556;
+                                                                    current_block = 18020887494656759876;
                                                                     break;
                                                                 }
                                                             } else {
@@ -12075,7 +12092,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                         additional_error,
                                                                     );
                                                                     if tmp___43 != 0 {
-                                                                        current_block = 7544259138455594556;
+                                                                        current_block = 18020887494656759876;
                                                                         break;
                                                                     }
                                                                 } else {
@@ -12102,7 +12119,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                             additional_error,
                                                                         );
                                                                         if tmp___44 != 0 {
-                                                                            current_block = 7544259138455594556;
+                                                                            current_block = 18020887494656759876;
                                                                             break;
                                                                         }
                                                                     } else {
@@ -12130,7 +12147,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                 additional_error,
                                                                             );
                                                                             if tmp___45 != 0 {
-                                                                                current_block = 7544259138455594556;
+                                                                                current_block = 18020887494656759876;
                                                                                 break;
                                                                             }
                                                                         } else {
@@ -12158,7 +12175,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                     additional_error,
                                                                                 );
                                                                                 if tmp___46 != 0 {
-                                                                                    current_block = 7544259138455594556;
+                                                                                    current_block = 18020887494656759876;
                                                                                     break;
                                                                                 }
                                                                             } else {
@@ -12187,7 +12204,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                         additional_error,
                                                                                     );
                                                                                     if tmp___47 != 0 {
-                                                                                        current_block = 7544259138455594556;
+                                                                                        current_block = 18020887494656759876;
                                                                                         break;
                                                                                     }
                                                                                 } else {
@@ -12215,7 +12232,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                             additional_error,
                                                                                         );
                                                                                         if tmp___48 != 0 {
-                                                                                            current_block = 7544259138455594556;
+                                                                                            current_block = 18020887494656759876;
                                                                                             break;
                                                                                         }
                                                                                     } else {
@@ -12243,7 +12260,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                                 additional_error,
                                                                                             );
                                                                                             if tmp___49 != 0 {
-                                                                                                current_block = 7544259138455594556;
+                                                                                                current_block = 18020887494656759876;
                                                                                                 break;
                                                                                             }
                                                                                         } else {
@@ -12274,7 +12291,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                                                                                                 additional_error,
                                                                                             );
                                                                                             if tmp___50 != 0 {
-                                                                                                current_block = 7544259138455594556;
+                                                                                                current_block = 18020887494656759876;
                                                                                                 break;
                                                                                             }
                                                                                         }
@@ -12298,7 +12315,7 @@ unsafe extern "C" fn cmdline_parser_internal(
                 }
             }
             63 => {
-                current_block = 7544259138455594556;
+                current_block = 18020887494656759876;
                 break;
             }
             _ => {
@@ -12320,7 +12337,7 @@ unsafe extern "C" fn cmdline_parser_internal(
         }
     }
     match current_block {
-        7544259138455594556 => {
+        18020887494656759876 => {
             cmdline_parser_release(&mut local_args_info);
             return 1 as libc::c_int;
         }
@@ -12489,11 +12506,11 @@ unsafe extern "C" fn _cmdline_parser_configfile(
                 if *farg.offset(0 as libc::c_int as isize) as libc::c_int
                     == 34 as libc::c_int
                 {
-                    current_block_86 = 1751906698440020857;
+                    current_block_86 = 8865292571736351783;
                 } else if *farg.offset(0 as libc::c_int as isize) as libc::c_int
                         == 39 as libc::c_int
                     {
-                    current_block_86 = 1751906698440020857;
+                    current_block_86 = 8865292571736351783;
                 } else {
                     next_token = strcspn(
                         farg as *const libc::c_char,
@@ -12503,7 +12520,7 @@ unsafe extern "C" fn _cmdline_parser_configfile(
                     current_block_86 = 11763295167351361500;
                 }
                 match current_block_86 {
-                    1751906698440020857 => {
+                    8865292571736351783 => {
                         farg = farg.offset(1);
                         str_index = strchr(
                             farg as *const libc::c_char,
@@ -12606,13 +12623,13 @@ unsafe extern "C" fn _cmdline_parser_configfile(
                             );
                             current_block_72 = 9705665520141849625;
                         } else {
-                            current_block_72 = 14390628605638734663;
+                            current_block_72 = 1689129419248187236;
                         }
                     } else {
-                        current_block_72 = 14390628605638734663;
+                        current_block_72 = 1689129419248187236;
                     }
                     match current_block_72 {
-                        14390628605638734663 => {
+                        1689129419248187236 => {
                             if equal != 0 {
                                 strcat(
                                     my_argv.as_mut_ptr(),
@@ -13943,7 +13960,7 @@ unsafe extern "C" fn yyensure_buffer_stack() {
             num_to_alloc
                 .wrapping_mul(
                     ::std::mem::size_of::<*mut yy_buffer_state>() as libc::c_ulong,
-                ) as _,
+                ),
         );
         yy_buffer_stack_max = num_to_alloc;
         yy_buffer_stack_top = 0 as libc::c_int as size_t;
@@ -13972,7 +13989,7 @@ unsafe extern "C" fn yyensure_buffer_stack() {
             grow_size
                 .wrapping_mul(
                     ::std::mem::size_of::<*mut yy_buffer_state>() as libc::c_ulong,
-                ) as _,
+                ),
         );
         yy_buffer_stack_max = num_to_alloc;
     }
@@ -14916,7 +14933,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
     if yystack.s_base as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
         tmp = yygrowstack(&mut yystack);
         if tmp == -(2 as libc::c_int) {
-            current_block = 2636382364904497915;
+            current_block = 5304467669977578821;
         } else {
             current_block = 8515828400728868193;
         }
@@ -14949,7 +14966,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                                     {
                                         tmp___0 = yygrowstack(&mut yystack);
                                         if tmp___0 == -(2 as libc::c_int) {
-                                            current_block = 2636382364904497915;
+                                            current_block = 5304467669977578821;
                                             break;
                                         }
                                     }
@@ -14974,7 +14991,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                             if yyn <= 259 as libc::c_int {
                                 if yycheck[yyn as usize] as libc::c_int == yychar {
                                     yyn = yytable[yyn as usize] as libc::c_int;
-                                    current_block = 17736937831720971013;
+                                    current_block = 2928017439712449587;
                                 } else {
                                     current_block = 12199444798915819164;
                                 }
@@ -14988,7 +15005,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                         current_block = 12199444798915819164;
                     }
                     match current_block {
-                        17736937831720971013 => {}
+                        2928017439712449587 => {}
                         _ => {
                             if !(yyerrflag != 0) {
                                 yyerror(
@@ -15012,7 +15029,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                                                     {
                                                         tmp___1 = yygrowstack(&mut yystack);
                                                         if tmp___1 == -(2 as libc::c_int) {
-                                                            current_block = 2636382364904497915;
+                                                            current_block = 5304467669977578821;
                                                             break '_yyloop;
                                                         }
                                                     }
@@ -15053,7 +15070,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                     memset(
                         &mut yyval as *mut YYSTYPE as *mut libc::c_void,
                         0 as libc::c_int,
-                        ::std::mem::size_of::<YYSTYPE>() as libc::c_ulong as _,
+                        ::std::mem::size_of::<YYSTYPE>() as libc::c_ulong,
                     );
                 }
                 match yyn {
@@ -15255,7 +15272,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
                 if yystack.s_mark as libc::c_ulong >= yystack.s_last as libc::c_ulong {
                     tmp___2 = yygrowstack(&mut yystack);
                     if tmp___2 == -(2 as libc::c_int) {
-                        current_block = 2636382364904497915;
+                        current_block = 5304467669977578821;
                         break;
                     }
                 }
@@ -15268,7 +15285,7 @@ pub unsafe extern "C" fn yyparse() -> libc::c_int {
         _ => {}
     }
     match current_block {
-        2636382364904497915 => {
+        5304467669977578821 => {
             yyerror(b"yacc stack overflow\0" as *const u8 as *const libc::c_char);
         }
         _ => {}
@@ -15550,7 +15567,7 @@ unsafe extern "C" fn icmp_echo_init_perthread(
     let mut tmp: __uint16_t = 0;
     let mut icmp_header: *mut icmp = 0 as *mut icmp;
     let mut payload: *mut libc::c_char = 0 as *mut libc::c_char;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -15567,7 +15584,7 @@ unsafe extern "C" fn icmp_echo_init_perthread(
     memcpy(
         payload as *mut libc::c_void,
         icmp_payload as *const libc::c_void,
-        icmp_payload_len as _,
+        icmp_payload_len,
     );
     return 0 as libc::c_int;
 }
@@ -16021,7 +16038,7 @@ unsafe extern "C" fn icmp_echo_init_perthread___0(
     let mut len: uint16_t = 0;
     let mut tmp: __uint16_t = 0;
     let mut icmp_header: *mut icmp = 0 as *mut icmp;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -16151,14 +16168,14 @@ unsafe extern "C" fn icmp_validate_packet___0(
     icmp_seqnum = (*icmp_h).icmp_hun.ih_idseq.icd_seq;
     let mut current_block_20: u64;
     if (*icmp_h).icmp_type as libc::c_int == 11 as libc::c_int {
-        current_block_20 = 8185735187304638456;
+        current_block_20 = 12122188516934996883;
     } else if (*icmp_h).icmp_type as libc::c_int == 3 as libc::c_int {
-        current_block_20 = 8185735187304638456;
+        current_block_20 = 12122188516934996883;
     } else {
         current_block_20 = 15904375183555213903;
     }
     match current_block_20 {
-        8185735187304638456 => {
+        12122188516934996883 => {
             if ((4 as libc::c_uint)
                 .wrapping_mul((*ip_hdr).ip_hl())
                 .wrapping_add(8 as libc::c_uint) as libc::c_ulong)
@@ -17088,7 +17105,7 @@ unsafe extern "C" fn synackscan_init_perthread(
     let mut len: uint16_t = 0;
     let mut tmp: __uint16_t = 0;
     let mut tcp_header: *mut tcphdr = 0 as *mut tcphdr;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -18149,7 +18166,7 @@ pub unsafe extern "C" fn udp_init_perthread(
     let mut tmp___0: uint64_t = 0;
     let mut aes: *mut aesrand_t = 0 as *mut aesrand_t;
     let mut tmp___1: *mut aesrand_t = 0 as *mut aesrand_t;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -18166,7 +18183,7 @@ pub unsafe extern "C" fn udp_init_perthread(
     make_udp_header(udp_header, zconf.target_port, udp_len);
     if !udp_fixed_payload.is_null() {
         payload = udp_header.offset(1 as libc::c_int as isize) as *mut libc::c_void;
-        memcpy(payload, udp_fixed_payload as *const libc::c_void, udp_fixed_payload_len as _);
+        memcpy(payload, udp_fixed_payload as *const libc::c_void, udp_fixed_payload_len);
     }
     tmp___0 = aesrand_getword(zconf.aes);
     seed = tmp___0 as uint32_t;
@@ -18240,10 +18257,10 @@ pub unsafe extern "C" fn udp_make_templated_packet(
     memset(
         payload as *mut libc::c_void,
         0 as libc::c_int,
-        1472 as libc::c_int as size_t as _,
+        1472 as libc::c_int as size_t,
     );
     aes = arg as *mut aesrand_t;
-    tmp___0 = 0;
+
 
 
 
@@ -18754,13 +18771,13 @@ pub unsafe extern "C" fn udp_template_load(
                         dollar = p;
                         current_block_13 = 12124785117276362961;
                     } else {
-                        current_block_13 = 7043273740668273692;
+                        current_block_13 = 2334936839955995241;
                     }
                 } else {
-                    current_block_13 = 7043273740668273692;
+                    current_block_13 = 2334936839955995241;
                 }
                 match current_block_13 {
-                    7043273740668273692 => {
+                    2334936839955995241 => {
                         if dollar.is_null() {
                             dollar = p;
                         }
@@ -18792,7 +18809,7 @@ pub unsafe extern "C" fn udp_template_load(
                             memcpy(
                                 tmp___0 as *mut libc::c_void,
                                 s as *const libc::c_void,
-                                tlen as size_t as _,
+                                tlen as size_t,
                             );
                             udp_template_add_field(t, UDP_DATA, tlen, tmp___0);
                             _max_pkt_len = (_max_pkt_len as libc::c_uint)
@@ -18808,7 +18825,7 @@ pub unsafe extern "C" fn udp_template_load(
                             lbrack.offset(1 as libc::c_int as isize)
                                 as *const libc::c_void,
                             (p.offset_from(lbrack) as libc::c_long - 1 as libc::c_long)
-                                as size_t as _,
+                                as size_t,
                         );
                         tmp___3 = udp_template_field_lookup(
                             tmp___0 as *const libc::c_char,
@@ -18851,7 +18868,7 @@ pub unsafe extern "C" fn udp_template_load(
         tlen = p.offset_from(s) as libc::c_long as libc::c_uint;
         tmp___4 = xmalloc(tlen as size_t);
         tmp___0 = tmp___4 as *mut libc::c_char;
-        memcpy(tmp___0 as *mut libc::c_void, s as *const libc::c_void, tlen as size_t as _);
+        memcpy(tmp___0 as *mut libc::c_void, s as *const libc::c_void, tlen as size_t);
         udp_template_add_field(t, UDP_DATA, tlen, tmp___0);
         _max_pkt_len = (_max_pkt_len as libc::c_uint).wrapping_add(tlen) as uint32_t
             as uint32_t;
@@ -19010,12 +19027,12 @@ pub unsafe extern "C" fn fprintf_ip_header(mut fp: *mut FILE, mut iph: *mut ip) 
     s = &mut (*iph).ip_src;
     d = &mut (*iph).ip_dst;
     tmp = inet_ntoa(*s);
-    strncpy(srcip.as_mut_ptr(), tmp as *const libc::c_char, 19 as libc::c_int as size_t as _);
+    strncpy(srcip.as_mut_ptr(), tmp as *const libc::c_char, 19 as libc::c_int as size_t);
     tmp___0 = inet_ntoa(*d);
     strncpy(
         dstip.as_mut_ptr(),
         tmp___0 as *const libc::c_char,
-        19 as libc::c_int as size_t as _,
+        19 as libc::c_int as size_t,
     );
     srcip[20 as libc::c_int as usize] = '\u{0}' as i32 as libc::c_char;
     dstip[20 as libc::c_int as usize] = '\u{0}' as i32 as libc::c_char;
@@ -19063,12 +19080,12 @@ pub unsafe extern "C" fn make_eth_header(
     memcpy(
         ((*ethh).ether_shost).as_mut_ptr() as *mut libc::c_void,
         src as *const libc::c_void,
-        6 as libc::c_int as size_t as _,
+        6 as libc::c_int as size_t,
     );
     memcpy(
         ((*ethh).ether_dhost).as_mut_ptr() as *mut libc::c_void,
         dst as *const libc::c_void,
-        6 as libc::c_int as size_t as _,
+        6 as libc::c_int as size_t,
     );
     (*ethh).ether_type = __bswap_16(2048 as libc::c_int as __uint16_t);
 }
@@ -19091,7 +19108,7 @@ pub unsafe extern "C" fn make_icmp_header(mut buf: *mut icmp) {
     memset(
         buf as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<icmp>() as libc::c_ulong as _,
+        ::std::mem::size_of::<icmp>() as libc::c_ulong,
     );
     (*buf).icmp_type = 8 as libc::c_int as uint8_t;
     (*buf).icmp_code = 0 as libc::c_int as uint8_t;
@@ -19879,7 +19896,7 @@ pub unsafe extern "C" fn ntp_init_perthread(
     let mut tmp___0: uint64_t = 0;
     let mut aes: *mut aesrand_t = 0 as *mut aesrand_t;
     let mut tmp___1: *mut aesrand_t = 0 as *mut aesrand_t;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -20163,7 +20180,7 @@ pub unsafe extern "C" fn upnp_init_perthread(
     let mut payload: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut tmp___5: size_t = 0;
     let mut tmp___9: size_t = 0;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -20286,7 +20303,7 @@ pub unsafe extern "C" fn upnp_process_packet(
             - 8 as libc::c_int) as uint16_t;
         tmp = xmalloc((plen as libc::c_int + 1 as libc::c_int) as size_t);
         s = tmp as *mut libc::c_char;
-        strncpy(s, payload as *const libc::c_char, plen as size_t as _);
+        strncpy(s, payload as *const libc::c_char, plen as size_t);
         *s.offset(plen as libc::c_int as isize) = 0 as libc::c_int as libc::c_char;
         is_first = 1 as libc::c_int;
         classification = b"none\0" as *const u8 as *const libc::c_char;
@@ -21267,7 +21284,7 @@ unsafe extern "C" fn build_global_dns_packets(
         memcpy(
             qname_p as *mut libc::c_void,
             *qnames.offset(i as isize) as *const libc::c_void,
-            *qname_lens.offset(i as isize) as size_t as _,
+            *qname_lens.offset(i as isize) as size_t,
         );
         (*tail_p).qtype = __bswap_16(*qtypes.offset(i as isize));
         (*tail_p).qclass = __bswap_16(1 as libc::c_int as __uint16_t);
@@ -21319,14 +21336,14 @@ unsafe extern "C" fn get_name_helper(
             }
             let mut current_block_27: u64;
             if recursion_level as libc::c_int > 0 as libc::c_int {
-                current_block_27 = 13513605098558570425;
+                current_block_27 = 8710080086406446940;
             } else if bytes_consumed as libc::c_int > 0 as libc::c_int {
-                current_block_27 = 13513605098558570425;
+                current_block_27 = 8710080086406446940;
             } else {
                 current_block_27 = 16203760046146113240;
             }
             match current_block_27 {
-                13513605098558570425 => {
+                8710080086406446940 => {
                     if (name_len as libc::c_int) < 1 as libc::c_int {
                         log_warn(
                             b"dns\0" as *const u8 as *const libc::c_char,
@@ -21404,7 +21421,7 @@ unsafe extern "C" fn get_name_helper(
                 memcpy(
                     name as *mut libc::c_void,
                     data as *const libc::c_void,
-                    byte as size_t as _,
+                    byte as size_t,
                 );
                 name = name.offset(byte as libc::c_int as isize);
                 name_len = (name_len as libc::c_int - byte as libc::c_int) as uint16_t;
@@ -21727,7 +21744,7 @@ unsafe extern "C" fn dns_global_initialize(mut conf: *mut state_conf) -> libc::c
                 *domains.offset(i___0 as isize),
                 probe_q_delimiter_p.offset(1 as libc::c_int as isize)
                     as *const libc::c_char,
-                domain_len as size_t as _,
+                domain_len as size_t,
             );
             *(*domains.offset(i___0 as isize))
                 .offset(domain_len as isize) = '\u{0}' as i32 as libc::c_char;
@@ -21739,7 +21756,7 @@ unsafe extern "C" fn dns_global_initialize(mut conf: *mut state_conf) -> libc::c
             strncpy(
                 qtype_str,
                 arg_pos as *const libc::c_char,
-                probe_q_delimiter_p.offset_from(arg_pos) as libc::c_long as size_t as _,
+                probe_q_delimiter_p.offset_from(arg_pos) as libc::c_long as size_t,
             );
             *qtype_str
                 .offset(
@@ -21837,7 +21854,7 @@ pub unsafe extern "C" fn dns_init_perthread(
     let mut tmp: __uint16_t = 0;
     let mut udp_header: *mut udphdr = 0 as *mut udphdr;
     let mut payload: *mut libc::c_char = 0 as *mut libc::c_char;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     make_eth_header(eth_header, src, gw);
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
@@ -21860,7 +21877,7 @@ pub unsafe extern "C" fn dns_init_perthread(
     memcpy(
         payload as *mut libc::c_void,
         *dns_packets.offset(0 as libc::c_int as isize) as *const libc::c_void,
-        *dns_packet_lens.offset(0 as libc::c_int as isize) as size_t as _,
+        *dns_packet_lens.offset(0 as libc::c_int as isize) as size_t,
     );
     return 0 as libc::c_int;
 }
@@ -21917,7 +21934,7 @@ pub unsafe extern "C" fn dns_make_packet(
         memcpy(
             payload as *mut libc::c_void,
             *dns_packets.offset(probe_num as isize) as *const libc::c_void,
-            *dns_packet_lens.offset(probe_num as isize) as size_t as _,
+            *dns_packet_lens.offset(probe_num as isize) as size_t,
         );
     }
     (*ip_header).ip_src.s_addr = src_ip;
@@ -22356,7 +22373,7 @@ pub unsafe extern "C" fn dns_process_packet(
                 if err != 0 {
                     break;
                 }
-                err = 0;
+
 
 
 
@@ -22380,7 +22397,7 @@ pub unsafe extern "C" fn dns_process_packet(
                 if err != 0 {
                     break;
                 }
-                err = 0;
+
 
 
 
@@ -22404,7 +22421,7 @@ pub unsafe extern "C" fn dns_process_packet(
                 if err != 0 {
                     break;
                 }
-                err = 0;
+
 
 
 
@@ -22799,7 +22816,7 @@ pub unsafe extern "C" fn bacnet_init_perthread(
     let mut tmp___1: uint64_t = 0;
     let mut aes: *mut aesrand_t = 0 as *mut aesrand_t;
     let mut tmp___2: *mut aesrand_t = 0 as *mut aesrand_t;
-    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t as _);
+    memset(buf, 0 as libc::c_int, 4096 as libc::c_int as size_t);
     eth_header = buf as *mut ether_header;
     ip_header = eth_header.offset(1 as libc::c_int as isize) as *mut ip;
     udp_header = ip_header.offset(1 as libc::c_int as isize) as *mut udphdr;
@@ -22833,7 +22850,7 @@ pub unsafe extern "C" fn bacnet_init_perthread(
     memcpy(
         body as *mut libc::c_void,
         bacnet_body.as_mut_ptr() as *const libc::c_void,
-        7 as libc::c_int as size_t as _,
+        7 as libc::c_int as size_t,
     );
     tmp___1 = aesrand_getword(zconf.aes);
     seed = tmp___1 as uint32_t;
@@ -23422,7 +23439,7 @@ pub unsafe extern "C" fn field_to_jsonobj(mut f: *mut field_t) -> *mut json_obje
         tmp___1 = json_object_new_boolean((*f).value.num as json_bool);
         return tmp___1;
     } else if (*f).type_0 == 3 as libc::c_int {
-        tmp___2 = 0 as *mut _;
+
 
 
 
@@ -23745,10 +23762,10 @@ pub fn main() {
     args.push(::std::ptr::null_mut());
     unsafe {
         ::std::process::exit(
-            0
 
 
 
+0
         )
     }
 }

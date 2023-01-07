@@ -105,5 +105,5 @@ fn main() {
         file.write_all(fixed_source_code.as_bytes()).unwrap();
     }
 
-    println!("{:?}", start.elapsed());
+    println!("{:.3}", start.elapsed().as_secs_f32());
 }

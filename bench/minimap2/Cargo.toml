@@ -15,5 +15,4 @@ path = "c2rust-lib.rs"
 crate-type = ["staticlib", "rlib"]
 [dependencies]
 c2rust-bitfields= "0.3"
-c2rust-asm-casts= "0.2"
 libc= "0.2"

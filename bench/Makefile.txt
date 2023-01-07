@@ -18,5 +18,8 @@ a.xml: main.c
 		--set outfile a.xml \
 		main.c
 
+clean-rs:
+	rm -rf compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib lines
+
 clean:
-	rm -rf *.xml a.json compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib *.dot lines
+	rm -rf *.xml compile_commands.json *.rs Cargo.* rust-toolchain target *.rlib *.dot lines

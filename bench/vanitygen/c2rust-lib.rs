@@ -6,7 +6,6 @@
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
 #![feature(asm)]
-#![feature(c_variadic)]
 #![feature(extern_types)]
 #![feature(label_break_value)]
 #![feature(register_tool)]

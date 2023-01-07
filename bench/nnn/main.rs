@@ -5974,7 +5974,7 @@ unsafe extern "C" fn filterentries(
 ) -> libc::c_int {
     let mut current_block: u64;
     let mut wln: *mut wchar_t = 0 as *mut wchar_t;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut ln: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut ch: [wint_t; 1] = [0; 1];
     let mut r: libc::c_int = 0;

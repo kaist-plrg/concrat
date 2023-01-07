@@ -111,5 +111,5 @@ fn main() {
         serde_json::to_writer_pretty(file, &summary).unwrap();
     }
 
-    println!("{:?}", start.elapsed());
+    println!("{:.3}", start.elapsed().as_secs_f32());
 }

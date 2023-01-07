@@ -1212,29 +1212,29 @@ struct pcap_stat {
    u_int ps_drop ;
    u_int ps_ifdrop ;
 };
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcat_chk(char * , char const   * , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsprintf_chk(char * , int  , unsigned long  , char const   * ,
                                 __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memmove_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    unsigned long __builtin_object_size(void * , int  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memset_chk(void * , int  , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncpy_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncat_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    long __builtin_expect(long  , long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memcpy_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsnprintf_chk(char * , unsigned long  , int  , unsigned long  ,
                                  char const   * , __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcpy_chk(char * , char const   * , unsigned long  ) ;  */
 #pragma merger("0","/tmp/cil-eQ8Pt2WR.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 __inline extern  __attribute__((__nothrow__)) double ( __attribute__((__warn_unused_result__,
@@ -1255,8 +1255,8 @@ extern  __attribute__((__nothrow__)) long long ( __attribute__((__nonnull__(1)))
                                                                                           int __base ) ;
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr )
+{
   long tmp ;
 
   {
@@ -1267,8 +1267,8 @@ __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __g
 }
 __inline extern  __attribute__((__nothrow__)) long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr ) 
-{ 
+__inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr )
+{
   long tmp ;
 
   {
@@ -1280,8 +1280,8 @@ __inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __
 __inline extern  __attribute__((__nothrow__)) long long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atoll)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern long long ( __attribute__((__warn_unused_result__, __nonnull__(1),
-__gnu_inline__)) atoll)(char const   *__nptr ) 
-{ 
+__gnu_inline__)) atoll)(char const   *__nptr )
+{
   long long tmp ;
 
   {
@@ -1298,8 +1298,8 @@ __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __
                           size_t __size , int (*__compar)(void const   * , void const   * ) ) ;
 __inline extern void *( __attribute__((__warn_unused_result__, __nonnull__(1,2,5),
 __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __nmemb ,
-                          size_t __size , int (*__compar)(void const   * , void const   * ) ) 
-{ 
+                          size_t __size , int (*__compar)(void const   * , void const   * ) )
+{
   size_t __l ;
   size_t __u ;
   size_t __idx ;
@@ -1335,8 +1335,8 @@ __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t const   * __res
                               size_t __len ) ;
 __inline extern  __attribute__((__nothrow__)) double ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern double ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr ) 
-{ 
+__inline extern double ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr )
+{
   double tmp ;
 
   {
@@ -1353,8 +1353,8 @@ __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unus
 __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
                                               char * __restrict  __resolved ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
-                                                                                                             char * __restrict  __resolved ) 
-{ 
+                                                                                                             char * __restrict  __resolved )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -1386,8 +1386,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2
 __gnu_inline__, __always_inline__)) ptsname_r)(int __fd , char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__, __always_inline__)) ptsname_r)(int __fd ,
                                                                                                     char *__buf ,
-                                                                                                    size_t __buflen ) 
-{ 
+                                                                                                    size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -1421,8 +1421,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) wctomb)(char *__s , wchar_t __wchar ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) wctomb)(char *__s ,
-                                                                                                         wchar_t __wchar ) 
-{ 
+                                                                                                         wchar_t __wchar )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -1457,8 +1457,8 @@ __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst , char const   * __res
                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst ,
                                                                                       char const   * __restrict  __src ,
-                                                                                      size_t __len ) 
-{ 
+                                                                                      size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1498,8 +1498,8 @@ __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t const   * __res
                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) wcstombs)(char * __restrict  __dst ,
                                                                                       wchar_t const   * __restrict  __src ,
-                                                                                      size_t __len ) 
-{ 
+                                                                                      size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1523,212 +1523,6 @@ __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) wcst
   }
   tmp___5 = __wcstombs_alias(__dst, __src, __len);
   return (tmp___5);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                            size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memmove)(void *__dest , void const   *__src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) memset)(void *__dest , int __ch , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) bcopy)(void const   *__src , void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) bzero)(void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) bcopy)(void const   *__src , void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) bcopy)(void const   *__src ,
-                                                                                                   void *__dest ,
-                                                                                                   size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __builtin___memmove_chk(__dest, __src, __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) bzero)(void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) bzero)(void *__dest ,
-                                                                                                 size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __builtin___memset_chk(__dest, '\000', __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __n ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                            size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest ,
-                                                                                                     void const   * __restrict  __src ,
-                                                                                                     size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 0);
-  tmp___0 = __builtin___memcpy_chk((void *)__dest, (void const   *)__src, __len, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memmove)(void *__dest , void const   *__src ,
-                                             size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) memmove)(void *__dest ,
-                                                                                                      void const   *__src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  tmp___0 = __builtin___memmove_chk(__dest, __src, __len, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) memset)(void *__dest , int __ch , size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) memset)(void *__dest ,
-                                                                                                   int __ch ,
-                                                                                                   size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  tmp___0 = __builtin___memset_chk(__dest, __ch, __len, tmp);
-  return (tmp___0);
-}
-}
-extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1))) __explicit_bzero_chk)(void *__dest ,
-                                                                                                  size_t __len ,
-                                                                                                  size_t __destlen ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest ,
-                                                                                                          size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __explicit_bzero_chk(__dest, __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strcpy_chk((char *)__dest, (char const   *)__src, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strncpy_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp);
-  return (tmp___0);
-}
-}
-extern  __attribute__((__nothrow__)) char *__stpncpy_chk(char *__dest , char const   *__src ,
-                                                         size_t __n , size_t __destlen ) ;
-extern  __attribute__((__nothrow__)) char *__stpncpy_alias(char *__dest , char const   *__src ,
-                                                           size_t __n )  __asm__("stpncpy")  ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __n ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __n ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-  unsigned long tmp___1 ;
-  char *tmp___3 ;
-
-  {
-  tmp___1 = __builtin_object_size((void *)__dest, 1);
-  if (tmp___1 != 0xffffffffffffffffUL) {
-    tmp = __builtin_object_size((void *)__dest, 1);
-    tmp___0 = __stpncpy_chk((char *)__dest, (char const   *)__src, __n, tmp);
-    return (tmp___0);
-  }
-  tmp___3 = __stpncpy_alias((char *)__dest, (char const   *)__src, __n);
-  return (tmp___3);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strcat_chk((char *)__dest, (char const   *)__src, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strncat_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp);
-  return (tmp___0);
 }
 }
 extern FILE *stdin ;
@@ -1775,8 +1569,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __gnu_inline__)) ferror_unlocked)(FILE *__stream ) ;
 extern int __uflow(FILE * ) ;
 extern int __overflow(FILE * , int  ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void)
+{
   int tmp ;
 
   {
@@ -1784,8 +1578,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) getchar)(void)
   return (tmp);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp )
+{
   int tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -1805,8 +1599,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp
   return (tmp___2);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void)
+{
   int tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -1826,8 +1620,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void)
   return (tmp___2);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c )
+{
   int tmp ;
 
   {
@@ -1835,8 +1629,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c )
   return (tmp);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream )
+{
   int tmp___0 ;
   char *tmp___1 ;
   char tmp___2 ;
@@ -1859,8 +1653,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , 
   return (tmp___3);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c )
+{
   int tmp___0 ;
   char *tmp___1 ;
   char tmp___2 ;
@@ -1885,8 +1679,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c 
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__)) feof_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) feof_unlocked)(FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) feof_unlocked)(FILE *__stream )
+{
 
 
   {
@@ -1895,8 +1689,8 @@ __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) fe
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__)) ferror_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) ferror_unlocked)(FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) ferror_unlocked)(FILE *__stream )
+{
 
 
   {
@@ -1908,8 +1702,8 @@ __always_inline__)) vsprintf)(char * __restrict  __s , char const   * __restrict
                               __gnuc_va_list __ap ) ;
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vsprintf)(char * __restrict  __s ,
                                                                                    char const   * __restrict  __fmt ,
-                                                                                   __gnuc_va_list __ap ) 
-{ 
+                                                                                   __gnuc_va_list __ap )
+{
   unsigned long tmp ;
   int tmp___0 ;
 
@@ -1925,8 +1719,8 @@ __always_inline__)) vsnprintf)(char * __restrict  __s , size_t __n , char const 
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) vsnprintf)(char * __restrict  __s ,
                                                                                                            size_t __n ,
                                                                                                            char const   * __restrict  __fmt ,
-                                                                                                           __gnuc_va_list __ap ) 
-{ 
+                                                                                                           __gnuc_va_list __ap )
+{
   unsigned long tmp ;
   int tmp___0 ;
 
@@ -1940,8 +1734,8 @@ __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __al
 extern int __vfprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format ,
                           __gnuc_va_list __ap ) ;
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vprintf)(char const   * __restrict  __fmt ,
-                                                                                  __gnuc_va_list __ap ) 
-{ 
+                                                                                  __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -1951,8 +1745,8 @@ __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vprintf
 }
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vfprintf)(FILE * __restrict  __stream ,
                                                                                    char const   * __restrict  __fmt ,
-                                                                                   __gnuc_va_list __ap ) 
-{ 
+                                                                                   __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -1964,8 +1758,8 @@ extern int ( /* format attribute */  __vdprintf_chk)(int __fd , int __flag , cha
                                                      __gnuc_va_list __arg ) ;
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) vdprintf)(int __fd ,
                                                                                                           char const   * __restrict  __fmt ,
-                                                                                                          __gnuc_va_list __ap ) 
-{ 
+                                                                                                          __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -1976,8 +1770,8 @@ __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __al
 extern char *( __attribute__((__warn_unused_result__)) __gets_chk)(char *__str , size_t  ) ;
 extern char *( __attribute__((__warn_unused_result__)) __gets_warn)(char *__str )  __asm__("gets")  ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) gets)(char *__str )  __attribute__((__deprecated__)) ;
-__inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) gets)(char *__str ) 
-{ 
+__inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) gets)(char *__str )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -2005,8 +1799,8 @@ extern char *( __attribute__((__warn_unused_result__)) __fgets_chk_warn)(char * 
                                                                          FILE * __restrict  __stream )  __asm__("__fgets_chk")  ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fgets)(char * __restrict  __s ,
                                                                                                           int __n ,
-                                                                                                          FILE * __restrict  __stream ) 
-{ 
+                                                                                                          FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -2049,8 +1843,8 @@ extern size_t ( __attribute__((__warn_unused_result__)) __fread_chk_warn)(void *
 __inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fread)(void * __restrict  __ptr ,
                                                                                                            size_t __size ,
                                                                                                            size_t __n ,
-                                                                                                           FILE * __restrict  __stream ) 
-{ 
+                                                                                                           FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -2093,8 +1887,8 @@ extern size_t ( __attribute__((__warn_unused_result__)) __fread_unlocked_chk_war
 __inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fread_unlocked)(void * __restrict  __ptr ,
                                                                                                                     size_t __size ,
                                                                                                                     size_t __n ,
-                                                                                                                    FILE * __restrict  __stream ) 
-{ 
+                                                                                                                    FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -2127,8 +1921,8 @@ extern void ( /* format attribute */  __vsyslog_chk)(int __pri , int __flag , ch
                                                      __gnuc_va_list __ap ) ;
 __inline extern void ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) vsyslog)(int __pri ,
                                                                                                           char const   *__fmt ,
-                                                                                                          __gnuc_va_list __ap ) 
-{ 
+                                                                                                          __gnuc_va_list __ap )
+{
 
 
   {
@@ -2136,7 +1930,7 @@ __inline extern void ( /* format attribute */ __attribute__((__gnu_inline__, __a
   return;
 }
 }
-extern  __attribute__((__noreturn__)) int log_fatal(char const   *loggerName , char const   *logMessage 
+extern  __attribute__((__noreturn__)) int log_fatal(char const   *loggerName , char const   *logMessage
                                                     , ...) ;
 extern int rijndaelKeySetupEnc(u32 *rk , u8 const   *cipherKey , int keyBits ) ;
 extern void rijndaelEncrypt(u32 const   *rk , int Nr , u8 const   *pt , u8 *ct ) ;
@@ -2145,8 +1939,8 @@ extern void *xmalloc(size_t size ) ;
 aesrand_t *aesrand_init_from_random(void) ;
 aesrand_t *aesrand_init_from_seed(uint64_t seed ) ;
 uint64_t aesrand_getword(aesrand_t *aes ) ;
-static aesrand_t *_aesrand_init(uint8_t *key ) 
-{ 
+static aesrand_t *_aesrand_init(uint8_t *key )
+{
   aesrand_t *aes ;
   void *tmp ;
   int tmp___0 ;
@@ -2163,8 +1957,8 @@ static aesrand_t *_aesrand_init(uint8_t *key )
   return (aes);
 }
 }
-aesrand_t *aesrand_init_from_seed(uint64_t seed ) 
-{ 
+aesrand_t *aesrand_init_from_seed(uint64_t seed )
+{
   uint8_t key[16] ;
   uint8_t i ;
   aesrand_t *tmp ;
@@ -2180,8 +1974,8 @@ aesrand_t *aesrand_init_from_seed(uint64_t seed )
   return (tmp);
 }
 }
-aesrand_t *aesrand_init_from_random(void) 
-{ 
+aesrand_t *aesrand_init_from_random(void)
+{
   uint8_t key[16] ;
   int tmp ;
   aesrand_t *tmp___0 ;
@@ -2195,8 +1989,8 @@ aesrand_t *aesrand_init_from_random(void)
   return (tmp___0);
 }
 }
-uint64_t aesrand_getword(aesrand_t *aes ) 
-{ 
+uint64_t aesrand_getword(aesrand_t *aes )
+{
   uint64_t retval ;
 
   {
@@ -2275,8 +2069,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_sub_1)(mp_ptr
                                                                           mp_limb_t __gmp_n ) ;
 extern mp_limb_t __gmpn_sub_n(mp_ptr  , mp_srcptr  , mp_srcptr  , mp_size_t  ) ;
 __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_abs)(mpz_ptr __gmp_w ,
-                                                                   mpz_srcptr __gmp_u ) 
-{ 
+                                                                   mpz_srcptr __gmp_u )
+{
 
 
   {
@@ -2292,8 +2086,8 @@ __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_abs)(mpz_ptr __gmp
 }
 }
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_uint_p)(mpz_srcptr __gmp_z )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_uint_p)(mpz_srcptr __gmp_z ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_uint_p)(mpz_srcptr __gmp_z )
+{
   mp_size_t __gmp_n ;
   mp_ptr __gmp_p ;
   int tmp ;
@@ -2317,8 +2111,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_uint_p)(mpz_sr
 }
 }
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ulong_p)(mpz_srcptr __gmp_z )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ulong_p)(mpz_srcptr __gmp_z ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ulong_p)(mpz_srcptr __gmp_z )
+{
   mp_size_t __gmp_n ;
   mp_ptr __gmp_p ;
   int tmp ;
@@ -2342,8 +2136,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ulong_p)(mpz_s
 }
 }
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ushort_p)(mpz_srcptr __gmp_z )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ushort_p)(mpz_srcptr __gmp_z ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ushort_p)(mpz_srcptr __gmp_z )
+{
   mp_size_t __gmp_n ;
   mp_ptr __gmp_p ;
   int tmp ;
@@ -2367,8 +2161,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_fits_ushort_p)(mpz_
 }
 }
 __inline extern unsigned long ( __attribute__((__gnu_inline__)) __gmpz_get_ui)(mpz_srcptr __gmp_z )  __attribute__((__pure__)) ;
-__inline extern unsigned long ( __attribute__((__gnu_inline__)) __gmpz_get_ui)(mpz_srcptr __gmp_z ) 
-{ 
+__inline extern unsigned long ( __attribute__((__gnu_inline__)) __gmpz_get_ui)(mpz_srcptr __gmp_z )
+{
   mp_ptr __gmp_p ;
   mp_size_t __gmp_n ;
   mp_limb_t __gmp_l ;
@@ -2389,8 +2183,8 @@ __inline extern unsigned long ( __attribute__((__gnu_inline__)) __gmpz_get_ui)(m
 __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpz_getlimbn)(mpz_srcptr __gmp_z ,
                                                                              mp_size_t __gmp_n )  __attribute__((__pure__)) ;
 __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpz_getlimbn)(mpz_srcptr __gmp_z ,
-                                                                             mp_size_t __gmp_n ) 
-{ 
+                                                                             mp_size_t __gmp_n )
+{
   mp_limb_t __gmp_result ;
   int tmp ;
   int tmp___0 ;
@@ -2420,8 +2214,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpz_getlimbn)(mpz
 }
 }
 __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_neg)(mpz_ptr __gmp_w ,
-                                                                   mpz_srcptr __gmp_u ) 
-{ 
+                                                                   mpz_srcptr __gmp_u )
+{
 
 
   {
@@ -2433,8 +2227,8 @@ __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_neg)(mpz_ptr __gmp
 }
 }
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_perfect_square_p)(mpz_srcptr __gmp_a )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_perfect_square_p)(mpz_srcptr __gmp_a ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) __gmpz_perfect_square_p)(mpz_srcptr __gmp_a )
+{
   mp_size_t __gmp_asize ;
   int __gmp_result ;
   long tmp ;
@@ -2450,8 +2244,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpz_perfect_square_p)(m
 }
 }
 __inline extern mp_bitcnt_t ( __attribute__((__gnu_inline__)) __gmpz_popcount)(mpz_srcptr __gmp_u )  __attribute__((__pure__)) ;
-__inline extern mp_bitcnt_t ( __attribute__((__gnu_inline__)) __gmpz_popcount)(mpz_srcptr __gmp_u ) 
-{ 
+__inline extern mp_bitcnt_t ( __attribute__((__gnu_inline__)) __gmpz_popcount)(mpz_srcptr __gmp_u )
+{
   mp_size_t __gmp_usize ;
   mp_bitcnt_t __gmp_result ;
   long tmp ;
@@ -2471,8 +2265,8 @@ __inline extern mp_bitcnt_t ( __attribute__((__gnu_inline__)) __gmpz_popcount)(m
 }
 }
 __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_set_q)(mpz_ptr __gmp_w ,
-                                                                     mpq_srcptr __gmp_u ) 
-{ 
+                                                                     mpq_srcptr __gmp_u )
+{
 
 
   {
@@ -2481,8 +2275,8 @@ __inline extern void ( __attribute__((__gnu_inline__)) __gmpz_set_q)(mpz_ptr __g
 }
 }
 __inline extern size_t ( __attribute__((__gnu_inline__)) __gmpz_size)(mpz_srcptr __gmp_z )  __attribute__((__pure__)) ;
-__inline extern size_t ( __attribute__((__gnu_inline__)) __gmpz_size)(mpz_srcptr __gmp_z ) 
-{ 
+__inline extern size_t ( __attribute__((__gnu_inline__)) __gmpz_size)(mpz_srcptr __gmp_z )
+{
   int tmp ;
 
   {
@@ -2495,8 +2289,8 @@ __inline extern size_t ( __attribute__((__gnu_inline__)) __gmpz_size)(mpz_srcptr
 }
 }
 __inline extern void ( __attribute__((__gnu_inline__)) __gmpq_abs)(mpq_ptr __gmp_w ,
-                                                                   mpq_srcptr __gmp_u ) 
-{ 
+                                                                   mpq_srcptr __gmp_u )
+{
 
 
   {
@@ -2512,8 +2306,8 @@ __inline extern void ( __attribute__((__gnu_inline__)) __gmpq_abs)(mpq_ptr __gmp
 }
 }
 __inline extern void ( __attribute__((__gnu_inline__)) __gmpq_neg)(mpq_ptr __gmp_w ,
-                                                                   mpq_srcptr __gmp_u ) 
-{ 
+                                                                   mpq_srcptr __gmp_u )
+{
 
 
   {
@@ -2528,8 +2322,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_add)(mp_ptr _
                                                                         mp_srcptr __gmp_xp ,
                                                                         mp_size_t __gmp_xsize ,
                                                                         mp_srcptr __gmp_yp ,
-                                                                        mp_size_t __gmp_ysize ) 
-{ 
+                                                                        mp_size_t __gmp_ysize )
+{
   mp_limb_t __gmp_c ;
   mp_size_t __gmp_i ;
   mp_limb_t __gmp_x ;
@@ -2580,8 +2374,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_add)(mp_ptr _
 __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_add_1)(mp_ptr __gmp_dst ,
                                                                           mp_srcptr __gmp_src ,
                                                                           mp_size_t __gmp_size ,
-                                                                          mp_limb_t __gmp_n ) 
-{ 
+                                                                          mp_limb_t __gmp_n )
+{
   mp_limb_t __gmp_c ;
   mp_size_t __gmp_i ;
   mp_limb_t __gmp_x ;
@@ -2640,8 +2434,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpn_cmp)(mp_srcptr __gm
                                                                   mp_size_t __gmp_size )  __attribute__((__pure__)) ;
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpn_cmp)(mp_srcptr __gmp_xp ,
                                                                   mp_srcptr __gmp_yp ,
-                                                                  mp_size_t __gmp_size ) 
-{ 
+                                                                  mp_size_t __gmp_size )
+{
   int __gmp_result ;
   mp_size_t __gmp_i ;
   mp_limb_t __gmp_x ;
@@ -2675,8 +2469,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) __gmpn_cmp)(mp_srcptr __gm
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpn_zero_p)(mp_srcptr __gmp_p ,
                                                                      mp_size_t __gmp_n )  __attribute__((__pure__)) ;
 __inline extern int ( __attribute__((__gnu_inline__)) __gmpn_zero_p)(mp_srcptr __gmp_p ,
-                                                                     mp_size_t __gmp_n ) 
-{ 
+                                                                     mp_size_t __gmp_n )
+{
 
 
   {
@@ -2696,8 +2490,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_sub)(mp_ptr _
                                                                         mp_srcptr __gmp_xp ,
                                                                         mp_size_t __gmp_xsize ,
                                                                         mp_srcptr __gmp_yp ,
-                                                                        mp_size_t __gmp_ysize ) 
-{ 
+                                                                        mp_size_t __gmp_ysize )
+{
   mp_limb_t __gmp_c ;
   mp_size_t __gmp_i ;
   mp_limb_t __gmp_x ;
@@ -2746,8 +2540,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_sub)(mp_ptr _
 __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_sub_1)(mp_ptr __gmp_dst ,
                                                                           mp_srcptr __gmp_src ,
                                                                           mp_size_t __gmp_size ,
-                                                                          mp_limb_t __gmp_n ) 
-{ 
+                                                                          mp_limb_t __gmp_n )
+{
   mp_limb_t __gmp_c ;
   mp_size_t __gmp_i ;
   mp_limb_t __gmp_x ;
@@ -2803,8 +2597,8 @@ __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_sub_1)(mp_ptr
 }
 __inline extern mp_limb_t ( __attribute__((__gnu_inline__)) __gmpn_neg)(mp_ptr __gmp_rp ,
                                                                         mp_srcptr __gmp_up ,
-                                                                        mp_size_t __gmp_n ) 
-{ 
+                                                                        mp_size_t __gmp_n )
+{
 
 
   {
@@ -2832,8 +2626,8 @@ __inline extern  __attribute__((__nothrow__)) struct cmsghdr *( __attribute__((_
 __inline extern  __attribute__((__nothrow__)) struct cmsghdr *( __attribute__((__gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr ,
                                                                                                                struct cmsghdr *__cmsg ) ;
 __inline extern struct cmsghdr *( __attribute__((__gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr ,
-                                                                                 struct cmsghdr *__cmsg ) 
-{ 
+                                                                                 struct cmsghdr *__cmsg )
+{
 
 
   {
@@ -2868,8 +2662,8 @@ extern ssize_t __recv_chk_warn(int __fd , void *__buf , size_t __n , size_t __bu
 __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) recv)(int __fd ,
                                                                                    void *__buf ,
                                                                                    size_t __n ,
-                                                                                   int __flags ) 
-{ 
+                                                                                   int __flags )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -2909,8 +2703,8 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) rec
                                                                                        size_t __n ,
                                                                                        int __flags ,
                                                                                        struct sockaddr * __restrict  __cil_tmp14 ,
-                                                                                       socklen_t * __restrict  __addr_len ) 
-{ 
+                                                                                       socklen_t * __restrict  __addr_len )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -2937,17 +2731,17 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) rec
 }
 }
 extern int log_debug(char const   *loggerName , char const   *logMessage  , ...) ;
-static cyclic_group_t groups[5]  = {      {(uint64_t )257, (uint64_t )3, (size_t )1, {(uint64_t )2}}, 
-        {(uint64_t )65537, (uint64_t )3, (size_t )1, {(uint64_t )2}}, 
+static cyclic_group_t groups[5]  = {      {(uint64_t )257, (uint64_t )3, (size_t )1, {(uint64_t )2}},
+        {(uint64_t )65537, (uint64_t )3, (size_t )1, {(uint64_t )2}},
         {(uint64_t )16777259, (uint64_t )2, (size_t )4, {(uint64_t )2, (uint64_t )23,
-                                                      (uint64_t )103, (uint64_t )3541}}, 
+                                                      (uint64_t )103, (uint64_t )3541}},
         {(uint64_t )268435459,
-      (uint64_t )2, (size_t )4, {(uint64_t )2, (uint64_t )3, (uint64_t )19, (uint64_t )87211}}, 
+      (uint64_t )2, (size_t )4, {(uint64_t )2, (uint64_t )3, (uint64_t )19, (uint64_t )87211}},
         {(uint64_t )4294967311L,
       (uint64_t )3, (size_t )5, {(uint64_t )2, (uint64_t )3, (uint64_t )5, (uint64_t )131,
                                  (uint64_t )364289}}};
-static int check_coprime(uint64_t check , cyclic_group_t const   *group ) 
-{ 
+static int check_coprime(uint64_t check , cyclic_group_t const   *group )
+{
   unsigned int i ;
 
   {
@@ -2966,7 +2760,7 @@ static int check_coprime(uint64_t check , cyclic_group_t const   *group )
         goto _L___0;
       }
     } else
-    _L___0: /* CIL Label */ 
+    _L___0: /* CIL Label */
     if (group->prime_factors[i] < check) {
       if (! (check % group->prime_factors[i])) {
         return (0);
@@ -2974,7 +2768,7 @@ static int check_coprime(uint64_t check , cyclic_group_t const   *group )
         goto _L;
       }
     } else
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (group->prime_factors[i] == check) {
       return (0);
     }
@@ -2983,8 +2777,8 @@ static int check_coprime(uint64_t check , cyclic_group_t const   *group )
   return (1);
 }
 }
-static uint32_t find_primroot(cyclic_group_t const   *group , aesrand_t *aes ) 
-{ 
+static uint32_t find_primroot(cyclic_group_t const   *group , aesrand_t *aes )
+{
   uint32_t candidate ;
   uint64_t tmp ;
   uint64_t retv ;
@@ -3013,8 +2807,8 @@ static uint32_t find_primroot(cyclic_group_t const   *group , aesrand_t *aes )
   return ((uint32_t )retv);
 }
 }
-cyclic_group_t const   *get_group(uint64_t min_size ) 
-{ 
+cyclic_group_t const   *get_group(uint64_t min_size )
+{
   unsigned int i ;
 
   {
@@ -3028,8 +2822,8 @@ cyclic_group_t const   *get_group(uint64_t min_size )
   __assert_fail("0", "src/cyclic.c", 142U, "get_group");
 }
 }
-cycle_t make_cycle(cyclic_group_t const   *group , aesrand_t *aes ) 
-{ 
+cycle_t make_cycle(cyclic_group_t const   *group , aesrand_t *aes )
+{
   cycle_t cycle ;
   uint32_t tmp ;
   uint64_t tmp___0 ;
@@ -3045,8 +2839,8 @@ cycle_t make_cycle(cyclic_group_t const   *group , aesrand_t *aes )
   return (cycle);
 }
 }
-uint64_t isomorphism(uint64_t additive_elt , cyclic_group_t const   *mult_group ) 
-{ 
+uint64_t isomorphism(uint64_t additive_elt , cyclic_group_t const   *mult_group )
+{
   mpz_t base ;
   mpz_t power ;
   mpz_t prime ;
@@ -3091,8 +2885,8 @@ static int eval_lt_node(node_t *node , fieldset_t *fields___8 ) ;
 static int eval_eq_node(node_t *node , fieldset_t *fields___8 ) ;
 static int eval_lt_eq_node(node_t *node , fieldset_t *fields___8 ) ;
 static int eval_gt_eq_node(node_t *node , fieldset_t *fields___8 ) ;
-static node_t *alloc_node(void) 
-{ 
+static node_t *alloc_node(void)
+{
   node_t *node ;
   void *tmp ;
 
@@ -3102,8 +2896,8 @@ static node_t *alloc_node(void)
   return (node);
 }
 }
-static int eval_gt_node(node_t *node , fieldset_t *fields___8 ) 
-{ 
+static int eval_gt_node(node_t *node , fieldset_t *fields___8 )
+{
   int index___0 ;
   uint64_t expected ;
   uint64_t actual ;
@@ -3117,8 +2911,8 @@ static int eval_gt_node(node_t *node , fieldset_t *fields___8 )
   return (actual > expected);
 }
 }
-static int eval_lt_node(node_t *node , fieldset_t *fields___8 ) 
-{ 
+static int eval_lt_node(node_t *node , fieldset_t *fields___8 )
+{
   int index___0 ;
   uint64_t expected ;
   uint64_t actual ;
@@ -3132,8 +2926,8 @@ static int eval_lt_node(node_t *node , fieldset_t *fields___8 )
   return (actual < expected);
 }
 }
-static int eval_eq_node(node_t *node , fieldset_t *fields___8 ) 
-{ 
+static int eval_eq_node(node_t *node , fieldset_t *fields___8 )
+{
   node_t *literal ;
   int index___0 ;
   char *expected ;
@@ -3145,25 +2939,25 @@ static int eval_eq_node(node_t *node , fieldset_t *fields___8 )
   literal = node->right_child;
   index___0 = (node->left_child)->value.field.index;
   switch ((unsigned int )literal->type) {
-  case 2U: 
+  case 2U:
   expected = literal->value.string_literal;
   actual = fs_get_string_by_index(fields___8, index___0);
   tmp = strcmp((char const   *)expected, (char const   *)actual);
   return (tmp == 0);
   break;
-  case 3U: 
+  case 3U:
   tmp___0 = fs_get_uint64_by_index(fields___8, index___0);
   return (tmp___0 == literal->value.int_literal);
   break;
-  default: 
+  default:
   __printf_chk(1, (char const   * __restrict  )"wat\n");
   break;
   }
   return (0);
 }
 }
-static int eval_lt_eq_node(node_t *node , fieldset_t *fields___8 ) 
-{ 
+static int eval_lt_eq_node(node_t *node , fieldset_t *fields___8 )
+{
   int tmp ;
   int tmp___0 ;
 
@@ -3177,8 +2971,8 @@ static int eval_lt_eq_node(node_t *node , fieldset_t *fields___8 )
   return (tmp___0);
 }
 }
-static int eval_gt_eq_node(node_t *node , fieldset_t *fields___8 ) 
-{ 
+static int eval_gt_eq_node(node_t *node , fieldset_t *fields___8 )
+{
   int tmp ;
   int tmp___0 ;
 
@@ -3192,8 +2986,8 @@ static int eval_gt_eq_node(node_t *node , fieldset_t *fields___8 )
   return (tmp___0);
 }
 }
-node_t *make_op_node(enum operation op ) 
-{ 
+node_t *make_op_node(enum operation op )
+{
   node_t *node ;
   node_t *tmp ;
 
@@ -3205,8 +2999,8 @@ node_t *make_op_node(enum operation op )
   return (node);
 }
 }
-node_t *make_field_node(char *fieldname ) 
-{ 
+node_t *make_field_node(char *fieldname )
+{
   node_t *node ;
   node_t *tmp ;
 
@@ -3218,8 +3012,8 @@ node_t *make_field_node(char *fieldname )
   return (node);
 }
 }
-node_t *make_string_node(char *literal ) 
-{ 
+node_t *make_string_node(char *literal )
+{
   node_t *node ;
   node_t *tmp ;
 
@@ -3231,8 +3025,8 @@ node_t *make_string_node(char *literal )
   return (node);
 }
 }
-node_t *make_int_node(int literal ) 
-{ 
+node_t *make_int_node(int literal )
+{
   node_t *node ;
   node_t *tmp ;
 
@@ -3244,8 +3038,8 @@ node_t *make_int_node(int literal )
   return (node);
 }
 }
-int evaluate_expression(node_t *root , fieldset_t *fields___8 ) 
-{ 
+int evaluate_expression(node_t *root , fieldset_t *fields___8 )
+{
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
@@ -3265,24 +3059,24 @@ int evaluate_expression(node_t *root , fieldset_t *fields___8 )
     return (1);
   }
   switch ((unsigned int )root->type) {
-  case 3U: 
-  case 2U: 
-  case 1U: 
+  case 3U:
+  case 2U:
+  case 1U:
   return (1);
-  case 0U: 
+  case 0U:
   break;
   }
   switch ((unsigned int )root->value.op) {
-  case 0U: 
+  case 0U:
   tmp = eval_gt_node(root, fields___8);
   return (tmp);
-  case 1U: 
+  case 1U:
   tmp___0 = eval_lt_node(root, fields___8);
   return (tmp___0);
-  case 2U: 
+  case 2U:
   tmp___1 = eval_eq_node(root, fields___8);
   return (tmp___1);
-  case 3U: 
+  case 3U:
   tmp___2 = eval_eq_node(root, fields___8);
   if (tmp___2) {
     tmp___3 = 0;
@@ -3290,13 +3084,13 @@ int evaluate_expression(node_t *root , fieldset_t *fields___8 )
     tmp___3 = 1;
   }
   return (tmp___3);
-  case 6U: 
+  case 6U:
   tmp___4 = eval_lt_eq_node(root, fields___8);
   return (tmp___4);
-  case 7U: 
+  case 7U:
   tmp___5 = eval_gt_eq_node(root, fields___8);
   return (tmp___5);
-  case 4U: 
+  case 4U:
   tmp___6 = evaluate_expression(root->left_child, fields___8);
   if (tmp___6) {
     tmp___7 = evaluate_expression(root->right_child, fields___8);
@@ -3309,7 +3103,7 @@ int evaluate_expression(node_t *root , fieldset_t *fields___8 )
     tmp___8 = 0;
   }
   return (tmp___8);
-  case 5U: 
+  case 5U:
   tmp___9 = evaluate_expression(root->left_child, fields___8);
   if (tmp___9) {
     tmp___11 = 1;
@@ -3326,8 +3120,8 @@ int evaluate_expression(node_t *root , fieldset_t *fields___8 )
   return (0);
 }
 }
-void print_expression(node_t *root ) 
-{ 
+void print_expression(node_t *root )
+{
 
 
   {
@@ -3337,19 +3131,19 @@ void print_expression(node_t *root )
   __printf_chk(1, (char const   * __restrict  )"%s", "( ");
   print_expression(root->left_child);
   switch ((unsigned int )root->type) {
-  case 0U: 
+  case 0U:
   __printf_chk(1, (char const   * __restrict  )" %i ", (unsigned int )root->value.op);
   break;
-  case 1U: 
+  case 1U:
   __printf_chk(1, (char const   * __restrict  )" (%s", root->value.field.fieldname);
   break;
-  case 2U: 
+  case 2U:
   __printf_chk(1, (char const   * __restrict  )"%s) ", root->value.string_literal);
   break;
-  case 3U: 
+  case 3U:
   __printf_chk(1, (char const   * __restrict  )" %llu) ", (unsigned long long )root->value.int_literal);
   break;
-  default: 
+  default:
   break;
   }
   print_expression(root->right_child);
@@ -3398,8 +3192,8 @@ extern uint8_t const   *u8_check(uint8_t const   *s , size_t n )  __attribute__(
 #pragma GCC diagnostic pop
 extern int log_warn(char const   *loggerName , char const   *logMessage  , ...) ;
 extern void *xcalloc(size_t count , size_t size ) ;
-void gen_fielddef_set(fielddefset_t *fds , fielddef_t *fs , int len ) 
-{ 
+void gen_fielddef_set(fielddefset_t *fds , fielddef_t *fs , int len )
+{
   fielddef_t *open ;
 
   {
@@ -3412,8 +3206,8 @@ void gen_fielddef_set(fielddefset_t *fds , fielddef_t *fs , int len )
   return;
 }
 }
-fieldset_t *fs_new_fieldset(fielddefset_t *fds ) 
-{ 
+fieldset_t *fs_new_fieldset(fielddefset_t *fds )
+{
   fieldset_t *f ;
   void *tmp ;
 
@@ -3426,8 +3220,8 @@ fieldset_t *fs_new_fieldset(fielddefset_t *fds )
   return (f);
 }
 }
-fieldset_t *fs_new_repeated_field(int type , int free_ ) 
-{ 
+fieldset_t *fs_new_repeated_field(int type , int free_ )
+{
   fieldset_t *f ;
   void *tmp ;
 
@@ -3441,8 +3235,8 @@ fieldset_t *fs_new_repeated_field(int type , int free_ )
   return (f);
 }
 }
-fieldset_t *fs_new_repeated_uint64(void) 
-{ 
+fieldset_t *fs_new_repeated_uint64(void)
+{
   fieldset_t *tmp ;
 
   {
@@ -3450,8 +3244,8 @@ fieldset_t *fs_new_repeated_uint64(void)
   return (tmp);
 }
 }
-fieldset_t *fs_new_repeated_bool(void) 
-{ 
+fieldset_t *fs_new_repeated_bool(void)
+{
   fieldset_t *tmp ;
 
   {
@@ -3459,8 +3253,8 @@ fieldset_t *fs_new_repeated_bool(void)
   return (tmp);
 }
 }
-fieldset_t *fs_new_repeated_string(int free_ ) 
-{ 
+fieldset_t *fs_new_repeated_string(int free_ )
+{
   fieldset_t *tmp ;
 
   {
@@ -3468,8 +3262,8 @@ fieldset_t *fs_new_repeated_string(int free_ )
   return (tmp);
 }
 }
-fieldset_t *fs_new_repeated_binary(int free_ ) 
-{ 
+fieldset_t *fs_new_repeated_binary(int free_ )
+{
   fieldset_t *tmp ;
 
   {
@@ -3477,8 +3271,8 @@ fieldset_t *fs_new_repeated_binary(int free_ )
   return (tmp);
 }
 }
-fieldset_t *fs_new_repeated_fieldset(void) 
-{ 
+fieldset_t *fs_new_repeated_fieldset(void)
+{
   fieldset_t *tmp ;
 
   {
@@ -3487,8 +3281,8 @@ fieldset_t *fs_new_repeated_fieldset(void)
 }
 }
 __inline static void fs_add_word(fieldset_t *fs , char const   *name , int type ,
-                                 int free_ , size_t len , field_val_t value ) 
-{ 
+                                 int free_ , size_t len , field_val_t value )
+{
   field_t *f ;
   int tmp ;
 
@@ -3519,8 +3313,8 @@ __inline static void fs_add_word(fieldset_t *fs , char const   *name , int type 
 }
 }
 static void fs_modify_word(fieldset_t *fs , char const   *name , int type , int free_ ,
-                           size_t len , field_val_t value ) 
-{ 
+                           size_t len , field_val_t value )
+{
   int i ;
   int tmp ;
 
@@ -3544,8 +3338,8 @@ static void fs_modify_word(fieldset_t *fs , char const   *name , int type , int 
   log_fatal("fs", "attempting to modify non-existent field");
 }
 }
-static char *sanitize_utf8(char const   *buf ) 
-{ 
+static char *sanitize_utf8(char const   *buf )
+{
   char const   *ptr ;
   uint32_t i ;
   size_t tmp ;
@@ -3655,8 +3449,8 @@ static char *sanitize_utf8(char const   *buf )
   return (safe_buf);
 }
 }
-void fs_add_null(fieldset_t *fs , char const   *name ) 
-{ 
+void fs_add_null(fieldset_t *fs , char const   *name )
+{
   field_val_t val ;
 
   {
@@ -3665,8 +3459,8 @@ void fs_add_null(fieldset_t *fs , char const   *name )
   return;
 }
 }
-void fs_add_string(fieldset_t *fs , char const   *name , char *value , int free_ ) 
-{ 
+void fs_add_string(fieldset_t *fs , char const   *name , char *value , int free_ )
+{
   field_val_t val ;
   size_t tmp ;
 
@@ -3677,8 +3471,8 @@ void fs_add_string(fieldset_t *fs , char const   *name , char *value , int free_
   return;
 }
 }
-void fs_add_unsafe_string(fieldset_t *fs , char const   *name , char *value , int free_ ) 
-{ 
+void fs_add_unsafe_string(fieldset_t *fs , char const   *name , char *value , int free_ )
+{
   field_val_t val ;
   size_t tmp ;
   char *safe_value ;
@@ -3708,8 +3502,8 @@ void fs_add_unsafe_string(fieldset_t *fs , char const   *name , char *value , in
   return;
 }
 }
-void fs_chkadd_string(fieldset_t *fs , char const   *name , char *value , int free_ ) 
-{ 
+void fs_chkadd_string(fieldset_t *fs , char const   *name , char *value , int free_ )
+{
 
 
   {
@@ -3721,8 +3515,8 @@ void fs_chkadd_string(fieldset_t *fs , char const   *name , char *value , int fr
   return;
 }
 }
-void fs_chkadd_unsafe_string(fieldset_t *fs , char const   *name , char *value , int free_ ) 
-{ 
+void fs_chkadd_unsafe_string(fieldset_t *fs , char const   *name , char *value , int free_ )
+{
 
 
   {
@@ -3734,8 +3528,8 @@ void fs_chkadd_unsafe_string(fieldset_t *fs , char const   *name , char *value ,
   return;
 }
 }
-void fs_add_constchar(fieldset_t *fs , char const   *name , char const   *value ) 
-{ 
+void fs_add_constchar(fieldset_t *fs , char const   *name , char const   *value )
+{
   field_val_t val ;
   size_t tmp ;
 
@@ -3746,8 +3540,8 @@ void fs_add_constchar(fieldset_t *fs , char const   *name , char const   *value 
   return;
 }
 }
-void fs_add_uint64(fieldset_t *fs , char const   *name , uint64_t value ) 
-{ 
+void fs_add_uint64(fieldset_t *fs , char const   *name , uint64_t value )
+{
   field_val_t val ;
 
   {
@@ -3756,8 +3550,8 @@ void fs_add_uint64(fieldset_t *fs , char const   *name , uint64_t value )
   return;
 }
 }
-void fs_add_bool(fieldset_t *fs , char const   *name , int value ) 
-{ 
+void fs_add_bool(fieldset_t *fs , char const   *name , int value )
+{
   field_val_t val ;
 
   {
@@ -3767,8 +3561,8 @@ void fs_add_bool(fieldset_t *fs , char const   *name , int value )
 }
 }
 void fs_add_binary(fieldset_t *fs , char const   *name , size_t len , void *value ,
-                   int free_ ) 
-{ 
+                   int free_ )
+{
   field_val_t val ;
 
   {
@@ -3777,8 +3571,8 @@ void fs_add_binary(fieldset_t *fs , char const   *name , size_t len , void *valu
   return;
 }
 }
-void fs_add_fieldset(fieldset_t *fs , char const   *name , fieldset_t *child ) 
-{ 
+void fs_add_fieldset(fieldset_t *fs , char const   *name , fieldset_t *child )
+{
   field_val_t val ;
 
   {
@@ -3787,8 +3581,8 @@ void fs_add_fieldset(fieldset_t *fs , char const   *name , fieldset_t *child )
   return;
 }
 }
-void fs_add_repeated(fieldset_t *fs , char const   *name , fieldset_t *child ) 
-{ 
+void fs_add_repeated(fieldset_t *fs , char const   *name , fieldset_t *child )
+{
   field_val_t val ;
 
   {
@@ -3797,8 +3591,8 @@ void fs_add_repeated(fieldset_t *fs , char const   *name , fieldset_t *child )
   return;
 }
 }
-void fs_modify_null(fieldset_t *fs , char const   *name ) 
-{ 
+void fs_modify_null(fieldset_t *fs , char const   *name )
+{
   field_val_t val ;
 
   {
@@ -3807,8 +3601,8 @@ void fs_modify_null(fieldset_t *fs , char const   *name )
   return;
 }
 }
-void fs_modify_string(fieldset_t *fs , char const   *name , char *value , int free_ ) 
-{ 
+void fs_modify_string(fieldset_t *fs , char const   *name , char *value , int free_ )
+{
   field_val_t val ;
   size_t tmp ;
 
@@ -3819,8 +3613,8 @@ void fs_modify_string(fieldset_t *fs , char const   *name , char *value , int fr
   return;
 }
 }
-void fs_modify_constchar(fieldset_t *fs , char const   *name , char const   *value ) 
-{ 
+void fs_modify_constchar(fieldset_t *fs , char const   *name , char const   *value )
+{
   field_val_t val ;
   size_t tmp ;
 
@@ -3831,8 +3625,8 @@ void fs_modify_constchar(fieldset_t *fs , char const   *name , char const   *val
   return;
 }
 }
-void fs_modify_uint64(fieldset_t *fs , char const   *name , uint64_t value ) 
-{ 
+void fs_modify_uint64(fieldset_t *fs , char const   *name , uint64_t value )
+{
   field_val_t val ;
 
   {
@@ -3841,8 +3635,8 @@ void fs_modify_uint64(fieldset_t *fs , char const   *name , uint64_t value )
   return;
 }
 }
-void fs_modify_bool(fieldset_t *fs , char const   *name , int value ) 
-{ 
+void fs_modify_bool(fieldset_t *fs , char const   *name , int value )
+{
   field_val_t val ;
 
   {
@@ -3852,8 +3646,8 @@ void fs_modify_bool(fieldset_t *fs , char const   *name , int value )
 }
 }
 void fs_modify_binary(fieldset_t *fs , char const   *name , size_t len , void *value ,
-                      int free_ ) 
-{ 
+                      int free_ )
+{
   field_val_t val ;
 
   {
@@ -3862,24 +3656,24 @@ void fs_modify_binary(fieldset_t *fs , char const   *name , size_t len , void *v
   return;
 }
 }
-uint64_t fs_get_uint64_by_index(fieldset_t *fs , int index___0 ) 
-{ 
+uint64_t fs_get_uint64_by_index(fieldset_t *fs , int index___0 )
+{
 
 
   {
   return (fs->fields[index___0].value.num);
 }
 }
-char *fs_get_string_by_index(fieldset_t *fs , int index___0 ) 
-{ 
+char *fs_get_string_by_index(fieldset_t *fs , int index___0 )
+{
 
 
   {
   return ((char *)fs->fields[index___0].value.ptr);
 }
 }
-int fds_get_index_by_name(fielddefset_t *fds , char const   *name ) 
-{ 
+int fds_get_index_by_name(fielddefset_t *fds , char const   *name )
+{
   int i ;
   int tmp ;
 
@@ -3895,8 +3689,8 @@ int fds_get_index_by_name(fielddefset_t *fds , char const   *name )
   return (-1);
 }
 }
-void field_free(field_t *f ) 
-{ 
+void field_free(field_t *f )
+{
 
 
   {
@@ -3912,8 +3706,8 @@ void field_free(field_t *f )
   return;
 }
 }
-void fs_free(fieldset_t *fs ) 
-{ 
+void fs_free(fieldset_t *fs )
+{
   int i ;
   field_t *f ;
 
@@ -3932,8 +3726,8 @@ void fs_free(fieldset_t *fs )
 }
 }
 void fs_generate_fieldset_translation(translation_t *t , fielddefset_t *avail , char const   **req ,
-                                      int reqlen ) 
-{ 
+                                      int reqlen )
+{
   int i ;
   int l ;
   int tmp ;
@@ -3960,8 +3754,8 @@ void fs_generate_fieldset_translation(translation_t *t , fielddefset_t *avail , 
   return;
 }
 }
-void fs_generate_full_fieldset_translation(translation_t *t , fielddefset_t *avail ) 
-{ 
+void fs_generate_full_fieldset_translation(translation_t *t , fielddefset_t *avail )
+{
   int i ;
 
   {
@@ -3978,8 +3772,8 @@ void fs_generate_full_fieldset_translation(translation_t *t , fielddefset_t *ava
   return;
 }
 }
-fieldset_t *translate_fieldset(fieldset_t *fs , translation_t *t ) 
-{ 
+fieldset_t *translate_fieldset(fieldset_t *fs , translation_t *t )
+{
   fieldset_t *retv ;
   fieldset_t *tmp ;
   int i ;
@@ -4004,7 +3798,7 @@ fieldset_t *translate_fieldset(fieldset_t *fs , translation_t *t )
 }
 #pragma merger("0","/tmp/cil-53gPEEIt.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 extern FILE *stderr ;
-extern int __fprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format 
+extern int __fprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format
                          , ...) ;
 int parse_filter_string(char *filter ) ;
 int validate_filter(node_t *root , fielddefset_t *fields___8 ) ;
@@ -4029,8 +3823,8 @@ __inline extern  __attribute__((__nothrow__)) intmax_t ( __attribute__((__gnu_in
                                                                                                     int base ) ;
 __inline extern intmax_t ( __attribute__((__gnu_inline__)) strtoimax)(char const   * __restrict  nptr ,
                                                                       char ** __restrict  endptr ,
-                                                                      int base ) 
-{ 
+                                                                      int base )
+{
   long tmp ;
 
   {
@@ -4046,8 +3840,8 @@ __inline extern  __attribute__((__nothrow__)) uintmax_t ( __attribute__((__gnu_i
                                                                                                      int base ) ;
 __inline extern uintmax_t ( __attribute__((__gnu_inline__)) strtoumax)(char const   * __restrict  nptr ,
                                                                        char ** __restrict  endptr ,
-                                                                       int base ) 
-{ 
+                                                                       int base )
+{
   unsigned long tmp ;
 
   {
@@ -4063,8 +3857,8 @@ __inline extern  __attribute__((__nothrow__)) intmax_t ( __attribute__((__gnu_in
                                                                                                     int base ) ;
 __inline extern intmax_t ( __attribute__((__gnu_inline__)) wcstoimax)(__gwchar_t const   * __restrict  nptr ,
                                                                       __gwchar_t ** __restrict  endptr ,
-                                                                      int base ) 
-{ 
+                                                                      int base )
+{
   long tmp ;
 
   {
@@ -4080,8 +3874,8 @@ __inline extern  __attribute__((__nothrow__)) uintmax_t ( __attribute__((__gnu_i
                                                                                                      int base ) ;
 __inline extern uintmax_t ( __attribute__((__gnu_inline__)) wcstoumax)(__gwchar_t const   * __restrict  nptr ,
                                                                        __gwchar_t ** __restrict  endptr ,
-                                                                       int base ) 
-{ 
+                                                                       int base )
+{
   unsigned long tmp ;
 
   {
@@ -4131,8 +3925,8 @@ extern ssize_t ( __attribute__((__warn_unused_result__)) __read_chk_warn)(int __
                                                                           size_t __buflen )  __asm__("__read_chk")  ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) read)(int __fd ,
                                                                                                            void *__buf ,
-                                                                                                           size_t __nbytes ) 
-{ 
+                                                                                                           size_t __nbytes )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -4173,8 +3967,8 @@ __nonnull__(1,2), __gnu_inline__, __always_inline__)) readlink)(char const   * _
                                                                 size_t __len ) ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(1,2),
 __gnu_inline__, __always_inline__)) readlink)(char const   * __restrict  __path ,
-                                              char * __restrict  __buf , size_t __len ) 
-{ 
+                                              char * __restrict  __buf , size_t __len )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -4216,8 +4010,8 @@ __nonnull__(2,3), __gnu_inline__, __always_inline__)) readlinkat)(int __fd , cha
                                                                   size_t __len ) ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(2,3),
 __gnu_inline__, __always_inline__)) readlinkat)(int __fd , char const   * __restrict  __path ,
-                                                char * __restrict  __buf , size_t __len ) 
-{ 
+                                                char * __restrict  __buf , size_t __len )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -4254,8 +4048,8 @@ extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result
 __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) getcwd)(char *__buf , size_t __size ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) getcwd)(char *__buf ,
-                                                                                                           size_t __size ) 
-{ 
+                                                                                                           size_t __size )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -4288,8 +4082,8 @@ __nonnull__(1))) __getwd_warn)(char *__buf )  __asm__("getwd")  ;
 __inline extern  __attribute__((__nothrow__)) char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf )  __attribute__((__deprecated__)) ;
 __inline extern char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
-__nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf ) 
-{ 
+__nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -4316,8 +4110,8 @@ __inline extern  __attribute__((__nothrow__)) size_t ( __attribute__((__gnu_inli
 __always_inline__)) confstr)(int __name , char *__buf , size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) confstr)(int __name ,
                                                                                      char *__buf ,
-                                                                                     size_t __len ) 
-{ 
+                                                                                     size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -4354,8 +4148,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) getgroups)(int __size , __gid_t *__list ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) getgroups)(int __size ,
-                                                                                                            __gid_t *__list ) 
-{ 
+                                                                                                            __gid_t *__list )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -4396,8 +4190,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __nonnull__(2), __gnu_inline__, __always_inline__)) ttyname_r)(int __fd , char *__buf ,
                                                                size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(2), __gnu_inline__,
-__always_inline__)) ttyname_r)(int __fd , char *__buf , size_t __buflen ) 
-{ 
+__always_inline__)) ttyname_r)(int __fd , char *__buf , size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -4430,8 +4224,8 @@ extern int ( __attribute__((__nonnull__(1))) __getlogin_r_chk_warn)(char *__buf 
                                                                     size_t __buflen ,
                                                                     size_t __nreal )  __asm__("__getlogin_r_chk")  ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) getlogin_r)(char *__buf ,
-                                                                                                     size_t __buflen ) 
-{ 
+                                                                                                     size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -4468,8 +4262,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) __get
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1),
 __gnu_inline__, __always_inline__)) gethostname)(char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) gethostname)(char *__buf ,
-                                                                                                      size_t __buflen ) 
-{ 
+                                                                                                      size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -4504,8 +4298,8 @@ __nonnull__(1))) __getdomainname_chk_warn)(char *__buf , size_t __buflen , size_
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__, __always_inline__)) getdomainname)(char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__,
-__always_inline__)) getdomainname)(char *__buf , size_t __buflen ) 
-{ 
+__always_inline__)) getdomainname)(char *__buf , size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -4534,8 +4328,8 @@ __always_inline__)) getdomainname)(char *__buf , size_t __buflen )
 extern int log_error(char const   *loggerName , char const   *logMessage  , ...) ;
 int yyparse(void) ;
 node_t *zfilter  ;
-static int validate_node(node_t *node , fielddefset_t *fields___8 ) 
-{ 
+static int validate_node(node_t *node , fielddefset_t *fields___8 )
+{
   int index___0 ;
   int found ;
   int tmp ;
@@ -4570,7 +4364,7 @@ static int validate_node(node_t *node , fielddefset_t *fields___8 )
       return (0);
     }
     switch ((unsigned int )(node->right_child)->type) {
-    case 2U: 
+    case 2U:
     tmp___0 = strcmp(fields___8->fielddefs[index___0].type, "string");
     if (tmp___0 == 0) {
       return (1);
@@ -4579,7 +4373,7 @@ static int validate_node(node_t *node , fielddefset_t *fields___8 )
                     fields___8->fielddefs[index___0].name);
       return (0);
     }
-    case 3U: 
+    case 3U:
     tmp___1 = strcmp(fields___8->fielddefs[index___0].type, "int");
     if (tmp___1 == 0) {
       return (1);
@@ -4593,7 +4387,7 @@ static int validate_node(node_t *node , fielddefset_t *fields___8 )
         return (0);
       }
     }
-    default: 
+    default:
     return (0);
     }
   } else {
@@ -4602,8 +4396,8 @@ static int validate_node(node_t *node , fielddefset_t *fields___8 )
   return (0);
 }
 }
-int parse_filter_string(char *filter ) 
-{ 
+int parse_filter_string(char *filter )
+{
   YY_BUFFER_STATE buffer_state ;
   YY_BUFFER_STATE tmp ;
   int status ;
@@ -4623,8 +4417,8 @@ int parse_filter_string(char *filter )
   return (1);
 }
 }
-int validate_filter(node_t *root , fielddefset_t *fields___8 ) 
-{ 
+int validate_filter(node_t *root , fielddefset_t *fields___8 )
+{
   int valid ;
   int tmp ;
   int tmp___0 ;
@@ -4666,10 +4460,10 @@ extern char *pcap_lookupdev(char * )  __attribute__((__deprecated__("use \'pcap_
 extern  __attribute__((__nothrow__)) unsigned int if_nametoindex(char const   *__ifname ) ;
 extern  __attribute__((__nothrow__)) char *if_indextoname(unsigned int __ifindex ,
                                                           char *__ifname ) ;
-extern  __attribute__((__nothrow__)) int ioctl(int __fd , unsigned long __request 
+extern  __attribute__((__nothrow__)) int ioctl(int __fd , unsigned long __request
                                                , ...) ;
-char *get_default_iface(void) 
-{ 
+char *get_default_iface(void)
+{
   char errbuf[256] ;
   char *iface ;
   char *tmp ;
@@ -4683,8 +4477,8 @@ char *get_default_iface(void)
   return (iface);
 }
 }
-int read_nl_sock(int sock , char *buf , int buf_len ) 
-{ 
+int read_nl_sock(int sock , char *buf , int buf_len )
+{
   int msg_len ;
   char *pbuf ;
   int len ;
@@ -4747,8 +4541,8 @@ int read_nl_sock(int sock , char *buf , int buf_len )
   return (msg_len);
 }
 }
-int send_nl_req(uint16_t msg_type , uint32_t seq , void *payload , uint32_t payload_len ) 
-{ 
+int send_nl_req(uint16_t msg_type , uint32_t seq , void *payload , uint32_t payload_len )
+{
   int sock ;
   int tmp ;
   int *tmp___0 ;
@@ -4795,8 +4589,8 @@ int send_nl_req(uint16_t msg_type , uint32_t seq , void *payload , uint32_t payl
   return (sock);
 }
 }
-int get_hw_addr(struct in_addr *gw_ip , char *iface , unsigned char *hw_mac ) 
-{ 
+int get_hw_addr(struct in_addr *gw_ip , char *iface , unsigned char *hw_mac )
+{
   struct ndmsg req ;
   unsigned int tmp ;
   int sock ;
@@ -4871,7 +4665,7 @@ int get_hw_addr(struct in_addr *gw_ip , char *iface , unsigned char *hw_mac )
         break;
       }
       switch ((int )rt_attr->rta_type) {
-      case 2: 
+      case 2:
       if ((unsigned long )((int )rt_attr->rta_len) - (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL) != 6UL) {
         log_fatal("get_gateway", "Unexpected hardware address length (%d). If you are using a VPN, supply the --iplayer flag (and provide an interface via -i)",
                   (unsigned long )((int )rt_attr->rta_len) - (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL));
@@ -4879,7 +4673,7 @@ int get_hw_addr(struct in_addr *gw_ip , char *iface , unsigned char *hw_mac )
       memcpy((void * __restrict  )(mac), (void const   * __restrict  )((void *)((char *)rt_attr + (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL))),
              (size_t )6);
       break;
-      case 1: 
+      case 1:
       if ((unsigned long )((int )rt_attr->rta_len) - (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL) != sizeof(dst_ip)) {
         log_fatal("get_gateway", "Unexpected IP address length (%d). If you are using a VPN, supply the --iplayer flag (and provide an interface via -i)",
                   (unsigned long )((int )rt_attr->rta_len) - (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL));
@@ -4907,8 +4701,8 @@ int get_hw_addr(struct in_addr *gw_ip , char *iface , unsigned char *hw_mac )
   return (-1);
 }
 }
-int _get_default_gw(struct in_addr *gw , char *iface ) 
-{ 
+int _get_default_gw(struct in_addr *gw , char *iface )
+{
   struct rtmsg req ;
   unsigned int nl_len ;
   char buf[8192] ;
@@ -4976,11 +4770,11 @@ int _get_default_gw(struct in_addr *gw , char *iface )
         break;
       }
       switch ((int )rt_attr->rta_type) {
-      case 4: 
+      case 4:
       if_indextoname((unsigned int )*((int *)((void *)((char *)rt_attr + (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL)))),
                      iface);
       break;
-      case 5: 
+      case 5:
       gw->s_addr = *((unsigned int *)((void *)((char *)rt_attr + (((sizeof(struct rtattr ) + 4UL) - 1UL) & 4294967292UL))));
       has_gw = 1;
       break;
@@ -4997,8 +4791,8 @@ int _get_default_gw(struct in_addr *gw , char *iface )
   return (-1);
 }
 }
-int get_default_gw(struct in_addr *gw , char *iface ) 
-{ 
+int get_default_gw(struct in_addr *gw , char *iface )
+{
   char _iface[16] ;
   int tmp ;
 
@@ -5013,8 +4807,8 @@ int get_default_gw(struct in_addr *gw , char *iface )
   return (0);
 }
 }
-int get_iface_ip(char *iface , struct in_addr *ip ) 
-{ 
+int get_iface_ip(char *iface , struct in_addr *ip )
+{
   int sock ;
   struct ifreq ifr ;
   int *tmp ;
@@ -5047,8 +4841,8 @@ int get_iface_ip(char *iface , struct in_addr *ip )
   return (0);
 }
 }
-int get_iface_hw_addr(char *iface , unsigned char *hw_mac ) 
-{ 
+int get_iface_hw_addr(char *iface , unsigned char *hw_mac )
+{
   int s ;
   struct ifreq buffer ;
   int *tmp ;
@@ -5082,8 +4876,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthre
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
                                                                                                    pthread_t __thread2 )  __attribute__((__const__)) ;
 __inline extern int ( __attribute__((__gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
-                                                                     pthread_t __thread2 ) 
-{ 
+                                                                     pthread_t __thread2 )
+{
 
 
   {
@@ -5102,8 +4896,8 @@ uint32_t iterator_get_fail(iterator_t *it ) ;
 uint32_t iterator_get_curr_send_threads(iterator_t *it ) ;
 shard_t *get_shard(iterator_t *it , uint8_t thread_id ) ;
 struct state_send zsend ;
-void shard_complete(uint8_t thread_id , void *arg ) 
-{ 
+void shard_complete(uint8_t thread_id , void *arg )
+{
   iterator_t *it ;
   shard_t *s ;
   uint8_t done ;
@@ -5155,8 +4949,8 @@ void shard_complete(uint8_t thread_id , void *arg )
   return;
 }
 }
-iterator_t *iterator_init(uint8_t num_threads , uint16_t shard , uint16_t num_shards ) 
-{ 
+iterator_t *iterator_init(uint8_t num_threads , uint16_t shard , uint16_t num_shards )
+{
   uint64_t num_addrs ;
   uint64_t tmp ;
   uint64_t group_min_size ;
@@ -5204,8 +4998,8 @@ iterator_t *iterator_init(uint8_t num_threads , uint16_t shard , uint16_t num_sh
   return (it);
 }
 }
-uint64_t iterator_get_sent(iterator_t *it ) 
-{ 
+uint64_t iterator_get_sent(iterator_t *it )
+{
   uint64_t sent ;
   uint8_t i ;
 
@@ -5219,8 +5013,8 @@ uint64_t iterator_get_sent(iterator_t *it )
   return (sent);
 }
 }
-uint64_t iterator_get_iterations(iterator_t *it ) 
-{ 
+uint64_t iterator_get_iterations(iterator_t *it )
+{
   uint64_t iterations ;
   uint8_t i ;
 
@@ -5234,8 +5028,8 @@ uint64_t iterator_get_iterations(iterator_t *it )
   return (iterations);
 }
 }
-uint32_t iterator_get_fail(iterator_t *it ) 
-{ 
+uint32_t iterator_get_fail(iterator_t *it )
+{
   uint32_t fails ;
   uint8_t i ;
 
@@ -5249,8 +5043,8 @@ uint32_t iterator_get_fail(iterator_t *it )
   return (fails);
 }
 }
-shard_t *get_shard(iterator_t *it , uint8_t thread_id ) 
-{ 
+shard_t *get_shard(iterator_t *it , uint8_t thread_id )
+{
 
 
   {
@@ -5260,8 +5054,8 @@ shard_t *get_shard(iterator_t *it , uint8_t thread_id )
   return (it->thread_shards + thread_id);
 }
 }
-uint32_t iterator_get_curr_send_threads(iterator_t *it ) 
-{ 
+uint32_t iterator_get_curr_send_threads(iterator_t *it )
+{
 
 
   {
@@ -5271,9 +5065,9 @@ uint32_t iterator_get_curr_send_threads(iterator_t *it )
   return (it->curr_threads);
 }
 }
-/* compiler builtin: 
+/* compiler builtin:
    float __builtin_inff(void) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___snprintf_chk(char * , unsigned long  , int  , unsigned long  ,
                                 char const   *  , ...) ;  */
 #pragma merger("0","/tmp/cil-zzcpgAnm.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
@@ -5299,8 +5093,8 @@ extern int unlock_file(FILE *f ) ;
 extern void time_string(uint32_t time , int est , char *buf , size_t len ) ;
 extern void number_string(uint32_t n , char *buf , size_t len ) ;
 static FILE *status_fd  =    (FILE *)((void *)0);
-static double min_d(double *array , int n ) 
-{ 
+static double min_d(double *array , int n )
+{
   double value ;
   float tmp ;
   int i ;
@@ -5318,8 +5112,8 @@ static double min_d(double *array , int n )
   return (value);
 }
 }
-double compute_remaining_time(double age , uint64_t packets_sent , uint64_t iterations ) 
-{ 
+double compute_remaining_time(double age , uint64_t packets_sent , uint64_t iterations )
+{
   double remaining[5] ;
   float tmp ;
   float tmp___0 ;
@@ -5372,8 +5166,8 @@ double compute_remaining_time(double age , uint64_t packets_sent , uint64_t iter
   }
 }
 }
-static void update_pcap_stats(pthread_mutex_t *recv_ready_mutex___0 ) 
-{ 
+static void update_pcap_stats(pthread_mutex_t *recv_ready_mutex___0 )
+{
 
 
   {
@@ -5383,8 +5177,8 @@ static void update_pcap_stats(pthread_mutex_t *recv_ready_mutex___0 )
   return;
 }
 }
-static void export_stats(int_status_t *intrnl , export_status_t *exp___0 , iterator_t *it ) 
-{ 
+static void export_stats(int_status_t *intrnl , export_status_t *exp___0 , iterator_t *it )
+{
   uint64_t total_sent ;
   uint64_t tmp ;
   uint64_t total_iterations ;
@@ -5512,8 +5306,8 @@ static void export_stats(int_status_t *intrnl , export_status_t *exp___0 , itera
   return;
 }
 }
-static void log_drop_warnings(export_status_t *exp___0 ) 
-{ 
+static void log_drop_warnings(export_status_t *exp___0 )
+{
 
 
   {
@@ -5529,8 +5323,8 @@ static void log_drop_warnings(export_status_t *exp___0 )
   return;
 }
 }
-static void onscreen_appsuccess(export_status_t *exp___0 ) 
-{ 
+static void onscreen_appsuccess(export_status_t *exp___0 )
+{
 
 
   {
@@ -5553,8 +5347,8 @@ static void onscreen_appsuccess(export_status_t *exp___0 )
   return;
 }
 }
-static void onscreen_generic(export_status_t *exp___0 ) 
-{ 
+static void onscreen_generic(export_status_t *exp___0 )
+{
 
 
   {
@@ -5575,8 +5369,8 @@ static void onscreen_generic(export_status_t *exp___0 )
   return;
 }
 }
-static FILE *init_status_update_file(char *path ) 
-{ 
+static FILE *init_status_update_file(char *path )
+{
   FILE *f ;
   FILE *tmp ;
   int *tmp___0 ;
@@ -5597,8 +5391,8 @@ static FILE *init_status_update_file(char *path )
   return (f);
 }
 }
-static void update_status_updates_file(export_status_t *exp___0 , FILE *f ) 
-{ 
+static void update_status_updates_file(export_status_t *exp___0 , FILE *f )
+{
   struct timeval now___0 ;
   char timestamp[256] ;
   time_t sec ;
@@ -5623,8 +5417,8 @@ static void update_status_updates_file(export_status_t *exp___0 , FILE *f )
   return;
 }
 }
-__inline static void check_min_hitrate(export_status_t *exp___0 ) 
-{ 
+__inline static void check_min_hitrate(export_status_t *exp___0 )
+{
 
 
   {
@@ -5635,8 +5429,8 @@ __inline static void check_min_hitrate(export_status_t *exp___0 )
   return;
 }
 }
-__inline static void check_max_sendto_failures(export_status_t *exp___0 ) 
-{ 
+__inline static void check_max_sendto_failures(export_status_t *exp___0 )
+{
 
 
   {
@@ -5648,8 +5442,8 @@ __inline static void check_max_sendto_failures(export_status_t *exp___0 )
   return;
 }
 }
-void monitor_init(void) 
-{ 
+void monitor_init(void)
+{
 
 
   {
@@ -5662,8 +5456,8 @@ void monitor_init(void)
   return;
 }
 }
-void monitor_run(iterator_t *it , pthread_mutex_t *lock ) 
-{ 
+void monitor_run(iterator_t *it , pthread_mutex_t *lock )
+{
   int_status_t *internal_status ;
   void *tmp ;
   export_status_t *export_status ;
@@ -5713,16 +5507,16 @@ void monitor_run(iterator_t *it , pthread_mutex_t *lock )
 }
 #pragma merger("0","/tmp/cil-npa5v3bz.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 int recv_run(pthread_mutex_t *recv_ready_mutex___0 ) ;
-__inline static __uint16_t __bswap_16(__uint16_t __bsx ) 
-{ 
+__inline static __uint16_t __bswap_16(__uint16_t __bsx )
+{
 
 
   {
   return ((__uint16_t )((((int )__bsx >> 8) & 255) | (((int )__bsx & 255) << 8)));
 }
 }
-__inline static __uint32_t __bswap_32(__uint32_t __bsx ) 
-{ 
+__inline static __uint32_t __bswap_32(__uint32_t __bsx )
+{
 
 
   {
@@ -5742,8 +5536,8 @@ void fs_add_ip_fields(fieldset_t *fs , struct ip *ip ) ;
 void fs_add_system_fields(fieldset_t *fs , int is_repeat , int in_cooldown ) ;
 static u_char fake_eth_hdr[65535]  ;
 static uint8_t **seen  =    (uint8_t **)((void *)0);
-void handle_packet(uint32_t buflen , unsigned char const   *bytes , struct timespec  const  ts ) 
-{ 
+void handle_packet(uint32_t buflen , unsigned char const   *bytes , struct timespec  const  ts )
+{
   struct ip *ip_hdr ;
   uint32_t src_ip ;
   uint32_t validation[16UL / sizeof(uint8_t )] ;
@@ -5858,7 +5652,7 @@ void handle_packet(uint32_t buflen , unsigned char const   *bytes , struct times
       (*((zconf.output_module)->process_ip))(o);
     }
   }
-  cleanup: 
+  cleanup:
   fs_free(fs);
   free((void *)o);
   if (zconf.output_module) {
@@ -5871,8 +5665,8 @@ void handle_packet(uint32_t buflen , unsigned char const   *bytes , struct times
   return;
 }
 }
-int recv_run(pthread_mutex_t *recv_ready_mutex___0 ) 
-{ 
+int recv_run(pthread_mutex_t *recv_ready_mutex___0 )
+{
   struct ether_header *eth ;
   double tmp ;
 
@@ -5949,8 +5743,8 @@ void validate_init(void) ;
 static int send_packet(sock_t sock , void *buf , int len , uint32_t idx  __attribute__((__unused__)) ) ;
 static int send_run_init(sock_t s ) ;
 static struct sockaddr_ll sockaddr  ;
-static int send_run_init(sock_t s ) 
-{ 
+static int send_run_init(sock_t s )
+{
   int sock ;
   struct ifreq if_idx ;
   size_t tmp ;
@@ -5984,8 +5778,8 @@ static int send_run_init(sock_t s )
   return (0);
 }
 }
-static int send_packet(sock_t sock , void *buf , int len , uint32_t idx  __attribute__((__unused__)) ) 
-{ 
+static int send_packet(sock_t sock , void *buf , int len , uint32_t idx  __attribute__((__unused__)) )
+{
   ssize_t tmp ;
 
   {
@@ -5996,8 +5790,8 @@ static int send_packet(sock_t sock , void *buf , int len , uint32_t idx  __attri
 }
 static pthread_mutex_t send_mutex  =    {{0, 0U, 0, 0U, 0, (short)0, (short)0, {(struct __pthread_internal_list *)0, (struct __pthread_internal_list *)0}}};
 static uint16_t num_src_ports  ;
-void sig_handler_increase_speed(int signal___0  __attribute__((__unused__)) ) 
-{ 
+void sig_handler_increase_speed(int signal___0  __attribute__((__unused__)) )
+{
   int old_rate ;
 
   {
@@ -6007,8 +5801,8 @@ void sig_handler_increase_speed(int signal___0  __attribute__((__unused__)) )
   return;
 }
 }
-void sig_handler_decrease_speed(int signal___0  __attribute__((__unused__)) ) 
-{ 
+void sig_handler_decrease_speed(int signal___0  __attribute__((__unused__)) )
+{
   int old_rate ;
 
   {
@@ -6018,8 +5812,8 @@ void sig_handler_decrease_speed(int signal___0  __attribute__((__unused__)) )
   return;
 }
 }
-iterator_t *send_init(void) 
-{ 
+iterator_t *send_init(void)
+{
   iterator_t *it ;
   uint32_t num_subshards ;
   uint64_t tmp ;
@@ -6127,8 +5921,8 @@ iterator_t *send_init(void)
   return (it);
 }
 }
-__inline static ipaddr_n_t get_src_ip(ipaddr_n_t dst , int local_offset ) 
-{ 
+__inline static ipaddr_n_t get_src_ip(ipaddr_n_t dst , int local_offset )
+{
   __uint32_t tmp ;
 
   {
@@ -6139,8 +5933,8 @@ __inline static ipaddr_n_t get_src_ip(ipaddr_n_t dst , int local_offset )
   return (zconf.source_ip_addresses[(tmp + (__uint32_t )local_offset) % zconf.number_source_ips]);
 }
 }
-int send_run(sock_t st , shard_t *s ) 
-{ 
+int send_run(sock_t st , shard_t *s )
+{
   char buf[4096] ;
   int tmp ;
   char mac_buf[18] ;
@@ -6308,7 +6102,7 @@ int send_run(sock_t st , shard_t *s )
             goto _L;
           } else
           if (count % (unsigned long )interval == 0UL) {
-            _L: /* CIL Label */ 
+            _L: /* CIL Label */
             tmp___11 = now();
             t___0 = tmp___11;
             if (! (count > last_count)) {
@@ -6435,7 +6229,7 @@ int send_run(sock_t st , shard_t *s )
       b ++;
     }
   }
-  cleanup: 
+  cleanup:
   (*(s->cb))(s->thread_id, s->arg);
   if (zconf.dryrun) {
     lock_file(stdout);
@@ -6454,8 +6248,8 @@ __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unus
 __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
                                               char * __restrict  __resolved ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
-                                                                                                             char * __restrict  __resolved ) 
-{ 
+                                                                                                             char * __restrict  __resolved )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -6482,8 +6276,8 @@ __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, _
 }
 }
 extern uint32_t blocklist_lookup_index(uint64_t index ) ;
-static uint32_t shard_roll_to_valid(shard_t *s ) 
-{ 
+static uint32_t shard_roll_to_valid(shard_t *s )
+{
   uint32_t tmp ;
 
   {
@@ -6496,8 +6290,8 @@ static uint32_t shard_roll_to_valid(shard_t *s )
 }
 void shard_init(shard_t *shard , uint16_t shard_idx , uint16_t num_shards , uint8_t thread_idx ,
                 uint8_t num_threads , uint32_t max_total_targets , cycle_t const   *cycle ,
-                void (*cb)(uint8_t id , void *arg ) , void *arg ) 
-{ 
+                void (*cb)(uint8_t id , void *arg ) , void *arg )
+{
   uint32_t num_subshards ;
   uint64_t num_elts ;
   uint32_t sub_idx ;
@@ -6578,8 +6372,8 @@ void shard_init(shard_t *shard , uint16_t shard_idx , uint16_t num_shards , uint
   return;
 }
 }
-uint32_t shard_get_cur_ip(shard_t *shard ) 
-{ 
+uint32_t shard_get_cur_ip(shard_t *shard )
+{
   uint32_t tmp ;
 
   {
@@ -6587,8 +6381,8 @@ uint32_t shard_get_cur_ip(shard_t *shard )
   return (tmp);
 }
 }
-__inline static uint32_t shard_get_next_elem(shard_t *shard ) 
-{ 
+__inline static uint32_t shard_get_next_elem(shard_t *shard )
+{
 
 
   {
@@ -6602,8 +6396,8 @@ __inline static uint32_t shard_get_next_elem(shard_t *shard )
   return ((uint32_t )shard->current);
 }
 }
-uint32_t shard_get_next_ip(shard_t *shard ) 
-{ 
+uint32_t shard_get_next_ip(shard_t *shard )
+{
   uint32_t candidate ;
   uint32_t tmp ;
   uint32_t tmp___0 ;
@@ -6632,8 +6426,8 @@ uint32_t shard_get_next_ip(shard_t *shard )
 }
 #pragma merger("0","/tmp/cil-UBUyuMIa.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 sock_t get_dryrun_socket(void) ;
-sock_t get_dryrun_socket(void) 
-{ 
+sock_t get_dryrun_socket(void)
+{
   int sock ;
   int tmp ;
   int *tmp___0 ;
@@ -6654,7 +6448,7 @@ sock_t get_dryrun_socket(void)
 }
 #pragma merger("0","/tmp/cil-F1NNSN1X.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 void init_empty_global_configuration(struct state_conf *c ) ;
-struct state_conf zconf  = 
+struct state_conf zconf  =
      {6, (port_h_t )0, (port_h_t )32768, (port_h_t )61000, 4294967295U, (uint32_t )0,
     (uint32_t )0, (char *)((void *)0), -1, (uint64_t )0, 0, (uint8_t )1, (uint8_t )1,
     0U, (uint32_t *)0, 0, (uint64_t )0, (aesrand_t *)0, 0U, (unsigned short)0, (unsigned short)0,
@@ -7580,8 +7374,8 @@ struct state_conf zconf  =
                                                                        0, 0, 0}, 0,
     (char *)((void *)0), (char *)((void *)0), (char *)((void *)0), 0, 0, 0, 1, 0,
     0, 0UL, 0UL, -1, (float )0.0, 0, 0, 0};
-void init_empty_global_configuration(struct state_conf *c ) 
-{ 
+void init_empty_global_configuration(struct state_conf *c )
+{
 
 
   {
@@ -7589,14 +7383,14 @@ void init_empty_global_configuration(struct state_conf *c )
   return;
 }
 }
-struct state_send zsend  = 
+struct state_send zsend  =
      {0.0, 0.0, (uint64_t )0, (uint64_t )0, (uint64_t )0, (uint64_t )0, 1, 0, 0U, (uint32_t )0,
     (uint32_t )0, 0U, (uint8_t **)((void *)0)};
-struct state_recv zrecv  = 
+struct state_recv zrecv  =
      {(uint32_t )0, (uint32_t )0, (uint32_t )0, (uint32_t )0, (uint32_t )0, (uint32_t )0,
     (uint32_t )0, (uint64_t )0, (uint32_t )0, (uint32_t )0, (uint32_t )0, 0, 0., 0.,
     (uint32_t )0, (uint32_t )0, (uint32_t )0};
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___sprintf_chk(char * , int  , unsigned long  , char const   *  , ...) ;  */
 #pragma merger("0","/tmp/cil-G2rwtN4f.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 void json_metadata(FILE *file___1 ) ;
@@ -7616,8 +7410,8 @@ extern struct json_object *json_object_new_int64(int64_t i ) ;
 extern struct json_object *json_object_new_double(double d ) ;
 extern struct json_object *json_object_new_string(char const   *s ) ;
 extern struct json_object *json_tokener_parse(char const   *str ) ;
-void json_metadata(FILE *file___1 ) 
-{ 
+void json_metadata(FILE *file___1 )
+{
   char send_start_time[1025] ;
   size_t tmp___2 ;
   char send_end_time[1025] ;
@@ -8064,8 +7858,8 @@ void parse_source_ip_addresses(char *given_string ) ;
 extern  __attribute__((__nothrow__)) in_addr_t inet_addr(char const   *__cp ) ;
 extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1))) strchr)(char const   *__s ,
                                                                                      int __c )  __attribute__((__pure__)) ;
-in_addr_t string_to_ip_address(char *t ) 
-{ 
+in_addr_t string_to_ip_address(char *t )
+{
   in_addr_t r ;
   in_addr_t tmp ;
 
@@ -8078,8 +7872,8 @@ in_addr_t string_to_ip_address(char *t )
   return (r);
 }
 }
-void add_to_array(char *to_add ) 
-{ 
+void add_to_array(char *to_add )
+{
 
 
   {
@@ -8092,8 +7886,8 @@ void add_to_array(char *to_add )
   return;
 }
 }
-void parse_source_ip_addresses(char *given_string ) 
-{ 
+void parse_source_ip_addresses(char *given_string )
+{
   char *dash ;
   char *tmp ;
   char *comma ;
@@ -8122,7 +7916,7 @@ void parse_source_ip_addresses(char *given_string )
       goto _L;
     }
   } else
-  _L: /* CIL Label */ 
+  _L: /* CIL Label */
   if (comma) {
     while (comma) {
       *comma = (char )'\000';
@@ -8162,8 +7956,8 @@ void validate_gen_ex(uint32_t const   input0 , uint32_t const   input1 , uint32_
                      uint32_t const   input3 , uint8_t *output ) ;
 static int inited  =    0;
 static uint32_t aes_sched[44]  ;
-void validate_init(void) 
-{ 
+void validate_init(void)
+{
   uint8_t key[16] ;
   int tmp ;
   int tmp___0 ;
@@ -8181,8 +7975,8 @@ void validate_init(void)
   return;
 }
 }
-void validate_gen(uint32_t const   src , uint32_t const   dst , uint8_t *output ) 
-{ 
+void validate_gen(uint32_t const   src , uint32_t const   dst , uint8_t *output )
+{
 
 
   {
@@ -8191,8 +7985,8 @@ void validate_gen(uint32_t const   src , uint32_t const   dst , uint8_t *output 
 }
 }
 void validate_gen_ex(uint32_t const   input0 , uint32_t const   input1 , uint32_t const   input2 ,
-                     uint32_t const   input3 , uint8_t *output ) 
-{ 
+                     uint32_t const   input3 , uint8_t *output )
+{
   uint32_t aes_input[4] ;
 
   {
@@ -8208,9 +8002,9 @@ void validate_gen_ex(uint32_t const   input0 , uint32_t const   input1 , uint32_
   return;
 }
 }
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___mempcpy_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___stpcpy_chk(char * , char const   * , unsigned long  ) ;  */
 #pragma merger("0","/tmp/cil-3ST6hNJ1.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 extern  __attribute__((__nothrow__, __noreturn__)) void exit(int __status ) ;
@@ -8232,8 +8026,8 @@ __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack , ch
                                      __gnuc_va_list __ap ) ;
 __inline extern __ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__)) getline)(char ** __restrict  __lineptr ,
                                                                                              size_t * __restrict  __n ,
-                                                                                             FILE * __restrict  __stream ) 
-{ 
+                                                                                             FILE * __restrict  __stream )
+{
   __ssize_t tmp ;
 
   {
@@ -8254,8 +8048,8 @@ __gnu_inline__, __always_inline__)) vasprintf)(char ** __restrict  __ptr , char 
                                                __gnuc_va_list __ap ) ;
 __inline extern int ( /* format attribute */ __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) vasprintf)(char ** __restrict  __ptr , char const   * __restrict  __fmt ,
-                                               __gnuc_va_list __ap ) 
-{ 
+                                               __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -8268,8 +8062,8 @@ __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack , ch
                                      __gnuc_va_list __ap ) ;
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack ,
                                                                                                                  char const   * __restrict  __fmt ,
-                                                                                                                 __gnuc_va_list __ap ) 
-{ 
+                                                                                                                 __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -8290,8 +8084,8 @@ extern char *( __attribute__((__warn_unused_result__)) __fgets_unlocked_chk_warn
                                                                                   FILE * __restrict  __stream )  __asm__("__fgets_unlocked_chk")  ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fgets_unlocked)(char * __restrict  __s ,
                                                                                                                    int __n ,
-                                                                                                                   FILE * __restrict  __stream ) 
-{ 
+                                                                                                                   FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -8327,8 +8121,8 @@ __gnu_inline__, __always_inline__)) mempcpy)(void * __restrict  __dest , void co
                                              size_t __len ) ;
 __inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) mempcpy)(void * __restrict  __dest ,
                                                                                                       void const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
+                                                                                                      size_t __len )
+{
   unsigned long tmp ;
   void *tmp___0 ;
 
@@ -8342,8 +8136,8 @@ __inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __alway
 __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
 __gnu_inline__, __always_inline__)) stpcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
 __inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) stpcpy)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
+                                                                                                     char const   * __restrict  __src )
+{
   unsigned long tmp ;
   char *tmp___0 ;
 
@@ -8392,8 +8186,8 @@ extern ssize_t ( __attribute__((__warn_unused_result__)) __pread64_chk_warn)(int
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) pread)(int __fd ,
                                                                                                             void *__buf ,
                                                                                                             size_t __nbytes ,
-                                                                                                            __off_t __offset ) 
-{ 
+                                                                                                            __off_t __offset )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -8422,8 +8216,8 @@ __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__,
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) pread64)(int __fd ,
                                                                                                               void *__buf ,
                                                                                                               size_t __nbytes ,
-                                                                                                              __off64_t __offset ) 
-{ 
+                                                                                                              __off64_t __offset )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -8455,8 +8249,8 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) rec
                                                                                        size_t __n ,
                                                                                        int __flags ,
                                                                                        struct sockaddr * __restrict  __cil_tmp14 ,
-                                                                                       socklen_t * __restrict  __addr_len ) 
-{ 
+                                                                                       socklen_t * __restrict  __addr_len )
+{
   __SOCKADDR_ARG __addr ;
   unsigned long tmp ;
   ssize_t tmp___0 ;
@@ -8525,8 +8319,8 @@ fielddef_t ip_fields[6] ;
 fielddef_t sys_fields[5] ;
 pthread_mutex_t recv_ready_mutex  =    {{0, 0U, 0, 0U, 0, (short)0, (short)0, {(struct __pthread_internal_list *)0, (struct __pthread_internal_list *)0}}};
 char const   *default_help_text  =    "By default, ZMap prints out unique, successful IP addresses (e.g., SYN-ACK from a TCP SYN scan) in ASCII form (e.g., 192.168.1.5) to stdout or the specified output file. Internally this is handled by the \"csv\" output module and is equivalent to running zmap --output-module=csv --output-fields=saddr --output-filter=\"success = 1 && repeat = 0\" --no-header-row.";
-static void *start_send(void *arg ) 
-{ 
+static void *start_send(void *arg )
+{
   send_arg_t *s ;
 
   {
@@ -8538,8 +8332,8 @@ static void *start_send(void *arg )
   return ((void *)0);
 }
 }
-static void *start_recv(void *arg ) 
-{ 
+static void *start_recv(void *arg )
+{
   recv_arg_t *r ;
 
   {
@@ -8550,8 +8344,8 @@ static void *start_recv(void *arg )
   return ((void *)0);
 }
 }
-static void *start_mon(void *arg ) 
-{ 
+static void *start_mon(void *arg )
+{
   mon_start_arg_t *mon_arg ;
 
   {
@@ -8563,8 +8357,8 @@ static void *start_mon(void *arg )
   return ((void *)0);
 }
 }
-static void start_zmap(void) 
-{ 
+static void start_zmap(void)
+{
   struct in_addr default_ip ;
   int tmp___0 ;
   char *tmp___1 ;
@@ -8750,7 +8544,7 @@ static void start_zmap(void)
       goto _L;
     } else
     if (zconf.status_updates_file) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       pthread_join(tmon, (void **)((void *)0));
       if (r != 0) {
         log_fatal("zmap", "unable to join monitor thread");
@@ -8775,8 +8569,8 @@ static void start_zmap(void)
   return;
 }
 }
-int main(int argc , char **argv ) 
-{ 
+int main(int argc , char **argv )
+{
   struct gengetopt_args_info args ;
   struct cmdline_parser_params *params ;
   int config_loaded ;
@@ -8852,7 +8646,7 @@ int main(int argc , char **argv )
   } else {
     tmp___1 = file_exists(args.config_arg);
     if (tmp___1) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       params->initialize = 0;
       params->override = 0;
       tmp___0 = cmdline_parser_config_file((char const   *)args.config_arg, & args,
@@ -9085,7 +8879,7 @@ int main(int argc , char **argv )
       goto _L___0;
     }
   } else
-  _L___0: /* CIL Label */ 
+  _L___0: /* CIL Label */
   if (args.output_filter_given) {
     log_debug("filter", "Empty output filter provided. ZMap will output all results, including duplicate and non-successful responses.");
   } else {
@@ -9270,7 +9064,7 @@ int main(int argc , char **argv )
     goto _L___1;
   } else
   if (args.shards_given) {
-    _L___1: /* CIL Label */ 
+    _L___1: /* CIL Label */
     if (! args.seed_given) {
       log_fatal("zmap", "Need to specify seed if sharding a scan");
     }
@@ -9310,19 +9104,19 @@ int main(int argc , char **argv )
     }
     if (*suffix) {
       switch ((int )*suffix) {
-      case 103: 
-      case 71: 
+      case 103:
+      case 71:
       zconf.bandwidth *= 1000000000UL;
       break;
-      case 109: 
-      case 77: 
+      case 109:
+      case 77:
       zconf.bandwidth *= 1000000UL;
       break;
-      case 107: 
-      case 75: 
+      case 107:
+      case 75:
       zconf.bandwidth *= 1000UL;
       break;
-      default: 
+      default:
       __fprintf_chk((FILE * __restrict  )stderr, 1, (char const   * __restrict  )"%s: unknown bandwidth suffix \'%s\' (supported suffixes are G, M and K)\n",
                     "zmap", suffix);
       exit(1);
@@ -9437,22 +9231,22 @@ char const   *gengetopt_args_info_purpose  =    "A fast Internet-wide scanner.";
 char const   *gengetopt_args_info_usage  =    "Usage: zmap [OPTION]... [SUBNETS]...";
 char const   *gengetopt_args_info_versiontext  =    "";
 char const   *gengetopt_args_info_description  =    "";
-char const   *gengetopt_args_info_help[62]  = 
-  {      "Basic Arguments:",      "  -p, --target-port=port        port number to scan (for TCP and UDP scans)",      "  -o, --output-file=name        Output file",      "  -b, --blocklist-file=path     File of subnets to exclude, in CIDR notation,\n                                  e.g. 192.168.0.0/16", 
-        "  -w, --allowlist-file=path     File of subnets to constrain scan to, in CIDR\n                                  notation, e.g. 192.168.0.0/16",      "  -I, --list-of-ips-file=path   List of individual addresses to scan in random\n                                  order. Use --white-list file unless >1\n                                  million IPs",      "\nScan Options:",      "  -r, --rate=pps                Set send rate in packets/sec", 
-        "  -B, --bandwidth=bps           Set send rate in bits/second (supports suffixes\n                                  G, M and K)",      "      --batch=pps               Set the number of packets to send per iteration",      "  -n, --max-targets=n           Cap number of targets to probe (as a number or\n                                  a percentage of the address space)",      "  -t, --max-runtime=secs        Cap length of time for sending packets", 
-        "  -N, --max-results=n           Cap number of results to return",      "  -P, --probes=n                Number of probes to send to each IP\n                                  (default=`1\')",      "  -c, --cooldown-time=secs      How long to continue receiving after sending\n                                  last probe  (default=`8\')",      "  -e, --seed=n                  Seed used to select address permutation", 
-        "      --retries=n               Max number of times to try to send packet if\n                                  send fails  (default=`10\')",      "  -d, --dryrun                  Don\'t actually send packets",      "\nScan Sharding:",      "      --shards=N                Set the total number of shards  (default=`1\')", 
-        "      --shard=n                 Set which shard this scan is (0 indexed)\n                                  (default=`0\')",      "\nNetwork Options:",      "  -s, --source-port=port|range  Source port(s) for scan packets",      "  -S, --source-ip=ip|range      Source address(es) for scan packets", 
-        "  -G, --gateway-mac=addr        Specify gateway MAC address",      "      --source-mac=addr         Source MAC address",      "  -i, --interface=name          Specify network interface to use",      "  -X, --iplayer                 Sends IP packets instead of Ethernet (for VPNs)", 
-        "\nProbe Modules:",      "  -M, --probe-module=name       Select probe module  (default=`tcp_synscan\')",      "      --probe-args=args         Arguments to pass to probe module",      "      --probe-ttl=n             Set TTL value for probe IP packets\n                                  (default=`255\')", 
-        "      --list-probe-modules      List available probe modules",      "\nResults Output:",      "  -f, --output-fields=fields    Fields that should be output in result set",      "  -O, --output-module=name      Select output module", 
-        "      --output-args=args        Arguments to pass to output module",      "      --output-filter=filter    Specify a filter over the response fields to\n                                  limit what responses get sent to the output\n                                  module",      "      --list-output-modules     List available output modules",      "      --list-output-fields      List all fields that can be output by selected\n                                  probe module", 
-        "      --no-header-row           Precludes outputting any header rows in data\n                                  (e.g., CSV headers)",      "\nLogging and Metadata:",      "  -v, --verbosity=n             Level of log detail (0-5)  (default=`3\')",      "  -l, --log-file=name           Write log entries to file", 
-        "  -L, --log-directory=directory Write log entries to a timestamped file in this\n                                  directory",      "  -m, --metadata-file=name      Output file for scan metadata (JSON)",      "  -u, --status-updates-file=name\n                                Write scan progress updates to CSV file",      "  -q, --quiet                   Do not print status updates", 
-        "      --disable-syslog          Disables logging messages to syslog",      "      --notes=notes             Inject user-specified notes into scan metadata",      "      --user-metadata=json      Inject user-specified JSON metadata into scan\n                                  metadata",      "\nAdditional Options:", 
-        "  -C, --config=filename         Read a configuration file, which can specify\n                                  any of these options\n                                  (default=`/etc/zmap/zmap.conf\')",      "      --max-sendto-failures=n   Maximum NIC sendto failures before scan is\n                                  aborted  (default=`-1\')",      "      --min-hitrate=n           Minimum hitrate that scan can hit before scan\n                                  is aborted  (default=`0.0\')",      "  -T, --sender-threads=n        Threads used to send packets  (default=`1\')", 
-        "      --cores=STRING            Comma-separated list of cores to pin to",      "      --ignore-blocklist-errors Ignore invalid entries in allowlist/blocklist\n                                  file.",      "  -h, --help                    Print help and exit",      "  -V, --version                 Print version and exit", 
+char const   *gengetopt_args_info_help[62]  =
+  {      "Basic Arguments:",      "  -p, --target-port=port        port number to scan (for TCP and UDP scans)",      "  -o, --output-file=name        Output file",      "  -b, --blocklist-file=path     File of subnets to exclude, in CIDR notation,\n                                  e.g. 192.168.0.0/16",
+        "  -w, --allowlist-file=path     File of subnets to constrain scan to, in CIDR\n                                  notation, e.g. 192.168.0.0/16",      "  -I, --list-of-ips-file=path   List of individual addresses to scan in random\n                                  order. Use --white-list file unless >1\n                                  million IPs",      "\nScan Options:",      "  -r, --rate=pps                Set send rate in packets/sec",
+        "  -B, --bandwidth=bps           Set send rate in bits/second (supports suffixes\n                                  G, M and K)",      "      --batch=pps               Set the number of packets to send per iteration",      "  -n, --max-targets=n           Cap number of targets to probe (as a number or\n                                  a percentage of the address space)",      "  -t, --max-runtime=secs        Cap length of time for sending packets",
+        "  -N, --max-results=n           Cap number of results to return",      "  -P, --probes=n                Number of probes to send to each IP\n                                  (default=`1\')",      "  -c, --cooldown-time=secs      How long to continue receiving after sending\n                                  last probe  (default=`8\')",      "  -e, --seed=n                  Seed used to select address permutation",
+        "      --retries=n               Max number of times to try to send packet if\n                                  send fails  (default=`10\')",      "  -d, --dryrun                  Don\'t actually send packets",      "\nScan Sharding:",      "      --shards=N                Set the total number of shards  (default=`1\')",
+        "      --shard=n                 Set which shard this scan is (0 indexed)\n                                  (default=`0\')",      "\nNetwork Options:",      "  -s, --source-port=port|range  Source port(s) for scan packets",      "  -S, --source-ip=ip|range      Source address(es) for scan packets",
+        "  -G, --gateway-mac=addr        Specify gateway MAC address",      "      --source-mac=addr         Source MAC address",      "  -i, --interface=name          Specify network interface to use",      "  -X, --iplayer                 Sends IP packets instead of Ethernet (for VPNs)",
+        "\nProbe Modules:",      "  -M, --probe-module=name       Select probe module  (default=`tcp_synscan\')",      "      --probe-args=args         Arguments to pass to probe module",      "      --probe-ttl=n             Set TTL value for probe IP packets\n                                  (default=`255\')",
+        "      --list-probe-modules      List available probe modules",      "\nResults Output:",      "  -f, --output-fields=fields    Fields that should be output in result set",      "  -O, --output-module=name      Select output module",
+        "      --output-args=args        Arguments to pass to output module",      "      --output-filter=filter    Specify a filter over the response fields to\n                                  limit what responses get sent to the output\n                                  module",      "      --list-output-modules     List available output modules",      "      --list-output-fields      List all fields that can be output by selected\n                                  probe module",
+        "      --no-header-row           Precludes outputting any header rows in data\n                                  (e.g., CSV headers)",      "\nLogging and Metadata:",      "  -v, --verbosity=n             Level of log detail (0-5)  (default=`3\')",      "  -l, --log-file=name           Write log entries to file",
+        "  -L, --log-directory=directory Write log entries to a timestamped file in this\n                                  directory",      "  -m, --metadata-file=name      Output file for scan metadata (JSON)",      "  -u, --status-updates-file=name\n                                Write scan progress updates to CSV file",      "  -q, --quiet                   Do not print status updates",
+        "      --disable-syslog          Disables logging messages to syslog",      "      --notes=notes             Inject user-specified notes into scan metadata",      "      --user-metadata=json      Inject user-specified JSON metadata into scan\n                                  metadata",      "\nAdditional Options:",
+        "  -C, --config=filename         Read a configuration file, which can specify\n                                  any of these options\n                                  (default=`/etc/zmap/zmap.conf\')",      "      --max-sendto-failures=n   Maximum NIC sendto failures before scan is\n                                  aborted  (default=`-1\')",      "      --min-hitrate=n           Minimum hitrate that scan can hit before scan\n                                  is aborted  (default=`0.0\')",      "  -T, --sender-threads=n        Threads used to send packets  (default=`1\')",
+        "      --cores=STRING            Comma-separated list of cores to pin to",      "      --ignore-blocklist-errors Ignore invalid entries in allowlist/blocklist\n                                  file.",      "  -h, --help                    Print help and exit",      "  -V, --version                 Print version and exit",
         "\nExamples:\n    zmap -p 80 (scan full IPv4 address space for hosts on TCP/80)\n    zmap -N 5 -B 10M -p 80 (find 5 HTTP servers, scanning at 10 Mb/s)\n    zmap -p 80 10.0.0.0/8 192.168.0.0/16 (scan both subnets on TCP/80)\n    zmap -p 80 1.2.3.4 10.0.0.3 (scan 1.2.3.4, 10.0.0.3 on TCP/80)",      (char const   *)0};
 static void clear_given(struct gengetopt_args_info *args_info ) ;
 static void clear_args(struct gengetopt_args_info *args_info ) ;
@@ -9460,8 +9254,8 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
                                    struct cmdline_parser_params *params , char const   *additional_error ) ;
 static struct line_list *cmd_line_list  =    (struct line_list *)0;
 static struct line_list *cmd_line_list_tmp  =    (struct line_list *)0;
-static void free_cmd_list(void) 
-{ 
+static void free_cmd_list(void)
+{
 
 
   {
@@ -9477,8 +9271,8 @@ static void free_cmd_list(void)
 }
 }
 static char *gengetopt_strdup(char const   *s ) ;
-static void clear_given(struct gengetopt_args_info *args_info ) 
-{ 
+static void clear_given(struct gengetopt_args_info *args_info )
+{
 
 
   {
@@ -9537,8 +9331,8 @@ static void clear_given(struct gengetopt_args_info *args_info )
   return;
 }
 }
-static void clear_args(struct gengetopt_args_info *args_info ) 
-{ 
+static void clear_args(struct gengetopt_args_info *args_info )
+{
 
 
   {
@@ -9621,8 +9415,8 @@ static void clear_args(struct gengetopt_args_info *args_info )
   return;
 }
 }
-static void init_args_info(struct gengetopt_args_info *args_info ) 
-{ 
+static void init_args_info(struct gengetopt_args_info *args_info )
+{
 
 
   {
@@ -9681,8 +9475,8 @@ static void init_args_info(struct gengetopt_args_info *args_info )
   return;
 }
 }
-void cmdline_parser_print_version(void) 
-{ 
+void cmdline_parser_print_version(void)
+{
   char const   *tmp___0 ;
   size_t tmp___1 ;
   size_t tmp___2 ;
@@ -9702,8 +9496,8 @@ void cmdline_parser_print_version(void)
   return;
 }
 }
-static void print_help_common(void) 
-{ 
+static void print_help_common(void)
+{
   size_t len_purpose ;
   size_t tmp ;
   size_t len_usage ;
@@ -9734,8 +9528,8 @@ static void print_help_common(void)
   return;
 }
 }
-void cmdline_parser_print_help(void) 
-{ 
+void cmdline_parser_print_help(void)
+{
   int i ;
   int tmp ;
 
@@ -9750,8 +9544,8 @@ void cmdline_parser_print_help(void)
   return;
 }
 }
-void cmdline_parser_init(struct gengetopt_args_info *args_info ) 
-{ 
+void cmdline_parser_init(struct gengetopt_args_info *args_info )
+{
 
 
   {
@@ -9763,8 +9557,8 @@ void cmdline_parser_init(struct gengetopt_args_info *args_info )
   return;
 }
 }
-void cmdline_parser_params_init(struct cmdline_parser_params *params ) 
-{ 
+void cmdline_parser_params_init(struct cmdline_parser_params *params )
+{
 
 
   {
@@ -9778,8 +9572,8 @@ void cmdline_parser_params_init(struct cmdline_parser_params *params )
   return;
 }
 }
-struct cmdline_parser_params *cmdline_parser_params_create(void) 
-{ 
+struct cmdline_parser_params *cmdline_parser_params_create(void)
+{
   struct cmdline_parser_params *params ;
   void *tmp ;
 
@@ -9790,8 +9584,8 @@ struct cmdline_parser_params *cmdline_parser_params_create(void)
   return (params);
 }
 }
-static void free_string_field(char **s ) 
-{ 
+static void free_string_field(char **s )
+{
 
 
   {
@@ -9802,8 +9596,8 @@ static void free_string_field(char **s )
   return;
 }
 }
-static void cmdline_parser_release(struct gengetopt_args_info *args_info ) 
-{ 
+static void cmdline_parser_release(struct gengetopt_args_info *args_info )
+{
   unsigned int i ;
 
   {
@@ -9886,8 +9680,8 @@ static void cmdline_parser_release(struct gengetopt_args_info *args_info )
 }
 }
 static void write_into_file(FILE *outfile , char const   *opt , char const   *arg ,
-                            char const   **values ) 
-{ 
+                            char const   **values )
+{
 
 
   {
@@ -9901,8 +9695,8 @@ static void write_into_file(FILE *outfile , char const   *opt , char const   *ar
   return;
 }
 }
-int cmdline_parser_dump(FILE *outfile , struct gengetopt_args_info *args_info ) 
-{ 
+int cmdline_parser_dump(FILE *outfile , struct gengetopt_args_info *args_info )
+{
   int i ;
 
   {
@@ -10103,8 +9897,8 @@ int cmdline_parser_dump(FILE *outfile , struct gengetopt_args_info *args_info )
   return (i);
 }
 }
-int cmdline_parser_file_save(char const   *filename , struct gengetopt_args_info *args_info ) 
-{ 
+int cmdline_parser_file_save(char const   *filename , struct gengetopt_args_info *args_info )
+{
   FILE *outfile ;
   int i ;
 
@@ -10121,8 +9915,8 @@ int cmdline_parser_file_save(char const   *filename , struct gengetopt_args_info
   return (i);
 }
 }
-void cmdline_parser_free(struct gengetopt_args_info *args_info ) 
-{ 
+void cmdline_parser_free(struct gengetopt_args_info *args_info )
+{
 
 
   {
@@ -10130,8 +9924,8 @@ void cmdline_parser_free(struct gengetopt_args_info *args_info )
   return;
 }
 }
-static char *gengetopt_strdup(char const   *s ) 
-{ 
+static char *gengetopt_strdup(char const   *s )
+{
   char *result ;
   size_t tmp ;
   void *tmp___0 ;
@@ -10151,8 +9945,8 @@ static char *gengetopt_strdup(char const   *s )
   return (result);
 }
 }
-int cmdline_parser(int argc , char **argv , struct gengetopt_args_info *args_info ) 
-{ 
+int cmdline_parser(int argc , char **argv , struct gengetopt_args_info *args_info )
+{
   int tmp ;
 
   {
@@ -10161,8 +9955,8 @@ int cmdline_parser(int argc , char **argv , struct gengetopt_args_info *args_inf
 }
 }
 int cmdline_parser_ext(int argc , char **argv , struct gengetopt_args_info *args_info ,
-                       struct cmdline_parser_params *params ) 
-{ 
+                       struct cmdline_parser_params *params )
+{
   int result ;
 
   {
@@ -10175,8 +9969,8 @@ int cmdline_parser_ext(int argc , char **argv , struct gengetopt_args_info *args
 }
 }
 int cmdline_parser2(int argc , char **argv , struct gengetopt_args_info *args_info ,
-                    int override , int initialize , int check_required ) 
-{ 
+                    int override , int initialize , int check_required )
+{
   int result ;
   struct cmdline_parser_params params ;
 
@@ -10194,8 +9988,8 @@ int cmdline_parser2(int argc , char **argv , struct gengetopt_args_info *args_in
   return (result);
 }
 }
-int cmdline_parser_required(struct gengetopt_args_info *args_info , char const   *prog_name ) 
-{ 
+int cmdline_parser_required(struct gengetopt_args_info *args_info , char const   *prog_name )
+{
 
 
   {
@@ -10207,8 +10001,8 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
                       unsigned int *prev_given , char *value , char const   **possible_values ,
                       char const   *default_value , cmdline_parser_arg_type arg_type ,
                       int check_ambiguity , int override , int no_free , int multiple_option ,
-                      char const   *long_opt , char short_opt , char const   *additional_error ) 
-{ 
+                      char const   *long_opt , char short_opt , char const   *additional_error )
+{
   char *stop_char ;
   char const   *val ;
   int found ;
@@ -10231,7 +10025,7 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
       } else
       if (check_ambiguity) {
         if (*field_given) {
-          _L: /* CIL Label */ 
+          _L: /* CIL Label */
           if ((int )short_opt != 45) {
             if (additional_error) {
               tmp = additional_error;
@@ -10271,27 +10065,27 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
     val = *(possible_values + found);
   }
   switch ((unsigned int )arg_type) {
-  case 2U: 
+  case 2U:
   if (val) {
     tmp___1 = strtol((char const   * __restrict  )val, (char ** __restrict  )(& stop_char),
                      0);
     *((int *)field) = (int )tmp___1;
   }
   break;
-  case 3U: 
+  case 3U:
   if (val) {
     tmp___2 = strtod((char const   * __restrict  )val, (char ** __restrict  )(& stop_char));
     *((float *)field) = (float )tmp___2;
   }
   break;
-  case 4U: 
+  case 4U:
   if (val) {
     tmp___3 = strtol((char const   * __restrict  )val, (char ** __restrict  )(& stop_char),
                      0);
     *((long *)field) = tmp___3;
   }
   break;
-  case 1U: 
+  case 1U:
   if (val) {
     string_field = (char **)field;
     if (! no_free) {
@@ -10302,13 +10096,13 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
     *string_field = gengetopt_strdup(val);
   }
   break;
-  default: 
+  default:
   break;
   }
   switch ((unsigned int )arg_type) {
-  case 4U: 
-  case 3U: 
-  case 2U: 
+  case 4U:
+  case 3U:
+  case 2U:
   if (val) {
     if (stop_char) {
       if (! ((int )*stop_char == 0)) {
@@ -10326,9 +10120,9 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
   default: ;
   }
   switch ((unsigned int )arg_type) {
-  case 0U: 
+  case 0U:
   break;
-  default: 
+  default:
   if (value) {
     if (orig_field) {
       if (no_free) {
@@ -10345,63 +10139,63 @@ static int update_arg(void *field , char **orig_field , unsigned int *field_give
   return (0);
 }
 }
-static struct option long_options[53]  = 
-  {      {"target-port", 1, (int *)((void *)0), 'p'}, 
-        {"output-file", 1, (int *)((void *)0), 'o'}, 
-        {"blocklist-file", 1, (int *)((void *)0), 'b'}, 
-        {"allowlist-file", 1, (int *)((void *)0), 'w'}, 
-        {"list-of-ips-file", 1, (int *)((void *)0), 'I'}, 
-        {"rate", 1, (int *)((void *)0), 'r'}, 
-        {"bandwidth", 1, (int *)((void *)0), 'B'}, 
-        {"batch", 1, (int *)((void *)0), 0}, 
-        {"max-targets", 1, (int *)((void *)0), 'n'}, 
-        {"max-runtime", 1, (int *)((void *)0), 't'}, 
-        {"max-results", 1, (int *)((void *)0), 'N'}, 
-        {"probes", 1, (int *)((void *)0), 'P'}, 
-        {"cooldown-time", 1, (int *)((void *)0), 'c'}, 
-        {"seed", 1, (int *)((void *)0), 'e'}, 
-        {"retries", 1, (int *)((void *)0), 0}, 
-        {"dryrun", 0, (int *)((void *)0), 'd'}, 
-        {"shards", 1, (int *)((void *)0), 0}, 
-        {"shard", 1, (int *)((void *)0), 0}, 
-        {"source-port", 1, (int *)((void *)0), 's'}, 
-        {"source-ip", 1, (int *)((void *)0), 'S'}, 
-        {"gateway-mac", 1, (int *)((void *)0), 'G'}, 
-        {"source-mac", 1, (int *)((void *)0), 0}, 
-        {"interface", 1, (int *)((void *)0), 'i'}, 
-        {"iplayer", 0, (int *)((void *)0), 'X'}, 
-        {"probe-module", 1, (int *)((void *)0), 'M'}, 
-        {"probe-args", 1, (int *)((void *)0), 0}, 
-        {"probe-ttl", 1, (int *)((void *)0), 0}, 
-        {"list-probe-modules", 0, (int *)((void *)0), 0}, 
-        {"output-fields", 1, (int *)((void *)0), 'f'}, 
-        {"output-module", 1, (int *)((void *)0), 'O'}, 
-        {"output-args", 1, (int *)((void *)0), 0}, 
-        {"output-filter", 1, (int *)((void *)0), 0}, 
-        {"list-output-modules", 0, (int *)((void *)0), 0}, 
-        {"list-output-fields", 0, (int *)((void *)0), 0}, 
-        {"no-header-row", 0, (int *)((void *)0), 0}, 
-        {"verbosity", 1, (int *)((void *)0), 'v'}, 
-        {"log-file", 1, (int *)((void *)0), 'l'}, 
-        {"log-directory", 1, (int *)((void *)0), 'L'}, 
-        {"metadata-file", 1, (int *)((void *)0), 'm'}, 
-        {"status-updates-file", 1, (int *)((void *)0), 'u'}, 
-        {"quiet", 0, (int *)((void *)0), 'q'}, 
-        {"disable-syslog", 0, (int *)((void *)0), 0}, 
-        {"notes", 1, (int *)((void *)0), 0}, 
-        {"user-metadata", 1, (int *)((void *)0), 0}, 
-        {"config", 1, (int *)((void *)0), 'C'}, 
-        {"max-sendto-failures", 1, (int *)((void *)0), 0}, 
-        {"min-hitrate", 1, (int *)((void *)0), 0}, 
-        {"sender-threads", 1, (int *)((void *)0), 'T'}, 
-        {"cores", 1, (int *)((void *)0), 0}, 
-        {"ignore-blocklist-errors", 0, (int *)((void *)0), 0}, 
-        {"help", 0, (int *)((void *)0), 'h'}, 
-        {"version", 0, (int *)((void *)0), 'V'}, 
+static struct option long_options[53]  =
+  {      {"target-port", 1, (int *)((void *)0), 'p'},
+        {"output-file", 1, (int *)((void *)0), 'o'},
+        {"blocklist-file", 1, (int *)((void *)0), 'b'},
+        {"allowlist-file", 1, (int *)((void *)0), 'w'},
+        {"list-of-ips-file", 1, (int *)((void *)0), 'I'},
+        {"rate", 1, (int *)((void *)0), 'r'},
+        {"bandwidth", 1, (int *)((void *)0), 'B'},
+        {"batch", 1, (int *)((void *)0), 0},
+        {"max-targets", 1, (int *)((void *)0), 'n'},
+        {"max-runtime", 1, (int *)((void *)0), 't'},
+        {"max-results", 1, (int *)((void *)0), 'N'},
+        {"probes", 1, (int *)((void *)0), 'P'},
+        {"cooldown-time", 1, (int *)((void *)0), 'c'},
+        {"seed", 1, (int *)((void *)0), 'e'},
+        {"retries", 1, (int *)((void *)0), 0},
+        {"dryrun", 0, (int *)((void *)0), 'd'},
+        {"shards", 1, (int *)((void *)0), 0},
+        {"shard", 1, (int *)((void *)0), 0},
+        {"source-port", 1, (int *)((void *)0), 's'},
+        {"source-ip", 1, (int *)((void *)0), 'S'},
+        {"gateway-mac", 1, (int *)((void *)0), 'G'},
+        {"source-mac", 1, (int *)((void *)0), 0},
+        {"interface", 1, (int *)((void *)0), 'i'},
+        {"iplayer", 0, (int *)((void *)0), 'X'},
+        {"probe-module", 1, (int *)((void *)0), 'M'},
+        {"probe-args", 1, (int *)((void *)0), 0},
+        {"probe-ttl", 1, (int *)((void *)0), 0},
+        {"list-probe-modules", 0, (int *)((void *)0), 0},
+        {"output-fields", 1, (int *)((void *)0), 'f'},
+        {"output-module", 1, (int *)((void *)0), 'O'},
+        {"output-args", 1, (int *)((void *)0), 0},
+        {"output-filter", 1, (int *)((void *)0), 0},
+        {"list-output-modules", 0, (int *)((void *)0), 0},
+        {"list-output-fields", 0, (int *)((void *)0), 0},
+        {"no-header-row", 0, (int *)((void *)0), 0},
+        {"verbosity", 1, (int *)((void *)0), 'v'},
+        {"log-file", 1, (int *)((void *)0), 'l'},
+        {"log-directory", 1, (int *)((void *)0), 'L'},
+        {"metadata-file", 1, (int *)((void *)0), 'm'},
+        {"status-updates-file", 1, (int *)((void *)0), 'u'},
+        {"quiet", 0, (int *)((void *)0), 'q'},
+        {"disable-syslog", 0, (int *)((void *)0), 0},
+        {"notes", 1, (int *)((void *)0), 0},
+        {"user-metadata", 1, (int *)((void *)0), 0},
+        {"config", 1, (int *)((void *)0), 'C'},
+        {"max-sendto-failures", 1, (int *)((void *)0), 0},
+        {"min-hitrate", 1, (int *)((void *)0), 0},
+        {"sender-threads", 1, (int *)((void *)0), 'T'},
+        {"cores", 1, (int *)((void *)0), 0},
+        {"ignore-blocklist-errors", 0, (int *)((void *)0), 0},
+        {"help", 0, (int *)((void *)0), 'h'},
+        {"version", 0, (int *)((void *)0), 'V'},
         {(char const   *)0, 0, (int *)0, 0}};
 static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_args_info *args_info ,
-                                   struct cmdline_parser_params *params , char const   *additional_error ) 
-{ 
+                                   struct cmdline_parser_params *params , char const   *additional_error )
+{
   int c ;
   int error_occurred ;
   struct gengetopt_args_info local_args_info ;
@@ -10513,7 +10307,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       break;
     }
     switch (c) {
-    case 112: 
+    case 112:
     tmp = update_arg((void *)(& args_info->target_port_arg), & args_info->target_port_orig,
                      & args_info->target_port_given, & local_args_info.target_port_given,
                      optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )2,
@@ -10522,7 +10316,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 111: 
+    case 111:
     tmp___0 = update_arg((void *)(& args_info->output_file_arg), & args_info->output_file_orig,
                          & args_info->output_file_given, & local_args_info.output_file_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10532,7 +10326,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 98: 
+    case 98:
     tmp___1 = update_arg((void *)(& args_info->blocklist_file_arg), & args_info->blocklist_file_orig,
                          & args_info->blocklist_file_given, & local_args_info.blocklist_file_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10542,7 +10336,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 119: 
+    case 119:
     tmp___2 = update_arg((void *)(& args_info->allowlist_file_arg), & args_info->allowlist_file_orig,
                          & args_info->allowlist_file_given, & local_args_info.allowlist_file_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10552,7 +10346,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 73: 
+    case 73:
     tmp___3 = update_arg((void *)(& args_info->list_of_ips_file_arg), & args_info->list_of_ips_file_orig,
                          & args_info->list_of_ips_file_given, & local_args_info.list_of_ips_file_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10562,7 +10356,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 114: 
+    case 114:
     tmp___4 = update_arg((void *)(& args_info->rate_arg), & args_info->rate_orig,
                          & args_info->rate_given, & local_args_info.rate_given, optarg,
                          (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )2,
@@ -10571,7 +10365,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 66: 
+    case 66:
     tmp___5 = update_arg((void *)(& args_info->bandwidth_arg), & args_info->bandwidth_orig,
                          & args_info->bandwidth_given, & local_args_info.bandwidth_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10581,7 +10375,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 110: 
+    case 110:
     tmp___6 = update_arg((void *)(& args_info->max_targets_arg), & args_info->max_targets_orig,
                          & args_info->max_targets_given, & local_args_info.max_targets_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10591,7 +10385,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 116: 
+    case 116:
     tmp___7 = update_arg((void *)(& args_info->max_runtime_arg), & args_info->max_runtime_orig,
                          & args_info->max_runtime_given, & local_args_info.max_runtime_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )2,
@@ -10601,7 +10395,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 78: 
+    case 78:
     tmp___8 = update_arg((void *)(& args_info->max_results_arg), & args_info->max_results_orig,
                          & args_info->max_results_given, & local_args_info.max_results_given,
                          optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )2,
@@ -10611,7 +10405,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 80: 
+    case 80:
     tmp___9 = update_arg((void *)(& args_info->probes_arg), & args_info->probes_orig,
                          & args_info->probes_given, & local_args_info.probes_given,
                          optarg, (char const   **)0, "1", (cmdline_parser_arg_type )2,
@@ -10620,7 +10414,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 99: 
+    case 99:
     tmp___10 = update_arg((void *)(& args_info->cooldown_time_arg), & args_info->cooldown_time_orig,
                           & args_info->cooldown_time_given, & local_args_info.cooldown_time_given,
                           optarg, (char const   **)0, "8", (cmdline_parser_arg_type )2,
@@ -10630,7 +10424,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 101: 
+    case 101:
     tmp___11 = update_arg((void *)(& args_info->seed_arg), & args_info->seed_orig,
                           & args_info->seed_given, & local_args_info.seed_given, optarg,
                           (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )4,
@@ -10639,7 +10433,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 100: 
+    case 100:
     tmp___12 = update_arg((void *)0, (char **)0, & args_info->dryrun_given, & local_args_info.dryrun_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )0,
                           check_ambiguity, override, 0, 0, "dryrun", (char )'d', additional_error);
@@ -10647,7 +10441,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 115: 
+    case 115:
     tmp___13 = update_arg((void *)(& args_info->source_port_arg), & args_info->source_port_orig,
                           & args_info->source_port_given, & local_args_info.source_port_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10657,7 +10451,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 83: 
+    case 83:
     tmp___14 = update_arg((void *)(& args_info->source_ip_arg), & args_info->source_ip_orig,
                           & args_info->source_ip_given, & local_args_info.source_ip_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10667,7 +10461,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 71: 
+    case 71:
     tmp___15 = update_arg((void *)(& args_info->gateway_mac_arg), & args_info->gateway_mac_orig,
                           & args_info->gateway_mac_given, & local_args_info.gateway_mac_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10677,7 +10471,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 105: 
+    case 105:
     tmp___16 = update_arg((void *)(& args_info->interface_arg), & args_info->interface_orig,
                           & args_info->interface_given, & local_args_info.interface_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10687,7 +10481,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 88: 
+    case 88:
     tmp___17 = update_arg((void *)0, (char **)0, & args_info->iplayer_given, & local_args_info.iplayer_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )0,
                           check_ambiguity, override, 0, 0, "iplayer", (char )'X',
@@ -10696,7 +10490,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 77: 
+    case 77:
     tmp___18 = update_arg((void *)(& args_info->probe_module_arg), & args_info->probe_module_orig,
                           & args_info->probe_module_given, & local_args_info.probe_module_given,
                           optarg, (char const   **)0, "tcp_synscan", (cmdline_parser_arg_type )1,
@@ -10706,7 +10500,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 102: 
+    case 102:
     tmp___19 = update_arg((void *)(& args_info->output_fields_arg), & args_info->output_fields_orig,
                           & args_info->output_fields_given, & local_args_info.output_fields_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10716,7 +10510,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 79: 
+    case 79:
     tmp___20 = update_arg((void *)(& args_info->output_module_arg), & args_info->output_module_orig,
                           & args_info->output_module_given, & local_args_info.output_module_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10726,7 +10520,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 118: 
+    case 118:
     tmp___21 = update_arg((void *)(& args_info->verbosity_arg), & args_info->verbosity_orig,
                           & args_info->verbosity_given, & local_args_info.verbosity_given,
                           optarg, (char const   **)0, "3", (cmdline_parser_arg_type )2,
@@ -10736,7 +10530,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 108: 
+    case 108:
     tmp___22 = update_arg((void *)(& args_info->log_file_arg), & args_info->log_file_orig,
                           & args_info->log_file_given, & local_args_info.log_file_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10746,7 +10540,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 76: 
+    case 76:
     tmp___23 = update_arg((void *)(& args_info->log_directory_arg), & args_info->log_directory_orig,
                           & args_info->log_directory_given, & local_args_info.log_directory_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10756,7 +10550,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 109: 
+    case 109:
     tmp___24 = update_arg((void *)(& args_info->metadata_file_arg), & args_info->metadata_file_orig,
                           & args_info->metadata_file_given, & local_args_info.metadata_file_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10766,7 +10560,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 117: 
+    case 117:
     tmp___25 = update_arg((void *)(& args_info->status_updates_file_arg), & args_info->status_updates_file_orig,
                           & args_info->status_updates_file_given, & local_args_info.status_updates_file_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )1,
@@ -10776,7 +10570,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 113: 
+    case 113:
     tmp___26 = update_arg((void *)0, (char **)0, & args_info->quiet_given, & local_args_info.quiet_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )0,
                           check_ambiguity, override, 0, 0, "quiet", (char )'q', additional_error);
@@ -10784,7 +10578,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 67: 
+    case 67:
     tmp___27 = update_arg((void *)(& args_info->config_arg), & args_info->config_orig,
                           & args_info->config_given, & local_args_info.config_given,
                           optarg, (char const   **)0, "/etc/zmap/zmap.conf", (cmdline_parser_arg_type )1,
@@ -10793,7 +10587,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 84: 
+    case 84:
     tmp___28 = update_arg((void *)(& args_info->sender_threads_arg), & args_info->sender_threads_orig,
                           & args_info->sender_threads_given, & local_args_info.sender_threads_given,
                           optarg, (char const   **)0, "1", (cmdline_parser_arg_type )2,
@@ -10803,7 +10597,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 104: 
+    case 104:
     tmp___29 = update_arg((void *)0, (char **)0, & args_info->help_given, & local_args_info.help_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )0,
                           check_ambiguity, override, 0, 0, "help", (char )'h', additional_error);
@@ -10811,7 +10605,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 86: 
+    case 86:
     tmp___30 = update_arg((void *)0, (char **)0, & args_info->version_given, & local_args_info.version_given,
                           optarg, (char const   **)0, (char const   *)0, (cmdline_parser_arg_type )0,
                           check_ambiguity, override, 0, 0, "version", (char )'V',
@@ -10820,7 +10614,7 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       goto failure;
     }
     break;
-    case 0: 
+    case 0:
     tmp___70 = strcmp(long_options[option_index].name, "batch");
     if (tmp___70 == 0) {
       tmp___31 = update_arg((void *)(& args_info->batch_arg), & args_info->batch_orig,
@@ -11102,9 +10896,9 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
       }
     }
     break;
-    case 63: 
+    case 63:
     goto failure;
-    default: 
+    default:
     if (additional_error) {
       tmp___71 = additional_error;
     } else {
@@ -11146,13 +10940,13 @@ static int cmdline_parser_internal(int argc , char **argv , struct gengetopt_arg
     }
   }
   return (0);
-  failure: 
+  failure:
   cmdline_parser_release(& local_args_info);
   return (1);
 }
 }
-static int _cmdline_parser_configfile(char const   *filename , int *my_argc ) 
-{ 
+static int _cmdline_parser_configfile(char const   *filename , int *my_argc )
+{
   FILE *file___1 ;
   char my_argv[2052] ;
   char linebuf[2048] ;
@@ -11233,7 +11027,7 @@ static int _cmdline_parser_configfile(char const   *filename , int *my_argc )
       goto _L;
     } else
     if ((int )*(farg + 0) == 39) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       farg ++;
       str_index = strchr((char const   *)farg, (int )*(str_index + 0));
       if (! str_index) {
@@ -11264,7 +11058,7 @@ static int _cmdline_parser_configfile(char const   *filename , int *my_argc )
         }
       }
     }
-    noarg: 
+    noarg:
     tmp___4 = strcmp((char const   *)fopt, "include");
     if (! tmp___4) {
       if (farg) {
@@ -11296,7 +11090,7 @@ static int _cmdline_parser_configfile(char const   *filename , int *my_argc )
           goto _L___0;
         }
       } else
-      _L___0: /* CIL Label */ 
+      _L___0: /* CIL Label */
       if (equal) {
         strcat((char * __restrict  )(my_argv), (char const   * __restrict  )"=");
       }
@@ -11320,8 +11114,8 @@ static int _cmdline_parser_configfile(char const   *filename , int *my_argc )
 }
 }
 int cmdline_parser_configfile(char const   *filename , struct gengetopt_args_info *args_info ,
-                              int override , int initialize , int check_required ) 
-{ 
+                              int override , int initialize , int check_required )
+{
   struct cmdline_parser_params params ;
   int tmp ;
 
@@ -11336,8 +11130,8 @@ int cmdline_parser_configfile(char const   *filename , struct gengetopt_args_inf
 }
 }
 int cmdline_parser_config_file(char const   *filename , struct gengetopt_args_info *args_info ,
-                               struct cmdline_parser_params *params ) 
-{ 
+                               struct cmdline_parser_params *params )
+{
   int i ;
   int result ;
   int my_argc ;
@@ -11429,123 +11223,123 @@ static yy_state_type yy_get_previous_state(void) ;
 static yy_state_type yy_try_NUL_trans(yy_state_type yy_current_state ) ;
 static int yy_get_next_buffer(void) ;
 static  __attribute__((__noreturn__)) void yy_fatal_error(char const   *msg ) ;
-static flex_int16_t const   yy_accept[26]  = 
-  {      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )16, 
-        (flex_int16_t const   )15,      (flex_int16_t const   )3,      (flex_int16_t const   )2,      (flex_int16_t const   )15, 
-        (flex_int16_t const   )15,      (flex_int16_t const   )12,      (flex_int16_t const   )13,      (flex_int16_t const   )1, 
-        (flex_int16_t const   )11,      (flex_int16_t const   )9,      (flex_int16_t const   )10,      (flex_int16_t const   )15, 
-        (flex_int16_t const   )15,      (flex_int16_t const   )3,      (flex_int16_t const   )4,      (flex_int16_t const   )7, 
-        (flex_int16_t const   )1,      (flex_int16_t const   )6,      (flex_int16_t const   )5,      (flex_int16_t const   )14, 
+static flex_int16_t const   yy_accept[26]  =
+  {      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )16,
+        (flex_int16_t const   )15,      (flex_int16_t const   )3,      (flex_int16_t const   )2,      (flex_int16_t const   )15,
+        (flex_int16_t const   )15,      (flex_int16_t const   )12,      (flex_int16_t const   )13,      (flex_int16_t const   )1,
+        (flex_int16_t const   )11,      (flex_int16_t const   )9,      (flex_int16_t const   )10,      (flex_int16_t const   )15,
+        (flex_int16_t const   )15,      (flex_int16_t const   )3,      (flex_int16_t const   )4,      (flex_int16_t const   )7,
+        (flex_int16_t const   )1,      (flex_int16_t const   )6,      (flex_int16_t const   )5,      (flex_int16_t const   )14,
         (flex_int16_t const   )8,      (flex_int16_t const   )0};
-static YY_CHAR const   yy_ec[256]  = 
-  {      (YY_CHAR const   )0,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )2,      (YY_CHAR const   )3,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )2,      (YY_CHAR const   )4,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )5,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )6,      (YY_CHAR const   )7,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )8,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9, 
-        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9, 
-        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )10,      (YY_CHAR const   )11,      (YY_CHAR const   )12,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )8, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13, 
-        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )14,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
+static YY_CHAR const   yy_ec[256]  =
+  {      (YY_CHAR const   )0,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )2,      (YY_CHAR const   )3,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )2,      (YY_CHAR const   )4,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )5,      (YY_CHAR const   )1,
+        (YY_CHAR const   )6,      (YY_CHAR const   )7,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )8,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,
+        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )9,
+        (YY_CHAR const   )9,      (YY_CHAR const   )9,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )10,      (YY_CHAR const   )11,      (YY_CHAR const   )12,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )8,
+        (YY_CHAR const   )1,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,
+        (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )13,      (YY_CHAR const   )1,
+        (YY_CHAR const   )14,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
         (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1};
-static YY_CHAR const   yy_meta[15]  = 
-  {      (YY_CHAR const   )0,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
-        (YY_CHAR const   )2,      (YY_CHAR const   )2,      (YY_CHAR const   )1,      (YY_CHAR const   )1, 
+static YY_CHAR const   yy_meta[15]  =
+  {      (YY_CHAR const   )0,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
+        (YY_CHAR const   )2,      (YY_CHAR const   )2,      (YY_CHAR const   )1,      (YY_CHAR const   )1,
         (YY_CHAR const   )1,      (YY_CHAR const   )2,      (YY_CHAR const   )1};
-static flex_int16_t const   yy_base[27]  = 
-  {      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )26,      (flex_int16_t const   )22,      (flex_int16_t const   )26,      (flex_int16_t const   )12, 
-        (flex_int16_t const   )17,      (flex_int16_t const   )26,      (flex_int16_t const   )26,      (flex_int16_t const   )12, 
-        (flex_int16_t const   )9,      (flex_int16_t const   )26,      (flex_int16_t const   )8,      (flex_int16_t const   )0, 
-        (flex_int16_t const   )4,      (flex_int16_t const   )15,      (flex_int16_t const   )26,      (flex_int16_t const   )26, 
-        (flex_int16_t const   )7,      (flex_int16_t const   )26,      (flex_int16_t const   )26,      (flex_int16_t const   )0, 
+static flex_int16_t const   yy_base[27]  =
+  {      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )0,      (flex_int16_t const   )25,
+        (flex_int16_t const   )26,      (flex_int16_t const   )22,      (flex_int16_t const   )26,      (flex_int16_t const   )12,
+        (flex_int16_t const   )17,      (flex_int16_t const   )26,      (flex_int16_t const   )26,      (flex_int16_t const   )12,
+        (flex_int16_t const   )9,      (flex_int16_t const   )26,      (flex_int16_t const   )8,      (flex_int16_t const   )0,
+        (flex_int16_t const   )4,      (flex_int16_t const   )15,      (flex_int16_t const   )26,      (flex_int16_t const   )26,
+        (flex_int16_t const   )7,      (flex_int16_t const   )26,      (flex_int16_t const   )26,      (flex_int16_t const   )0,
         (flex_int16_t const   )26,      (flex_int16_t const   )26,      (flex_int16_t const   )13};
-static flex_int16_t const   yy_def[27]  = 
-  {      (flex_int16_t const   )0,      (flex_int16_t const   )25,      (flex_int16_t const   )1,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )26, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )26, 
+static flex_int16_t const   yy_def[27]  =
+  {      (flex_int16_t const   )0,      (flex_int16_t const   )25,      (flex_int16_t const   )1,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )26,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )26,
         (flex_int16_t const   )25,      (flex_int16_t const   )0,      (flex_int16_t const   )25};
-static flex_int16_t const   yy_nxt[41]  = 
-  {      (flex_int16_t const   )0,      (flex_int16_t const   )4,      (flex_int16_t const   )5,      (flex_int16_t const   )6, 
-        (flex_int16_t const   )7,      (flex_int16_t const   )8,      (flex_int16_t const   )9,      (flex_int16_t const   )10, 
-        (flex_int16_t const   )4,      (flex_int16_t const   )11,      (flex_int16_t const   )12,      (flex_int16_t const   )13, 
-        (flex_int16_t const   )14,      (flex_int16_t const   )15,      (flex_int16_t const   )16,      (flex_int16_t const   )23, 
-        (flex_int16_t const   )20,      (flex_int16_t const   )17,      (flex_int16_t const   )24,      (flex_int16_t const   )22, 
-        (flex_int16_t const   )21,      (flex_int16_t const   )20,      (flex_int16_t const   )19,      (flex_int16_t const   )18, 
-        (flex_int16_t const   )17,      (flex_int16_t const   )25,      (flex_int16_t const   )3,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
+static flex_int16_t const   yy_nxt[41]  =
+  {      (flex_int16_t const   )0,      (flex_int16_t const   )4,      (flex_int16_t const   )5,      (flex_int16_t const   )6,
+        (flex_int16_t const   )7,      (flex_int16_t const   )8,      (flex_int16_t const   )9,      (flex_int16_t const   )10,
+        (flex_int16_t const   )4,      (flex_int16_t const   )11,      (flex_int16_t const   )12,      (flex_int16_t const   )13,
+        (flex_int16_t const   )14,      (flex_int16_t const   )15,      (flex_int16_t const   )16,      (flex_int16_t const   )23,
+        (flex_int16_t const   )20,      (flex_int16_t const   )17,      (flex_int16_t const   )24,      (flex_int16_t const   )22,
+        (flex_int16_t const   )21,      (flex_int16_t const   )20,      (flex_int16_t const   )19,      (flex_int16_t const   )18,
+        (flex_int16_t const   )17,      (flex_int16_t const   )25,      (flex_int16_t const   )3,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
         (flex_int16_t const   )25};
-static flex_int16_t const   yy_chk[41]  = 
-  {      (flex_int16_t const   )0,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1, 
-        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1, 
-        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1, 
-        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )26, 
-        (flex_int16_t const   )20,      (flex_int16_t const   )17,      (flex_int16_t const   )16,      (flex_int16_t const   )14, 
-        (flex_int16_t const   )12,      (flex_int16_t const   )11,      (flex_int16_t const   )8,      (flex_int16_t const   )7, 
-        (flex_int16_t const   )5,      (flex_int16_t const   )3,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
-        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25, 
+static flex_int16_t const   yy_chk[41]  =
+  {      (flex_int16_t const   )0,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,
+        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,
+        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,
+        (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )1,      (flex_int16_t const   )26,
+        (flex_int16_t const   )20,      (flex_int16_t const   )17,      (flex_int16_t const   )16,      (flex_int16_t const   )14,
+        (flex_int16_t const   )12,      (flex_int16_t const   )11,      (flex_int16_t const   )8,      (flex_int16_t const   )7,
+        (flex_int16_t const   )5,      (flex_int16_t const   )3,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
+        (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,      (flex_int16_t const   )25,
         (flex_int16_t const   )25};
 static yy_state_type yy_last_accepting_state  ;
 static char *yy_last_accepting_cpos  ;
@@ -11569,8 +11363,8 @@ int yyget_lineno(void) ;
 void yyset_lineno(int _line_number ) ;
 int yywrap(void) ;
 int yylex(void) ;
-int yylex(void) 
-{ 
+int yylex(void)
+{
   yy_state_type yy_current_state ;
   char *yy_cp ;
   char *yy_bp ;
@@ -11611,7 +11405,7 @@ int yylex(void)
     *yy_cp = yy_hold_char;
     yy_bp = yy_cp;
     yy_current_state = yy_start;
-    yy_match: 
+    yy_match:
     while (1) {
       yy_c = (YY_CHAR )yy_ec[(YY_CHAR )*yy_cp];
       if (yy_accept[yy_current_state]) {
@@ -11630,7 +11424,7 @@ int yylex(void)
         break;
       }
     }
-    yy_find_action: 
+    yy_find_action:
     yy_act = (int )yy_accept[yy_current_state];
     if (yy_act == 0) {
       yy_cp = yy_last_accepting_cpos;
@@ -11642,65 +11436,65 @@ int yylex(void)
     yy_hold_char = *yy_cp;
     *yy_cp = (char )'\000';
     yy_c_buf_p = yy_cp;
-    do_action: 
+    do_action:
     switch (yy_act) {
-    case 0: 
+    case 0:
     *yy_cp = yy_hold_char;
     yy_cp = yy_last_accepting_cpos;
     yy_current_state = yy_last_accepting_state;
     goto yy_find_action;
-    case 1: 
+    case 1:
     tmp___0 = atoll((char const   *)yytext);
     yylval.int_literal = (int )((uint64_t )tmp___0);
     return (259);
     break;
-    case 2: 
+    case 2:
     break;
-    case 3: 
+    case 3:
     break;
-    case 4: 
+    case 4:
     return (261);
     break;
-    case 5: 
+    case 5:
     return (262);
     break;
-    case 6: 
+    case 6:
     return (263);
     break;
-    case 7: 
+    case 7:
     return (257);
     break;
-    case 8: 
+    case 8:
     return (258);
     break;
-    case 9: 
+    case 9:
     return ('=');
     break;
-    case 10: 
+    case 10:
     return ('>');
     break;
-    case 11: 
+    case 11:
     return ('<');
     break;
-    case 12: 
+    case 12:
     return ('(');
     break;
-    case 13: 
+    case 13:
     return (')');
     break;
-    case 14: 
+    case 14:
     yylval.string_literal = strdup((char const   *)yytext);
     return (260);
     break;
-    case 15: 
+    case 15:
     while (1) {
       fwrite((void const   * __restrict  )yytext, (size_t )yyleng, (size_t )1, (FILE * __restrict  )yyout);
       break;
     }
     break;
-    case 17: 
+    case 17:
     return (0);
-    case 16: 
+    case 16:
     yy_amount_of_matched_text = (int )(yy_cp - yytext) - 1;
     *yy_cp = yy_hold_char;
     if ((*(yy_buffer_stack + yy_buffer_stack_top))->yy_buffer_status == 0) {
@@ -11725,7 +11519,7 @@ int yylex(void)
     } else {
       tmp___1 = yy_get_next_buffer();
       switch (tmp___1) {
-      case 1: 
+      case 1:
       yy_did_buffer_switch_on_eof = 0;
       tmp___2 = yywrap();
       if (tmp___2) {
@@ -11737,13 +11531,13 @@ int yylex(void)
         yyrestart(yyin);
       }
       break;
-      case 0: 
+      case 0:
       yy_c_buf_p = yytext + yy_amount_of_matched_text;
       yy_current_state = yy_get_previous_state();
       yy_cp = yy_c_buf_p;
       yy_bp = yytext + 0;
       goto yy_match;
-      case 2: 
+      case 2:
       yy_c_buf_p = (*(yy_buffer_stack + yy_buffer_stack_top))->yy_ch_buf + yy_n_chars;
       yy_current_state = yy_get_previous_state();
       yy_cp = yy_c_buf_p;
@@ -11752,14 +11546,14 @@ int yylex(void)
       }
     }
     break;
-    default: 
+    default:
     yy_fatal_error("fatal flex scanner internal error--no action found");
     }
   }
 }
 }
-static int yy_get_next_buffer(void) 
-{ 
+static int yy_get_next_buffer(void)
+{
   char *dest ;
   char *source ;
   int number_to_move ;
@@ -11922,8 +11716,8 @@ static int yy_get_next_buffer(void)
   return (ret_val);
 }
 }
-static yy_state_type yy_get_previous_state(void) 
-{ 
+static yy_state_type yy_get_previous_state(void)
+{
   yy_state_type yy_current_state ;
   char *yy_cp ;
   YY_CHAR yy_c ;
@@ -11955,8 +11749,8 @@ static yy_state_type yy_get_previous_state(void)
   return (yy_current_state);
 }
 }
-static yy_state_type yy_try_NUL_trans(yy_state_type yy_current_state ) 
-{ 
+static yy_state_type yy_try_NUL_trans(yy_state_type yy_current_state )
+{
   int yy_is_jam ;
   char *yy_cp ;
   YY_CHAR yy_c ;
@@ -11985,8 +11779,8 @@ static yy_state_type yy_try_NUL_trans(yy_state_type yy_current_state )
   return (tmp);
 }
 }
-void yyrestart(FILE *input_file ) 
-{ 
+void yyrestart(FILE *input_file )
+{
   YY_BUFFER_STATE tmp ;
   YY_BUFFER_STATE tmp___0 ;
 
@@ -12010,8 +11804,8 @@ void yyrestart(FILE *input_file )
   return;
 }
 }
-void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer ) 
-{ 
+void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer )
+{
   YY_BUFFER_STATE tmp ;
   YY_BUFFER_STATE tmp___0 ;
 
@@ -12041,8 +11835,8 @@ void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer )
   return;
 }
 }
-static void yy_load_buffer_state(void) 
-{ 
+static void yy_load_buffer_state(void)
+{
 
 
   {
@@ -12054,8 +11848,8 @@ static void yy_load_buffer_state(void)
   return;
 }
 }
-YY_BUFFER_STATE yy_create_buffer(FILE *file___1 , int size ) 
-{ 
+YY_BUFFER_STATE yy_create_buffer(FILE *file___1 , int size )
+{
   YY_BUFFER_STATE b ;
   void *tmp ;
   void *tmp___0 ;
@@ -12077,8 +11871,8 @@ YY_BUFFER_STATE yy_create_buffer(FILE *file___1 , int size )
   return (b);
 }
 }
-void yy_delete_buffer(YY_BUFFER_STATE b ) 
-{ 
+void yy_delete_buffer(YY_BUFFER_STATE b )
+{
   YY_BUFFER_STATE tmp ;
 
   {
@@ -12100,8 +11894,8 @@ void yy_delete_buffer(YY_BUFFER_STATE b )
   return;
 }
 }
-static void yy_init_buffer(YY_BUFFER_STATE b , FILE *file___1 ) 
-{ 
+static void yy_init_buffer(YY_BUFFER_STATE b , FILE *file___1 )
+{
   int oerrno ;
   int *tmp ;
   YY_BUFFER_STATE tmp___0 ;
@@ -12136,8 +11930,8 @@ static void yy_init_buffer(YY_BUFFER_STATE b , FILE *file___1 )
   return;
 }
 }
-void yy_flush_buffer(YY_BUFFER_STATE b ) 
-{ 
+void yy_flush_buffer(YY_BUFFER_STATE b )
+{
   YY_BUFFER_STATE tmp ;
 
   {
@@ -12161,8 +11955,8 @@ void yy_flush_buffer(YY_BUFFER_STATE b )
   return;
 }
 }
-void yypush_buffer_state(YY_BUFFER_STATE new_buffer ) 
-{ 
+void yypush_buffer_state(YY_BUFFER_STATE new_buffer )
+{
   YY_BUFFER_STATE tmp ;
   YY_BUFFER_STATE tmp___0 ;
 
@@ -12195,8 +11989,8 @@ void yypush_buffer_state(YY_BUFFER_STATE new_buffer )
   return;
 }
 }
-void yypop_buffer_state(void) 
-{ 
+void yypop_buffer_state(void)
+{
   YY_BUFFER_STATE tmp ;
   YY_BUFFER_STATE tmp___0 ;
   YY_BUFFER_STATE tmp___1 ;
@@ -12232,8 +12026,8 @@ void yypop_buffer_state(void)
   return;
 }
 }
-static void yyensure_buffer_stack(void) 
-{ 
+static void yyensure_buffer_stack(void)
+{
   yy_size_t num_to_alloc ;
   void *tmp ;
   yy_size_t grow_size ;
@@ -12266,8 +12060,8 @@ static void yyensure_buffer_stack(void)
   return;
 }
 }
-YY_BUFFER_STATE yy_scan_buffer(char *base , yy_size_t size ) 
-{ 
+YY_BUFFER_STATE yy_scan_buffer(char *base , yy_size_t size )
+{
   YY_BUFFER_STATE b ;
   void *tmp ;
   char *tmp___0 ;
@@ -12302,8 +12096,8 @@ YY_BUFFER_STATE yy_scan_buffer(char *base , yy_size_t size )
   return (b);
 }
 }
-YY_BUFFER_STATE yy_scan_string(char const   *yystr ) 
-{ 
+YY_BUFFER_STATE yy_scan_string(char const   *yystr )
+{
   size_t tmp ;
   YY_BUFFER_STATE tmp___0 ;
 
@@ -12313,8 +12107,8 @@ YY_BUFFER_STATE yy_scan_string(char const   *yystr )
   return (tmp___0);
 }
 }
-YY_BUFFER_STATE yy_scan_bytes(char const   *yybytes , int _yybytes_len ) 
-{ 
+YY_BUFFER_STATE yy_scan_bytes(char const   *yybytes , int _yybytes_len )
+{
   YY_BUFFER_STATE b ;
   char *buf ;
   yy_size_t n ;
@@ -12346,8 +12140,8 @@ YY_BUFFER_STATE yy_scan_bytes(char const   *yybytes , int _yybytes_len )
 }
 }
 static  __attribute__((__noreturn__)) void yy_fatal_error(char const   *msg ) ;
-static void yy_fatal_error(char const   *msg ) 
-{ 
+static void yy_fatal_error(char const   *msg )
+{
 
 
   {
@@ -12356,48 +12150,48 @@ static void yy_fatal_error(char const   *msg )
   exit(2);
 }
 }
-int yyget_lineno(void) 
-{ 
+int yyget_lineno(void)
+{
 
 
   {
   return (yylineno);
 }
 }
-FILE *yyget_in(void) 
-{ 
+FILE *yyget_in(void)
+{
 
 
   {
   return (yyin);
 }
 }
-FILE *yyget_out(void) 
-{ 
+FILE *yyget_out(void)
+{
 
 
   {
   return (yyout);
 }
 }
-int yyget_leng(void) 
-{ 
+int yyget_leng(void)
+{
 
 
   {
   return (yyleng);
 }
 }
-char *yyget_text(void) 
-{ 
+char *yyget_text(void)
+{
 
 
   {
   return (yytext);
 }
 }
-void yyset_lineno(int _line_number ) 
-{ 
+void yyset_lineno(int _line_number )
+{
 
 
   {
@@ -12405,8 +12199,8 @@ void yyset_lineno(int _line_number )
   return;
 }
 }
-void yyset_in(FILE *_in_str ) 
-{ 
+void yyset_in(FILE *_in_str )
+{
 
 
   {
@@ -12414,8 +12208,8 @@ void yyset_in(FILE *_in_str )
   return;
 }
 }
-void yyset_out(FILE *_out_str ) 
-{ 
+void yyset_out(FILE *_out_str )
+{
 
 
   {
@@ -12423,16 +12217,16 @@ void yyset_out(FILE *_out_str )
   return;
 }
 }
-int yyget_debug(void) 
-{ 
+int yyget_debug(void)
+{
 
 
   {
   return (yy_flex_debug);
 }
 }
-void yyset_debug(int _bdebug ) 
-{ 
+void yyset_debug(int _bdebug )
+{
 
 
   {
@@ -12440,8 +12234,8 @@ void yyset_debug(int _bdebug )
   return;
 }
 }
-static int yy_init_globals(void) 
-{ 
+static int yy_init_globals(void)
+{
 
 
   {
@@ -12456,8 +12250,8 @@ static int yy_init_globals(void)
   return (0);
 }
 }
-int yylex_destroy(void) 
-{ 
+int yylex_destroy(void)
+{
   YY_BUFFER_STATE tmp ;
   YY_BUFFER_STATE tmp___0 ;
 
@@ -12486,8 +12280,8 @@ int yylex_destroy(void)
   return (0);
 }
 }
-void *yyalloc(yy_size_t size ) 
-{ 
+void *yyalloc(yy_size_t size )
+{
   void *tmp ;
 
   {
@@ -12495,8 +12289,8 @@ void *yyalloc(yy_size_t size )
   return (tmp);
 }
 }
-void *yyrealloc(void *ptr , yy_size_t size ) 
-{ 
+void *yyrealloc(void *ptr , yy_size_t size )
+{
   void *tmp ;
 
   {
@@ -12504,8 +12298,8 @@ void *yyrealloc(void *ptr , yy_size_t size )
   return (tmp);
 }
 }
-void yyfree(void *ptr ) 
-{ 
+void yyfree(void *ptr )
+{
 
 
   {
@@ -12514,8 +12308,8 @@ void yyfree(void *ptr )
 }
 }
 #pragma merger("0","/tmp/cil-gRO6ACsF.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
-void yyerror(char const   *str ) 
-{ 
+void yyerror(char const   *str )
+{
 
 
   {
@@ -12524,183 +12318,183 @@ void yyerror(char const   *str )
   return;
 }
 }
-int yywrap(void) 
-{ 
+int yywrap(void)
+{
 
 
   {
   return (1);
 }
 }
-static YYINT const   yylhs[16]  = 
-  {      (YYINT const   )-1,      (YYINT const   )0,      (YYINT const   )4,      (YYINT const   )4, 
-        (YYINT const   )4,      (YYINT const   )4,      (YYINT const   )1,      (YYINT const   )1, 
-        (YYINT const   )2,      (YYINT const   )2,      (YYINT const   )2,      (YYINT const   )2, 
+static YYINT const   yylhs[16]  =
+  {      (YYINT const   )-1,      (YYINT const   )0,      (YYINT const   )4,      (YYINT const   )4,
+        (YYINT const   )4,      (YYINT const   )4,      (YYINT const   )1,      (YYINT const   )1,
+        (YYINT const   )2,      (YYINT const   )2,      (YYINT const   )2,      (YYINT const   )2,
         (YYINT const   )2,      (YYINT const   )2,      (YYINT const   )3,      (YYINT const   )3};
-static YYINT const   yylen[16]  = 
-  {      (YYINT const   )2,      (YYINT const   )1,      (YYINT const   )3,      (YYINT const   )3, 
-        (YYINT const   )3,      (YYINT const   )1,      (YYINT const   )1,      (YYINT const   )1, 
-        (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3, 
+static YYINT const   yylen[16]  =
+  {      (YYINT const   )2,      (YYINT const   )1,      (YYINT const   )3,      (YYINT const   )3,
+        (YYINT const   )3,      (YYINT const   )1,      (YYINT const   )1,      (YYINT const   )1,
+        (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3,
         (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3,      (YYINT const   )3};
-static YYINT const   yydefred[28]  = 
-  {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )5,      (YYINT const   )6,      (YYINT const   )7,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )4,      (YYINT const   )11,      (YYINT const   )15, 
-        (YYINT const   )12,      (YYINT const   )9,      (YYINT const   )10,      (YYINT const   )8, 
+static YYINT const   yydefred[28]  =
+  {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )5,      (YYINT const   )6,      (YYINT const   )7,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )4,      (YYINT const   )11,      (YYINT const   )15,
+        (YYINT const   )12,      (YYINT const   )9,      (YYINT const   )10,      (YYINT const   )8,
         (YYINT const   )14,      (YYINT const   )13,      (YYINT const   )3,      (YYINT const   )0};
-static YYINT const   yydgoto[5]  = {      (YYINT const   )3,      (YYINT const   )4,      (YYINT const   )5,      (YYINT const   )6, 
+static YYINT const   yydgoto[5]  = {      (YYINT const   )3,      (YYINT const   )4,      (YYINT const   )5,      (YYINT const   )6,
         (YYINT const   )7};
-static YYINT const   yysindex[28]  = 
-  {      (YYINT const   )-40,      (YYINT const   )-40,      (YYINT const   )-57,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )-250, 
-        (YYINT const   )-39,      (YYINT const   )-249,      (YYINT const   )-245,      (YYINT const   )-244, 
-        (YYINT const   )-243,      (YYINT const   )-247,      (YYINT const   )-242,      (YYINT const   )-40, 
-        (YYINT const   )-40,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
+static YYINT const   yysindex[28]  =
+  {      (YYINT const   )-40,      (YYINT const   )-40,      (YYINT const   )-57,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )-250,
+        (YYINT const   )-39,      (YYINT const   )-249,      (YYINT const   )-245,      (YYINT const   )-244,
+        (YYINT const   )-243,      (YYINT const   )-247,      (YYINT const   )-242,      (YYINT const   )-40,
+        (YYINT const   )-40,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
         (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )-248};
-static YYINT const   yyrindex[28]  = 
-  {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )18, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
+static YYINT const   yyrindex[28]  =
+  {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )18,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
         (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )1};
-static YYINT const   yygindex[5]  = {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
+static YYINT const   yygindex[5]  = {      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
         (YYINT const   )5};
-static YYINT const   yytable[260]  = 
-  {      (YYINT const   )1,      (YYINT const   )2,      (YYINT const   )17,      (YYINT const   )12, 
-        (YYINT const   )13,      (YYINT const   )11,      (YYINT const   )8,      (YYINT const   )15, 
-        (YYINT const   )16,      (YYINT const   )15,      (YYINT const   )18,      (YYINT const   )19, 
-        (YYINT const   )23,      (YYINT const   )24,      (YYINT const   )20,      (YYINT const   )21, 
-        (YYINT const   )22,      (YYINT const   )25,      (YYINT const   )1,      (YYINT const   )0, 
-        (YYINT const   )26,      (YYINT const   )27,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )2,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )9,      (YYINT const   )10,      (YYINT const   )14,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )15,      (YYINT const   )16, 
-        (YYINT const   )2,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
-        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0, 
+static YYINT const   yytable[260]  =
+  {      (YYINT const   )1,      (YYINT const   )2,      (YYINT const   )17,      (YYINT const   )12,
+        (YYINT const   )13,      (YYINT const   )11,      (YYINT const   )8,      (YYINT const   )15,
+        (YYINT const   )16,      (YYINT const   )15,      (YYINT const   )18,      (YYINT const   )19,
+        (YYINT const   )23,      (YYINT const   )24,      (YYINT const   )20,      (YYINT const   )21,
+        (YYINT const   )22,      (YYINT const   )25,      (YYINT const   )1,      (YYINT const   )0,
+        (YYINT const   )26,      (YYINT const   )27,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )2,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )9,      (YYINT const   )10,      (YYINT const   )14,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )15,      (YYINT const   )16,
+        (YYINT const   )2,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
+        (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,
         (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )0,      (YYINT const   )2};
-static YYINT const   yycheck[260]  = 
-  {      (YYINT const   )40,      (YYINT const   )0,      (YYINT const   )41,      (YYINT const   )60, 
-        (YYINT const   )61,      (YYINT const   )62,      (YYINT const   )1,      (YYINT const   )257, 
-        (YYINT const   )258,      (YYINT const   )257,      (YYINT const   )259,      (YYINT const   )260, 
-        (YYINT const   )259,      (YYINT const   )260,      (YYINT const   )259,      (YYINT const   )259, 
-        (YYINT const   )259,      (YYINT const   )259,      (YYINT const   )0,      (YYINT const   )-1, 
-        (YYINT const   )15,      (YYINT const   )16,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )41,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )261,      (YYINT const   )262,      (YYINT const   )263,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )257,      (YYINT const   )258, 
-        (YYINT const   )260,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
-        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1, 
+static YYINT const   yycheck[260]  =
+  {      (YYINT const   )40,      (YYINT const   )0,      (YYINT const   )41,      (YYINT const   )60,
+        (YYINT const   )61,      (YYINT const   )62,      (YYINT const   )1,      (YYINT const   )257,
+        (YYINT const   )258,      (YYINT const   )257,      (YYINT const   )259,      (YYINT const   )260,
+        (YYINT const   )259,      (YYINT const   )260,      (YYINT const   )259,      (YYINT const   )259,
+        (YYINT const   )259,      (YYINT const   )259,      (YYINT const   )0,      (YYINT const   )-1,
+        (YYINT const   )15,      (YYINT const   )16,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )41,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )261,      (YYINT const   )262,      (YYINT const   )263,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )257,      (YYINT const   )258,
+        (YYINT const   )260,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
+        (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,
         (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )-1,      (YYINT const   )258};
 int yydebug  ;
 int yynerrs  ;
@@ -12709,8 +12503,8 @@ int yychar  ;
 YYSTYPE yyval  ;
 YYSTYPE yylval  ;
 static YYSTACKDATA yystack  ;
-static int yygrowstack(YYSTACKDATA *data ) 
-{ 
+static int yygrowstack(YYSTACKDATA *data )
+{
   int i ;
   unsigned int newsize ;
   YYINT *newss ;
@@ -12751,8 +12545,8 @@ static int yygrowstack(YYSTACKDATA *data )
   return (0);
 }
 }
-int yyparse(void) 
-{ 
+int yyparse(void)
+{
   int yym ;
   int yyn ;
   int yystate ;
@@ -12776,7 +12570,7 @@ int yyparse(void)
   yystack.l_mark = yystack.l_base;
   yystate = 0;
   *(yystack.s_mark) = (YYINT )0;
-  yyloop: 
+  yyloop:
   yyn = (int )yydefred[yystate];
   if (yyn != 0) {
     goto yyreduce;
@@ -12830,9 +12624,9 @@ int yyparse(void)
   }
   yyerror("syntax error");
   goto yyerrlab;
-  yyerrlab: 
+  yyerrlab:
   yynerrs ++;
-  yyinrecovery: 
+  yyinrecovery:
   if (yyerrflag < 3) {
     yyerrflag = 3;
     while (1) {
@@ -12864,7 +12658,7 @@ int yyparse(void)
           goto _L___1;
         }
       } else {
-        _L___1: /* CIL Label */ 
+        _L___1: /* CIL Label */
         if ((unsigned long )yystack.s_mark <= (unsigned long )yystack.s_base) {
           goto yyabort;
         }
@@ -12879,7 +12673,7 @@ int yyparse(void)
     yychar = -1;
     goto yyloop;
   }
-  yyreduce: 
+  yyreduce:
   yym = (int )yylen[yyn];
   if (yym) {
     yyval = *(yystack.l_mark + (1 - yym));
@@ -12887,67 +12681,67 @@ int yyparse(void)
     memset((void *)(& yyval), 0, sizeof(yyval));
   }
   switch (yyn) {
-  case 1: 
+  case 1:
   zfilter = (yystack.l_mark + 0)->expr;
   break;
-  case 2: 
+  case 2:
   yyval.expr = make_op_node((enum operation )5);
   (yyval.expr)->left_child = (yystack.l_mark + -2)->expr;
   (yyval.expr)->right_child = (yystack.l_mark + 0)->expr;
   break;
-  case 3: 
+  case 3:
   yyval.expr = make_op_node((enum operation )4);
   (yyval.expr)->left_child = (yystack.l_mark + -2)->expr;
   (yyval.expr)->right_child = (yystack.l_mark + 0)->expr;
   break;
-  case 4: 
+  case 4:
   yyval.expr = (yystack.l_mark + -1)->expr;
   break;
-  case 5: 
+  case 5:
   yyval.expr = (yystack.l_mark + 0)->expr;
   break;
-  case 6: 
+  case 6:
   yyval.expr = (yystack.l_mark + 0)->expr;
   break;
-  case 7: 
+  case 7:
   yyval.expr = (yystack.l_mark + 0)->expr;
   break;
-  case 8: 
+  case 8:
   yyval.expr = make_op_node((enum operation )2);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 9: 
+  case 9:
   yyval.expr = make_op_node((enum operation )0);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 10: 
+  case 10:
   yyval.expr = make_op_node((enum operation )1);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 11: 
+  case 11:
   yyval.expr = make_op_node((enum operation )3);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 12: 
+  case 12:
   yyval.expr = make_op_node((enum operation )7);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 13: 
+  case 13:
   yyval.expr = make_op_node((enum operation )6);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_int_node((yystack.l_mark + 0)->int_literal);
   break;
-  case 14: 
+  case 14:
   yyval.expr = make_op_node((enum operation )2);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_string_node((yystack.l_mark + 0)->string_literal);
   break;
-  case 15: 
+  case 15:
   yyval.expr = make_op_node((enum operation )3);
   (yyval.expr)->left_child = make_field_node((yystack.l_mark + -2)->string_literal);
   (yyval.expr)->right_child = make_string_node((yystack.l_mark + 0)->string_literal);
@@ -13006,7 +12800,7 @@ int yyparse(void)
   (yystack.l_mark) ++;
   *(yystack.l_mark) = yyval;
   goto yyloop;
-  yyoverflow: 
+  yyoverflow:
   yyerror("yacc stack overflow");
   yyabort: ;
   return (1);
@@ -13015,7 +12809,7 @@ int yyparse(void)
 }
 }
 #pragma merger("0","/tmp/cil-ce4AH_OU.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
-extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format 
+extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format
                                                 , ...)  __asm__("__isoc99_sscanf")  ;
 extern int fseek(FILE *__stream , long __off , int __whence ) ;
 extern long ( __attribute__((__warn_unused_result__)) ftell)(FILE *__stream ) ;
@@ -13027,8 +12821,8 @@ void make_ip_header(struct ip *iph , uint8_t protocol , uint16_t len ) ;
 void make_icmp_header(struct icmp *buf ) ;
 void fprintf_ip_header(FILE *fp , struct ip *iph ) ;
 void fprintf_eth_header(FILE *fp , struct ether_header *ethh ) ;
-__inline static unsigned short in_checksum(unsigned short *ip_pkt , int len ) 
-{ 
+__inline static unsigned short in_checksum(unsigned short *ip_pkt , int len )
+{
   unsigned long sum ;
   int nwords ;
   unsigned short *tmp ;
@@ -13049,8 +12843,8 @@ __inline static unsigned short in_checksum(unsigned short *ip_pkt , int len )
   return ((unsigned short )(~ sum));
 }
 }
-__inline static unsigned short zmap_ip_checksum(unsigned short *buf ) 
-{ 
+__inline static unsigned short zmap_ip_checksum(unsigned short *buf )
+{
   unsigned short tmp ;
 
   {
@@ -13058,8 +12852,8 @@ __inline static unsigned short zmap_ip_checksum(unsigned short *buf )
   return (tmp);
 }
 }
-__inline static unsigned short icmp_checksum(unsigned short *buf , size_t buflen ) 
-{ 
+__inline static unsigned short icmp_checksum(unsigned short *buf , size_t buflen )
+{
   unsigned short tmp ;
 
   {
@@ -13067,8 +12861,8 @@ __inline static unsigned short icmp_checksum(unsigned short *buf , size_t buflen
   return (tmp);
 }
 }
-__inline static struct icmp *get_icmp_header(struct ip  const  *ip_hdr , uint32_t len ) 
-{ 
+__inline static struct icmp *get_icmp_header(struct ip  const  *ip_hdr , uint32_t len )
+{
 
 
   {
@@ -13085,8 +12879,8 @@ char const   *icmp_usage_error  =    "unknown ICMP probe specification (expected
 static size_t icmp_payload_len  =    (size_t )0;
 static unsigned long const   icmp_payload_default_len  =    (size_t const   )20;
 static char *icmp_payload  =    (char *)((void *)0);
-int icmp_global_initialize(struct state_conf *conf ) 
-{ 
+int icmp_global_initialize(struct state_conf *conf )
+{
   void *tmp ;
   size_t tmp___0 ;
   char *c ;
@@ -13210,8 +13004,8 @@ int icmp_global_initialize(struct state_conf *conf )
 }
 int icmp_global_cleanup(struct state_conf *zconf___0  __attribute__((__unused__)) ,
                         struct state_send *zsend___0  __attribute__((__unused__)) ,
-                        struct state_recv *zrecv___0  __attribute__((__unused__)) ) 
-{ 
+                        struct state_recv *zrecv___0  __attribute__((__unused__)) )
+{
 
 
   {
@@ -13223,8 +13017,8 @@ int icmp_global_cleanup(struct state_conf *zconf___0  __attribute__((__unused__)
 }
 }
 static int icmp_echo_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port  __attribute__((__unused__)) ,
-                                    void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                                    void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -13250,8 +13044,8 @@ static int icmp_echo_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw ,
 }
 static int icmp_echo_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip ,
                                  ipaddr_n_t dst_ip , uint8_t ttl , uint32_t *validation ,
-                                 int probe_num  __attribute__((__unused__)) , void *arg  __attribute__((__unused__)) ) 
-{ 
+                                 int probe_num  __attribute__((__unused__)) , void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct icmp *icmp_header ;
@@ -13280,8 +13074,8 @@ static int icmp_echo_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip
   return (0);
 }
 }
-static void icmp_echo_print_packet(FILE *fp , void *packet ) 
-{ 
+static void icmp_echo_print_packet(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct icmp *icmp_header ;
@@ -13305,8 +13099,8 @@ static void icmp_echo_print_packet(FILE *fp , void *packet )
   return;
 }
 }
-static int imcp_validate_id_seq(struct icmp *icmp_h , uint32_t *validation ) 
-{ 
+static int imcp_validate_id_seq(struct icmp *icmp_h , uint32_t *validation )
+{
 
 
   {
@@ -13320,8 +13114,8 @@ static int imcp_validate_id_seq(struct icmp *icmp_h , uint32_t *validation )
 }
 }
 static int icmp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip  __attribute__((__unused__)) ,
-                                uint32_t *validation ) 
-{ 
+                                uint32_t *validation )
+{
   struct icmp *icmp_h ;
   struct icmp *tmp ;
   int tmp___0 ;
@@ -13366,8 +13160,8 @@ static int icmp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint3
 }
 static void icmp_echo_process_packet(u_char const   *packet , uint32_t len , fieldset_t *fs ,
                                      uint32_t *validation  __attribute__((__unused__)) ,
-                                     struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                                     struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct icmp *icmp_hdr ;
   __uint16_t tmp ;
@@ -13387,27 +13181,27 @@ static void icmp_echo_process_packet(u_char const   *packet , uint32_t len , fie
   fs_add_uint64(fs, "seq", (uint64_t )tmp___0);
   hdrlen = (uint32_t )((sizeof(struct ether_header ) + (unsigned long )(4U * ip_hdr->ip_hl)) + 4UL);
   switch ((int )icmp_hdr->icmp_type) {
-  case 0: 
+  case 0:
   fs_add_string(fs, "classification", (char *)"echoreply", 0);
   fs_add_uint64(fs, "success", (uint64_t )1);
   break;
-  case 3: 
+  case 3:
   fs_add_string(fs, "classification", (char *)"unreach", 0);
   fs_add_bool(fs, "success", 0);
   break;
-  case 4: 
+  case 4:
   fs_add_string(fs, "classification", (char *)"sourcequench", 0);
   fs_add_bool(fs, "success", 0);
   break;
-  case 5: 
+  case 5:
   fs_add_string(fs, "classification", (char *)"redirect", 0);
   fs_add_bool(fs, "success", 0);
   break;
-  case 11: 
+  case 11:
   fs_add_string(fs, "classification", (char *)"timxceed", 0);
   fs_add_bool(fs, "success", 0);
   break;
-  default: 
+  default:
   fs_add_string(fs, "classification", (char *)"other", 0);
   fs_add_bool(fs, "success", 0);
   break;
@@ -13422,14 +13216,14 @@ static void icmp_echo_process_packet(u_char const   *packet , uint32_t len , fie
   return;
 }
 }
-static fielddef_t fields[7]  = {      {"type", "int", "icmp message type"}, 
-        {"code", "int", "icmp message sub type code"}, 
-        {"icmp_id", "int", "icmp id number"}, 
-        {"seq", "int", "icmp sequence number"}, 
-        {"classification", "string", "probe module classification"}, 
-        {"success", "bool", "did probe module classify response as success"}, 
+static fielddef_t fields[7]  = {      {"type", "int", "icmp message type"},
+        {"code", "int", "icmp message sub type code"},
+        {"icmp_id", "int", "icmp id number"},
+        {"seq", "int", "icmp sequence number"},
+        {"classification", "string", "probe module classification"},
+        {"success", "bool", "did probe module classify response as success"},
         {"data", "binary", "ICMP payload"}};
-probe_module_t module_icmp_echo  = 
+probe_module_t module_icmp_echo  =
      {"icmp_echoscan", (size_t )48, "icmp and icmp[0]!=8", (size_t )96, (uint8_t )0,
     & icmp_global_initialize, & icmp_echo_init_perthread, & icmp_echo_make_packet,
     & icmp_echo_print_packet, & icmp_validate_packet, (void (*)(u_char const   *packetbuf ,
@@ -13441,8 +13235,8 @@ probe_module_t module_icmp_echo  =
 probe_module_t module_icmp_echo_time ;
 static int icmp_echo_init_perthread___0(void *buf , macaddr_t *src , macaddr_t *gw ,
                                         port_h_t dst_port  __attribute__((__unused__)) ,
-                                        void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                                        void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -13465,8 +13259,8 @@ static int icmp_echo_init_perthread___0(void *buf , macaddr_t *src , macaddr_t *
 static int icmp_echo_make_packet___0(void *buf , size_t *buf_len , ipaddr_n_t src_ip ,
                                      ipaddr_n_t dst_ip , uint8_t ttl , uint32_t *validation ,
                                      int probe_num  __attribute__((__unused__)) ,
-                                     void *arg  __attribute__((__unused__)) ) 
-{ 
+                                     void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct icmp *icmp_header ;
@@ -13502,8 +13296,8 @@ static int icmp_echo_make_packet___0(void *buf , size_t *buf_len , ipaddr_n_t sr
   return (0);
 }
 }
-static void icmp_echo_print_packet___0(FILE *fp , void *packet ) 
-{ 
+static void icmp_echo_print_packet___0(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct icmp *icmp_header ;
@@ -13528,8 +13322,8 @@ static void icmp_echo_print_packet___0(FILE *fp , void *packet )
 }
 }
 static int icmp_validate_packet___0(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                                    uint32_t *validation ) 
-{ 
+                                    uint32_t *validation )
+{
   struct icmp *icmp_h ;
   uint16_t icmp_idnum ;
   uint16_t icmp_seqnum ;
@@ -13550,7 +13344,7 @@ static int icmp_validate_packet___0(struct ip  const  *ip_hdr , uint32_t len , u
     goto _L;
   } else
   if ((int )icmp_h->icmp_type == 3) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if ((unsigned long )(4U * ip_hdr->ip_hl + 8U) + sizeof(struct ip ) > (unsigned long )len) {
       return (0);
     }
@@ -13576,8 +13370,8 @@ static int icmp_validate_packet___0(struct ip  const  *ip_hdr , uint32_t len , u
 }
 static void icmp_echo_process_packet___0(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                                          fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                                         struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                                         struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct icmp *icmp_hdr ;
   __uint16_t tmp ;
@@ -13598,27 +13392,27 @@ static void icmp_echo_process_packet___0(u_char const   *packet , uint32_t len  
   fs_add_uint64(fs, "sent_timestamp_us", (uint64_t )payload->sent_tv_usec);
   fs_add_uint64(fs, "dst_raw", (uint64_t )payload->dst);
   switch ((int )icmp_hdr->icmp_type) {
-  case 0: 
+  case 0:
   fs_add_string(fs, "classification", (char *)"echoreply", 0);
   fs_add_uint64(fs, "success", (uint64_t )1);
   break;
-  case 3: 
+  case 3:
   fs_add_string(fs, "classification", (char *)"unreach", 0);
   fs_add_uint64(fs, "success", (uint64_t )0);
   break;
-  case 4: 
+  case 4:
   fs_add_string(fs, "classification", (char *)"sourcequench", 0);
   fs_add_uint64(fs, "success", (uint64_t )0);
   break;
-  case 5: 
+  case 5:
   fs_add_string(fs, "classification", (char *)"redirect", 0);
   fs_add_uint64(fs, "success", (uint64_t )0);
   break;
-  case 11: 
+  case 11:
   fs_add_string(fs, "classification", (char *)"timxceed", 0);
   fs_add_uint64(fs, "success", (uint64_t )0);
   break;
-  default: 
+  default:
   fs_add_string(fs, "classification", (char *)"other", 0);
   fs_add_uint64(fs, "success", (uint64_t )0);
   break;
@@ -13626,18 +13420,18 @@ static void icmp_echo_process_packet___0(u_char const   *packet , uint32_t len  
   return;
 }
 }
-static fielddef_t fields___0[9]  = 
-  {      {"type", "int", "icmp message type"}, 
-        {"code", "int", "icmp message sub type code"}, 
-        {"icmp_id", "int", "icmp id number"}, 
-        {"seq", "int", "icmp sequence number"}, 
-        {"sent_timestamp_ts", "int", "timestamp of sent probe in seconds since Epoch"}, 
+static fielddef_t fields___0[9]  =
+  {      {"type", "int", "icmp message type"},
+        {"code", "int", "icmp message sub type code"},
+        {"icmp_id", "int", "icmp id number"},
+        {"seq", "int", "icmp sequence number"},
+        {"sent_timestamp_ts", "int", "timestamp of sent probe in seconds since Epoch"},
         {"sent_timestamp_us",
-      "int", "microsecond part of sent timestamp"}, 
-        {"dst-raw", "int", "raw destination IP address of sent probe"}, 
-        {"classification", "string", "probe module classification"}, 
+      "int", "microsecond part of sent timestamp"},
+        {"dst-raw", "int", "raw destination IP address of sent probe"},
+        {"classification", "string", "probe module classification"},
         {"success", "int", "did probe module classify response as success"}};
-probe_module_t module_icmp_echo_time  = 
+probe_module_t module_icmp_echo_time  =
      {"icmp_echo_time", (size_t )62, "icmp and icmp[0]!=8", (size_t )96, (uint8_t )0,
     (int (*)(struct state_conf * ))0, & icmp_echo_init_perthread___0, & icmp_echo_make_packet___0,
     & icmp_echo_print_packet___0, & icmp_validate_packet___0, (void (*)(u_char const   *packetbuf ,
@@ -13652,8 +13446,8 @@ extern int blocklist_is_allowed(uint32_t s_addr ) ;
 void make_tcp_header(struct tcphdr *tcp_header , port_h_t dest_port , uint16_t th_flags ) ;
 size_t set_mss_option(struct tcphdr *tcp_header ) ;
 __inline static uint16_t tcp_checksum(unsigned short len_tcp , uint32_t saddr , uint32_t daddr ,
-                                      struct tcphdr *tcp_pkt ) 
-{ 
+                                      struct tcphdr *tcp_pkt )
+{
   alias_unsigned_short *src_addr ;
   alias_unsigned_short *dest_addr ;
   unsigned char prot_tcp ;
@@ -13695,8 +13489,8 @@ __inline static uint16_t tcp_checksum(unsigned short len_tcp , uint32_t saddr , 
   return ((unsigned short )(~ sum));
 }
 }
-__inline static int check_dst_port(uint16_t port , int num_ports___6 , uint32_t *validation ) 
-{ 
+__inline static int check_dst_port(uint16_t port , int num_ports___6 , uint32_t *validation )
+{
   int32_t to_validate ;
   int32_t min ;
   int32_t max ;
@@ -13714,16 +13508,16 @@ __inline static int check_dst_port(uint16_t port , int num_ports___6 , uint32_t 
   return ((max - min) % num_ports___6 >= (to_validate - min) % num_ports___6);
 }
 }
-__inline static uint16_t get_src_port(int num_ports___6 , int probe_num , uint32_t *validation ) 
-{ 
+__inline static uint16_t get_src_port(int num_ports___6 , int probe_num , uint32_t *validation )
+{
 
 
   {
   return ((uint16_t )((unsigned int )zconf.source_port_first + (*(validation + 1) + (uint32_t )probe_num) % (unsigned int )num_ports___6));
 }
 }
-__inline static struct ip *get_ip_header(u_char const   *packet , uint32_t len ) 
-{ 
+__inline static struct ip *get_ip_header(u_char const   *packet , uint32_t len )
+{
 
 
   {
@@ -13733,8 +13527,8 @@ __inline static struct ip *get_ip_header(u_char const   *packet , uint32_t len )
   return ((struct ip *)(packet + sizeof(struct ether_header )));
 }
 }
-__inline static struct tcphdr *get_tcp_header(struct ip  const  *ip_hdr , uint32_t len ) 
-{ 
+__inline static struct tcphdr *get_tcp_header(struct ip  const  *ip_hdr , uint32_t len )
+{
 
 
   {
@@ -13749,8 +13543,8 @@ void fs_populate_icmp_from_iphdr(struct ip *ip , size_t len , fieldset_t *fs ) ;
 probe_module_t module_tcp_synscan ;
 static uint16_t num_ports  ;
 static port_h_t target_port  ;
-static int synscan_global_initialize(struct state_conf *state ) 
-{ 
+static int synscan_global_initialize(struct state_conf *state )
+{
 
 
   {
@@ -13760,8 +13554,8 @@ static int synscan_global_initialize(struct state_conf *state )
 }
 }
 static int synscan_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port ,
-                                  void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                                  void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -13783,8 +13577,8 @@ static int synscan_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , p
 }
 static int synscan_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t dst_ip ,
                                uint8_t ttl , uint32_t *validation , int probe_num ,
-                               void *arg  __attribute__((__unused__)) ) 
-{ 
+                               void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct tcphdr *tcp_header ;
@@ -13815,8 +13609,8 @@ static int synscan_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip ,
   return (0);
 }
 }
-void synscan_print_packet(FILE *fp , void *packet ) 
-{ 
+void synscan_print_packet(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct tcphdr *tcph ;
@@ -13842,8 +13636,8 @@ void synscan_print_packet(FILE *fp , void *packet )
 }
 }
 static int synscan_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                                   uint32_t *validation ) 
-{ 
+                                   uint32_t *validation )
+{
   struct tcphdr *tcp ;
   struct tcphdr *tmp ;
   port_h_t sport ;
@@ -13941,8 +13735,8 @@ static int synscan_validate_packet(struct ip  const  *ip_hdr , uint32_t len , ui
 }
 static void synscan_process_packet(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                                    fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                                   struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                                   struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct ip *tmp ;
   struct tcphdr *tcp ;
@@ -13997,19 +13791,19 @@ static void synscan_process_packet(u_char const   *packet , uint32_t len  __attr
   return;
 }
 }
-static fielddef_t fields___1[11]  = 
-  {      {"sport", "int", "TCP source port"}, 
-        {"dport", "int", "TCP destination port"}, 
-        {"seqnum", "int", "TCP sequence number"}, 
-        {"acknum", "int", "TCP acknowledgement number"}, 
-        {"window", "int", "TCP window"}, 
-        {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
+static fielddef_t fields___1[11]  =
+  {      {"sport", "int", "TCP source port"},
+        {"dport", "int", "TCP destination port"},
+        {"seqnum", "int", "TCP sequence number"},
+        {"acknum", "int", "TCP acknowledgement number"},
+        {"window", "int", "TCP window"},
+        {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
         {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}};
-probe_module_t module_tcp_synscan  = 
+probe_module_t module_tcp_synscan  =
      {"tcp_synscan", (size_t )58, "(tcp && tcp[13] & 4 != 0 || tcp[13] == 18) || icmp",
     (size_t )96, (uint8_t )1, & synscan_global_initialize, & synscan_init_perthread,
     & synscan_make_packet, & synscan_print_packet, & synscan_validate_packet, (void (*)(u_char const   *packetbuf ,
@@ -14022,8 +13816,8 @@ probe_module_t module_tcp_synscan  =
 #pragma merger("0","/tmp/cil-MqRz6qWN.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 probe_module_t module_tcp_synackscan ;
 static uint32_t num_ports___0  ;
-static int synackscan_global_initialize(struct state_conf *state ) 
-{ 
+static int synackscan_global_initialize(struct state_conf *state )
+{
 
 
   {
@@ -14032,8 +13826,8 @@ static int synackscan_global_initialize(struct state_conf *state )
 }
 }
 static int synackscan_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw ,
-                                     port_h_t dst_port , void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                                     port_h_t dst_port , void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -14056,8 +13850,8 @@ static int synackscan_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw 
 }
 static int synackscan_make_packet(void *buf , size_t *buf_len  __attribute__((__unused__)) ,
                                   ipaddr_n_t src_ip , ipaddr_n_t dst_ip , uint8_t ttl ,
-                                  uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) ) 
-{ 
+                                  uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct tcphdr *tcp_header ;
@@ -14090,8 +13884,8 @@ static int synackscan_make_packet(void *buf , size_t *buf_len  __attribute__((__
 }
 }
 static int synackscan_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip  __attribute__((__unused__)) ,
-                                      uint32_t *validation ) 
-{ 
+                                      uint32_t *validation )
+{
   struct tcphdr *tcp ;
   struct tcphdr *tmp ;
   uint16_t sport ;
@@ -14195,8 +13989,8 @@ static int synackscan_validate_packet(struct ip  const  *ip_hdr , uint32_t len ,
 }
 static void synackscan_process_packet(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                                       fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                                      struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                                      struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct ip *tmp ;
   struct tcphdr *tcp ;
@@ -14244,19 +14038,19 @@ static void synackscan_process_packet(u_char const   *packet , uint32_t len  __a
   return;
 }
 }
-static fielddef_t fields___2[11]  = 
-  {      {"sport", "int", "TCP source port"}, 
-        {"dport", "int", "TCP destination port"}, 
-        {"seqnum", "int", "TCP sequence number"}, 
-        {"acknum", "int", "TCP acknowledgement number"}, 
-        {"window", "int", "TCP window"}, 
-        {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
+static fielddef_t fields___2[11]  =
+  {      {"sport", "int", "TCP source port"},
+        {"dport", "int", "TCP destination port"},
+        {"seqnum", "int", "TCP sequence number"},
+        {"acknum", "int", "TCP acknowledgement number"},
+        {"window", "int", "TCP window"},
+        {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
         {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}};
-probe_module_t module_tcp_synackscan  = 
+probe_module_t module_tcp_synackscan  =
      {"tcp_synackscan", (size_t )58, "(tcp && tcp[13] & 4 != 0 || tcp[13] == 18) || icmp",
     (size_t )96, (uint8_t )1, & synackscan_global_initialize, & synackscan_init_perthread,
     & synackscan_make_packet, & synscan_print_packet, & synackscan_validate_packet,
@@ -14270,8 +14064,8 @@ extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2))) s
                                                                                        char const   *__needle )  __attribute__((__pure__)) ;
 extern void *xrealloc(void *ptr , size_t size ) ;
 void make_udp_header(struct udphdr *udp_header , port_h_t dest_port , uint16_t len ) ;
-__inline static struct udphdr *get_udp_header(struct ip  const  *ip_hdr , uint32_t len ) 
-{ 
+__inline static struct udphdr *get_udp_header(struct ip  const  *ip_hdr , uint32_t len )
+{
 
 
   {
@@ -14308,99 +14102,99 @@ char const   *udp_usage_error  =    "unknown UDP probe specification (expected f
 unsigned char const   *charset_alphanum  =    (unsigned char const   *)((unsigned char *)"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 unsigned char const   *charset_alpha  =    (unsigned char const   *)((unsigned char *)"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 unsigned char const   *charset_digit  =    (unsigned char const   *)((unsigned char *)"0123456789");
-unsigned char const   charset_all[257]  = 
-  {      (unsigned char const   )1,      (unsigned char const   )2,      (unsigned char const   )3,      (unsigned char const   )4, 
-        (unsigned char const   )5,      (unsigned char const   )6,      (unsigned char const   )7,      (unsigned char const   )8, 
-        (unsigned char const   )9,      (unsigned char const   )10,      (unsigned char const   )11,      (unsigned char const   )12, 
-        (unsigned char const   )13,      (unsigned char const   )14,      (unsigned char const   )15,      (unsigned char const   )16, 
-        (unsigned char const   )17,      (unsigned char const   )18,      (unsigned char const   )19,      (unsigned char const   )20, 
-        (unsigned char const   )21,      (unsigned char const   )22,      (unsigned char const   )23,      (unsigned char const   )24, 
-        (unsigned char const   )25,      (unsigned char const   )26,      (unsigned char const   )27,      (unsigned char const   )28, 
-        (unsigned char const   )29,      (unsigned char const   )30,      (unsigned char const   )31,      (unsigned char const   )32, 
-        (unsigned char const   )33,      (unsigned char const   )34,      (unsigned char const   )35,      (unsigned char const   )36, 
-        (unsigned char const   )37,      (unsigned char const   )38,      (unsigned char const   )39,      (unsigned char const   )40, 
-        (unsigned char const   )41,      (unsigned char const   )42,      (unsigned char const   )43,      (unsigned char const   )44, 
-        (unsigned char const   )45,      (unsigned char const   )46,      (unsigned char const   )47,      (unsigned char const   )48, 
-        (unsigned char const   )49,      (unsigned char const   )50,      (unsigned char const   )51,      (unsigned char const   )52, 
-        (unsigned char const   )53,      (unsigned char const   )54,      (unsigned char const   )55,      (unsigned char const   )56, 
-        (unsigned char const   )57,      (unsigned char const   )58,      (unsigned char const   )59,      (unsigned char const   )60, 
-        (unsigned char const   )61,      (unsigned char const   )62,      (unsigned char const   )63,      (unsigned char const   )64, 
-        (unsigned char const   )65,      (unsigned char const   )66,      (unsigned char const   )67,      (unsigned char const   )68, 
-        (unsigned char const   )69,      (unsigned char const   )70,      (unsigned char const   )71,      (unsigned char const   )72, 
-        (unsigned char const   )73,      (unsigned char const   )74,      (unsigned char const   )75,      (unsigned char const   )76, 
-        (unsigned char const   )77,      (unsigned char const   )78,      (unsigned char const   )79,      (unsigned char const   )80, 
-        (unsigned char const   )81,      (unsigned char const   )82,      (unsigned char const   )83,      (unsigned char const   )84, 
-        (unsigned char const   )85,      (unsigned char const   )86,      (unsigned char const   )87,      (unsigned char const   )88, 
-        (unsigned char const   )89,      (unsigned char const   )90,      (unsigned char const   )91,      (unsigned char const   )92, 
-        (unsigned char const   )93,      (unsigned char const   )94,      (unsigned char const   )95,      (unsigned char const   )96, 
-        (unsigned char const   )97,      (unsigned char const   )98,      (unsigned char const   )99,      (unsigned char const   )100, 
-        (unsigned char const   )101,      (unsigned char const   )102,      (unsigned char const   )103,      (unsigned char const   )104, 
-        (unsigned char const   )105,      (unsigned char const   )106,      (unsigned char const   )107,      (unsigned char const   )108, 
-        (unsigned char const   )109,      (unsigned char const   )110,      (unsigned char const   )111,      (unsigned char const   )112, 
-        (unsigned char const   )113,      (unsigned char const   )114,      (unsigned char const   )115,      (unsigned char const   )116, 
-        (unsigned char const   )117,      (unsigned char const   )118,      (unsigned char const   )119,      (unsigned char const   )120, 
-        (unsigned char const   )121,      (unsigned char const   )122,      (unsigned char const   )123,      (unsigned char const   )124, 
-        (unsigned char const   )125,      (unsigned char const   )126,      (unsigned char const   )127,      (unsigned char const   )128, 
-        (unsigned char const   )129,      (unsigned char const   )130,      (unsigned char const   )131,      (unsigned char const   )132, 
-        (unsigned char const   )133,      (unsigned char const   )134,      (unsigned char const   )135,      (unsigned char const   )136, 
-        (unsigned char const   )137,      (unsigned char const   )138,      (unsigned char const   )139,      (unsigned char const   )140, 
-        (unsigned char const   )141,      (unsigned char const   )142,      (unsigned char const   )143,      (unsigned char const   )144, 
-        (unsigned char const   )145,      (unsigned char const   )146,      (unsigned char const   )147,      (unsigned char const   )148, 
-        (unsigned char const   )149,      (unsigned char const   )150,      (unsigned char const   )151,      (unsigned char const   )152, 
-        (unsigned char const   )153,      (unsigned char const   )154,      (unsigned char const   )155,      (unsigned char const   )156, 
-        (unsigned char const   )157,      (unsigned char const   )158,      (unsigned char const   )159,      (unsigned char const   )160, 
-        (unsigned char const   )161,      (unsigned char const   )162,      (unsigned char const   )163,      (unsigned char const   )164, 
-        (unsigned char const   )165,      (unsigned char const   )166,      (unsigned char const   )167,      (unsigned char const   )168, 
-        (unsigned char const   )169,      (unsigned char const   )170,      (unsigned char const   )171,      (unsigned char const   )172, 
-        (unsigned char const   )173,      (unsigned char const   )174,      (unsigned char const   )175,      (unsigned char const   )176, 
-        (unsigned char const   )177,      (unsigned char const   )178,      (unsigned char const   )179,      (unsigned char const   )180, 
-        (unsigned char const   )181,      (unsigned char const   )182,      (unsigned char const   )183,      (unsigned char const   )184, 
-        (unsigned char const   )185,      (unsigned char const   )186,      (unsigned char const   )187,      (unsigned char const   )188, 
-        (unsigned char const   )189,      (unsigned char const   )190,      (unsigned char const   )191,      (unsigned char const   )192, 
-        (unsigned char const   )193,      (unsigned char const   )194,      (unsigned char const   )195,      (unsigned char const   )196, 
-        (unsigned char const   )197,      (unsigned char const   )198,      (unsigned char const   )199,      (unsigned char const   )200, 
-        (unsigned char const   )201,      (unsigned char const   )202,      (unsigned char const   )203,      (unsigned char const   )204, 
-        (unsigned char const   )205,      (unsigned char const   )206,      (unsigned char const   )207,      (unsigned char const   )208, 
-        (unsigned char const   )209,      (unsigned char const   )210,      (unsigned char const   )211,      (unsigned char const   )212, 
-        (unsigned char const   )213,      (unsigned char const   )214,      (unsigned char const   )215,      (unsigned char const   )216, 
-        (unsigned char const   )217,      (unsigned char const   )218,      (unsigned char const   )219,      (unsigned char const   )220, 
-        (unsigned char const   )221,      (unsigned char const   )222,      (unsigned char const   )223,      (unsigned char const   )224, 
-        (unsigned char const   )225,      (unsigned char const   )226,      (unsigned char const   )227,      (unsigned char const   )228, 
-        (unsigned char const   )229,      (unsigned char const   )230,      (unsigned char const   )231,      (unsigned char const   )232, 
-        (unsigned char const   )233,      (unsigned char const   )234,      (unsigned char const   )235,      (unsigned char const   )236, 
-        (unsigned char const   )237,      (unsigned char const   )238,      (unsigned char const   )239,      (unsigned char const   )240, 
-        (unsigned char const   )241,      (unsigned char const   )242,      (unsigned char const   )243,      (unsigned char const   )244, 
-        (unsigned char const   )245,      (unsigned char const   )246,      (unsigned char const   )247,      (unsigned char const   )248, 
-        (unsigned char const   )249,      (unsigned char const   )250,      (unsigned char const   )251,      (unsigned char const   )252, 
+unsigned char const   charset_all[257]  =
+  {      (unsigned char const   )1,      (unsigned char const   )2,      (unsigned char const   )3,      (unsigned char const   )4,
+        (unsigned char const   )5,      (unsigned char const   )6,      (unsigned char const   )7,      (unsigned char const   )8,
+        (unsigned char const   )9,      (unsigned char const   )10,      (unsigned char const   )11,      (unsigned char const   )12,
+        (unsigned char const   )13,      (unsigned char const   )14,      (unsigned char const   )15,      (unsigned char const   )16,
+        (unsigned char const   )17,      (unsigned char const   )18,      (unsigned char const   )19,      (unsigned char const   )20,
+        (unsigned char const   )21,      (unsigned char const   )22,      (unsigned char const   )23,      (unsigned char const   )24,
+        (unsigned char const   )25,      (unsigned char const   )26,      (unsigned char const   )27,      (unsigned char const   )28,
+        (unsigned char const   )29,      (unsigned char const   )30,      (unsigned char const   )31,      (unsigned char const   )32,
+        (unsigned char const   )33,      (unsigned char const   )34,      (unsigned char const   )35,      (unsigned char const   )36,
+        (unsigned char const   )37,      (unsigned char const   )38,      (unsigned char const   )39,      (unsigned char const   )40,
+        (unsigned char const   )41,      (unsigned char const   )42,      (unsigned char const   )43,      (unsigned char const   )44,
+        (unsigned char const   )45,      (unsigned char const   )46,      (unsigned char const   )47,      (unsigned char const   )48,
+        (unsigned char const   )49,      (unsigned char const   )50,      (unsigned char const   )51,      (unsigned char const   )52,
+        (unsigned char const   )53,      (unsigned char const   )54,      (unsigned char const   )55,      (unsigned char const   )56,
+        (unsigned char const   )57,      (unsigned char const   )58,      (unsigned char const   )59,      (unsigned char const   )60,
+        (unsigned char const   )61,      (unsigned char const   )62,      (unsigned char const   )63,      (unsigned char const   )64,
+        (unsigned char const   )65,      (unsigned char const   )66,      (unsigned char const   )67,      (unsigned char const   )68,
+        (unsigned char const   )69,      (unsigned char const   )70,      (unsigned char const   )71,      (unsigned char const   )72,
+        (unsigned char const   )73,      (unsigned char const   )74,      (unsigned char const   )75,      (unsigned char const   )76,
+        (unsigned char const   )77,      (unsigned char const   )78,      (unsigned char const   )79,      (unsigned char const   )80,
+        (unsigned char const   )81,      (unsigned char const   )82,      (unsigned char const   )83,      (unsigned char const   )84,
+        (unsigned char const   )85,      (unsigned char const   )86,      (unsigned char const   )87,      (unsigned char const   )88,
+        (unsigned char const   )89,      (unsigned char const   )90,      (unsigned char const   )91,      (unsigned char const   )92,
+        (unsigned char const   )93,      (unsigned char const   )94,      (unsigned char const   )95,      (unsigned char const   )96,
+        (unsigned char const   )97,      (unsigned char const   )98,      (unsigned char const   )99,      (unsigned char const   )100,
+        (unsigned char const   )101,      (unsigned char const   )102,      (unsigned char const   )103,      (unsigned char const   )104,
+        (unsigned char const   )105,      (unsigned char const   )106,      (unsigned char const   )107,      (unsigned char const   )108,
+        (unsigned char const   )109,      (unsigned char const   )110,      (unsigned char const   )111,      (unsigned char const   )112,
+        (unsigned char const   )113,      (unsigned char const   )114,      (unsigned char const   )115,      (unsigned char const   )116,
+        (unsigned char const   )117,      (unsigned char const   )118,      (unsigned char const   )119,      (unsigned char const   )120,
+        (unsigned char const   )121,      (unsigned char const   )122,      (unsigned char const   )123,      (unsigned char const   )124,
+        (unsigned char const   )125,      (unsigned char const   )126,      (unsigned char const   )127,      (unsigned char const   )128,
+        (unsigned char const   )129,      (unsigned char const   )130,      (unsigned char const   )131,      (unsigned char const   )132,
+        (unsigned char const   )133,      (unsigned char const   )134,      (unsigned char const   )135,      (unsigned char const   )136,
+        (unsigned char const   )137,      (unsigned char const   )138,      (unsigned char const   )139,      (unsigned char const   )140,
+        (unsigned char const   )141,      (unsigned char const   )142,      (unsigned char const   )143,      (unsigned char const   )144,
+        (unsigned char const   )145,      (unsigned char const   )146,      (unsigned char const   )147,      (unsigned char const   )148,
+        (unsigned char const   )149,      (unsigned char const   )150,      (unsigned char const   )151,      (unsigned char const   )152,
+        (unsigned char const   )153,      (unsigned char const   )154,      (unsigned char const   )155,      (unsigned char const   )156,
+        (unsigned char const   )157,      (unsigned char const   )158,      (unsigned char const   )159,      (unsigned char const   )160,
+        (unsigned char const   )161,      (unsigned char const   )162,      (unsigned char const   )163,      (unsigned char const   )164,
+        (unsigned char const   )165,      (unsigned char const   )166,      (unsigned char const   )167,      (unsigned char const   )168,
+        (unsigned char const   )169,      (unsigned char const   )170,      (unsigned char const   )171,      (unsigned char const   )172,
+        (unsigned char const   )173,      (unsigned char const   )174,      (unsigned char const   )175,      (unsigned char const   )176,
+        (unsigned char const   )177,      (unsigned char const   )178,      (unsigned char const   )179,      (unsigned char const   )180,
+        (unsigned char const   )181,      (unsigned char const   )182,      (unsigned char const   )183,      (unsigned char const   )184,
+        (unsigned char const   )185,      (unsigned char const   )186,      (unsigned char const   )187,      (unsigned char const   )188,
+        (unsigned char const   )189,      (unsigned char const   )190,      (unsigned char const   )191,      (unsigned char const   )192,
+        (unsigned char const   )193,      (unsigned char const   )194,      (unsigned char const   )195,      (unsigned char const   )196,
+        (unsigned char const   )197,      (unsigned char const   )198,      (unsigned char const   )199,      (unsigned char const   )200,
+        (unsigned char const   )201,      (unsigned char const   )202,      (unsigned char const   )203,      (unsigned char const   )204,
+        (unsigned char const   )205,      (unsigned char const   )206,      (unsigned char const   )207,      (unsigned char const   )208,
+        (unsigned char const   )209,      (unsigned char const   )210,      (unsigned char const   )211,      (unsigned char const   )212,
+        (unsigned char const   )213,      (unsigned char const   )214,      (unsigned char const   )215,      (unsigned char const   )216,
+        (unsigned char const   )217,      (unsigned char const   )218,      (unsigned char const   )219,      (unsigned char const   )220,
+        (unsigned char const   )221,      (unsigned char const   )222,      (unsigned char const   )223,      (unsigned char const   )224,
+        (unsigned char const   )225,      (unsigned char const   )226,      (unsigned char const   )227,      (unsigned char const   )228,
+        (unsigned char const   )229,      (unsigned char const   )230,      (unsigned char const   )231,      (unsigned char const   )232,
+        (unsigned char const   )233,      (unsigned char const   )234,      (unsigned char const   )235,      (unsigned char const   )236,
+        (unsigned char const   )237,      (unsigned char const   )238,      (unsigned char const   )239,      (unsigned char const   )240,
+        (unsigned char const   )241,      (unsigned char const   )242,      (unsigned char const   )243,      (unsigned char const   )244,
+        (unsigned char const   )245,      (unsigned char const   )246,      (unsigned char const   )247,      (unsigned char const   )248,
+        (unsigned char const   )249,      (unsigned char const   )250,      (unsigned char const   )251,      (unsigned char const   )252,
         (unsigned char const   )253,      (unsigned char const   )254,      (unsigned char const   )255,      (unsigned char const   )0};
 static int num_ports___1  ;
 probe_module_t module_udp ;
 static uint32_t udp_num_template_field_types  =    (uint32_t )12;
-static udp_payload_field_type_def_t udp_payload_template_fields[12]  = 
-  {      {"SADDR_N", "Source IP address in network byte order", (size_t )4, (udp_payload_field_type_t )1}, 
+static udp_payload_field_type_def_t udp_payload_template_fields[12]  =
+  {      {"SADDR_N", "Source IP address in network byte order", (size_t )4, (udp_payload_field_type_t )1},
         {"SADDR",
-      "Source IP address in dotted-quad format", (size_t )15, (udp_payload_field_type_t )2}, 
+      "Source IP address in dotted-quad format", (size_t )15, (udp_payload_field_type_t )2},
         {"DADDR_N",
-      "Destination IP address in network byte order", (size_t )4, (udp_payload_field_type_t )3}, 
+      "Destination IP address in network byte order", (size_t )4, (udp_payload_field_type_t )3},
         {"DADDR",
-      "Destination IP address in dotted-quad format", (size_t )15, (udp_payload_field_type_t )4}, 
+      "Destination IP address in dotted-quad format", (size_t )15, (udp_payload_field_type_t )4},
         {"SPORT_N",
-      "UDP source port in netowrk byte order", (size_t )2, (udp_payload_field_type_t )5}, 
+      "UDP source port in netowrk byte order", (size_t )2, (udp_payload_field_type_t )5},
         {"SPORT",
-      "UDP source port in ascii format", (size_t )5, (udp_payload_field_type_t )6}, 
+      "UDP source port in ascii format", (size_t )5, (udp_payload_field_type_t )6},
         {"DPORT_N",
-      "UDP destination port in network byte order", (size_t )2, (udp_payload_field_type_t )7}, 
+      "UDP destination port in network byte order", (size_t )2, (udp_payload_field_type_t )7},
         {"DPORT",
-      "UDP destination port in ascii format", (size_t )5, (udp_payload_field_type_t )8}, 
+      "UDP destination port in ascii format", (size_t )5, (udp_payload_field_type_t )8},
         {"RAND_BYTE",
-      "Random bytes from 0-255", (size_t )0, (udp_payload_field_type_t )9}, 
-        {"RAND_DIGIT", "Random digits from 0-9", (size_t )0, (udp_payload_field_type_t )10}, 
+      "Random bytes from 0-255", (size_t )0, (udp_payload_field_type_t )9},
+        {"RAND_DIGIT", "Random digits from 0-9", (size_t )0, (udp_payload_field_type_t )10},
         {"RAND_ALPHA",
-      "Random mixed-case letters (a-z)", (size_t )0, (udp_payload_field_type_t )11}, 
+      "Random mixed-case letters (a-z)", (size_t )0, (udp_payload_field_type_t )11},
         {"RAND_ALPHANUM",
       "Random mixed-case letters (a-z) and numbers", (size_t )0, (udp_payload_field_type_t )12}};
-void udp_set_num_ports(int x ) 
-{ 
+void udp_set_num_ports(int x )
+{
 
 
   {
@@ -14408,8 +14202,8 @@ void udp_set_num_ports(int x )
   return;
 }
 }
-int udp_global_initialize(struct state_conf *conf ) 
-{ 
+int udp_global_initialize(struct state_conf *conf )
+{
   uint32_t udp_template_max_len ;
   char const   *args ;
   uint32_t i ;
@@ -14548,8 +14342,8 @@ int udp_global_initialize(struct state_conf *conf )
 }
 int udp_global_cleanup(struct state_conf *zconf___0  __attribute__((__unused__)) ,
                        struct state_send *zsend___0  __attribute__((__unused__)) ,
-                       struct state_recv *zrecv___0  __attribute__((__unused__)) ) 
-{ 
+                       struct state_recv *zrecv___0  __attribute__((__unused__)) )
+{
 
 
   {
@@ -14565,8 +14359,8 @@ int udp_global_cleanup(struct state_conf *zconf___0  __attribute__((__unused__))
 }
 }
 int udp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port  __attribute__((__unused__)) ,
-                       void **arg_ptr ) 
-{ 
+                       void **arg_ptr )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t ip_len ;
@@ -14604,8 +14398,8 @@ int udp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst
 }
 }
 int udp_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t dst_ip ,
-                    uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) ) 
-{ 
+                    uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -14630,8 +14424,8 @@ int udp_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t
 }
 int udp_make_templated_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t dst_ip ,
                               uint8_t ttl , uint32_t *validation , int probe_num ,
-                              void *arg ) 
-{ 
+                              void *arg )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -14669,8 +14463,8 @@ int udp_make_templated_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , 
   return (0);
 }
 }
-void udp_print_packet(FILE *fp , void *packet ) 
-{ 
+void udp_print_packet(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct udphdr *udph ;
@@ -14695,8 +14489,8 @@ void udp_print_packet(FILE *fp , void *packet )
 }
 void udp_process_packet(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                         fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                        struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                        struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct udphdr *udp ;
   struct udphdr *tmp ;
@@ -14763,8 +14557,8 @@ void udp_process_packet(u_char const   *packet , uint32_t len  __attribute__((__
 }
 }
 int udp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                        uint32_t *validation ) 
-{ 
+                        uint32_t *validation )
+{
   int tmp ;
 
   {
@@ -14773,8 +14567,8 @@ int udp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src
 }
 }
 int udp_do_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip  __attribute__((__unused__)) ,
-                           uint32_t *validation , int num_ports___6 , int expected_port ) 
-{ 
+                           uint32_t *validation , int num_ports___6 , int expected_port )
+{
   struct udphdr *udp ;
   struct udphdr *tmp ;
   uint16_t dport ;
@@ -14844,8 +14638,8 @@ int udp_do_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *
 }
 }
 void udp_template_add_field(udp_payload_template_t *t , udp_payload_field_type_t ftype ,
-                            unsigned int length , char *data ) 
-{ 
+                            unsigned int length , char *data )
+{
   udp_payload_field_t *c ;
   void *tmp ;
   void *tmp___0 ;
@@ -14866,8 +14660,8 @@ void udp_template_add_field(udp_payload_template_t *t , udp_payload_field_type_t
   return;
 }
 }
-void udp_template_free(udp_payload_template_t *t ) 
-{ 
+void udp_template_free(udp_payload_template_t *t )
+{
   unsigned int x ;
 
   {
@@ -14889,8 +14683,8 @@ void udp_template_free(udp_payload_template_t *t )
 }
 }
 int udp_random_bytes(char *dst , int len , unsigned char const   *charset , int charset_len ,
-                     aesrand_t *aes ) 
-{ 
+                     aesrand_t *aes )
+{
   int i ;
   char *tmp ;
   uint64_t tmp___0 ;
@@ -14908,8 +14702,8 @@ int udp_random_bytes(char *dst , int len , unsigned char const   *charset , int 
 }
 }
 int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len ,
-                       struct ip *ip_hdr , struct udphdr *udp_hdr , aesrand_t *aes ) 
-{ 
+                       struct ip *ip_hdr , struct udphdr *udp_hdr , aesrand_t *aes )
+{
   udp_payload_field_t *c ;
   char *p ;
   char *max ;
@@ -14946,7 +14740,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
       return (0);
     }
     switch ((unsigned int )c->ftype) {
-    case 0U: 
+    case 0U:
     if (c->data) {
       if (! c->length) {
         break;
@@ -14957,23 +14751,23 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     memcpy((void * __restrict  )p, (void const   * __restrict  )c->data, c->length);
     p += c->length;
     break;
-    case 10U: 
+    case 10U:
     tmp___0 = udp_random_bytes(p, (int )c->length, charset_digit, 10, aes);
     p += tmp___0;
     break;
-    case 11U: 
+    case 11U:
     tmp___1 = udp_random_bytes(p, (int )c->length, charset_alpha, 52, aes);
     p += tmp___1;
     break;
-    case 12U: 
+    case 12U:
     tmp___2 = udp_random_bytes(p, (int )c->length, charset_alphanum, 62, aes);
     p += tmp___2;
     break;
-    case 9U: 
+    case 9U:
     tmp___3 = udp_random_bytes(p, (int )c->length, charset_all, 256, aes);
     p += tmp___3;
     break;
-    case 2U: 
+    case 2U:
     if ((unsigned long )(p + 15) >= (unsigned long )max) {
       full = 1;
       break;
@@ -14985,7 +14779,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     tmp___5 = strlen((char const   *)(tmp));
     p += tmp___5;
     break;
-    case 4U: 
+    case 4U:
     if ((unsigned long )(p + 15) >= (unsigned long )max) {
       full = 1;
       break;
@@ -14997,7 +14791,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     tmp___7 = strlen((char const   *)(tmp));
     p += tmp___7;
     break;
-    case 1U: 
+    case 1U:
     if ((unsigned long )(p + 4) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15006,7 +14800,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     *u32 = ip_hdr->ip_src.s_addr;
     p += 4;
     break;
-    case 3U: 
+    case 3U:
     if ((unsigned long )(p + 4) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15015,7 +14809,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     *u32 = ip_hdr->ip_dst.s_addr;
     p += 4;
     break;
-    case 5U: 
+    case 5U:
     if ((unsigned long )(p + 2) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15024,7 +14818,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     *u16 = udp_hdr->__annonCompField5.__annonCompField3.uh_sport;
     p += 2;
     break;
-    case 7U: 
+    case 7U:
     if ((unsigned long )(p + 2) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15033,7 +14827,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     *u16 = udp_hdr->__annonCompField5.__annonCompField3.uh_sport;
     p += 2;
     break;
-    case 6U: 
+    case 6U:
     if ((unsigned long )(p + 5) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15045,7 +14839,7 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
     memcpy((void * __restrict  )p, (void const   * __restrict  )(tmp), (size_t )y);
     p += y;
     break;
-    case 8U: 
+    case 8U:
     if ((unsigned long )(p + 5) >= (unsigned long )max) {
       full = 1;
       break;
@@ -15068,8 +14862,8 @@ int udp_template_build(udp_payload_template_t *t , char *out , unsigned int len 
 }
 static unsigned long const   fcount  =    (size_t const   )(sizeof(udp_payload_template_fields) / sizeof(udp_payload_template_fields[0]));
 int udp_template_field_lookup(char const   *vname ,
-                              udp_payload_field_t *c ) 
-{ 
+                              udp_payload_field_t *c )
+{
   size_t vname_len ;
   size_t tmp ;
   size_t type_name_len ;
@@ -15153,8 +14947,8 @@ int udp_template_field_lookup(char const   *vname ,
   return (0);
 }
 }
-udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint32_t *max_pkt_len ) 
-{ 
+udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint32_t *max_pkt_len )
+{
   udp_payload_template_t *t ;
   void *tmp ;
   uint32_t _max_pkt_len ;
@@ -15182,7 +14976,7 @@ udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint
   t->fields = (struct udp_payload_field **)((void *)0);
   while ((unsigned long )p < (unsigned long )(buf + buf_len)) {
     switch ((int )*p) {
-    case 36: 
+    case 36:
     if (dollar) {
       if (! lbrack) {
         dollar = p;
@@ -15190,13 +14984,13 @@ udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint
         goto _L;
       }
     } else
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (! dollar) {
       dollar = p;
     }
     p ++;
     continue;
-    case 123: 
+    case 123:
     if (dollar) {
       if (! lbrack) {
         lbrack = p;
@@ -15204,7 +14998,7 @@ udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint
     }
     p ++;
     continue;
-    case 125: 
+    case 125:
     if (dollar) {
       if (! lbrack) {
         p ++;
@@ -15236,7 +15030,7 @@ udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint
     }
     free((void *)tmp___0);
     break;
-    default: 
+    default:
     if (dollar) {
       if (lbrack) {
         p ++;
@@ -15260,18 +15054,18 @@ udp_payload_template_t *udp_template_load(uint8_t *buf , uint32_t buf_len , uint
   return (t);
 }
 }
-static fielddef_t fields___3[10]  = 
-  {      {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"sport", "int", "UDP source port"}, 
-        {"dport", "int", "UDP destination port"}, 
-        {"udp_pkt_size", "int", "UDP packet length"}, 
-        {"data", "binary", "UDP payload"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
+static fielddef_t fields___3[10]  =
+  {      {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"sport", "int", "UDP source port"},
+        {"dport", "int", "UDP destination port"},
+        {"udp_pkt_size", "int", "UDP packet length"},
+        {"data", "binary", "UDP payload"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
         {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}};
-probe_module_t module_udp  = 
+probe_module_t module_udp  =
      {"udp", (size_t )0, "udp || icmp", (size_t )1500, (uint8_t )1, & udp_global_initialize,
     & udp_init_perthread, & udp_make_packet, & udp_print_packet, & udp_validate_packet,
     (void (*)(u_char const   *packetbuf , uint32_t len , fieldset_t * , uint32_t *validation ,
@@ -15279,8 +15073,8 @@ probe_module_t module_udp  =
     0, fields___3, (int )(sizeof(fields___3) / sizeof(fields___3[0])), "Probe module that sends UDP packets to hosts. Packets can optionally be templated based on destination host. Specify packet file with --probe-args=file:/path_to_packet_file and templates with template:/path_to_template_file."};
 #pragma merger("0","/tmp/cil-bHI_Md2T.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 extern  __attribute__((__nothrow__)) long random(void) ;
-__inline static struct ip *get_inner_ip_header(struct icmp  const  *icmp , uint32_t len ) 
-{ 
+__inline static struct ip *get_inner_ip_header(struct icmp  const  *icmp , uint32_t len )
+{
 
 
   {
@@ -15292,8 +15086,8 @@ __inline static struct ip *get_inner_ip_header(struct icmp  const  *icmp , uint3
 }
 char *make_ip_str(uint32_t ip ) ;
 char const   *icmp_unreach_strings[16] ;
-void print_macaddr(struct ifreq *i ) 
-{ 
+void print_macaddr(struct ifreq *i )
+{
 
 
   {
@@ -15305,8 +15099,8 @@ void print_macaddr(struct ifreq *i )
   return;
 }
 }
-void fprintf_ip_header(FILE *fp , struct ip *iph ) 
-{ 
+void fprintf_ip_header(FILE *fp , struct ip *iph )
+{
   struct in_addr *s ;
   struct in_addr *d ;
   char srcip[21] ;
@@ -15330,8 +15124,8 @@ void fprintf_ip_header(FILE *fp , struct ip *iph )
   return;
 }
 }
-void fprintf_eth_header(FILE *fp , struct ether_header *ethh ) 
-{ 
+void fprintf_eth_header(FILE *fp , struct ether_header *ethh )
+{
 
 
   {
@@ -15345,8 +15139,8 @@ void fprintf_eth_header(FILE *fp , struct ether_header *ethh )
   return;
 }
 }
-void make_eth_header(struct ether_header *ethh , macaddr_t *src , macaddr_t *dst ) 
-{ 
+void make_eth_header(struct ether_header *ethh , macaddr_t *src , macaddr_t *dst )
+{
 
 
   {
@@ -15358,8 +15152,8 @@ void make_eth_header(struct ether_header *ethh , macaddr_t *src , macaddr_t *dst
   return;
 }
 }
-void make_ip_header(struct ip *iph , uint8_t protocol , uint16_t len ) 
-{ 
+void make_ip_header(struct ip *iph , uint8_t protocol , uint16_t len )
+{
 
 
   {
@@ -15375,8 +15169,8 @@ void make_ip_header(struct ip *iph , uint8_t protocol , uint16_t len )
   return;
 }
 }
-void make_icmp_header(struct icmp *buf ) 
-{ 
+void make_icmp_header(struct icmp *buf )
+{
 
 
   {
@@ -15387,8 +15181,8 @@ void make_icmp_header(struct icmp *buf )
   return;
 }
 }
-void make_tcp_header(struct tcphdr *tcp_header , port_h_t dest_port , uint16_t th_flags ) 
-{ 
+void make_tcp_header(struct tcphdr *tcp_header , port_h_t dest_port , uint16_t th_flags )
+{
   long tmp ;
 
   {
@@ -15406,8 +15200,8 @@ void make_tcp_header(struct tcphdr *tcp_header , port_h_t dest_port , uint16_t t
   return;
 }
 }
-size_t set_mss_option(struct tcphdr *tcp_header ) 
-{ 
+size_t set_mss_option(struct tcphdr *tcp_header )
+{
   size_t header_size ;
   uint8_t *base ;
   uint8_t *last_opt ;
@@ -15424,8 +15218,8 @@ size_t set_mss_option(struct tcphdr *tcp_header )
   return ((size_t )((int )tcp_header->__annonCompField8.__annonCompField6.th_off * 4));
 }
 }
-void make_udp_header(struct udphdr *udp_header , port_h_t dest_port , uint16_t len ) 
-{ 
+void make_udp_header(struct udphdr *udp_header , port_h_t dest_port , uint16_t len )
+{
 
 
   {
@@ -15436,8 +15230,8 @@ void make_udp_header(struct udphdr *udp_header , port_h_t dest_port , uint16_t l
 }
 }
 int icmp_helper_validate(struct ip  const  *ip_hdr , uint32_t len , size_t min_l4_len ,
-                         struct ip **probe_pkt , size_t *probe_len ) 
-{ 
+                         struct ip **probe_pkt , size_t *probe_len )
+{
   uint32_t min_len ;
   struct icmp *icmp ;
   struct ip *ip_inner ;
@@ -15479,8 +15273,8 @@ int icmp_helper_validate(struct ip  const  *ip_hdr , uint32_t len , size_t min_l
   return (1);
 }
 }
-void fs_add_null_icmp(fieldset_t *fs ) 
-{ 
+void fs_add_null_icmp(fieldset_t *fs )
+{
 
 
   {
@@ -15491,8 +15285,8 @@ void fs_add_null_icmp(fieldset_t *fs )
   return;
 }
 }
-void fs_add_failure_no_port(fieldset_t *fs ) 
-{ 
+void fs_add_failure_no_port(fieldset_t *fs )
+{
 
 
   {
@@ -15503,8 +15297,8 @@ void fs_add_failure_no_port(fieldset_t *fs )
   return;
 }
 }
-void fs_populate_icmp_from_iphdr(struct ip *ip , size_t len , fieldset_t *fs ) 
-{ 
+void fs_populate_icmp_from_iphdr(struct ip *ip , size_t len , fieldset_t *fs )
+{
   struct icmp *icmp ;
   struct icmp *tmp___1 ;
   struct ip *ip_inner ;
@@ -15552,8 +15346,8 @@ void fs_populate_icmp_from_iphdr(struct ip *ip , size_t len , fieldset_t *fs )
   return;
 }
 }
-char *make_ip_str(uint32_t ip ) 
-{ 
+char *make_ip_str(uint32_t ip )
+{
   struct in_addr t ;
   char const   *temp ;
   char *tmp ;
@@ -15572,22 +15366,22 @@ char *make_ip_str(uint32_t ip )
   return (retv);
 }
 }
-char const   *icmp_unreach_strings[16]  = 
-  {      "network unreachable",      "host unreachable",      "protocol unreachable",      "port unreachable", 
-        "fragments required",      "source route failed",      "network unknown",      "host unknown", 
-        "source host isolated",      "network admin. prohibited",      "host admin. prohibited",      "network unreachable TOS", 
+char const   *icmp_unreach_strings[16]  =
+  {      "network unreachable",      "host unreachable",      "protocol unreachable",      "port unreachable",
+        "fragments required",      "source route failed",      "network unknown",      "host unknown",
+        "source host isolated",      "network admin. prohibited",      "host admin. prohibited",      "network unreachable TOS",
         "host unreachable TOS",      "communication admin. prohibited",      "host presdence violation",      "precedence cutoff"};
 #pragma merger("0","/tmp/cil-8VjOvi3I.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 probe_module_t module_ntp ;
 probe_module_t module_upnp ;
 probe_module_t module_dns ;
 probe_module_t module_bacnet ;
-probe_module_t *probe_modules[9]  = 
-  {      & module_tcp_synscan,      & module_tcp_synackscan,      & module_icmp_echo,      & module_icmp_echo_time, 
-        & module_udp,      & module_ntp,      & module_upnp,      & module_dns, 
+probe_module_t *probe_modules[9]  =
+  {      & module_tcp_synscan,      & module_tcp_synackscan,      & module_icmp_echo,      & module_icmp_echo_time,
+        & module_udp,      & module_ntp,      & module_upnp,      & module_dns,
         & module_bacnet};
-probe_module_t *get_probe_module_by_name(char const   *name ) 
-{ 
+probe_module_t *get_probe_module_by_name(char const   *name )
+{
   int len ;
   int i ;
   int tmp ;
@@ -15605,8 +15399,8 @@ probe_module_t *get_probe_module_by_name(char const   *name )
   return ((probe_module_t *)((void *)0));
 }
 }
-void print_probe_modules(void) 
-{ 
+void print_probe_modules(void)
+{
   int len ;
   int i ;
 
@@ -15620,8 +15414,8 @@ void print_probe_modules(void)
   return;
 }
 }
-void fs_add_ip_fields(fieldset_t *fs , struct ip *ip ) 
-{ 
+void fs_add_ip_fields(fieldset_t *fs , struct ip *ip )
+{
   char *tmp ;
   char *tmp___0 ;
   __uint16_t tmp___1 ;
@@ -15639,8 +15433,8 @@ void fs_add_ip_fields(fieldset_t *fs , struct ip *ip )
   return;
 }
 }
-void fs_add_system_fields(fieldset_t *fs , int is_repeat , int in_cooldown ) 
-{ 
+void fs_add_system_fields(fieldset_t *fs , int is_repeat , int in_cooldown )
+{
   char *timestr ;
   void *tmp ;
   char *timestr_ms ;
@@ -15673,24 +15467,24 @@ void fs_add_system_fields(fieldset_t *fs , int is_repeat , int in_cooldown )
 }
 }
 int ip_fields_len  =    6;
-fielddef_t ip_fields[6]  = {      {"saddr", "string", "source IP address of response"}, 
-        {"saddr_raw", "int", "network order integer form of source IP address"}, 
-        {"daddr", "string", "destination IP address of response"}, 
-        {"daddr_raw", "int", "network order integer form of destination IP address"}, 
+fielddef_t ip_fields[6]  = {      {"saddr", "string", "source IP address of response"},
+        {"saddr_raw", "int", "network order integer form of source IP address"},
+        {"daddr", "string", "destination IP address of response"},
+        {"daddr_raw", "int", "network order integer form of destination IP address"},
         {"ipid",
-      "int", "IP identification number of response"}, 
+      "int", "IP identification number of response"},
         {"ttl", "int", "time-to-live of response packet"}};
 int sys_fields_len  =    5;
-fielddef_t sys_fields[5]  = {      {"repeat", "bool", "Is response a repeat response from host"}, 
-        {"cooldown", "bool", "Was response received during the cooldown period"}, 
-        {"timestamp_str", "string", "timestamp of when response arrived in ISO8601 format."}, 
+fielddef_t sys_fields[5]  = {      {"repeat", "bool", "Is response a repeat response from host"},
+        {"cooldown", "bool", "Was response received during the cooldown period"},
+        {"timestamp_str", "string", "timestamp of when response arrived in ISO8601 format."},
         {"timestamp_ts",
-      "int", "timestamp of when response arrived in seconds since Epoch"}, 
+      "int", "timestamp of when response arrived in seconds since Epoch"},
         {"timestamp_us", "int", "microsecond part of timestamp (e.g. microseconds since \'timestamp-ts\')"}};
 #pragma merger("0","/tmp/cil-Drl7vGf8.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 static int num_ports___2  ;
-int ntp_global_initialize(struct state_conf *conf ) 
-{ 
+int ntp_global_initialize(struct state_conf *conf )
+{
   int tmp ;
 
   {
@@ -15700,8 +15494,8 @@ int ntp_global_initialize(struct state_conf *conf )
 }
 }
 int ntp_make_packet(void *buf , ipaddr_n_t src_ip , ipaddr_n_t dst_ip , uint8_t ttl ,
-                    uint32_t *validation , int probe_num ) 
-{ 
+                    uint32_t *validation , int probe_num )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -15725,8 +15519,8 @@ int ntp_make_packet(void *buf , ipaddr_n_t src_ip , ipaddr_n_t dst_ip , uint8_t 
 }
 }
 int ntp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                        uint32_t *validation ) 
-{ 
+                        uint32_t *validation )
+{
   int tmp ;
 
   {
@@ -15736,8 +15530,8 @@ int ntp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src
 }
 void ntp_process_packet(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                         fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                        struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                        struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   uint64_t temp64 ;
   uint8_t temp8 ;
@@ -15853,8 +15647,8 @@ void ntp_process_packet(u_char const   *packet , uint32_t len  __attribute__((__
 }
 }
 int ntp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port  __attribute__((__unused__)) ,
-                       void **arg ) 
-{ 
+                       void **arg )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -15890,8 +15684,8 @@ int ntp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst
   return (0);
 }
 }
-void ntp_print_packet(FILE *fp , void *packet ) 
-{ 
+void ntp_print_packet(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct udphdr *udph ;
@@ -15918,30 +15712,30 @@ void ntp_print_packet(FILE *fp , void *packet )
   return;
 }
 }
-static fielddef_t fields___4[19]  = 
-  {      {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is  response considered success"}, 
-        {"sport", "int", "UDP source port"}, 
-        {"dport", "int", "UDP destination port"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
-        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}, 
+static fielddef_t fields___4[19]  =
+  {      {"classification", "string", "packet classification"},
+        {"success", "bool", "is  response considered success"},
+        {"sport", "int", "UDP source port"},
+        {"dport", "int", "UDP destination port"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
+        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"},
         {"LI_VN_MODE",
-      "int", "leap indication, version number, mode"}, 
-        {"stratum", "int", "stratum"}, 
-        {"poll", "int", "poll"}, 
-        {"precision", "int", "precision"}, 
-        {"root_delay", "int", "root delay"}, 
-        {"root_dispersion", "int", "root dispersion"}, 
-        {"reference_clock_identifier", "int", "code identifying clock reference"}, 
-        {"reference_timestamp", "int", "local time at which local clock was last set or corrected"}, 
+      "int", "leap indication, version number, mode"},
+        {"stratum", "int", "stratum"},
+        {"poll", "int", "poll"},
+        {"precision", "int", "precision"},
+        {"root_delay", "int", "root delay"},
+        {"root_dispersion", "int", "root dispersion"},
+        {"reference_clock_identifier", "int", "code identifying clock reference"},
+        {"reference_timestamp", "int", "local time at which local clock was last set or corrected"},
         {"originate_timestamp",
-      "int", "local time at which request deparated client for service"}, 
-        {"receive_timestamp", "int", "local time at which request arrvied at service host"}, 
+      "int", "local time at which request deparated client for service"},
+        {"receive_timestamp", "int", "local time at which request arrvied at service host"},
         {"transmit_timestamp",
       "int", "local time which reply departed service host for client"}};
-probe_module_t module_ntp  = 
+probe_module_t module_ntp  =
      {"ntp", (size_t )0, "udp || icmp", (size_t )1500, (uint8_t )1, & ntp_global_initialize,
     & ntp_init_perthread, & udp_make_packet, & ntp_print_packet, & ntp_validate_packet,
     (void (*)(u_char const   *packetbuf , uint32_t len , fieldset_t * , uint32_t *validation ,
@@ -15956,8 +15750,8 @@ extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2))) s
                                                                                        char const   * __restrict  __delim ) ;
 static char const   *upnp_query  =    "M-SEARCH * HTTP/1.1\r\nHost:239.255.255.250:1900\r\nST:upnp:rootdevice\r\nMan:\"ssdp:discover\"\r\nMX:3\r\n\r\n";
 static int num_ports___3  ;
-int upnp_global_initialize(struct state_conf *state ) 
-{ 
+int upnp_global_initialize(struct state_conf *state )
+{
 
 
   {
@@ -15967,8 +15761,8 @@ int upnp_global_initialize(struct state_conf *state )
 }
 }
 int upnp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port ,
-                        void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                        void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -16009,8 +15803,8 @@ int upnp_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t ds
 }
 }
 int upnp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                         uint32_t *validation ) 
-{ 
+                         uint32_t *validation )
+{
   int tmp ;
 
   {
@@ -16020,8 +15814,8 @@ int upnp_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *sr
 }
 void upnp_process_packet(u_char const   *packet , uint32_t len  __attribute__((__unused__)) ,
                          fieldset_t *fs , uint32_t *validation  __attribute__((__unused__)) ,
-                         struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                         struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct udphdr *udp ;
   char *payload ;
@@ -16170,7 +15964,7 @@ void upnp_process_packet(u_char const   *packet , uint32_t len  __attribute__((_
       }
       pch = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )"\n");
     }
-    cleanup: 
+    cleanup:
     fs_add_string(fs, "classification", (char *)classification, 0);
     fs_add_bool(fs, "success", (int )is_success);
     fs_chkadd_unsafe_string(fs, "server", server, 1);
@@ -16234,27 +16028,27 @@ void upnp_process_packet(u_char const   *packet , uint32_t len  __attribute__((_
   return;
 }
 }
-static fielddef_t fields___5[18]  = 
-  {      {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"server", "string", "UPnP server"}, 
-        {"location", "string", "UPnP location"}, 
-        {"usn", "string", "UPnP usn"}, 
-        {"st", "string", "UPnP st"}, 
-        {"ext", "string", "UPnP ext"}, 
-        {"cache_control", "string", "UPnP cache-control"}, 
-        {"x_user_agent", "string", "UPnP x-user-agent"}, 
-        {"agent", "string", "UPnP agent"}, 
-        {"date", "string", "UPnP date"}, 
-        {"sport", "int", "UDP source port"}, 
-        {"dport", "int", "UDP destination port"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
-        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}, 
+static fielddef_t fields___5[18]  =
+  {      {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"server", "string", "UPnP server"},
+        {"location", "string", "UPnP location"},
+        {"usn", "string", "UPnP usn"},
+        {"st", "string", "UPnP st"},
+        {"ext", "string", "UPnP ext"},
+        {"cache_control", "string", "UPnP cache-control"},
+        {"x_user_agent", "string", "UPnP x-user-agent"},
+        {"agent", "string", "UPnP agent"},
+        {"date", "string", "UPnP date"},
+        {"sport", "int", "UDP source port"},
+        {"dport", "int", "UDP destination port"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
+        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"},
         {"data",
       "binary", "UDP payload"}};
-probe_module_t module_upnp  = 
+probe_module_t module_upnp  =
      {"upnp", (size_t )139, "udp || icmp", (size_t )2048, (uint8_t )1, & upnp_global_initialize,
     & upnp_init_perthread, & udp_make_packet, & udp_print_packet, & upnp_validate_packet,
     (void (*)(u_char const   *packetbuf , uint32_t len , fieldset_t * , uint32_t *validation ,
@@ -16264,10 +16058,10 @@ probe_module_t module_upnp  =
     2, fields___5, 18, "Probe module that sends a TCP SYN packet to a specific port. Possible classifications are: synack and rst. A SYN-ACK packet is considered a success and a reset packet is considered a failed response."};
 #pragma merger("0","/tmp/cil-tSFy327H.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 static int num_ports___4  ;
-char const   default_domain[15]  = 
-  {      (char const   )'w',      (char const   )'w',      (char const   )'w',      (char const   )'.', 
-        (char const   )'g',      (char const   )'o',      (char const   )'o',      (char const   )'g', 
-        (char const   )'l',      (char const   )'e',      (char const   )'.',      (char const   )'c', 
+char const   default_domain[15]  =
+  {      (char const   )'w',      (char const   )'w',      (char const   )'w',      (char const   )'.',
+        (char const   )'g',      (char const   )'o',      (char const   )'o',      (char const   )'g',
+        (char const   )'l',      (char const   )'e',      (char const   )'.',      (char const   )'c',
         (char const   )'o',      (char const   )'m',      (char const   )'\000'};
 unsigned short const   default_qtype  =    (uint16_t const   )1;
 static char **dns_packets  ;
@@ -16276,18 +16070,18 @@ static uint16_t *qname_lens  ;
 static char **qnames  ;
 static uint16_t *qtypes  ;
 static int num_questions  =    0;
-char const   *qtype_strs[10]  = 
-  {      "A",      "NS",      "CNAME",      "SOA", 
-        "PTR",      "MX",      "TXT",      "AAAA", 
+char const   *qtype_strs[10]  =
+  {      "A",      "NS",      "CNAME",      "SOA",
+        "PTR",      "MX",      "TXT",      "AAAA",
         "RRSIG",      "ALL"};
 int const   qtype_strs_len  =    (int const   )10;
-dns_qtype const   qtype_strid_to_qtype[10]  = 
-  {      (dns_qtype const   )1,      (dns_qtype const   )2,      (dns_qtype const   )5,      (dns_qtype const   )6, 
-        (dns_qtype const   )12,      (dns_qtype const   )15,      (dns_qtype const   )16,      (dns_qtype const   )28, 
+dns_qtype const   qtype_strid_to_qtype[10]  =
+  {      (dns_qtype const   )1,      (dns_qtype const   )2,      (dns_qtype const   )5,      (dns_qtype const   )6,
+        (dns_qtype const   )12,      (dns_qtype const   )15,      (dns_qtype const   )16,      (dns_qtype const   )28,
         (dns_qtype const   )46,      (dns_qtype const   )255};
 int8_t qtype_qtype_to_strid[256]  = {      (int8_t )-1};
-void setup_qtype_str_map(void) 
-{ 
+void setup_qtype_str_map(void)
+{
 
 
   {
@@ -16304,8 +16098,8 @@ void setup_qtype_str_map(void)
   return;
 }
 }
-static uint16_t qtype_str_to_code(char const   *str ) 
-{ 
+static uint16_t qtype_str_to_code(char const   *str )
+{
   int i ;
   int tmp ;
 
@@ -16321,8 +16115,8 @@ static uint16_t qtype_str_to_code(char const   *str )
   return ((uint16_t )0);
 }
 }
-static uint16_t domain_to_qname(char **qname_handle , char const   *domain ) 
-{ 
+static uint16_t domain_to_qname(char **qname_handle , char const   *domain )
+{
   uint16_t len ;
   size_t tmp ;
   char *qname ;
@@ -16359,8 +16153,8 @@ static uint16_t domain_to_qname(char **qname_handle , char const   *domain )
   return (len);
 }
 }
-static int build_global_dns_packets(char **domains , int num_domains , size_t *max_len ) 
-{ 
+static int build_global_dns_packets(char **domains , int num_domains , size_t *max_len )
+{
   size_t _max_len ;
   int i ;
   uint16_t len ;
@@ -16406,8 +16200,8 @@ static int build_global_dns_packets(char **domains , int num_domains , size_t *m
 }
 static uint16_t get_name_helper(char const   *data , uint16_t data_len , char const   *payload ,
                                 uint16_t payload_len , char *name , uint16_t name_len ,
-                                uint16_t recursion_level ) 
-{ 
+                                uint16_t recursion_level )
+{
   uint16_t bytes_consumed ;
   uint8_t byte ;
   uint16_t offset ;
@@ -16442,7 +16236,7 @@ static uint16_t get_name_helper(char const   *data , uint16_t data_len , char co
         goto _L;
       } else
       if ((int )bytes_consumed > 0) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         if ((int )name_len < 1) {
           log_warn("dns", "Exceeded static name field allocation.");
           return ((uint16_t )0);
@@ -16503,8 +16297,8 @@ static uint16_t get_name_helper(char const   *data , uint16_t data_len , char co
 }
 }
 static char *get_name(char const   *data , uint16_t data_len , char const   *payload ,
-                      uint16_t payload_len , uint16_t *bytes_consumed ) 
-{ 
+                      uint16_t payload_len , uint16_t *bytes_consumed )
+{
   char *name ;
   void *tmp ;
 
@@ -16525,8 +16319,8 @@ static char *get_name(char const   *data , uint16_t data_len , char const   *pay
 }
 }
 static bool process_response_question(char **data , uint16_t *data_len , char const   *payload ,
-                                      uint16_t payload_len , fieldset_t *list ) 
-{ 
+                                      uint16_t payload_len , fieldset_t *list )
+{
   uint16_t bytes_consumed ;
   char *question_name ;
   char *tmp ;
@@ -16578,8 +16372,8 @@ static bool process_response_question(char **data , uint16_t *data_len , char co
 }
 }
 static bool process_response_answer(char **data , uint16_t *data_len , char const   *payload ,
-                                    uint16_t payload_len , fieldset_t *list ) 
-{ 
+                                    uint16_t payload_len , fieldset_t *list )
+{
   uint16_t bytes_consumed ;
   char *answer_name ;
   char *tmp ;
@@ -16665,7 +16459,7 @@ static bool process_response_answer(char **data , uint16_t *data_len , char cons
     goto _L;
   } else
   if ((int )type == 5) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     rdata_bytes_consumed = (uint16_t )0;
     tmp___6 = get_name((char const   *)rdata, rdlength, payload, payload_len, & rdata_bytes_consumed);
     rdata_name = tmp___6;
@@ -16764,8 +16558,8 @@ static bool process_response_answer(char **data , uint16_t *data_len , char cons
   return ((bool )0);
 }
 }
-static int dns_global_initialize(struct state_conf *conf ) 
-{ 
+static int dns_global_initialize(struct state_conf *conf )
+{
   void *tmp ;
   void *tmp___0 ;
   void *tmp___1 ;
@@ -16888,8 +16682,8 @@ static int dns_global_initialize(struct state_conf *conf )
 }
 static int dns_global_cleanup(struct state_conf *zconf___0  __attribute__((__unused__)) ,
                               struct state_send *zsend___0  __attribute__((__unused__)) ,
-                              struct state_recv *zrecv___0  __attribute__((__unused__)) ) 
-{ 
+                              struct state_recv *zrecv___0  __attribute__((__unused__)) )
+{
   int i ;
   int i___0 ;
 
@@ -16929,8 +16723,8 @@ static int dns_global_cleanup(struct state_conf *zconf___0  __attribute__((__unu
 }
 }
 int dns_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port  __attribute__((__unused__)) ,
-                       void **arg_ptr  __attribute__((__unused__)) ) 
-{ 
+                       void **arg_ptr  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   uint16_t len ;
@@ -16956,8 +16750,8 @@ int dns_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst
 }
 }
 int dns_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t dst_ip ,
-                    uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) ) 
-{ 
+                    uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -17000,8 +16794,8 @@ int dns_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t
   return (0);
 }
 }
-void dns_print_packet(FILE *fp , void *packet ) 
-{ 
+void dns_print_packet(FILE *fp , void *packet )
+{
   struct ether_header *ethh ;
   struct ip *iph ;
   struct udphdr *udph ;
@@ -17026,8 +16820,8 @@ void dns_print_packet(FILE *fp , void *packet )
 }
 }
 int dns_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                        uint32_t *validation ) 
-{ 
+                        uint32_t *validation )
+{
   int tmp ;
   struct udphdr *udp ;
   struct udphdr *tmp___0 ;
@@ -17067,8 +16861,8 @@ int dns_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src
   return (1);
 }
 }
-void dns_add_null_fs(fieldset_t *fs ) 
-{ 
+void dns_add_null_fs(fieldset_t *fs )
+{
   fieldset_t *tmp ;
   fieldset_t *tmp___0 ;
   fieldset_t *tmp___1 ;
@@ -17104,8 +16898,8 @@ void dns_add_null_fs(fieldset_t *fs )
 }
 }
 void dns_process_packet(u_char const   *packet , uint32_t len , fieldset_t *fs , uint32_t *validation ,
-                        struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                        struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct udphdr *udp_hdr ;
   struct udphdr *tmp ;
@@ -17181,7 +16975,7 @@ void dns_process_packet(u_char const   *packet , uint32_t len , fieldset_t *fs ,
           }
         }
       }
-      __Cont: /* CIL Label */ 
+      __Cont: /* CIL Label */
       i ++;
     }
     if (! (match > 0)) {
@@ -17328,50 +17122,50 @@ void dns_process_packet(u_char const   *packet , uint32_t len , fieldset_t *fs ,
   return;
 }
 }
-static fielddef_t fields___6[32]  = 
-  {      {"sport", "int", "UDP source port"}, 
-        {"dport", "int", "UDP destination port"}, 
-        {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"app_success", "bool", "Is the RA bit set with no error code?"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
-        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}, 
+static fielddef_t fields___6[32]  =
+  {      {"sport", "int", "UDP source port"},
+        {"dport", "int", "UDP destination port"},
+        {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"app_success", "bool", "Is the RA bit set with no error code?"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
+        {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"},
         {"udp_len",
-      "int", "UDP packet lenght"}, 
-        {"dns_id", "int", "DNS transaction ID"}, 
-        {"dns_rd", "int", "DNS recursion desired"}, 
-        {"dns_tc", "int", "DNS packet truncated"}, 
-        {"dns_aa", "int", "DNS authoritative answer"}, 
-        {"dns_opcode", "int", "DNS opcode (query type)"}, 
-        {"dns_qr", "int", "DNS query(0) or response (1)"}, 
-        {"dns_rcode", "int", "DNS response code"}, 
-        {"dns_cd", "int", "DNS checking disabled"}, 
-        {"dns_ad", "int", "DNS authenticated data"}, 
-        {"dns_z", "int", "DNS reserved"}, 
-        {"dns_ra", "int", "DNS recursion available"}, 
-        {"dns_qdcount", "int", "DNS number questions"}, 
-        {"dns_ancount", "int", "DNS number answer RR\'s"}, 
-        {"dns_nscount", "int", "DNS number NS RR\'s in authority section"}, 
-        {"dns_arcount", "int", "DNS number additional RR\'s"}, 
-        {"dns_questions", "repeated", "DNS question list"}, 
-        {"dns_answers", "repeated", "DNS answer list"}, 
-        {"dns_authorities", "repeated", "DNS authority list"}, 
-        {"dns_additionals", "repeated", "DNS additional list"}, 
-        {"dns_parse_err", "int", "Problem parsing the DNS response"}, 
-        {"dns_unconsumed_bytes", "int", "Bytes left over when parsing the DNS response"}, 
+      "int", "UDP packet lenght"},
+        {"dns_id", "int", "DNS transaction ID"},
+        {"dns_rd", "int", "DNS recursion desired"},
+        {"dns_tc", "int", "DNS packet truncated"},
+        {"dns_aa", "int", "DNS authoritative answer"},
+        {"dns_opcode", "int", "DNS opcode (query type)"},
+        {"dns_qr", "int", "DNS query(0) or response (1)"},
+        {"dns_rcode", "int", "DNS response code"},
+        {"dns_cd", "int", "DNS checking disabled"},
+        {"dns_ad", "int", "DNS authenticated data"},
+        {"dns_z", "int", "DNS reserved"},
+        {"dns_ra", "int", "DNS recursion available"},
+        {"dns_qdcount", "int", "DNS number questions"},
+        {"dns_ancount", "int", "DNS number answer RR\'s"},
+        {"dns_nscount", "int", "DNS number NS RR\'s in authority section"},
+        {"dns_arcount", "int", "DNS number additional RR\'s"},
+        {"dns_questions", "repeated", "DNS question list"},
+        {"dns_answers", "repeated", "DNS answer list"},
+        {"dns_authorities", "repeated", "DNS authority list"},
+        {"dns_additionals", "repeated", "DNS additional list"},
+        {"dns_parse_err", "int", "Problem parsing the DNS response"},
+        {"dns_unconsumed_bytes", "int", "Bytes left over when parsing the DNS response"},
         {"raw_data",
       "binary", "UDP payload"}};
-probe_module_t module_dns  = 
+probe_module_t module_dns  =
      {"dns", (size_t )0, "udp || icmp", (size_t )1500, (uint8_t )1, & dns_global_initialize,
     & dns_init_perthread, & dns_make_packet, & dns_print_packet, & dns_validate_packet,
     (void (*)(u_char const   *packetbuf , uint32_t len , fieldset_t * , uint32_t *validation ,
               struct timespec  const  ts ))(& dns_process_packet), & dns_global_cleanup,
     2, fields___6, (int )(sizeof(fields___6) / sizeof(fields___6[0])), "This module sends out DNS queries and parses basic responses. By default, the module will perform an A record lookup for google.com. You can specify other queries using the --probe-args argument in the form: \'type,query\', e.g. \'A,google.com\'. The module supports sending the the following types: of queries: A, NS, CNAME, SOA, PTR, MX, TXT, AAAA, RRSIG, and ALL. The module will accept and attempt to parse all DNS responses. There is currently support for parsing out full data from A, NS, CNAME, MX, TXT, and AAAA. Any other types will be output in raw form."};
 #pragma merger("0","/tmp/cil-Y25XbCHJ.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
-__inline static uint8_t *get_udp_payload(struct udphdr  const  *udp , uint32_t len  __attribute__((__unused__)) ) 
-{ 
+__inline static uint8_t *get_udp_payload(struct udphdr  const  *udp , uint32_t len  __attribute__((__unused__)) )
+{
 
 
   {
@@ -17379,10 +17173,10 @@ __inline static uint8_t *get_udp_payload(struct udphdr  const  *udp , uint32_t l
 }
 }
 static int num_ports___5  ;
-static uint8_t bacnet_body[7]  = {      (uint8_t )12,      (uint8_t )2,      (uint8_t )63,      (uint8_t )255, 
+static uint8_t bacnet_body[7]  = {      (uint8_t )12,      (uint8_t )2,      (uint8_t )63,      (uint8_t )255,
         (uint8_t )255,      (uint8_t )25,      (uint8_t )75};
-__inline static uint8_t get_invoke_id(uint32_t *validation ) 
-{ 
+__inline static uint8_t get_invoke_id(uint32_t *validation )
+{
 
 
   {
@@ -17390,8 +17184,8 @@ __inline static uint8_t get_invoke_id(uint32_t *validation )
 }
 }
 int bacnet_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t dst_port  __attribute__((__unused__)) ,
-                          void **arg ) 
-{ 
+                          void **arg )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -17440,8 +17234,8 @@ int bacnet_init_perthread(void *buf , macaddr_t *src , macaddr_t *gw , port_h_t 
 }
 }
 int bacnet_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_n_t dst_ip ,
-                       uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) ) 
-{ 
+                       uint8_t ttl , uint32_t *validation , int probe_num , void *arg  __attribute__((__unused__)) )
+{
   struct ether_header *eth_header ;
   struct ip *ip_header ;
   struct udphdr *udp_header ;
@@ -17466,8 +17260,8 @@ int bacnet_make_packet(void *buf , size_t *buf_len , ipaddr_n_t src_ip , ipaddr_
 }
 }
 int bacnet_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *src_ip ,
-                           uint32_t *validation ) 
-{ 
+                           uint32_t *validation )
+{
   int tmp ;
   struct udphdr *udp ;
   struct udphdr *tmp___0 ;
@@ -17500,8 +17294,8 @@ int bacnet_validate_packet(struct ip  const  *ip_hdr , uint32_t len , uint32_t *
 }
 }
 void bacnet_process_packet(u_char const   *packet , uint32_t len , fieldset_t *fs ,
-                           uint32_t *validation  __attribute__((__unused__)) , struct timespec ts  __attribute__((__unused__)) ) 
-{ 
+                           uint32_t *validation  __attribute__((__unused__)) , struct timespec ts  __attribute__((__unused__)) )
+{
   struct ip *ip_hdr ;
   struct ip *tmp ;
   struct udphdr *udp ;
@@ -17556,8 +17350,8 @@ void bacnet_process_packet(u_char const   *packet , uint32_t len , fieldset_t *f
   return;
 }
 }
-int bacnet_global_initialize(struct state_conf *conf ) 
-{ 
+int bacnet_global_initialize(struct state_conf *conf )
+{
 
 
   {
@@ -17565,17 +17359,17 @@ int bacnet_global_initialize(struct state_conf *conf )
   return (0);
 }
 }
-static fielddef_t fields___7[9]  = 
-  {      {"sport", "int", "UDP source port"}, 
-        {"dport", "int", "UDP destination port"}, 
-        {"classification", "string", "packet classification"}, 
-        {"success", "bool", "is response considered success"}, 
-        {"udp_payload", "binary", "UDP payload"}, 
-        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"}, 
-        {"icmp_type", "int", "icmp message type"}, 
-        {"icmp_code", "int", "icmp message sub type code"}, 
+static fielddef_t fields___7[9]  =
+  {      {"sport", "int", "UDP source port"},
+        {"dport", "int", "UDP destination port"},
+        {"classification", "string", "packet classification"},
+        {"success", "bool", "is response considered success"},
+        {"udp_payload", "binary", "UDP payload"},
+        {"icmp_responder", "string", "Source IP of ICMP_UNREACH messages"},
+        {"icmp_type", "int", "icmp message type"},
+        {"icmp_code", "int", "icmp message sub type code"},
         {"icmp_unreach_str", "string", "for icmp_unreach responses, the string version of icmp_code (e.g. network-unreach)"}};
-probe_module_t module_bacnet  = 
+probe_module_t module_bacnet  =
      {"bacnet", ((sizeof(struct ether_header ) + sizeof(struct ip )) + sizeof(struct udphdr )) + 17UL,
     "udp || icmp", (size_t )1500, (uint8_t )1, & bacnet_global_initialize, & bacnet_init_perthread,
     & bacnet_make_packet, & udp_print_packet, & bacnet_validate_packet, (void (*)(u_char const   *packetbuf ,
@@ -17588,8 +17382,8 @@ probe_module_t module_bacnet  =
 #pragma merger("0","/tmp/cil-b7hbuZre.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 extern void check_and_log_file_error(FILE *file , char const   *name ) ;
 static FILE *file  =    (FILE *)((void *)0);
-int csv_init(struct state_conf *conf , char const   **fields___8 , int fieldlens ) 
-{ 
+int csv_init(struct state_conf *conf , char const   **fields___8 , int fieldlens )
+{
   int *tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -17634,8 +17428,8 @@ int csv_init(struct state_conf *conf , char const   **fields___8 , int fieldlens
 }
 }
 int csv_close(struct state_conf *c  __attribute__((__unused__)) , struct state_send *s  __attribute__((__unused__)) ,
-              struct state_recv *r  __attribute__((__unused__)) ) 
-{ 
+              struct state_recv *r  __attribute__((__unused__)) )
+{
 
 
   {
@@ -17646,8 +17440,8 @@ int csv_close(struct state_conf *c  __attribute__((__unused__)) , struct state_s
   return (0);
 }
 }
-static void hex_encode___0(FILE *f , unsigned char *readbuf , size_t len ) 
-{ 
+static void hex_encode___0(FILE *f , unsigned char *readbuf , size_t len )
+{
   size_t i ;
 
   {
@@ -17661,8 +17455,8 @@ static void hex_encode___0(FILE *f , unsigned char *readbuf , size_t len )
   return;
 }
 }
-int csv_process(fieldset_t *fs ) 
-{ 
+int csv_process(fieldset_t *fs )
+{
   int i ;
   field_t *f ;
   char *tmp ;
@@ -17709,7 +17503,7 @@ int csv_process(fieldset_t *fs )
   return (0);
 }
 }
-output_module_t module_csv_file  = 
+output_module_t module_csv_file  =
      {"csv", 0, 0U, & csv_init, (int (*)(struct state_conf * , struct state_send * ,
                                        struct state_recv * ))((void *)0), (int (*)(struct state_conf * ,
                                                                                    struct state_send * ,
@@ -17720,8 +17514,8 @@ extern char const   *json_object_to_json_string_ext(struct json_object *obj , in
 extern struct json_object *json_object_new_boolean(json_bool b ) ;
 static FILE *file___0  =    (FILE *)((void *)0);
 int json_output_file_init(struct state_conf *conf , char const   **fields___8  __attribute__((__unused__)) ,
-                          int fieldlens  __attribute__((__unused__)) ) 
-{ 
+                          int fieldlens  __attribute__((__unused__)) )
+{
   int *tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -17750,8 +17544,8 @@ int json_output_file_init(struct state_conf *conf , char const   **fields___8  _
   return (0);
 }
 }
-char *hex_encode(unsigned char *packet , int buflen ) 
-{ 
+char *hex_encode(unsigned char *packet , int buflen )
+{
   char *buf ;
   void *tmp ;
   int i ;
@@ -17772,8 +17566,8 @@ char *hex_encode(unsigned char *packet , int buflen )
 }
 json_object *fs_to_jsonobj(fieldset_t *fs ) ;
 json_object *repeated_to_jsonobj(fieldset_t *fs ) ;
-json_object *field_to_jsonobj(field_t *f ) 
-{ 
+json_object *field_to_jsonobj(field_t *f )
+{
   struct json_object *tmp ;
   struct json_object *tmp___0 ;
   struct json_object *tmp___1 ;
@@ -17820,8 +17614,8 @@ json_object *field_to_jsonobj(field_t *f )
   }
 }
 }
-json_object *repeated_to_jsonobj(fieldset_t *fs ) 
-{ 
+json_object *repeated_to_jsonobj(fieldset_t *fs )
+{
   json_object *obj ;
   struct json_object *tmp ;
   int i ;
@@ -17841,8 +17635,8 @@ json_object *repeated_to_jsonobj(fieldset_t *fs )
   return (obj);
 }
 }
-json_object *fs_to_jsonobj(fieldset_t *fs ) 
-{ 
+json_object *fs_to_jsonobj(fieldset_t *fs )
+{
   json_object *obj ;
   struct json_object *tmp ;
   int i ;
@@ -17864,8 +17658,8 @@ json_object *fs_to_jsonobj(fieldset_t *fs )
   return (obj);
 }
 }
-int json_output_to_file(fieldset_t *fs ) 
-{ 
+int json_output_to_file(fieldset_t *fs )
+{
   json_object *record ;
   json_object *tmp ;
   char const   *tmp___0 ;
@@ -17886,8 +17680,8 @@ int json_output_to_file(fieldset_t *fs )
 }
 }
 int json_output_file_close(struct state_conf *c  __attribute__((__unused__)) , struct state_send *s  __attribute__((__unused__)) ,
-                           struct state_recv *r  __attribute__((__unused__)) ) 
-{ 
+                           struct state_recv *r  __attribute__((__unused__)) )
+{
 
 
   {
@@ -17898,8 +17692,8 @@ int json_output_file_close(struct state_conf *c  __attribute__((__unused__)) , s
   return (0);
 }
 }
-int print_json_fieldset(fieldset_t *fs ) 
-{ 
+int print_json_fieldset(fieldset_t *fs )
+{
   json_object *record ;
   json_object *tmp ;
   char const   *tmp___0 ;
@@ -17914,15 +17708,15 @@ int print_json_fieldset(fieldset_t *fs )
   return (0);
 }
 }
-output_module_t module_json_file  = 
+output_module_t module_json_file  =
      {"json", 1, 0U, & json_output_file_init, (int (*)(struct state_conf * , struct state_send * ,
                                                      struct state_recv * ))((void *)0),
     (int (*)(struct state_conf * , struct state_send * , struct state_recv * ))((void *)0),
     & json_output_file_close, & json_output_to_file, "Outputs one or more output fileds as a json valid file. By default, the \nprobe module does not filter out duplicates or limit to successful fields, \nbut rather includes all received packets. Fields can be controlled by \nsetting --output-fields. Filtering out failures and duplicate pakcets can \nbe achieved by setting an --output-filter."};
 #pragma merger("0","/tmp/cil-a1p6wWpl.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
 output_module_t *output_modules[2]  = {      & module_csv_file,      & module_json_file};
-output_module_t *get_output_module_by_name(char const   *name ) 
-{ 
+output_module_t *get_output_module_by_name(char const   *name )
+{
   int num_modules ;
   int i ;
   int tmp ;
@@ -17940,8 +17734,8 @@ output_module_t *get_output_module_by_name(char const   *name )
   return ((output_module_t *)((void *)0));
 }
 }
-void print_output_modules(void) 
-{ 
+void print_output_modules(void)
+{
   int num_modules ;
   int i ;
 
@@ -17956,8 +17750,8 @@ void print_output_modules(void)
 }
 }
 #pragma merger("0","/tmp/cil-Y5wDcVRb.i","-Wall,-Wformat=2,-Wno-format-nonliteral,-pedantic,-fno-strict-aliasing,-Wextra,-Wfloat-equal,-Wundef,-Wwrite-strings,-Wredundant-decls,-Wnested-externs,-Wbad-function-cast,-Winit-self,-Wmissing-noreturn,-Wstack-protector,-fstack-protector-all,-fwrapv,-fPIC,--param,ssp-buffer-size=1,-O2,-std=gnu99")
-sock_t get_socket(uint32_t id  __attribute__((__unused__)) ) 
-{ 
+sock_t get_socket(uint32_t id  __attribute__((__unused__)) )
+{
   int sock ;
   __uint16_t tmp ;
   __uint16_t tmp___0 ;
@@ -17997,8 +17791,8 @@ extern int pcap_compile(pcap_t * , struct bpf_program * , char const   * , int  
 extern int pcap_datalink(pcap_t * ) ;
 static pcap_t *pc  =    (pcap_t *)((void *)0);
 void packet_cb(u_char *user  __attribute__((__unused__)) , struct pcap_pkthdr  const  *p ,
-               u_char const   *bytes ) 
-{ 
+               u_char const   *bytes )
+{
   struct timespec ts ;
   uint32_t buflen ;
 
@@ -18016,8 +17810,8 @@ void packet_cb(u_char *user  __attribute__((__unused__)) , struct pcap_pkthdr  c
   return;
 }
 }
-void recv_init(void) 
-{ 
+void recv_init(void)
+{
   char bpftmp[1024] ;
   char errbuf[256] ;
   int tmp ;
@@ -18038,19 +17832,19 @@ void recv_init(void)
   }
   tmp = pcap_datalink(pc);
   switch (tmp) {
-  case 1: 
+  case 1:
   log_debug("recv", "Data link layer Ethernet");
   zconf.data_link_size = (int )sizeof(struct ether_header );
   break;
-  case 12: 
+  case 12:
   log_info("recv", "Data link RAW");
   zconf.data_link_size = 0;
   break;
-  case 113: 
+  case 113:
   log_info("recv", "Data link cooked socket");
   zconf.data_link_size = 16;
   break;
-  default: 
+  default:
   log_error("recv", "unknown data link layer");
   }
   if (! zconf.send_ip_pkts) {
@@ -18094,8 +17888,8 @@ void recv_init(void)
   return;
 }
 }
-void recv_packets(void) 
-{ 
+void recv_packets(void)
+{
   int ret ;
   int tmp ;
 
@@ -18111,8 +17905,8 @@ void recv_packets(void)
   return;
 }
 }
-void recv_cleanup(void) 
-{ 
+void recv_cleanup(void)
+{
 
 
   {
@@ -18121,8 +17915,8 @@ void recv_cleanup(void)
   return;
 }
 }
-int recv_update_stats(void) 
-{ 
+int recv_update_stats(void)
+{
   struct pcap_stat pcst ;
   char *tmp ;
   int tmp___0 ;

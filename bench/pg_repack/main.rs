@@ -60,7 +60,6 @@ extern "C" {
     fn calloc(_: libc::c_ulong, _: libc::c_ulong) -> *mut libc::c_void;
     fn free(__ptr: *mut libc::c_void);
     fn getenv(__name: *const libc::c_char) -> *mut libc::c_char;
-    fn strcmp(_: *const libc::c_char, _: *const libc::c_char) -> libc::c_int;
     fn __errno_location() -> *mut libc::c_int;
     fn __ctype_tolower_loc() -> *mut *const __int32_t;
     fn __ctype_toupper_loc() -> *mut *const __int32_t;
@@ -150,6 +149,12 @@ extern "C" {
         __timeout: libc::c_int,
         __fdslen: libc::c_ulong,
     ) -> libc::c_int;
+    fn strcmp(_: *const libc::c_char, _: *const libc::c_char) -> libc::c_int;
+    fn strncat(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
     fn fflush(__stream: *mut FILE) -> libc::c_int;
     fn fopen(_: *const libc::c_char, _: *const libc::c_char) -> *mut FILE;
     fn sscanf(_: *const libc::c_char, _: *const libc::c_char, _: ...) -> libc::c_int;
@@ -241,6 +246,17 @@ extern "C" {
         resultFormat: libc::c_int,
     ) -> libc::c_int;
     fn enlargePQExpBuffer(str: PQExpBuffer, needed: size_t) -> libc::c_int;
+    fn memset(
+        _: *mut libc::c_void,
+        _: libc::c_int,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
+    fn strcpy(_: *mut libc::c_char, _: *const libc::c_char) -> *mut libc::c_char;
+    fn memcpy(
+        _: *mut libc::c_void,
+        _: *const libc::c_void,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_void;
     fn fclose(__stream: *mut FILE) -> libc::c_int;
     fn strcspn(_: *const libc::c_char, _: *const libc::c_char) -> libc::c_ulong;
     fn getpwuid(__uid: __uid_t) -> *mut passwd;
@@ -255,6 +271,11 @@ extern "C" {
         __longopts: *const option,
         __longind: *mut libc::c_int,
     ) -> libc::c_int;
+    fn strncpy(
+        _: *mut libc::c_char,
+        _: *const libc::c_char,
+        _: libc::c_ulong,
+    ) -> *mut libc::c_char;
 }
 pub type __builtin_va_list = [__va_list_tag; 1];
 #[derive(Copy, Clone)]
@@ -1082,21 +1103,21 @@ unsafe fn main_0(
         );
     }
     if !(r_index.head).is_null() {
-        current_block = 6366187563082267978;
+        current_block = 3619607498703390906;
     } else if only_indexes {
-        current_block = 6366187563082267978;
+        current_block = 3619607498703390906;
     } else {
         if !(schema_list.head).is_null() {
             let mut current_block_117: u64;
             if !(table_list.head).is_null() {
-                current_block_117 = 9883361772205930751;
+                current_block_117 = 6673183371627936260;
             } else if !(parent_table_list.head).is_null() {
-                current_block_117 = 9883361772205930751;
+                current_block_117 = 6673183371627936260;
             } else {
                 current_block_117 = 16937825661756021828;
             }
             match current_block_117 {
-                9883361772205930751 => {
+                6673183371627936260 => {
                     tmp___41 = pgut_errstart(20 as libc::c_int);
                     if tmp___41 {
                         tmp___39 = errmsg(
@@ -1142,14 +1163,14 @@ unsafe fn main_0(
         if alldb {
             let mut current_block_149: u64;
             if !(table_list.head).is_null() {
-                current_block_149 = 16869621181989210477;
+                current_block_149 = 5468953419055934960;
             } else if !(parent_table_list.head).is_null() {
-                current_block_149 = 16869621181989210477;
+                current_block_149 = 5468953419055934960;
             } else {
                 current_block_149 = 9216188846964669005;
             }
             match current_block_149 {
-                16869621181989210477 => {
+                5468953419055934960 => {
                     tmp___50 = pgut_errstart(20 as libc::c_int);
                     if tmp___50 {
                         tmp___48 = errmsg(
@@ -1197,7 +1218,7 @@ unsafe fn main_0(
         current_block = 16512738885216853798;
     }
     match current_block {
-        6366187563082267978 => {
+        3619607498703390906 => {
             if !(r_index.head).is_null() {
                 if !(table_list.head).is_null() {
                     tmp___4 = pgut_errstart(20 as libc::c_int);
@@ -1224,10 +1245,10 @@ unsafe fn main_0(
                     }
                     current_block = 16512738885216853798;
                 } else {
-                    current_block = 5324276660319579342;
+                    current_block = 5959195713635517026;
                 }
             } else {
-                current_block = 5324276660319579342;
+                current_block = 5959195713635517026;
             }
             match current_block {
                 16512738885216853798 => {}
@@ -1245,10 +1266,10 @@ unsafe fn main_0(
                             }
                             current_block = 16512738885216853798;
                         } else {
-                            current_block = 17722525762118303510;
+                            current_block = 1068343903420912510;
                         }
                     } else {
-                        current_block = 17722525762118303510;
+                        current_block = 1068343903420912510;
                     }
                     match current_block {
                         16512738885216853798 => {}
@@ -1266,19 +1287,19 @@ unsafe fn main_0(
                                     }
                                     current_block = 16512738885216853798;
                                 } else {
-                                    current_block = 2402526077591545746;
+                                    current_block = 7232231062156968487;
                                 }
                             } else {
-                                current_block = 2402526077591545746;
+                                current_block = 7232231062156968487;
                             }
                             match current_block {
                                 16512738885216853798 => {}
                                 _ => {
                                     if only_indexes {
                                         if !(table_list.head).is_null() {
-                                            current_block = 3727274548616262782;
+                                            current_block = 18089518268307582889;
                                         } else if !(parent_table_list.head).is_null() {
-                                            current_block = 3727274548616262782;
+                                            current_block = 18089518268307582889;
                                         } else {
                                             tmp___16 = pgut_errstart(20 as libc::c_int);
                                             if tmp___16 {
@@ -1292,7 +1313,7 @@ unsafe fn main_0(
                                             current_block = 16512738885216853798;
                                         }
                                     } else {
-                                        current_block = 3727274548616262782;
+                                        current_block = 18089518268307582889;
                                     }
                                     match current_block {
                                         16512738885216853798 => {}
@@ -1311,13 +1332,13 @@ unsafe fn main_0(
                                                     }
                                                     current_block_110 = 228501038991332163;
                                                 } else {
-                                                    current_block_110 = 6102065738294282542;
+                                                    current_block_110 = 2911882689592688210;
                                                 }
                                             } else {
-                                                current_block_110 = 6102065738294282542;
+                                                current_block_110 = 2911882689592688210;
                                             }
                                             match current_block_110 {
-                                                6102065738294282542 => {
+                                                2911882689592688210 => {
                                                     if alldb {
                                                         tmp___22 = pgut_errstart(20 as libc::c_int);
                                                         if tmp___22 {
@@ -1601,14 +1622,14 @@ unsafe extern "C" fn preliminary_checks(
             );
             let mut current_block_29: u64;
             if tmp___5 {
-                current_block_29 = 11039786497382000233;
+                current_block_29 = 6552552662334427764;
             } else {
                 tmp___6 = sqlstate_equals(
                     res,
                     b"42883\0" as *const u8 as *const libc::c_char,
                 );
                 if tmp___6 {
-                    current_block_29 = 11039786497382000233;
+                    current_block_29 = 6552552662334427764;
                 } else {
                     if !errbuf.is_null() {
                         tmp___4 = PQerrorMessage(connection as *const PGconn);
@@ -1623,7 +1644,7 @@ unsafe extern "C" fn preliminary_checks(
                 }
             }
             match current_block_29 {
-                11039786497382000233 => {
+                6552552662334427764 => {
                     if !errbuf.is_null() {
                         pg_snprintf(
                             errbuf,
@@ -2061,9 +2082,9 @@ unsafe extern "C" fn repack_one_database(
             *fresh2 = tablespace as *const libc::c_char;
             let mut current_block_73: u64;
             if num_tables != 0 {
-                current_block_73 = 292809133874490552;
+                current_block_73 = 9578412546440464103;
             } else if num_parent_tables != 0 {
-                current_block_73 = 292809133874490552;
+                current_block_73 = 9578412546440464103;
             } else {
                 if num_schemas != 0 {
                     appendPQExpBufferStr(
@@ -2102,7 +2123,7 @@ unsafe extern "C" fn repack_one_database(
                 current_block_73 = 14541395414537699361;
             }
             match current_block_73 {
-                292809133874490552 => {
+                9578412546440464103 => {
                     if num_tables != 0 {
                         appendPQExpBufferStr(
                             &mut sql,
@@ -2526,7 +2547,7 @@ unsafe extern "C" fn rebuild_indexes(mut table: *const repack_table) -> bool {
                     tmp,
                 );
                 have_error = 1 as libc::c_int != 0;
-                current_block = 4934180340219882360;
+                current_block = 5981039198808986644;
                 break;
             }
         }
@@ -3099,11 +3120,11 @@ unsafe extern "C" fn repack_one_table(
                     0 as libc::c_int,
                     0 as libc::c_int,
                 );
-                libc::strncat(
+                strncat(
                     buffer.as_mut_ptr(),
                     tmp___15 as *const libc::c_char,
                     (::std::mem::size_of::<[libc::c_char; 12]>() as libc::c_ulong)
-                        .wrapping_sub(1 as libc::c_ulong) as _,
+                        .wrapping_sub(1 as libc::c_ulong),
                 );
                 PQclear(res);
                 res = 0 as *mut libc::c_void as *mut PGresult;
@@ -3184,7 +3205,7 @@ unsafe extern "C" fn repack_one_table(
                                             as *const libc::c_char,
                                         tmp___20,
                                     );
-                                    current_block = 7937605043431339171;
+                                    current_block = 10080499346322770311;
                                     break;
                                 } else {
                                     PQclear(res);
@@ -3192,7 +3213,7 @@ unsafe extern "C" fn repack_one_table(
                                 }
                             }
                             match current_block {
-                                7937605043431339171 => {}
+                                10080499346322770311 => {}
                                 _ => {
                                     tmp___22 = PQsetnonblocking(conn2, 0 as libc::c_int);
                                     if tmp___22 != 0 {
@@ -3638,13 +3659,13 @@ unsafe extern "C" fn kill_ddl(
                             }
                             current_block = 2480299350034459858;
                         } else {
-                            current_block = 8698692796900969279;
+                            current_block = 3427341020185193989;
                         }
                     } else {
-                        current_block = 8698692796900969279;
+                        current_block = 3427341020185193989;
                     }
                 } else {
-                    current_block = 8698692796900969279;
+                    current_block = 3427341020185193989;
                 }
                 match current_block {
                     2480299350034459858 => {}
@@ -4438,9 +4459,9 @@ unsafe extern "C" fn repack_all_indexes(
                 cell = r_index.head;
             } else {
                 if !(table_list.head).is_null() {
-                    current_block = 265029363770428529;
+                    current_block = 3354684830166788511;
                 } else if !(parent_table_list.head).is_null() {
-                    current_block = 265029363770428529;
+                    current_block = 3354684830166788511;
                 } else {
                     current_block = 1356832168064818221;
                 }
@@ -5035,10 +5056,10 @@ pub unsafe extern "C" fn parse_time(
         i += 1;
     }
     *tmp.offset(len as isize) = '\u{0}' as i32 as libc::c_char;
-    libc::memset(
+    memset(
         &mut tm as *mut tm as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<tm>() as _,
+        ::std::mem::size_of::<tm>() as libc::c_ulong,
     );
     tm.tm_year = 0 as libc::c_int;
     tm.tm_mon = 0 as libc::c_int;
@@ -5091,7 +5112,7 @@ pub unsafe extern "C" fn simple_string_list_append(
     );
     cell = tmp___0 as *mut SimpleStringListCell;
     (*cell).next = 0 as *mut libc::c_void as *mut SimpleStringListCell;
-    libc::strcpy(((*cell).val).as_mut_ptr(), val);
+    strcpy(((*cell).val).as_mut_ptr(), val);
     if !((*list).tail).is_null() {
         (*(*list).tail).next = cell;
     } else {
@@ -5138,11 +5159,11 @@ unsafe extern "C" fn prompt_for_password() -> *mut libc::c_char {
     tmp = pgut_malloc(100 as libc::c_int as size_t);
     buf = tmp as *mut libc::c_char;
     if have_passwd {
-        libc::memcpy(
+        memcpy(
             buf as *mut libc::c_void,
             passwdbuf as *const libc::c_void,
             (::std::mem::size_of::<libc::c_char>() as libc::c_ulong)
-                .wrapping_mul(100 as libc::c_ulong) as _,
+                .wrapping_mul(100 as libc::c_ulong),
         );
     } else {
         if buf as libc::c_ulong != 0 as *mut libc::c_void as libc::c_ulong {
@@ -5156,11 +5177,11 @@ unsafe extern "C" fn prompt_for_password() -> *mut libc::c_char {
         have_passwd = 1 as libc::c_int != 0;
         tmp___0 = pgut_malloc(100 as libc::c_int as size_t);
         passwdbuf = tmp___0 as *mut libc::c_char;
-        libc::memcpy(
+        memcpy(
             passwdbuf as *mut libc::c_void,
             buf as *const libc::c_void,
             (::std::mem::size_of::<libc::c_char>() as libc::c_ulong)
-                .wrapping_mul(100 as libc::c_ulong) as _,
+                .wrapping_mul(100 as libc::c_ulong),
         );
     }
     if buf as libc::c_ulong == 0 as *mut libc::c_void as libc::c_ulong {
@@ -5844,9 +5865,9 @@ pub unsafe extern "C" fn log_required(
 ) -> bool {
     let mut current_block_13: u64;
     if elevel == 15 as libc::c_int {
-        current_block_13 = 12910196309224966777;
+        current_block_13 = 9081034410475992199;
     } else if elevel == 16 as libc::c_int {
-        current_block_13 = 12910196309224966777;
+        current_block_13 = 9081034410475992199;
     } else {
         if log_min_level == 15 as libc::c_int {
             if elevel >= 21 as libc::c_int {
@@ -5858,7 +5879,7 @@ pub unsafe extern "C" fn log_required(
         current_block_13 = 10599921512955367680;
     }
     match current_block_13 {
-        12910196309224966777 => {
+        9081034410475992199 => {
             if log_min_level == 15 as libc::c_int {
                 return 1 as libc::c_int != 0
             } else {
@@ -6384,7 +6405,7 @@ pub unsafe extern "C" fn strdup_with_len(
     }
     tmp = pgut_malloc(len.wrapping_add(1 as libc::c_ulong));
     r = tmp as *mut libc::c_char;
-    libc::memcpy(r as *mut libc::c_void, str as *const libc::c_void, len as _);
+    memcpy(r as *mut libc::c_void, str as *const libc::c_void, len);
     *r.offset(len as isize) = '\u{0}' as i32 as libc::c_char;
     return r;
 }
@@ -6540,7 +6561,7 @@ pub unsafe extern "C" fn pgut_mkdir(mut dirpath: *const libc::c_char) -> bool {
         } else if *p.offset(0 as libc::c_int as isize) as libc::c_int
                 != 47 as libc::c_int
             {
-            current_block_34 = 4840823220790654551;
+            current_block_34 = 7433400993609327386;
         } else {
             current_block_34 = 17407779659766490442;
         }
@@ -7161,16 +7182,16 @@ pub unsafe extern "C" fn pgut_setopt(
                         as *const libc::c_char;
                     current_block = 479107131381816815;
                 } else {
-                    current_block = 2273208954694866844;
+                    current_block = 17502702098312004114;
                 }
             } else {
-                current_block = 2273208954694866844;
+                current_block = 17502702098312004114;
             }
         } else {
-            current_block = 2273208954694866844;
+            current_block = 17502702098312004114;
         }
         match current_block {
-            2273208954694866844 => {
+            17502702098312004114 => {
                 (*opt).source = src;
                 match (*opt).type_0 as libc::c_int {
                     66 | 98 => {
@@ -7531,7 +7552,7 @@ unsafe extern "C" fn get_next_token(
     } else {
         j = strcspn(s, b"# \n\r\t\x0B\0" as *const u8 as *const libc::c_char);
         i = j;
-        libc::memcpy(dst as *mut libc::c_void, s as *const libc::c_void, j as _);
+        memcpy(dst as *mut libc::c_void, s as *const libc::c_void, j);
     }
     *dst.offset(j as isize) = '\u{0}' as i32 as libc::c_char;
     return s.offset(i as isize);
@@ -7565,7 +7586,7 @@ unsafe extern "C" fn parse_pair(
         }
         return 0 as libc::c_int != 0;
     }
-    libc::strncpy(key, start, end.offset_from(start) as _);
+    strncpy(key, start, end.offset_from(start) as libc::c_long as size_t);
     *key
         .offset(
             end.offset_from(start) as libc::c_long as isize,
@@ -7870,10 +7891,10 @@ unsafe extern "C" fn option_merge(
     result = tmp___1 as *mut option;
     option_copy(result, opts1, len1);
     option_copy(result.offset(len1 as isize), opts2, len2);
-    libc::memset(
+    memset(
         result.offset(n as isize) as *mut libc::c_void,
         0 as libc::c_int,
-        ::std::mem::size_of::<pgut_option>() as _,
+        ::std::mem::size_of::<pgut_option>() as libc::c_ulong,
     );
     return result;
 }
@@ -8083,14 +8104,14 @@ pub unsafe extern "C" fn help(mut details: bool) {
     if details {
         let mut current_block_23: u64;
         if !PROGRAM_URL.is_null() {
-            current_block_23 = 1334427664935841474;
+            current_block_23 = 1653514583762618083;
         } else if !PROGRAM_ISSUES.is_null() {
-            current_block_23 = 1334427664935841474;
+            current_block_23 = 1653514583762618083;
         } else {
             current_block_23 = 11584701595673473500;
         }
         match current_block_23 {
-            1334427664935841474 => {
+            1653514583762618083 => {
                 pg_printf(b"\n\0" as *const u8 as *const libc::c_char);
                 if !PROGRAM_URL.is_null() {
                     pg_printf(

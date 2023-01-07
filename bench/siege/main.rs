@@ -2859,7 +2859,7 @@ unsafe extern "C" fn __mkhash(
     let mut len: size_t = 0;
     let mut tmp: size_t = 0;
     let mut tmp___0: size_t = 0;
-    let mut tmp___1 = 0 as *mut _;
+    let mut tmp___1: *mut _ = 0 as *mut _;
     let mut __res: libc::c_int = 0;
     let mut tmp___3: *mut *const __int32_t = 0 as *mut *const __int32_t;
     let mut tmp___4: libc::c_int = 0;

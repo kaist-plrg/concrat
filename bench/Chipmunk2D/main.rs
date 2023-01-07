@@ -6061,7 +6061,7 @@ unsafe extern "C" fn EPARecurse(
     let mut duplicate: cpBool = 0;
     let mut tmp___4: libc::c_int = 0;
     let mut hull2: *mut MinkowskiPoint = 0 as *mut MinkowskiPoint;
-    let mut tmp___5 = 0 as *mut _;
+    let mut tmp___5: *mut _ = 0 as *mut _;
     let mut count2: libc::c_int = 0;
     let mut i___0: libc::c_int = 0;
     let mut index___0: libc::c_int = 0;
@@ -11577,7 +11577,7 @@ pub unsafe extern "C" fn cpPolyShapeInit(
     mut radius: cpFloat,
 ) -> *mut cpPolyShape {
     let mut hullVerts: *mut cpVect = 0 as *mut cpVect;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut i: libc::c_int = 0;
     let mut hullCount: libc::c_uint = 0;
     let mut tmp___0: libc::c_int = 0;
@@ -11810,7 +11810,7 @@ pub unsafe extern "C" fn cpPolyShapeSetVerts(
     mut transform: cpTransform,
 ) {
     let mut hullVerts: *mut cpVect = 0 as *mut cpVect;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut i: libc::c_int = 0;
     let mut hullCount: libc::c_uint = 0;
     let mut tmp___0: libc::c_int = 0;
@@ -12637,7 +12637,7 @@ unsafe extern "C" fn ApproximateConcaveDecomposition(
 ) {
     let mut first: libc::c_int = 0;
     let mut hullVerts: *mut cpVect = 0 as *mut cpVect;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut hullCount: libc::c_int = 0;
     let mut tmp___0: libc::c_int = 0;
     let mut notch: Notch = Notch {
@@ -12662,7 +12662,7 @@ unsafe extern "C" fn ApproximateConcaveDecomposition(
     let mut sub2_count: libc::c_int = 0;
     let mut scratch: *mut cpVect = 0 as *mut cpVect;
     let mut tmp___5: libc::c_int = 0;
-    let mut tmp___6 = 0 as *mut _;
+    let mut tmp___6: *mut _ = 0 as *mut _;
     let mut i: libc::c_int = 0;
     let mut i___0: libc::c_int = 0;
     let mut hull: *mut cpPolyline = 0 as *mut cpPolyline;
@@ -17252,7 +17252,7 @@ unsafe extern "C" fn cpSpaceDebugDrawShape(
     let mut count: libc::c_int = 0;
     let mut planes: *mut cpSplittingPlane = 0 as *mut cpSplittingPlane;
     let mut verts: *mut cpVect = 0 as *mut cpVect;
-    let mut tmp___0 = 0 as *mut _;
+    let mut tmp___0: *mut _ = 0 as *mut _;
     let mut i: libc::c_int = 0;
     body = (*shape).body;
     data = (*options).data;
@@ -17473,7 +17473,7 @@ unsafe extern "C" fn cpSpaceDebugDrawConstraint(
     let mut r2: cpVect = cpVect { x: 0., y: 0. };
     let mut tmp___13: cpVect = cpVect { x: 0., y: 0. };
     let mut verts: *mut cpVect = 0 as *mut cpVect;
-    let mut tmp___14 = 0 as *mut _;
+    let mut tmp___14: *mut _ = 0 as *mut _;
     let mut i: libc::c_int = 0;
     let mut v: cpVect = cpVect { x: 0., y: 0. };
     let mut tmp___15: cpFloat = 0.;

@@ -690,195 +690,11 @@ struct server_context_s {
    int nitems ;
 };
 typedef struct server_context_s server_context_t;
-typedef unsigned short __uint16_t;
-typedef int __int32_t;
-typedef unsigned int __uint32_t;
-typedef unsigned long __uint64_t;
 union pthread_attr_t {
    char __size[56] ;
    long __align ;
 };
 typedef union pthread_attr_t pthread_attr_t;
-typedef __int32_t int32_t;
-struct bn_mont_ctx_st ;
-typedef struct bn_mont_ctx_st BN_MONT_CTX;
-struct env_md_st ;
-typedef struct env_md_st EVP_MD;
-struct env_md_ctx_st ;
-typedef struct env_md_ctx_st EVP_MD_CTX;
-struct evp_pkey_ctx_st ;
-typedef struct evp_pkey_ctx_st EVP_PKEY_CTX;
-struct engine_st ;
-typedef struct engine_st ENGINE;
-struct bn_mont_ctx_st {
-   int ri ;
-   BIGNUM RR ;
-   BIGNUM N ;
-   BIGNUM Ni ;
-   unsigned long n0[2] ;
-   int flags ;
-};
-struct ec_method_st ;
-typedef struct ec_method_st EC_METHOD;
-struct env_md_st {
-   int type ;
-   int pkey_type ;
-   int md_size ;
-   unsigned long flags ;
-   int (*init)(EVP_MD_CTX *ctx ) ;
-   int (*update)(EVP_MD_CTX *ctx , void const   *data , size_t count ) ;
-   int (*final)(EVP_MD_CTX *ctx , unsigned char *md ) ;
-   int (*copy)(EVP_MD_CTX *to , EVP_MD_CTX const   *from ) ;
-   int (*cleanup)(EVP_MD_CTX *ctx ) ;
-   int (*sign)(int type , unsigned char const   *m , unsigned int m_length , unsigned char *sigret ,
-               unsigned int *siglen , void *key ) ;
-   int (*verify)(int type , unsigned char const   *m , unsigned int m_length , unsigned char const   *sigbuf ,
-                 unsigned int siglen , void *key ) ;
-   int required_pkey_type[5] ;
-   int block_size ;
-   int ctx_size ;
-   int (*md_ctrl)(EVP_MD_CTX *ctx , int cmd , int p1 , void *p2 ) ;
-};
-struct env_md_ctx_st {
-   EVP_MD const   *digest ;
-   ENGINE *engine ;
-   unsigned long flags ;
-   void *md_data ;
-   EVP_PKEY_CTX *pctx ;
-   int (*update)(EVP_MD_CTX *ctx , void const   *data , size_t count ) ;
-};
-typedef __uint16_t uint16_t;
-typedef __uint32_t uint32_t;
-typedef __uint64_t uint64_t;
-typedef long intptr_t;
-typedef int32_t cl_int;
-typedef uint32_t cl_uint;
-typedef uint64_t cl_ulong;
-typedef int __attribute__((__vector_size__(8), __may_alias__))  __m64;
-typedef int __attribute__((__vector_size__(8), __may_alias__, __aligned__(1)))  __m64_u;
-typedef int __attribute__((__vector_size__(8)))  __v2si;
-typedef short __attribute__((__vector_size__(8)))  __v4hi;
-typedef char __attribute__((__vector_size__(8)))  __v8qi;
-typedef long long __attribute__((__vector_size__(8)))  __v1di;
-typedef float __attribute__((__vector_size__(8)))  __v2sf;
-enum _mm_hint {
-    _MM_HINT_ET0 = 7,
-    _MM_HINT_ET1 = 6,
-    _MM_HINT_T0 = 3,
-    _MM_HINT_T1 = 2,
-    _MM_HINT_T2 = 1,
-    _MM_HINT_NTA = 0
-} ;
-typedef float __attribute__((__vector_size__(16), __may_alias__))  __m128;
-typedef float __attribute__((__vector_size__(16), __may_alias__, __aligned__(1)))  __m128_u;
-typedef float __attribute__((__vector_size__(16)))  __v4sf;
-typedef double __attribute__((__vector_size__(16)))  __v2df;
-typedef long long __attribute__((__vector_size__(16)))  __v2di;
-typedef unsigned long long __attribute__((__vector_size__(16)))  __v2du;
-typedef int __attribute__((__vector_size__(16)))  __v4si;
-typedef unsigned int __attribute__((__vector_size__(16)))  __v4su;
-typedef short __attribute__((__vector_size__(16)))  __v8hi;
-typedef unsigned short __attribute__((__vector_size__(16)))  __v8hu;
-typedef char __attribute__((__vector_size__(16)))  __v16qi;
-typedef signed char __attribute__((__vector_size__(16)))  __v16qs;
-typedef unsigned char __attribute__((__vector_size__(16)))  __v16qu;
-typedef long long __attribute__((__vector_size__(16), __may_alias__))  __m128i;
-typedef double __attribute__((__vector_size__(16), __may_alias__))  __m128d;
-typedef long long __attribute__((__vector_size__(16), __may_alias__, __aligned__(1)))  __m128i_u;
-typedef double __attribute__((__vector_size__(16), __may_alias__, __aligned__(1)))  __m128d_u;
-struct _cl_platform_id ;
-typedef struct _cl_platform_id *cl_platform_id;
-struct _cl_device_id ;
-typedef struct _cl_device_id *cl_device_id;
-struct _cl_context ;
-typedef struct _cl_context *cl_context;
-struct _cl_command_queue ;
-typedef struct _cl_command_queue *cl_command_queue;
-struct _cl_mem ;
-typedef struct _cl_mem *cl_mem;
-struct _cl_program ;
-typedef struct _cl_program *cl_program;
-struct _cl_kernel ;
-typedef struct _cl_kernel *cl_kernel;
-struct _cl_event ;
-typedef struct _cl_event *cl_event;
-typedef cl_uint cl_bool;
-typedef cl_ulong cl_bitfield;
-typedef cl_bitfield cl_device_type;
-typedef cl_uint cl_platform_info;
-typedef cl_uint cl_device_info;
-typedef cl_bitfield cl_command_queue_properties;
-typedef intptr_t cl_context_properties;
-typedef cl_bitfield cl_mem_flags;
-typedef cl_bitfield cl_map_flags;
-typedef cl_uint cl_program_info;
-typedef cl_uint cl_program_build_info;
-typedef int (*vg_ocl_check_t)(struct _vg_ocl_context_s * , int slot );
-struct _vg_ocl_context_s {
-   vg_exec_context_t base ;
-   cl_device_id voc_ocldid ;
-   cl_context voc_oclctx ;
-   cl_command_queue voc_oclcmdq ;
-   cl_program voc_oclprog ;
-   int (*voc_init_func)(struct _vg_ocl_context_s * ) ;
-   int (*voc_rekey_func)(struct _vg_ocl_context_s * ) ;
-   int (*voc_check_func)(struct _vg_ocl_context_s * , int slot ) ;
-   int voc_quirks ;
-   int voc_nslots ;
-   cl_kernel voc_oclkernel[2][3] ;
-   cl_event voc_oclkrnwait[2] ;
-   cl_mem voc_args[2][6] ;
-   size_t voc_arg_size[2][6] ;
-   int voc_pattern_rewrite ;
-   int voc_pattern_alloc ;
-   vg_ocl_check_t voc_verify_func[3] ;
-   pthread_t voc_ocl_thread ;
-   pthread_mutex_t voc_lock ;
-   pthread_cond_t voc_wait ;
-   int voc_ocl_slot ;
-   int voc_ocl_rows ;
-   int voc_ocl_cols ;
-   int voc_ocl_invsize ;
-   int voc_halt ;
-   int voc_dump_done ;
-};
-struct __anonstruct_vg_elf32_header_t_838073139 {
-   unsigned char e_ident[16] ;
-   uint16_t e_type ;
-   uint16_t e_machine ;
-   uint32_t e_version ;
-   uint32_t e_entry ;
-   uint32_t e_phoff ;
-   uint32_t e_shoff ;
-   uint32_t e_flags ;
-   uint16_t e_ehsize ;
-   uint16_t e_phentsize ;
-   uint16_t e_phnum ;
-   uint16_t e_shentsize ;
-   uint16_t e_shnum ;
-   uint16_t e_shstrndx ;
-};
-typedef struct __anonstruct_vg_elf32_header_t_838073139 vg_elf32_header_t;
-struct __anonstruct_vg_elf32_shdr_t_293933665 {
-   uint32_t sh_name ;
-   uint32_t sh_type ;
-   uint32_t sh_flags ;
-   uint32_t sh_addr ;
-   uint32_t sh_offset ;
-   uint32_t sh_size ;
-   uint32_t sh_link ;
-   uint32_t sh_info ;
-   uint32_t sh_addralign ;
-   uint32_t sh_entsize ;
-};
-typedef struct __anonstruct_vg_elf32_shdr_t_293933665 vg_elf32_shdr_t;
-struct ec_point_st {
-   EC_METHOD const   *meth ;
-   BIGNUM X ;
-   BIGNUM Y ;
-   BIGNUM Z ;
-   int Z_is_one ;
-};
 struct real_pcre ;
 typedef struct real_pcre pcre;
 struct pcre_extra {
@@ -950,6 +766,8 @@ typedef struct asn1_string_st ASN1_STRING;
 typedef int ASN1_BOOLEAN;
 struct bn_blinding_st ;
 typedef struct bn_blinding_st BN_BLINDING;
+struct bn_mont_ctx_st ;
+typedef struct bn_mont_ctx_st BN_MONT_CTX;
 struct bn_gencb_st ;
 typedef struct bn_gencb_st BN_GENCB;
 struct buf_mem_st ;
@@ -958,10 +776,16 @@ struct evp_cipher_st ;
 typedef struct evp_cipher_st EVP_CIPHER;
 struct evp_cipher_ctx_st ;
 typedef struct evp_cipher_ctx_st EVP_CIPHER_CTX;
+struct env_md_st ;
+typedef struct env_md_st EVP_MD;
+struct env_md_ctx_st ;
+typedef struct env_md_ctx_st EVP_MD_CTX;
 struct evp_pkey_st ;
 typedef struct evp_pkey_st EVP_PKEY;
 struct evp_pkey_asn1_method_st ;
 typedef struct evp_pkey_asn1_method_st EVP_PKEY_ASN1_METHOD;
+struct evp_pkey_ctx_st ;
+typedef struct evp_pkey_ctx_st EVP_PKEY_CTX;
 struct dh_st ;
 typedef struct dh_st DH;
 struct dh_method ;
@@ -978,6 +802,8 @@ struct X509_algor_st ;
 typedef struct X509_algor_st X509_ALGOR;
 struct pkcs8_priv_key_info_st ;
 typedef struct pkcs8_priv_key_info_st PKCS8_PRIV_KEY_INFO;
+struct engine_st ;
+typedef struct engine_st ENGINE;
 struct crypto_ex_data_st ;
 typedef struct crypto_ex_data_st CRYPTO_EX_DATA;
 struct stack_st {
@@ -996,6 +822,14 @@ struct crypto_ex_data_st {
 };
 struct stack_st_void {
    _STACK stack ;
+};
+struct bn_mont_ctx_st {
+   int ri ;
+   BIGNUM RR ;
+   BIGNUM N ;
+   BIGNUM Ni ;
+   unsigned long n0[2] ;
+   int flags ;
 };
 union __anonunion_cb_888073939 {
    void (*cb_1)(int  , int  , void * ) ;
@@ -1101,6 +935,33 @@ struct evp_pkey_st {
    union __anonunion_pkey_1024245030 pkey ;
    int save_parameters ;
    struct stack_st_X509_ATTRIBUTE *attributes ;
+};
+struct env_md_st {
+   int type ;
+   int pkey_type ;
+   int md_size ;
+   unsigned long flags ;
+   int (*init)(EVP_MD_CTX *ctx ) ;
+   int (*update)(EVP_MD_CTX *ctx , void const   *data , size_t count ) ;
+   int (*final)(EVP_MD_CTX *ctx , unsigned char *md ) ;
+   int (*copy)(EVP_MD_CTX *to , EVP_MD_CTX const   *from ) ;
+   int (*cleanup)(EVP_MD_CTX *ctx ) ;
+   int (*sign)(int type , unsigned char const   *m , unsigned int m_length , unsigned char *sigret ,
+               unsigned int *siglen , void *key ) ;
+   int (*verify)(int type , unsigned char const   *m , unsigned int m_length , unsigned char const   *sigbuf ,
+                 unsigned int siglen , void *key ) ;
+   int required_pkey_type[5] ;
+   int block_size ;
+   int ctx_size ;
+   int (*md_ctrl)(EVP_MD_CTX *ctx , int cmd , int p1 , void *p2 ) ;
+};
+struct env_md_ctx_st {
+   EVP_MD const   *digest ;
+   ENGINE *engine ;
+   unsigned long flags ;
+   void *md_data ;
+   EVP_PKEY_CTX *pctx ;
+   int (*update)(EVP_MD_CTX *ctx , void const   *data , size_t count ) ;
 };
 struct evp_cipher_st {
    int nid ;
@@ -1287,723 +1148,41 @@ struct __anonstruct_vg_protkey_parameters_t_1070732568 {
    EVP_CIPHER const   *(*cipher_getter)(void) ;
 };
 typedef struct __anonstruct_vg_protkey_parameters_t_1070732568 vg_protkey_parameters_t;
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___sprintf_chk(char * , int  , unsigned long  , char const   *  , ...) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcat_chk(char * , char const   * , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsprintf_chk(char * , int  , unsigned long  , char const   * ,
                                 __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memmove_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    unsigned long __builtin_object_size(void * , int  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memset_chk(void * , int  , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin_va_arg_pack(void) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncpy_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncat_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    long __builtin_expect(long  , long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memcpy_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___snprintf_chk(char * , unsigned long  , int  , unsigned long  ,
                                 char const   *  , ...) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsnprintf_chk(char * , unsigned long  , int  , unsigned long  ,
                                  char const   * , __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcpy_chk(char * , char const   * , unsigned long  ) ;  */
-#pragma merger("0","/tmp/cil-TRAokokX.i","-ggdb,-O3,-Wall")
+#pragma merger("0","/tmp/cil-YNFZ1O0H.i","-ggdb,-O3,-Wall")
 extern FILE *stdin ;
 extern FILE *stdout ;
 extern FILE *stderr ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) fprintf)(FILE * __restrict  __stream ,
-                                                                                                  char const   * __restrict  __fmt 
-                                                                                                  , ...) ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) printf)(char const   * __restrict  __fmt 
-                                                                                                 , ...) ;
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) sprintf)(char * __restrict  __s , char const   * __restrict  __fmt 
-                                             , ...) ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) vfprintf)(FILE * __restrict  __stream ,
-                                                                                                   char const   * __restrict  __fmt ,
-                                                                                                   __gnuc_va_list __ap ) ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) vprintf)(char const   * __restrict  __fmt ,
-                                                                                                  __gnuc_va_list __ap ) ;
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) vsprintf)(char * __restrict  __s , char const   * __restrict  __fmt ,
-                                              __gnuc_va_list __ap ) ;
-__inline extern  __attribute__((__nothrow__)) int ( /* format attribute */ __attribute__((__leaf__,
-__gnu_inline__, __artificial__, __always_inline__)) snprintf)(char * __restrict  __s ,
-                                                              size_t __n , char const   * __restrict  __fmt 
-                                                              , ...) ;
-__inline extern  __attribute__((__nothrow__)) int ( /* format attribute */ __attribute__((__leaf__,
-__gnu_inline__, __artificial__, __always_inline__)) vsnprintf)(char * __restrict  __s ,
-                                                               size_t __n , char const   * __restrict  __fmt ,
-                                                               __gnuc_va_list __ap ) ;
-__inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __artificial__,
-__always_inline__)) vdprintf)(int __fd , char const   * __restrict  __fmt , __gnuc_va_list __ap ) ;
-__inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __artificial__,
-__always_inline__)) dprintf)(int __fd , char const   * __restrict  __fmt  , ...) ;
-extern int getc(FILE *__stream ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getc_unlocked)(FILE *__fp ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void) ;
-__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp ) ;
-extern int putc(int __c , FILE *__stream ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) putc_unlocked)(int __c , FILE *__stream ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c ) ;
-__inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fgets)(char * __restrict  __s , int __n , FILE * __restrict  __stream ) ;
-__inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fread)(void * __restrict  __ptr , size_t __size , size_t __n ,
-                           FILE * __restrict  __stream ) ;
-__inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fread_unlocked)(void * __restrict  __ptr , size_t __size , size_t __n ,
-                                    FILE * __restrict  __stream ) ;
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
-__leaf__, __gnu_inline__)) feof_unlocked)(FILE *__stream ) ;
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
-__leaf__, __gnu_inline__)) ferror_unlocked)(FILE *__stream ) ;
-extern int __uflow(FILE * ) ;
-extern int __overflow(FILE * , int  ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = getc(stdin);
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp ) 
-{ 
-  int tmp___0 ;
-  char *tmp___1 ;
-  int tmp___2 ;
-  long tmp___3 ;
-
-  {
-  tmp___3 = __builtin_expect((long )((unsigned long )__fp->_IO_read_ptr >= (unsigned long )__fp->_IO_read_end),
-                             0L);
-  if (tmp___3) {
-    tmp___0 = __uflow(__fp);
-    tmp___2 = tmp___0;
-  } else {
-    tmp___1 = __fp->_IO_read_ptr;
-    (__fp->_IO_read_ptr) ++;
-    tmp___2 = (int )*((unsigned char *)tmp___1);
-  }
-  return (tmp___2);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void) 
-{ 
-  int tmp___0 ;
-  char *tmp___1 ;
-  int tmp___2 ;
-  long tmp___3 ;
-
-  {
-  tmp___3 = __builtin_expect((long )((unsigned long )stdin->_IO_read_ptr >= (unsigned long )stdin->_IO_read_end),
-                             0L);
-  if (tmp___3) {
-    tmp___0 = __uflow(stdin);
-    tmp___2 = tmp___0;
-  } else {
-    tmp___1 = stdin->_IO_read_ptr;
-    (stdin->_IO_read_ptr) ++;
-    tmp___2 = (int )*((unsigned char *)tmp___1);
-  }
-  return (tmp___2);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = putc(__c, stdout);
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream ) 
-{ 
-  int tmp___0 ;
-  char *tmp___1 ;
-  char tmp___2 ;
-  int tmp___3 ;
-  long tmp___4 ;
-
-  {
-  tmp___4 = __builtin_expect((long )((unsigned long )__stream->_IO_write_ptr >= (unsigned long )__stream->_IO_write_end),
-                             0L);
-  if (tmp___4) {
-    tmp___0 = __overflow(__stream, (int )((unsigned char )__c));
-    tmp___3 = tmp___0;
-  } else {
-    tmp___1 = __stream->_IO_write_ptr;
-    (__stream->_IO_write_ptr) ++;
-    tmp___2 = (char )__c;
-    *tmp___1 = tmp___2;
-    tmp___3 = (int )((unsigned char )tmp___2);
-  }
-  return (tmp___3);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c ) 
-{ 
-  int tmp___0 ;
-  char *tmp___1 ;
-  char tmp___2 ;
-  int tmp___3 ;
-  long tmp___4 ;
-
-  {
-  tmp___4 = __builtin_expect((long )((unsigned long )stdout->_IO_write_ptr >= (unsigned long )stdout->_IO_write_end),
-                             0L);
-  if (tmp___4) {
-    tmp___0 = __overflow(stdout, (int )((unsigned char )__c));
-    tmp___3 = tmp___0;
-  } else {
-    tmp___1 = stdout->_IO_write_ptr;
-    (stdout->_IO_write_ptr) ++;
-    tmp___2 = (char )__c;
-    *tmp___1 = tmp___2;
-    tmp___3 = (int )((unsigned char )tmp___2);
-  }
-  return (tmp___3);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
-__leaf__, __gnu_inline__)) feof_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__)) feof_unlocked)(FILE *__stream ) 
-{ 
-
-
-  {
-  return ((__stream->_flags & 16) != 0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
-__leaf__, __gnu_inline__)) ferror_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__)) ferror_unlocked)(FILE *__stream ) 
-{ 
-
-
-  {
-  return ((__stream->_flags & 32) != 0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) sprintf)(char * __restrict  __s , char const   * __restrict  __fmt 
-                                             , ...) ;
-__inline extern int ( __attribute__((__leaf__, __gnu_inline__, __artificial__, __always_inline__)) sprintf)(char * __restrict  __s ,
-                                                                                                            char const   * __restrict  __fmt 
-                                                                                                            , ...) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__s, 1);
-  tmp___1 = __builtin___sprintf_chk((char *)__s, 1, tmp___0, (char const   *)__fmt,
-                                    __builtin_va_arg_pack());
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) vsprintf)(char * __restrict  __s , char const   * __restrict  __fmt ,
-                                              __gnuc_va_list __ap ) ;
-__inline extern int ( __attribute__((__leaf__, __gnu_inline__, __artificial__, __always_inline__)) vsprintf)(char * __restrict  __s ,
-                                                                                                             char const   * __restrict  __fmt ,
-                                                                                                             __gnuc_va_list __ap ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__s, 1);
-  tmp___1 = __builtin___vsprintf_chk((char *)__s, 1, tmp___0, (char const   *)__fmt,
-                                     __ap);
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( /* format attribute */ __attribute__((__leaf__,
-__gnu_inline__, __artificial__, __always_inline__)) snprintf)(char * __restrict  __s ,
-                                                              size_t __n , char const   * __restrict  __fmt 
-                                                              , ...) ;
-__inline extern int ( /* format attribute */ __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) snprintf)(char * __restrict  __s , size_t __n ,
-                                              char const   * __restrict  __fmt  , ...) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__s, 1);
-  tmp___1 = __builtin___snprintf_chk((char *)__s, __n, 1, tmp___0, (char const   *)__fmt,
-                                     __builtin_va_arg_pack());
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) int ( /* format attribute */ __attribute__((__leaf__,
-__gnu_inline__, __artificial__, __always_inline__)) vsnprintf)(char * __restrict  __s ,
-                                                               size_t __n , char const   * __restrict  __fmt ,
-                                                               __gnuc_va_list __ap ) ;
-__inline extern int ( /* format attribute */ __attribute__((__leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) vsnprintf)(char * __restrict  __s , size_t __n ,
-                                               char const   * __restrict  __fmt ,
-                                               __gnuc_va_list __ap ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__s, 1);
-  tmp___1 = __builtin___vsnprintf_chk((char *)__s, __n, 1, tmp___0, (char const   *)__fmt,
-                                      __ap);
-  return (tmp___1);
-}
-}
-extern int __fprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format 
-                         , ...) ;
-extern int __printf_chk(int __flag , char const   * __restrict  __format  , ...) ;
-extern int __vfprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format ,
-                          __gnuc_va_list __ap ) ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) fprintf)(FILE * __restrict  __stream ,
-                                                                                                  char const   * __restrict  __fmt 
-                                                                                                  , ...) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __fprintf_chk(__stream, 1, __fmt, __builtin_va_arg_pack());
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) printf)(char const   * __restrict  __fmt 
-                                                                                                 , ...) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __printf_chk(1, __fmt, __builtin_va_arg_pack());
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) vprintf)(char const   * __restrict  __fmt ,
-                                                                                                  __gnuc_va_list __ap ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __vfprintf_chk((FILE * __restrict  )stdout, 1, __fmt, __ap);
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) vfprintf)(FILE * __restrict  __stream ,
-                                                                                                   char const   * __restrict  __fmt ,
-                                                                                                   __gnuc_va_list __ap ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __vfprintf_chk(__stream, 1, __fmt, __ap);
-  return (tmp___0);
-}
-}
-extern int ( /* format attribute */  __dprintf_chk)(int __fd , int __flag , char const   * __restrict  __fmt 
-                                                    , ...) ;
-extern int ( /* format attribute */  __vdprintf_chk)(int __fd , int __flag , char const   * __restrict  __fmt ,
-                                                     __gnuc_va_list __arg ) ;
-__inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __artificial__,
-__always_inline__)) dprintf)(int __fd , char const   * __restrict  __fmt  , ...) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __dprintf_chk(__fd, 1, __fmt, __builtin_va_arg_pack());
-  return (tmp___0);
-}
-}
-__inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __artificial__,
-__always_inline__)) vdprintf)(int __fd , char const   * __restrict  __fmt , __gnuc_va_list __ap ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __vdprintf_chk(__fd, 1, __fmt, __ap);
-  return (tmp___0);
-}
-}
-extern char *( __attribute__((__warn_unused_result__)) __fgets_chk)(char * __restrict  __s ,
-                                                                    size_t __size ,
-                                                                    int __n , FILE * __restrict  __stream ) ;
-extern char *( __attribute__((__warn_unused_result__)) __fgets_alias)(char * __restrict  __s ,
-                                                                      int __n , FILE * __restrict  __stream )  __asm__("fgets")  ;
-extern char *( __attribute__((__warn_unused_result__)) __fgets_chk_warn)(char * __restrict  __s ,
-                                                                         size_t __size ,
-                                                                         int __n ,
-                                                                         FILE * __restrict  __stream )  __asm__("__fgets_chk") __attribute__((__warning__("fgets called with bigger size than length of destination buffer"))) ;
-__inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fgets)(char * __restrict  __s , int __n , FILE * __restrict  __stream ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-  unsigned long tmp___2 ;
-  char *tmp___3 ;
-  unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  char *tmp___6 ;
-
-  {
-  tmp___5 = __builtin_object_size((void *)__s, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__s, 1);
-    tmp___1 = __fgets_chk(__s, tmp___0, __n, __stream);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__s, 1);
-    if ((size_t )__n > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__s, 1);
-      tmp___3 = __fgets_chk_warn(__s, tmp___2, __n, __stream);
-      return (tmp___3);
-    }
-  }
-  tmp___6 = __fgets_alias(__s, __n, __stream);
-  return (tmp___6);
-}
-}
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_chk)(void * __restrict  __ptr ,
-                                                                     size_t __ptrlen ,
-                                                                     size_t __size ,
-                                                                     size_t __n ,
-                                                                     FILE * __restrict  __stream ) ;
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_alias)(void * __restrict  __ptr ,
-                                                                       size_t __size ,
-                                                                       size_t __n ,
-                                                                       FILE * __restrict  __stream )  __asm__("fread")  ;
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_chk_warn)(void * __restrict  __ptr ,
-                                                                          size_t __ptrlen ,
-                                                                          size_t __size ,
-                                                                          size_t __n ,
-                                                                          FILE * __restrict  __stream )  __asm__("__fread_chk") __attribute__((__warning__("fread called with bigger size * nmemb than length of destination buffer"))) ;
-__inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fread)(void * __restrict  __ptr , size_t __size , size_t __n ,
-                           FILE * __restrict  __stream ) 
-{ 
-  unsigned long tmp___0 ;
-  size_t tmp___1 ;
-  unsigned long tmp___2 ;
-  size_t tmp___3 ;
-  unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  size_t tmp___6 ;
-
-  {
-  tmp___5 = __builtin_object_size((void *)__ptr, 0);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__ptr, 0);
-    tmp___1 = __fread_chk(__ptr, tmp___0, __size, __n, __stream);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__ptr, 0);
-    if (__size * __n > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__ptr, 0);
-      tmp___3 = __fread_chk_warn(__ptr, tmp___2, __size, __n, __stream);
-      return (tmp___3);
-    }
-  }
-  tmp___6 = __fread_alias(__ptr, __size, __n, __stream);
-  return (tmp___6);
-}
-}
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_unlocked_chk)(void * __restrict  __ptr ,
-                                                                              size_t __ptrlen ,
-                                                                              size_t __size ,
-                                                                              size_t __n ,
-                                                                              FILE * __restrict  __stream ) ;
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_unlocked_alias)(void * __restrict  __ptr ,
-                                                                                size_t __size ,
-                                                                                size_t __n ,
-                                                                                FILE * __restrict  __stream )  __asm__("fread_unlocked")  ;
-extern size_t ( __attribute__((__warn_unused_result__)) __fread_unlocked_chk_warn)(void * __restrict  __ptr ,
-                                                                                   size_t __ptrlen ,
-                                                                                   size_t __size ,
-                                                                                   size_t __n ,
-                                                                                   FILE * __restrict  __stream )  __asm__("__fread_unlocked_chk") __attribute__((__warning__("fread_unlocked called with bigger size * nmemb than length of destination buffer"))) ;
-__inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) fread_unlocked)(void * __restrict  __ptr , size_t __size , size_t __n ,
-                                    FILE * __restrict  __stream ) 
-{ 
-  unsigned long tmp___0 ;
-  size_t tmp___1 ;
-  unsigned long tmp___2 ;
-  size_t tmp___3 ;
-  unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  size_t tmp___7 ;
-
-  {
-  tmp___5 = __builtin_object_size((void *)__ptr, 0);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__ptr, 0);
-    tmp___1 = __fread_unlocked_chk(__ptr, tmp___0, __size, __n, __stream);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__ptr, 0);
-    if (__size * __n > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__ptr, 0);
-      tmp___3 = __fread_unlocked_chk_warn(__ptr, tmp___2, __size, __n, __stream);
-      return (tmp___3);
-    }
-  }
-  tmp___7 = __fread_unlocked_alias(__ptr, __size, __n, __stream);
-  return (tmp___7);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memcpy)(void * __restrict  __dest ,
-                                                                      void const   * __restrict  __src ,
-                                                                      size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memmove)(void *__dest ,
-                                                                       void const   *__src ,
-                                                                       size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memset)(void *__dest ,
-                                                                      int __ch , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strcpy)(char * __restrict  __dest ,
-                                                                      char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strncpy)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strcat)(char * __restrict  __dest ,
-                                                                      char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strncat)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __len ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2), __leaf__)) strcmp)(char const   *__s1 ,
-                                                                                               char const   *__s2 )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1), __leaf__)) strdup)(char const   *__s )  __attribute__((__malloc__)) ;
-extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1), __leaf__)) strchr)(char const   *__s ,
-                                                                                               int __c )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) size_t ( __attribute__((__nonnull__(1), __leaf__)) strlen)(char const   *__s )  __attribute__((__pure__)) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) bcopy)(void const   *__src ,
-                                                                     void *__dest ,
-                                                                     size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) bzero)(void *__dest ,
-                                                                     size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) bcopy)(void const   *__src ,
-                                                                     void *__dest ,
-                                                                     size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) bcopy)(void const   *__src , void *__dest , size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-
-  {
-  tmp___0 = __builtin_object_size(__dest, 0);
-  __builtin___memmove_chk(__dest, __src, __len, tmp___0);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) bzero)(void *__dest ,
-                                                                     size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __leaf__, __gnu_inline__, __artificial__,
-__always_inline__)) bzero)(void *__dest , size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-
-  {
-  tmp___0 = __builtin_object_size(__dest, 0);
-  __builtin___memset_chk(__dest, '\000', __len, tmp___0);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) explicit_bzero)(void *__dest ,
-                                                                              size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) stpncpy)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __n ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memcpy)(void * __restrict  __dest ,
-                                                                      void const   * __restrict  __src ,
-                                                                      size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) memcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                            size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  void *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__dest, 0);
-  tmp___1 = __builtin___memcpy_chk((void *)__dest, (void const   *)__src, __len, tmp___0);
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memmove)(void *__dest ,
-                                                                       void const   *__src ,
-                                                                       size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) memmove)(void *__dest , void const   *__src ,
-                                             size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  void *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size(__dest, 0);
-  tmp___1 = __builtin___memmove_chk(__dest, __src, __len, tmp___0);
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) memset)(void *__dest ,
-                                                                      int __ch , size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1), __leaf__, __gnu_inline__, __artificial__,
-__always_inline__)) memset)(void *__dest , int __ch , size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  void *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size(__dest, 0);
-  tmp___1 = __builtin___memset_chk(__dest, __ch, __len, tmp___0);
-  return (tmp___1);
-}
-}
-extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1), __leaf__)) __explicit_bzero_chk)(void *__dest ,
-                                                                                                            size_t __len ,
-                                                                                                            size_t __destlen ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) explicit_bzero)(void *__dest ,
-                                                                              size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __leaf__, __gnu_inline__, __artificial__,
-__always_inline__)) explicit_bzero)(void *__dest , size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-
-  {
-  tmp___0 = __builtin_object_size(__dest, 0);
-  __explicit_bzero_chk(__dest, __len, tmp___0);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strcpy)(char * __restrict  __dest ,
-                                                                      char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) strcpy)(char * __restrict  __dest , char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__dest, 1);
-  tmp___1 = __builtin___strcpy_chk((char *)__dest, (char const   *)__src, tmp___0);
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strncpy)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) strncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__dest, 1);
-  tmp___1 = __builtin___strncpy_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp___0);
-  return (tmp___1);
-}
-}
-extern  __attribute__((__nothrow__)) char *( __attribute__((__leaf__)) __stpncpy_chk)(char *__dest ,
-                                                                                      char const   *__src ,
-                                                                                      size_t __n ,
-                                                                                      size_t __destlen ) ;
-extern  __attribute__((__nothrow__)) char *( __attribute__((__leaf__)) __stpncpy_alias)(char *__dest ,
-                                                                                        char const   *__src ,
-                                                                                        size_t __n )  __asm__("stpncpy")  ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) stpncpy)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __n ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) stpncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __n ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-  unsigned long tmp___2 ;
-  char *tmp___3 ;
-
-  {
-  tmp___2 = __builtin_object_size((void *)__dest, 1);
-  if (tmp___2 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__dest, 1);
-    tmp___1 = __stpncpy_chk((char *)__dest, (char const   *)__src, __n, tmp___0);
-    return (tmp___1);
-  }
-  tmp___3 = __stpncpy_alias((char *)__dest, (char const   *)__src, __n);
-  return (tmp___3);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strcat)(char * __restrict  __dest ,
-                                                                      char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) strcat)(char * __restrict  __dest , char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__dest, 1);
-  tmp___1 = __builtin___strcat_chk((char *)__dest, (char const   *)__src, tmp___0);
-  return (tmp___1);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__leaf__, __gnu_inline__, __artificial__, __always_inline__)) strncat)(char * __restrict  __dest ,
-                                                                       char const   * __restrict  __src ,
-                                                                       size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) strncat)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-
-  {
-  tmp___0 = __builtin_object_size((void *)__dest, 1);
-  tmp___1 = __builtin___strncat_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp___0);
-  return (tmp___1);
-}
-}
 extern  __attribute__((__nothrow__, __noreturn__)) void ( __attribute__((__leaf__)) __assert_fail)(char const   *__assertion ,
                                                                                                    char const   *__file ,
                                                                                                    unsigned int __line ,
@@ -2023,8 +1202,8 @@ extern int ( __attribute__((__nonnull__(1,2,3))) pthread_cond_timedwait)(pthread
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
                                                                                                              pthread_t __thread2 )  __attribute__((__const__)) ;
 __inline extern int ( __attribute__((__leaf__, __gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
-                                                                               pthread_t __thread2 ) 
-{ 
+                                                                               pthread_t __thread2 )
+{
 
 
   {
@@ -2050,40 +1229,40 @@ extern  __attribute__((__nothrow__)) long long ( __attribute__((__nonnull__(1), 
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __leaf__, __gnu_inline__)) atoi)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __leaf__,
-__gnu_inline__)) atoi)(char const   *__nptr ) 
-{ 
-  long tmp___0 ;
+__gnu_inline__)) atoi)(char const   *__nptr )
+{
+  long tmp ;
 
   {
-  tmp___0 = strtol((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
-                   10);
-  return ((int )tmp___0);
+  tmp = strtol((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
+               10);
+  return ((int )tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __leaf__, __gnu_inline__)) atol)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __leaf__,
-__gnu_inline__)) atol)(char const   *__nptr ) 
-{ 
-  long tmp___0 ;
+__gnu_inline__)) atol)(char const   *__nptr )
+{
+  long tmp ;
 
   {
-  tmp___0 = strtol((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
-                   10);
-  return (tmp___0);
+  tmp = strtol((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
+               10);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) long long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __leaf__, __gnu_inline__)) atoll)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern long long ( __attribute__((__warn_unused_result__, __nonnull__(1),
-__leaf__, __gnu_inline__)) atoll)(char const   *__nptr ) 
-{ 
-  long long tmp___0 ;
+__leaf__, __gnu_inline__)) atoll)(char const   *__nptr )
+{
+  long long tmp ;
 
   {
-  tmp___0 = strtoll((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
-                    10);
-  return (tmp___0);
+  tmp = strtoll((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)),
+                10);
+  return (tmp);
 }
 }
 extern  __attribute__((__nothrow__)) void *( __attribute__((__warn_unused_result__,
@@ -2100,8 +1279,8 @@ __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __
                           size_t __size , int (*__compar)(void const   * , void const   * ) ) ;
 __inline extern void *( __attribute__((__warn_unused_result__, __nonnull__(1,2,5),
 __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __nmemb ,
-                          size_t __size , int (*__compar)(void const   * , void const   * ) ) 
-{ 
+                          size_t __size , int (*__compar)(void const   * , void const   * ) )
+{
   size_t __l ;
   size_t __u ;
   size_t __idx ;
@@ -2139,13 +1318,13 @@ __artificial__, __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t
 __inline extern  __attribute__((__nothrow__)) double ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __leaf__, __gnu_inline__)) atof)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern double ( __attribute__((__warn_unused_result__, __nonnull__(1), __leaf__,
-__gnu_inline__)) atof)(char const   *__nptr ) 
-{ 
-  double tmp___0 ;
+__gnu_inline__)) atof)(char const   *__nptr )
+{
+  double tmp ;
 
   {
-  tmp___0 = strtod((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)));
-  return (tmp___0);
+  tmp = strtod((char const   * __restrict  )__nptr, (char ** __restrict  )((char **)((void *)0)));
+  return (tmp);
 }
 }
 extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
@@ -2158,22 +1337,22 @@ __leaf__, __gnu_inline__, __artificial__, __always_inline__)) realpath)(char con
                                                                         char * __restrict  __resolved ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__,
 __artificial__, __always_inline__)) realpath)(char const   * __restrict  __name ,
-                                              char * __restrict  __resolved ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-  unsigned long tmp___2 ;
-  char *tmp___3 ;
+                                              char * __restrict  __resolved )
+{
+  unsigned long tmp ;
+  char *tmp___0 ;
+  unsigned long tmp___1 ;
+  char *tmp___2 ;
 
   {
-  tmp___2 = __builtin_object_size((void *)__resolved, 1);
-  if (tmp___2 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__resolved, 1);
-    tmp___1 = __realpath_chk(__name, __resolved, tmp___0);
-    return (tmp___1);
+  tmp___1 = __builtin_object_size((void *)__resolved, 1);
+  if (tmp___1 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__resolved, 1);
+    tmp___0 = __realpath_chk(__name, __resolved, tmp);
+    return (tmp___0);
   }
-  tmp___3 = __realpath_alias(__name, __resolved);
-  return (tmp___3);
+  tmp___2 = __realpath_alias(__name, __resolved);
+  return (tmp___2);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2), __leaf__)) __ptsname_r_chk)(int __fd ,
@@ -2191,31 +1370,31 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__leaf__, __g
 __artificial__, __always_inline__)) ptsname_r)(int __fd , char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__leaf__, __gnu_inline__, __artificial__, __always_inline__)) ptsname_r)(int __fd ,
                                                                                                               char *__buf ,
-                                                                                                              size_t __buflen ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+                                                                                                              size_t __buflen )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __ptsname_r_chk(__fd, __buf, __buflen, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__buflen > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __ptsname_r_chk_warn(__fd, __buf, __buflen, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __ptsname_r_chk(__fd, __buf, __buflen, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__buflen > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __ptsname_r_chk_warn(__fd, __buf, __buflen, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __ptsname_r_alias(__fd, __buf, __buflen);
-  return (tmp___6);
+  tmp___5 = __ptsname_r_alias(__fd, __buf, __buflen);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
@@ -2226,26 +1405,26 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) wctomb)(char *__s ,
                                                                       wchar_t __wchar ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) wctomb)(char *__s , wchar_t __wchar ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
+__artificial__, __always_inline__)) wctomb)(char *__s , wchar_t __wchar )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
   unsigned long tmp___2 ;
-  unsigned long tmp___3 ;
-  int tmp___4 ;
+  int tmp___3 ;
 
   {
-  tmp___2 = __builtin_object_size((void *)__s, 1);
-  if (tmp___2 != 0xffffffffffffffffUL) {
-    tmp___3 = __builtin_object_size((void *)__s, 1);
-    if (16UL > tmp___3) {
-      tmp___0 = __builtin_object_size((void *)__s, 1);
-      tmp___1 = __wctomb_chk(__s, __wchar, tmp___0);
-      return (tmp___1);
+  tmp___1 = __builtin_object_size((void *)__s, 1);
+  if (tmp___1 != 0xffffffffffffffffUL) {
+    tmp___2 = __builtin_object_size((void *)__s, 1);
+    if (16UL > tmp___2) {
+      tmp = __builtin_object_size((void *)__s, 1);
+      tmp___0 = __wctomb_chk(__s, __wchar, tmp);
+      return (tmp___0);
     }
   }
-  tmp___4 = __wctomb_alias(__s, __wchar);
-  return (tmp___4);
+  tmp___3 = __wctomb_alias(__s, __wchar);
+  return (tmp___3);
 }
 }
 extern  __attribute__((__nothrow__)) size_t ( __attribute__((__leaf__)) __mbstowcs_chk)(wchar_t * __restrict  __dst ,
@@ -2264,31 +1443,31 @@ __artificial__, __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst , char
                                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__leaf__, __gnu_inline__, __artificial__,
 __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst , char const   * __restrict  __src ,
-                              size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  size_t tmp___1 ;
-  unsigned long tmp___2 ;
-  size_t tmp___3 ;
+                              size_t __len )
+{
+  unsigned long tmp ;
+  size_t tmp___0 ;
+  unsigned long tmp___1 ;
+  size_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  size_t tmp___6 ;
+  size_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__dst, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__dst, 1);
-    tmp___1 = __mbstowcs_chk(__dst, __src, __len, tmp___0 / sizeof(wchar_t ));
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__dst, 1);
-    if (__len > tmp___4 / sizeof(wchar_t )) {
-      tmp___2 = __builtin_object_size((void *)__dst, 1);
-      tmp___3 = __mbstowcs_chk_warn(__dst, __src, __len, tmp___2 / sizeof(wchar_t ));
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__dst, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__dst, 1);
+    tmp___0 = __mbstowcs_chk(__dst, __src, __len, tmp / sizeof(wchar_t ));
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__dst, 1);
+    if (__len > tmp___3 / sizeof(wchar_t )) {
+      tmp___1 = __builtin_object_size((void *)__dst, 1);
+      tmp___2 = __mbstowcs_chk_warn(__dst, __src, __len, tmp___1 / sizeof(wchar_t ));
+      return (tmp___2);
     }
   }
-  tmp___6 = __mbstowcs_alias(__dst, __src, __len);
-  return (tmp___6);
+  tmp___5 = __mbstowcs_alias(__dst, __src, __len);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) size_t ( __attribute__((__leaf__)) __wcstombs_chk)(char * __restrict  __dst ,
@@ -2307,31 +1486,31 @@ __artificial__, __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t
                                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__leaf__, __gnu_inline__, __artificial__,
 __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t const   * __restrict  __src ,
-                              size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  size_t tmp___1 ;
-  unsigned long tmp___2 ;
-  size_t tmp___3 ;
+                              size_t __len )
+{
+  unsigned long tmp ;
+  size_t tmp___0 ;
+  unsigned long tmp___1 ;
+  size_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  size_t tmp___6 ;
+  size_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__dst, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__dst, 1);
-    tmp___1 = __wcstombs_chk(__dst, __src, __len, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__dst, 1);
-    if (__len > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__dst, 1);
-      tmp___3 = __wcstombs_chk_warn(__dst, __src, __len, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__dst, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__dst, 1);
+    tmp___0 = __wcstombs_chk(__dst, __src, __len, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__dst, 1);
+    if (__len > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__dst, 1);
+      tmp___2 = __wcstombs_chk_warn(__dst, __src, __len, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __wcstombs_alias(__dst, __src, __len);
-  return (tmp___6);
+  tmp___5 = __wcstombs_alias(__dst, __src, __len);
+  return (tmp___5);
 }
 }
 extern void CRYPTO_free(void *ptr ) ;
@@ -2351,8 +1530,8 @@ __gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr , struct cmsghdr *__cmsg )
 __inline extern  __attribute__((__nothrow__)) struct cmsghdr *( __attribute__((__leaf__,
 __gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr , struct cmsghdr *__cmsg ) ;
 __inline extern struct cmsghdr *( __attribute__((__leaf__, __gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr ,
-                                                                                           struct cmsghdr *__cmsg ) 
-{ 
+                                                                                           struct cmsghdr *__cmsg )
+{
 
 
   {
@@ -2387,31 +1566,31 @@ extern ssize_t __recv_chk_warn(int __fd , void *__buf , size_t __n , size_t __bu
 __inline extern ssize_t ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) recv)(int __fd ,
                                                                                                    void *__buf ,
                                                                                                    size_t __n ,
-                                                                                                   int __flags ) 
-{ 
-  unsigned long tmp___0 ;
-  ssize_t tmp___1 ;
-  unsigned long tmp___2 ;
-  ssize_t tmp___3 ;
+                                                                                                   int __flags )
+{
+  unsigned long tmp ;
+  ssize_t tmp___0 ;
+  unsigned long tmp___1 ;
+  ssize_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  ssize_t tmp___6 ;
+  ssize_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size(__buf, 0);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size(__buf, 0);
-    tmp___1 = __recv_chk(__fd, __buf, __n, tmp___0, __flags);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size(__buf, 0);
-    if (__n > tmp___4) {
-      tmp___2 = __builtin_object_size(__buf, 0);
-      tmp___3 = __recv_chk_warn(__fd, __buf, __n, tmp___2, __flags);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size(__buf, 0);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size(__buf, 0);
+    tmp___0 = __recv_chk(__fd, __buf, __n, tmp, __flags);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size(__buf, 0);
+    if (__n > tmp___3) {
+      tmp___1 = __builtin_object_size(__buf, 0);
+      tmp___2 = __recv_chk_warn(__fd, __buf, __n, tmp___1, __flags);
+      return (tmp___2);
     }
   }
-  tmp___6 = __recv_alias(__fd, __buf, __n, __flags);
-  return (tmp___6);
+  tmp___5 = __recv_alias(__fd, __buf, __n, __flags);
+  return (tmp___5);
 }
 }
 extern ssize_t __recvfrom_chk(int __fd , void * __restrict  __buf , size_t __n , size_t __buflen ,
@@ -2428,31 +1607,31 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __artificial__, __alway
                                                                                                        size_t __n ,
                                                                                                        int __flags ,
                                                                                                        struct sockaddr * __restrict  __addr ,
-                                                                                                       socklen_t * __restrict  __addr_len ) 
-{ 
-  unsigned long tmp___0 ;
-  ssize_t tmp___1 ;
-  unsigned long tmp___2 ;
-  ssize_t tmp___3 ;
+                                                                                                       socklen_t * __restrict  __addr_len )
+{
+  unsigned long tmp ;
+  ssize_t tmp___0 ;
+  unsigned long tmp___1 ;
+  ssize_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  ssize_t tmp___6 ;
+  ssize_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 0);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 0);
-    tmp___1 = __recvfrom_chk(__fd, __buf, __n, tmp___0, __flags, __addr, __addr_len);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 0);
-    if (__n > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 0);
-      tmp___3 = __recvfrom_chk_warn(__fd, __buf, __n, tmp___2, __flags, __addr, __addr_len);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 0);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 0);
+    tmp___0 = __recvfrom_chk(__fd, __buf, __n, tmp, __flags, __addr, __addr_len);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 0);
+    if (__n > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 0);
+      tmp___2 = __recvfrom_chk_warn(__fd, __buf, __n, tmp___1, __flags, __addr, __addr_len);
+      return (tmp___2);
     }
   }
-  tmp___6 = __recvfrom_alias(__fd, __buf, __n, __flags, __addr, __addr_len);
-  return (tmp___6);
+  tmp___5 = __recvfrom_alias(__fd, __buf, __n, __flags, __addr, __addr_len);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1), __leaf__)) gettimeofday)(struct timeval * __restrict  __tv ,
@@ -2463,8 +1642,8 @@ extern CURLcode curl_easy_setopt(CURL *curl , CURLoption option  , ...) ;
 extern CURLcode curl_easy_perform(CURL *curl ) ;
 extern void curl_easy_cleanup(CURL *curl ) ;
 static void __attribute__((__warning__("curl_easy_setopt expects a long argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_long)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a long argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_long)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a long argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_long)(void)
+{
 
 
   {
@@ -2473,8 +1652,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a long argument
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_off_t argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_off_t)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_off_t argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_off_t)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_off_t argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_off_t)(void)
+{
 
 
   {
@@ -2483,8 +1662,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_off_t ar
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a string (\'char *\' or char[]) argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_string)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a string (\'char *\' or char[]) argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_string)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a string (\'char *\' or char[]) argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_string)(void)
+{
 
 
   {
@@ -2493,8 +1672,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a string (\'cha
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_write_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_write_callback)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_write_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_write_callback)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_write_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_write_callback)(void)
+{
 
 
   {
@@ -2503,8 +1682,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_write_ca
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_resolver_start_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_resolver_start_callback)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_resolver_start_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_resolver_start_callback)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_resolver_start_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_resolver_start_callback)(void)
+{
 
 
   {
@@ -2513,8 +1692,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_resolver
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_read_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_read_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_read_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_read_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_read_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_read_cb)(void)
+{
 
 
   {
@@ -2523,8 +1702,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_read_cal
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_ioctl_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ioctl_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_ioctl_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ioctl_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_ioctl_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ioctl_cb)(void)
+{
 
 
   {
@@ -2533,8 +1712,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_ioctl_ca
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_sockopt_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_sockopt_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_sockopt_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_sockopt_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_sockopt_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_sockopt_cb)(void)
+{
 
 
   {
@@ -2543,8 +1722,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_sockopt_
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_opensocket_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_opensocket_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_opensocket_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_opensocket_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_opensocket_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_opensocket_cb)(void)
+{
 
 
   {
@@ -2553,8 +1732,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_opensock
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_progress_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_progress_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_progress_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_progress_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_progress_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_progress_cb)(void)
+{
 
 
   {
@@ -2563,8 +1742,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_progress
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_debug_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_debug_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_debug_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_debug_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_debug_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_debug_cb)(void)
+{
 
 
   {
@@ -2573,8 +1752,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_debug_ca
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_ssl_ctx_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ssl_ctx_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_ssl_ctx_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ssl_ctx_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_ssl_ctx_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_ssl_ctx_cb)(void)
+{
 
 
   {
@@ -2583,8 +1762,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_ssl_ctx_
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_conv_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_conv_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_conv_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_conv_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_conv_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_conv_cb)(void)
+{
 
 
   {
@@ -2593,8 +1772,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_conv_cal
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a curl_seek_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_seek_cb)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a curl_seek_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_seek_cb)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a curl_seek_callback argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_seek_cb)(void)
+{
 
 
   {
@@ -2603,8 +1782,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a curl_seek_cal
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a private data pointer as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_cb_data)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a private data pointer as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_cb_data)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a private data pointer as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_cb_data)(void)
+{
 
 
   {
@@ -2613,8 +1792,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a private data 
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a char buffer of CURL_ERROR_SIZE as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_error_buffer)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a char buffer of CURL_ERROR_SIZE as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_error_buffer)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a char buffer of CURL_ERROR_SIZE as argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_error_buffer)(void)
+{
 
 
   {
@@ -2623,8 +1802,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a char buffer o
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a \'FILE *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_FILE)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a \'FILE *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_FILE)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a \'FILE *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_FILE)(void)
+{
 
 
   {
@@ -2633,8 +1812,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a \'FILE *\' ar
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a \'void *\' or \'char *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_postfields)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a \'void *\' or \'char *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_postfields)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a \'void *\' or \'char *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_postfields)(void)
+{
 
 
   {
@@ -2643,8 +1822,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a \'void *\' or
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_httppost *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_httpost)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_httppost *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_httpost)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_httppost *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_httpost)(void)
+{
 
 
   {
@@ -2653,8 +1832,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a \'curl_mime *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_mimepost)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a \'curl_mime *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_mimepost)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a \'curl_mime *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_mimepost)(void)
+{
 
 
   {
@@ -2663,8 +1842,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a \'curl_mime *
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_slist *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_slist)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_slist *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_slist)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl_slist *\' argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_curl_slist)(void)
+{
 
 
   {
@@ -2673,8 +1852,8 @@ static void __attribute__((__warning__("curl_easy_setopt expects a \'struct curl
 }
 }
 static void __attribute__((__warning__("curl_easy_setopt expects a CURLSH* argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_CURLSH)(void)  __attribute__((__unused__)) ;
-static void __attribute__((__warning__("curl_easy_setopt expects a CURLSH* argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_CURLSH)(void) 
-{ 
+static void __attribute__((__warning__("curl_easy_setopt expects a CURLSH* argument for this option")))  ( __attribute__((__noinline__)) _curl_easy_setopt_err_CURLSH)(void)
+{
 
 
   {
@@ -2722,37 +1901,37 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(3,5), __le
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __leaf__, __gnu_inline__)) stat)(char const   * __restrict  __path , struct stat * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__)) stat)(char const   * __restrict  __path ,
-                                                                                        struct stat * __restrict  __statbuf ) 
-{ 
-  int tmp___0 ;
+                                                                                        struct stat * __restrict  __statbuf )
+{
+  int tmp ;
 
   {
-  tmp___0 = __xstat(1, (char const   *)__path, (struct stat *)__statbuf);
-  return (tmp___0);
+  tmp = __xstat(1, (char const   *)__path, (struct stat *)__statbuf);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __leaf__, __gnu_inline__)) lstat)(char const   * __restrict  __path , struct stat * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __leaf__, __gnu_inline__)) lstat)(char const   * __restrict  __path ,
-                                                                                         struct stat * __restrict  __statbuf ) 
-{ 
-  int tmp___0 ;
+                                                                                         struct stat * __restrict  __statbuf )
+{
+  int tmp ;
 
   {
-  tmp___0 = __lxstat(1, (char const   *)__path, (struct stat *)__statbuf);
-  return (tmp___0);
+  tmp = __lxstat(1, (char const   *)__path, (struct stat *)__statbuf);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2),
 __leaf__, __gnu_inline__)) fstat)(int __fd , struct stat *__statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(2), __leaf__, __gnu_inline__)) fstat)(int __fd ,
-                                                                                       struct stat *__statbuf ) 
-{ 
-  int tmp___0 ;
+                                                                                       struct stat *__statbuf )
+{
+  int tmp ;
 
   {
-  tmp___0 = __fxstat(1, __fd, __statbuf);
-  return (tmp___0);
+  tmp = __fxstat(1, __fd, __statbuf);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2,3),
@@ -2761,27 +1940,27 @@ __leaf__, __gnu_inline__)) fstatat)(int __fd , char const   * __restrict  __file
 __inline extern int ( __attribute__((__nonnull__(2,3), __leaf__, __gnu_inline__)) fstatat)(int __fd ,
                                                                                            char const   * __restrict  __filename ,
                                                                                            struct stat * __restrict  __statbuf ,
-                                                                                           int __flag ) 
-{ 
-  int tmp___0 ;
+                                                                                           int __flag )
+{
+  int tmp ;
 
   {
-  tmp___0 = __fxstatat(1, __fd, (char const   *)__filename, (struct stat *)__statbuf,
-                       __flag);
-  return (tmp___0);
+  tmp = __fxstatat(1, __fd, (char const   *)__filename, (struct stat *)__statbuf,
+                   __flag);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1),
 __leaf__, __gnu_inline__)) mknod)(char const   *__path , __mode_t __mode , __dev_t __dev ) ;
 __inline extern int ( __attribute__((__nonnull__(1), __leaf__, __gnu_inline__)) mknod)(char const   *__path ,
                                                                                        __mode_t __mode ,
-                                                                                       __dev_t __dev ) 
-{ 
-  int tmp___0 ;
+                                                                                       __dev_t __dev )
+{
+  int tmp ;
 
   {
-  tmp___0 = __xmknod(0, __path, __mode, & __dev);
-  return (tmp___0);
+  tmp = __xmknod(0, __path, __mode, & __dev);
+  return (tmp);
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2),
@@ -2790,13 +1969,13 @@ __leaf__, __gnu_inline__)) mknodat)(int __fd , char const   *__path , __mode_t _
 __inline extern int ( __attribute__((__nonnull__(2), __leaf__, __gnu_inline__)) mknodat)(int __fd ,
                                                                                          char const   *__path ,
                                                                                          __mode_t __mode ,
-                                                                                         __dev_t __dev ) 
-{ 
-  int tmp___0 ;
+                                                                                         __dev_t __dev )
+{
+  int tmp ;
 
   {
-  tmp___0 = __xmknodat(0, __fd, __path, __mode, & __dev);
-  return (tmp___0);
+  tmp = __xmknodat(0, __fd, __path, __mode, & __dev);
+  return (tmp);
 }
 }
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
@@ -2847,31 +2026,31 @@ extern ssize_t ( __attribute__((__warn_unused_result__)) __read_chk_warn)(int __
                                                                           size_t __nbytes ,
                                                                           size_t __buflen )  __asm__("__read_chk") __attribute__((__warning__("read called with bigger length than size of the destination buffer"))) ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __artificial__,
-__always_inline__)) read)(int __fd , void *__buf , size_t __nbytes ) 
-{ 
-  unsigned long tmp___0 ;
-  ssize_t tmp___1 ;
-  unsigned long tmp___2 ;
-  ssize_t tmp___3 ;
+__always_inline__)) read)(int __fd , void *__buf , size_t __nbytes )
+{
+  unsigned long tmp ;
+  ssize_t tmp___0 ;
+  unsigned long tmp___1 ;
+  ssize_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  ssize_t tmp___6 ;
+  ssize_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size(__buf, 0);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size(__buf, 0);
-    tmp___1 = __read_chk(__fd, __buf, __nbytes, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size(__buf, 0);
-    if (__nbytes > tmp___4) {
-      tmp___2 = __builtin_object_size(__buf, 0);
-      tmp___3 = __read_chk_warn(__fd, __buf, __nbytes, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size(__buf, 0);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size(__buf, 0);
+    tmp___0 = __read_chk(__fd, __buf, __nbytes, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size(__buf, 0);
+    if (__nbytes > tmp___3) {
+      tmp___1 = __builtin_object_size(__buf, 0);
+      tmp___2 = __read_chk_warn(__fd, __buf, __nbytes, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __read_alias(__fd, __buf, __nbytes);
-  return (tmp___6);
+  tmp___5 = __read_alias(__fd, __buf, __nbytes);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) ssize_t ( __attribute__((__warn_unused_result__,
@@ -2891,31 +2070,31 @@ __nonnull__(1,2), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) 
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(1,2),
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) readlink)(char const   * __restrict  __path ,
                                                                         char * __restrict  __buf ,
-                                                                        size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  ssize_t tmp___1 ;
-  unsigned long tmp___2 ;
-  ssize_t tmp___3 ;
+                                                                        size_t __len )
+{
+  unsigned long tmp ;
+  ssize_t tmp___0 ;
+  unsigned long tmp___1 ;
+  ssize_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  ssize_t tmp___6 ;
+  ssize_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __readlink_chk(__path, __buf, __len, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__len > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __readlink_chk_warn(__path, __buf, __len, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __readlink_chk(__path, __buf, __len, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__len > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __readlink_chk_warn(__path, __buf, __len, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __readlink_alias(__path, __buf, __len);
-  return (tmp___6);
+  tmp___5 = __readlink_alias(__path, __buf, __len);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) ssize_t ( __attribute__((__warn_unused_result__,
@@ -2938,31 +2117,31 @@ __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(2,3
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) readlinkat)(int __fd ,
                                                                           char const   * __restrict  __path ,
                                                                           char * __restrict  __buf ,
-                                                                          size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  ssize_t tmp___1 ;
-  unsigned long tmp___2 ;
-  ssize_t tmp___3 ;
+                                                                          size_t __len )
+{
+  unsigned long tmp ;
+  ssize_t tmp___0 ;
+  unsigned long tmp___1 ;
+  ssize_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  ssize_t tmp___6 ;
+  ssize_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __readlinkat_chk(__fd, __path, __buf, __len, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__len > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __readlinkat_chk_warn(__fd, __path, __buf, __len, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __readlinkat_chk(__fd, __path, __buf, __len, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__len > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __readlinkat_chk_warn(__fd, __path, __buf, __len, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __readlinkat_alias(__fd, __path, __buf, __len);
-  return (tmp___6);
+  tmp___5 = __readlinkat_alias(__fd, __path, __buf, __len);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
@@ -2975,31 +2154,31 @@ __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unus
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getcwd)(char *__buf ,
                                                                       size_t __size ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) getcwd)(char *__buf , size_t __size ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-  unsigned long tmp___2 ;
-  char *tmp___3 ;
+__artificial__, __always_inline__)) getcwd)(char *__buf , size_t __size )
+{
+  unsigned long tmp ;
+  char *tmp___0 ;
+  unsigned long tmp___1 ;
+  char *tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  char *tmp___6 ;
+  char *tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __getcwd_chk(__buf, __size, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__size > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __getcwd_chk_warn(__buf, __size, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __getcwd_chk(__buf, __size, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__size > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __getcwd_chk_warn(__buf, __size, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __getcwd_alias(__buf, __size);
-  return (tmp___6);
+  tmp___5 = __getcwd_alias(__buf, __size);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
@@ -3009,22 +2188,22 @@ __nonnull__(1), __leaf__)) __getwd_warn)(char *__buf )  __asm__("getwd") __attri
 __inline extern  __attribute__((__nothrow__)) char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
 __nonnull__(1), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getwd)(char *__buf )  __attribute__((__deprecated__)) ;
 __inline extern char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
-__nonnull__(1), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getwd)(char *__buf ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
-  unsigned long tmp___2 ;
-  char *tmp___3 ;
+__nonnull__(1), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getwd)(char *__buf )
+{
+  unsigned long tmp ;
+  char *tmp___0 ;
+  unsigned long tmp___1 ;
+  char *tmp___2 ;
 
   {
-  tmp___2 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___2 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __getwd_chk(__buf, tmp___0);
-    return ((char __attribute__((__deprecated__))  *)tmp___1);
+  tmp___1 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___1 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __getwd_chk(__buf, tmp);
+    return ((char __attribute__((__deprecated__))  *)tmp___0);
   }
-  tmp___3 = __getwd_warn(__buf);
-  return ((char __attribute__((__deprecated__))  *)tmp___3);
+  tmp___2 = __getwd_warn(__buf);
+  return ((char __attribute__((__deprecated__))  *)tmp___2);
 }
 }
 extern  __attribute__((__nothrow__)) size_t ( __attribute__((__leaf__)) __confstr_chk)(int __name ,
@@ -3041,31 +2220,31 @@ extern  __attribute__((__nothrow__)) size_t ( __attribute__((__leaf__)) __confst
 __inline extern  __attribute__((__nothrow__)) size_t ( __attribute__((__leaf__, __gnu_inline__,
 __artificial__, __always_inline__)) confstr)(int __name , char *__buf , size_t __len ) ;
 __inline extern size_t ( __attribute__((__leaf__, __gnu_inline__, __artificial__,
-__always_inline__)) confstr)(int __name , char *__buf , size_t __len ) 
-{ 
-  unsigned long tmp___0 ;
-  size_t tmp___1 ;
-  unsigned long tmp___2 ;
-  size_t tmp___3 ;
+__always_inline__)) confstr)(int __name , char *__buf , size_t __len )
+{
+  unsigned long tmp ;
+  size_t tmp___0 ;
+  unsigned long tmp___1 ;
+  size_t tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  size_t tmp___6 ;
+  size_t tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __confstr_chk(__name, __buf, __len, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (tmp___4 < __len) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __confstr_chk_warn(__name, __buf, __len, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __confstr_chk(__name, __buf, __len, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (tmp___3 < __len) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __confstr_chk_warn(__name, __buf, __len, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __confstr_alias(__name, __buf, __len);
-  return (tmp___6);
+  tmp___5 = __confstr_alias(__name, __buf, __len);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
@@ -3078,31 +2257,31 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getgroups)(int __size ,
                                                                          __gid_t *__list ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__,
-__artificial__, __always_inline__)) getgroups)(int __size , __gid_t *__list ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+__artificial__, __always_inline__)) getgroups)(int __size , __gid_t *__list )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__list, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__list, 1);
-    tmp___1 = __getgroups_chk(__size, __list, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__list, 1);
-    if ((unsigned long )__size * sizeof(__gid_t ) > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__list, 1);
-      tmp___3 = __getgroups_chk_warn(__size, __list, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__list, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__list, 1);
+    tmp___0 = __getgroups_chk(__size, __list, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__list, 1);
+    if ((unsigned long )__size * sizeof(__gid_t ) > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__list, 1);
+      tmp___2 = __getgroups_chk_warn(__size, __list, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __getgroups_alias(__size, __list);
-  return (tmp___6);
+  tmp___5 = __getgroups_alias(__size, __list);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2), __leaf__)) __ttyname_r_chk)(int __fd ,
@@ -3122,31 +2301,31 @@ __nonnull__(2), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) tt
                                                                                          size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(2), __leaf__,
 __gnu_inline__, __artificial__, __always_inline__)) ttyname_r)(int __fd , char *__buf ,
-                                                               size_t __buflen ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+                                                               size_t __buflen )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __ttyname_r_chk(__fd, __buf, __buflen, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__buflen > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __ttyname_r_chk_warn(__fd, __buf, __buflen, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __ttyname_r_chk(__fd, __buf, __buflen, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__buflen > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __ttyname_r_chk_warn(__fd, __buf, __buflen, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __ttyname_r_alias(__fd, __buf, __buflen);
-  return (tmp___6);
+  tmp___5 = __ttyname_r_alias(__fd, __buf, __buflen);
+  return (tmp___5);
 }
 }
 extern int ( __attribute__((__nonnull__(1))) __getlogin_r_chk)(char *__buf , size_t __buflen ,
@@ -3156,31 +2335,31 @@ extern int ( __attribute__((__nonnull__(1))) __getlogin_r_chk_warn)(char *__buf 
                                                                     size_t __buflen ,
                                                                     size_t __nreal )  __asm__("__getlogin_r_chk") __attribute__((__warning__("getlogin_r called with bigger buflen than size of destination buffer"))) ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__, __artificial__,
-__always_inline__)) getlogin_r)(char *__buf , size_t __buflen ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+__always_inline__)) getlogin_r)(char *__buf , size_t __buflen )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __getlogin_r_chk(__buf, __buflen, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__buflen > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __getlogin_r_chk_warn(__buf, __buflen, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __getlogin_r_chk(__buf, __buflen, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__buflen > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __getlogin_r_chk_warn(__buf, __buflen, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __getlogin_r_alias(__buf, __buflen);
-  return (tmp___6);
+  tmp___5 = __getlogin_r_alias(__buf, __buflen);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1), __leaf__)) __gethostname_chk)(char *__buf ,
@@ -3195,31 +2374,31 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1
 __leaf__, __gnu_inline__, __artificial__, __always_inline__)) gethostname)(char *__buf ,
                                                                            size_t __buflen ) ;
 __inline extern int ( __attribute__((__nonnull__(1), __leaf__, __gnu_inline__, __artificial__,
-__always_inline__)) gethostname)(char *__buf , size_t __buflen ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+__always_inline__)) gethostname)(char *__buf , size_t __buflen )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __gethostname_chk(__buf, __buflen, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__buflen > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __gethostname_chk_warn(__buf, __buflen, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __gethostname_chk(__buf, __buflen, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__buflen > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __gethostname_chk_warn(__buf, __buflen, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __gethostname_alias(__buf, __buflen);
-  return (tmp___6);
+  tmp___5 = __gethostname_alias(__buf, __buflen);
+  return (tmp___5);
 }
 }
 extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
@@ -3233,31 +2412,31 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __nonnull__(1), __leaf__, __gnu_inline__, __artificial__, __always_inline__)) getdomainname)(char *__buf ,
                                                                                              size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __leaf__,
-__gnu_inline__, __artificial__, __always_inline__)) getdomainname)(char *__buf , size_t __buflen ) 
-{ 
-  unsigned long tmp___0 ;
-  int tmp___1 ;
-  unsigned long tmp___2 ;
-  int tmp___3 ;
+__gnu_inline__, __artificial__, __always_inline__)) getdomainname)(char *__buf , size_t __buflen )
+{
+  unsigned long tmp ;
+  int tmp___0 ;
+  unsigned long tmp___1 ;
+  int tmp___2 ;
+  unsigned long tmp___3 ;
   unsigned long tmp___4 ;
-  unsigned long tmp___5 ;
-  int tmp___6 ;
+  int tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__buf, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___0 = __builtin_object_size((void *)__buf, 1);
-    tmp___1 = __getdomainname_chk(__buf, __buflen, tmp___0);
-    return (tmp___1);
-    tmp___4 = __builtin_object_size((void *)__buf, 1);
-    if (__buflen > tmp___4) {
-      tmp___2 = __builtin_object_size((void *)__buf, 1);
-      tmp___3 = __getdomainname_chk_warn(__buf, __buflen, tmp___2);
-      return (tmp___3);
+  tmp___4 = __builtin_object_size((void *)__buf, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp = __builtin_object_size((void *)__buf, 1);
+    tmp___0 = __getdomainname_chk(__buf, __buflen, tmp);
+    return (tmp___0);
+    tmp___3 = __builtin_object_size((void *)__buf, 1);
+    if (__buflen > tmp___3) {
+      tmp___1 = __builtin_object_size((void *)__buf, 1);
+      tmp___2 = __getdomainname_chk_warn(__buf, __buflen, tmp___1);
+      return (tmp___2);
     }
   }
-  tmp___6 = __getdomainname_alias(__buf, __buflen);
-  return (tmp___6);
+  tmp___5 = __getdomainname_alias(__buf, __buflen);
+  return (tmp___5);
 }
 }
 int vg_context_add_patterns(vg_context_t *vcp , char const   ** const  patterns ,
@@ -3271,15 +2450,16 @@ void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pa
 void vg_output_timing_console(vg_context_t *vcp , double count , unsigned long long rate ,
                               unsigned long long total ) ;
 EC_KEY *vg_exec_context_new_key(void) ;
-vg_ocl_context_t *vg_ocl_context_new(vg_context_t *vcp , int platformidx , int deviceidx ,
-                                     int safe_mode , int verify , int worksize , int nthreads ,
-                                     int nrows , int ncols , int invsize ) ;
-vg_ocl_context_t *vg_ocl_context_new_from_devstr(vg_context_t *vcp , char const   *devstr ,
-                                                 int safemode , int verify ) ;
-void vg_ocl_enumerate_devices(void) ;
+extern vg_ocl_context_t *vg_ocl_context_new(vg_context_t *vcp , int platformidx ,
+                                            int deviceidx , int safe_mode , int verify ,
+                                            int worksize , int nthreads , int nrows ,
+                                            int ncols , int invsize ) ;
+extern vg_ocl_context_t *vg_ocl_context_new_from_devstr(vg_context_t *vcp , char const   *devstr ,
+                                                        int safemode , int verify ) ;
+extern void vg_ocl_enumerate_devices(void) ;
 int vg_b58_decode_check(char const   *input , void *buf , size_t len ) ;
-__inline static void avl_root_init(avl_root_t *rootp ) 
-{ 
+__inline static void avl_root_init(avl_root_t *rootp )
+{
 
 
   {
@@ -3287,21 +2467,21 @@ __inline static void avl_root_init(avl_root_t *rootp )
   return;
 }
 }
-__inline static int avl_root_empty(avl_root_t *rootp ) 
-{ 
-  int tmp___0 ;
+__inline static int avl_root_empty(avl_root_t *rootp )
+{
+  int tmp ;
 
   {
   if ((unsigned long )rootp->ar_root == (unsigned long )((void *)0)) {
-    tmp___0 = 1;
+    tmp = 1;
   } else {
-    tmp___0 = 0;
+    tmp = 0;
   }
-  return (tmp___0);
+  return (tmp);
 }
 }
-__inline static void avl_item_init(avl_item_t *itemp ) 
-{ 
+__inline static void avl_item_init(avl_item_t *itemp )
+{
 
 
   {
@@ -3313,36 +2493,36 @@ __inline static void avl_item_init(avl_item_t *itemp )
   return;
 }
 }
-__inline static void _avl_rotate_ll(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
-  avl_item_t *tmp___0 ;
+__inline static void _avl_rotate_ll(avl_root_t *rootp , avl_item_t *itemp )
+{
+  avl_item_t *tmp ;
 
   {
-  tmp___0 = itemp->ai_left;
-  itemp->ai_left = tmp___0->ai_right;
+  tmp = itemp->ai_left;
+  itemp->ai_left = tmp->ai_right;
   if (itemp->ai_left) {
     (itemp->ai_left)->ai_up = itemp;
   }
-  tmp___0->ai_right = itemp;
+  tmp->ai_right = itemp;
   if (itemp->ai_up) {
     if ((unsigned long )(itemp->ai_up)->ai_left == (unsigned long )itemp) {
-      (itemp->ai_up)->ai_left = tmp___0;
+      (itemp->ai_up)->ai_left = tmp;
     } else {
       if (! ((unsigned long )(itemp->ai_up)->ai_right == (unsigned long )itemp)) {
         __assert_fail("itemp->ai_up->ai_right == itemp", "avl.h", 89U, "_avl_rotate_ll");
       }
-      (itemp->ai_up)->ai_right = tmp___0;
+      (itemp->ai_up)->ai_right = tmp;
     }
   } else {
-    rootp->ar_root = tmp___0;
+    rootp->ar_root = tmp;
   }
-  tmp___0->ai_up = itemp->ai_up;
-  itemp->ai_up = tmp___0;
+  tmp->ai_up = itemp->ai_up;
+  itemp->ai_up = tmp;
   return;
 }
 }
-__inline static void _avl_rotate_lr(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+__inline static void _avl_rotate_lr(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *rcp ;
   avl_item_t *rlcp ;
 
@@ -3377,36 +2557,36 @@ __inline static void _avl_rotate_lr(avl_root_t *rootp , avl_item_t *itemp )
   return;
 }
 }
-__inline static void _avl_rotate_rr(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
-  avl_item_t *tmp___0 ;
+__inline static void _avl_rotate_rr(avl_root_t *rootp , avl_item_t *itemp )
+{
+  avl_item_t *tmp ;
 
   {
-  tmp___0 = itemp->ai_right;
-  itemp->ai_right = tmp___0->ai_left;
+  tmp = itemp->ai_right;
+  itemp->ai_right = tmp->ai_left;
   if (itemp->ai_right) {
     (itemp->ai_right)->ai_up = itemp;
   }
-  tmp___0->ai_left = itemp;
+  tmp->ai_left = itemp;
   if (itemp->ai_up) {
     if ((unsigned long )(itemp->ai_up)->ai_right == (unsigned long )itemp) {
-      (itemp->ai_up)->ai_right = tmp___0;
+      (itemp->ai_up)->ai_right = tmp;
     } else {
       if (! ((unsigned long )(itemp->ai_up)->ai_left == (unsigned long )itemp)) {
         __assert_fail("itemp->ai_up->ai_left == itemp", "avl.h", 142U, "_avl_rotate_rr");
       }
-      (itemp->ai_up)->ai_left = tmp___0;
+      (itemp->ai_up)->ai_left = tmp;
     }
   } else {
-    rootp->ar_root = tmp___0;
+    rootp->ar_root = tmp;
   }
-  tmp___0->ai_up = itemp->ai_up;
-  itemp->ai_up = tmp___0;
+  tmp->ai_up = itemp->ai_up;
+  itemp->ai_up = tmp;
   return;
 }
 }
-__inline static void _avl_rotate_rl(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+__inline static void _avl_rotate_rl(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *rcp ;
   avl_item_t *rlcp ;
 
@@ -3441,8 +2621,8 @@ __inline static void _avl_rotate_rl(avl_root_t *rootp , avl_item_t *itemp )
   return;
 }
 }
-static void avl_delete_fix(avl_root_t *rootp , avl_item_t *itemp , avl_item_t *parentp ) 
-{ 
+static void avl_delete_fix(avl_root_t *rootp , avl_item_t *itemp , avl_item_t *parentp )
+{
   avl_item_t *childp ;
 
   {
@@ -3534,17 +2714,17 @@ static void avl_delete_fix(avl_root_t *rootp , avl_item_t *itemp , avl_item_t *p
   return;
 }
 }
-static void avl_insert_fix(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+static void avl_insert_fix(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *childp ;
   avl_item_t *parentp ;
-  struct _avl_item_s *tmp___0 ;
+  struct _avl_item_s *tmp ;
 
   {
   parentp = itemp->ai_up;
-  tmp___0 = (struct _avl_item_s *)((void *)0);
-  itemp->ai_right = tmp___0;
-  itemp->ai_left = tmp___0;
+  tmp = (struct _avl_item_s *)((void *)0);
+  itemp->ai_right = tmp;
+  itemp->ai_left = tmp;
   if (! (! itemp->ai_indexed)) {
     __assert_fail("!itemp->ai_indexed", "avl.h", 275U, "avl_insert_fix");
   }
@@ -3618,8 +2798,8 @@ static void avl_insert_fix(avl_root_t *rootp , avl_item_t *itemp )
   return;
 }
 }
-__inline static avl_item_t *avl_first(avl_root_t *rootp ) 
-{ 
+__inline static avl_item_t *avl_first(avl_root_t *rootp )
+{
   avl_item_t *itemp ;
 
   {
@@ -3632,8 +2812,8 @@ __inline static avl_item_t *avl_first(avl_root_t *rootp )
   return (itemp);
 }
 }
-__inline static avl_item_t *avl_next(avl_item_t *itemp ) 
-{ 
+__inline static avl_item_t *avl_next(avl_item_t *itemp )
+{
 
 
   {
@@ -3660,8 +2840,8 @@ __inline static avl_item_t *avl_next(avl_item_t *itemp )
   return (itemp->ai_up);
 }
 }
-static void avl_remove(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+static void avl_remove(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *relocp ;
   avl_item_t *replacep ;
   avl_item_t *parentp ;
@@ -3676,7 +2856,7 @@ static void avl_remove(avl_root_t *rootp , avl_item_t *itemp )
     goto _L;
   } else
   if ((unsigned long )itemp->ai_right == (unsigned long )((void *)0)) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     parentp = itemp->ai_up;
     replacep = itemp->ai_left;
     if ((unsigned long )replacep == (unsigned long )((void *)0)) {
@@ -3748,10 +2928,10 @@ static void avl_remove(avl_root_t *rootp , avl_item_t *itemp )
 }
 char const   *version  =    "0.22";
 int const   debug  =    (int const   )0;
-static int workitem_cmp(workitem_t *a , workitem_t *b ) 
-{ 
+static int workitem_cmp(workitem_t *a , workitem_t *b )
+{
   int cmpres ;
-  int tmp___0 ;
+  int tmp ;
 
   {
   cmpres = strcmp(a->pattern, b->pattern);
@@ -3760,18 +2940,18 @@ static int workitem_cmp(workitem_t *a , workitem_t *b )
       cmpres = -1;
     } else {
       if (a->reward > b->reward) {
-        tmp___0 = 1;
+        tmp = 1;
       } else {
-        tmp___0 = 0;
+        tmp = 0;
       }
-      cmpres = tmp___0;
+      cmpres = tmp;
     }
   }
   return (cmpres);
 }
 }
-static workitem_t *workitem_avl_search(avl_root_t *rootp , char const   *pattern ) 
-{ 
+static workitem_t *workitem_avl_search(avl_root_t *rootp , char const   *pattern )
+{
   workitem_t *vp ;
   avl_item_t *itemp ;
   int cmpres ;
@@ -3793,8 +2973,8 @@ static workitem_t *workitem_avl_search(avl_root_t *rootp , char const   *pattern
   return ((workitem_t *)((void *)0));
 }
 }
-static workitem_t *workitem_avl_insert(avl_root_t *rootp , workitem_t *vpnew ) 
-{ 
+static workitem_t *workitem_avl_insert(avl_root_t *rootp , workitem_t *vpnew )
+{
   workitem_t *vp ;
   avl_item_t *itemp ;
   avl_item_t **ptrp ;
@@ -3823,8 +3003,8 @@ static workitem_t *workitem_avl_insert(avl_root_t *rootp , workitem_t *vpnew )
   return ((workitem_t *)((void *)0));
 }
 }
-static workitem_t *workitem_avl_first(avl_root_t *rootp ) 
-{ 
+static workitem_t *workitem_avl_first(avl_root_t *rootp )
+{
   avl_item_t *itemp ;
 
   {
@@ -3835,8 +3015,8 @@ static workitem_t *workitem_avl_first(avl_root_t *rootp )
   return ((workitem_t *)((void *)0));
 }
 }
-static workitem_t *workitem_avl_next(workitem_t *vp ) 
-{ 
+static workitem_t *workitem_avl_next(workitem_t *vp )
+{
   avl_item_t *itemp ;
 
   {
@@ -3848,8 +3028,8 @@ static workitem_t *workitem_avl_next(workitem_t *vp )
   return ((workitem_t *)((void *)0));
 }
 }
-void server_workitem_free(workitem_t *wip ) 
-{ 
+void server_workitem_free(workitem_t *wip )
+{
 
 
   {
@@ -3860,8 +3040,8 @@ void server_workitem_free(workitem_t *wip )
   return;
 }
 }
-void server_batch_free(pubkeybatch_t *pbatch ) 
-{ 
+void server_batch_free(pubkeybatch_t *pbatch )
+{
   workitem_t *wip ;
 
   {
@@ -3886,18 +3066,18 @@ void server_batch_free(pubkeybatch_t *pbatch )
   return;
 }
 }
-static int pubkeybatch_cmp(pubkeybatch_t *a , pubkeybatch_t *b ) 
-{ 
-  int tmp___0 ;
+static int pubkeybatch_cmp(pubkeybatch_t *a , pubkeybatch_t *b )
+{
+  int tmp ;
 
   {
-  tmp___0 = strcmp(a->pubkey_hex, b->pubkey_hex);
-  return (tmp___0);
+  tmp = strcmp(a->pubkey_hex, b->pubkey_hex);
+  return (tmp);
 }
 }
 static pubkeybatch_t *pubkeybatch_avl_search(avl_root_t *rootp , EC_POINT const   *pubkey ,
-                                             EC_GROUP const   *pgroup ) 
-{ 
+                                             EC_GROUP const   *pgroup )
+{
   char *pubkey_hex ;
   pubkeybatch_t *vp ;
   avl_item_t *itemp ;
@@ -3923,8 +3103,8 @@ static pubkeybatch_t *pubkeybatch_avl_search(avl_root_t *rootp , EC_POINT const 
   return ((pubkeybatch_t *)((void *)0));
 }
 }
-static pubkeybatch_t *pubkeybatch_avl_insert(avl_root_t *rootp , pubkeybatch_t *vpnew ) 
-{ 
+static pubkeybatch_t *pubkeybatch_avl_insert(avl_root_t *rootp , pubkeybatch_t *vpnew )
+{
   pubkeybatch_t *vp ;
   avl_item_t *itemp ;
   avl_item_t **ptrp ;
@@ -3953,8 +3133,8 @@ static pubkeybatch_t *pubkeybatch_avl_insert(avl_root_t *rootp , pubkeybatch_t *
   return ((pubkeybatch_t *)((void *)0));
 }
 }
-static pubkeybatch_t *pubkeybatch_avl_first(avl_root_t *rootp ) 
-{ 
+static pubkeybatch_t *pubkeybatch_avl_first(avl_root_t *rootp )
+{
   avl_item_t *itemp ;
 
   {
@@ -3965,8 +3145,8 @@ static pubkeybatch_t *pubkeybatch_avl_first(avl_root_t *rootp )
   return ((pubkeybatch_t *)((void *)0));
 }
 }
-static pubkeybatch_t *pubkeybatch_avl_next(pubkeybatch_t *vp ) 
-{ 
+static pubkeybatch_t *pubkeybatch_avl_next(pubkeybatch_t *vp )
+{
   avl_item_t *itemp ;
 
   {
@@ -3980,17 +3160,17 @@ static pubkeybatch_t *pubkeybatch_avl_next(pubkeybatch_t *vp )
 }
 static workitem_t *server_workitem_new(server_request_t *reqp , char const   *pfx ,
                                        char const   *pubkey_s , char const   *addrtype_s ,
-                                       char const   *reward_s , char const   *comment ) 
-{ 
+                                       char const   *reward_s , char const   *comment )
+{
   workitem_t *wip ;
   EC_POINT *pubkey ;
   int addrtype ;
   double reward ;
   double difficulty ;
+  size_t tmp ;
   size_t tmp___0 ;
-  size_t tmp___1 ;
-  void *tmp___2 ;
-  size_t tmp___3 ;
+  void *tmp___1 ;
+  size_t tmp___2 ;
 
   {
   addrtype = atoi(addrtype_s);
@@ -4012,16 +3192,16 @@ static workitem_t *server_workitem_new(server_request_t *reqp , char const   *pf
   if ((unsigned long )pubkey == (unsigned long )((void *)0)) {
     return ((workitem_t *)((void *)0));
   }
-  tmp___0 = strlen(pfx);
-  tmp___1 = strlen(comment);
-  tmp___2 = malloc(((sizeof(*wip) + tmp___0) + tmp___1) + 2UL);
-  wip = (workitem_t *)tmp___2;
+  tmp = strlen(pfx);
+  tmp___0 = strlen(comment);
+  tmp___1 = malloc(((sizeof(*wip) + tmp) + tmp___0) + 2UL);
+  wip = (workitem_t *)tmp___1;
   memset((void *)wip, 0, sizeof(*wip));
   avl_item_init(& wip->avlent);
   wip->pattern = (char const   *)((char *)(wip + 1));
   strcpy((char * __restrict  )((char *)wip->pattern), (char const   * __restrict  )pfx);
-  tmp___3 = strlen(wip->pattern);
-  wip->comment = wip->pattern + (tmp___3 + 1UL);
+  tmp___2 = strlen(wip->pattern);
+  wip->comment = wip->pattern + (tmp___2 + 1UL);
   strcpy((char * __restrict  )((char *)wip->comment), (char const   * __restrict  )comment);
   wip->pubkey = pubkey;
   wip->addrtype = addrtype;
@@ -4031,41 +3211,41 @@ static workitem_t *server_workitem_new(server_request_t *reqp , char const   *pf
   return (wip);
 }
 }
-static int server_workitem_equal(workitem_t *a , workitem_t *b ) 
-{ 
+static int server_workitem_equal(workitem_t *a , workitem_t *b )
+{
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
 
   {
   if (a->reward == b->reward) {
-    tmp___0 = strcmp(a->pattern, b->pattern);
-    if (tmp___0) {
-      tmp___1 = 0;
+    tmp = strcmp(a->pattern, b->pattern);
+    if (tmp) {
+      tmp___0 = 0;
     } else {
-      tmp___1 = 1;
+      tmp___0 = 1;
     }
   } else {
-    tmp___1 = 0;
+    tmp___0 = 0;
   }
-  return (tmp___1);
+  return (tmp___0);
 }
 }
-static int server_pubkeybatch_equal(server_context_t *ctxp , pubkeybatch_t *a , pubkeybatch_t *b ) 
-{ 
+static int server_pubkeybatch_equal(server_context_t *ctxp , pubkeybatch_t *a , pubkeybatch_t *b )
+{
   workitem_t *wipa ;
   workitem_t *wipb ;
-  EC_GROUP const   *tmp___0 ;
+  EC_GROUP const   *tmp ;
+  int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
 
   {
   if (a->nitems != b->nitems) {
     return (0);
   }
-  tmp___0 = EC_KEY_get0_group((EC_KEY const   *)ctxp->dummy_key);
-  tmp___1 = EC_POINT_cmp(tmp___0, (EC_POINT const   *)a->pubkey, (EC_POINT const   *)b->pubkey,
+  tmp = EC_KEY_get0_group((EC_KEY const   *)ctxp->dummy_key);
+  tmp___0 = EC_POINT_cmp(tmp, (EC_POINT const   *)a->pubkey, (EC_POINT const   *)b->pubkey,
                          (BN_CTX *)((void *)0));
-  if (tmp___1) {
+  if (tmp___0) {
     return (0);
   }
   wipa = workitem_avl_first(& a->items);
@@ -4078,8 +3258,8 @@ static int server_pubkeybatch_equal(server_context_t *ctxp , pubkeybatch_t *a , 
     } else {
       break;
     }
-    tmp___2 = server_workitem_equal(wipa, wipb);
-    if (! tmp___2) {
+    tmp___1 = server_workitem_equal(wipa, wipb);
+    if (! tmp___1) {
       return (0);
     }
     wipa = workitem_avl_next(wipa);
@@ -4088,8 +3268,8 @@ static int server_pubkeybatch_equal(server_context_t *ctxp , pubkeybatch_t *a , 
   return (1);
 }
 }
-void server_context_free(server_context_t *ctxp ) 
-{ 
+void server_context_free(server_context_t *ctxp )
+{
 
 
   {
@@ -4106,24 +3286,24 @@ void server_context_free(server_context_t *ctxp )
   return;
 }
 }
-server_context_t *server_context_new(char const   *url , char const   *credit_addr ) 
-{ 
+server_context_t *server_context_new(char const   *url , char const   *credit_addr )
+{
   server_context_t *ctxp ;
   int urllen ;
-  size_t tmp___0 ;
+  size_t tmp ;
   int addrlen ;
-  size_t tmp___1 ;
+  size_t tmp___0 ;
+  void *tmp___1 ;
   void *tmp___2 ;
   void *tmp___3 ;
-  void *tmp___4 ;
 
   {
-  tmp___0 = strlen(url);
-  urllen = (int )tmp___0;
-  tmp___1 = strlen(credit_addr);
-  addrlen = (int )tmp___1;
-  tmp___2 = malloc(((sizeof(*ctxp) + (unsigned long )urllen) + (unsigned long )addrlen) + 2UL);
-  ctxp = (server_context_t *)tmp___2;
+  tmp = strlen(url);
+  urllen = (int )tmp;
+  tmp___0 = strlen(credit_addr);
+  addrlen = (int )tmp___0;
+  tmp___1 = malloc(((sizeof(*ctxp) + (unsigned long )urllen) + (unsigned long )addrlen) + 2UL);
+  ctxp = (server_context_t *)tmp___1;
   memset((void *)ctxp, 0, sizeof(*ctxp));
   avl_root_init(& ctxp->items);
   ctxp->url = (char const   *)(ctxp + 1);
@@ -4131,10 +3311,10 @@ server_context_t *server_context_new(char const   *url , char const   *credit_ad
   strcpy((char * __restrict  )((char *)ctxp->url), (char const   * __restrict  )url);
   strcpy((char * __restrict  )((char *)ctxp->credit_addr), (char const   * __restrict  )credit_addr);
   ctxp->dummy_key = vg_exec_context_new_key();
-  tmp___3 = malloc((size_t )(urllen + 9));
-  ctxp->getwork = (char *)tmp___3;
-  tmp___4 = malloc((size_t )(urllen + 7));
-  ctxp->submit = (char *)tmp___4;
+  tmp___2 = malloc((size_t )(urllen + 9));
+  ctxp->getwork = (char *)tmp___2;
+  tmp___3 = malloc((size_t )(urllen + 7));
+  ctxp->submit = (char *)tmp___3;
   if ((int const   )*(url + (urllen - 1)) == 47) {
     snprintf((char * __restrict  )ctxp->getwork, (size_t )(urllen + 9), (char const   * __restrict  )"%sgetWork",
              url);
@@ -4149,20 +3329,20 @@ server_context_t *server_context_new(char const   *url , char const   *credit_ad
   return (ctxp);
 }
 }
-int server_workitem_add(server_request_t *reqp , workitem_t *wip ) 
-{ 
+int server_workitem_add(server_request_t *reqp , workitem_t *wip )
+{
   workitem_t *xwip ;
   pubkeybatch_t *pbatch ;
-  void *tmp___0 ;
-  char *tmp___1 ;
+  void *tmp ;
+  char *tmp___0 ;
 
   {
   pbatch = (pubkeybatch_t *)((void *)0);
   pbatch = pubkeybatch_avl_search(& reqp->items, (EC_POINT const   *)wip->pubkey,
                                   reqp->group);
   if ((unsigned long )pbatch == (unsigned long )((void *)0)) {
-    tmp___0 = malloc(sizeof(*pbatch));
-    pbatch = (pubkeybatch_t *)tmp___0;
+    tmp = malloc(sizeof(*pbatch));
+    pbatch = (pubkeybatch_t *)tmp;
     if ((unsigned long )pbatch == (unsigned long )((void *)0)) {
       return (-1);
     }
@@ -4171,9 +3351,9 @@ int server_workitem_add(server_request_t *reqp , workitem_t *wip )
     avl_root_init(& pbatch->items);
     pbatch->total_value = (double )0;
     pbatch->pubkey = wip->pubkey;
-    tmp___1 = EC_POINT_point2hex(reqp->group, (EC_POINT const   *)wip->pubkey, (point_conversion_form_t )4,
+    tmp___0 = EC_POINT_point2hex(reqp->group, (EC_POINT const   *)wip->pubkey, (point_conversion_form_t )4,
                                  (BN_CTX *)((void *)0));
-    pbatch->pubkey_hex = (char const   *)tmp___1;
+    pbatch->pubkey_hex = (char const   *)tmp___0;
     pubkeybatch_avl_insert(& reqp->items, pbatch);
     (reqp->nitems) ++;
   }
@@ -4193,8 +3373,8 @@ int server_workitem_add(server_request_t *reqp , workitem_t *wip )
 }
 }
 static size_t server_body_reader(char const   *buf , size_t elemsize , size_t len ,
-                                 void *param ) 
-{ 
+                                 void *param )
+{
   server_request_t *reqp ;
   char *line ;
   char *sep ;
@@ -4204,8 +3384,8 @@ static size_t server_body_reader(char const   *buf , size_t elemsize , size_t le
   char *reward_s ;
   char *comment ;
   workitem_t *wip ;
-  void *tmp___0 ;
-  int tmp___1 ;
+  void *tmp ;
+  int tmp___0 ;
 
   {
   reqp = (server_request_t *)param;
@@ -4232,8 +3412,8 @@ static size_t server_body_reader(char const   *buf , size_t elemsize , size_t le
         return ((size_t )0);
       }
     }
-    tmp___0 = realloc((void *)reqp->part_buf, reqp->part_size);
-    reqp->part_buf = (char *)tmp___0;
+    tmp = realloc((void *)reqp->part_buf, reqp->part_size);
+    reqp->part_buf = (char *)tmp;
     if (! reqp->part_buf) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Out of memory");
       return ((size_t )0);
@@ -4286,8 +3466,8 @@ static size_t server_body_reader(char const   *buf , size_t elemsize , size_t le
     if (! wip) {
       goto bad_line;
     }
-    tmp___1 = server_workitem_add(reqp, wip);
-    if (tmp___1) {
+    tmp___0 = server_workitem_add(reqp, wip);
+    if (tmp___0) {
       server_workitem_free(wip);
       goto bad_line;
     }
@@ -4302,8 +3482,8 @@ static size_t server_body_reader(char const   *buf , size_t elemsize , size_t le
   return (len);
 }
 }
-void dump_work(avl_root_t *work ) 
-{ 
+void dump_work(avl_root_t *work )
+{
   pubkeybatch_t *pbatch ;
   workitem_t *wip ;
 
@@ -4326,8 +3506,8 @@ void dump_work(avl_root_t *work )
   return;
 }
 }
-void free_pkb_tree(avl_root_t *rootp , pubkeybatch_t *save_pkb ) 
-{ 
+void free_pkb_tree(avl_root_t *rootp , pubkeybatch_t *save_pkb )
+{
   pubkeybatch_t *pkb ;
 
   {
@@ -4344,48 +3524,48 @@ void free_pkb_tree(avl_root_t *rootp , pubkeybatch_t *save_pkb )
   return;
 }
 }
-void server_request_free(server_request_t *reqp ) 
-{ 
-  int tmp___0 ;
+void server_request_free(server_request_t *reqp )
+{
+  int tmp ;
 
   {
   if ((unsigned long )reqp->part_buf != (unsigned long )((void *)0)) {
     free((void *)reqp->part_buf);
   }
-  tmp___0 = avl_root_empty(& reqp->items);
-  if (! tmp___0) {
+  tmp = avl_root_empty(& reqp->items);
+  if (! tmp) {
     free_pkb_tree(& reqp->items, (pubkeybatch_t *)((void *)0));
   }
   free((void *)reqp);
   return;
 }
 }
-int server_context_getwork(server_context_t *ctxp ) 
-{ 
+int server_context_getwork(server_context_t *ctxp )
+{
   CURLcode res ;
   server_request_t *reqp ;
   CURL *creq ;
-  void *tmp___0 ;
+  void *tmp ;
   int _curl_opt ;
+  int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
-  CURLcode tmp___3 ;
+  CURLcode tmp___2 ;
   int _curl_opt___0 ;
-  int tmp___4 ;
-  CURLcode tmp___5 ;
+  int tmp___3 ;
+  CURLcode tmp___4 ;
   int _curl_opt___1 ;
-  int tmp___6 ;
-  CURLcode tmp___7 ;
+  int tmp___5 ;
+  CURLcode tmp___6 ;
   int _curl_opt___2 ;
-  int tmp___8 ;
-  CURLcode tmp___9 ;
+  int tmp___7 ;
+  CURLcode tmp___8 ;
   int _curl_opt___3 ;
-  CURLcode tmp___10 ;
-  char const   *tmp___11 ;
+  CURLcode tmp___9 ;
+  char const   *tmp___10 ;
 
   {
-  tmp___0 = malloc(sizeof(*reqp));
-  reqp = (server_request_t *)tmp___0;
+  tmp = malloc(sizeof(*reqp));
+  reqp = (server_request_t *)tmp;
   memset((void *)reqp, 0, sizeof(*reqp));
   reqp->group = EC_KEY_get0_group((EC_KEY const   *)ctxp->dummy_key);
   creq = curl_easy_init();
@@ -4400,252 +3580,252 @@ int server_context_getwork(server_context_t *ctxp )
       _curl_easy_setopt_err_curl_off_t();
     }
     if (_curl_opt == 10264) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10102) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10287) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10065) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10097) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10022) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10031) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10082) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10135) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10169) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10036) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10238) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10221) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10222) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10223) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10211) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10279) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10077) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10017) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10134) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10147) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10062) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10170) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10026) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10063) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10224) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10217) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10186) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10118) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10177) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10174) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10230) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10262) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10004) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10176) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10175) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10006) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10246) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10247) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10260) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10258) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10263) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10235) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10254) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10255) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10256) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10257) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10259) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10277) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10252) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10253) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10251) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10076) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10007) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10016) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10266) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10190) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10191) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10192) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10289) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10236) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10179) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10162) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10183) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10153) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10152) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10025) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10086) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10089) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10087) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10088) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10083) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10276) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10205) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10206) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10204) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10231) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10002) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10018) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10173) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10005) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10220) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else {
-      tmp___1 = 0;
+      tmp___0 = 0;
     }
     if (_curl_opt == 20079) {
       _curl_easy_setopt_err_write_callback();
@@ -4744,7 +3924,7 @@ int server_context_getwork(server_context_t *ctxp )
       goto _L;
     } else
     if (0) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       if (! (sizeof(ctxp->getwork) == sizeof(void *))) {
         _curl_easy_setopt_err_cb_data();
       }
@@ -4753,12 +3933,12 @@ int server_context_getwork(server_context_t *ctxp )
       _curl_easy_setopt_err_FILE();
     }
     if (_curl_opt == 10015) {
-      tmp___2 = 1;
+      tmp___1 = 1;
     } else
     if (_curl_opt == 10165) {
-      tmp___2 = 1;
+      tmp___1 = 1;
     } else {
-      tmp___2 = 0;
+      tmp___1 = 0;
     }
     if (_curl_opt == 10024) {
       _curl_easy_setopt_err_curl_httpost();
@@ -4800,8 +3980,8 @@ int server_context_getwork(server_context_t *ctxp )
       _curl_easy_setopt_err_CURLSH();
     }
   }
-  tmp___3 = curl_easy_setopt(creq, (CURLoption )_curl_opt, ctxp->getwork);
-  if (tmp___3) {
+  tmp___2 = curl_easy_setopt(creq, (CURLoption )_curl_opt, ctxp->getwork);
+  if (tmp___2) {
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
     exit(1);
   } else {
@@ -4809,12 +3989,12 @@ int server_context_getwork(server_context_t *ctxp )
     if (0) {
       if (0 < _curl_opt___0) {
         if (_curl_opt___0 < 10000) {
-          tmp___4 = 1;
+          tmp___3 = 1;
         } else {
-          tmp___4 = 0;
+          tmp___3 = 0;
         }
       } else {
-        tmp___4 = 0;
+        tmp___3 = 0;
       }
       if (_curl_opt___0 > 30000) {
         _curl_easy_setopt_err_curl_off_t();
@@ -5162,7 +4342,7 @@ int server_context_getwork(server_context_t *ctxp )
         goto _L___0;
       } else
       if (0) {
-        _L___0: /* CIL Label */ 
+        _L___0: /* CIL Label */
         if (! (sizeof(ctxp->verbose > 1) == sizeof(void *))) {
           _curl_easy_setopt_err_cb_data();
         }
@@ -5219,8 +4399,8 @@ int server_context_getwork(server_context_t *ctxp )
         _curl_easy_setopt_err_CURLSH();
       }
     }
-    tmp___5 = curl_easy_setopt(creq, (CURLoption )_curl_opt___0, ctxp->verbose > 1);
-    if (tmp___5) {
+    tmp___4 = curl_easy_setopt(creq, (CURLoption )_curl_opt___0, ctxp->verbose > 1);
+    if (tmp___4) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
       exit(1);
     } else {
@@ -5481,12 +4661,12 @@ int server_context_getwork(server_context_t *ctxp )
           _curl_easy_setopt_err_string();
         }
         if (_curl_opt___1 == 20079) {
-          tmp___6 = 1;
+          tmp___5 = 1;
         } else
         if (_curl_opt___1 == 20011) {
-          tmp___6 = 1;
+          tmp___5 = 1;
         } else {
-          tmp___6 = 0;
+          tmp___5 = 0;
         }
         if (_curl_opt___1 == 20272) {
           _curl_easy_setopt_err_resolver_start_callback();
@@ -5576,7 +4756,7 @@ int server_context_getwork(server_context_t *ctxp )
           goto _L___1;
         } else
         if (0) {
-          _L___1: /* CIL Label */ 
+          _L___1: /* CIL Label */
           if (! (sizeof(server_body_reader) == sizeof(void *))) {
             _curl_easy_setopt_err_cb_data();
           }
@@ -5633,8 +4813,8 @@ int server_context_getwork(server_context_t *ctxp )
           _curl_easy_setopt_err_CURLSH();
         }
       }
-      tmp___7 = curl_easy_setopt(creq, (CURLoption )_curl_opt___1, & server_body_reader);
-      if (tmp___7) {
+      tmp___6 = curl_easy_setopt(creq, (CURLoption )_curl_opt___1, & server_body_reader);
+      if (tmp___6) {
         fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
         exit(1);
       } else {
@@ -5642,12 +4822,12 @@ int server_context_getwork(server_context_t *ctxp )
         if (0) {
           if (0 < _curl_opt___2) {
             if (_curl_opt___2 < 10000) {
-              tmp___8 = 1;
+              tmp___7 = 1;
             } else {
-              tmp___8 = 0;
+              tmp___7 = 0;
             }
           } else {
-            tmp___8 = 0;
+            tmp___7 = 0;
           }
           if (_curl_opt___2 > 30000) {
             _curl_easy_setopt_err_curl_off_t();
@@ -5995,7 +5175,7 @@ int server_context_getwork(server_context_t *ctxp )
             goto _L___2;
           } else
           if (0) {
-            _L___2: /* CIL Label */ 
+            _L___2: /* CIL Label */
             if (! (sizeof(1) == sizeof(void *))) {
               _curl_easy_setopt_err_cb_data();
             }
@@ -6052,8 +5232,8 @@ int server_context_getwork(server_context_t *ctxp )
             _curl_easy_setopt_err_CURLSH();
           }
         }
-        tmp___9 = curl_easy_setopt(creq, (CURLoption )_curl_opt___2, 1);
-        if (tmp___9) {
+        tmp___8 = curl_easy_setopt(creq, (CURLoption )_curl_opt___2, 1);
+        if (tmp___8) {
           fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
           exit(1);
         } else {
@@ -6410,7 +5590,7 @@ int server_context_getwork(server_context_t *ctxp )
               goto _L___3;
             } else
             if (0) {
-              _L___3: /* CIL Label */ 
+              _L___3: /* CIL Label */
               if (! (sizeof(reqp) == sizeof(void *))) {
                 _curl_easy_setopt_err_cb_data();
               }
@@ -6464,8 +5644,8 @@ int server_context_getwork(server_context_t *ctxp )
               _curl_easy_setopt_err_CURLSH();
             }
           }
-          tmp___10 = curl_easy_setopt(creq, (CURLoption )_curl_opt___3, reqp);
-          if (tmp___10) {
+          tmp___9 = curl_easy_setopt(creq, (CURLoption )_curl_opt___3, reqp);
+          if (tmp___9) {
             fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
             exit(1);
           }
@@ -6476,9 +5656,9 @@ int server_context_getwork(server_context_t *ctxp )
   res = curl_easy_perform(creq);
   curl_easy_cleanup(creq);
   if ((unsigned int )res != 0U) {
-    tmp___11 = curl_easy_strerror(res);
+    tmp___10 = curl_easy_strerror(res);
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Get work request failed: %s\n",
-            tmp___11);
+            tmp___10);
     server_request_free(reqp);
     return (-1);
   }
@@ -6486,28 +5666,28 @@ int server_context_getwork(server_context_t *ctxp )
   return (0);
 }
 }
-int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , char const   *privkey ) 
-{ 
+int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , char const   *privkey )
+{
   char urlbuf[8192] ;
   char *pubhex ;
   CURL *creq ;
   CURLcode res ;
-  EC_GROUP const   *tmp___0 ;
+  EC_GROUP const   *tmp ;
   int _curl_opt ;
+  int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
-  CURLcode tmp___3 ;
+  CURLcode tmp___2 ;
   int _curl_opt___0 ;
-  int tmp___4 ;
-  CURLcode tmp___5 ;
+  int tmp___3 ;
+  CURLcode tmp___4 ;
   int _curl_opt___1 ;
-  int tmp___6 ;
-  CURLcode tmp___7 ;
-  char const   *tmp___8 ;
+  int tmp___5 ;
+  CURLcode tmp___6 ;
+  char const   *tmp___7 ;
 
   {
-  tmp___0 = EC_KEY_get0_group((EC_KEY const   *)ctxp->dummy_key);
-  pubhex = EC_POINT_point2hex(tmp___0, (EC_POINT const   *)work->pubkey, (point_conversion_form_t )4,
+  tmp = EC_KEY_get0_group((EC_KEY const   *)ctxp->dummy_key);
+  pubhex = EC_POINT_point2hex(tmp, (EC_POINT const   *)work->pubkey, (point_conversion_form_t )4,
                               (BN_CTX *)((void *)0));
   snprintf((char * __restrict  )(urlbuf), sizeof(urlbuf), (char const   * __restrict  )"%s?key=%s%%3A%s&privateKey=%s&bitcoinAddress=%s",
            ctxp->submit, work->pattern, pubhex, privkey, ctxp->credit_addr);
@@ -6524,252 +5704,252 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
       _curl_easy_setopt_err_curl_off_t();
     }
     if (_curl_opt == 10264) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10102) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10287) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10065) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10097) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10022) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10031) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10082) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10135) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10169) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10036) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10238) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10221) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10222) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10223) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10211) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10279) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10077) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10017) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10134) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10147) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10062) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10170) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10026) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10063) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10224) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10217) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10186) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10118) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10177) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10174) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10230) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10262) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10004) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10176) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10175) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10006) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10246) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10247) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10260) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10258) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10263) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10235) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10254) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10255) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10256) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10257) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10259) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10277) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10252) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10253) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10251) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10076) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10007) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10016) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10266) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10190) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10191) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10192) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10289) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10236) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10179) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10162) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10183) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10153) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10152) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10025) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10086) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10089) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10087) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10088) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10083) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10276) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10205) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10206) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10204) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10231) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10002) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10018) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10173) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10005) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else
     if (_curl_opt == 10220) {
-      tmp___1 = 1;
+      tmp___0 = 1;
     } else {
-      tmp___1 = 0;
+      tmp___0 = 0;
     }
     if (_curl_opt == 20079) {
       _curl_easy_setopt_err_write_callback();
@@ -6868,7 +6048,7 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
       goto _L;
     } else
     if (0) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       if (! (sizeof(urlbuf) == sizeof(void *))) {
         _curl_easy_setopt_err_cb_data();
       }
@@ -6877,12 +6057,12 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
       _curl_easy_setopt_err_FILE();
     }
     if (_curl_opt == 10015) {
-      tmp___2 = 1;
+      tmp___1 = 1;
     } else
     if (_curl_opt == 10165) {
-      tmp___2 = 1;
+      tmp___1 = 1;
     } else {
-      tmp___2 = 0;
+      tmp___1 = 0;
     }
     if (_curl_opt == 10024) {
       _curl_easy_setopt_err_curl_httpost();
@@ -6924,8 +6104,8 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
       _curl_easy_setopt_err_CURLSH();
     }
   }
-  tmp___3 = curl_easy_setopt(creq, (CURLoption )_curl_opt, urlbuf);
-  if (tmp___3) {
+  tmp___2 = curl_easy_setopt(creq, (CURLoption )_curl_opt, urlbuf);
+  if (tmp___2) {
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
     exit(1);
   } else {
@@ -6933,12 +6113,12 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
     if (0) {
       if (0 < _curl_opt___0) {
         if (_curl_opt___0 < 10000) {
-          tmp___4 = 1;
+          tmp___3 = 1;
         } else {
-          tmp___4 = 0;
+          tmp___3 = 0;
         }
       } else {
-        tmp___4 = 0;
+        tmp___3 = 0;
       }
       if (_curl_opt___0 > 30000) {
         _curl_easy_setopt_err_curl_off_t();
@@ -7286,7 +6466,7 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
         goto _L___0;
       } else
       if (0) {
-        _L___0: /* CIL Label */ 
+        _L___0: /* CIL Label */
         if (! (sizeof(ctxp->verbose > 1) == sizeof(void *))) {
           _curl_easy_setopt_err_cb_data();
         }
@@ -7343,8 +6523,8 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
         _curl_easy_setopt_err_CURLSH();
       }
     }
-    tmp___5 = curl_easy_setopt(creq, (CURLoption )_curl_opt___0, ctxp->verbose > 1);
-    if (tmp___5) {
+    tmp___4 = curl_easy_setopt(creq, (CURLoption )_curl_opt___0, ctxp->verbose > 1);
+    if (tmp___4) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
       exit(1);
     } else {
@@ -7352,12 +6532,12 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
       if (0) {
         if (0 < _curl_opt___1) {
           if (_curl_opt___1 < 10000) {
-            tmp___6 = 1;
+            tmp___5 = 1;
           } else {
-            tmp___6 = 0;
+            tmp___5 = 0;
           }
         } else {
-          tmp___6 = 0;
+          tmp___5 = 0;
         }
         if (_curl_opt___1 > 30000) {
           _curl_easy_setopt_err_curl_off_t();
@@ -7705,7 +6885,7 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
           goto _L___1;
         } else
         if (0) {
-          _L___1: /* CIL Label */ 
+          _L___1: /* CIL Label */
           if (! (sizeof(1) == sizeof(void *))) {
             _curl_easy_setopt_err_cb_data();
           }
@@ -7762,8 +6942,8 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
           _curl_easy_setopt_err_CURLSH();
         }
       }
-      tmp___7 = curl_easy_setopt(creq, (CURLoption )_curl_opt___1, 1);
-      if (tmp___7) {
+      tmp___6 = curl_easy_setopt(creq, (CURLoption )_curl_opt___1, 1);
+      if (tmp___6) {
         fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Failed to set up libcurl\n");
         exit(1);
       }
@@ -7771,9 +6951,9 @@ int server_context_submit_solution(server_context_t *ctxp , workitem_t *work , c
   }
   res = curl_easy_perform(creq);
   if ((unsigned int )res != 0U) {
-    tmp___8 = curl_easy_strerror(res);
+    tmp___7 = curl_easy_strerror(res);
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Submission failed: %s\n",
-            tmp___8);
+            tmp___7);
     curl_easy_cleanup(creq);
     return (-1);
   }
@@ -7785,8 +6965,8 @@ static pthread_mutex_t soln_lock  ;
 static pthread_cond_t soln_cond  ;
 static char *soln_pattern  =    (char *)((void *)0);
 static char *soln_private_key  =    (char *)((void *)0);
-void free_soln(void) 
-{ 
+void free_soln(void)
+{
 
 
   {
@@ -7801,35 +6981,35 @@ void free_soln(void)
   return;
 }
 }
-void output_match_work_complete(vg_context_t *vcp , EC_KEY *pkey , char const   *pattern ) 
-{ 
-  BIGNUM const   *tmp___0 ;
+void output_match_work_complete(vg_context_t *vcp , EC_KEY *pkey , char const   *pattern )
+{
+  BIGNUM const   *tmp ;
 
   {
   vg_output_match_console(vcp, pkey, pattern);
   pthread_mutex_lock(& soln_lock);
   free_soln();
   soln_pattern = strdup(pattern);
-  tmp___0 = EC_KEY_get0_private_key((EC_KEY const   *)pkey);
-  soln_private_key = BN_bn2hex(tmp___0);
+  tmp = EC_KEY_get0_private_key((EC_KEY const   *)pkey);
+  soln_private_key = BN_bn2hex(tmp);
   vcp->vc_halt = 1;
   pthread_cond_broadcast(& soln_cond);
   pthread_mutex_unlock(& soln_lock);
   return;
 }
 }
-int check_solution(server_context_t *scp , pubkeybatch_t *pbatch ) 
-{ 
+int check_solution(server_context_t *scp , pubkeybatch_t *pbatch )
+{
   int res ;
   workitem_t *wip ;
-  workitem_t *tmp___0 ;
+  workitem_t *tmp ;
 
   {
   res = 0;
   pthread_mutex_lock(& soln_lock);
   if ((unsigned long )soln_private_key != (unsigned long )((void *)0)) {
-    tmp___0 = workitem_avl_search(& pbatch->items, (char const   *)soln_pattern);
-    wip = tmp___0;
+    tmp = workitem_avl_search(& pbatch->items, (char const   *)soln_pattern);
+    wip = tmp;
     if (! ((unsigned long )wip != (unsigned long )((void *)0))) {
       __assert_fail("wip != NULL", "oclvanityminer.c", 712U, "check_solution");
     }
@@ -7848,8 +7028,8 @@ int check_solution(server_context_t *scp , pubkeybatch_t *pbatch )
   return (res);
 }
 }
-pubkeybatch_t *most_valuable_pkb(server_context_t *scp ) 
-{ 
+pubkeybatch_t *most_valuable_pkb(server_context_t *scp )
+{
   pubkeybatch_t *pbatch ;
   pubkeybatch_t *res ;
 
@@ -7868,8 +7048,8 @@ pubkeybatch_t *most_valuable_pkb(server_context_t *scp )
   return (res);
 }
 }
-void usage(char const   *name ) 
-{ 
+void usage(char const   *name )
+{
 
 
   {
@@ -7878,8 +7058,8 @@ void usage(char const   *name )
   return;
 }
 }
-int main(int argc , char **argv ) 
-{ 
+int main(int argc , char **argv )
+{
   char const   *url ;
   char const   *credit_addr ;
   int opt ;
@@ -7908,15 +7088,15 @@ int main(int argc , char **argv )
   int was_sleeping ;
   struct timeval tv ;
   struct timespec sleepy ;
+  long tmp ;
   long tmp___0 ;
-  long tmp___1 ;
+  int tmp___1 ;
   int tmp___2 ;
   int tmp___3 ;
   int tmp___4 ;
   int tmp___5 ;
-  int tmp___6 ;
   workitem_t *wip ;
-  int tmp___7 ;
+  int tmp___6 ;
   int tmp___8 ;
 
   {
@@ -7953,19 +7133,19 @@ int main(int argc , char **argv )
       break;
     }
     switch (opt) {
-    case 117: 
+    case 117:
     url = (char const   *)optarg;
     break;
-    case 97: 
+    case 97:
     credit_addr = (char const   *)optarg;
     break;
-    case 118: 
+    case 118:
     verbose = 2;
     break;
-    case 113: 
+    case 113:
     verbose = 0;
     break;
-    case 105: 
+    case 105:
     interval = atoi((char const   *)optarg);
     if (interval < 10) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid interval \'%s\'\n",
@@ -7973,13 +7153,13 @@ int main(int argc , char **argv )
       return (1);
     }
     break;
-    case 112: 
+    case 112:
     platformidx = atoi((char const   *)optarg);
     break;
-    case 100: 
+    case 100:
     deviceidx = atoi((char const   *)optarg);
     break;
-    case 119: 
+    case 119:
     worksize = atoi((char const   *)optarg);
     if (worksize == 0) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid work size \'%s\'\n",
@@ -7987,7 +7167,7 @@ int main(int argc , char **argv )
       return (1);
     }
     break;
-    case 116: 
+    case 116:
     nthreads = atoi((char const   *)optarg);
     if (nthreads == 0) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid thread count \'%s\'\n",
@@ -7995,16 +7175,16 @@ int main(int argc , char **argv )
       return (1);
     }
     break;
-    case 103: 
+    case 103:
     nrows = 0;
-    tmp___0 = strtol((char const   * __restrict  )optarg, (char ** __restrict  )(& pend),
-                     0);
-    ncols = (int )tmp___0;
+    tmp = strtol((char const   * __restrict  )optarg, (char ** __restrict  )(& pend),
+                 0);
+    ncols = (int )tmp;
     if (pend) {
       if ((int )*pend == 120) {
-        tmp___1 = strtol((char const   * __restrict  )(pend + 1), (char ** __restrict  )((void *)0),
+        tmp___0 = strtol((char const   * __restrict  )(pend + 1), (char ** __restrict  )((void *)0),
                          0);
-        nrows = (int )tmp___1;
+        nrows = (int )tmp___0;
       }
     }
     if (! nrows) {
@@ -8018,7 +7198,7 @@ int main(int argc , char **argv )
       return (1);
     }
     break;
-    case 98: 
+    case 98:
     invsize = atoi((char const   *)optarg);
     if (! invsize) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid modular inverse size \'%s\'\n",
@@ -8030,23 +7210,23 @@ int main(int argc , char **argv )
       return (1);
     }
     break;
-    case 86: 
+    case 86:
     verify_mode = 1;
     break;
-    case 83: 
+    case 83:
     safe_mode = 1;
     break;
-    case 68: 
+    case 68:
     if (ndevstrs >= 32) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Too many OpenCL devices (limit %d)\n",
               32);
       return (1);
     }
-    tmp___2 = ndevstrs;
+    tmp___1 = ndevstrs;
     ndevstrs ++;
-    devstrs[tmp___2] = optarg;
+    devstrs[tmp___1] = optarg;
     break;
-    default: 
+    default:
     usage((char const   *)*(argv + 0));
     return (1);
     }
@@ -8064,15 +7244,15 @@ int main(int argc , char **argv )
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: No reward address specified\n");
     return (1);
   }
-  tmp___3 = vg_b58_decode_check(credit_addr, (void *)0, (size_t )0);
-  if (! tmp___3) {
+  tmp___2 = vg_b58_decode_check(credit_addr, (void *)0, (size_t )0);
+  if (! tmp___2) {
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Invalid reward address specified\n");
     return (1);
   }
   scp = server_context_new(url, credit_addr);
   scp->verbose = verbose;
-  tmp___4 = server_context_getwork(scp);
-  if (tmp___4) {
+  tmp___3 = server_context_getwork(scp);
+  if (tmp___3) {
     return (1);
   }
   res = 0;
@@ -8104,15 +7284,15 @@ int main(int argc , char **argv )
     dump_work(& scp->items);
   }
   while (1) {
-    tmp___5 = avl_root_empty(& scp->items);
-    if (tmp___5) {
+    tmp___4 = avl_root_empty(& scp->items);
+    if (tmp___4) {
       server_context_getwork(scp);
     }
     pkb = most_valuable_pkb(scp);
     if (pkb) {
       if (active_pkb) {
-        tmp___6 = server_pubkeybatch_equal(scp, active_pkb, pkb);
-        if (tmp___6) {
+        tmp___5 = server_pubkeybatch_equal(scp, active_pkb, pkb);
+        if (tmp___5) {
           pkb = active_pkb;
         }
       }
@@ -8122,7 +7302,7 @@ int main(int argc , char **argv )
         goto _L;
       } else
       if ((unsigned long )pkb != (unsigned long )active_pkb) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         vg_context_stop_threads(vcp);
         thread_started = 0;
         if (active_pkb) {
@@ -8150,9 +7330,9 @@ int main(int argc , char **argv )
         fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Searching for pattern: \"%s\" Reward: %f Value: %f BTC/Gkey\n",
                 wip->pattern, wip->reward, wip->value);
         vcp->vc_addrtype = wip->addrtype;
-        tmp___7 = vg_context_add_patterns(vcp, (char const   ** const  )(& wip->pattern),
+        tmp___6 = vg_context_add_patterns(vcp, (char const   ** const  )(& wip->pattern),
                                           1);
-        if (tmp___7) {
+        if (tmp___6) {
           active_pkb_value = (float )((double )active_pkb_value + wip->value);
         } else {
           fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: could not add pattern\n");
@@ -8195,8661 +7375,23 @@ int main(int argc , char **argv )
   return (0);
 }
 }
-/* compiler builtin: 
-   float __attribute__((____vector_size____(16)))  __builtin_ia32_maxps(float __attribute__((____vector_size____(16)))   ,
-                                                                        float __attribute__((____vector_size____(16)))   ) ;  */
-/* compiler builtin: 
-   float __attribute__((____vector_size____(16)))  __builtin_ia32_unpckhps(float __attribute__((____vector_size____(16)))   ,
-                                                                           float __attribute__((____vector_size____(16)))   ) ;  */
-/* compiler builtin: 
-   float __attribute__((____vector_size____(16)))  __builtin_ia32_unpcklps(float __attribute__((____vector_size____(16)))   ,
-                                                                           float __attribute__((____vector_size____(16)))   ) ;  */
-/* compiler builtin: 
-   void __builtin_prefetch(void const   *  , ...) ;  */
-#pragma merger("0","/tmp/cil-ILat4I7x.i","-ggdb,-O3,-Wall")
+#pragma merger("0","/tmp/cil-bTF4NPpC.i","-ggdb,-O3,-Wall")
 extern int fclose(FILE *__stream ) ;
 extern int fflush(FILE *__stream ) ;
 extern FILE *( __attribute__((__warn_unused_result__)) fopen)(char const   * __restrict  __filename ,
                                                               char const   * __restrict  __modes ) ;
-extern size_t fwrite(void const   * __restrict  __ptr , size_t __size , size_t __n ,
-                     FILE * __restrict  __s ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
-__leaf__)) feof)(FILE *__stream ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2), __leaf__)) memcmp)(void const   *__s1 ,
-                                                                                               void const   *__s2 ,
-                                                                                               size_t __n )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1), __leaf__)) memchr)(void const   *__s ,
-                                                                                               int __c ,
-                                                                                               size_t __n )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2), __leaf__)) strncmp)(char const   *__s1 ,
-                                                                                                char const   *__s2 ,
-                                                                                                size_t __n )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2), __leaf__)) strstr)(char const   *__haystack ,
-                                                                                                 char const   *__needle )  __attribute__((__pure__)) ;
-extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(2,3), __leaf__)) strtok_r)(char * __restrict  __s ,
-                                                                                                   char const   * __restrict  __delim ,
-                                                                                                   char ** __restrict  __save_ptr ) ;
 extern  __attribute__((__nothrow__)) char *( __attribute__((__leaf__)) strerror)(int __errnum ) ;
+extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) exp)(double __x ) ;
+extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) log)(double __x ) ;
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,3))) pthread_create)(pthread_t * __restrict  __newthread ,
                                                                                              pthread_attr_t const   * __restrict  __attr ,
                                                                                              void *(*__start_routine)(void * ) ,
                                                                                              void * __restrict  __arg ) ;
 extern int pthread_join(pthread_t __th , void **__thread_return ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1), __leaf__)) pthread_mutex_destroy)(pthread_mutex_t *__mutex ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1), __leaf__)) pthread_cond_destroy)(pthread_cond_t *__cond ) ;
+extern  __attribute__((__nothrow__)) pthread_t ( __attribute__((__leaf__)) pthread_self)(void)  __attribute__((__const__)) ;
 extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthread_cond_signal)(pthread_cond_t *__cond ) ;
 extern int ( __attribute__((__nonnull__(1,2))) pthread_cond_wait)(pthread_cond_t * __restrict  __cond ,
                                                                   pthread_mutex_t * __restrict  __mutex ) ;
-extern BN_CTX *BN_CTX_new(void) ;
-extern void BN_CTX_free(BN_CTX *c ) ;
-extern void BN_init(BIGNUM * ) ;
-extern void BN_clear_free(BIGNUM *a ) ;
-extern BIGNUM *BN_bin2bn(unsigned char const   *s , int len , BIGNUM *ret ) ;
-extern int BN_sub(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *b ) ;
-extern int BN_set_word(BIGNUM *a , unsigned long w ) ;
-extern unsigned long BN_get_word(BIGNUM const   *a ) ;
-extern int BN_cmp(BIGNUM const   *a , BIGNUM const   *b ) ;
-extern BIGNUM *BN_mod_inverse(BIGNUM *ret , BIGNUM const   *a , BIGNUM const   *n ,
-                              BN_CTX *ctx ) ;
-extern BN_MONT_CTX *BN_MONT_CTX_new(void) ;
-extern int BN_mod_mul_montgomery(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *b ,
-                                 BN_MONT_CTX *mont , BN_CTX *ctx ) ;
-extern void BN_MONT_CTX_free(BN_MONT_CTX *mont ) ;
-extern int BN_MONT_CTX_set(BN_MONT_CTX *mont , BIGNUM const   *mod , BN_CTX *ctx ) ;
-extern BIGNUM *bn_expand2(BIGNUM *a , int words ) ;
-extern EC_POINT const   *EC_GROUP_get0_generator(EC_GROUP const   *group ) ;
-extern int EC_GROUP_get_order(EC_GROUP const   *group , BIGNUM *order , BN_CTX *ctx ) ;
-extern EC_POINT *EC_POINT_new(EC_GROUP const   *group ) ;
-extern int EC_POINT_copy(EC_POINT *dst , EC_POINT const   *src ) ;
-extern int EC_POINT_add(EC_GROUP const   *group , EC_POINT *r , EC_POINT const   *a ,
-                        EC_POINT const   *b , BN_CTX *ctx ) ;
-extern int EC_POINT_make_affine(EC_GROUP const   *group , EC_POINT *point , BN_CTX *ctx ) ;
-extern int EC_POINTs_make_affine(EC_GROUP const   *group , size_t num , EC_POINT **points ,
-                                 BN_CTX *ctx ) ;
-extern int EC_POINT_mul(EC_GROUP const   *group , EC_POINT *r , BIGNUM const   *n ,
-                        EC_POINT const   *q , BIGNUM const   *m , BN_CTX *ctx ) ;
-extern EC_POINT const   *EC_KEY_get0_public_key(EC_KEY const   *key ) ;
-extern int EC_KEY_generate_key(EC_KEY *key ) ;
-extern EVP_MD_CTX *EVP_MD_CTX_create(void) ;
-extern void EVP_MD_CTX_destroy(EVP_MD_CTX *ctx ) ;
-extern int EVP_DigestInit_ex(EVP_MD_CTX *ctx , EVP_MD const   *type , ENGINE *impl ) ;
-extern int EVP_DigestUpdate(EVP_MD_CTX *ctx , void const   *d , size_t cnt ) ;
-extern int EVP_DigestFinal_ex(EVP_MD_CTX *ctx , unsigned char *md , unsigned int *s ) ;
-extern EVP_MD const   *EVP_md5(void) ;
-#pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 220 (OpenCL 2.2)")
-extern int ( /* missing proto */  __builtin_ia32_emms)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_empty)(void) 
-{ 
-
-
-  {
-  __builtin_ia32_emms();
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_empty)(void) 
-{ 
-
-
-  {
-  _mm_empty();
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_init_v2si)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi32_si64)(int __i ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_init_v2si(__i, 0);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_from_int)(int __i ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtsi32_si64(__i);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_from_int64)(long long __i ) 
-{ 
-
-
-  {
-  return ((__m64 )__i);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_ext_v2si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi64_si32)(__m64 __i ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_ext_v2si((__v2si )__i, 0);
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_to_int)(__m64 __i ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtsi64_si32(__i);
-  return (tmp___0);
-}
-}
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_to_int64)(__m64 __i ) 
-{ 
-
-
-  {
-  return ((long long )__i);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packsswb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packs_pi16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packsswb((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                    (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_packsswb)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_packs_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packssdw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packs_pi32)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packssdw((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_packssdw)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_packs_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packuswb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packs_pu16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packuswb((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                    (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_packuswb)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_packs_pu16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhbw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_pi8)(__m64 __m1 ,
-                                                                                                             __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhbw((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                     (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpckhbw)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpackhi_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhwd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_pi16)(__m64 __m1 ,
-                                                                                                              __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                     (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpckhwd)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpackhi_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhdq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_pi32)(__m64 __m1 ,
-                                                                                                              __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhdq((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpckhdq)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpackhi_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpcklbw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_pi8)(__m64 __m1 ,
-                                                                                                             __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklbw((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                     (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpcklbw)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpacklo_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpcklwd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_pi16)(__m64 __m1 ,
-                                                                                                              __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                     (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpcklwd)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpacklo_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckldq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_pi32)(__m64 __m1 ,
-                                                                                                              __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckldq((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_punpckldq)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_unpacklo_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_pi8)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                 (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddb)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_add_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_pi16)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddw)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_add_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_pi32)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddd((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddd)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_add_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_si64)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddq((__v1di )__m1, (__v1di )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddsb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_pi8)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddsb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddsb)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_adds_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddsw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_pi16)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddsw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddsw)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_adds_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddusb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_pu8)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddusb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddusb)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_adds_pu8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddusw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_pu16)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddusw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_paddusw)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_adds_pu16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_pi8)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                 (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubb)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sub_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_pi16)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubw)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sub_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_pi32)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubd((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubd)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sub_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_si64)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubq((__v1di )__m1, (__v1di )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubsb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_pi8)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubsb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubsb)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_subs_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubsw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_pi16)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubsw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubsw)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_subs_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubusb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_pu8)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubusb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubusb)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_subs_pu8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubusw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_pu16)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubusw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psubusw)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_subs_pu16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaddwd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_madd_pi16)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaddwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmaddwd)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_madd_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmulhw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mulhi_pi16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmulhw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmulhw)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_mulhi_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmullw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mullo_pi16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmullw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmullw)(__m64 __m1 ,
-                                                                                                      __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_mullo_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_pi16)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__count));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psllw)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sll_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllwi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_pi16)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllwi((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                  __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psllwi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_slli_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pslld)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_pi32)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pslld((__v2si )__m, (__v2si )__count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pslld)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sll_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pslldi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_pi32)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pslldi((__v2si )__m, __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pslldi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_slli_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_si64)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllq((__v1di )__m, (__v1di )__count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psllq)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sll_si64(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllqi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_si64)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllqi((__v1di )__m, __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psllqi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_slli_si64(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psraw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sra_pi16)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psraw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__count));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psraw)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sra_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrawi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srai_pi16)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrawi((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                  __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrawi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srai_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrad)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sra_pi32)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrad((__v2si )__m, (__v2si )__count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrad)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sra_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psradi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srai_pi32)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psradi((__v2si )__m, __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psradi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srai_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_pi16)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__count));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrlw)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srl_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlwi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_pi16)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlwi((int __attribute__((__vector_size__(8)))  )((__v4hi )__m),
-                                  __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrlwi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srli_pi16(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrld)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_pi32)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrld((__v2si )__m, (__v2si )__count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrld)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srl_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrldi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_pi32)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrldi((__v2si )__m, __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrldi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srli_pi32(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_si64)(__m64 __m ,
-                                                                                                         __m64 __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlq((__v1di )__m, (__v1di )__count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrlq)(__m64 __m ,
-                                                                                                     __m64 __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srl_si64(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlqi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_si64)(__m64 __m ,
-                                                                                                          int __count ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlqi((__v1di )__m, __count);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psrlqi)(__m64 __m ,
-                                                                                                      int __count ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_srli_si64(__m, __count);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pand)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_and_si64)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pand(__m1, __m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pand)(__m64 __m1 ,
-                                                                                                    __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_and_si64(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pandn)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_andnot_si64)(__m64 __m1 ,
-                                                                                                            __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pandn(__m1, __m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pandn)(__m64 __m1 ,
-                                                                                                     __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_andnot_si64(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_por)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_or_si64)(__m64 __m1 ,
-                                                                                                        __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_por(__m1, __m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_por)(__m64 __m1 ,
-                                                                                                   __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_or_si64(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pxor)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_xor_si64)(__m64 __m1 ,
-                                                                                                         __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pxor(__m1, __m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pxor)(__m64 __m1 ,
-                                                                                                    __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_xor_si64(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpeqb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_pi8)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpeqb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpeqb)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpeq_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpgtb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_pi8)(__m64 __m1 ,
-                                                                                                          __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpgtb((int __attribute__((__vector_size__(8)))  )((__v8qi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v8qi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpgtb)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpgt_pi8(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpeqw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_pi16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpeqw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpeqw)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpeq_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpgtw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_pi16)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpgtw((int __attribute__((__vector_size__(8)))  )((__v4hi )__m1),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__m2));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpgtw)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpgt_pi16(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpeqd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_pi32)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpeqd((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpeqd)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpeq_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pcmpgtd)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_pi32)(__m64 __m1 ,
-                                                                                                           __m64 __m2 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpgtd((__v2si )__m1, (__v2si )__m2);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pcmpgtd)(__m64 __m1 ,
-                                                                                                       __m64 __m2 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cmpgt_pi32(__m1, __m2);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setzero_si64)(void) 
-{ 
-
-
-  {
-  return ((__m64 )0LL);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_pi32)(int __i1 ,
-                                                                                                         int __i0 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_init_v2si(__i0, __i1);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_init_v4hi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_pi16)(short __w3 ,
-                                                                                                         short __w2 ,
-                                                                                                         short __w1 ,
-                                                                                                         short __w0 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_init_v4hi((int )__w0, (int )__w1, (int )__w2, (int )__w3);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_init_v8qi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_pi8)(char __b7 ,
-                                                                                                        char __b6 ,
-                                                                                                        char __b5 ,
-                                                                                                        char __b4 ,
-                                                                                                        char __b3 ,
-                                                                                                        char __b2 ,
-                                                                                                        char __b1 ,
-                                                                                                        char __b0 ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_init_v8qi((int )__b0, (int )__b1, (int )__b2, (int )__b3,
-                                         (int )__b4, (int )__b5, (int )__b6, (int )__b7);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_pi32)(int __i0 ,
-                                                                                                          int __i1 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi32(__i1, __i0);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_pi16)(short __w0 ,
-                                                                                                          short __w1 ,
-                                                                                                          short __w2 ,
-                                                                                                          short __w3 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi16(__w3, __w2, __w1, __w0);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_pi8)(char __b0 ,
-                                                                                                         char __b1 ,
-                                                                                                         char __b2 ,
-                                                                                                         char __b3 ,
-                                                                                                         char __b4 ,
-                                                                                                         char __b5 ,
-                                                                                                         char __b6 ,
-                                                                                                         char __b7 ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi8(__b7, __b6, __b5, __b4, __b3, __b2, __b1, __b0);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_pi32)(int __i ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi32(__i, __i);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_pi16)(short __w ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi16(__w, __w, __w, __w);
-  return (tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_pi8)(char __b ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_pi8(__b, __b, __b, __b, __b, __b, __b, __b);
-  return (tmp___0);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_prefetch)(void const   *__P ,
-                                                                                                        enum _mm_hint __I ) 
-{ 
-
-
-  {
-  __builtin_prefetch(__P, ((unsigned int )__I & 4U) >> 2, (unsigned int )__I & 3U);
-  return;
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_undefined_ps)(void) 
-{ 
-  __m128 __Y ;
-
-  {
-  __Y = __Y;
-  return (__Y);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setzero_ps)(void) 
-{ 
-
-
-  {
-  return ((float __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_addss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_addss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_subss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_subss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_mulss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_mulss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_divss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_div_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_divss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_sqrtss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sqrt_ss)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_sqrtss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_rcpss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_rcp_ss)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_rcpss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_rsqrtss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_rsqrt_ss)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_rsqrtss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_minss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_minss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_maxss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_maxss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-
-
-  {
-  return ((__m128 )((__v4sf )__A + (__v4sf )__B));
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-
-
-  {
-  return ((__m128 )((__v4sf )__A - (__v4sf )__B));
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-
-
-  {
-  return ((__m128 )((__v4sf )__A * (__v4sf )__B));
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_div_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-
-
-  {
-  return ((__m128 )((__v4sf )__A / (__v4sf )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_sqrtps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sqrt_ps)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_sqrtps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_rcpps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_rcp_ps)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_rcpps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_rsqrtps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_rsqrt_ps)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_rsqrtps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_minps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_minps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  float __attribute__((____vector_size____(16)))  tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_maxps((float __attribute__((____vector_size____(16)))  )((__v4sf )__A),
-                                 (float __attribute__((____vector_size____(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_andps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_and_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_andps((double __attribute__((__vector_size__(16), __may_alias__))  )__A,
-                                 (double __attribute__((__vector_size__(16), __may_alias__))  )__B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_andnps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_andnot_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_andnps((double __attribute__((__vector_size__(16), __may_alias__))  )__A,
-                                  (double __attribute__((__vector_size__(16), __may_alias__))  )__B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_orps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_or_ps)(__m128 __A ,
-                                                                                                       __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_orps((double __attribute__((__vector_size__(16), __may_alias__))  )__A,
-                                (double __attribute__((__vector_size__(16), __may_alias__))  )__B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_xorps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_xor_ps)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_xorps((double __attribute__((__vector_size__(16), __may_alias__))  )__A,
-                                 (double __attribute__((__vector_size__(16), __may_alias__))  )__B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpeqss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpeqss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpltss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpless)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmple_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpless((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltss((double __attribute__((__vector_size__(16)))  )((__v4sf )__B),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  tmp___1 = __builtin_ia32_movss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )tmp___0));
-  return ((__m128 )tmp___1);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpge_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpless((double __attribute__((__vector_size__(16)))  )((__v4sf )__B),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  tmp___1 = __builtin_ia32_movss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )tmp___0));
-  return ((__m128 )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpneqss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpneq_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpneqss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnltss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnlt_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnless)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnle_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnless((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpngt_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltss((double __attribute__((__vector_size__(16)))  )((__v4sf )__B),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  tmp___1 = __builtin_ia32_movss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )tmp___0));
-  return ((__m128 )tmp___1);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnge_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnless((double __attribute__((__vector_size__(16)))  )((__v4sf )__B),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  tmp___1 = __builtin_ia32_movss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                 (double __attribute__((__vector_size__(16)))  )((__v4sf )tmp___0));
-  return ((__m128 )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpordss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpord_ss)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpordss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpunordss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpunord_ss)(__m128 __A ,
-                                                                                                             __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpunordss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                      (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpeqps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_ps)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpeqps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpltps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_ps)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpleps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmple_ps)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpleps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpgtps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_ps)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpgtps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpgeps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpge_ps)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpgeps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpneqps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpneq_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpneqps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnltps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnlt_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnleps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnle_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnleps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpngtps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpngt_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpngtps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpngeps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnge_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpngeps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpordps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpord_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpordps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpunordps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpunord_ps)(__m128 __A ,
-                                                                                                             __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpunordps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                      (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comieq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comieq_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comieq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comilt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comilt_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comilt((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comile)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comile_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comile((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comigt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comigt_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comigt((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comige)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comige_ss)(__m128 __A ,
-                                                                                                        __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comige((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comineq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comineq_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comineq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomieq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomieq_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomieq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomilt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomilt_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomilt((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomile)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomile_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomile((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomigt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomigt_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomigt((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomige)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomige_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomige((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomineq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomineq_ss)(__m128 __A ,
-                                                                                                          __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomineq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtss2si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtss_si32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtss2si((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvt_ss2si)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtss_si32(__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtss2si64)() ;
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtss_si64)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtss2si64((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((long long )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtps2pi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtps_pi32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtps2pi((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvt_ps2pi)(__m128 __A ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtps_pi32(__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttss2si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttss_si32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttss2si((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtt_ss2si)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvttss_si32(__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttss2si64)() ;
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttss_si64)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttss2si64((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((long long )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttps2pi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttps_pi32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttps2pi((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtt_ps2pi)(__m128 __A ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvttps_pi32(__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsi2ss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi32_ss)(__m128 __A ,
-                                                                                                            int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsi2ss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    __B);
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvt_si2ss)(__m128 __A ,
-                                                                                                           int __B ) 
-{ 
-  __m128 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtsi32_ss(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsi642ss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi64_ss)(__m128 __A ,
-                                                                                                            long long __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsi642ss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                      __B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtpi2ps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpi32_ps)(__m128 __A ,
-                                                                                                            __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (__v2si )__B);
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvt_pi2ps)(__m128 __A ,
-                                                                                                           __m64 __B ) 
-{ 
-  __m128 tmp___0 ;
-
-  {
-  tmp___0 = _mm_cvtpi32_ps(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movlhps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpi16_ps)(__m64 __A ) 
-{ 
-  __v4hi __sign ;
-  __v2si __hisi ;
-  __v2si __losi ;
-  __v4sf __zero ;
-  __v4sf __ra ;
-  __v4sf __rb ;
-  int tmp___0 ;
-  int tmp___1 ;
-  int tmp___2 ;
-  __m128 tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-  int tmp___6 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpgtw((int __attribute__((__vector_size__(8)))  )((__v4hi )0LL),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__A));
-  __sign = (__v4hi )tmp___0;
-  tmp___1 = __builtin_ia32_punpcklwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )__sign);
-  __losi = (__v2si )tmp___1;
-  tmp___2 = __builtin_ia32_punpckhwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )__sign);
-  __hisi = (__v2si )tmp___2;
-  tmp___3 = _mm_setzero_ps();
-  __zero = (__v4sf )tmp___3;
-  tmp___4 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__zero,
-                                    __losi);
-  __ra = (__v4sf )tmp___4;
-  tmp___5 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__ra,
-                                    __hisi);
-  __rb = (__v4sf )tmp___5;
-  tmp___6 = __builtin_ia32_movlhps((double __attribute__((__vector_size__(16)))  )__ra,
-                                   (double __attribute__((__vector_size__(16)))  )__rb);
-  return ((__m128 )tmp___6);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpu16_ps)(__m64 __A ) 
-{ 
-  __v2si __hisi ;
-  __v2si __losi ;
-  __v4sf __zero ;
-  __v4sf __ra ;
-  __v4sf __rb ;
-  int tmp___0 ;
-  int tmp___1 ;
-  __m128 tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )((__v4hi )0LL));
-  __losi = (__v2si )tmp___0;
-  tmp___1 = __builtin_ia32_punpckhwd((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )((__v4hi )0LL));
-  __hisi = (__v2si )tmp___1;
-  tmp___2 = _mm_setzero_ps();
-  __zero = (__v4sf )tmp___2;
-  tmp___3 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__zero,
-                                    __losi);
-  __ra = (__v4sf )tmp___3;
-  tmp___4 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__ra,
-                                    __hisi);
-  __rb = (__v4sf )tmp___4;
-  tmp___5 = __builtin_ia32_movlhps((double __attribute__((__vector_size__(16)))  )__ra,
-                                   (double __attribute__((__vector_size__(16)))  )__rb);
-  return ((__m128 )tmp___5);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpi8_ps)(__m64 __A ) 
-{ 
-  __v8qi __sign ;
-  int tmp___0 ;
-  int tmp___1 ;
-  __m128 tmp___2 ;
-
-  {
-  tmp___0 = __builtin_ia32_pcmpgtb((int __attribute__((__vector_size__(8)))  )((__v8qi )0LL),
-                                   (int __attribute__((__vector_size__(8)))  )((__v8qi )__A));
-  __sign = (__v8qi )tmp___0;
-  tmp___1 = __builtin_ia32_punpcklbw((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )__sign);
-  __A = (__m64 )tmp___1;
-  tmp___2 = _mm_cvtpi16_ps(__A);
-  return (tmp___2);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpu8_ps)(__m64 __A ) 
-{ 
-  int tmp___0 ;
-  __m128 tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklbw((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                     (int __attribute__((__vector_size__(8)))  )((__v8qi )0LL));
-  __A = (__m64 )tmp___0;
-  tmp___1 = _mm_cvtpu16_ps(__A);
-  return (tmp___1);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpi32x2_ps)(__m64 __A ,
-                                                                                                              __m64 __B ) 
-{ 
-  __v4sf __zero ;
-  __m128 tmp___0 ;
-  __v4sf __sfa ;
-  int tmp___1 ;
-  __v4sf __sfb ;
-  int tmp___2 ;
-  int tmp___3 ;
-
-  {
-  tmp___0 = _mm_setzero_ps();
-  __zero = (__v4sf )tmp___0;
-  tmp___1 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__zero,
-                                    (__v2si )__A);
-  __sfa = (__v4sf )tmp___1;
-  tmp___2 = __builtin_ia32_cvtpi2ps((double __attribute__((__vector_size__(16)))  )__sfa,
-                                    (__v2si )__B);
-  __sfb = (__v4sf )tmp___2;
-  tmp___3 = __builtin_ia32_movlhps((double __attribute__((__vector_size__(16)))  )__sfa,
-                                   (double __attribute__((__vector_size__(16)))  )__sfb);
-  return ((__m128 )tmp___3);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movhlps)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtps_pi16)(__m128 __A ) 
-{ 
-  __v4sf __hisf ;
-  __v4sf __losf ;
-  int tmp___0 ;
-  __v2si __hisi ;
-  int tmp___1 ;
-  __v2si __losi ;
-  int tmp___2 ;
-  int tmp___3 ;
-
-  {
-  __hisf = (__v4sf )__A;
-  tmp___0 = __builtin_ia32_movhlps((double __attribute__((__vector_size__(16)))  )__hisf,
-                                   (double __attribute__((__vector_size__(16)))  )__hisf);
-  __losf = (__v4sf )tmp___0;
-  tmp___1 = __builtin_ia32_cvtps2pi((double __attribute__((__vector_size__(16)))  )__hisf);
-  __hisi = (__v2si )tmp___1;
-  tmp___2 = __builtin_ia32_cvtps2pi((double __attribute__((__vector_size__(16)))  )__losf);
-  __losi = (__v2si )tmp___2;
-  tmp___3 = __builtin_ia32_packssdw(__hisi, __losi);
-  return ((__m64 )tmp___3);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtps_pi8)(__m128 __A ) 
-{ 
-  __v4hi __tmp ;
-  __m64 tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = _mm_cvtps_pi16(__A);
-  __tmp = (__v4hi )tmp___0;
-  tmp___1 = __builtin_ia32_packsswb((int __attribute__((__vector_size__(8)))  )__tmp,
-                                    (int __attribute__((__vector_size__(8)))  )((__v4hi )0LL));
-  return ((__m64 )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_shufps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shuffle_ps)(__m128 __A ,
-                                                                                                            __m128 __B ,
-                                                                                                            int const   __mask ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_shufps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                  (double __attribute__((__vector_size__(16)))  )((__v4sf )__B),
-                                  __mask);
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_ps)(__m128 __A ,
-                                                                                                             __m128 __B ) 
-{ 
-  float __attribute__((____vector_size____(16)))  tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_unpckhps((float __attribute__((____vector_size____(16)))  )((__v4sf )__A),
-                                    (float __attribute__((____vector_size____(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_ps)(__m128 __A ,
-                                                                                                             __m128 __B ) 
-{ 
-  float __attribute__((____vector_size____(16)))  tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_unpcklps((float __attribute__((____vector_size____(16)))  )((__v4sf )__A),
-                                    (float __attribute__((____vector_size____(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_loadhps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadh_pi)(__m128 __A ,
-                                                                                                          __m64 const   *__P ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_loadhps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (__v2sf const   *)__P);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_storehps)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storeh_pi)(__m64 *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-
-
-  {
-  __builtin_ia32_storehps((__v2sf *)__P, (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return;
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movehl_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_movhlps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movelh_ps)(__m128 __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_movlhps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_loadlps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadl_pi)(__m128 __A ,
-                                                                                                          __m64 const   *__P ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_loadlps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                   (__v2sf const   *)__P);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_storelps)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storel_pi)(__m64 *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-
-
-  {
-  __builtin_ia32_storelps((__v2sf *)__P, (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movmskps)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movemask_ps)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_movmskps((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_stmxcsr)() ;
-__inline extern unsigned int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_getcsr)(void) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_stmxcsr();
-  return ((unsigned int )tmp___0);
-}
-}
-__inline extern unsigned int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_GET_EXCEPTION_STATE)(void) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  return (tmp___0 & 63U);
-}
-}
-__inline extern unsigned int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_GET_EXCEPTION_MASK)(void) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  return (tmp___0 & 8064U);
-}
-}
-__inline extern unsigned int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_GET_ROUNDING_MODE)(void) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  return (tmp___0 & 24576U);
-}
-}
-__inline extern unsigned int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_GET_FLUSH_ZERO_MODE)(void) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  return (tmp___0 & 32768U);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ldmxcsr)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setcsr)(unsigned int __I ) 
-{ 
-
-
-  {
-  __builtin_ia32_ldmxcsr(__I);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_SET_EXCEPTION_STATE)(unsigned int __mask ) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  _mm_setcsr((tmp___0 & 4294967232U) | __mask);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_SET_EXCEPTION_MASK)(unsigned int __mask ) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  _mm_setcsr((tmp___0 & 4294959231U) | __mask);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_SET_ROUNDING_MODE)(unsigned int __mode ) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  _mm_setcsr((tmp___0 & 4294942719U) | __mode);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _MM_SET_FLUSH_ZERO_MODE)(unsigned int __mode ) 
-{ 
-  unsigned int tmp___0 ;
-
-  {
-  tmp___0 = _mm_getcsr();
-  _mm_setcsr((tmp___0 & 4294934527U) | __mode);
-  return;
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_ss)(float __F ) 
-{ 
-
-
-  {
-  return ((float __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_ps1)(float __F ) 
-{ 
-  __m128 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_ss(__F);
-  return (tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_ss)(float const   *__P ) 
-{ 
-  __m128 tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_ss((float )*__P);
-  return (tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_ps1)(float const   *__P ) 
-{ 
-  __m128 tmp___0 ;
-
-  {
-  tmp___0 = _mm_load_ss(__P);
-  return (tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_ps)(float const   *__P ) 
-{ 
-
-
-  {
-  return (*((__m128 *)__P));
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadu_ps)(float const   *__P ) 
-{ 
-
-
-  {
-  return ((__m128 )*((__m128_u *)__P));
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadr_ps)(float const   *__P ) 
-{ 
-  __v4sf __tmp ;
-  int tmp___0 ;
-
-  {
-  __tmp = *((__v4sf *)__P);
-  tmp___0 = __builtin_ia32_shufps((double __attribute__((__vector_size__(16)))  )__tmp,
-                                  (double __attribute__((__vector_size__(16)))  )__tmp,
-                                  ((1 << 4) | (2 << 2)) | 3);
-  return ((__m128 )tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_ps)(float const   __Z ,
-                                                                                                        float const   __Y ,
-                                                                                                        float const   __X ,
-                                                                                                        float const   __W ) 
-{ 
-
-
-  {
-  return ((float __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_ps)(float __Z ,
-                                                                                                         float __Y ,
-                                                                                                         float __X ,
-                                                                                                         float __W ) 
-{ 
-
-
-  {
-  return ((float __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_ss)(float *__P ,
-                                                                                                        __m128 __A ) 
-{ 
-
-
-  {
-  return;
-}
-}
-__inline extern float ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtss_f32)(__m128 __A ) 
-{ 
-
-
-  {
-  return ((float )0);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_ps)(float *__P ,
-                                                                                                        __m128 __A ) 
-{ 
-
-
-  {
-  *((__m128 *)__P) = __A;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storeu_ps)(float *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-
-
-  {
-  *((__m128_u *)__P) = (__m128_u )__A;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store1_ps)(float *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-  __v4sf __va ;
-  __v4sf __tmp ;
-  int tmp___0 ;
-
-  {
-  __va = (__v4sf )__A;
-  tmp___0 = __builtin_ia32_shufps((double __attribute__((__vector_size__(16)))  )__va,
-                                  (double __attribute__((__vector_size__(16)))  )__va,
-                                  0);
-  __tmp = (__v4sf )tmp___0;
-  _mm_storeu_ps(__P, (__m128 )__tmp);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_ps1)(float *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-
-
-  {
-  _mm_store1_ps(__P, __A);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storer_ps)(float *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-  __v4sf __va ;
-  __v4sf __tmp ;
-  int tmp___0 ;
-
-  {
-  __va = (__v4sf )__A;
-  tmp___0 = __builtin_ia32_shufps((double __attribute__((__vector_size__(16)))  )__va,
-                                  (double __attribute__((__vector_size__(16)))  )__va,
-                                  ((1 << 4) | (2 << 2)) | 3);
-  __tmp = (__v4sf )tmp___0;
-  _mm_store_ps(__P, (__m128 )__tmp);
-  return;
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_move_ss)(__m128 __A ,
-                                                                                                         __m128 __B ) 
-{ 
-
-
-  {
-  return ((float __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_ext_v4hi)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_extract_pi16)(__m64 const   __A ,
-                                                                                                           int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_ext_v4hi((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                        __N);
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pextrw)(__m64 const   __A ,
-                                                                                                    int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = _mm_extract_pi16(__A, __N);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_set_v4hi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_insert_pi16)(__m64 const   __A ,
-                                                                                                            int const   __D ,
-                                                                                                            int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_set_v4hi((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                        __D, __N);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pinsrw)(__m64 const   __A ,
-                                                                                                      int const   __D ,
-                                                                                                      int const   __N ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_insert_pi16(__A, __D, __N);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaxsw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_pi16)(__m64 __A ,
-                                                                                                         __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaxsw((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmaxsw)(__m64 __A ,
-                                                                                                      __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_max_pi16(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaxub)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_pu8)(__m64 __A ,
-                                                                                                        __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaxub((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                  (int __attribute__((__vector_size__(8)))  )((__v8qi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmaxub)(__m64 __A ,
-                                                                                                      __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_max_pu8(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pminsw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_pi16)(__m64 __A ,
-                                                                                                         __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pminsw((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                  (int __attribute__((__vector_size__(8)))  )((__v4hi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pminsw)(__m64 __A ,
-                                                                                                      __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_min_pi16(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pminub)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_pu8)(__m64 __A ,
-                                                                                                        __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pminub((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                  (int __attribute__((__vector_size__(8)))  )((__v8qi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pminub)(__m64 __A ,
-                                                                                                      __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_min_pu8(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmovmskb)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movemask_pi8)(__m64 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmovmskb((int __attribute__((__vector_size__(8)))  )((__v8qi )__A));
-  return (tmp___0);
-}
-}
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmovmskb)(__m64 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = _mm_movemask_pi8(__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmulhuw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mulhi_pu16)(__m64 __A ,
-                                                                                                           __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmulhuw((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                   (int __attribute__((__vector_size__(8)))  )((__v4hi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pmulhuw)(__m64 __A ,
-                                                                                                       __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_mulhi_pu16(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pshufw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shuffle_pi16)(__m64 __A ,
-                                                                                                             int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pshufw((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                  __N);
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pshufw)(__m64 __A ,
-                                                                                                      int const   __N ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_shuffle_pi16(__A, __N);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_maskmovq)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_maskmove_si64)(__m64 __A ,
-                                                                                                             __m64 __N ,
-                                                                                                             char *__P ) 
-{ 
-
-
-  {
-  __builtin_ia32_maskmovq((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                          (int __attribute__((__vector_size__(8)))  )((__v8qi )__N),
-                          __P);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_maskmovq)(__m64 __A ,
-                                                                                                       __m64 __N ,
-                                                                                                       char *__P ) 
-{ 
-
-
-  {
-  _mm_maskmove_si64(__A, __N, __P);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pavgb)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_avg_pu8)(__m64 __A ,
-                                                                                                        __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pavgb((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                 (int __attribute__((__vector_size__(8)))  )((__v8qi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pavgb)(__m64 __A ,
-                                                                                                     __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_avg_pu8(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pavgw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_avg_pu16)(__m64 __A ,
-                                                                                                         __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pavgw((int __attribute__((__vector_size__(8)))  )((__v4hi )__A),
-                                 (int __attribute__((__vector_size__(8)))  )((__v4hi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_pavgw)(__m64 __A ,
-                                                                                                     __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_avg_pu16(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psadbw)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sad_pu8)(__m64 __A ,
-                                                                                                        __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psadbw((int __attribute__((__vector_size__(8)))  )((__v8qi )__A),
-                                  (int __attribute__((__vector_size__(8)))  )((__v8qi )__B));
-  return ((__m64 )tmp___0);
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _m_psadbw)(__m64 __A ,
-                                                                                                      __m64 __B ) 
-{ 
-  __m64 tmp___0 ;
-
-  {
-  tmp___0 = _mm_sad_pu8(__A, __B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movntq)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_pi)(__m64 *__P ,
-                                                                                                         __m64 __A ) 
-{ 
-
-
-  {
-  __builtin_ia32_movntq((unsigned long long *)__P, (unsigned long long )__A);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movntps)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_ps)(float *__P ,
-                                                                                                         __m128 __A ) 
-{ 
-
-
-  {
-  __builtin_ia32_movntps(__P, (double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_sfence)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sfence)(void) 
-{ 
-
-
-  {
-  __builtin_ia32_sfence();
-  return;
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_sd)(double __F ) 
-{ 
-
-
-  {
-  return ((double __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_pd1)(double __F ) 
-{ 
-  __m128d tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_sd(__F);
-  return (tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_pd)(double __W ,
-                                                                                                         double __X ) 
-{ 
-
-
-  {
-  return ((double __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_undefined_pd)(void) 
-{ 
-  __m128d __Y ;
-
-  {
-  __Y = __Y;
-  return (__Y);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setzero_pd)(void) 
-{ 
-
-
-  {
-  return ((double __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_move_sd)(__m128d __A ,
-                                                                                                          __m128d __B ) 
-{ 
-
-
-  {
-  return ((double __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_pd)(double const   *__P ) 
-{ 
-
-
-  {
-  return (*((__m128d *)__P));
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadu_pd)(double const   *__P ) 
-{ 
-
-
-  {
-  return ((__m128d )*((__m128d_u *)__P));
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load1_pd)(double const   *__P ) 
-{ 
-  __m128d tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_sd((double )*__P);
-  return (tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_pd1)(double const   *__P ) 
-{ 
-  __m128d tmp___0 ;
-
-  {
-  tmp___0 = _mm_load1_pd(__P);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_shufpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadr_pd)(double const   *__P ) 
-{ 
-  __m128d __tmp ;
-  __m128d tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = _mm_load_pd(__P);
-  __tmp = tmp___0;
-  tmp___1 = __builtin_ia32_shufpd(__tmp, __tmp, 1);
-  return ((__m128d )tmp___1);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_pd)(double *__P ,
-                                                                                                        __m128d __A ) 
-{ 
-
-
-  {
-  *((__m128d *)__P) = __A;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storeu_pd)(double *__P ,
-                                                                                                         __m128d __A ) 
-{ 
-
-
-  {
-  *((__m128d_u *)__P) = (__m128d_u )__A;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_sd)(double *__P ,
-                                                                                                        __m128d __A ) 
-{ 
-
-
-  {
-  return;
-}
-}
-__inline extern double ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsd_f64)(__m128d __A ) 
-{ 
-
-
-  {
-  return ((double )0);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storel_pd)(double *__P ,
-                                                                                                         __m128d __A ) 
-{ 
-
-
-  {
-  _mm_store_sd(__P, __A);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store1_pd)(double *__P ,
-                                                                                                         __m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_shufpd(__A, __A, 0);
-  _mm_store_pd(__P, (__m128d )tmp___0);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_pd1)(double *__P ,
-                                                                                                         __m128d __A ) 
-{ 
-
-
-  {
-  _mm_store1_pd(__P, __A);
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storer_pd)(double *__P ,
-                                                                                                         __m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_shufpd(__A, __A, 1);
-  _mm_store_pd(__P, (__m128d )tmp___0);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_ext_v4si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi128_si32)(__m128i __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_ext_v4si((__v4si )__A, 0);
-  return (tmp___0);
-}
-}
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi128_si64)(__m128i __A ) 
-{ 
-
-
-  {
-  return (0LL);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-
-
-  {
-  return ((__m128d )((__v2df )__A + (__v2df )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_addsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_addsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-
-
-  {
-  return ((__m128d )((__v2df )__A - (__v2df )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_subsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_subsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-
-
-  {
-  return ((__m128d )((__v2df )__A * (__v2df )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_mulsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_mulsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_div_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-
-
-  {
-  return ((__m128d )((__v2df )__A / (__v2df )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_divsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_div_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_divsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_sqrtpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sqrt_pd)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_sqrtpd((__v2df )__A);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movsd)() ;
-extern int ( /* missing proto */  __builtin_ia32_sqrtsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sqrt_sd)(__m128d __A ,
-                                                                                                          __m128d __B ) 
-{ 
-  __v2df __tmp ;
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_movsd((__v2df )__A, (__v2df )__B);
-  __tmp = (__v2df )tmp___0;
-  tmp___1 = __builtin_ia32_sqrtsd(__tmp);
-  return ((__m128d )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_minpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_minpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_minsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_minsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_maxpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_maxpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_maxsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_maxsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_andpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_and_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_andpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_andnpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_andnot_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_andnpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_orpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_or_pd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_orpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_xorpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_xor_pd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_xorpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpeqpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_pd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpeqpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpltpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_pd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmplepd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmple_pd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmplepd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpgtpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_pd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpgtpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpgepd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpge_pd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpgepd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpneqpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpneq_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpneqpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnltpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnlt_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnlepd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnle_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnlepd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpngtpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpngt_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpngtpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpngepd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnge_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpngepd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpordpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpord_pd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpordpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpunordpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpunord_pd)(__m128d __A ,
-                                                                                                              __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpunordpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpeqsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_sd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpeqsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpltsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_sd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmplesd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmple_sd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmplesd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_sd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpltsd((__v2df )__B, (__v2df )__A);
-  tmp___1 = __builtin_ia32_movsd((__v2df )__A, (__v2df )tmp___0);
-  return ((__m128d )tmp___1);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpge_sd)(__m128d __A ,
-                                                                                                           __m128d __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmplesd((__v2df )__B, (__v2df )__A);
-  tmp___1 = __builtin_ia32_movsd((__v2df )__A, (__v2df )tmp___0);
-  return ((__m128d )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpneqsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpneq_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpneqsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnltsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnlt_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpnlesd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnle_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnlesd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpngt_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnltsd((__v2df )__B, (__v2df )__A);
-  tmp___1 = __builtin_ia32_movsd((__v2df )__A, (__v2df )tmp___0);
-  return ((__m128d )tmp___1);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpnge_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpnlesd((__v2df )__B, (__v2df )__A);
-  tmp___1 = __builtin_ia32_movsd((__v2df )__A, (__v2df )tmp___0);
-  return ((__m128d )tmp___1);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpordsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpord_sd)(__m128d __A ,
-                                                                                                            __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpordsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cmpunordsd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpunord_sd)(__m128d __A ,
-                                                                                                              __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cmpunordsd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdeq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comieq_sd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdeq((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdlt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comilt_sd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdlt((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdle)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comile_sd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdle((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdgt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comigt_sd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdgt((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdge)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comige_sd)(__m128d __A ,
-                                                                                                        __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdge((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_comisdneq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_comineq_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_comisdneq((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdeq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomieq_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdeq((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdlt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomilt_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdlt((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdle)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomile_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdle((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdgt)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomigt_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdgt((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdge)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomige_sd)(__m128d __A ,
-                                                                                                         __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdge((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_ucomisdneq)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_ucomineq_sd)(__m128d __A ,
-                                                                                                          __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_ucomisdneq((__v2df )__A, (__v2df )__B);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_epi64x)(long long __q1 ,
-                                                                                                             long long __q0 ) 
-{ 
-
-
-  {
-  return ((long long __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_epi64)(__m64 __q1 ,
-                                                                                                            __m64 __q0 ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64x((long long )__q1, (long long )__q0);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_epi32)(int __q3 ,
-                                                                                                            int __q2 ,
-                                                                                                            int __q1 ,
-                                                                                                            int __q0 ) 
-{ 
-
-
-  {
-  return ((long long __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_epi16)(short __q7 ,
-                                                                                                            short __q6 ,
-                                                                                                            short __q5 ,
-                                                                                                            short __q4 ,
-                                                                                                            short __q3 ,
-                                                                                                            short __q2 ,
-                                                                                                            short __q1 ,
-                                                                                                            short __q0 ) 
-{ 
-
-
-  {
-  return ((long long __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set_epi8)(char __q15 ,
-                                                                                                           char __q14 ,
-                                                                                                           char __q13 ,
-                                                                                                           char __q12 ,
-                                                                                                           char __q11 ,
-                                                                                                           char __q10 ,
-                                                                                                           char __q09 ,
-                                                                                                           char __q08 ,
-                                                                                                           char __q07 ,
-                                                                                                           char __q06 ,
-                                                                                                           char __q05 ,
-                                                                                                           char __q04 ,
-                                                                                                           char __q03 ,
-                                                                                                           char __q02 ,
-                                                                                                           char __q01 ,
-                                                                                                           char __q00 ) 
-{ 
-
-
-  {
-  return ((long long __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_epi64x)(long long __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64x(__A, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_epi64)(__m64 __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64(__A, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_epi32)(int __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi32(__A, __A, __A, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_epi16)(short __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi16(__A, __A, __A, __A, __A, __A, __A, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_set1_epi8)(char __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi8(__A, __A, __A, __A, __A, __A, __A, __A, __A, __A, __A, __A,
-                         __A, __A, __A, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_epi64)(__m64 __q0 ,
-                                                                                                             __m64 __q1 ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64(__q1, __q0);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_epi32)(int __q0 ,
-                                                                                                             int __q1 ,
-                                                                                                             int __q2 ,
-                                                                                                             int __q3 ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi32(__q3, __q2, __q1, __q0);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_epi16)(short __q0 ,
-                                                                                                             short __q1 ,
-                                                                                                             short __q2 ,
-                                                                                                             short __q3 ,
-                                                                                                             short __q4 ,
-                                                                                                             short __q5 ,
-                                                                                                             short __q6 ,
-                                                                                                             short __q7 ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi16(__q7, __q6, __q5, __q4, __q3, __q2, __q1, __q0);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setr_epi8)(char __q00 ,
-                                                                                                            char __q01 ,
-                                                                                                            char __q02 ,
-                                                                                                            char __q03 ,
-                                                                                                            char __q04 ,
-                                                                                                            char __q05 ,
-                                                                                                            char __q06 ,
-                                                                                                            char __q07 ,
-                                                                                                            char __q08 ,
-                                                                                                            char __q09 ,
-                                                                                                            char __q10 ,
-                                                                                                            char __q11 ,
-                                                                                                            char __q12 ,
-                                                                                                            char __q13 ,
-                                                                                                            char __q14 ,
-                                                                                                            char __q15 ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi8(__q15, __q14, __q13, __q12, __q11, __q10, __q09, __q08, __q07,
-                         __q06, __q05, __q04, __q03, __q02, __q01, __q00);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_load_si128)(__m128i const   *__P ) 
-{ 
-
-
-  {
-  return ((__m128i )*__P);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadu_si128)(__m128i_u const   *__P ) 
-{ 
-
-
-  {
-  return ((__m128i )*__P);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadl_epi64)(__m128i_u const   *__P ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64((__m64 )0LL, (__m64 )*((__m64_u *)__P));
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadu_si64)(void const   *__P ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_loadl_epi64((__m128i_u const   *)((__m128i_u *)__P));
-  return (tmp___0);
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_store_si128)(__m128i *__P ,
-                                                                                                           __m128i __B ) 
-{ 
-
-
-  {
-  *__P = __B;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storeu_si128)(__m128i_u *__P ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  *__P = (__m128i_u )__B;
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storel_epi64)(__m128i_u *__P ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return;
-}
-}
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_storeu_si64)(void *__P ,
-                                                                                                           __m128i __B ) 
-{ 
-
-
-  {
-  _mm_storel_epi64((__m128i_u *)__P, __B);
-  return;
-}
-}
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movepi64_pi64)(__m128i __B ) 
-{ 
-
-
-  {
-  return ((int __attribute__((__vector_size__(8), __may_alias__))  )0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movpi64_epi64)(__m64 __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64((__m64 )0LL, __A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_move_epi64)(__m128i __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_movq128((__v2di )__A);
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_undefined_si128)(void) 
-{ 
-  __m128i __Y ;
-
-  {
-  __Y = __Y;
-  return (__Y);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_setzero_si128)(void) 
-{ 
-
-
-  {
-  return ((long long __attribute__((__vector_size__(16), __may_alias__))  )0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtdq2pd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtepi32_pd)(__m128i __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtdq2pd((__v4si )__A);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtdq2ps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtepi32_ps)(__m128i __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtdq2ps((__v4si )__A);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtpd2dq)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpd_epi32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtpd2dq((__v2df )__A);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtpd2pi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpd_pi32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtpd2pi((__v2df )__A);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtpd2ps)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpd_ps)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtpd2ps((__v2df )__A);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttpd2dq)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttpd_epi32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttpd2dq((__v2df )__A);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttpd2pi)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttpd_pi32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttpd2pi((__v2df )__A);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtpi2pd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtpi32_pd)(__m64 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtpi2pd((__v2si )__A);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtps2dq)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtps_epi32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtps2dq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttps2dq)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttps_epi32)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttps2dq((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtps2pd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtps_pd)(__m128 __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtps2pd((double __attribute__((__vector_size__(16)))  )((__v4sf )__A));
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsd2si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsd_si32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsd2si((__v2df )__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsd2si64)() ;
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsd_si64)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsd2si64((__v2df )__A);
-  return ((long long )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttsd2si)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttsd_si32)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttsd2si((__v2df )__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvttsd2si64)() ;
-__inline extern long long ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvttsd_si64)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvttsd2si64((__v2df )__A);
-  return ((long long )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsd2ss)() ;
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsd_ss)(__m128 __A ,
-                                                                                                          __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsd2ss((double __attribute__((__vector_size__(16)))  )((__v4sf )__A),
-                                    (__v2df )__B);
-  return ((__m128 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsi2sd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi32_sd)(__m128d __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsi2sd((__v2df )__A, __B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtsi642sd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi64_sd)(__m128d __A ,
-                                                                                                             long long __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtsi642sd((__v2df )__A, __B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_cvtss2sd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtss_sd)(__m128d __A ,
-                                                                                                           __m128 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_cvtss2sd((__v2df )__A, (double __attribute__((__vector_size__(16)))  )((__v4sf )__B));
-  return ((__m128d )tmp___0);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shuffle_pd)(__m128d __A ,
-                                                                                                             __m128d __B ,
-                                                                                                             int const   __mask ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_shufpd((__v2df )__A, (__v2df )__B, __mask);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_unpckhpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_pd)(__m128d __A ,
-                                                                                                              __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_unpckhpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_unpcklpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_pd)(__m128d __A ,
-                                                                                                              __m128d __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_unpcklpd((__v2df )__A, (__v2df )__B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_loadhpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadh_pd)(__m128d __A ,
-                                                                                                           double const   *__B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_loadhpd((__v2df )__A, __B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_loadlpd)() ;
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_loadl_pd)(__m128d __A ,
-                                                                                                           double const   *__B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_loadlpd((__v2df )__A, __B);
-  return ((__m128d )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movmskpd)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movemask_pd)(__m128d __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_movmskpd((__v2df )__A);
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packsswb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packs_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packsswb128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                       (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packssdw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packs_epi32)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packssdw128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_packuswb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_packus_epi16)(__m128i __A ,
-                                                                                                               __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_packuswb128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                       (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhbw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_epi8)(__m128i __A ,
-                                                                                                                __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhbw128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                        (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhwd128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_epi16)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhwd128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                        (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhdq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_epi32)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhdq128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckhqdq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpackhi_epi64)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckhqdq128((__v2di )__A, (__v2di )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpcklbw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_epi8)(__m128i __A ,
-                                                                                                                __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklbw128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                        (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpcklwd128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_epi16)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklwd128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                        (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpckldq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_epi32)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpckldq128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_punpcklqdq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_unpacklo_epi64)(__m128i __A ,
-                                                                                                                 __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_punpcklqdq128((__v2di )__A, (__v2di )__B);
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_epi8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v16qu )__A) + (int __attribute__((__vector_size__(16)))  )((__v16qu )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hu )__A) + (int __attribute__((__vector_size__(16)))  )((__v8hu )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_epi32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v4su )__A + (__v4su )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_add_epi64)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v2du )__A + (__v2du )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddsb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_epi8)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddsb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddsw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_epi16)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddsw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddusb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_epu8)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddusb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_paddusw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_adds_epu16)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_paddusw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_epi8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v16qu )__A) - (int __attribute__((__vector_size__(16)))  )((__v16qu )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hu )__A) - (int __attribute__((__vector_size__(16)))  )((__v8hu )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_epi32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v4su )__A - (__v4su )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sub_epi64)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v2du )__A - (__v2du )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubsb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_epi8)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubsb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubsw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_epi16)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubsw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubusb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_epu8)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubusb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psubusw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_subs_epu16)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psubusw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaddwd128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_madd_epi16)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaddwd128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmulhw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mulhi_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmulhw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mullo_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hu )__A) * (int __attribute__((__vector_size__(16)))  )((__v8hu )__B)));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmuludq)() ;
-__inline extern __m64 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_su32)(__m64 __A ,
-                                                                                                         __m64 __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmuludq((__v2si )__A, (__v2si )__B);
-  return ((__m64 )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmuludq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mul_epu32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmuludq128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllwi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_epi16)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllwi128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pslldi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_epi32)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pslldi128((__v4si )__A, __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllqi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_slli_epi64)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllqi128((__v2di )__A, __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrawi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srai_epi16)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrawi128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psradi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srai_epi32)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psradi128((__v4si )__A, __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrldqi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_bsrli_si128)(__m128i __A ,
-                                                                                                              int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrldqi128(__A, __N * 8);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pslldqi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_bslli_si128)(__m128i __A ,
-                                                                                                              int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pslldqi128(__A, __N * 8);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlwi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_epi16)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlwi128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrldi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_epi32)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrldi128((__v4si )__A, __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlqi128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srli_epi64)(__m128i __A ,
-                                                                                                             int __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlqi128((__v2di )__A, __B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                    (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pslld128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_epi32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pslld128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psllq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sll_epi64)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psllq128((__v2di )__A, (__v2di )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psraw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sra_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psraw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                    (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrad128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sra_epi32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrad128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                    (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrld128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_epi32)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrld128((__v4si )__A, (__v4si )__B);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psrlq128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_srl_epi64)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psrlq128((__v2di )__A, (__v2di )__B);
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_and_si128)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v2du )__A & (__v2du )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pandn128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_andnot_si128)(__m128i __A ,
-                                                                                                               __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pandn128((__v2di )__A, (__v2di )__B);
-  return ((__m128i )tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_or_si128)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v2du )__A | (__v2du )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_xor_si128)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v2du )__A ^ (__v2du )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_epi8)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v16qi )__A) == (int __attribute__((__vector_size__(16)))  )((__v16qi )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hi )__A) == (int __attribute__((__vector_size__(16)))  )((__v8hi )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpeq_epi32)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v4si )__A == (__v4si )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_epi8)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v16qs )__A) < (int __attribute__((__vector_size__(16)))  )((__v16qs )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hi )__A) < (int __attribute__((__vector_size__(16)))  )((__v8hi )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmplt_epi32)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v4si )__A < (__v4si )__B));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_epi8)(__m128i __A ,
-                                                                                                             __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v16qs )__A) > (int __attribute__((__vector_size__(16)))  )((__v16qs )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_epi16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((int __attribute__((__vector_size__(16)))  )((__v8hi )__A) > (int __attribute__((__vector_size__(16)))  )((__v8hi )__B)));
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cmpgt_epi32)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-
-
-  {
-  return ((__m128i )((__v4si )__A > (__v4si )__B));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_ext_v8hi)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_extract_epi16)(__m128i const   __A ,
-                                                                                                            int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_ext_v8hi((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                        __N);
-  return ((int )((unsigned short )tmp___0));
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_vec_set_v8hi)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_insert_epi16)(__m128i const   __A ,
-                                                                                                               int const   __D ,
-                                                                                                               int const   __N ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_vec_set_v8hi((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                        __D, __N);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaxsw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaxsw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmaxub128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_max_epu8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmaxub128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pminsw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_epi16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pminsw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pminub128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_min_epu8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pminub128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmovmskb128)() ;
-__inline extern int ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_movemask_epi8)(__m128i __A ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmovmskb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A));
-  return (tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pmulhuw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mulhi_epu16)(__m128i __A ,
-                                                                                                              __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pmulhuw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                      (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pshufhw)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shufflehi_epi16)(__m128i __A ,
-                                                                                                                  int const   __mask ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pshufhw((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                   __mask);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pshuflw)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shufflelo_epi16)(__m128i __A ,
-                                                                                                                  int const   __mask ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pshuflw((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                   __mask);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pshufd)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_shuffle_epi32)(__m128i __A ,
-                                                                                                                int const   __mask ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pshufd((__v4si )__A, __mask);
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_maskmovdqu)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_maskmoveu_si128)(__m128i __A ,
-                                                                                                               __m128i __B ,
-                                                                                                               char *__C ) 
-{ 
-
-
-  {
-  __builtin_ia32_maskmovdqu((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                            (int __attribute__((__vector_size__(16)))  )((__v16qi )__B),
-                            __C);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pavgb128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_avg_epu8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pavgb128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                    (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pavgw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_avg_epu16)(__m128i __A ,
-                                                                                                            __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_pavgw128((int __attribute__((__vector_size__(16)))  )((__v8hi )__A),
-                                    (int __attribute__((__vector_size__(16)))  )((__v8hi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_psadbw128)() ;
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_sad_epu8)(__m128i __A ,
-                                                                                                           __m128i __B ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = __builtin_ia32_psadbw128((int __attribute__((__vector_size__(16)))  )((__v16qi )__A),
-                                     (int __attribute__((__vector_size__(16)))  )((__v16qi )__B));
-  return ((__m128i )tmp___0);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movnti)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_si32)(int *__A ,
-                                                                                                           int __B ) 
-{ 
-
-
-  {
-  __builtin_ia32_movnti(__A, __B);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movnti64)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_si64)(long long *__A ,
-                                                                                                           long long __B ) 
-{ 
-
-
-  {
-  __builtin_ia32_movnti64(__A, __B);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movntdq)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_si128)(__m128i *__A ,
-                                                                                                            __m128i __B ) 
-{ 
-
-
-  {
-  __builtin_ia32_movntdq((__v2di *)__A, (__v2di )__B);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_movntpd)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_stream_pd)(double *__A ,
-                                                                                                         __m128d __B ) 
-{ 
-
-
-  {
-  __builtin_ia32_movntpd(__A, (__v2df )__B);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_clflush)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_clflush)(void const   *__A ) 
-{ 
-
-
-  {
-  __builtin_ia32_clflush(__A);
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_lfence)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_lfence)(void) 
-{ 
-
-
-  {
-  __builtin_ia32_lfence();
-  return;
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_mfence)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_mfence)(void) 
-{ 
-
-
-  {
-  __builtin_ia32_mfence();
-  return;
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi32_si128)(int __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi32(0, 0, 0, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_cvtsi64_si128)(long long __A ) 
-{ 
-  __m128i tmp___0 ;
-
-  {
-  tmp___0 = _mm_set_epi64x(0LL, __A);
-  return (tmp___0);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castpd_ps)(__m128d __A ) 
-{ 
-
-
-  {
-  return ((__m128 )__A);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castpd_si128)(__m128d __A ) 
-{ 
-
-
-  {
-  return ((__m128i )__A);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castps_pd)(__m128 __A ) 
-{ 
-
-
-  {
-  return ((__m128d )__A);
-}
-}
-__inline extern __m128i ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castps_si128)(__m128 __A ) 
-{ 
-
-
-  {
-  return ((__m128i )__A);
-}
-}
-__inline extern __m128 ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castsi128_ps)(__m128i __A ) 
-{ 
-
-
-  {
-  return ((__m128 )__A);
-}
-}
-__inline extern __m128d ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_castsi128_pd)(__m128i __A ) 
-{ 
-
-
-  {
-  return ((__m128d )__A);
-}
-}
-extern int ( /* missing proto */  __builtin_ia32_pause)() ;
-__inline extern void ( __attribute__((__gnu_inline__, __artificial__, __always_inline__)) _mm_pause)(void) 
-{ 
-
-
-  {
-  __builtin_ia32_pause();
-  return;
-}
-}
-extern cl_int clGetPlatformIDs(cl_uint num_entries , cl_platform_id *platforms , cl_uint *num_platforms ) ;
-extern cl_int clGetPlatformInfo(cl_platform_id platform , cl_platform_info param_name ,
-                                size_t param_value_size , void *param_value , size_t *param_value_size_ret ) ;
-extern cl_int clGetDeviceIDs(cl_platform_id platform , cl_device_type device_type ,
-                             cl_uint num_entries , cl_device_id *devices , cl_uint *num_devices ) ;
-extern cl_int clGetDeviceInfo(cl_device_id device , cl_device_info param_name , size_t param_value_size ,
-                              void *param_value , size_t *param_value_size_ret ) ;
-extern cl_context clCreateContext(cl_context_properties const   *properties , cl_uint num_devices ,
-                                  cl_device_id const   *devices , void (*pfn_notify)(char const   *errinfo ,
-                                                                                     void const   *private_info ,
-                                                                                     size_t cb ,
-                                                                                     void *user_data ) ,
-                                  void *user_data , cl_int *errcode_ret ) ;
-extern cl_int clReleaseContext(cl_context context ) ;
-extern cl_int clReleaseCommandQueue(cl_command_queue command_queue ) ;
-extern cl_mem clCreateBuffer(cl_context context , cl_mem_flags flags , size_t size ,
-                             void *host_ptr , cl_int *errcode_ret ) ;
-extern cl_int clRetainMemObject(cl_mem memobj ) ;
-extern cl_int clReleaseMemObject(cl_mem memobj ) ;
-extern cl_program clCreateProgramWithSource(cl_context context , cl_uint count , char const   **strings ,
-                                            size_t const   *lengths , cl_int *errcode_ret ) ;
-extern cl_program clCreateProgramWithBinary(cl_context context , cl_uint num_devices ,
-                                            cl_device_id const   *device_list , size_t const   *lengths ,
-                                            unsigned char const   **binaries , cl_int *binary_status ,
-                                            cl_int *errcode_ret ) ;
-extern cl_int clReleaseProgram(cl_program program ) ;
-extern cl_int clBuildProgram(cl_program program , cl_uint num_devices , cl_device_id const   *device_list ,
-                             char const   *options , void (*pfn_notify)(cl_program program ,
-                                                                        void *user_data ) ,
-                             void *user_data ) ;
-extern cl_int clGetProgramInfo(cl_program program , cl_program_info param_name , size_t param_value_size ,
-                               void *param_value , size_t *param_value_size_ret ) ;
-extern cl_int clGetProgramBuildInfo(cl_program program , cl_device_id device , cl_program_build_info param_name ,
-                                    size_t param_value_size , void *param_value ,
-                                    size_t *param_value_size_ret ) ;
-extern cl_kernel clCreateKernel(cl_program program , char const   *kernel_name , cl_int *errcode_ret ) ;
-extern cl_int clReleaseKernel(cl_kernel kernel ) ;
-extern cl_int clSetKernelArg(cl_kernel kernel , cl_uint arg_index , size_t arg_size ,
-                             void const   *arg_value ) ;
-extern cl_int clWaitForEvents(cl_uint num_events , cl_event const   *event_list ) ;
-extern cl_int clReleaseEvent(cl_event event ) ;
-extern cl_int clEnqueueWriteBuffer(cl_command_queue command_queue , cl_mem buffer ,
-                                   cl_bool blocking_write , size_t offset , size_t size ,
-                                   void const   *ptr , cl_uint num_events_in_wait_list ,
-                                   cl_event const   *event_wait_list , cl_event *event ) ;
-extern void *clEnqueueMapBuffer(cl_command_queue command_queue , cl_mem buffer , cl_bool blocking_map ,
-                                cl_map_flags map_flags , size_t offset , size_t size ,
-                                cl_uint num_events_in_wait_list , cl_event const   *event_wait_list ,
-                                cl_event *event , cl_int *errcode_ret ) ;
-extern cl_int clEnqueueUnmapMemObject(cl_command_queue command_queue , cl_mem memobj ,
-                                      void *mapped_ptr , cl_uint num_events_in_wait_list ,
-                                      cl_event const   *event_wait_list , cl_event *event ) ;
-extern cl_int clEnqueueNDRangeKernel(cl_command_queue command_queue , cl_kernel kernel ,
-                                     cl_uint work_dim , size_t const   *global_work_offset ,
-                                     size_t const   *global_work_size , size_t const   *local_work_size ,
-                                     cl_uint num_events_in_wait_list , cl_event const   *event_wait_list ,
-                                     cl_event *event ) ;
-extern cl_command_queue clCreateCommandQueue(cl_context context , cl_device_id device ,
-                                             cl_command_queue_properties properties ,
-                                             cl_int *errcode_ret )  __attribute__((__deprecated__)) ;
-extern  __attribute__((__nothrow__)) int *( __attribute__((__leaf__)) __errno_location)(void)  __attribute__((__const__)) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1), __leaf__)) unlink)(char const   *__name ) ;
-int vg_output_timing(vg_context_t *vcp , int cycle , struct timeval *last ) ;
-int vg_context_hash160_sort(vg_context_t *vcp , void *buf ) ;
-void vg_context_thread_exit(vg_context_t *vcp ) ;
-int vg_exec_context_init(vg_context_t *vcp , vg_exec_context_t *vxcp ) ;
-void vg_exec_context_del(vg_exec_context_t *vxcp ) ;
-void vg_exec_context_calc_address(vg_exec_context_t *vxcp ) ;
-void vg_exec_context_downgrade_lock(vg_exec_context_t *vxcp ) ;
-int vg_exec_context_upgrade_lock(vg_exec_context_t *vxcp ) ;
-void vg_exec_context_yield(vg_exec_context_t *vxcp ) ;
-void vg_ocl_context_free(vg_ocl_context_t *vocp ) ;
-void fdumphex(FILE *fp , unsigned char const   *src , size_t len ) ;
-void fdumpbn(FILE *fp , BIGNUM const   *bn ) ;
-static void vg_ocl_free_args(vg_ocl_context_t *vocp ) ;
-static void *vg_opencl_loop(vg_exec_context_t *arg ) ;
-void vg_exec_downgrade_lock(vg_exec_context_t *vxcp ) 
-{ 
-
-
-  {
-  return;
-}
-}
-int vg_exec_upgrade_lock(vg_exec_context_t *vxcp ) 
-{ 
-
-
-  {
-  return (0);
-}
-}
-static char tmp[64]  ;
-static char const   *vg_ocl_strerror(cl_int ret ) 
-{ 
-
-
-  {
-  switch (ret) {
-  case 0: 
-  return ("CL_SUCCESS");
-  case -1: 
-  return ("CL_DEVICE_NOT_FOUND");
-  case -2: 
-  return ("CL_DEVICE_NOT_AVAILABLE");
-  case -3: 
-  return ("CL_COMPILER_NOT_AVAILABLE");
-  case -4: 
-  return ("CL_MEM_OBJECT_ALLOCATION_FAILURE");
-  case -5: 
-  return ("CL_OUT_OF_RESOURCES");
-  case -6: 
-  return ("CL_OUT_OF_HOST_MEMORY");
-  case -7: 
-  return ("CL_PROFILING_INFO_NOT_AVAILABLE");
-  case -8: 
-  return ("CL_MEM_COPY_OVERLAP");
-  case -9: 
-  return ("CL_IMAGE_FORMAT_MISMATCH");
-  case -10: 
-  return ("CL_IMAGE_FORMAT_NOT_SUPPORTED");
-  case -11: 
-  return ("CL_BUILD_PROGRAM_FAILURE");
-  case -12: 
-  return ("CL_MAP_FAILURE");
-  case -13: 
-  return ("CL_MISALIGNED_SUB_BUFFER_OFFSET");
-  case -14: 
-  return ("CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST");
-  case -30: 
-  return ("CL_INVALID_VALUE");
-  case -31: 
-  return ("CL_INVALID_DEVICE_TYPE");
-  case -32: 
-  return ("CL_INVALID_PLATFORM");
-  case -33: 
-  return ("CL_INVALID_DEVICE");
-  case -34: 
-  return ("CL_INVALID_CONTEXT");
-  case -35: 
-  return ("CL_INVALID_QUEUE_PROPERTIES");
-  case -36: 
-  return ("CL_INVALID_COMMAND_QUEUE");
-  case -37: 
-  return ("CL_INVALID_HOST_PTR");
-  case -38: 
-  return ("CL_INVALID_MEM_OBJECT");
-  case -39: 
-  return ("CL_INVALID_IMAGE_FORMAT_DESCRIPTOR");
-  case -40: 
-  return ("CL_INVALID_IMAGE_SIZE");
-  case -41: 
-  return ("CL_INVALID_SAMPLER");
-  case -42: 
-  return ("CL_INVALID_BINARY");
-  case -43: 
-  return ("CL_INVALID_BUILD_OPTIONS");
-  case -44: 
-  return ("CL_INVALID_PROGRAM");
-  case -45: 
-  return ("CL_INVALID_PROGRAM_EXECUTABLE");
-  case -46: 
-  return ("CL_INVALID_KERNEL_NAME");
-  case -47: 
-  return ("CL_INVALID_KERNEL_DEFINITION");
-  case -48: 
-  return ("CL_INVALID_KERNEL");
-  case -49: 
-  return ("CL_INVALID_ARG_INDEX");
-  case -50: 
-  return ("CL_INVALID_ARG_VALUE");
-  case -51: 
-  return ("CL_INVALID_ARG_SIZE");
-  case -52: 
-  return ("CL_INVALID_KERNEL_ARGS");
-  case -53: 
-  return ("CL_INVALID_WORK_DIMENSION");
-  case -54: 
-  return ("CL_INVALID_WORK_GROUP_SIZE");
-  case -55: 
-  return ("CL_INVALID_WORK_ITEM_SIZE");
-  case -56: 
-  return ("CL_INVALID_GLOBAL_OFFSET");
-  case -57: 
-  return ("CL_INVALID_EVENT_WAIT_LIST");
-  case -58: 
-  return ("CL_INVALID_EVENT");
-  case -59: 
-  return ("CL_INVALID_OPERATION");
-  case -60: 
-  return ("CL_INVALID_GL_OBJECT");
-  case -61: 
-  return ("CL_INVALID_BUFFER_SIZE");
-  case -62: 
-  return ("CL_INVALID_MIP_LEVEL");
-  case -63: 
-  return ("CL_INVALID_GLOBAL_WORK_SIZE");
-  case -64: 
-  return ("CL_INVALID_PROPERTY");
-  default: 
-  snprintf((char * __restrict  )(tmp), sizeof(tmp), (char const   * __restrict  )"Unknown code %d",
-           ret);
-  return ((char const   *)(tmp));
-  }
-}
-}
-static char platform_str[1024]  ;
-static char const   *vg_ocl_platform_getstr(cl_platform_id pid , cl_platform_info param ) 
-{ 
-  cl_int ret ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetPlatformInfo(pid, param, sizeof(platform_str), (void *)(platform_str),
-                          & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    snprintf((char * __restrict  )(platform_str), sizeof(platform_str), (char const   * __restrict  )"clGetPlatformInfo(%d): %s",
-             param, tmp___0);
-  }
-  return ((char const   *)(platform_str));
-}
-}
-static cl_platform_id vg_ocl_device_getplatform(cl_device_id did ) 
-{ 
-  cl_int ret ;
-  cl_platform_id val ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, (cl_device_info )4145, sizeof(val), (void *)(& val),
-                        & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clGetDeviceInfo(CL_DEVICE_PLATFORM): %s",
-            tmp___0);
-  }
-  return (val);
-}
-}
-static cl_device_type vg_ocl_device_gettype(cl_device_id did ) 
-{ 
-  cl_int ret ;
-  cl_device_type val ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, (cl_device_info )4096, sizeof(val), (void *)(& val),
-                        & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clGetDeviceInfo(CL_DEVICE_TYPE): %s",
-            tmp___0);
-  }
-  return (val);
-}
-}
-static char device_str[1024]  ;
-static char const   *vg_ocl_device_getstr(cl_device_id did , cl_device_info param ) 
-{ 
-  cl_int ret ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, param, sizeof(device_str), (void *)(device_str), & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    snprintf((char * __restrict  )(device_str), sizeof(device_str), (char const   * __restrict  )"clGetDeviceInfo(%d): %s",
-             param, tmp___0);
-  }
-  return ((char const   *)(device_str));
-}
-}
-static size_t vg_ocl_device_getsizet(cl_device_id did , cl_device_info param ) 
-{ 
-  cl_int ret ;
-  size_t val ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, param, sizeof(val), (void *)(& val), & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clGetDeviceInfo(%d): %s",
-            param, tmp___0);
-  }
-  return (val);
-}
-}
-static cl_ulong vg_ocl_device_getulong(cl_device_id did , cl_device_info param ) 
-{ 
-  cl_int ret ;
-  cl_ulong val ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, param, sizeof(val), (void *)(& val), & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clGetDeviceInfo(%d): %s",
-            param, tmp___0);
-  }
-  return (val);
-}
-}
-static cl_uint vg_ocl_device_getuint(cl_device_id did , cl_device_info param ) 
-{ 
-  cl_int ret ;
-  cl_uint val ;
-  size_t size_ret ;
-  char const   *tmp___0 ;
-
-  {
-  ret = clGetDeviceInfo(did, param, sizeof(val), (void *)(& val), & size_ret);
-  if (ret != 0) {
-    tmp___0 = vg_ocl_strerror(ret);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clGetDeviceInfo(%d): %s",
-            param, tmp___0);
-  }
-  return (val);
-}
-}
-void vg_ocl_dump_info(vg_ocl_context_t *vocp ) 
-{ 
-  cl_device_id did ;
-  char const   *tmp___0 ;
-  cl_uint tmp___1 ;
-  char const   *tmp___2 ;
-  char const   *tmp___3 ;
-  char const   *tmp___4 ;
-  char const   *tmp___5 ;
-  size_t tmp___6 ;
-  size_t tmp___7 ;
-  cl_ulong tmp___8 ;
-  cl_ulong tmp___9 ;
-
-  {
-  if (vocp->base.vxc_vc) {
-    if ((vocp->base.vxc_vc)->vc_verbose < 1) {
-      return;
-    }
-  }
-  if (vocp->voc_dump_done) {
-    return;
-  }
-  did = vocp->voc_ocldid;
-  tmp___0 = vg_ocl_device_getstr(did, (cl_device_info )4139);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Device: %s\n",
-          tmp___0);
-  tmp___1 = vg_ocl_device_getuint(did, (cl_device_info )4097);
-  tmp___2 = vg_ocl_device_getstr(did, (cl_device_info )4140);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Vendor: %s (%04x)\n",
-          tmp___2, tmp___1);
-  tmp___3 = vg_ocl_device_getstr(did, (cl_device_info )4141);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Driver: %s\n",
-          tmp___3);
-  tmp___4 = vg_ocl_device_getstr(did, (cl_device_info )4142);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Profile: %s\n",
-          tmp___4);
-  tmp___5 = vg_ocl_device_getstr(did, (cl_device_info )4143);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Version: %s\n",
-          tmp___5);
-  tmp___6 = vg_ocl_device_getsizet(did, (cl_device_info )4098);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Max compute units: %zd\n",
-          tmp___6);
-  tmp___7 = vg_ocl_device_getsizet(did, (cl_device_info )4100);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Max workgroup size: %zd\n",
-          tmp___7);
-  tmp___8 = vg_ocl_device_getulong(did, (cl_device_info )4127);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Global memory: %ld\n",
-          tmp___8);
-  tmp___9 = vg_ocl_device_getulong(did, (cl_device_info )4112);
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Max allocation: %ld\n",
-          tmp___9);
-  vocp->voc_dump_done = 1;
-  return;
-}
-}
-void vg_ocl_error(vg_ocl_context_t *vocp , int code , char const   *desc ) 
-{ 
-  char const   *err ;
-  char const   *tmp___0 ;
-
-  {
-  tmp___0 = vg_ocl_strerror(code);
-  err = tmp___0;
-  if (desc) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"%s: %s\n",
-            desc, err);
-  } else {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"%s\n", err);
-  }
-  if (vocp) {
-    if (vocp->voc_ocldid) {
-      vg_ocl_dump_info(vocp);
-    }
-  }
-  return;
-}
-}
-static void vg_ocl_buildlog(vg_ocl_context_t *vocp , cl_program prog ) 
-{ 
-  size_t logbufsize ;
-  size_t logsize ;
-  char *log___0 ;
-  int off ;
-  cl_int ret ;
-  void *tmp___0 ;
-
-  {
-  off = 0;
-  ret = clGetProgramBuildInfo(prog, vocp->voc_ocldid, (cl_program_build_info )4483,
-                              (size_t )0, (void *)0, & logbufsize);
-  if (ret != 0) {
-    vg_ocl_error((vg_ocl_context_t *)((void *)0), ret, "clGetProgramBuildInfo");
-    return;
-  }
-  tmp___0 = malloc(logbufsize);
-  log___0 = (char *)tmp___0;
-  if (! log___0) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Could not allocate build log buffer\n");
-    return;
-  }
-  ret = clGetProgramBuildInfo(prog, vocp->voc_ocldid, (cl_program_build_info )4483,
-                              logbufsize, (void *)log___0, & logsize);
-  if (ret != 0) {
-    vg_ocl_error((vg_ocl_context_t *)((void *)0), ret, "clGetProgramBuildInfo");
-  } else {
-    *(log___0 + (logbufsize - 1UL)) = (char )'\000';
-    off = (int )(logsize - 1UL);
-    while (off >= 0) {
-      if ((int )*(log___0 + off) != 13) {
-        if ((int )*(log___0 + off) != 10) {
-          if ((int )*(log___0 + off) != 32) {
-            if ((int )*(log___0 + off) != 9) {
-              if ((int )*(log___0 + off) != 0) {
-                break;
-              }
-            }
-          }
-        }
-      }
-      *(log___0 + off) = (char )'\000';
-      off --;
-    }
-    off = 0;
-    while ((size_t )off < logbufsize) {
-      if ((int )*(log___0 + off) != 13) {
-        if ((int )*(log___0 + off) != 10) {
-          break;
-        }
-      }
-      off ++;
-    }
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Build log:\n%s\n",
-            log___0 + off);
-  }
-  free((void *)log___0);
-  return;
-}
-}
-static int vg_ocl_get_quirks(vg_ocl_context_t *vocp ) 
-{ 
-  uint32_t vend ;
-  char const   *dvn ;
-  unsigned int quirks ;
-  char *tmp___0 ;
-  int tmp___1 ;
-  cl_device_type tmp___2 ;
-
-  {
-  quirks = 0U;
-  quirks |= 1U;
-  vend = vg_ocl_device_getuint(vocp->voc_ocldid, (cl_device_info )4097);
-  switch (vend) {
-  case 4318U: 
-  quirks &= 4294967294U;
-  quirks |= 2U;
-  quirks |= 32U;
-  break;
-  case 4098U: 
-  tmp___2 = vg_ocl_device_gettype(vocp->voc_ocldid);
-  if (tmp___2 & (unsigned long )(1 << 2)) {
-    quirks |= 4U;
-    quirks |= 8U;
-    dvn = vg_ocl_device_getstr(vocp->voc_ocldid, (cl_device_info )4144);
-    if (dvn) {
-      tmp___0 = strstr(dvn, "cl_amd_media_ops");
-      if (tmp___0) {
-        quirks |= 16U;
-      }
-    }
-    dvn = vg_ocl_device_getstr(vocp->voc_ocldid, (cl_device_info )4139);
-    tmp___1 = strcmp(dvn, "ATI RV710");
-    if (! tmp___1) {
-      quirks &= 4294967264U;
-      quirks |= 128U;
-    }
-  }
-  break;
-  default: 
-  break;
-  }
-  return ((int )quirks);
-}
-}
-static int vg_ocl_create_kernel(vg_ocl_context_t *vocp , int knum , char const   *func ) 
-{ 
-  int i ;
-  cl_kernel krn ;
-  cl_int ret ;
-
-  {
-  i = 0;
-  while (i < 2) {
-    krn = clCreateKernel(vocp->voc_oclprog, func, & ret);
-    if (! krn) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clCreateKernel(%d): ",
-              i);
-      vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-      while (1) {
-        i --;
-        if (! (i >= 0)) {
-          break;
-        }
-        clReleaseKernel(vocp->voc_oclkernel[i][knum]);
-        vocp->voc_oclkernel[i][knum] = (cl_kernel )((void *)0);
-      }
-      return (0);
-    }
-    vocp->voc_oclkernel[i][knum] = krn;
-    vocp->voc_oclkrnwait[i] = (cl_event )((void *)0);
-    i ++;
-  }
-  return (1);
-}
-}
-static void vg_ocl_hash_program(vg_ocl_context_t *vocp , char const   *opts , char const   *program ,
-                                size_t size , unsigned char *hash_out ) 
-{ 
-  EVP_MD_CTX *mdctx ;
-  cl_platform_id pid ;
-  char const   *str ;
-  EVP_MD const   *tmp___0 ;
-  size_t tmp___1 ;
-  size_t tmp___2 ;
-  size_t tmp___3 ;
-  size_t tmp___4 ;
-
-  {
-  mdctx = EVP_MD_CTX_create();
-  tmp___0 = EVP_md5();
-  EVP_DigestInit_ex(mdctx, tmp___0, (ENGINE *)((void *)0));
-  pid = vg_ocl_device_getplatform(vocp->voc_ocldid);
-  str = vg_ocl_platform_getstr(pid, (cl_platform_info )2306);
-  tmp___1 = strlen(str);
-  EVP_DigestUpdate(mdctx, (void const   *)str, tmp___1 + 1UL);
-  str = vg_ocl_platform_getstr(pid, (cl_platform_info )2305);
-  tmp___2 = strlen(str);
-  EVP_DigestUpdate(mdctx, (void const   *)str, tmp___2 + 1UL);
-  str = vg_ocl_device_getstr(vocp->voc_ocldid, (cl_device_info )4139);
-  tmp___3 = strlen(str);
-  EVP_DigestUpdate(mdctx, (void const   *)str, tmp___3 + 1UL);
-  if (opts) {
-    tmp___4 = strlen(opts);
-    EVP_DigestUpdate(mdctx, (void const   *)opts, tmp___4 + 1UL);
-  }
-  if (size) {
-    EVP_DigestUpdate(mdctx, (void const   *)program, size);
-  }
-  EVP_DigestFinal_ex(mdctx, hash_out, (unsigned int *)((void *)0));
-  EVP_MD_CTX_destroy(mdctx);
-  return;
-}
-}
-static int vg_ocl_amd_patch_inner(unsigned char *binary , size_t size ) 
-{ 
-  vg_elf32_header_t *ehp ;
-  vg_elf32_shdr_t *shp ;
-  vg_elf32_shdr_t *nshp ;
-  uint32_t *instr ;
-  size_t off ;
-  int i ;
-  int n ;
-  int txt2idx ;
-  int patched ;
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  ehp = (vg_elf32_header_t *)binary;
-  if (size < sizeof(*ehp)) {
-    return (0);
-  } else {
-    tmp___0 = memcmp((void const   *)(ehp->e_ident), (void const   *)"\177ELF\001\001\001d",
-                     (size_t )8);
-    if (tmp___0) {
-      return (0);
-    } else
-    if (! ehp->e_shoff) {
-      return (0);
-    }
-  }
-  off = (size_t )(ehp->e_shoff + (uint32_t )((int )ehp->e_shstrndx * (int )ehp->e_shentsize));
-  nshp = (vg_elf32_shdr_t *)(binary + off);
-  if (off + sizeof(*nshp) > size) {
-    return (0);
-  }
-  shp = (vg_elf32_shdr_t *)(binary + ehp->e_shoff);
-  n = 0;
-  txt2idx = 0;
-  i = 0;
-  while (i < (int )ehp->e_shnum) {
-    off = (size_t )(nshp->sh_offset + (shp + i)->sh_name);
-    if (off + 6UL >= size) {
-      goto __Cont;
-    } else {
-      tmp___1 = memcmp((void const   *)(binary + off), (void const   *)".text", (size_t )6);
-      if (tmp___1) {
-        goto __Cont;
-      }
-    }
-    n ++;
-    if (n == 2) {
-      txt2idx = i;
-    }
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  if (n != 2) {
-    return (0);
-  }
-  off = (size_t )(shp + txt2idx)->sh_offset;
-  instr = (uint32_t *)(binary + off);
-  n = (int )((shp + txt2idx)->sh_size / 4U);
-  patched = 0;
-  i = 0;
-  while (i < n) {
-    if ((*(instr + i) & 33558528U) == 0U) {
-      if ((*(instr + (i + 1)) & 2416177152U) == 106496U) {
-        *(instr + (i + 1)) ^= 90112U;
-        patched ++;
-      }
-    }
-    i += 2;
-  }
-  return (patched);
-}
-}
-static int vg_ocl_amd_patch(vg_ocl_context_t *vocp , unsigned char *binary , size_t size ) 
-{ 
-  vg_context_t *vcp ;
-  vg_elf32_header_t *ehp ;
-  unsigned char *ptr ;
-  size_t offset ;
-  int ninner ;
-  int nrun ;
-  int npatched ;
-  int tmp___0 ;
-  void *tmp___1 ;
-  int tmp___2 ;
-
-  {
-  vcp = vocp->base.vxc_vc;
-  offset = (size_t )1;
-  ninner = 0;
-  npatched = 0;
-  ehp = (vg_elf32_header_t *)binary;
-  if (size < sizeof(*ehp)) {
-    return (0);
-  } else {
-    tmp___0 = memcmp((void const   *)(ehp->e_ident), (void const   *)"\177ELF\001\001\001\000",
-                     (size_t )8);
-    if (tmp___0) {
-      return (0);
-    } else
-    if (! ehp->e_shoff) {
-      return (0);
-    }
-  }
-  offset = (size_t )1;
-  while (offset < size - 8UL) {
-    tmp___1 = memchr((void const   *)(binary + offset), 127, size - offset);
-    ptr = (unsigned char *)tmp___1;
-    if (! ptr) {
-      return (npatched);
-    }
-    offset = (size_t )(ptr - binary);
-    ehp = (vg_elf32_header_t *)ptr;
-    if (size - offset < sizeof(*ehp)) {
-      offset ++;
-      continue;
-    } else {
-      tmp___2 = memcmp((void const   *)(ehp->e_ident), (void const   *)"\177ELF\001\001\001d",
-                       (size_t )8);
-      if (tmp___2) {
-        offset ++;
-        continue;
-      } else
-      if (! ehp->e_shoff) {
-        offset ++;
-        continue;
-      }
-    }
-    ninner ++;
-    nrun = vg_ocl_amd_patch_inner(ptr, size - offset);
-    npatched += nrun;
-    if (vcp->vc_verbose > 1) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"AMD BFI_INT: patched %d instructions in kernel %d\n",
-              nrun, ninner);
-    }
-    npatched ++;
-    offset ++;
-  }
-  return (npatched);
-}
-}
-static int vg_ocl_load_program(vg_context_t *vcp , vg_ocl_context_t *vocp , char const   *filename ,
-                               char const   *opts ) 
-{ 
-  FILE *kfp ;
-  char *buf ;
-  char *tbuf ;
-  int len ;
-  int fromsource ;
-  int patched ;
-  size_t sz ;
-  size_t szr ;
-  cl_program prog ;
-  cl_int ret ;
-  cl_int sts ;
-  unsigned char prog_hash[16] ;
-  char bin_name[64] ;
-  char const   *tmp___0 ;
-  void *tmp___1 ;
-  int *tmp___2 ;
-  char *tmp___3 ;
-  size_t tmp___4 ;
-  size_t tmp___5 ;
-  void *tmp___6 ;
-  int tmp___7 ;
-  void *tmp___8 ;
-  int *tmp___9 ;
-  char *tmp___10 ;
-  int tmp___11 ;
-  int tmp___12 ;
-
-  {
-  fromsource = 0;
-  patched = 0;
-  if (vcp->vc_verbose > 1) {
-    if (opts) {
-      tmp___0 = opts;
-    } else {
-      tmp___0 = "";
-    }
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"OpenCL compiler flags: %s\n",
-            tmp___0);
-  }
-  sz = (size_t )131072;
-  tmp___1 = malloc(sz);
-  buf = (char *)tmp___1;
-  if (! buf) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Could not allocate program buffer\n");
-    return (0);
-  }
-  kfp = fopen((char const   * __restrict  )filename, (char const   * __restrict  )"r");
-  if (! kfp) {
-    tmp___2 = __errno_location();
-    tmp___3 = strerror(*tmp___2);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Error loading kernel file \'%s\': %s\n",
-            filename, tmp___3);
-    free((void *)buf);
-    return (0);
-  }
-  tmp___4 = fread((void * __restrict  )buf, (size_t )1, sz, (FILE * __restrict  )kfp);
-  len = (int )tmp___4;
-  fclose(kfp);
-  if (! len) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Short read on CL kernel\n");
-    free((void *)buf);
-    return (0);
-  }
-  vg_ocl_hash_program(vocp, opts, (char const   *)buf, (size_t )len, prog_hash);
-  snprintf((char * __restrict  )(bin_name), sizeof(bin_name), (char const   * __restrict  )"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x.oclbin",
-           (int )prog_hash[0], (int )prog_hash[1], (int )prog_hash[2], (int )prog_hash[3],
-           (int )prog_hash[4], (int )prog_hash[5], (int )prog_hash[6], (int )prog_hash[7],
-           (int )prog_hash[8], (int )prog_hash[9], (int )prog_hash[10], (int )prog_hash[11],
-           (int )prog_hash[12], (int )prog_hash[13], (int )prog_hash[14], (int )prog_hash[15]);
-  if (vocp->voc_quirks & 128) {
-    kfp = (FILE *)((void *)0);
-    if (vcp->vc_verbose > 1) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Binary OpenCL programs disabled\n");
-    }
-  } else {
-    kfp = fopen((char const   * __restrict  )(bin_name), (char const   * __restrict  )"rb");
-  }
-  if (! kfp) {
-    fromsource = 1;
-    sz = (size_t )len;
-    prog = clCreateProgramWithSource(vocp->voc_oclctx, (cl_uint )1, (char const   **)(& buf),
-                                     (size_t const   *)(& sz), & ret);
-  } else {
-    if (vcp->vc_verbose > 1) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Loading kernel binary %s\n",
-              bin_name);
-    }
-    szr = (size_t )0;
-    while (1) {
-      tmp___7 = feof(kfp);
-      if (tmp___7) {
-        break;
-      }
-      tmp___5 = fread((void * __restrict  )(buf + szr), (size_t )1, sz - szr, (FILE * __restrict  )kfp);
-      len = (int )tmp___5;
-      if (! len) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Short read on CL kernel binary\n");
-        fclose(kfp);
-        free((void *)buf);
-        return (0);
-      }
-      szr += (size_t )len;
-      if (szr == sz) {
-        tmp___6 = realloc((void *)buf, sz * 2UL);
-        tbuf = (char *)tmp___6;
-        if (! tbuf) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Could not expand CL kernel binary buffer\n");
-          fclose(kfp);
-          free((void *)buf);
-          return (0);
-        }
-        buf = tbuf;
-        sz *= 2UL;
-      }
-    }
-    fclose(kfp);
-    rebuild: 
-    prog = clCreateProgramWithBinary(vocp->voc_oclctx, (cl_uint )1, (cl_device_id const   *)(& vocp->voc_ocldid),
-                                     (size_t const   *)(& szr), (unsigned char const   **)(& buf),
-                                     & sts, & ret);
-  }
-  free((void *)buf);
-  if (! prog) {
-    vg_ocl_error(vocp, ret, "clCreateProgramWithSource");
-    return (0);
-  }
-  if (vcp->vc_verbose > 0) {
-    if (fromsource) {
-      if (! patched) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Compiling kernel, can take minutes...");
-        fflush(stderr);
-      }
-    }
-  }
-  ret = clBuildProgram(prog, (cl_uint )1, (cl_device_id const   *)(& vocp->voc_ocldid),
-                       opts, (void (*)(cl_program program , void *user_data ))((void *)0),
-                       (void *)0);
-  if (ret != 0) {
-    if (vcp->vc_verbose > 0) {
-      if (fromsource) {
-        if (! patched) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"failure.\n");
-        }
-      }
-    }
-    vg_ocl_error((vg_ocl_context_t *)((void *)0), ret, "clBuildProgram");
-  } else
-  if (vcp->vc_verbose > 0) {
-    if (fromsource) {
-      if (! patched) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"done!\n");
-      }
-    }
-  }
-  if (ret != 0) {
-    vg_ocl_buildlog(vocp, prog);
-  } else
-  if (vcp->vc_verbose > 1) {
-    if (fromsource) {
-      if (! patched) {
-        vg_ocl_buildlog(vocp, prog);
-      }
-    }
-  }
-  if (ret != 0) {
-    vg_ocl_dump_info(vocp);
-    clReleaseProgram(prog);
-    return (0);
-  }
-  if (fromsource) {
-    if (! (vocp->voc_quirks & 128)) {
-      ret = clGetProgramInfo(prog, (cl_program_info )4453, sizeof(szr), (void *)(& szr),
-                             & sz);
-      if (ret != 0) {
-        vg_ocl_error(vocp, ret, "WARNING: clGetProgramInfo(BINARY_SIZES)");
-        goto out;
-      }
-      if (sz == 0UL) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: zero-length CL kernel binary\n");
-        goto out;
-      }
-      tmp___8 = malloc(szr);
-      buf = (char *)tmp___8;
-      if (! buf) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: Could not allocate %zd bytes for CL binary\n",
-                szr);
-        goto out;
-      }
-      ret = clGetProgramInfo(prog, (cl_program_info )4454, sizeof(buf), (void *)(& buf),
-                             & sz);
-      if (ret != 0) {
-        vg_ocl_error(vocp, ret, "WARNING: clGetProgramInfo(BINARIES)");
-        free((void *)buf);
-        goto out;
-      }
-      if (vocp->voc_quirks & 16) {
-        if (! patched) {
-          patched = vg_ocl_amd_patch(vocp, (unsigned char *)buf, szr);
-          if (patched > 0) {
-            if (vcp->vc_verbose > 1) {
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"AMD BFI_INT patch complete\n");
-            }
-            clReleaseProgram(prog);
-            goto rebuild;
-          }
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: AMD BFI_INT patching failed\n");
-          if (patched < 0) {
-            free((void *)buf);
-            goto out;
-          }
-        }
-      }
-      kfp = fopen((char const   * __restrict  )(bin_name), (char const   * __restrict  )"wb");
-      if (! kfp) {
-        tmp___9 = __errno_location();
-        tmp___10 = strerror(*tmp___9);
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: could not save CL kernel binary: %s\n",
-                tmp___10);
-      } else {
-        sz = fwrite((void const   * __restrict  )buf, (size_t )1, szr, (FILE * __restrict  )kfp);
-        fclose(kfp);
-        if (sz != szr) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: short write on CL kernel binary file: expected %zd, got %zd\n",
-                  szr, sz);
-          unlink((char const   *)(bin_name));
-        }
-      }
-      free((void *)buf);
-    }
-  }
-  out: 
-  vocp->voc_oclprog = prog;
-  tmp___11 = vg_ocl_create_kernel(vocp, 0, "ec_add_grid");
-  if (tmp___11) {
-    tmp___12 = vg_ocl_create_kernel(vocp, 1, "heap_invert");
-    if (! tmp___12) {
-      clReleaseProgram(vocp->voc_oclprog);
-      vocp->voc_oclprog = (cl_program )((void *)0);
-      return (0);
-    }
-  } else {
-    clReleaseProgram(vocp->voc_oclprog);
-    vocp->voc_oclprog = (cl_program )((void *)0);
-    return (0);
-  }
-  return (1);
-}
-}
-static void vg_ocl_context_callback(char const   *errinfo , void const   *private_info ,
-                                    size_t cb , void *user_data ) 
-{ 
-
-
-  {
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"vg_ocl_context_callback error: %s\n",
-          errinfo);
-  return;
-}
-}
-static int vg_ocl_init(vg_context_t *vcp , vg_ocl_context_t *vocp , cl_device_id did ,
-                       int safe_mode ) 
-{ 
-  cl_int ret ;
-  char optbuf[128] ;
-  int end ;
-  char yesbuf[16] ;
-  char *tmp___0 ;
-  int tmp___1 ;
-  int tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-  int tmp___6 ;
-  int tmp___7 ;
-  int tmp___8 ;
-
-  {
-  end = 0;
-  memset((void *)vocp, 0, sizeof(*vocp));
-  vg_exec_context_init(vcp, & vocp->base);
-  vocp->base.vxc_threadfunc = & vg_opencl_loop;
-  pthread_mutex_init(& vocp->voc_lock, (pthread_mutexattr_t const   *)((void *)0));
-  pthread_cond_init((pthread_cond_t * __restrict  )(& vocp->voc_wait), (pthread_condattr_t const   * __restrict  )((void *)0));
-  vocp->voc_ocl_slot = -1;
-  vocp->voc_ocldid = did;
-  if (vcp->vc_verbose > 1) {
-    vg_ocl_dump_info(vocp);
-  }
-  vocp->voc_quirks = vg_ocl_get_quirks(vocp);
-  if (vocp->voc_quirks & 64) {
-    if (vcp->vc_verbose > 0) {
-      printf((char const   * __restrict  )"Type \'yes\' to continue: ");
-      fflush(stdout);
-      tmp___0 = fgets((char * __restrict  )(yesbuf), (int )sizeof(yesbuf), (FILE * __restrict  )stdin);
-      if (tmp___0) {
-        tmp___1 = strncmp((char const   *)(yesbuf), "yes", (size_t )3);
-        if (tmp___1) {
-          exit(1);
-        }
-      } else {
-        exit(1);
-      }
-    }
-  }
-  vocp->voc_oclctx = clCreateContext((cl_context_properties const   *)((void *)0),
-                                     (cl_uint )1, (cl_device_id const   *)(& did),
-                                     & vg_ocl_context_callback, (void *)0, & ret);
-  if (! vocp->voc_oclctx) {
-    vg_ocl_error(vocp, ret, "clCreateContext");
-    return (0);
-  }
-  vocp->voc_oclcmdq = clCreateCommandQueue(vocp->voc_oclctx, vocp->voc_ocldid, (cl_command_queue_properties )0,
-                                           & ret);
-  if (! vocp->voc_oclcmdq) {
-    vg_ocl_error(vocp, ret, "clCreateCommandQueue");
-    return (0);
-  }
-  if (safe_mode) {
-    vocp->voc_quirks &= -32;
-  }
-  end = 0;
-  optbuf[end] = (char )'\000';
-  if (vocp->voc_quirks & 1) {
-    tmp___2 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-DDEEP_PREPROC_UNROLL ");
-    end += tmp___2;
-  }
-  if (vocp->voc_quirks & 2) {
-    tmp___3 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-DPRAGMA_UNROLL ");
-    end += tmp___3;
-  }
-  if (vocp->voc_quirks & 4) {
-    tmp___4 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-DVERY_EXPENSIVE_BRANCHES ");
-    end += tmp___4;
-  }
-  if (vocp->voc_quirks & 8) {
-    tmp___5 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-DDEEP_VLIW ");
-    end += tmp___5;
-  }
-  if (vocp->voc_quirks & 16) {
-    tmp___6 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-DAMD_BFI_INT ");
-    end += tmp___6;
-  }
-  if (vocp->voc_quirks & 32) {
-    tmp___7 = snprintf((char * __restrict  )(optbuf + end), sizeof(optbuf) - (unsigned long )end,
-                       (char const   * __restrict  )"-cl-nv-verbose ");
-    end += tmp___7;
-  }
-  tmp___8 = vg_ocl_load_program(vcp, vocp, "calc_addrs.cl", (char const   *)(optbuf));
-  if (! tmp___8) {
-    return (0);
-  }
-  return (1);
-}
-}
-static void vg_ocl_del(vg_ocl_context_t *vocp ) 
-{ 
-
-
-  {
-  vg_ocl_free_args(vocp);
-  if (vocp->voc_oclprog) {
-    clReleaseProgram(vocp->voc_oclprog);
-    vocp->voc_oclprog = (cl_program )((void *)0);
-  }
-  if (vocp->voc_oclcmdq) {
-    clReleaseCommandQueue(vocp->voc_oclcmdq);
-    vocp->voc_oclcmdq = (cl_command_queue )((void *)0);
-  }
-  if (vocp->voc_oclctx) {
-    clReleaseContext(vocp->voc_oclctx);
-    vocp->voc_oclctx = (cl_context )((void *)0);
-  }
-  pthread_cond_destroy(& vocp->voc_wait);
-  pthread_mutex_destroy(& vocp->voc_lock);
-  vg_exec_context_del(& vocp->base);
-  return;
-}
-}
-static int vg_ocl_arg_map[6][8]  = { {        2,        0,        -1}, 
-   {        0,        1,        1,        0, 
-            2,        2,        -1}, 
-   {        0,        0,        2,        1, 
-            -1}, 
-   {        0,        2,        -1}, 
-   {        0,        3,        -1}, 
-   {        2,        3,        -1}};
-static int vg_ocl_kernel_arg_alloc(vg_ocl_context_t *vocp , int slot , int arg , size_t size ,
-                                   int host ) 
-{ 
-  cl_mem clbuf ;
-  cl_int ret ;
-  int i ;
-  int j ;
-  int knum ;
-  int karg ;
-  int tmp___0 ;
-
-  {
-  i = 0;
-  while (i < 2) {
-    if (i != slot) {
-      if (slot >= 0) {
-        goto __Cont;
-      }
-    }
-    if (vocp->voc_args[i][arg]) {
-      clReleaseMemObject(vocp->voc_args[i][arg]);
-      vocp->voc_args[i][arg] = (cl_mem )((void *)0);
-      vocp->voc_arg_size[i][arg] = (size_t )0;
-    }
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  if (host) {
-    tmp___0 = 1 << 4;
-  } else {
-    tmp___0 = 0;
-  }
-  clbuf = clCreateBuffer(vocp->voc_oclctx, (cl_mem_flags )(1 | tmp___0), size, (void *)0,
-                         & ret);
-  if (! clbuf) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clCreateBuffer(%d,%d): ",
-            slot, arg);
-    vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-    return (0);
-  }
-  i = 0;
-  while (i < 2) {
-    if (i != slot) {
-      if (slot >= 0) {
-        goto __Cont___0;
-      }
-    }
-    clRetainMemObject(clbuf);
-    vocp->voc_args[i][arg] = clbuf;
-    vocp->voc_arg_size[i][arg] = size;
-    j = 0;
-    while (vg_ocl_arg_map[arg][j] >= 0) {
-      knum = vg_ocl_arg_map[arg][j];
-      karg = vg_ocl_arg_map[arg][j + 1];
-      ret = clSetKernelArg(vocp->voc_oclkernel[i][knum], (cl_uint )karg, sizeof(clbuf),
-                           (void const   *)(& clbuf));
-      if (ret) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clSetKernelArg(%d,%d): ",
-                knum, karg);
-        vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-        return (0);
-      }
-      j += 2;
-    }
-    __Cont___0: /* CIL Label */ 
-    i ++;
-  }
-  clReleaseMemObject(clbuf);
-  return (1);
-}
-}
-int vg_ocl_copyout_arg(vg_ocl_context_t *vocp , int wslot , int arg , void *buffer ,
-                       size_t size ) 
-{ 
-  cl_int slot ;
-  cl_int ret ;
-
-  {
-  if (wslot < 0) {
-    slot = 0;
-  } else {
-    slot = wslot;
-  }
-  if (slot >= 0) {
-    if (! (slot < 2)) {
-      __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1048U, "vg_ocl_copyout_arg");
-    }
-  } else {
-    __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1048U, "vg_ocl_copyout_arg");
-  }
-  if (! (size <= vocp->voc_arg_size[slot][arg])) {
-    __assert_fail("size <= vocp->voc_arg_size[slot][arg]", "oclengine.c", 1049U, "vg_ocl_copyout_arg");
-  }
-  ret = clEnqueueWriteBuffer(vocp->voc_oclcmdq, vocp->voc_args[slot][arg], (cl_bool )1,
-                             (size_t )0, size, (void const   *)buffer, (cl_uint )0,
-                             (cl_event const   *)((void *)0), (cl_event *)((void *)0));
-  if (ret) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clEnqueueWriteBuffer(%d): ",
-            arg);
-    vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-    return (0);
-  }
-  return (1);
-}
-}
-static void *vg_ocl_map_arg_buffer(vg_ocl_context_t *vocp , int slot , int arg , int rw ) 
-{ 
-  void *buf ;
-  cl_int ret ;
-  int tmp___1 ;
-  int tmp___2 ;
-
-  {
-  if (slot >= 0) {
-    if (! (slot < 2)) {
-      __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1075U, "vg_ocl_map_arg_buffer");
-    }
-  } else {
-    __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1075U, "vg_ocl_map_arg_buffer");
-  }
-  if (rw == 2) {
-    tmp___2 = 1 | (1 << 1);
-  } else {
-    if (rw) {
-      tmp___1 = 1 << 1;
-    } else {
-      tmp___1 = 1;
-    }
-    tmp___2 = tmp___1;
-  }
-  buf = clEnqueueMapBuffer(vocp->voc_oclcmdq, vocp->voc_args[slot][arg], (cl_bool )1,
-                           (cl_map_flags )tmp___2, (size_t )0, vocp->voc_arg_size[slot][arg],
-                           (cl_uint )0, (cl_event const   *)((void *)0), (cl_event *)((void *)0),
-                           & ret);
-  if (! buf) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clEnqueueMapBuffer(%d): ",
-            arg);
-    vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-    return ((void *)0);
-  }
-  return (buf);
-}
-}
-static void vg_ocl_unmap_arg_buffer(vg_ocl_context_t *vocp , int slot , int arg ,
-                                    void *buf ) 
-{ 
-  cl_int ret ;
-  cl_event ev ;
-
-  {
-  if (slot >= 0) {
-    if (! (slot < 2)) {
-      __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1101U, "vg_ocl_unmap_arg_buffer");
-    }
-  } else {
-    __assert_fail("(slot >= 0) && (slot < MAX_SLOT)", "oclengine.c", 1101U, "vg_ocl_unmap_arg_buffer");
-  }
-  ret = clEnqueueUnmapMemObject(vocp->voc_oclcmdq, vocp->voc_args[slot][arg], buf,
-                                (cl_uint )0, (cl_event const   *)((void *)0), & ev);
-  if (ret != 0) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clEnqueueUnmapMemObject(%d): ",
-            arg);
-    vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-    return;
-  }
-  ret = clWaitForEvents((cl_uint )1, (cl_event const   *)(& ev));
-  clReleaseEvent(ev);
-  if (ret != 0) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clWaitForEvent(clUnmapMemObject,%d): ",
-            arg);
-    vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-  }
-  return;
-}
-}
-int vg_ocl_kernel_int_arg(vg_ocl_context_t *vocp , int slot , int arg , int value ) 
-{ 
-  cl_int ret ;
-  int i ;
-
-  {
-  i = 0;
-  while (i < 2) {
-    if (i != slot) {
-      if (slot >= 0) {
-        goto __Cont;
-      }
-    }
-    ret = clSetKernelArg(vocp->voc_oclkernel[i][2], (cl_uint )arg, sizeof(value),
-                         (void const   *)(& value));
-    if (ret) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clSetKernelArg(%d): ",
-              arg);
-      vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-      return (0);
-    }
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  return (1);
-}
-}
-int vg_ocl_kernel_buffer_arg(vg_ocl_context_t *vocp , int slot , int arg , void *value ,
-                             size_t size ) 
-{ 
-  cl_int ret ;
-  int i ;
-  int j ;
-  int knum ;
-  int karg ;
-
-  {
-  i = 0;
-  while (i < 2) {
-    if (i != slot) {
-      if (slot >= 0) {
-        goto __Cont;
-      }
-    }
-    j = 0;
-    while (vg_ocl_arg_map[arg][j] >= 0) {
-      knum = vg_ocl_arg_map[arg][j];
-      karg = vg_ocl_arg_map[arg][j + 1];
-      ret = clSetKernelArg(vocp->voc_oclkernel[i][knum], (cl_uint )karg, size, (void const   *)value);
-      if (ret) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"clSetKernelArg(%d,%d): ",
-                knum, karg);
-        vg_ocl_error(vocp, ret, (char const   *)((void *)0));
-        return (0);
-      }
-      j += 2;
-    }
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  return (1);
-}
-}
-static void vg_ocl_free_args(vg_ocl_context_t *vocp ) 
-{ 
-  int i ;
-  int arg ;
-
-  {
-  i = 0;
-  while (i < 2) {
-    arg = 0;
-    while (arg < 6) {
-      if (vocp->voc_args[i][arg]) {
-        clReleaseMemObject(vocp->voc_args[i][arg]);
-        vocp->voc_args[i][arg] = (cl_mem )((void *)0);
-        vocp->voc_arg_size[i][arg] = (size_t )0;
-      }
-      arg ++;
-    }
-    i ++;
-  }
-  return;
-}
-}
-int vg_ocl_kernel_dead(vg_ocl_context_t *vocp , int slot ) 
-{ 
-
-
-  {
-  return ((unsigned long )vocp->voc_oclkrnwait[slot] == (unsigned long )((void *)0));
-}
-}
-static int vg_ocl_kernel_start(vg_ocl_context_t *vocp , int slot , int ncol , int nrow ,
-                               int invsize ) 
-{ 
-  cl_int val ;
-  cl_int ret ;
-  cl_event ev ;
-  size_t globalws[2] ;
-  size_t invws ;
-  int tmp___2 ;
-  int tmp___3 ;
-
-  {
-  globalws[0] = (size_t )ncol;
-  globalws[1] = (size_t )nrow;
-  invws = (size_t )((ncol * nrow) / invsize);
-  if (! (! vocp->voc_oclkrnwait[slot])) {
-    __assert_fail("!vocp->voc_oclkrnwait[slot]", "oclengine.c", 1203U, "vg_ocl_kernel_start");
-  }
-  if (! (invsize & (invsize - 1))) {
-    if (! (invsize > 1)) {
-      __assert_fail("is_pow2(invsize) && (invsize > 1)", "oclengine.c", 1206U, "vg_ocl_kernel_start");
-    }
-  } else {
-    __assert_fail("is_pow2(invsize) && (invsize > 1)", "oclengine.c", 1206U, "vg_ocl_kernel_start");
-  }
-  val = invsize;
-  ret = clSetKernelArg(vocp->voc_oclkernel[slot][1], (cl_uint )1, sizeof(val), (void const   *)(& val));
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clSetKernelArg(ncol)");
-    return (0);
-  }
-  ret = clEnqueueNDRangeKernel(vocp->voc_oclcmdq, vocp->voc_oclkernel[slot][0], (cl_uint )2,
-                               (size_t const   *)((void *)0), (size_t const   *)(globalws),
-                               (size_t const   *)((void *)0), (cl_uint )0, (cl_event const   *)((void *)0),
-                               & ev);
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clEnqueueNDRange(0)");
-    return (0);
-  }
-  ret = clWaitForEvents((cl_uint )1, (cl_event const   *)(& ev));
-  clReleaseEvent(ev);
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clWaitForEvents(NDRange,0)");
-    return (0);
-  }
-  if (vocp->voc_verify_func[0]) {
-    tmp___2 = (*(vocp->voc_verify_func[0]))(vocp, slot);
-    if (! tmp___2) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Kernel 0 failed verification test\n");
-      return (0);
-    }
-  }
-  ret = clEnqueueNDRangeKernel(vocp->voc_oclcmdq, vocp->voc_oclkernel[slot][1], (cl_uint )1,
-                               (size_t const   *)((void *)0), (size_t const   *)(& invws),
-                               (size_t const   *)((void *)0), (cl_uint )0, (cl_event const   *)((void *)0),
-                               & ev);
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clEnqueueNDRange(1)");
-    return (0);
-  }
-  ret = clWaitForEvents((cl_uint )1, (cl_event const   *)(& ev));
-  clReleaseEvent(ev);
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clWaitForEvents(NDRange,1)");
-    return (0);
-  }
-  if (vocp->voc_verify_func[1]) {
-    tmp___3 = (*(vocp->voc_verify_func[1]))(vocp, slot);
-    if (! tmp___3) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Kernel 1 failed verification test\n");
-      return (0);
-    }
-  }
-  ret = clEnqueueNDRangeKernel(vocp->voc_oclcmdq, vocp->voc_oclkernel[slot][2], (cl_uint )2,
-                               (size_t const   *)((void *)0), (size_t const   *)(globalws),
-                               (size_t const   *)((void *)0), (cl_uint )0, (cl_event const   *)((void *)0),
-                               & ev);
-  if (ret != 0) {
-    vg_ocl_error(vocp, ret, "clEnqueueNDRange(2)");
-    return (0);
-  }
-  vocp->voc_oclkrnwait[slot] = ev;
-  return (1);
-}
-}
-static int vg_ocl_kernel_wait(vg_ocl_context_t *vocp , int slot ) 
-{ 
-  cl_event ev ;
-  cl_int ret ;
-
-  {
-  ev = vocp->voc_oclkrnwait[slot];
-  vocp->voc_oclkrnwait[slot] = (cl_event )((void *)0);
-  if (ev) {
-    ret = clWaitForEvents((cl_uint )1, (cl_event const   *)(& ev));
-    clReleaseEvent(ev);
-    if (ret != 0) {
-      vg_ocl_error(vocp, ret, "clWaitForEvents(NDRange,e)");
-      return (0);
-    }
-  }
-  return (1);
-}
-}
-__inline static void vg_ocl_get_bignum_raw(BIGNUM *bn , unsigned char const   *buf ) 
-{ 
-
-
-  {
-  if (! (4 <= bn->dmax)) {
-    bn_expand2(bn, 4);
-  }
-  memcpy((void * __restrict  )bn->d, (void const   * __restrict  )buf, (size_t )32);
-  bn->top = (int )(32UL / sizeof(unsigned long ));
-  return;
-}
-}
-__inline static void vg_ocl_put_bignum_raw(unsigned char *buf , BIGNUM const   *bn ) 
-{ 
-  int bnlen ;
-
-  {
-  bnlen = (int )((unsigned long )bn->top * sizeof(unsigned long ));
-  if (bnlen >= 32) {
-    memcpy((void * __restrict  )buf, (void const   * __restrict  )bn->d, (size_t )32);
-  } else {
-    memcpy((void * __restrict  )buf, (void const   * __restrict  )bn->d, (size_t )bnlen);
-    memset((void *)(buf + bnlen), 0, (size_t )(32 - bnlen));
-  }
-  return;
-}
-}
-static void vg_ocl_get_bignum_tpa(BIGNUM *bn , unsigned char const   *buf , int cell ) 
-{ 
-  unsigned char bnbuf[32] ;
-  int start ;
-  int i ;
-
-  {
-  start = (cell / 128) * 1024 + cell % 128;
-  i = 0;
-  while (i < 8) {
-    memcpy((void * __restrict  )(bnbuf + i * 4), (void const   * __restrict  )(buf + 4 * (start + i * 128)),
-           (size_t )4);
-    i ++;
-  }
-  vg_ocl_get_bignum_raw(bn, (unsigned char const   *)(bnbuf));
-  return;
-}
-}
-__inline static void vg_ocl_get_point(EC_POINT *ppnt , unsigned char const   *buf ) ;
-static unsigned char const   mont_one[5]  = {      (unsigned char const   )1,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )3, 
-        (unsigned char const   )209};
-__inline static void vg_ocl_get_point(EC_POINT *ppnt , unsigned char const   *buf ) 
-{ 
-
-
-  {
-  vg_ocl_get_bignum_raw(& ppnt->X, buf);
-  vg_ocl_get_bignum_raw(& ppnt->Y, buf + 32);
-  if (! ppnt->Z_is_one) {
-    ppnt->Z_is_one = 1;
-    BN_bin2bn(mont_one, (int )sizeof(mont_one), & ppnt->Z);
-  }
-  return;
-}
-}
-__inline static void vg_ocl_put_point(unsigned char *buf , EC_POINT const   *ppnt ) 
-{ 
-
-
-  {
-  if (! ppnt->Z_is_one) {
-    __assert_fail("ppnt->Z_is_one", "oclengine.c", 1368U, "vg_ocl_put_point");
-  }
-  vg_ocl_put_bignum_raw(buf, & ppnt->X);
-  vg_ocl_put_bignum_raw(buf + 32, & ppnt->Y);
-  return;
-}
-}
-static void vg_ocl_put_point_tpa(unsigned char *buf , int cell , EC_POINT const   *ppnt ) 
-{ 
-  unsigned char pntbuf[64] ;
-  int start ;
-  int i ;
-
-  {
-  vg_ocl_put_point(pntbuf, ppnt);
-  start = ((2 * cell) / 128) * 1024 + cell % 64;
-  i = 0;
-  while (i < 8) {
-    memcpy((void * __restrict  )(buf + 4 * (start + i * 128)), (void const   * __restrict  )(pntbuf + i * 4),
-           (size_t )4);
-    i ++;
-  }
-  i = 0;
-  while (i < 8) {
-    memcpy((void * __restrict  )(buf + 4 * ((start + 64) + i * 128)), (void const   * __restrict  )((pntbuf + 32) + i * 4),
-           (size_t )4);
-    i ++;
-  }
-  return;
-}
-}
-static void vg_ocl_get_point_tpa(EC_POINT *ppnt , unsigned char const   *buf , int cell ) 
-{ 
-  unsigned char pntbuf[64] ;
-  int start ;
-  int i ;
-
-  {
-  start = ((2 * cell) / 128) * 1024 + cell % 64;
-  i = 0;
-  while (i < 8) {
-    memcpy((void * __restrict  )(pntbuf + i * 4), (void const   * __restrict  )(buf + 4 * (start + i * 128)),
-           (size_t )4);
-    i ++;
-  }
-  i = 0;
-  while (i < 8) {
-    memcpy((void * __restrict  )((pntbuf + 32) + i * 4), (void const   * __restrict  )(buf + 4 * ((start + 64) + i * 128)),
-           (size_t )4);
-    i ++;
-  }
-  vg_ocl_get_point(ppnt, (unsigned char const   *)(pntbuf));
-  return;
-}
-}
-void show_elapsed(struct timeval *tv , char const   *place ) 
-{ 
-  struct timeval now ;
-  struct timeval delta ;
-
-  {
-  gettimeofday((struct timeval * __restrict  )(& now), (void * __restrict  )((void *)0));
-  while (1) {
-    delta.tv_sec = now.tv_sec - tv->tv_sec;
-    delta.tv_usec = now.tv_usec - tv->tv_usec;
-    if (delta.tv_usec < 0L) {
-      (delta.tv_sec) --;
-      delta.tv_usec += 1000000L;
-    }
-    break;
-  }
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"%s spent %ld.%06lds\n",
-          place, delta.tv_sec, delta.tv_usec);
-  return;
-}
-}
-static int vg_ocl_gethash_check(vg_ocl_context_t *vocp , int slot ) 
-{ 
-  vg_exec_context_t *vxcp ;
-  vg_context_t *vcp ;
-  int (*test_func)(vg_exec_context_t * ) ;
-  unsigned char *ocl_hashes_out ;
-  int i ;
-  int res ;
-  int round___0 ;
-  void *tmp___0 ;
-
-  {
-  vxcp = & vocp->base;
-  vcp = vocp->base.vxc_vc;
-  test_func = vcp->vc_test;
-  res = 0;
-  tmp___0 = vg_ocl_map_arg_buffer(vocp, slot, 0, 0);
-  ocl_hashes_out = (unsigned char *)tmp___0;
-  if (! ocl_hashes_out) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map hash result buffer for slot %d\n",
-            slot);
-    return (2);
-  }
-  round___0 = vocp->voc_ocl_cols * vocp->voc_ocl_rows;
-  i = 0;
-  while (i < round___0) {
-    memcpy((void * __restrict  )(& vxcp->vxc_binres[1]), (void const   * __restrict  )(ocl_hashes_out + 20 * i),
-           (size_t )20);
-    res = (*test_func)(vxcp);
-    if (res) {
-      break;
-    }
-    i ++;
-    (vxcp->vxc_delta) ++;
-  }
-  vg_ocl_unmap_arg_buffer(vocp, slot, 0, (void *)ocl_hashes_out);
-  return (res);
-}
-}
-static int vg_ocl_gethash_init(vg_ocl_context_t *vocp ) 
-{ 
-  int i ;
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = vg_ocl_create_kernel(vocp, 2, "hash_ec_point_get");
-  if (! tmp___0) {
-    return (0);
-  }
-  i = 0;
-  while (i < vocp->voc_nslots) {
-    tmp___1 = vg_ocl_kernel_arg_alloc(vocp, i, 0, (size_t )((20 * vocp->voc_ocl_rows) * vocp->voc_ocl_cols),
-                                      1);
-    if (! tmp___1) {
-      return (0);
-    }
-    i ++;
-  }
-  vocp->voc_rekey_func = (int (*)(struct _vg_ocl_context_s * ))((void *)0);
-  vocp->voc_check_func = & vg_ocl_gethash_check;
-  return (1);
-}
-}
-static int vg_ocl_prefix_rekey(vg_ocl_context_t *vocp ) 
-{ 
-  vg_context_t *vcp ;
-  unsigned char *ocl_targets_in ;
-  uint32_t *ocl_found_out ;
-  int i ;
-  void *tmp___0 ;
-  int tmp___1 ;
-  void *tmp___2 ;
-
-  {
-  vcp = vocp->base.vxc_vc;
-  i = 0;
-  while (i < vocp->voc_nslots) {
-    tmp___0 = vg_ocl_map_arg_buffer(vocp, i, 0, 1);
-    ocl_found_out = (uint32_t *)tmp___0;
-    if (! ocl_found_out) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map result buffer for slot %d (rekey)\n",
-              i);
-      return (-1);
-    }
-    *(ocl_found_out + 0) = 4294967295U;
-    vg_ocl_unmap_arg_buffer(vocp, i, 0, (void *)ocl_found_out);
-    i ++;
-  }
-  if (vocp->voc_pattern_rewrite) {
-    i = vg_context_hash160_sort(vcp, (void *)0);
-    if (! i) {
-      return (0);
-    }
-    if (i > vocp->voc_pattern_alloc) {
-      tmp___1 = vg_ocl_kernel_arg_alloc(vocp, -1, 5, (size_t )(40 * i), 0);
-      if (! tmp___1) {
-        return (-1);
-      }
-      vocp->voc_pattern_alloc = i;
-    }
-    tmp___2 = vg_ocl_map_arg_buffer(vocp, 0, 5, 1);
-    ocl_targets_in = (unsigned char *)tmp___2;
-    if (! ocl_targets_in) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map hash target buffer\n");
-      return (-1);
-    }
-    vg_context_hash160_sort(vcp, (void *)ocl_targets_in);
-    vg_ocl_unmap_arg_buffer(vocp, 0, 5, (void *)ocl_targets_in);
-    vg_ocl_kernel_int_arg(vocp, -1, 4, i);
-    vocp->voc_pattern_rewrite = 0;
-  }
-  return (1);
-}
-}
-static int vg_ocl_prefix_check(vg_ocl_context_t *vocp , int slot ) 
-{ 
-  vg_exec_context_t *vxcp ;
-  vg_context_t *vcp ;
-  int (*test_func)(vg_exec_context_t * ) ;
-  uint32_t *ocl_found_out ;
-  uint32_t found_delta ;
-  int orig_delta ;
-  int tablesize ;
-  int res ;
-  void *tmp___0 ;
-  int tmp___1 ;
-
-  {
-  vxcp = & vocp->base;
-  vcp = vocp->base.vxc_vc;
-  test_func = vcp->vc_test;
-  res = 0;
-  tmp___0 = vg_ocl_map_arg_buffer(vocp, slot, 0, 2);
-  ocl_found_out = (uint32_t *)tmp___0;
-  if (! ocl_found_out) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map result buffer for slot %d\n",
-            slot);
-    return (2);
-  }
-  found_delta = *(ocl_found_out + 0);
-  if (found_delta != 4294967295U) {
-    orig_delta = vxcp->vxc_delta;
-    vxcp->vxc_delta = (int )((uint32_t )vxcp->vxc_delta + found_delta);
-    vg_exec_context_calc_address(vxcp);
-    res = 0;
-    tmp___1 = memcmp((void const   *)(vxcp->vxc_binres + 1), (void const   *)(ocl_found_out + 2),
-                     (size_t )20);
-    if (! tmp___1) {
-      res = (*test_func)(vxcp);
-    }
-    if (res == 0) {
-      tablesize = (int )*(ocl_found_out + 2);
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Match idx: %d\n",
-              *(ocl_found_out + 1));
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"CPU hash: ");
-      fdumphex(stderr, (unsigned char const   *)(vxcp->vxc_binres + 1), (size_t )20);
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"GPU hash: ");
-      fdumphex(stderr, (unsigned char const   *)((unsigned char *)(ocl_found_out + 2)),
-               (size_t )20);
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Found delta: %d Start delta: %d\n",
-              found_delta, orig_delta);
-      res = 1;
-    }
-  } else {
-    vxcp->vxc_delta += vocp->voc_ocl_cols * vocp->voc_ocl_rows;
-  }
-  vg_ocl_unmap_arg_buffer(vocp, slot, 0, (void *)ocl_found_out);
-  return (res);
-}
-}
-static int vg_ocl_prefix_init(vg_ocl_context_t *vocp ) 
-{ 
-  int i ;
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  tmp___0 = vg_ocl_create_kernel(vocp, 2, "hash_ec_point_search_prefix");
-  if (! tmp___0) {
-    return (0);
-  }
-  i = 0;
-  while (i < vocp->voc_nslots) {
-    tmp___1 = vg_ocl_kernel_arg_alloc(vocp, i, 0, (size_t )28, 1);
-    if (! tmp___1) {
-      return (0);
-    }
-    i ++;
-  }
-  vocp->voc_rekey_func = & vg_ocl_prefix_rekey;
-  vocp->voc_check_func = & vg_ocl_prefix_check;
-  vocp->voc_pattern_rewrite = 1;
-  vocp->voc_pattern_alloc = 0;
-  return (1);
-}
-}
-static int vg_ocl_config_pattern(vg_ocl_context_t *vocp ) 
-{ 
-  vg_context_t *vcp ;
-  int i ;
-  int tmp___0 ;
-  int tmp___1 ;
-
-  {
-  vcp = vocp->base.vxc_vc;
-  i = vg_context_hash160_sort(vcp, (void *)0);
-  if (i > 0) {
-    if (vcp->vc_verbose > 1) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Using OpenCL prefix matcher\n");
-    }
-    tmp___0 = vg_ocl_prefix_init(vocp);
-    return (tmp___0);
-  }
-  if (vcp->vc_verbose > 0) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: Using CPU pattern matcher\n");
-  }
-  tmp___1 = vg_ocl_gethash_init(vocp);
-  return (tmp___1);
-}
-}
-static int vg_ocl_verify_temporary(vg_ocl_context_t *vocp , int slot , int z_inverted ) ;
-static unsigned char const   raw_modulus[32]  = 
-  {      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )254, 
-        (unsigned char const   )255,      (unsigned char const   )255,      (unsigned char const   )252,      (unsigned char const   )47};
-static int vg_ocl_verify_temporary(vg_ocl_context_t *vocp , int slot , int z_inverted ) 
-{ 
-  vg_exec_context_t *vxcp ;
-  unsigned char *point_tmp ;
-  unsigned char *z_heap ;
-  unsigned char *ocl_points_in ;
-  unsigned char *ocl_strides_in ;
-  EC_GROUP const   *pgroup ;
-  EC_POINT *ppr ;
-  EC_POINT *ppc ;
-  EC_POINT *pps ;
-  EC_POINT *ppt ;
-  BIGNUM bnz ;
-  BIGNUM bnez ;
-  BIGNUM bnm ;
-  BIGNUM *bnzc ;
-  BN_CTX *bnctx ;
-  BN_MONT_CTX *bnmont ;
-  int ret ;
-  int mismatches ;
-  int mm_r ;
-  int x ;
-  int y ;
-  int bx ;
-  void *tmp___0 ;
-  void *tmp___1 ;
-  void *tmp___2 ;
-  void *tmp___3 ;
-  BIGNUM const   *tmp___6 ;
-  int tmp___7 ;
-  int tmp___8 ;
-  int tmp___9 ;
-  int tmp___10 ;
-  int tmp___11 ;
-  int tmp___12 ;
-
-  {
-  vxcp = & vocp->base;
-  point_tmp = (unsigned char *)((void *)0);
-  z_heap = (unsigned char *)((void *)0);
-  ocl_points_in = (unsigned char *)((void *)0);
-  ocl_strides_in = (unsigned char *)((void *)0);
-  ppr = (EC_POINT *)((void *)0);
-  ppc = (EC_POINT *)((void *)0);
-  pps = (EC_POINT *)((void *)0);
-  ppt = (EC_POINT *)((void *)0);
-  bnctx = (BN_CTX *)((void *)0);
-  ret = 0;
-  mismatches = 0;
-  BN_init(& bnz);
-  BN_init(& bnez);
-  BN_init(& bnm);
-  bnctx = BN_CTX_new();
-  bnmont = BN_MONT_CTX_new();
-  pgroup = EC_KEY_get0_group((EC_KEY const   *)vxcp->vxc_key);
-  ppr = EC_POINT_new(pgroup);
-  ppc = EC_POINT_new(pgroup);
-  pps = EC_POINT_new(pgroup);
-  ppt = EC_POINT_new(pgroup);
-  if (! bnctx) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  } else
-  if (! bnmont) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  } else
-  if (! ppr) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  } else
-  if (! ppc) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  } else
-  if (! pps) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  } else
-  if (! ppt) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: out of memory\n");
-    goto out;
-  }
-  BN_bin2bn(raw_modulus, (int )sizeof(raw_modulus), & bnm);
-  BN_MONT_CTX_set(bnmont, (BIGNUM const   *)(& bnm), bnctx);
-  if (z_inverted) {
-    bnzc = & bnez;
-  } else {
-    bnzc = & pps->Z;
-  }
-  tmp___0 = vg_ocl_map_arg_buffer(vocp, slot, 1, 0);
-  z_heap = (unsigned char *)tmp___0;
-  tmp___1 = vg_ocl_map_arg_buffer(vocp, slot, 2, 0);
-  point_tmp = (unsigned char *)tmp___1;
-  tmp___2 = vg_ocl_map_arg_buffer(vocp, slot, 3, 0);
-  ocl_points_in = (unsigned char *)tmp___2;
-  tmp___3 = vg_ocl_map_arg_buffer(vocp, slot, 4, 0);
-  ocl_strides_in = (unsigned char *)tmp___3;
-  if (! z_heap) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: could not map OpenCL point buffers\n");
-    goto out;
-  } else
-  if (! point_tmp) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: could not map OpenCL point buffers\n");
-    goto out;
-  } else
-  if (! ocl_points_in) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: could not map OpenCL point buffers\n");
-    goto out;
-  } else
-  if (! ocl_strides_in) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: could not map OpenCL point buffers\n");
-    goto out;
-  }
-  y = 0;
-  while (y < vocp->voc_ocl_rows) {
-    vg_ocl_get_point(ppr, (unsigned char const   *)(ocl_strides_in + 64 * y));
-    bx = y * vocp->voc_ocl_cols;
-    mm_r = 0;
-    x = 0;
-    while (x < vocp->voc_ocl_cols) {
-      vg_ocl_get_point_tpa(ppc, (unsigned char const   *)ocl_points_in, x);
-      if (ppr->Z_is_one) {
-        if (! ppc->Z_is_one) {
-          __assert_fail("ppr->Z_is_one && ppc->Z_is_one", "oclengine.c", 1718U, "vg_ocl_verify_temporary");
-        }
-      } else {
-        __assert_fail("ppr->Z_is_one && ppc->Z_is_one", "oclengine.c", 1718U, "vg_ocl_verify_temporary");
-      }
-      EC_POINT_add(pgroup, pps, (EC_POINT const   *)ppc, (EC_POINT const   *)ppr,
-                   bnctx);
-      if (! (! pps->Z_is_one)) {
-        __assert_fail("!pps->Z_is_one", "oclengine.c", 1720U, "vg_ocl_verify_temporary");
-      }
-      vg_ocl_get_point_tpa(ppt, (unsigned char const   *)point_tmp, bx + x);
-      vg_ocl_get_bignum_tpa(& bnz, (unsigned char const   *)z_heap, bx + x);
-      if (z_inverted) {
-        BN_mod_inverse(& bnez, (BIGNUM const   *)(& pps->Z), (BIGNUM const   *)(& bnm),
-                       bnctx);
-        BN_mod_mul_montgomery(& bnez, (BIGNUM const   *)(& bnez), (BIGNUM const   *)(& bnmont->RR),
-                              bnmont, bnctx);
-        BN_mod_mul_montgomery(& bnez, (BIGNUM const   *)(& bnez), (BIGNUM const   *)(& bnmont->RR),
-                              bnmont, bnctx);
-      }
-      tmp___10 = BN_cmp((BIGNUM const   *)(& ppt->X), (BIGNUM const   *)(& pps->X));
-      if (tmp___10) {
-        goto _L;
-      } else {
-        tmp___11 = BN_cmp((BIGNUM const   *)(& ppt->Y), (BIGNUM const   *)(& pps->Y));
-        if (tmp___11) {
-          goto _L;
-        } else {
-          tmp___12 = BN_cmp((BIGNUM const   *)(& bnz), (BIGNUM const   *)bnzc);
-          if (tmp___12) {
-            _L: /* CIL Label */ 
-            if (! mismatches) {
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Base privkey: ");
-              tmp___6 = EC_KEY_get0_private_key((EC_KEY const   *)vxcp->vxc_key);
-              fdumpbn(stderr, tmp___6);
-            }
-            mismatches ++;
-            fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Mismatch for kernel %d, offset %d (%d,%d)\n",
-                    z_inverted, bx + x, y, x);
-            if (! mm_r) {
-              mm_r = 1;
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Row X   : ");
-              fdumpbn(stderr, (BIGNUM const   *)(& ppr->X));
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Row Y   : ");
-              fdumpbn(stderr, (BIGNUM const   *)(& ppr->Y));
-            }
-            fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Column X: ");
-            fdumpbn(stderr, (BIGNUM const   *)(& ppc->X));
-            fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Column Y: ");
-            fdumpbn(stderr, (BIGNUM const   *)(& ppc->Y));
-            tmp___7 = BN_cmp((BIGNUM const   *)(& ppt->X), (BIGNUM const   *)(& pps->X));
-            if (tmp___7) {
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Expect X: ");
-              fdumpbn(stderr, (BIGNUM const   *)(& pps->X));
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Device X: ");
-              fdumpbn(stderr, (BIGNUM const   *)(& ppt->X));
-            }
-            tmp___8 = BN_cmp((BIGNUM const   *)(& ppt->Y), (BIGNUM const   *)(& pps->Y));
-            if (tmp___8) {
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Expect Y: ");
-              fdumpbn(stderr, (BIGNUM const   *)(& pps->Y));
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Device Y: ");
-              fdumpbn(stderr, (BIGNUM const   *)(& ppt->Y));
-            }
-            tmp___9 = BN_cmp((BIGNUM const   *)(& bnz), (BIGNUM const   *)bnzc);
-            if (tmp___9) {
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Expect Z: ");
-              fdumpbn(stderr, (BIGNUM const   *)bnzc);
-              fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Device Z: ");
-              fdumpbn(stderr, (BIGNUM const   *)(& bnz));
-            }
-          }
-        }
-      }
-      x ++;
-    }
-    y ++;
-  }
-  ret = ! mismatches;
-  out: 
-  if (z_heap) {
-    vg_ocl_unmap_arg_buffer(vocp, slot, 1, (void *)z_heap);
-  }
-  if (point_tmp) {
-    vg_ocl_unmap_arg_buffer(vocp, slot, 2, (void *)point_tmp);
-  }
-  if (ocl_points_in) {
-    vg_ocl_unmap_arg_buffer(vocp, slot, 3, (void *)ocl_points_in);
-  }
-  if (ocl_strides_in) {
-    vg_ocl_unmap_arg_buffer(vocp, slot, 4, (void *)ocl_strides_in);
-  }
-  if (ppr) {
-    EC_POINT_free(ppr);
-  }
-  if (ppc) {
-    EC_POINT_free(ppc);
-  }
-  if (pps) {
-    EC_POINT_free(pps);
-  }
-  if (ppt) {
-    EC_POINT_free(ppt);
-  }
-  BN_clear_free(& bnz);
-  BN_clear_free(& bnez);
-  BN_clear_free(& bnm);
-  if (bnmont) {
-    BN_MONT_CTX_free(bnmont);
-  }
-  if (bnctx) {
-    BN_CTX_free(bnctx);
-  }
-  return (ret);
-}
-}
-static int vg_ocl_verify_k0(vg_ocl_context_t *vocp , int slot ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = vg_ocl_verify_temporary(vocp, slot, 0);
-  return (tmp___0);
-}
-}
-static int vg_ocl_verify_k1(vg_ocl_context_t *vocp , int slot ) 
-{ 
-  int tmp___0 ;
-
-  {
-  tmp___0 = vg_ocl_verify_temporary(vocp, slot, 1);
-  return (tmp___0);
-}
-}
-static void *vg_opencl_thread(void *arg ) 
-{ 
-  vg_ocl_context_t *vocp ;
-  vg_context_t *vcp ;
-  int halt ;
-  int slot ;
-  int rows ;
-  int cols ;
-  int invsize ;
-  unsigned long long idleu ;
-  unsigned long long busyu ;
-  double pidle ;
-  struct timeval tv ;
-  struct timeval tvt ;
-  struct timeval tvd ;
-  struct timeval idle ;
-  struct timeval busy ;
-  int tmp___1 ;
-  int tmp___2 ;
-
-  {
-  vocp = (vg_ocl_context_t *)arg;
-  vcp = vocp->base.vxc_vc;
-  halt = 0;
-  slot = -1;
-  memset((void *)(& idle), 0, sizeof(idle));
-  memset((void *)(& busy), 0, sizeof(busy));
-  while (1) {
-    pthread_mutex_lock(& vocp->voc_lock);
-    if (halt) {
-      halt = 0;
-      vocp->voc_halt = 1;
-    }
-    if (slot != -1) {
-      if (! (vocp->voc_ocl_slot == slot)) {
-        __assert_fail("vocp->voc_ocl_slot == slot", "oclengine.c", 1838U, "vg_opencl_thread");
-      }
-      vocp->voc_ocl_slot = -1;
-      slot = -1;
-      pthread_cond_signal(& vocp->voc_wait);
-    }
-    if (vocp->voc_ocl_slot == -1) {
-      gettimeofday((struct timeval * __restrict  )(& tv), (void * __restrict  )((void *)0));
-      while (vocp->voc_ocl_slot == -1) {
-        if (vocp->voc_halt) {
-          goto out;
-        }
-        pthread_cond_wait((pthread_cond_t * __restrict  )(& vocp->voc_wait), (pthread_mutex_t * __restrict  )(& vocp->voc_lock));
-      }
-      gettimeofday((struct timeval * __restrict  )(& tvt), (void * __restrict  )((void *)0));
-      while (1) {
-        tvd.tv_sec = tvt.tv_sec - tv.tv_sec;
-        tvd.tv_usec = tvt.tv_usec - tv.tv_usec;
-        if (tvd.tv_usec < 0L) {
-          (tvd.tv_sec) --;
-          tvd.tv_usec += 1000000L;
-        }
-        break;
-      }
-      while (1) {
-        idle.tv_sec = tvd.tv_sec + idle.tv_sec;
-        idle.tv_usec = tvd.tv_usec + idle.tv_usec;
-        if (idle.tv_usec >= 1000000L) {
-          (idle.tv_sec) ++;
-          idle.tv_usec -= 1000000L;
-        }
-        break;
-      }
-    }
-    slot = vocp->voc_ocl_slot;
-    rows = vocp->voc_ocl_rows;
-    cols = vocp->voc_ocl_cols;
-    invsize = vocp->voc_ocl_invsize;
-    pthread_mutex_unlock(& vocp->voc_lock);
-    gettimeofday((struct timeval * __restrict  )(& tv), (void * __restrict  )((void *)0));
-    tmp___1 = vg_ocl_kernel_start(vocp, slot, cols, rows, invsize);
-    if (! tmp___1) {
-      halt = 1;
-    }
-    tmp___2 = vg_ocl_kernel_wait(vocp, slot);
-    if (! tmp___2) {
-      halt = 1;
-    }
-    if (vcp->vc_verbose > 1) {
-      gettimeofday((struct timeval * __restrict  )(& tvt), (void * __restrict  )((void *)0));
-      while (1) {
-        tvd.tv_sec = tvt.tv_sec - tv.tv_sec;
-        tvd.tv_usec = tvt.tv_usec - tv.tv_usec;
-        if (tvd.tv_usec < 0L) {
-          (tvd.tv_sec) --;
-          tvd.tv_usec += 1000000L;
-        }
-        break;
-      }
-      while (1) {
-        busy.tv_sec = tvd.tv_sec + busy.tv_sec;
-        busy.tv_usec = tvd.tv_usec + busy.tv_usec;
-        if (busy.tv_usec >= 1000000L) {
-          (busy.tv_sec) ++;
-          busy.tv_usec -= 1000000L;
-        }
-        break;
-      }
-      if (busy.tv_sec + idle.tv_sec > 1L) {
-        idleu = (unsigned long long )(1000000L * idle.tv_sec + idle.tv_usec);
-        busyu = (unsigned long long )(1000000L * busy.tv_sec + busy.tv_usec);
-        pidle = (double )idleu / (double )(idleu + busyu);
-        if (pidle > 0.01) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"\rGPU idle: %.2f%%                                                              \n",
-                  (double )100 * pidle);
-        }
-        memset((void *)(& idle), 0, sizeof(idle));
-        memset((void *)(& busy), 0, sizeof(busy));
-      }
-    }
-  }
-  out: 
-  pthread_mutex_unlock(& vocp->voc_lock);
-  return ((void *)0);
-}
-}
-static void *vg_opencl_loop(vg_exec_context_t *arg ) 
-{ 
-  vg_ocl_context_t *vocp ;
-  int i ;
-  int round___0 ;
-  int nrows ;
-  int ncols ;
-  int pattern_generation ;
-  unsigned long rekey_max ;
-  unsigned long npoints ;
-  unsigned long rekey_at ;
-  EC_KEY *pkey ;
-  EC_GROUP const   *pgroup ;
-  EC_POINT const   *pgen ;
-  EC_POINT **ppbase ;
-  EC_POINT **pprow ;
-  EC_POINT *pbatchinc ;
-  EC_POINT *poffset ;
-  EC_POINT *pseek ;
-  unsigned char *ocl_points_in ;
-  unsigned char *ocl_strides_in ;
-  vg_context_t *vcp ;
-  vg_exec_context_t *vxcp ;
-  int slot ;
-  int nslots ;
-  int slot_busy ;
-  int slot_done ;
-  int halt ;
-  int c ;
-  int output_interval ;
-  struct timeval tvstart ;
-  void *tmp___0 ;
-  int tmp___1 ;
-  int tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-  int tmp___6 ;
-  int tmp___7 ;
-  BIGNUM const   *tmp___8 ;
-  EC_POINT const   *tmp___10 ;
-  void *tmp___11 ;
-  int tmp___13 ;
-  void *tmp___14 ;
-
-  {
-  vocp = (vg_ocl_context_t *)arg;
-  rekey_max = 100000000UL;
-  pkey = (EC_KEY *)((void *)0);
-  ppbase = (EC_POINT **)((void *)0);
-  pbatchinc = (EC_POINT *)((void *)0);
-  poffset = (EC_POINT *)((void *)0);
-  pseek = (EC_POINT *)((void *)0);
-  vcp = vocp->base.vxc_vc;
-  vxcp = & vocp->base;
-  slot_busy = 0;
-  slot_done = 0;
-  halt = 0;
-  c = 0;
-  output_interval = 1000;
-  pkey = vxcp->vxc_key;
-  pgroup = EC_KEY_get0_group((EC_KEY const   *)pkey);
-  pgen = EC_GROUP_get0_generator(pgroup);
-  round___0 = vocp->voc_ocl_rows * vocp->voc_ocl_cols;
-  if (! vcp->vc_remove_on_match) {
-    if (vcp->vc_chance >= (double )1.0f) {
-      if (vcp->vc_chance < (double )round___0) {
-        if (vcp->vc_verbose > 0) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: low pattern difficulty\n");
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: better match throughput is possible using vanitygen on the CPU\n");
-        }
-      }
-    }
-  }
-  slot = 0;
-  nslots = 2;
-  vocp->voc_nslots = nslots;
-  nrows = vocp->voc_ocl_rows;
-  ncols = vocp->voc_ocl_cols;
-  tmp___0 = malloc((unsigned long )(nrows + ncols) * sizeof(EC_POINT *));
-  ppbase = (EC_POINT **)tmp___0;
-  if (! ppbase) {
-    goto enomem;
-  }
-  i = 0;
-  while (i < nrows + ncols) {
-    *(ppbase + i) = EC_POINT_new(pgroup);
-    if (! *(ppbase + i)) {
-      goto enomem;
-    }
-    i ++;
-  }
-  pprow = ppbase + ncols;
-  pbatchinc = EC_POINT_new(pgroup);
-  poffset = EC_POINT_new(pgroup);
-  pseek = EC_POINT_new(pgroup);
-  if (! pbatchinc) {
-    goto enomem;
-  } else
-  if (! poffset) {
-    goto enomem;
-  } else
-  if (! pseek) {
-    goto enomem;
-  }
-  BN_set_word(& vxcp->vxc_bntmp, (unsigned long )ncols);
-  EC_POINT_mul(pgroup, pbatchinc, (BIGNUM const   *)(& vxcp->vxc_bntmp), (EC_POINT const   *)((void *)0),
-               (BIGNUM const   *)((void *)0), vxcp->vxc_bnctx);
-  EC_POINT_make_affine(pgroup, pbatchinc, vxcp->vxc_bnctx);
-  BN_set_word(& vxcp->vxc_bntmp, (unsigned long )round___0);
-  EC_POINT_mul(pgroup, poffset, (BIGNUM const   *)(& vxcp->vxc_bntmp), (EC_POINT const   *)((void *)0),
-               (BIGNUM const   *)((void *)0), vxcp->vxc_bnctx);
-  EC_POINT_make_affine(pgroup, poffset, vxcp->vxc_bnctx);
-  tmp___1 = vg_ocl_config_pattern(vocp);
-  if (! tmp___1) {
-    goto enomem;
-  }
-  i = 0;
-  while (i < nslots) {
-    tmp___2 = vg_ocl_kernel_arg_alloc(vocp, i, 4, (size_t )(64 * nrows), 1);
-    if (! tmp___2) {
-      goto enomem;
-    }
-    i ++;
-  }
-  tmp___3 = vg_ocl_kernel_arg_alloc(vocp, -1, 1, (size_t )((64 * round___0 + 4095) & -4096),
-                                    0);
-  if (tmp___3) {
-    tmp___4 = vg_ocl_kernel_arg_alloc(vocp, -1, 2, (size_t )((64 * round___0 + 4095) & -4096),
-                                      0);
-    if (tmp___4) {
-      tmp___5 = vg_ocl_kernel_arg_alloc(vocp, -1, 3, (size_t )((64 * ncols + 4095) & -4096),
-                                        1);
-      if (! tmp___5) {
-        goto enomem;
-      }
-    } else {
-      goto enomem;
-    }
-  } else {
-    goto enomem;
-  }
-  npoints = 0UL;
-  rekey_at = 0UL;
-  vxcp->vxc_binres[0] = (unsigned char )vcp->vc_addrtype;
-  tmp___6 = pthread_create((pthread_t * __restrict  )(& vocp->voc_ocl_thread), (pthread_attr_t const   * __restrict  )((void *)0),
-                           & vg_opencl_thread, (void * __restrict  )vocp);
-  if (tmp___6) {
-    goto enomem;
-  }
-  gettimeofday((struct timeval * __restrict  )(& tvstart), (void * __restrict  )((void *)0));
-  l_rekey: 
-  if (vocp->voc_rekey_func) {
-    tmp___7 = (*(vocp->voc_rekey_func))(vocp);
-    switch (tmp___7) {
-    case 1: 
-    break;
-    case 0: 
-    goto nopatterns;
-    default: 
-    goto enomem;
-    }
-  }
-  vg_exec_context_upgrade_lock(vxcp);
-  pattern_generation = vcp->vc_pattern_generation;
-  EC_KEY_generate_key(pkey);
-  npoints = 0UL;
-  EC_GROUP_get_order(pgroup, & vxcp->vxc_bntmp, vxcp->vxc_bnctx);
-  tmp___8 = EC_KEY_get0_private_key((EC_KEY const   *)pkey);
-  BN_sub(& vxcp->vxc_bntmp2, (BIGNUM const   *)(& vxcp->vxc_bntmp), tmp___8);
-  rekey_at = BN_get_word((BIGNUM const   *)(& vxcp->vxc_bntmp2));
-  if (rekey_at == 18446744073709551615) {
-    rekey_at = rekey_max;
-  } else
-  if (rekey_at > rekey_max) {
-    rekey_at = rekey_max;
-  }
-  if (! (rekey_at > 0UL)) {
-    __assert_fail("rekey_at > 0", "oclengine.c", 2040U, "vg_opencl_loop");
-  }
-  tmp___10 = EC_KEY_get0_public_key((EC_KEY const   *)pkey);
-  EC_POINT_copy(*(ppbase + 0), tmp___10);
-  vg_exec_context_downgrade_lock(vxcp);
-  if (vcp->vc_pubkey_base) {
-    EC_POINT_add(pgroup, *(ppbase + 0), (EC_POINT const   *)*(ppbase + 0), (EC_POINT const   *)vcp->vc_pubkey_base,
-                 vxcp->vxc_bnctx);
-  }
-  i = 1;
-  while (i < ncols) {
-    EC_POINT_add(pgroup, *(ppbase + i), (EC_POINT const   *)*(ppbase + (i - 1)), pgen,
-                 vxcp->vxc_bnctx);
-    i ++;
-  }
-  EC_POINTs_make_affine(pgroup, (size_t )ncols, ppbase, vxcp->vxc_bnctx);
-  tmp___11 = vg_ocl_map_arg_buffer(vocp, 0, 3, 1);
-  ocl_points_in = (unsigned char *)tmp___11;
-  if (! ocl_points_in) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map column buffer\n");
-    goto enomem;
-  }
-  i = 0;
-  while (i < ncols) {
-    vg_ocl_put_point_tpa(ocl_points_in, i, (EC_POINT const   *)*(ppbase + i));
-    i ++;
-  }
-  vg_ocl_unmap_arg_buffer(vocp, 0, 3, (void *)ocl_points_in);
-  EC_POINT_copy(*(pprow + 0), pgen);
-  i = 1;
-  while (i < nrows) {
-    EC_POINT_add(pgroup, *(pprow + i), (EC_POINT const   *)*(pprow + (i - 1)), (EC_POINT const   *)pbatchinc,
-                 vxcp->vxc_bnctx);
-    i ++;
-  }
-  EC_POINTs_make_affine(pgroup, (size_t )nrows, pprow, vxcp->vxc_bnctx);
-  vxcp->vxc_delta = 1;
-  npoints = 1UL;
-  slot = 0;
-  slot_busy = 0;
-  slot_done = 0;
-  while (1) {
-    if (slot_done) {
-      if (! (rekey_at > 0UL)) {
-        __assert_fail("rekey_at > 0", "oclengine.c", 2096U, "vg_opencl_loop");
-      }
-      slot_done = 0;
-      tmp___13 = (*(vocp->voc_check_func))(vocp, slot);
-      switch (tmp___13) {
-      case 1: 
-      rekey_at = 0UL;
-      break;
-      case 2: 
-      halt = 1;
-      break;
-      default: 
-      break;
-      }
-      c += round___0;
-      if (! halt) {
-        if (c >= output_interval) {
-          output_interval = vg_output_timing(vcp, c, & tvstart);
-          c = 0;
-        }
-      }
-      vg_exec_context_yield(vxcp);
-      if (vocp->voc_rekey_func) {
-        if (pattern_generation != vcp->vc_pattern_generation) {
-          vocp->voc_pattern_rewrite = 1;
-          rekey_at = 0UL;
-        }
-      }
-    }
-    if (vcp->vc_halt) {
-      halt = 1;
-    }
-    if (halt) {
-      break;
-    }
-    if (npoints + (unsigned long )round___0 < rekey_at) {
-      if (npoints > 1UL) {
-        i = 0;
-        while (i < nrows) {
-          EC_POINT_add(pgroup, *(pprow + i), (EC_POINT const   *)*(pprow + i), (EC_POINT const   *)poffset,
-                       vxcp->vxc_bnctx);
-          i ++;
-        }
-        EC_POINTs_make_affine(pgroup, (size_t )nrows, pprow, vxcp->vxc_bnctx);
-      }
-      tmp___14 = vg_ocl_map_arg_buffer(vocp, slot, 4, 1);
-      ocl_strides_in = (unsigned char *)tmp___14;
-      if (! ocl_strides_in) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Could not map row buffer for slot %d\n",
-                slot);
-        goto enomem;
-      }
-      memset((void *)ocl_strides_in, 0, (size_t )(64 * nrows));
-      i = 0;
-      while (i < nrows) {
-        vg_ocl_put_point(ocl_strides_in + 64 * i, (EC_POINT const   *)*(pprow + i));
-        i ++;
-      }
-      vg_ocl_unmap_arg_buffer(vocp, slot, 4, (void *)ocl_strides_in);
-      npoints += (unsigned long )round___0;
-      pthread_mutex_lock(& vocp->voc_lock);
-      while (vocp->voc_ocl_slot != -1) {
-        if (! slot_busy) {
-          __assert_fail("slot_busy", "oclengine.c", 2166U, "vg_opencl_loop");
-        }
-        pthread_cond_wait((pthread_cond_t * __restrict  )(& vocp->voc_wait), (pthread_mutex_t * __restrict  )(& vocp->voc_lock));
-      }
-      if (vocp->voc_halt) {
-        pthread_mutex_unlock(& vocp->voc_lock);
-        halt = 1;
-        break;
-      }
-      vocp->voc_ocl_slot = slot;
-      pthread_cond_signal(& vocp->voc_wait);
-      pthread_mutex_unlock(& vocp->voc_lock);
-      slot_done = slot_busy;
-      slot_busy = 1;
-      slot = (slot + 1) % nslots;
-    } else {
-      if (slot_busy) {
-        pthread_mutex_lock(& vocp->voc_lock);
-        while (vocp->voc_ocl_slot != -1) {
-          if (! (vocp->voc_ocl_slot == ((slot + nslots) - 1) % nslots)) {
-            __assert_fail("vocp->voc_ocl_slot == ((slot + nslots - 1) % nslots)",
-                          "oclengine.c", 2189U, "vg_opencl_loop");
-          }
-          pthread_cond_wait((pthread_cond_t * __restrict  )(& vocp->voc_wait), (pthread_mutex_t * __restrict  )(& vocp->voc_lock));
-        }
-        pthread_mutex_unlock(& vocp->voc_lock);
-        slot_busy = 0;
-        slot_done = 1;
-      }
-      if (! rekey_at) {
-        goto l_rekey;
-      } else
-      if (! slot_done) {
-        if (npoints + (unsigned long )round___0 >= rekey_at) {
-          goto l_rekey;
-        }
-      }
-    }
-  }
-  if (0) {
-    enomem: 
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: allocation failure?\n");
-    nopatterns: ;
-  }
-  if (halt) {
-    if (vcp->vc_verbose > 1) {
-      printf((char const   * __restrict  )"Halting...");
-      fflush(stdout);
-    }
-    pthread_mutex_lock(& vocp->voc_lock);
-    vocp->voc_halt = 1;
-    pthread_cond_signal(& vocp->voc_wait);
-    while (vocp->voc_ocl_slot != -1) {
-      if (! slot_busy) {
-        __assert_fail("slot_busy", "oclengine.c", 2221U, "vg_opencl_loop");
-      }
-      pthread_cond_wait((pthread_cond_t * __restrict  )(& vocp->voc_wait), (pthread_mutex_t * __restrict  )(& vocp->voc_lock));
-    }
-    slot_busy = 0;
-    pthread_mutex_unlock(& vocp->voc_lock);
-    pthread_join(vocp->voc_ocl_thread, (void **)((void *)0));
-    if (vcp->vc_verbose > 1) {
-      printf((char const   * __restrict  )"done!\n");
-    }
-  }
-  vg_exec_context_yield(vxcp);
-  if (ppbase) {
-    i = 0;
-    while (i < nrows + ncols) {
-      if (*(ppbase + i)) {
-        EC_POINT_free(*(ppbase + i));
-      }
-      i ++;
-    }
-    free((void *)ppbase);
-  }
-  if (pbatchinc) {
-    EC_POINT_free(pbatchinc);
-  }
-  vg_ocl_free_args(vocp);
-  vocp->voc_halt = 0;
-  vocp->voc_ocl_slot = -1;
-  vg_context_thread_exit(vcp);
-  return ((void *)0);
-}
-}
-static int get_device_list(cl_platform_id pid , cl_device_id **list_out ) 
-{ 
-  cl_uint nd ;
-  cl_int res ;
-  cl_device_id *ids ;
-  void *tmp___0 ;
-
-  {
-  res = clGetDeviceIDs(pid, (cl_device_type )4294967295U, (cl_uint )0, (cl_device_id *)((void *)0),
-                       & nd);
-  if (res != 0) {
-    vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetDeviceIDs(0)");
-    *list_out = (cl_device_id *)((void *)0);
-    return (-1);
-  }
-  if (nd) {
-    tmp___0 = malloc((unsigned long )nd * sizeof(*ids));
-    ids = (cl_device_id *)tmp___0;
-    if ((unsigned long )ids == (unsigned long )((void *)0)) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Could not allocate device ID list\n");
-      *list_out = (cl_device_id *)((void *)0);
-      return (-1);
-    }
-    res = clGetDeviceIDs(pid, (cl_device_type )4294967295U, nd, ids, (cl_uint *)((void *)0));
-    if (res != 0) {
-      vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetDeviceIDs(n)");
-      free((void *)ids);
-      *list_out = (cl_device_id *)((void *)0);
-      return (-1);
-    }
-    *list_out = ids;
-  }
-  return ((int )nd);
-}
-}
-static void show_devices(cl_platform_id pid , cl_device_id *ids , int nd , int base ) 
-{ 
-  int i ;
-  char nbuf[128] ;
-  char vbuf[128] ;
-  size_t len ;
-  cl_int res ;
-
-  {
-  i = 0;
-  while (i < nd) {
-    res = clGetDeviceInfo(*(ids + i), (cl_device_info )4139, sizeof(nbuf), (void *)(nbuf),
-                          & len);
-    if (res != 0) {
-      goto __Cont;
-    }
-    if (len >= sizeof(nbuf)) {
-      len = sizeof(nbuf) - 1UL;
-    }
-    nbuf[len] = (char )'\000';
-    res = clGetDeviceInfo(*(ids + i), (cl_device_info )4140, sizeof(vbuf), (void *)(vbuf),
-                          & len);
-    if (res != 0) {
-      goto __Cont;
-    }
-    if (len >= sizeof(vbuf)) {
-      len = sizeof(vbuf) - 1UL;
-    }
-    vbuf[len] = (char )'\000';
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"  %d: [%s] %s\n",
-            i + base, vbuf, nbuf);
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  return;
-}
-}
-static cl_device_id get_device(cl_platform_id pid , int num ) 
-{ 
-  int nd ;
-  cl_device_id id ;
-  cl_device_id *ids ;
-
-  {
-  nd = get_device_list(pid, & ids);
-  if (nd < 0) {
-    return ((cl_device_id )((void *)0));
-  }
-  if (! nd) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"No OpenCL devices found\n");
-    return ((cl_device_id )((void *)0));
-  }
-  if (num < 0) {
-    if (nd == 1) {
-      num = 0;
-    } else {
-      num = nd;
-    }
-  }
-  if (num < nd) {
-    id = *(ids + num);
-    free((void *)ids);
-    return (id);
-  }
-  free((void *)ids);
-  return ((cl_device_id )((void *)0));
-}
-}
-static int get_platform_list(cl_platform_id **list_out ) 
-{ 
-  cl_uint np ;
-  cl_int res ;
-  cl_platform_id *ids ;
-  void *tmp___0 ;
-
-  {
-  res = clGetPlatformIDs((cl_uint )0, (cl_platform_id *)((void *)0), & np);
-  if (res != 0) {
-    vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetPlatformIDs(0)");
-    *list_out = (cl_platform_id *)((void *)0);
-    return (-1);
-  }
-  if (np) {
-    tmp___0 = malloc((unsigned long )np * sizeof(*ids));
-    ids = (cl_platform_id *)tmp___0;
-    if ((unsigned long )ids == (unsigned long )((void *)0)) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Could not allocate platform ID list\n");
-      *list_out = (cl_platform_id *)((void *)0);
-      return (-1);
-    }
-    res = clGetPlatformIDs(np, ids, (cl_uint *)((void *)0));
-    if (res != 0) {
-      vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetPlatformIDs(n)");
-      free((void *)ids);
-      *list_out = (cl_platform_id *)((void *)0);
-      return (-1);
-    }
-    *list_out = ids;
-  }
-  return ((int )np);
-}
-}
-void show_platforms(cl_platform_id *ids , int np , int base ) 
-{ 
-  int i ;
-  char nbuf[128] ;
-  char vbuf[128] ;
-  size_t len ;
-  cl_int res ;
-
-  {
-  i = 0;
-  while (i < np) {
-    res = clGetPlatformInfo(*(ids + i), (cl_platform_info )2306, sizeof(nbuf), (void *)(nbuf),
-                            & len);
-    if (res != 0) {
-      vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetPlatformInfo(NAME)");
-      goto __Cont;
-    }
-    if (len >= sizeof(nbuf)) {
-      len = sizeof(nbuf) - 1UL;
-    }
-    nbuf[len] = (char )'\000';
-    res = clGetPlatformInfo(*(ids + i), (cl_platform_info )2307, sizeof(vbuf), (void *)(vbuf),
-                            & len);
-    if (res != 0) {
-      vg_ocl_error((vg_ocl_context_t *)((void *)0), res, "clGetPlatformInfo(VENDOR)");
-      goto __Cont;
-    }
-    if (len >= sizeof(vbuf)) {
-      len = sizeof(vbuf) - 1UL;
-    }
-    vbuf[len] = (char )'\000';
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"%d: [%s] %s\n",
-            i + base, vbuf, nbuf);
-    __Cont: /* CIL Label */ 
-    i ++;
-  }
-  return;
-}
-}
-static cl_platform_id get_platform(int num ) 
-{ 
-  int np ;
-  cl_platform_id id ;
-  cl_platform_id *ids ;
-
-  {
-  np = get_platform_list(& ids);
-  if (np < 0) {
-    return ((cl_platform_id )((void *)0));
-  }
-  if (! np) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"No OpenCL platforms available\n");
-    return ((cl_platform_id )((void *)0));
-  }
-  if (num < 0) {
-    if (np == 1) {
-      num = 0;
-    } else {
-      num = np;
-    }
-  }
-  if (num < np) {
-    id = *(ids + num);
-    free((void *)ids);
-    return (id);
-  }
-  free((void *)ids);
-  return ((cl_platform_id )((void *)0));
-}
-}
-void vg_ocl_enumerate_devices(void) 
-{ 
-  cl_platform_id *pids ;
-  cl_device_id *dids ;
-  int np ;
-  int nd ;
-  int i ;
-
-  {
-  np = get_platform_list(& pids);
-  if (! np) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"No OpenCL platforms available\n");
-    return;
-  }
-  fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Available OpenCL platforms:\n");
-  i = 0;
-  while (i < np) {
-    show_platforms(pids + i, 1, i);
-    nd = get_device_list(*(pids + i), & dids);
-    if (! nd) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"  -- No devices\n");
-    } else {
-      show_devices(*(pids + i), dids, nd, 0);
-    }
-    i ++;
-  }
-  return;
-}
-}
-static cl_device_id get_opencl_device(int platformidx , int deviceidx ) 
-{ 
-  cl_platform_id pid ;
-  cl_device_id did ;
-
-  {
-  did = (cl_device_id )((void *)0);
-  pid = get_platform(platformidx);
-  if (pid) {
-    did = get_device(pid, deviceidx);
-    if (did) {
-      return (did);
-    }
-  }
-  return ((cl_device_id )((void *)0));
-}
-}
-vg_ocl_context_t *vg_ocl_context_new(vg_context_t *vcp , int platformidx , int deviceidx ,
-                                     int safe_mode , int verify , int worksize , int nthreads ,
-                                     int nrows , int ncols , int invsize ) 
-{ 
-  cl_device_id did ;
-  int round___0 ;
-  int full_threads ;
-  int wsmult ;
-  cl_ulong memsize ;
-  cl_ulong allocsize ;
-  vg_ocl_context_t *vocp ;
-  void *tmp___0 ;
-  int tmp___1 ;
-  size_t tmp___2 ;
-  cl_device_type tmp___3 ;
-  size_t tmp___4 ;
-  cl_device_type tmp___5 ;
-
-  {
-  did = get_opencl_device(platformidx, deviceidx);
-  if (! did) {
-    return ((vg_ocl_context_t *)0);
-  }
-  tmp___0 = malloc(sizeof(*vocp));
-  vocp = (vg_ocl_context_t *)tmp___0;
-  if (! vocp) {
-    return ((vg_ocl_context_t *)((void *)0));
-  }
-  tmp___1 = vg_ocl_init(vcp, vocp, did, safe_mode);
-  if (! tmp___1) {
-    free((void *)vocp);
-    return ((vg_ocl_context_t *)((void *)0));
-  }
-  if (verify) {
-    if (vcp->vc_verbose > 0) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: Hardware verification mode enabled\n");
-    }
-    if (! nthreads) {
-      nthreads = 1;
-    }
-    vocp->voc_verify_func[0] = & vg_ocl_verify_k0;
-    vocp->voc_verify_func[1] = & vg_ocl_verify_k1;
-  }
-  if (! nthreads) {
-    tmp___3 = vg_ocl_device_gettype(vocp->voc_ocldid);
-    if (tmp___3 & (unsigned long )(1 << 1)) {
-      nthreads = 1;
-    } else {
-      tmp___2 = vg_ocl_device_getsizet(vocp->voc_ocldid, (cl_device_info )4100);
-      nthreads = (int )tmp___2;
-    }
-  }
-  tmp___4 = vg_ocl_device_getsizet(vocp->voc_ocldid, (cl_device_info )4098);
-  full_threads = (int )tmp___4;
-  full_threads *= nthreads;
-  if (! worksize) {
-    tmp___5 = vg_ocl_device_gettype(vocp->voc_ocldid);
-    if (tmp___5 & (unsigned long )(1 << 2)) {
-      worksize = 2048;
-    } else {
-      worksize = 256;
-    }
-  }
-  if (! ncols) {
-    memsize = vg_ocl_device_getulong(vocp->voc_ocldid, (cl_device_info )4127);
-    allocsize = vg_ocl_device_getulong(vocp->voc_ocldid, (cl_device_info )4112);
-    memsize /= 2UL;
-    ncols = full_threads;
-    nrows = 2;
-    while (1) {
-      if (ncols > nrows) {
-        if (! (! (ncols & 1))) {
-          break;
-        }
-      } else {
-        break;
-      }
-      ncols /= 2;
-      nrows *= 2;
-    }
-    wsmult = 1;
-    while (1) {
-      if (! worksize) {
-        goto _L;
-      } else
-      if (wsmult * 2 <= worksize) {
-        _L: /* CIL Label */ 
-        if ((cl_ulong )(((ncols * nrows) * 2) * 128) < memsize) {
-          if (! ((cl_ulong )(((ncols * nrows) * 2) * 64) < allocsize)) {
-            break;
-          }
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-      if (ncols > nrows) {
-        nrows *= 2;
-      } else {
-        ncols *= 2;
-      }
-      wsmult *= 2;
-    }
-  }
-  round___0 = nrows * ncols;
-  if (! invsize) {
-    invsize = 2;
-    while (1) {
-      if (! (round___0 % (invsize << 1))) {
-        if (! (round___0 / invsize > full_threads)) {
-          break;
-        }
-      } else {
-        break;
-      }
-      invsize <<= 1;
-    }
-  }
-  if (vcp->vc_verbose > 1) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Grid size: %dx%d\n",
-            ncols, nrows);
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Modular inverse: %d threads, %d ops each\n",
-            round___0 / invsize, invsize);
-  }
-  if (round___0 % invsize) {
-    goto _L___0;
-  } else
-  if (! (! (invsize & (invsize - 1)))) {
-    goto _L___0;
-  } else
-  if (invsize < 2) {
-    _L___0: /* CIL Label */ 
-    if (vcp->vc_verbose <= 1) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Grid size: %dx%d\n",
-              ncols, nrows);
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Modular inverse: %d threads, %d ops each\n",
-              round___0 / invsize, invsize);
-    }
-    if (round___0 % invsize) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Modular inverse work size must evenly divide points\n");
-    } else {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Modular inverse work per task (%d) must be a power of 2\n",
-              invsize);
-    }
-    goto out_fail;
-  }
-  vocp->voc_ocl_rows = nrows;
-  vocp->voc_ocl_cols = ncols;
-  vocp->voc_ocl_invsize = invsize;
-  return (vocp);
-  out_fail: 
-  vg_ocl_context_free(vocp);
-  return ((vg_ocl_context_t *)((void *)0));
-}
-}
-vg_ocl_context_t *vg_ocl_context_new_from_devstr(vg_context_t *vcp , char const   *devstr ,
-                                                 int safemode , int verify ) 
-{ 
-  int platformidx ;
-  int deviceidx ;
-  int worksize ;
-  int nthreads ;
-  int nrows ;
-  int ncols ;
-  int invsize ;
-  char *dsd ;
-  char *part ;
-  char *part2 ;
-  char *save ;
-  char *param ;
-  long tmp___0 ;
-  long tmp___1 ;
-  int tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  vg_ocl_context_t *tmp___5 ;
-
-  {
-  worksize = 0;
-  nthreads = 0;
-  nrows = 0;
-  ncols = 0;
-  invsize = 0;
-  dsd = strdup(devstr);
-  if (! dsd) {
-    return ((vg_ocl_context_t *)((void *)0));
-  }
-  save = (char *)((void *)0);
-  part = strtok_r((char * __restrict  )dsd, (char const   * __restrict  )",", (char ** __restrict  )(& save));
-  part2 = strchr((char const   *)part, ':');
-  if (! part2) {
-    fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid device specifier \'%s\'\n",
-            part);
-    free((void *)dsd);
-    return ((vg_ocl_context_t *)((void *)0));
-  }
-  *part2 = (char )'\000';
-  platformidx = atoi((char const   *)part);
-  deviceidx = atoi((char const   *)(part2 + 1));
-  while (1) {
-    part = strtok_r((char * __restrict  )((void *)0), (char const   * __restrict  )",",
-                    (char ** __restrict  )(& save));
-    if (! ((unsigned long )part != (unsigned long )((void *)0))) {
-      break;
-    }
-    param = strchr((char const   *)part, '=');
-    if (! param) {
-      fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Unrecognized parameter \'%s\'\n",
-              part);
-      continue;
-    }
-    *param = (char )'\000';
-    param ++;
-    tmp___4 = strcmp((char const   *)part, "grid");
-    if (tmp___4) {
-      tmp___3 = strcmp((char const   *)part, "invsize");
-      if (tmp___3) {
-        tmp___2 = strcmp((char const   *)part, "threads");
-        if (tmp___2) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Unrecognized parameter \'%s\'\n",
-                  part);
-        } else {
-          nthreads = atoi((char const   *)param);
-          if (nthreads == 0) {
-            fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid thread count \'%s\'\n",
-                    param);
-            continue;
-          }
-        }
-      } else {
-        invsize = atoi((char const   *)param);
-        if (! invsize) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid modular inverse size \'%s\'\n",
-                  param);
-          continue;
-        }
-        if (invsize & (invsize - 1)) {
-          fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Modular inverse size %d must be a power of 2\n",
-                  invsize);
-          invsize = 0;
-          continue;
-        }
-      }
-    } else {
-      tmp___0 = strtol((char const   * __restrict  )param, (char ** __restrict  )(& part2),
-                       0);
-      ncols = (int )tmp___0;
-      if (part2) {
-        if ((int )*part2 == 120) {
-          tmp___1 = strtol((char const   * __restrict  )(part2 + 1), (char ** __restrict  )((void *)0),
-                           0);
-          nrows = (int )tmp___1;
-        }
-      }
-      if (! nrows) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid grid size \'%s\'\n",
-                param);
-        nrows = 0;
-        ncols = 0;
-        continue;
-      } else
-      if (! ncols) {
-        fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Invalid grid size \'%s\'\n",
-                param);
-        nrows = 0;
-        ncols = 0;
-        continue;
-      }
-    }
-  }
-  free((void *)dsd);
-  tmp___5 = vg_ocl_context_new(vcp, platformidx, deviceidx, safemode, verify, worksize,
-                               nthreads, nrows, ncols, invsize);
-  return (tmp___5);
-}
-}
-void vg_ocl_context_free(vg_ocl_context_t *vocp ) 
-{ 
-
-
-  {
-  vg_ocl_del(vocp);
-  free((void *)vocp);
-  return;
-}
-}
-#pragma merger("0","/tmp/cil-0tBpLO9a.i","-ggdb,-O3,-Wall")
-extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) exp)(double __x ) ;
-extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) log)(double __x ) ;
-extern  __attribute__((__nothrow__)) pthread_t ( __attribute__((__leaf__)) pthread_self)(void)  __attribute__((__const__)) ;
 extern unsigned char *SHA256(unsigned char const   *d , size_t n , unsigned char *md ) ;
 extern unsigned char *RIPEMD160(unsigned char const   *d , size_t n , unsigned char *md ) ;
 extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
@@ -16860,50 +7402,64 @@ __leaf__, __gnu_inline__, __artificial__, __always_inline__)) realpath)(char con
                                                                         char * __restrict  __resolved ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __leaf__, __gnu_inline__,
 __artificial__, __always_inline__)) realpath)(char const   * __restrict  __name ,
-                                              char * __restrict  __resolved ) 
-{ 
-  unsigned long tmp___0 ;
-  char *tmp___1 ;
+                                              char * __restrict  __resolved )
+{
+  unsigned long tmp ;
+  char *tmp___0 ;
+  unsigned long tmp___1 ;
   unsigned long tmp___2 ;
-  unsigned long tmp___3 ;
-  char *tmp___4 ;
-  unsigned long tmp___5 ;
-  char *tmp___6 ;
+  char *tmp___3 ;
+  unsigned long tmp___4 ;
+  char *tmp___5 ;
 
   {
-  tmp___5 = __builtin_object_size((void *)__resolved, 1);
-  if (tmp___5 != 0xffffffffffffffffUL) {
-    tmp___2 = __builtin_object_size((void *)__resolved, 1);
-    if (tmp___2 < 4096UL) {
-      tmp___0 = __builtin_object_size((void *)__resolved, 1);
-      tmp___1 = __realpath_chk_warn(__name, __resolved, tmp___0);
-      return (tmp___1);
+  tmp___4 = __builtin_object_size((void *)__resolved, 1);
+  if (tmp___4 != 0xffffffffffffffffUL) {
+    tmp___1 = __builtin_object_size((void *)__resolved, 1);
+    if (tmp___1 < 4096UL) {
+      tmp = __builtin_object_size((void *)__resolved, 1);
+      tmp___0 = __realpath_chk_warn(__name, __resolved, tmp);
+      return (tmp___0);
     }
-    tmp___3 = __builtin_object_size((void *)__resolved, 1);
-    tmp___4 = __realpath_chk(__name, __resolved, tmp___3);
-    return (tmp___4);
+    tmp___2 = __builtin_object_size((void *)__resolved, 1);
+    tmp___3 = __realpath_chk(__name, __resolved, tmp___2);
+    return (tmp___3);
   }
-  tmp___6 = __realpath_alias(__name, __resolved);
-  return (tmp___6);
+  tmp___5 = __realpath_alias(__name, __resolved);
+  return (tmp___5);
 }
 }
 extern BIGNUM const   *BN_value_one(void) ;
+extern BN_CTX *BN_CTX_new(void) ;
+extern void BN_CTX_free(BN_CTX *c ) ;
 extern BIGNUM *BN_new(void) ;
+extern void BN_init(BIGNUM * ) ;
+extern void BN_clear_free(BIGNUM *a ) ;
 extern BIGNUM *BN_copy(BIGNUM *a , BIGNUM const   *b ) ;
+extern BIGNUM *BN_bin2bn(unsigned char const   *s , int len , BIGNUM *ret ) ;
 extern int BN_bn2bin(BIGNUM const   *a , unsigned char *to ) ;
+extern int BN_sub(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *b ) ;
 extern int BN_add(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *b ) ;
 extern int BN_mul(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *b , BN_CTX *ctx ) ;
 extern int BN_div(BIGNUM *dv , BIGNUM *rem , BIGNUM const   *m , BIGNUM const   *d ,
                   BN_CTX *ctx ) ;
+extern int BN_set_word(BIGNUM *a , unsigned long w ) ;
+extern unsigned long BN_get_word(BIGNUM const   *a ) ;
+extern int BN_cmp(BIGNUM const   *a , BIGNUM const   *b ) ;
 extern void BN_free(BIGNUM *a ) ;
 extern int BN_lshift(BIGNUM *r , BIGNUM const   *a , int n ) ;
 extern int BN_exp(BIGNUM *r , BIGNUM const   *a , BIGNUM const   *p , BN_CTX *ctx ) ;
 extern void BN_clear(BIGNUM *a ) ;
 extern int BN_set_bit(BIGNUM *a , int n ) ;
 extern char *BN_bn2dec(BIGNUM const   *a ) ;
+extern EC_POINT *EC_POINT_new(EC_GROUP const   *group ) ;
+extern int EC_POINT_copy(EC_POINT *dst , EC_POINT const   *src ) ;
 extern size_t EC_POINT_point2oct(EC_GROUP const   *group , EC_POINT const   *p , point_conversion_form_t form ,
                                  unsigned char *buf , size_t len , BN_CTX *ctx ) ;
+extern int EC_POINT_add(EC_GROUP const   *group , EC_POINT *r , EC_POINT const   *a ,
+                        EC_POINT const   *b , BN_CTX *ctx ) ;
 extern EC_KEY *EC_KEY_new_by_curve_name(int nid ) ;
+extern EC_POINT const   *EC_KEY_get0_public_key(EC_KEY const   *key ) ;
 extern int EC_KEY_precompute_mult(EC_KEY *key , BN_CTX *ctx ) ;
 extern int EC_KEY_check_key(EC_KEY const   *key ) ;
 extern int i2d_ECPrivateKey(EC_KEY *key , unsigned char **out ) ;
@@ -16913,11 +7469,21 @@ extern pcre *pcre_compile(char const   * , int  , char const   ** , int * , unsi
 extern int pcre_exec(pcre const   * , pcre_extra const   * , char const   * , int  ,
                      int  , int  , int * , int  ) ;
 extern pcre_extra *pcre_study(pcre const   * , int  , char const   ** ) ;
+extern  __attribute__((__nothrow__)) int *( __attribute__((__leaf__)) __errno_location)(void)  __attribute__((__const__)) ;
 void vg_context_free(vg_context_t *vcp ) ;
 void vg_context_wait_for_completion(vg_context_t *vcp ) ;
 void vg_prefix_context_set_case_insensitive(vg_context_t *vcp , int caseinsensitive ) ;
 vg_context_t *vg_regex_context_new(int addrtype , int privtype ) ;
+int vg_output_timing(vg_context_t *vcp , int cycle , struct timeval *last ) ;
+int vg_context_hash160_sort(vg_context_t *vcp , void *buf ) ;
+void vg_context_thread_exit(vg_context_t *vcp ) ;
+int vg_exec_context_init(vg_context_t *vcp , vg_exec_context_t *vxcp ) ;
+void vg_exec_context_del(vg_exec_context_t *vxcp ) ;
 void vg_exec_context_consolidate_key(vg_exec_context_t *vxcp ) ;
+void vg_exec_context_calc_address(vg_exec_context_t *vxcp ) ;
+void vg_exec_context_downgrade_lock(vg_exec_context_t *vxcp ) ;
+int vg_exec_context_upgrade_lock(vg_exec_context_t *vxcp ) ;
+void vg_exec_context_yield(vg_exec_context_t *vxcp ) ;
 char const   *vg_b58_alphabet ;
 signed char const   vg_b58_reverse_map[256] ;
 void dumphex(unsigned char const   *src , size_t len ) ;
@@ -16930,8 +7496,8 @@ void vg_encode_privkey(EC_KEY const   *pkey , int addrtype , char *result ) ;
 int vg_set_privkey(BIGNUM const   *bnpriv , EC_KEY *pkey ) ;
 int vg_protect_encode_privkey(char *out , EC_KEY const   *pkey , int keytype , int parameter_group ,
                               char const   *pass ) ;
-static void avl_delete_fix___0(avl_root_t *rootp , avl_item_t *itemp , avl_item_t *parentp ) 
-{ 
+static void avl_delete_fix___0(avl_root_t *rootp , avl_item_t *itemp , avl_item_t *parentp )
+{
   avl_item_t *childp ;
 
   {
@@ -17023,17 +7589,17 @@ static void avl_delete_fix___0(avl_root_t *rootp , avl_item_t *itemp , avl_item_
   return;
 }
 }
-static void avl_insert_fix___0(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+static void avl_insert_fix___0(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *childp ;
   avl_item_t *parentp ;
-  struct _avl_item_s *tmp___0 ;
+  struct _avl_item_s *tmp ;
 
   {
   parentp = itemp->ai_up;
-  tmp___0 = (struct _avl_item_s *)((void *)0);
-  itemp->ai_right = tmp___0;
-  itemp->ai_left = tmp___0;
+  tmp = (struct _avl_item_s *)((void *)0);
+  itemp->ai_right = tmp;
+  itemp->ai_left = tmp;
   if (! (! itemp->ai_indexed)) {
     __assert_fail("!itemp->ai_indexed", "avl.h", 275U, "avl_insert_fix");
   }
@@ -17107,8 +7673,8 @@ static void avl_insert_fix___0(avl_root_t *rootp , avl_item_t *itemp )
   return;
 }
 }
-static void avl_remove___0(avl_root_t *rootp , avl_item_t *itemp ) 
-{ 
+static void avl_remove___0(avl_root_t *rootp , avl_item_t *itemp )
+{
   avl_item_t *relocp ;
   avl_item_t *replacep ;
   avl_item_t *parentp ;
@@ -17123,7 +7689,7 @@ static void avl_remove___0(avl_root_t *rootp , avl_item_t *itemp )
     goto _L;
   } else
   if ((unsigned long )itemp->ai_right == (unsigned long )((void *)0)) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     parentp = itemp->ai_up;
     replacep = itemp->ai_left;
     if ((unsigned long )replacep == (unsigned long )((void *)0)) {
@@ -17193,13 +7759,13 @@ static void avl_remove___0(avl_root_t *rootp , avl_item_t *itemp )
   return;
 }
 }
-EC_KEY *vg_exec_context_new_key(void) 
-{ 
-  EC_KEY *tmp___0 ;
+EC_KEY *vg_exec_context_new_key(void)
+{
+  EC_KEY *tmp ;
 
   {
-  tmp___0 = EC_KEY_new_by_curve_name(714);
-  return (tmp___0);
+  tmp = EC_KEY_new_by_curve_name(714);
+  return (tmp);
 }
 }
 static pthread_mutex_t vg_thread_lock  =    {{0, 0U, 0, 0U, 0, (short)0, (short)0, {(struct __pthread_internal_list *)0, (struct __pthread_internal_list *)0}}};
@@ -17207,8 +7773,8 @@ static pthread_cond_t vg_thread_rdcond  =    {{{0ULL},
      {0ULL}, {0U, 0U}, {0U, 0U}, 0U, 0U, {0U, 0U}}};
 static pthread_cond_t vg_thread_wrcond  =    {{{0ULL}, {0ULL}, {0U, 0U}, {0U, 0U}, 0U, 0U, {0U, 0U}}};
 static pthread_cond_t vg_thread_upcond  =    {{{0ULL}, {0ULL}, {0U, 0U}, {0U, 0U}, 0U, 0U, {0U, 0U}}};
-static void __vg_exec_context_yield(vg_exec_context_t *vxcp ) 
-{ 
+static void __vg_exec_context_yield(vg_exec_context_t *vxcp )
+{
 
 
   {
@@ -17233,8 +7799,8 @@ static void __vg_exec_context_yield(vg_exec_context_t *vxcp )
   return;
 }
 }
-int vg_exec_context_upgrade_lock(vg_exec_context_t *vxcp ) 
-{ 
+int vg_exec_context_upgrade_lock(vg_exec_context_t *vxcp )
+{
   vg_exec_context_t *tp ;
   vg_context_t *vcp ;
   int tmp___5 ;
@@ -17301,8 +7867,8 @@ int vg_exec_context_upgrade_lock(vg_exec_context_t *vxcp )
   return (1);
 }
 }
-void vg_exec_context_downgrade_lock(vg_exec_context_t *vxcp ) 
-{ 
+void vg_exec_context_downgrade_lock(vg_exec_context_t *vxcp )
+{
 
 
   {
@@ -17326,8 +7892,8 @@ void vg_exec_context_downgrade_lock(vg_exec_context_t *vxcp )
   return;
 }
 }
-int vg_exec_context_init(vg_context_t *vcp , vg_exec_context_t *vxcp ) 
-{ 
+int vg_exec_context_init(vg_context_t *vcp , vg_exec_context_t *vxcp )
+{
 
 
   {
@@ -17357,8 +7923,8 @@ int vg_exec_context_init(vg_context_t *vcp , vg_exec_context_t *vxcp )
   return (1);
 }
 }
-void vg_exec_context_del(vg_exec_context_t *vxcp ) 
-{ 
+void vg_exec_context_del(vg_exec_context_t *vxcp )
+{
   vg_exec_context_t *tp ;
   vg_exec_context_t **pprev ;
 
@@ -17401,8 +7967,8 @@ void vg_exec_context_del(vg_exec_context_t *vxcp )
   return;
 }
 }
-void vg_exec_context_yield(vg_exec_context_t *vxcp ) 
-{ 
+void vg_exec_context_yield(vg_exec_context_t *vxcp )
+{
 
 
   {
@@ -17423,46 +7989,46 @@ void vg_exec_context_yield(vg_exec_context_t *vxcp )
   return;
 }
 }
-void vg_exec_context_consolidate_key(vg_exec_context_t *vxcp ) 
-{ 
-  BIGNUM const   *tmp___0 ;
+void vg_exec_context_consolidate_key(vg_exec_context_t *vxcp )
+{
+  BIGNUM const   *tmp ;
 
   {
   if (vxcp->vxc_delta) {
     BN_clear(& vxcp->vxc_bntmp);
     BN_set_word(& vxcp->vxc_bntmp, (unsigned long )vxcp->vxc_delta);
-    tmp___0 = EC_KEY_get0_private_key((EC_KEY const   *)vxcp->vxc_key);
-    BN_add(& vxcp->vxc_bntmp2, tmp___0, (BIGNUM const   *)(& vxcp->vxc_bntmp));
+    tmp = EC_KEY_get0_private_key((EC_KEY const   *)vxcp->vxc_key);
+    BN_add(& vxcp->vxc_bntmp2, tmp, (BIGNUM const   *)(& vxcp->vxc_bntmp));
     vg_set_privkey((BIGNUM const   *)(& vxcp->vxc_bntmp2), vxcp->vxc_key);
     vxcp->vxc_delta = 0;
   }
   return;
 }
 }
-void vg_exec_context_calc_address(vg_exec_context_t *vxcp ) 
-{ 
+void vg_exec_context_calc_address(vg_exec_context_t *vxcp )
+{
   EC_POINT *pubkey ;
   EC_GROUP const   *pgroup ;
   unsigned char eckey_buf[96] ;
   unsigned char hash1[32] ;
   unsigned char hash2[20] ;
   int len ;
-  EC_POINT const   *tmp___0 ;
-  size_t tmp___1 ;
+  EC_POINT const   *tmp ;
+  size_t tmp___0 ;
 
   {
   vg_exec_context_consolidate_key(vxcp);
   pgroup = EC_KEY_get0_group((EC_KEY const   *)vxcp->vxc_key);
   pubkey = EC_POINT_new(pgroup);
-  tmp___0 = EC_KEY_get0_public_key((EC_KEY const   *)vxcp->vxc_key);
-  EC_POINT_copy(pubkey, tmp___0);
+  tmp = EC_KEY_get0_public_key((EC_KEY const   *)vxcp->vxc_key);
+  EC_POINT_copy(pubkey, tmp);
   if ((vxcp->vxc_vc)->vc_pubkey_base) {
     EC_POINT_add(pgroup, pubkey, (EC_POINT const   *)pubkey, (EC_POINT const   *)(vxcp->vxc_vc)->vc_pubkey_base,
                  vxcp->vxc_bnctx);
   }
-  tmp___1 = EC_POINT_point2oct(pgroup, (EC_POINT const   *)pubkey, (point_conversion_form_t )4,
+  tmp___0 = EC_POINT_point2oct(pgroup, (EC_POINT const   *)pubkey, (point_conversion_form_t )4,
                                eckey_buf, sizeof(eckey_buf), vxcp->vxc_bnctx);
-  len = (int )tmp___1;
+  len = (int )tmp___0;
   SHA256((unsigned char const   *)(eckey_buf), (size_t )len, hash1);
   RIPEMD160((unsigned char const   *)(hash1), sizeof(hash1), hash2);
   memcpy((void * __restrict  )(& vxcp->vxc_binres[1]), (void const   * __restrict  )(hash2),
@@ -17473,8 +8039,8 @@ void vg_exec_context_calc_address(vg_exec_context_t *vxcp )
 }
 static pthread_mutex_t timing_mutex  =    {{0, 0U, 0, 0U, 0, (short)0, (short)0, {(struct __pthread_internal_list *)0, (struct __pthread_internal_list *)0}}};
 int vg_output_timing(vg_context_t *vcp ,
-                     int cycle , struct timeval *last ) 
-{ 
+                     int cycle , struct timeval *last )
+{
   pthread_t me ;
   struct timeval tvnow ;
   struct timeval tv ;
@@ -17487,8 +8053,8 @@ int vg_output_timing(vg_context_t *vcp ,
   unsigned long long sincelast ;
   int p ;
   int i ;
-  int tmp___0 ;
-  void *tmp___1 ;
+  int tmp ;
+  void *tmp___0 ;
 
   {
   myrate = 0ULL;
@@ -17513,8 +8079,8 @@ int vg_output_timing(vg_context_t *vcp ,
   tip = vcp->vc_timing_head;
   mytip = (timing_info_t *)((void *)0);
   while ((unsigned long )tip != (unsigned long )((void *)0)) {
-    tmp___0 = pthread_equal(tip->ti_thread, me);
-    if (tmp___0) {
+    tmp = pthread_equal(tip->ti_thread, me);
+    if (tmp) {
       mytip = tip;
       p = (tip->ti_hist_last + 1) % 5;
       tip->ti_hist_time[p] = mytime;
@@ -17537,8 +8103,8 @@ int vg_output_timing(vg_context_t *vcp ,
     tip = tip->ti_next;
   }
   if (! mytip) {
-    tmp___1 = malloc(sizeof(*tip));
-    mytip = (timing_info_t *)tmp___1;
+    tmp___0 = malloc(sizeof(*tip));
+    mytip = (timing_info_t *)tmp___0;
     mytip->ti_next = vcp->vc_timing_head;
     mytip->ti_thread = me;
     vcp->vc_timing_head = mytip;
@@ -17572,12 +8138,12 @@ int vg_output_timing(vg_context_t *vcp ,
   return ((int )myrate);
 }
 }
-void vg_context_thread_exit(vg_context_t *vcp ) 
-{ 
+void vg_context_thread_exit(vg_context_t *vcp )
+{
   timing_info_t *tip ;
   timing_info_t **ptip ;
   pthread_t me ;
-  int tmp___0 ;
+  int tmp ;
 
   {
   pthread_mutex_lock(& timing_mutex);
@@ -17585,14 +8151,14 @@ void vg_context_thread_exit(vg_context_t *vcp )
   ptip = & vcp->vc_timing_head;
   tip = *ptip;
   while ((unsigned long )tip != (unsigned long )((void *)0)) {
-    tmp___0 = pthread_equal(tip->ti_thread, me);
-    if (! tmp___0) {
+    tmp = pthread_equal(tip->ti_thread, me);
+    if (! tmp) {
       goto __Cont;
     }
     *ptip = tip->ti_next;
     free((void *)tip);
     break;
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     ptip = & tip->ti_next;
     tip = *ptip;
   }
@@ -17600,8 +8166,8 @@ void vg_context_thread_exit(vg_context_t *vcp )
   return;
 }
 }
-static void vg_timing_info_free(vg_context_t *vcp ) 
-{ 
+static void vg_timing_info_free(vg_context_t *vcp )
+{
   timing_info_t *tp ;
 
   {
@@ -17614,8 +8180,8 @@ static void vg_timing_info_free(vg_context_t *vcp )
 }
 }
 void vg_output_timing_console(vg_context_t *vcp , double count , unsigned long long rate ,
-                              unsigned long long total ) 
-{ 
+                              unsigned long long total )
+{
   double prob ;
   double time___0 ;
   double targ ;
@@ -17742,8 +8308,8 @@ void vg_output_timing_console(vg_context_t *vcp , double count , unsigned long l
   return;
 }
 }
-void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pattern ) 
-{ 
+void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pattern )
+{
   unsigned char key_buf[512] ;
   unsigned char *pend ;
   char addr_buf[64] ;
@@ -17754,10 +8320,10 @@ void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pa
   int isscript ;
   EC_POINT *ppnt ;
   int free_ppnt ;
-  EC_GROUP const   *tmp___0 ;
-  EC_POINT const   *tmp___1 ;
-  EC_GROUP const   *tmp___2 ;
-  EC_POINT const   *tmp___3 ;
+  EC_GROUP const   *tmp ;
+  EC_POINT const   *tmp___0 ;
+  EC_GROUP const   *tmp___1 ;
+  EC_POINT const   *tmp___2 ;
   int tmp___6 ;
   EC_GROUP const   *tmp___7 ;
   EC_GROUP const   *tmp___8 ;
@@ -17772,18 +8338,18 @@ void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pa
   isscript = (unsigned int )vcp->vc_format == 1U;
   free_ppnt = 0;
   if (vcp->vc_pubkey_base) {
-    tmp___0 = EC_KEY_get0_group((EC_KEY const   *)pkey);
-    ppnt = EC_POINT_new(tmp___0);
-    tmp___1 = EC_KEY_get0_public_key((EC_KEY const   *)pkey);
-    EC_POINT_copy(ppnt, tmp___1);
-    tmp___2 = EC_KEY_get0_group((EC_KEY const   *)pkey);
-    EC_POINT_add(tmp___2, ppnt, (EC_POINT const   *)ppnt, (EC_POINT const   *)vcp->vc_pubkey_base,
+    tmp = EC_KEY_get0_group((EC_KEY const   *)pkey);
+    ppnt = EC_POINT_new(tmp);
+    tmp___0 = EC_KEY_get0_public_key((EC_KEY const   *)pkey);
+    EC_POINT_copy(ppnt, tmp___0);
+    tmp___1 = EC_KEY_get0_group((EC_KEY const   *)pkey);
+    EC_POINT_add(tmp___1, ppnt, (EC_POINT const   *)ppnt, (EC_POINT const   *)vcp->vc_pubkey_base,
                  (BN_CTX *)((void *)0));
     free_ppnt = 1;
     keytype = "PrivkeyPart";
   } else {
-    tmp___3 = EC_KEY_get0_public_key((EC_KEY const   *)pkey);
-    ppnt = (EC_POINT *)tmp___3;
+    tmp___2 = EC_KEY_get0_public_key((EC_KEY const   *)pkey);
+    ppnt = (EC_POINT *)tmp___2;
   }
   tmp___6 = EC_KEY_check_key((EC_KEY const   *)pkey);
   if (! tmp___6) {
@@ -17834,7 +8400,7 @@ void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pa
     goto _L;
   } else
   if (vcp->vc_verbose > 0) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (isscript) {
       printf((char const   * __restrict  )"P2SHAddress: %s\n", addr2_buf);
     }
@@ -17867,8 +8433,8 @@ void vg_output_match_console(vg_context_t *vcp , EC_KEY *pkey , char const   *pa
   return;
 }
 }
-void vg_context_free(vg_context_t *vcp ) 
-{ 
+void vg_context_free(vg_context_t *vcp )
+{
 
 
   {
@@ -17878,18 +8444,18 @@ void vg_context_free(vg_context_t *vcp )
 }
 }
 int vg_context_add_patterns(vg_context_t *vcp , char const   ** const  patterns ,
-                            int npatterns ) 
-{ 
-  int tmp___0 ;
+                            int npatterns )
+{
+  int tmp ;
 
   {
   (vcp->vc_pattern_generation) ++;
-  tmp___0 = (*(vcp->vc_add_patterns))(vcp, patterns, npatterns);
-  return (tmp___0);
+  tmp = (*(vcp->vc_add_patterns))(vcp, patterns, npatterns);
+  return (tmp);
 }
 }
-void vg_context_clear_all_patterns(vg_context_t *vcp ) 
-{ 
+void vg_context_clear_all_patterns(vg_context_t *vcp )
+{
 
 
   {
@@ -17898,20 +8464,20 @@ void vg_context_clear_all_patterns(vg_context_t *vcp )
   return;
 }
 }
-int vg_context_hash160_sort(vg_context_t *vcp , void *buf ) 
-{ 
-  int tmp___0 ;
+int vg_context_hash160_sort(vg_context_t *vcp , void *buf )
+{
+  int tmp ;
 
   {
   if (! vcp->vc_hash160_sort) {
     return (0);
   }
-  tmp___0 = (*(vcp->vc_hash160_sort))(vcp, buf);
-  return (tmp___0);
+  tmp = (*(vcp->vc_hash160_sort))(vcp, buf);
+  return (tmp);
 }
 }
-int vg_context_start_threads(vg_context_t *vcp ) 
-{ 
+int vg_context_start_threads(vg_context_t *vcp )
+{
   vg_exec_context_t *vxcp ;
   int res ;
 
@@ -17932,8 +8498,8 @@ int vg_context_start_threads(vg_context_t *vcp )
   return (0);
 }
 }
-void vg_context_stop_threads(vg_context_t *vcp ) 
-{ 
+void vg_context_stop_threads(vg_context_t *vcp )
+{
 
 
   {
@@ -17943,8 +8509,8 @@ void vg_context_stop_threads(vg_context_t *vcp )
   return;
 }
 }
-void vg_context_wait_for_completion(vg_context_t *vcp ) 
-{ 
+void vg_context_wait_for_completion(vg_context_t *vcp )
+{
   vg_exec_context_t *vxcp ;
 
   {
@@ -17955,15 +8521,15 @@ void vg_context_wait_for_completion(vg_context_t *vcp )
     }
     pthread_join(vxcp->vxc_pthread, (void **)((void *)0));
     vxcp->vxc_thread_active = 0;
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     vxcp = vxcp->vxc_next;
   }
   return;
 }
 }
 static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result ,
-                             BN_CTX *bnctx ) 
-{ 
+                             BN_CTX *bnctx )
+{
   int i ;
   int p ;
   int c ;
@@ -17986,13 +8552,13 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
   BIGNUM *bnlow2 ;
   BIGNUM bntmp ;
   BIGNUM bntmp2 ;
-  size_t tmp___0 ;
-  BIGNUM const   *tmp___1 ;
-  int tmp___2 ;
-  unsigned long tmp___3 ;
-  BIGNUM const   *tmp___4 ;
+  size_t tmp ;
+  BIGNUM const   *tmp___0 ;
+  int tmp___1 ;
+  unsigned long tmp___2 ;
+  BIGNUM const   *tmp___3 ;
+  int tmp___4 ;
   int tmp___5 ;
-  int tmp___6 ;
   int tmp___7 ;
   int tmp___8 ;
   int tmp___9 ;
@@ -18020,8 +8586,8 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
   BN_init(& bntmp);
   BN_init(& bntmp2);
   BN_set_word(& bnbase, 58UL);
-  tmp___0 = strlen(pfx);
-  p = (int )tmp___0;
+  tmp = strlen(pfx);
+  p = (int )tmp;
   i = 0;
   while (i < p) {
     c = (int )vg_b58_reverse_map[(int )*(pfx + i)];
@@ -18048,13 +8614,13 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
              bnctx);
       BN_add(& bntarg, (BIGNUM const   *)(& bntmp), (BIGNUM const   *)(& bntmp2));
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   BN_clear(& bntmp);
   BN_set_bit(& bntmp, 200 - zero_prefix * 8);
-  tmp___1 = BN_value_one();
-  BN_sub(& bnceil, (BIGNUM const   *)(& bntmp), tmp___1);
+  tmp___0 = BN_value_one();
+  BN_sub(& bnceil, (BIGNUM const   *)(& bntmp), tmp___0);
   BN_set_bit(& bnfloor, 192 - zero_prefix * 8);
   bnlow = BN_new();
   bnhigh = BN_new();
@@ -18064,8 +8630,8 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
     bnbp = & bntmp2;
     b58pow = 0;
     while (1) {
-      tmp___2 = BN_cmp((BIGNUM const   *)bnap, (BIGNUM const   *)(& bnbase));
-      if (! (tmp___2 > 0)) {
+      tmp___1 = BN_cmp((BIGNUM const   *)bnap, (BIGNUM const   *)(& bnbase));
+      if (! (tmp___1 > 0)) {
         break;
       }
       b58pow ++;
@@ -18075,8 +8641,8 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
       bnap = bnbp;
       bnbp = bntp;
     }
-    tmp___3 = BN_get_word((BIGNUM const   *)bnap);
-    b58ceil = (int )tmp___3;
+    tmp___2 = BN_get_word((BIGNUM const   *)bnap);
+    b58ceil = (int )tmp___2;
     if (b58pow - (p - zero_prefix) < 6) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Prefix \'%s\' is too long\n",
               pfx);
@@ -18085,8 +8651,8 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
     BN_set_word(& bntmp2, (unsigned long )(b58pow - (p - zero_prefix)));
     BN_exp(& bntmp, (BIGNUM const   *)(& bnbase), (BIGNUM const   *)(& bntmp2), bnctx);
     BN_mul(bnlow, (BIGNUM const   *)(& bntmp), (BIGNUM const   *)(& bntarg), bnctx);
-    tmp___4 = BN_value_one();
-    BN_sub(& bntmp2, (BIGNUM const   *)(& bntmp), tmp___4);
+    tmp___3 = BN_value_one();
+    BN_sub(& bntmp2, (BIGNUM const   *)(& bntmp), tmp___3);
     BN_add(bnhigh, (BIGNUM const   *)bnlow, (BIGNUM const   *)(& bntmp2));
     if (b58top <= b58ceil) {
       check_upper = 1;
@@ -18096,16 +8662,16 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
       BN_mul(& bntmp2, (BIGNUM const   *)bnhigh, (BIGNUM const   *)(& bnbase), bnctx);
       BN_set_word(& bntmp, 57UL);
       BN_add(bnhigh2, (BIGNUM const   *)(& bntmp2), (BIGNUM const   *)(& bntmp));
-      tmp___6 = BN_cmp((BIGNUM const   *)(& bnceil), (BIGNUM const   *)bnlow2);
-      if (tmp___6 < 0) {
+      tmp___5 = BN_cmp((BIGNUM const   *)(& bnceil), (BIGNUM const   *)bnlow2);
+      if (tmp___5 < 0) {
         check_upper = 0;
         BN_free(bnhigh2);
         bnhigh2 = (BIGNUM *)((void *)0);
         BN_free(bnlow2);
         bnlow2 = (BIGNUM *)((void *)0);
       } else {
-        tmp___5 = BN_cmp((BIGNUM const   *)(& bnceil), (BIGNUM const   *)bnhigh2);
-        if (tmp___5 < 0) {
+        tmp___4 = BN_cmp((BIGNUM const   *)(& bnceil), (BIGNUM const   *)bnhigh2);
+        if (tmp___4 < 0) {
           BN_copy(bnhigh2, (BIGNUM const   *)(& bnceil));
         }
       }
@@ -18224,10 +8790,10 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
   bnhigh2 = (BIGNUM *)((void *)0);
   ret = 0;
   if (0) {
-    not_possible: 
+    not_possible:
     ret = -2;
   }
-  out: 
+  out:
   BN_clear_free(& bntarg);
   BN_clear_free(& bnceil);
   BN_clear_free(& bnfloor);
@@ -18249,8 +8815,8 @@ static int get_prefix_ranges(int addrtype , char const   *pfx , BIGNUM **result 
   return (ret);
 }
 }
-static void free_ranges(BIGNUM **ranges ) 
-{ 
+static void free_ranges(BIGNUM **ranges )
+{
 
 
   {
@@ -18268,8 +8834,8 @@ static void free_ranges(BIGNUM **ranges )
 }
 }
 int const   vpk_nwords  =    (int const   )(((25UL + sizeof(unsigned long )) - 1UL) / sizeof(unsigned long ));
-static void vg_prefix_free(vg_prefix_t *vp ) 
-{ 
+static void vg_prefix_free(vg_prefix_t *vp )
+{
 
 
   {
@@ -18283,23 +8849,23 @@ static void vg_prefix_free(vg_prefix_t *vp )
   return;
 }
 }
-static vg_prefix_t *vg_prefix_avl_search(avl_root_t *rootp , BIGNUM *targ ) 
-{ 
+static vg_prefix_t *vg_prefix_avl_search(avl_root_t *rootp , BIGNUM *targ )
+{
   vg_prefix_t *vp ;
   avl_item_t *itemp ;
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
 
   {
   itemp = rootp->ar_root;
   while (itemp) {
     vp = (vg_prefix_t *)((unsigned char *)itemp - (size_t )(& ((vg_prefix_t *)((unsigned char *)0))->vp_item));
-    tmp___1 = BN_cmp((BIGNUM const   *)vp->vp_low, (BIGNUM const   *)targ);
-    if (tmp___1 > 0) {
+    tmp___0 = BN_cmp((BIGNUM const   *)vp->vp_low, (BIGNUM const   *)targ);
+    if (tmp___0 > 0) {
       itemp = itemp->ai_left;
     } else {
-      tmp___0 = BN_cmp((BIGNUM const   *)vp->vp_high, (BIGNUM const   *)targ);
-      if (tmp___0 < 0) {
+      tmp = BN_cmp((BIGNUM const   *)vp->vp_high, (BIGNUM const   *)targ);
+      if (tmp < 0) {
         itemp = itemp->ai_right;
       } else {
         return (vp);
@@ -18309,13 +8875,13 @@ static vg_prefix_t *vg_prefix_avl_search(avl_root_t *rootp , BIGNUM *targ )
   return ((vg_prefix_t *)((void *)0));
 }
 }
-static vg_prefix_t *vg_prefix_avl_insert(avl_root_t *rootp , vg_prefix_t *vpnew ) 
-{ 
+static vg_prefix_t *vg_prefix_avl_insert(avl_root_t *rootp , vg_prefix_t *vpnew )
+{
   vg_prefix_t *vp ;
   avl_item_t *itemp ;
   avl_item_t **ptrp ;
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
 
   {
   itemp = (avl_item_t *)((void *)0);
@@ -18323,12 +8889,12 @@ static vg_prefix_t *vg_prefix_avl_insert(avl_root_t *rootp , vg_prefix_t *vpnew 
   while (*ptrp) {
     itemp = *ptrp;
     vp = (vg_prefix_t *)((unsigned char *)itemp - (size_t )(& ((vg_prefix_t *)((unsigned char *)0))->vp_item));
-    tmp___1 = BN_cmp((BIGNUM const   *)vp->vp_low, (BIGNUM const   *)vpnew->vp_high);
-    if (tmp___1 > 0) {
+    tmp___0 = BN_cmp((BIGNUM const   *)vp->vp_low, (BIGNUM const   *)vpnew->vp_high);
+    if (tmp___0 > 0) {
       ptrp = & itemp->ai_left;
     } else {
-      tmp___0 = BN_cmp((BIGNUM const   *)vp->vp_high, (BIGNUM const   *)vpnew->vp_low);
-      if (tmp___0 < 0) {
+      tmp = BN_cmp((BIGNUM const   *)vp->vp_high, (BIGNUM const   *)vpnew->vp_low);
+      if (tmp < 0) {
         ptrp = & itemp->ai_right;
       } else {
         return (vp);
@@ -18342,8 +8908,8 @@ static vg_prefix_t *vg_prefix_avl_insert(avl_root_t *rootp , vg_prefix_t *vpnew 
   return ((vg_prefix_t *)((void *)0));
 }
 }
-static vg_prefix_t *vg_prefix_first(avl_root_t *rootp ) 
-{ 
+static vg_prefix_t *vg_prefix_first(avl_root_t *rootp )
+{
   avl_item_t *itemp ;
 
   {
@@ -18354,8 +8920,8 @@ static vg_prefix_t *vg_prefix_first(avl_root_t *rootp )
   return ((vg_prefix_t *)((void *)0));
 }
 }
-static vg_prefix_t *vg_prefix_next(vg_prefix_t *vp ) 
-{ 
+static vg_prefix_t *vg_prefix_next(vg_prefix_t *vp )
+{
   avl_item_t *itemp ;
 
   {
@@ -18368,8 +8934,8 @@ static vg_prefix_t *vg_prefix_next(vg_prefix_t *vp )
 }
 }
 static vg_prefix_t *vg_prefix_add(avl_root_t *rootp , char const   *pattern , BIGNUM *low ,
-                                  BIGNUM *high ) 
-{ 
+                                  BIGNUM *high )
+{
   vg_prefix_t *vp ;
   vg_prefix_t *vp2 ;
   int tmp___2 ;
@@ -18399,8 +8965,8 @@ static vg_prefix_t *vg_prefix_add(avl_root_t *rootp , char const   *pattern , BI
   return (vp);
 }
 }
-static void vg_prefix_delete(avl_root_t *rootp , vg_prefix_t *vp ) 
-{ 
+static void vg_prefix_delete(avl_root_t *rootp , vg_prefix_t *vp )
+{
   vg_prefix_t *sibp ;
   vg_prefix_t *delp ;
 
@@ -18425,8 +8991,8 @@ static void vg_prefix_delete(avl_root_t *rootp , vg_prefix_t *vp )
 }
 }
 static vg_prefix_t *vg_prefix_add_ranges(avl_root_t *rootp , char const   *pattern ,
-                                         BIGNUM **ranges , vg_prefix_t *master ) 
-{ 
+                                         BIGNUM **ranges , vg_prefix_t *master )
+{
   vg_prefix_t *vp ;
   vg_prefix_t *vp2 ;
 
@@ -18471,8 +9037,8 @@ static vg_prefix_t *vg_prefix_add_ranges(avl_root_t *rootp , char const   *patte
   return (vp);
 }
 }
-static void vg_prefix_range_sum(vg_prefix_t *vp , BIGNUM *result , BIGNUM *tmp1 ) 
-{ 
+static void vg_prefix_range_sum(vg_prefix_t *vp , BIGNUM *result , BIGNUM *tmp1 )
+{
   vg_prefix_t *startp ;
 
   {
@@ -18493,41 +9059,41 @@ static void vg_prefix_range_sum(vg_prefix_t *vp , BIGNUM *result , BIGNUM *tmp1 
   return;
 }
 }
-static unsigned char const   b58_case_map[256]  = 
-  {      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )2,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )2, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0, 
-        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )2,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1, 
-        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0, 
+static unsigned char const   b58_case_map[256]  =
+  {      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )2,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )2,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,
+        (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )0,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )2,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,
+        (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )1,      (unsigned char const   )0,
         (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0,      (unsigned char const   )0};
-static int prefix_case_iter_init(prefix_case_iter_t *cip , char const   *pfx ) 
-{ 
+static int prefix_case_iter_init(prefix_case_iter_t *cip , char const   *pfx )
+{
   int i ;
 
   {
@@ -18549,15 +9115,15 @@ static int prefix_case_iter_init(prefix_case_iter_t *cip , char const   *pfx )
     cip->ci_prefix[i] = (char )((int const   )*(pfx + i) | 32);
     cip->ci_case_map[(int )cip->ci_nbits] = (char )i;
     cip->ci_nbits = (char )((int )cip->ci_nbits + 1);
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   cip->ci_prefix[i] = (char )'\000';
   return (1);
 }
 }
-static int prefix_case_iter_next(prefix_case_iter_t *cip ) 
-{ 
+static int prefix_case_iter_next(prefix_case_iter_t *cip )
+{
   unsigned long val ;
   unsigned long max ;
   unsigned long mask ;
@@ -18586,8 +9152,8 @@ static int prefix_case_iter_next(prefix_case_iter_t *cip )
   return (1);
 }
 }
-void vg_prefix_context_set_case_insensitive(vg_context_t *vcp , int caseinsensitive ) 
-{ 
+void vg_prefix_context_set_case_insensitive(vg_context_t *vcp , int caseinsensitive )
+{
 
 
   {
@@ -18595,19 +9161,19 @@ void vg_prefix_context_set_case_insensitive(vg_context_t *vcp , int caseinsensit
   return;
 }
 }
-static void vg_prefix_context_clear_all_patterns(vg_context_t *vcp ) 
-{ 
+static void vg_prefix_context_clear_all_patterns(vg_context_t *vcp )
+{
   vg_prefix_context_t *vcpp ;
   vg_prefix_t *vp ;
   unsigned long npfx_left ;
-  int tmp___0 ;
+  int tmp ;
 
   {
   vcpp = (vg_prefix_context_t *)vcp;
   npfx_left = 0UL;
   while (1) {
-    tmp___0 = avl_root_empty(& vcpp->vcp_avlroot);
-    if (tmp___0) {
+    tmp = avl_root_empty(& vcpp->vcp_avlroot);
+    if (tmp) {
       break;
     }
     vp = (vg_prefix_t *)((unsigned char *)vcpp->vcp_avlroot.ar_root - (size_t )(& ((vg_prefix_t *)((unsigned char *)0))->vp_item));
@@ -18624,8 +9190,8 @@ static void vg_prefix_context_clear_all_patterns(vg_context_t *vcp )
   return;
 }
 }
-static void vg_prefix_context_free(vg_context_t *vcp ) 
-{ 
+static void vg_prefix_context_free(vg_context_t *vcp )
+{
   vg_prefix_context_t *vcpp ;
 
   {
@@ -18637,8 +9203,8 @@ static void vg_prefix_context_free(vg_context_t *vcp )
 }
 }
 static void vg_prefix_context_next_difficulty(vg_prefix_context_t *vcpp , BIGNUM *bntmp ,
-                                              BIGNUM *bntmp2 , BN_CTX *bnctx ) 
-{ 
+                                              BIGNUM *bntmp2 , BN_CTX *bnctx )
+{
   char *dbuf ;
 
   {
@@ -18662,8 +9228,8 @@ static void vg_prefix_context_next_difficulty(vg_prefix_context_t *vcpp , BIGNUM
 }
 }
 static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** const  patterns ,
-                                          int npatterns ) 
-{ 
+                                          int npatterns )
+{
   vg_prefix_context_t *vcpp ;
   prefix_case_iter_t caseiter ;
   vg_prefix_t *vp ;
@@ -18679,8 +9245,8 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
   int case_impossible ;
   unsigned long npfx ;
   char *dbuf ;
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
   char const   *ats ;
   char const   *bw ;
 
@@ -18702,8 +9268,8 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
         vp = vg_prefix_add_ranges(& vcpp->vcp_avlroot, *(patterns + i), ranges, (vg_prefix_t *)((void *)0));
       }
     } else {
-      tmp___0 = prefix_case_iter_init(& caseiter, *(patterns + i));
-      if (! tmp___0) {
+      tmp = prefix_case_iter_init(& caseiter, *(patterns + i));
+      if (! tmp) {
         fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Prefix \'%s\' is too long\n",
                 *(patterns + i));
         goto __Cont;
@@ -18733,9 +9299,9 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
         if (! vp) {
           vp = vp2;
         }
-        __Cont___0: /* CIL Label */ 
-        tmp___1 = prefix_case_iter_next(& caseiter);
-        if (! tmp___1) {
+        __Cont___0: /* CIL Label */
+        tmp___0 = prefix_case_iter_next(& caseiter);
+        if (! tmp___0) {
           break;
         }
       }
@@ -18773,7 +9339,7 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
               dbuf, *(patterns + i));
       CRYPTO_free((void *)dbuf);
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   vcpp->base.vc_npatterns += npfx;
@@ -18783,19 +9349,19 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
       ats = "bitcoin";
       bw = "\"1\"";
       switch (vcpp->base.vc_addrtype) {
-      case 5: 
+      case 5:
       ats = "bitcoin script";
       bw = "\"3\"";
       break;
-      case 111: 
+      case 111:
       ats = "testnet";
       bw = "\"m\" or \"n\"";
       break;
-      case 52: 
+      case 52:
       ats = "namecoin";
       bw = "\"M\" or \"N\"";
       break;
-      default: 
+      default:
       break;
       }
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Hint: valid %s addresses begin with %s\n",
@@ -18813,8 +9379,8 @@ static int vg_prefix_context_add_patterns(vg_context_t *vcp , char const   ** co
   return (ret);
 }
 }
-double vg_prefix_get_difficulty(int addrtype , char const   *pattern ) 
-{ 
+double vg_prefix_get_difficulty(int addrtype , char const   *pattern )
+{
   BN_CTX *bnctx ;
   BIGNUM result ;
   BIGNUM bntmp ;
@@ -18851,24 +9417,24 @@ double vg_prefix_get_difficulty(int addrtype , char const   *pattern )
   return (diffret);
 }
 }
-static int vg_prefix_test(vg_exec_context_t *vxcp ) 
-{ 
+static int vg_prefix_test(vg_exec_context_t *vxcp )
+{
   vg_prefix_context_t *vcpp ;
   vg_prefix_t *vp ;
   int res ;
+  int tmp ;
   int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
 
   {
   vcpp = (vg_prefix_context_t *)vxcp->vxc_vc;
   res = 0;
   BN_bin2bn((unsigned char const   *)(vxcp->vxc_binres), 25, & vxcp->vxc_bntarg);
-  research: 
+  research:
   vp = vg_prefix_avl_search(& vcpp->vcp_avlroot, & vxcp->vxc_bntarg);
   if (vp) {
-    tmp___0 = vg_exec_context_upgrade_lock(vxcp);
-    if (tmp___0) {
+    tmp = vg_exec_context_upgrade_lock(vxcp);
+    if (tmp) {
       goto research;
     }
     vg_exec_context_consolidate_key(vxcp);
@@ -18883,8 +9449,8 @@ static int vg_prefix_test(vg_exec_context_t *vxcp )
       BN_copy(& vcpp->vcp_difficulty, (BIGNUM const   *)(& vxcp->vxc_bntmp));
       vg_prefix_delete(& vcpp->vcp_avlroot, vp);
       (vcpp->base.vc_npatterns) --;
-      tmp___1 = avl_root_empty(& vcpp->vcp_avlroot);
-      if (! tmp___1) {
+      tmp___0 = avl_root_empty(& vcpp->vcp_avlroot);
+      if (! tmp___0) {
         vg_prefix_context_next_difficulty(vcpp, & vxcp->vxc_bntmp, & vxcp->vxc_bntmp2,
                                           vxcp->vxc_bnctx);
       }
@@ -18892,15 +9458,15 @@ static int vg_prefix_test(vg_exec_context_t *vxcp )
     }
     res = 1;
   }
-  tmp___2 = avl_root_empty(& vcpp->vcp_avlroot);
-  if (tmp___2) {
+  tmp___1 = avl_root_empty(& vcpp->vcp_avlroot);
+  if (tmp___1) {
     return (2);
   }
   return (res);
 }
 }
-static int vg_prefix_hash160_sort(vg_context_t *vcp , void *buf ) 
-{ 
+static int vg_prefix_hash160_sort(vg_context_t *vcp , void *buf )
+{
   vg_prefix_context_t *vcpp ;
   vg_prefix_t *vp ;
   unsigned char *cbuf ;
@@ -18909,8 +9475,8 @@ static int vg_prefix_hash160_sort(vg_context_t *vcp , void *buf )
   int ncopy ;
   int nskip ;
   int npfx ;
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
 
   {
   vcpp = (vg_prefix_context_t *)vcp;
@@ -18923,6 +9489,28 @@ static int vg_prefix_hash160_sort(vg_context_t *vcp , void *buf )
       goto __Cont;
     }
     nbytes = BN_bn2bin((BIGNUM const   *)vp->vp_low, bnbuf);
+    if (nbytes >= 24) {
+      ncopy = 20;
+    } else {
+      if (nbytes > 4) {
+        tmp = nbytes - 4;
+      } else {
+        tmp = 0;
+      }
+      ncopy = tmp;
+    }
+    if (nbytes >= 24) {
+      nskip = nbytes - 24;
+    } else {
+      nskip = 0;
+    }
+    if (ncopy < 20) {
+      memset((void *)cbuf, 0, (size_t )(20 - ncopy));
+    }
+    memcpy((void * __restrict  )(cbuf + (20 - ncopy)), (void const   * __restrict  )(bnbuf + nskip),
+           (size_t )ncopy);
+    cbuf += 20;
+    nbytes = BN_bn2bin((BIGNUM const   *)vp->vp_high, bnbuf);
     if (nbytes >= 24) {
       ncopy = 20;
     } else {
@@ -18944,42 +9532,20 @@ static int vg_prefix_hash160_sort(vg_context_t *vcp , void *buf )
     memcpy((void * __restrict  )(cbuf + (20 - ncopy)), (void const   * __restrict  )(bnbuf + nskip),
            (size_t )ncopy);
     cbuf += 20;
-    nbytes = BN_bn2bin((BIGNUM const   *)vp->vp_high, bnbuf);
-    if (nbytes >= 24) {
-      ncopy = 20;
-    } else {
-      if (nbytes > 4) {
-        tmp___1 = nbytes - 4;
-      } else {
-        tmp___1 = 0;
-      }
-      ncopy = tmp___1;
-    }
-    if (nbytes >= 24) {
-      nskip = nbytes - 24;
-    } else {
-      nskip = 0;
-    }
-    if (ncopy < 20) {
-      memset((void *)cbuf, 0, (size_t )(20 - ncopy));
-    }
-    memcpy((void * __restrict  )(cbuf + (20 - ncopy)), (void const   * __restrict  )(bnbuf + nskip),
-           (size_t )ncopy);
-    cbuf += 20;
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     vp = vg_prefix_next(vp);
   }
   return (npfx);
 }
 }
-vg_context_t *vg_prefix_context_new(int addrtype , int privtype , int caseinsensitive ) 
-{ 
+vg_context_t *vg_prefix_context_new(int addrtype , int privtype , int caseinsensitive )
+{
   vg_prefix_context_t *vcpp ;
-  void *tmp___0 ;
+  void *tmp ;
 
   {
-  tmp___0 = malloc(sizeof(*vcpp));
-  vcpp = (vg_prefix_context_t *)tmp___0;
+  tmp = malloc(sizeof(*vcpp));
+  vcpp = (vg_prefix_context_t *)tmp;
   if (vcpp) {
     memset((void *)vcpp, 0, sizeof(*vcpp));
     vcpp->base.vc_addrtype = addrtype;
@@ -19001,8 +9567,8 @@ vg_context_t *vg_prefix_context_new(int addrtype , int privtype , int caseinsens
 }
 }
 static int vg_regex_context_add_patterns(vg_context_t *vcp , char const   ** const  patterns ,
-                                         int npatterns ) 
-{ 
+                                         int npatterns )
+{
   vg_regex_context_t *vcrp ;
   char const   *pcre_errptr ;
   int pcre_erroffset ;
@@ -19010,7 +9576,7 @@ static int vg_regex_context_add_patterns(vg_context_t *vcp , char const   ** con
   unsigned long nres ;
   unsigned long count ;
   void **mem ;
-  void *tmp___0 ;
+  void *tmp ;
   char const   *spaces ;
 
   {
@@ -19026,8 +9592,8 @@ static int vg_regex_context_add_patterns(vg_context_t *vcp , char const   ** con
     if (count < 16UL) {
       count = 16UL;
     }
-    tmp___0 = malloc((3UL * count) * sizeof(void *));
-    mem = (void **)tmp___0;
+    tmp = malloc((3UL * count) * sizeof(void *));
+    mem = (void **)tmp;
     if (! mem) {
       return (0);
     }
@@ -19075,7 +9641,7 @@ static int vg_regex_context_add_patterns(vg_context_t *vcp , char const   ** con
     }
     *(vcrp->vcr_regex_pat + nres) = *(patterns + i);
     nres ++;
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   if (nres == vcrp->base.vc_npatterns) {
@@ -19086,8 +9652,8 @@ static int vg_regex_context_add_patterns(vg_context_t *vcp , char const   ** con
   return (1);
 }
 }
-static void vg_regex_context_clear_all_patterns(vg_context_t *vcp ) 
-{ 
+static void vg_regex_context_clear_all_patterns(vg_context_t *vcp )
+{
   vg_regex_context_t *vcrp ;
   int i ;
 
@@ -19107,8 +9673,8 @@ static void vg_regex_context_clear_all_patterns(vg_context_t *vcp )
   return;
 }
 }
-static void vg_regex_context_free(vg_context_t *vcp ) 
-{ 
+static void vg_regex_context_free(vg_context_t *vcp )
+{
   vg_regex_context_t *vcrp ;
 
   {
@@ -19121,8 +9687,8 @@ static void vg_regex_context_free(vg_context_t *vcp )
   return;
 }
 }
-static int vg_regex_test(vg_exec_context_t *vxcp ) 
-{ 
+static int vg_regex_test(vg_exec_context_t *vxcp )
+{
   vg_regex_context_t *vcrp ;
   unsigned char hash1[32] ;
   unsigned char hash2[32] ;
@@ -19139,9 +9705,9 @@ static int vg_regex_test(vg_exec_context_t *vxcp )
   BIGNUM *bnptmp ;
   int res ;
   pcre *re ;
-  unsigned long tmp___0 ;
+  unsigned long tmp ;
+  int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
 
   {
   vcrp = (vg_regex_context_t *)vxcp->vxc_vc;
@@ -19173,21 +9739,21 @@ static int vg_regex_test(vg_exec_context_t *vxcp )
     bnptmp = bn;
     bn = bndiv;
     bndiv = bnptmp;
-    tmp___0 = BN_get_word((BIGNUM const   *)(& bnrem));
-    d = (int )tmp___0;
+    tmp = BN_get_word((BIGNUM const   *)(& bnrem));
+    d = (int )tmp;
     p --;
     b58[p] = (char )*(vg_b58_alphabet + d);
   }
   while (1) {
-    tmp___1 = zpfx;
+    tmp___0 = zpfx;
     zpfx --;
-    if (! tmp___1) {
+    if (! tmp___0) {
       break;
     }
     p --;
     b58[p] = (char )*(vg_b58_alphabet + 0);
   }
-  restart_loop: 
+  restart_loop:
   nres = (int )vcrp->base.vc_npatterns;
   if (! nres) {
     res = 2;
@@ -19208,8 +9774,8 @@ static int vg_regex_test(vg_exec_context_t *vxcp )
       goto __Cont;
     }
     re = *(vcrp->vcr_regex + i);
-    tmp___2 = vg_exec_context_upgrade_lock(vxcp);
-    if (tmp___2) {
+    tmp___1 = vg_exec_context_upgrade_lock(vxcp);
+    if (tmp___1) {
       if ((unsigned long )i >= vcrp->base.vc_npatterns) {
         goto restart_loop;
       } else
@@ -19242,22 +9808,22 @@ static int vg_regex_test(vg_exec_context_t *vxcp )
       (vcrp->base.vc_pattern_generation) ++;
     }
     res = 1;
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
-  out: 
+  out:
   BN_clear_free(& bnrem);
   return (res);
 }
 }
-vg_context_t *vg_regex_context_new(int addrtype , int privtype ) 
-{ 
+vg_context_t *vg_regex_context_new(int addrtype , int privtype )
+{
   vg_regex_context_t *vcrp ;
-  void *tmp___0 ;
+  void *tmp ;
 
   {
-  tmp___0 = malloc(sizeof(*vcrp));
-  vcrp = (vg_regex_context_t *)tmp___0;
+  tmp = malloc(sizeof(*vcrp));
+  vcrp = (vg_regex_context_t *)tmp;
   if (vcrp) {
     memset((void *)vcrp, 0, sizeof(*vcrp));
     vcrp->base.vc_addrtype = addrtype;
@@ -19277,7 +9843,10 @@ vg_context_t *vg_regex_context_new(int addrtype , int privtype )
   return (& vcrp->base);
 }
 }
-#pragma merger("0","/tmp/cil-CUvp5pCS.i","-ggdb,-O3,-Wall")
+#pragma merger("0","/tmp/cil-XmRKgc3M.i","-ggdb,-O3,-Wall")
+extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2), __leaf__)) memcmp)(void const   *__s1 ,
+                                                                                               void const   *__s2 ,
+                                                                                               size_t __n )  __attribute__((__pure__)) ;
 extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) pow)(double __x ,
                                                                              double __y ) ;
 extern void OPENSSL_cleanse(void *ptr , size_t len ) ;
@@ -19310,6 +9879,8 @@ extern unsigned char *HMAC(EVP_MD const   *evp_md , void const   *key , int key_
                            unsigned int *md_len ) ;
 extern int RAND_bytes(unsigned char *buf , int num ) ;
 extern int EC_GROUP_cmp(EC_GROUP const   *a , EC_GROUP const   *b , BN_CTX *ctx ) ;
+extern int EC_POINT_mul(EC_GROUP const   *group , EC_POINT *r , BIGNUM const   *n ,
+                        EC_POINT const   *q , BIGNUM const   *m , BN_CTX *ctx ) ;
 extern EC_KEY *EC_KEY_copy(EC_KEY *dst , EC_KEY const   *src ) ;
 extern EC_KEY *EC_KEY_dup(EC_KEY const   *src ) ;
 extern int EC_KEY_set_private_key(EC_KEY *key , BIGNUM const   *prv ) ;
@@ -19329,6 +9900,8 @@ extern PKCS8_PRIV_KEY_INFO *PKCS8_decrypt(X509_SIG *p8 , char const   *pass , in
 extern X509_SIG *PKCS8_encrypt(int pbe_nid , EVP_CIPHER const   *cipher , char const   *pass ,
                                int passlen , unsigned char *salt , int saltlen , int iter ,
                                PKCS8_PRIV_KEY_INFO *p8 ) ;
+void fdumphex(FILE *fp , unsigned char const   *src , size_t len ) ;
+void fdumpbn(FILE *fp , BIGNUM const   *bn ) ;
 void vg_b58_encode_check(void *buf , size_t len , char *result ) ;
 int vg_decode_privkey(char const   *b58encoded , EC_KEY *pkey , int *addrtype ) ;
 int vg_protect_decode_privkey(EC_KEY *pkey , int *keytype , char const   *encoded ,
@@ -19340,69 +9913,69 @@ int vg_read_password(char *buf , size_t size ) ;
 int vg_check_password_complexity(char const   *pass , int verbose ) ;
 int vg_read_file(FILE *fp , char ***result , int *rescount ) ;
 char const   *vg_b58_alphabet  =    "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-signed char const   vg_b58_reverse_map[256]  = 
-  {      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )0,      (signed char const   )1,      (signed char const   )2, 
-        (signed char const   )3,      (signed char const   )4,      (signed char const   )5,      (signed char const   )6, 
-        (signed char const   )7,      (signed char const   )8,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )9,      (signed char const   )10,      (signed char const   )11, 
-        (signed char const   )12,      (signed char const   )13,      (signed char const   )14,      (signed char const   )15, 
-        (signed char const   )16,      (signed char const   )-1,      (signed char const   )17,      (signed char const   )18, 
-        (signed char const   )19,      (signed char const   )20,      (signed char const   )21,      (signed char const   )-1, 
-        (signed char const   )22,      (signed char const   )23,      (signed char const   )24,      (signed char const   )25, 
-        (signed char const   )26,      (signed char const   )27,      (signed char const   )28,      (signed char const   )29, 
-        (signed char const   )30,      (signed char const   )31,      (signed char const   )32,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )33,      (signed char const   )34,      (signed char const   )35, 
-        (signed char const   )36,      (signed char const   )37,      (signed char const   )38,      (signed char const   )39, 
-        (signed char const   )40,      (signed char const   )41,      (signed char const   )42,      (signed char const   )43, 
-        (signed char const   )-1,      (signed char const   )44,      (signed char const   )45,      (signed char const   )46, 
-        (signed char const   )47,      (signed char const   )48,      (signed char const   )49,      (signed char const   )50, 
-        (signed char const   )51,      (signed char const   )52,      (signed char const   )53,      (signed char const   )54, 
-        (signed char const   )55,      (signed char const   )56,      (signed char const   )57,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
-        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1, 
+signed char const   vg_b58_reverse_map[256]  =
+  {      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )0,      (signed char const   )1,      (signed char const   )2,
+        (signed char const   )3,      (signed char const   )4,      (signed char const   )5,      (signed char const   )6,
+        (signed char const   )7,      (signed char const   )8,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )9,      (signed char const   )10,      (signed char const   )11,
+        (signed char const   )12,      (signed char const   )13,      (signed char const   )14,      (signed char const   )15,
+        (signed char const   )16,      (signed char const   )-1,      (signed char const   )17,      (signed char const   )18,
+        (signed char const   )19,      (signed char const   )20,      (signed char const   )21,      (signed char const   )-1,
+        (signed char const   )22,      (signed char const   )23,      (signed char const   )24,      (signed char const   )25,
+        (signed char const   )26,      (signed char const   )27,      (signed char const   )28,      (signed char const   )29,
+        (signed char const   )30,      (signed char const   )31,      (signed char const   )32,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )33,      (signed char const   )34,      (signed char const   )35,
+        (signed char const   )36,      (signed char const   )37,      (signed char const   )38,      (signed char const   )39,
+        (signed char const   )40,      (signed char const   )41,      (signed char const   )42,      (signed char const   )43,
+        (signed char const   )-1,      (signed char const   )44,      (signed char const   )45,      (signed char const   )46,
+        (signed char const   )47,      (signed char const   )48,      (signed char const   )49,      (signed char const   )50,
+        (signed char const   )51,      (signed char const   )52,      (signed char const   )53,      (signed char const   )54,
+        (signed char const   )55,      (signed char const   )56,      (signed char const   )57,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
+        (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,
         (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1,      (signed char const   )-1};
-void fdumphex(FILE *fp , unsigned char const   *src , size_t len ) 
-{ 
+void fdumphex(FILE *fp , unsigned char const   *src , size_t len )
+{
   size_t i ;
 
   {
@@ -19415,27 +9988,27 @@ void fdumphex(FILE *fp , unsigned char const   *src , size_t len )
   return;
 }
 }
-void fdumpbn(FILE *fp , BIGNUM const   *bn ) 
-{ 
+void fdumpbn(FILE *fp , BIGNUM const   *bn )
+{
   char *buf ;
-  char const   *tmp___0 ;
+  char const   *tmp ;
 
   {
   buf = BN_bn2hex(bn);
   if (buf) {
-    tmp___0 = (char const   *)buf;
+    tmp = (char const   *)buf;
   } else {
-    tmp___0 = "0";
+    tmp = "0";
   }
-  fprintf((FILE * __restrict  )fp, (char const   * __restrict  )"%s\n", tmp___0);
+  fprintf((FILE * __restrict  )fp, (char const   * __restrict  )"%s\n", tmp);
   if (buf) {
     CRYPTO_free((void *)buf);
   }
   return;
 }
 }
-void dumphex(unsigned char const   *src , size_t len ) 
-{ 
+void dumphex(unsigned char const   *src , size_t len )
+{
 
 
   {
@@ -19443,8 +10016,8 @@ void dumphex(unsigned char const   *src , size_t len )
   return;
 }
 }
-void dumpbn(BIGNUM const   *bn ) 
-{ 
+void dumpbn(BIGNUM const   *bn )
+{
 
 
   {
@@ -19452,8 +10025,8 @@ void dumpbn(BIGNUM const   *bn )
   return;
 }
 }
-void vg_b58_encode_check(void *buf , size_t len , char *result ) 
-{ 
+void vg_b58_encode_check(void *buf , size_t len , char *result )
+{
   unsigned char hash1[32] ;
   unsigned char hash2[32] ;
   int d ;
@@ -19469,9 +10042,9 @@ void vg_b58_encode_check(void *buf , size_t len , char *result )
   unsigned char *binres ;
   int brlen ;
   int zpfx ;
-  void *tmp___0 ;
-  unsigned long tmp___1 ;
-  int tmp___2 ;
+  void *tmp ;
+  unsigned long tmp___0 ;
+  int tmp___1 ;
 
   {
   bnctx = BN_CTX_new();
@@ -19483,8 +10056,8 @@ void vg_b58_encode_check(void *buf , size_t len , char *result )
   bn = & bna;
   bndiv = & bnb;
   brlen = (int )(2UL * len + 4UL);
-  tmp___0 = malloc((size_t )brlen);
-  binres = (unsigned char *)tmp___0;
+  tmp = malloc((size_t )brlen);
+  binres = (unsigned char *)tmp;
   memcpy((void * __restrict  )binres, (void const   * __restrict  )buf, len);
   SHA256((unsigned char const   *)binres, len, hash1);
   SHA256((unsigned char const   *)(hash1), sizeof(hash1), hash2);
@@ -19508,15 +10081,15 @@ void vg_b58_encode_check(void *buf , size_t len , char *result )
     bntmp = bn;
     bn = bndiv;
     bndiv = bntmp;
-    tmp___1 = BN_get_word((BIGNUM const   *)(& bnrem));
-    d = (int )tmp___1;
+    tmp___0 = BN_get_word((BIGNUM const   *)(& bnrem));
+    d = (int )tmp___0;
     p --;
     *(binres + p) = (unsigned char )*(vg_b58_alphabet + d);
   }
   while (1) {
-    tmp___2 = zpfx;
+    tmp___1 = zpfx;
     zpfx --;
-    if (! tmp___2) {
+    if (! tmp___1) {
       break;
     }
     p --;
@@ -19533,8 +10106,8 @@ void vg_b58_encode_check(void *buf , size_t len , char *result )
   return;
 }
 }
-int vg_b58_decode_check(char const   *input , void *buf , size_t len ) 
-{ 
+int vg_b58_decode_check(char const   *input , void *buf , size_t len )
+{
   int i ;
   int l ;
   int c ;
@@ -19547,10 +10120,10 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
   unsigned char hash2[32] ;
   int zpfx ;
   int res ;
-  size_t tmp___0 ;
-  int tmp___1 ;
-  void *tmp___2 ;
-  int tmp___3 ;
+  size_t tmp ;
+  int tmp___0 ;
+  void *tmp___1 ;
+  int tmp___2 ;
 
   {
   xbuf = (unsigned char *)((void *)0);
@@ -19560,8 +10133,8 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
   BN_init(& bnbase);
   BN_set_word(& bnbase, 58UL);
   bnctx = BN_CTX_new();
-  tmp___0 = strlen(input);
-  l = (int )tmp___0;
+  tmp = strlen(input);
+  l = (int )tmp;
   i = 0;
   while (i < l) {
     if ((int const   )*(input + i) == 13) {
@@ -19584,7 +10157,7 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
     BN_set_word(& bnw, (unsigned long )c);
     BN_mul(& bn, (BIGNUM const   *)(& bn), (BIGNUM const   *)(& bnbase), bnctx);
     BN_add(& bn, (BIGNUM const   *)(& bn), (BIGNUM const   *)(& bnw));
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   i = 0;
@@ -19606,17 +10179,17 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
       break;
     }
     zpfx ++;
-    __Cont___0: /* CIL Label */ 
+    __Cont___0: /* CIL Label */
     i ++;
   }
-  tmp___1 = BN_num_bits((BIGNUM const   *)(& bn));
-  c = (tmp___1 + 7) / 8;
+  tmp___0 = BN_num_bits((BIGNUM const   *)(& bn));
+  c = (tmp___0 + 7) / 8;
   l = zpfx + c;
   if (l < 5) {
     goto out;
   }
-  tmp___2 = malloc((size_t )l);
-  xbuf = (unsigned char *)tmp___2;
+  tmp___1 = malloc((size_t )l);
+  xbuf = (unsigned char *)tmp___1;
   if (! xbuf) {
     goto out;
   }
@@ -19629,8 +10202,8 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
   l -= 4;
   SHA256((unsigned char const   *)xbuf, (size_t )l, hash1);
   SHA256((unsigned char const   *)(hash1), sizeof(hash1), hash2);
-  tmp___3 = memcmp((void const   *)(hash2), (void const   *)(xbuf + l), (size_t )4);
-  if (tmp___3) {
+  tmp___2 = memcmp((void const   *)(hash2), (void const   *)(xbuf + l), (size_t )4);
+  if (tmp___2) {
     goto out;
   }
   if (len) {
@@ -19640,7 +10213,7 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
     memcpy((void * __restrict  )buf, (void const   * __restrict  )xbuf, len);
   }
   res = l;
-  out: 
+  out:
   if (xbuf) {
     free((void *)xbuf);
   }
@@ -19652,20 +10225,20 @@ int vg_b58_decode_check(char const   *input , void *buf , size_t len )
 }
 }
 void vg_encode_address(EC_POINT const   *ppoint , EC_GROUP const   *pgroup , int addrtype ,
-                       char *result ) 
-{ 
+                       char *result )
+{
   unsigned char eckey_buf[128] ;
   unsigned char *pend ;
   unsigned char binres[21] ;
-  unsigned int tmp___0 ;
+  unsigned int tmp ;
   unsigned char hash1[32] ;
 
   {
   binres[0] = (unsigned char)0;
-  tmp___0 = 1U;
-  while (! (tmp___0 >= 21U)) {
-    binres[tmp___0] = (unsigned char)0;
-    tmp___0 ++;
+  tmp = 1U;
+  while (! (tmp >= 21U)) {
+    binres[tmp] = (unsigned char)0;
+    tmp ++;
   }
   pend = eckey_buf;
   EC_POINT_point2oct(pgroup, ppoint, (point_conversion_form_t )4, eckey_buf, sizeof(eckey_buf),
@@ -19679,21 +10252,21 @@ void vg_encode_address(EC_POINT const   *ppoint , EC_GROUP const   *pgroup , int
 }
 }
 void vg_encode_script_address(EC_POINT const   *ppoint , EC_GROUP const   *pgroup ,
-                              int addrtype , char *result ) 
-{ 
+                              int addrtype , char *result )
+{
   unsigned char script_buf[69] ;
   unsigned char *eckey_buf ;
   unsigned char binres[21] ;
-  unsigned int tmp___0 ;
+  unsigned int tmp ;
   unsigned char hash1[32] ;
 
   {
   eckey_buf = script_buf + 2;
   binres[0] = (unsigned char)0;
-  tmp___0 = 1U;
-  while (! (tmp___0 >= 21U)) {
-    binres[tmp___0] = (unsigned char)0;
-    tmp___0 ++;
+  tmp = 1U;
+  while (! (tmp >= 21U)) {
+    binres[tmp] = (unsigned char)0;
+    tmp ++;
   }
   script_buf[0] = (unsigned char)81;
   script_buf[1] = (unsigned char)65;
@@ -19708,18 +10281,18 @@ void vg_encode_script_address(EC_POINT const   *ppoint , EC_GROUP const   *pgrou
   return;
 }
 }
-void vg_encode_privkey(EC_KEY const   *pkey , int addrtype , char *result ) 
-{ 
+void vg_encode_privkey(EC_KEY const   *pkey , int addrtype , char *result )
+{
   unsigned char eckey_buf[128] ;
   BIGNUM const   *bn ;
   int nbytes ;
-  int tmp___0 ;
+  int tmp ;
 
   {
   bn = EC_KEY_get0_private_key(pkey);
   eckey_buf[0] = (unsigned char )addrtype;
-  tmp___0 = BN_num_bits(bn);
-  nbytes = (tmp___0 + 7) / 8;
+  tmp = BN_num_bits(bn);
+  nbytes = (tmp + 7) / 8;
   if (! (nbytes <= 32)) {
     __assert_fail("nbytes <= 32", "util.c", 301U, "vg_encode_privkey");
   }
@@ -19731,42 +10304,42 @@ void vg_encode_privkey(EC_KEY const   *pkey , int addrtype , char *result )
   return;
 }
 }
-int vg_set_privkey(BIGNUM const   *bnpriv , EC_KEY *pkey ) 
-{ 
+int vg_set_privkey(BIGNUM const   *bnpriv , EC_KEY *pkey )
+{
   EC_GROUP const   *pgroup ;
   EC_POINT *ppnt ;
   int res ;
+  int tmp ;
   int tmp___0 ;
   int tmp___1 ;
   int tmp___2 ;
-  int tmp___3 ;
   int tmp___6 ;
 
   {
   pgroup = EC_KEY_get0_group((EC_KEY const   *)pkey);
   ppnt = EC_POINT_new(pgroup);
   if (ppnt) {
-    tmp___0 = EC_KEY_set_private_key(pkey, bnpriv);
-    if (tmp___0) {
-      tmp___1 = EC_POINT_mul(pgroup, ppnt, bnpriv, (EC_POINT const   *)((void *)0),
+    tmp = EC_KEY_set_private_key(pkey, bnpriv);
+    if (tmp) {
+      tmp___0 = EC_POINT_mul(pgroup, ppnt, bnpriv, (EC_POINT const   *)((void *)0),
                              (BIGNUM const   *)((void *)0), (BN_CTX *)((void *)0));
-      if (tmp___1) {
-        tmp___2 = EC_KEY_set_public_key(pkey, (EC_POINT const   *)ppnt);
-        if (tmp___2) {
-          tmp___3 = 1;
+      if (tmp___0) {
+        tmp___1 = EC_KEY_set_public_key(pkey, (EC_POINT const   *)ppnt);
+        if (tmp___1) {
+          tmp___2 = 1;
         } else {
-          tmp___3 = 0;
+          tmp___2 = 0;
         }
       } else {
-        tmp___3 = 0;
+        tmp___2 = 0;
       }
     } else {
-      tmp___3 = 0;
+      tmp___2 = 0;
     }
   } else {
-    tmp___3 = 0;
+    tmp___2 = 0;
   }
-  res = tmp___3;
+  res = tmp___2;
   if (ppnt) {
     EC_POINT_free(ppnt);
   }
@@ -19780,8 +10353,8 @@ int vg_set_privkey(BIGNUM const   *bnpriv , EC_KEY *pkey )
   return (1);
 }
 }
-int vg_decode_privkey(char const   *b58encoded , EC_KEY *pkey , int *addrtype ) 
-{ 
+int vg_decode_privkey(char const   *b58encoded , EC_KEY *pkey , int *addrtype )
+{
   BIGNUM bnpriv ;
   unsigned char ecpriv[48] ;
   int res ;
@@ -19799,42 +10372,42 @@ int vg_decode_privkey(char const   *b58encoded , EC_KEY *pkey , int *addrtype )
   return (1);
 }
 }
-static vg_protkey_parameters_t const   protkey_parameters[17]  = 
-  {      {0, 4096, & EVP_sha256, & EVP_aes_256_cbc}, 
-        {0, 0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+static vg_protkey_parameters_t const   protkey_parameters[17]  =
+  {      {0, 4096, & EVP_sha256, & EVP_aes_256_cbc},
+        {0, 0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {0,
-      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)}, 
+      0, (EVP_MD const   *(*)(void))((void *)0), (EVP_CIPHER const   *(*)(void))((void *)0)},
         {1,
       4096, & EVP_sha256, & EVP_aes_256_cbc}};
 static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int data_in_len ,
-                            unsigned char *data_out , char const   *pass , int enc ) 
-{ 
+                            unsigned char *data_out , char const   *pass , int enc )
+{
   EVP_CIPHER_CTX *ctx ;
   unsigned char *salt ;
   unsigned char keymaterial[144] ;
@@ -19856,12 +10429,12 @@ static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int d
   int nbytes ;
   int ipos ;
   int ret ;
-  size_t tmp___0 ;
+  size_t tmp ;
+  int tmp___0 ;
   int tmp___1 ;
   int tmp___2 ;
-  int tmp___3 ;
-  unsigned char *tmp___4 ;
-  int tmp___5 ;
+  unsigned char *tmp___3 ;
+  int tmp___4 ;
 
   {
   ctx = (EVP_CIPHER_CTX *)((void *)0);
@@ -19932,13 +10505,13 @@ static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int d
   } else {
     salt = (unsigned char *)((void *)0);
   }
-  tmp___0 = strlen(pass);
-  PKCS5_PBKDF2_HMAC(pass, (int )(tmp___0 + 1UL), (unsigned char const   *)salt, salt_len,
+  tmp = strlen(pass);
+  PKCS5_PBKDF2_HMAC(pass, (int )(tmp + 1UL), (unsigned char const   *)salt, salt_len,
                     (int )params->iterations, pbkdf_digest, (int )((cipher->key_len + cipher->iv_len) + (int const   )hmac_keylen),
                     keymaterial);
-  tmp___1 = EVP_CipherInit(ctx, cipher, (unsigned char const   *)(keymaterial), (unsigned char const   *)(keymaterial + cipher->key_len),
+  tmp___0 = EVP_CipherInit(ctx, cipher, (unsigned char const   *)(keymaterial), (unsigned char const   *)(keymaterial + cipher->key_len),
                            enc);
-  if (! tmp___1) {
+  if (! tmp___0) {
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: could not configure cipher\n");
     goto out;
   }
@@ -19958,36 +10531,36 @@ static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int d
     ipos = 0;
   }
   oincr = olen;
-  tmp___2 = EVP_CipherUpdate(ctx, data_out + opos, & oincr, (unsigned char const   *)(data_in + ipos),
+  tmp___1 = EVP_CipherUpdate(ctx, data_out + opos, & oincr, (unsigned char const   *)(data_in + ipos),
                              nbytes);
-  if (! tmp___2) {
+  if (! tmp___1) {
     goto invalid_pass;
   }
   opos += oincr;
   olen -= oincr;
   oincr = olen;
-  tmp___3 = EVP_CipherFinal(ctx, data_out + opos, & oincr);
-  if (! tmp___3) {
+  tmp___2 = EVP_CipherFinal(ctx, data_out + opos, & oincr);
+  if (! tmp___2) {
     goto invalid_pass;
   }
   opos += oincr;
   if (hmac_len) {
     hlen = (unsigned int )sizeof(hmac);
     if (enc) {
-      tmp___4 = data_in;
+      tmp___3 = data_in;
     } else {
-      tmp___4 = data_out;
+      tmp___3 = data_out;
     }
     HMAC(hmac_digest, (void const   *)((keymaterial + cipher->key_len) + cipher->iv_len),
-         hmac_keylen, (unsigned char const   *)tmp___4, (size_t )plaintext_len, hmac,
+         hmac_keylen, (unsigned char const   *)tmp___3, (size_t )plaintext_len, hmac,
          & hlen);
     if (enc) {
       memcpy((void * __restrict  )((data_out + 1) + ciphertext_len), (void const   * __restrict  )(hmac),
              (size_t )hmac_len);
     } else {
-      tmp___5 = memcmp((void const   *)(hmac), (void const   *)((data_in + 1) + ciphertext_len),
+      tmp___4 = memcmp((void const   *)(hmac), (void const   *)((data_in + 1) + ciphertext_len),
                        (size_t )hmac_len);
-      if (tmp___5) {
+      if (tmp___4) {
         goto invalid_pass;
       }
     }
@@ -20005,10 +10578,10 @@ static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int d
   }
   ret = opos;
   if (0) {
-    invalid_pass: 
+    invalid_pass:
     fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"ERROR: Invalid password\n");
   }
-  out: 
+  out:
   OPENSSL_cleanse((void *)(hmac), sizeof(hmac));
   OPENSSL_cleanse((void *)(keymaterial), sizeof(keymaterial));
   if (ctx) {
@@ -20018,15 +10591,15 @@ static int vg_protect_crypt(int parameter_group , unsigned char *data_in , int d
 }
 }
 int vg_protect_encode_privkey(char *out , EC_KEY const   *pkey , int keytype , int parameter_group ,
-                              char const   *pass ) 
-{ 
+                              char const   *pass )
+{
   unsigned char ecpriv[64] ;
   unsigned char ecenc[128] ;
   BIGNUM const   *privkey ;
   int nbytes ;
   int restype ;
-  int tmp___0 ;
-  size_t tmp___1 ;
+  int tmp ;
+  size_t tmp___0 ;
 
   {
   if (keytype & 1) {
@@ -20035,8 +10608,8 @@ int vg_protect_encode_privkey(char *out , EC_KEY const   *pkey , int keytype , i
     restype = 32;
   }
   privkey = EC_KEY_get0_private_key(pkey);
-  tmp___0 = BN_num_bits(privkey);
-  nbytes = (tmp___0 + 7) / 8;
+  tmp = BN_num_bits(privkey);
+  nbytes = (tmp + 7) / 8;
   if (nbytes < 32) {
     memset((void *)(ecpriv), 0, (size_t )(32 - nbytes));
   }
@@ -20048,21 +10621,21 @@ int vg_protect_encode_privkey(char *out , EC_KEY const   *pkey , int keytype , i
   OPENSSL_cleanse((void *)(ecpriv), sizeof(ecpriv));
   ecenc[0] = (unsigned char )restype;
   vg_b58_encode_check((void *)(ecenc), (size_t )(nbytes + 1), out);
-  tmp___1 = strlen((char const   *)out);
-  nbytes = (int )tmp___1;
+  tmp___0 = strlen((char const   *)out);
+  nbytes = (int )tmp___0;
   return (nbytes);
 }
 }
 int vg_protect_decode_privkey(EC_KEY *pkey , int *keytype , char const   *encoded ,
-                              char const   *pass ) 
-{ 
+                              char const   *pass )
+{
   unsigned char ecpriv[64] ;
   unsigned char ecenc[128] ;
   BIGNUM bn ;
   int restype ;
   int res ;
-  unsigned char *tmp___0 ;
-  int tmp___1 ;
+  unsigned char *tmp ;
+  int tmp___0 ;
 
   {
   res = vg_b58_decode_check(encoded, (void *)(ecenc), sizeof(ecenc));
@@ -20073,22 +10646,22 @@ int vg_protect_decode_privkey(EC_KEY *pkey , int *keytype , char const   *encode
     return (0);
   }
   switch ((int )ecenc[0]) {
-  case 32: 
+  case 32:
   restype = 128;
   break;
-  case 79: 
+  case 79:
   restype = 239;
   break;
-  default: 
+  default:
   return (0);
   }
   if (pkey) {
-    tmp___0 = ecpriv;
+    tmp = ecpriv;
   } else {
-    tmp___0 = (unsigned char *)((void *)0);
+    tmp = (unsigned char *)((void *)0);
   }
-  tmp___1 = vg_protect_crypt(-1, ecenc + 1, res - 1, tmp___0, pass, 0);
-  if (! tmp___1) {
+  tmp___0 = vg_protect_crypt(-1, ecenc + 1, res - 1, tmp, pass, 0);
+  if (! tmp___0) {
     return (0);
   }
   res = 1;
@@ -20103,8 +10676,8 @@ int vg_protect_decode_privkey(EC_KEY *pkey , int *keytype , char const   *encode
   return (res);
 }
 }
-int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char const   *pass ) 
-{ 
+int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char const   *pass )
+{
   EC_KEY *pkey_copy ;
   EVP_PKEY *evp_key ;
   PKCS8_PRIV_KEY_INFO *pkcs8 ;
@@ -20112,10 +10685,10 @@ int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char
   BUF_MEM *memptr ;
   BIO *bio ;
   int res ;
-  int tmp___0 ;
-  BIO_METHOD *tmp___1 ;
-  size_t tmp___2 ;
-  EVP_CIPHER const   *tmp___3 ;
+  int tmp ;
+  BIO_METHOD *tmp___0 ;
+  size_t tmp___1 ;
+  EVP_CIPHER const   *tmp___2 ;
 
   {
   pkey_copy = (EC_KEY *)((void *)0);
@@ -20132,8 +10705,8 @@ int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char
   if (! evp_key) {
     goto out;
   } else {
-    tmp___0 = EVP_PKEY_set1_EC_KEY(evp_key, pkey_copy);
-    if (! tmp___0) {
+    tmp = EVP_PKEY_set1_EC_KEY(evp_key, pkey_copy);
+    if (! tmp) {
       goto out;
     }
   }
@@ -20141,17 +10714,17 @@ int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char
   if (! pkcs8) {
     goto out;
   }
-  tmp___1 = BIO_s_mem();
-  bio = BIO_new(tmp___1);
+  tmp___0 = BIO_s_mem();
+  bio = BIO_new(tmp___0);
   if (! bio) {
     goto out;
   }
   if (! pass) {
     res = PEM_write_bio_PKCS8_PRIV_KEY_INFO(bio, pkcs8);
   } else {
-    tmp___2 = strlen(pass);
-    tmp___3 = EVP_aes_256_cbc();
-    pkcs8_enc = PKCS8_encrypt(-1, tmp___3, pass, (int )tmp___2, (unsigned char *)((void *)0),
+    tmp___1 = strlen(pass);
+    tmp___2 = EVP_aes_256_cbc();
+    pkcs8_enc = PKCS8_encrypt(-1, tmp___2, pass, (int )tmp___1, (unsigned char *)((void *)0),
                               0, 4096, pkcs8);
     if (! pkcs8_enc) {
       goto out;
@@ -20167,7 +10740,7 @@ int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char
     memcpy((void * __restrict  )out, (void const   * __restrict  )memptr->data, (size_t )(outlen - 1));
     *(out + (outlen - 1)) = (char )'\000';
   }
-  out: 
+  out:
   if (bio) {
     BIO_free(bio);
   }
@@ -20186,8 +10759,8 @@ int vg_pkcs8_encode_privkey(char *out , int outlen , EC_KEY const   *pkey , char
   return (res);
 }
 }
-int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *pass ) 
-{ 
+int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *pass )
+{
   EC_KEY *pkey_in ;
   EC_KEY *test_key ;
   EVP_PKEY *evp_key ;
@@ -20195,12 +10768,12 @@ int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *
   X509_SIG *pkcs8_enc ;
   BIO *bio ;
   int res ;
+  size_t tmp ;
   size_t tmp___0 ;
-  size_t tmp___1 ;
+  EC_GROUP const   *tmp___1 ;
   EC_GROUP const   *tmp___2 ;
-  EC_GROUP const   *tmp___3 ;
-  int tmp___4 ;
-  EC_KEY *tmp___5 ;
+  int tmp___3 ;
+  EC_KEY *tmp___4 ;
 
   {
   pkey_in = (EC_KEY *)((void *)0);
@@ -20210,8 +10783,8 @@ int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *
   pkcs8_enc = (X509_SIG *)((void *)0);
   bio = (BIO *)((void *)0);
   res = 0;
-  tmp___0 = strlen(pem_in);
-  bio = BIO_new_mem_buf((void *)((char *)pem_in), (int )tmp___0);
+  tmp = strlen(pem_in);
+  bio = BIO_new_mem_buf((void *)((char *)pem_in), (int )tmp);
   if (! bio) {
     goto out;
   }
@@ -20221,8 +10794,8 @@ int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *
     if (! pass) {
       return (-1);
     }
-    tmp___1 = strlen(pass);
-    pkcs8 = PKCS8_decrypt(pkcs8_enc, pass, (int )tmp___1);
+    tmp___0 = strlen(pass);
+    pkcs8 = PKCS8_decrypt(pkcs8_enc, pass, (int )tmp___0);
   } else {
     BIO_ctrl(bio, 1, 0L, (void *)0);
     pkcs8 = PEM_read_bio_PKCS8_PRIV_KEY_INFO(bio, (PKCS8_PRIV_KEY_INFO **)((void *)0),
@@ -20243,19 +10816,19 @@ int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *
   if (! test_key) {
     goto out;
   } else {
-    tmp___2 = EC_KEY_get0_group((EC_KEY const   *)test_key);
-    tmp___3 = EC_KEY_get0_group((EC_KEY const   *)pkey_in);
-    tmp___4 = EC_GROUP_cmp(tmp___3, tmp___2, (BN_CTX *)((void *)0));
-    if (tmp___4) {
+    tmp___1 = EC_KEY_get0_group((EC_KEY const   *)test_key);
+    tmp___2 = EC_KEY_get0_group((EC_KEY const   *)pkey_in);
+    tmp___3 = EC_GROUP_cmp(tmp___2, tmp___1, (BN_CTX *)((void *)0));
+    if (tmp___3) {
       goto out;
     }
   }
-  tmp___5 = EC_KEY_copy(pkey, (EC_KEY const   *)pkey_in);
-  if (! tmp___5) {
+  tmp___4 = EC_KEY_copy(pkey, (EC_KEY const   *)pkey_in);
+  if (! tmp___4) {
     goto out;
   }
   res = 1;
-  out: 
+  out:
   if (bio) {
     BIO_free(bio);
   }
@@ -20274,25 +10847,25 @@ int vg_pkcs8_decode_privkey(EC_KEY *pkey , char const   *pem_in , char const   *
   return (res);
 }
 }
-int vg_decode_privkey_any(EC_KEY *pkey , int *addrtype , char const   *input , char const   *pass ) 
-{ 
+int vg_decode_privkey_any(EC_KEY *pkey , int *addrtype , char const   *input , char const   *pass )
+{
   int res ;
+  int tmp ;
   int tmp___0 ;
   int tmp___1 ;
-  int tmp___2 ;
 
   {
-  tmp___0 = vg_decode_privkey(input, pkey, addrtype);
-  if (tmp___0) {
+  tmp = vg_decode_privkey(input, pkey, addrtype);
+  if (tmp) {
     return (1);
   }
-  tmp___2 = vg_protect_decode_privkey(pkey, addrtype, input, (char const   *)((void *)0));
-  if (tmp___2) {
+  tmp___1 = vg_protect_decode_privkey(pkey, addrtype, input, (char const   *)((void *)0));
+  if (tmp___1) {
     if (! pass) {
       return (-1);
     }
-    tmp___1 = vg_protect_decode_privkey(pkey, addrtype, input, pass);
-    return (tmp___1);
+    tmp___0 = vg_protect_decode_privkey(pkey, addrtype, input, pass);
+    return (tmp___0);
   }
   res = vg_pkcs8_decode_privkey(pkey, input, pass);
   if (res > 0) {
@@ -20301,60 +10874,60 @@ int vg_decode_privkey_any(EC_KEY *pkey , int *addrtype , char const   *input , c
   return (res);
 }
 }
-int vg_read_password(char *buf , size_t size ) 
-{ 
+int vg_read_password(char *buf , size_t size )
+{
+  int tmp ;
   int tmp___0 ;
-  int tmp___1 ;
 
   {
-  tmp___0 = EVP_read_pw_string(buf, (int )size, "Enter new password:", 1);
-  if (tmp___0) {
-    tmp___1 = 0;
+  tmp = EVP_read_pw_string(buf, (int )size, "Enter new password:", 1);
+  if (tmp) {
+    tmp___0 = 0;
   } else {
-    tmp___1 = 1;
+    tmp___0 = 1;
   }
-  return (tmp___1);
+  return (tmp___0);
 }
 }
-static unsigned char ascii_class[128]  = 
-  {      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0, 
-        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)4, 
-        (unsigned char)4,      (unsigned char)4,      (unsigned char)4,      (unsigned char)5, 
-        (unsigned char)4,      (unsigned char)4,      (unsigned char)4,      (unsigned char)4, 
-        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)5, 
-        (unsigned char)3,      (unsigned char)3,      (unsigned char)3,      (unsigned char)3, 
-        (unsigned char)3,      (unsigned char)3,      (unsigned char)3,      (unsigned char)3, 
-        (unsigned char)3,      (unsigned char)3,      (unsigned char)5,      (unsigned char)5, 
-        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)5, 
-        (unsigned char)4,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2, 
-        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)5, 
-        (unsigned char)5,      (unsigned char)5,      (unsigned char)4,      (unsigned char)4, 
-        (unsigned char)5,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1, 
-        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)5, 
+static unsigned char ascii_class[128]  =
+  {      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)0,      (unsigned char)0,      (unsigned char)0,      (unsigned char)0,
+        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)4,
+        (unsigned char)4,      (unsigned char)4,      (unsigned char)4,      (unsigned char)5,
+        (unsigned char)4,      (unsigned char)4,      (unsigned char)4,      (unsigned char)4,
+        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)5,
+        (unsigned char)3,      (unsigned char)3,      (unsigned char)3,      (unsigned char)3,
+        (unsigned char)3,      (unsigned char)3,      (unsigned char)3,      (unsigned char)3,
+        (unsigned char)3,      (unsigned char)3,      (unsigned char)5,      (unsigned char)5,
+        (unsigned char)5,      (unsigned char)4,      (unsigned char)5,      (unsigned char)5,
+        (unsigned char)4,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)2,
+        (unsigned char)2,      (unsigned char)2,      (unsigned char)2,      (unsigned char)5,
+        (unsigned char)5,      (unsigned char)5,      (unsigned char)4,      (unsigned char)4,
+        (unsigned char)5,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)1,
+        (unsigned char)1,      (unsigned char)1,      (unsigned char)1,      (unsigned char)5,
         (unsigned char)5,      (unsigned char)5,      (unsigned char)5,      (unsigned char)0};
-int vg_check_password_complexity(char const   *pass , int verbose ) 
-{ 
+int vg_check_password_complexity(char const   *pass , int verbose )
+{
   int i ;
   int len ;
   int classes[6] ;
-  unsigned int tmp___0 ;
+  unsigned int tmp ;
   char const   *crackunit ;
   int char_complexity ;
   double crackops ;
@@ -20362,22 +10935,22 @@ int vg_check_password_complexity(char const   *pass , int verbose )
   int weak ;
   int rate ;
   int weak_threshold ;
-  size_t tmp___1 ;
-  char const   *tmp___2 ;
+  size_t tmp___0 ;
+  char const   *tmp___1 ;
 
   {
   classes[0] = 0;
-  tmp___0 = 1U;
-  while (! (tmp___0 >= 6U)) {
-    classes[tmp___0] = 0;
-    tmp___0 ++;
+  tmp = 1U;
+  while (! (tmp >= 6U)) {
+    classes[tmp] = 0;
+    tmp ++;
   }
   crackunit = "seconds";
   char_complexity = 0;
   rate = 250000000;
   weak_threshold = 31536000;
-  tmp___1 = strlen(pass);
-  len = (int )tmp___1;
+  tmp___0 = strlen(pass);
+  len = (int )tmp___0;
   i = 0;
   while (i < len) {
     if ((unsigned long )*(pass + i) > sizeof(ascii_class)) {
@@ -20432,9 +11005,9 @@ int vg_check_password_complexity(char const   *pass , int verbose )
       goto _L___6;
     }
   } else
-  _L___6: /* CIL Label */ 
+  _L___6: /* CIL Label */
   if (verbose > 1) {
-    _L___5: /* CIL Label */ 
+    _L___5: /* CIL Label */
     if (cracktime < 1.0) {
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Estimated password crack time: >1 %s\n",
               crackunit);
@@ -20469,7 +11042,7 @@ int vg_check_password_complexity(char const   *pass , int verbose )
         goto _L___4;
       }
     } else
-    _L___4: /* CIL Label */ 
+    _L___4: /* CIL Label */
     if (! classes[2]) {
       if (! classes[3]) {
         if (! classes[4]) {
@@ -20478,14 +11051,14 @@ int vg_check_password_complexity(char const   *pass , int verbose )
               goto _L;
             } else
             if (! classes[1]) {
-              _L: /* CIL Label */ 
+              _L: /* CIL Label */
               if (classes[0]) {
-                tmp___2 = "lower";
+                tmp___1 = "lower";
               } else {
-                tmp___2 = "upper";
+                tmp___1 = "upper";
               }
               fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: Password contains only %scase letters\n",
-                      tmp___2);
+                      tmp___1);
             } else {
               fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"WARNING: Password contains only letters\n");
             }
@@ -20497,8 +11070,8 @@ int vg_check_password_complexity(char const   *pass , int verbose )
   return (! weak);
 }
 }
-int vg_read_file(FILE *fp , char ***result , int *rescount ) 
-{ 
+int vg_read_file(FILE *fp , char ***result , int *rescount )
+{
   int ret ;
   char **patterns ;
   char *buf ;
@@ -20509,12 +11082,12 @@ int vg_read_file(FILE *fp , char ***result , int *rescount )
   int npatterns ;
   int count ;
   int pos ;
+  void *tmp ;
   void *tmp___0 ;
-  void *tmp___1 ;
-  size_t tmp___2 ;
-  int *tmp___3 ;
-  char *tmp___4 ;
-  void *tmp___5 ;
+  size_t tmp___1 ;
+  int *tmp___2 ;
+  char *tmp___3 ;
+  void *tmp___4 ;
 
   {
   ret = 1;
@@ -20522,14 +11095,14 @@ int vg_read_file(FILE *fp , char ***result , int *rescount )
   blksize = 16384;
   nalloc = 16;
   npatterns = 0;
-  tmp___0 = malloc(sizeof(char *) * (unsigned long )nalloc);
-  patterns = (char **)tmp___0;
+  tmp = malloc(sizeof(char *) * (unsigned long )nalloc);
+  patterns = (char **)tmp;
   count = 0;
   pos = 0;
   while (1) {
     obuf = buf;
-    tmp___1 = malloc((size_t )blksize);
-    buf = (char *)tmp___1;
+    tmp___0 = malloc((size_t )blksize);
+    buf = (char *)tmp___0;
     if (! buf) {
       ret = 0;
       break;
@@ -20539,14 +11112,14 @@ int vg_read_file(FILE *fp , char ***result , int *rescount )
              (size_t )(count - pos));
     }
     pos = count - pos;
-    tmp___2 = fread((void * __restrict  )(buf + pos), (size_t )1, (size_t )(blksize - pos),
+    tmp___1 = fread((void * __restrict  )(buf + pos), (size_t )1, (size_t )(blksize - pos),
                     (FILE * __restrict  )fp);
-    count = (int )tmp___2;
+    count = (int )tmp___1;
     if (count < 0) {
-      tmp___3 = __errno_location();
-      tmp___4 = strerror(*tmp___3);
+      tmp___2 = __errno_location();
+      tmp___3 = strerror(*tmp___2);
       fprintf((FILE * __restrict  )stderr, (char const   * __restrict  )"Error reading file: %s\n",
-              tmp___4);
+              tmp___3);
       ret = 0;
     }
     if (count <= 0) {
@@ -20559,13 +11132,13 @@ int vg_read_file(FILE *fp , char ***result , int *rescount )
         goto _L;
       } else
       if ((int )*(buf + pos) == 10) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         *(buf + pos) = (char )'\000';
         if (pat) {
           if (npatterns == nalloc) {
             nalloc *= 2;
-            tmp___5 = realloc((void *)patterns, sizeof(char *) * (unsigned long )nalloc);
-            patterns = (char **)tmp___5;
+            tmp___4 = realloc((void *)patterns, sizeof(char *) * (unsigned long )nalloc);
+            patterns = (char **)tmp___4;
           }
           *(patterns + npatterns) = pat;
           npatterns ++;

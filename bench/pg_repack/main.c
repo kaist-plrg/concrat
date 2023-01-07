@@ -414,33 +414,33 @@ struct option {
    int *flag ;
    int val ;
 };
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___mempcpy_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcat_chk(char * , char const   * , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___stpcpy_chk(char * , char const   * , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsprintf_chk(char * , int  , unsigned long  , char const   * ,
                                 __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memmove_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    unsigned long __builtin_object_size(void * , int  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memset_chk(void * , int  , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncpy_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strncat_chk(char * , char const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    long __builtin_expect(long  , long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void *__builtin___memcpy_chk(void * , void const   * , unsigned long  , unsigned long  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    int __builtin___vsnprintf_chk(char * , unsigned long  , int  , unsigned long  ,
                                  char const   * , __builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    char *__builtin___strcpy_chk(char * , char const   * , unsigned long  ) ;  */
 #pragma merger("0","/tmp/cil-cvujKFDm.i","-Wall,-Wmissing-prototypes,-Wpointer-arith,-Wdeclaration-after-statement,-Werror=vla,-Wendif-labels,-Wmissing-format-attribute,-Wimplicit-fallthrough=3,-Wformat-security,-fno-strict-aliasing,-fwrapv,-fexcess-precision=standard,-Wno-format-truncation,-Wno-stringop-truncation,-g,-g,-O2,-fstack-protector-strong,-Wformat,-Werror=format-security,-fno-omit-frame-pointer,-Wdate-time")
 char const   *PROGRAM_URL  =    "https://reorg.github.io/pg_repack/";
@@ -506,8 +506,8 @@ __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack , ch
                                      __gnuc_va_list __ap ) ;
 extern int __uflow(FILE * ) ;
 extern int __overflow(FILE * , int  ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) getchar)(void)
+{
   int tmp ;
 
   {
@@ -515,8 +515,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) getchar)(void)
   return (tmp);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp )
+{
   int tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -536,8 +536,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) fgetc_unlocked)(FILE *__fp
   return (tmp___2);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void)
+{
   int tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
@@ -557,8 +557,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) getchar_unlocked)(void)
   return (tmp___2);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c )
+{
   int tmp ;
 
   {
@@ -566,8 +566,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) putchar)(int __c )
   return (tmp);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , FILE *__stream )
+{
   int tmp___0 ;
   char *tmp___1 ;
   char tmp___2 ;
@@ -590,8 +590,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) fputc_unlocked)(int __c , 
   return (tmp___3);
 }
 }
-__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c )
+{
   int tmp___0 ;
   char *tmp___1 ;
   char tmp___2 ;
@@ -616,8 +616,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) putchar_unlocked)(int __c 
 }
 __inline extern __ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__)) getline)(char ** __restrict  __lineptr ,
                                                                                              size_t * __restrict  __n ,
-                                                                                             FILE * __restrict  __stream ) 
-{ 
+                                                                                             FILE * __restrict  __stream )
+{
   __ssize_t tmp ;
 
   {
@@ -627,8 +627,8 @@ __inline extern __ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline_
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__)) feof_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) feof_unlocked)(FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) feof_unlocked)(FILE *__stream )
+{
 
 
   {
@@ -637,8 +637,8 @@ __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) fe
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__)) ferror_unlocked)(FILE *__stream ) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) ferror_unlocked)(FILE *__stream ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__)) ferror_unlocked)(FILE *__stream )
+{
 
 
   {
@@ -650,8 +650,8 @@ __always_inline__)) vsprintf)(char * __restrict  __s , char const   * __restrict
                               __gnuc_va_list __ap ) ;
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vsprintf)(char * __restrict  __s ,
                                                                                    char const   * __restrict  __fmt ,
-                                                                                   __gnuc_va_list __ap ) 
-{ 
+                                                                                   __gnuc_va_list __ap )
+{
   unsigned long tmp ;
   int tmp___0 ;
 
@@ -667,8 +667,8 @@ __always_inline__)) vsnprintf)(char * __restrict  __s , size_t __n , char const 
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) vsnprintf)(char * __restrict  __s ,
                                                                                                            size_t __n ,
                                                                                                            char const   * __restrict  __fmt ,
-                                                                                                           __gnuc_va_list __ap ) 
-{ 
+                                                                                                           __gnuc_va_list __ap )
+{
   unsigned long tmp ;
   int tmp___0 ;
 
@@ -682,8 +682,8 @@ __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __al
 extern int __vfprintf_chk(FILE * __restrict  __stream , int __flag , char const   * __restrict  __format ,
                           __gnuc_va_list __ap ) ;
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vprintf)(char const   * __restrict  __fmt ,
-                                                                                  __gnuc_va_list __ap ) 
-{ 
+                                                                                  __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -693,8 +693,8 @@ __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vprintf
 }
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) vfprintf)(FILE * __restrict  __stream ,
                                                                                    char const   * __restrict  __fmt ,
-                                                                                   __gnuc_va_list __ap ) 
-{ 
+                                                                                   __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -706,8 +706,8 @@ extern int ( /* format attribute */  __vdprintf_chk)(int __fd , int __flag , cha
                                                      __gnuc_va_list __arg ) ;
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) vdprintf)(int __fd ,
                                                                                                           char const   * __restrict  __fmt ,
-                                                                                                          __gnuc_va_list __ap ) 
-{ 
+                                                                                                          __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -728,8 +728,8 @@ __gnu_inline__, __always_inline__)) vasprintf)(char ** __restrict  __ptr , char 
                                                __gnuc_va_list __ap ) ;
 __inline extern int ( /* format attribute */ __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) vasprintf)(char ** __restrict  __ptr , char const   * __restrict  __fmt ,
-                                               __gnuc_va_list __ap ) 
-{ 
+                                               __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -742,8 +742,8 @@ __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack , ch
                                      __gnuc_va_list __ap ) ;
 __inline extern int ( /* format attribute */ __attribute__((__gnu_inline__, __always_inline__)) obstack_vprintf)(struct obstack * __restrict  __obstack ,
                                                                                                                  char const   * __restrict  __fmt ,
-                                                                                                                 __gnuc_va_list __ap ) 
-{ 
+                                                                                                                 __gnuc_va_list __ap )
+{
   int tmp ;
 
   {
@@ -762,8 +762,8 @@ extern char *( __attribute__((__warn_unused_result__)) __fgets_chk_warn)(char * 
                                                                          FILE * __restrict  __stream )  __asm__("__fgets_chk")  ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fgets)(char * __restrict  __s ,
                                                                                                           int __n ,
-                                                                                                          FILE * __restrict  __stream ) 
-{ 
+                                                                                                          FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -806,8 +806,8 @@ extern size_t ( __attribute__((__warn_unused_result__)) __fread_chk_warn)(void *
 __inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fread)(void * __restrict  __ptr ,
                                                                                                            size_t __size ,
                                                                                                            size_t __n ,
-                                                                                                           FILE * __restrict  __stream ) 
-{ 
+                                                                                                           FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -846,8 +846,8 @@ extern char *( __attribute__((__warn_unused_result__)) __fgets_unlocked_chk_warn
                                                                                   FILE * __restrict  __stream )  __asm__("__fgets_unlocked_chk")  ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fgets_unlocked)(char * __restrict  __s ,
                                                                                                                    int __n ,
-                                                                                                                   FILE * __restrict  __stream ) 
-{ 
+                                                                                                                   FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -890,8 +890,8 @@ extern size_t ( __attribute__((__warn_unused_result__)) __fread_unlocked_chk_war
 __inline extern size_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) fread_unlocked)(void * __restrict  __ptr ,
                                                                                                                     size_t __size ,
                                                                                                                     size_t __n ,
-                                                                                                                    FILE * __restrict  __stream ) 
-{ 
+                                                                                                                    FILE * __restrict  __stream )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -938,8 +938,8 @@ extern  __attribute__((__nothrow__)) long long ( __attribute__((__nonnull__(1)))
                                                                                           int __base ) ;
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr ) 
-{ 
+__inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atoi)(char const   *__nptr )
+{
   long tmp ;
 
   {
@@ -950,8 +950,8 @@ __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __g
 }
 __inline extern  __attribute__((__nothrow__)) long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr ) 
-{ 
+__inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atol)(char const   *__nptr )
+{
   long tmp ;
 
   {
@@ -963,8 +963,8 @@ __inline extern long ( __attribute__((__warn_unused_result__, __nonnull__(1), __
 __inline extern  __attribute__((__nothrow__)) long long ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atoll)(char const   *__nptr )  __attribute__((__pure__)) ;
 __inline extern long long ( __attribute__((__warn_unused_result__, __nonnull__(1),
-__gnu_inline__)) atoll)(char const   *__nptr ) 
-{ 
+__gnu_inline__)) atoll)(char const   *__nptr )
+{
   long long tmp ;
 
   {
@@ -986,8 +986,8 @@ __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __
                           size_t __size , int (*__compar)(void const   * , void const   * ) ) ;
 __inline extern void *( __attribute__((__warn_unused_result__, __nonnull__(1,2,5),
 __gnu_inline__)) bsearch)(void const   *__key , void const   *__base , size_t __nmemb ,
-                          size_t __size , int (*__compar)(void const   * , void const   * ) ) 
-{ 
+                          size_t __size , int (*__compar)(void const   * , void const   * ) )
+{
   size_t __l ;
   size_t __u ;
   size_t __idx ;
@@ -1025,8 +1025,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2
 __gnu_inline__, __always_inline__)) ptsname_r)(int __fd , char *__buf , size_t __buflen ) ;
 __inline extern  __attribute__((__nothrow__)) double ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr )  __attribute__((__pure__)) ;
-__inline extern double ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr ) 
-{ 
+__inline extern double ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__)) atof)(char const   *__nptr )
+{
   double tmp ;
 
   {
@@ -1043,8 +1043,8 @@ __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unus
 __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
                                               char * __restrict  __resolved ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) realpath)(char const   * __restrict  __name ,
-                                                                                                             char * __restrict  __resolved ) 
-{ 
+                                                                                                             char * __restrict  __resolved )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -1076,8 +1076,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2
 __gnu_inline__, __always_inline__)) ptsname_r)(int __fd , char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__, __always_inline__)) ptsname_r)(int __fd ,
                                                                                                     char *__buf ,
-                                                                                                    size_t __buflen ) 
-{ 
+                                                                                                    size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -1111,8 +1111,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) wctomb)(char *__s , wchar_t __wchar ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) wctomb)(char *__s ,
-                                                                                                         wchar_t __wchar ) 
-{ 
+                                                                                                         wchar_t __wchar )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -1147,8 +1147,8 @@ __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst , char const   * __res
                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) mbstowcs)(wchar_t * __restrict  __dst ,
                                                                                       char const   * __restrict  __src ,
-                                                                                      size_t __len ) 
-{ 
+                                                                                      size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1188,8 +1188,8 @@ __always_inline__)) wcstombs)(char * __restrict  __dst , wchar_t const   * __res
                               size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) wcstombs)(char * __restrict  __dst ,
                                                                                       wchar_t const   * __restrict  __src ,
-                                                                                      size_t __len ) 
-{ 
+                                                                                      size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1215,258 +1215,14 @@ __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) wcst
   return (tmp___5);
 }
 }
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                            size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memmove)(void *__dest , void const   *__src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) memset)(void *__dest , int __ch , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2))) strcmp)(char const   *__s1 ,
-                                                                                     char const   *__s2 )  __attribute__((__pure__)) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) mempcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) bcopy)(void const   *__src , void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) bzero)(void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) bcopy)(void const   *__src , void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) bcopy)(void const   *__src ,
-                                                                                                   void *__dest ,
-                                                                                                   size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __builtin___memmove_chk(__dest, __src, __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) bzero)(void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) bzero)(void *__dest ,
-                                                                                                 size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __builtin___memset_chk(__dest, '\000', __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest , size_t __len ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __n ) ;
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                            size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) memcpy)(void * __restrict  __dest ,
-                                                                                                     void const   * __restrict  __src ,
-                                                                                                     size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 0);
-  tmp___0 = __builtin___memcpy_chk((void *)__dest, (void const   *)__src, __len, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) memmove)(void *__dest , void const   *__src ,
-                                             size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) memmove)(void *__dest ,
-                                                                                                      void const   *__src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  tmp___0 = __builtin___memmove_chk(__dest, __src, __len, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) mempcpy)(void * __restrict  __dest , void const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) mempcpy)(void * __restrict  __dest ,
-                                                                                                      void const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 0);
-  tmp___0 = __builtin___mempcpy_chk((void *)__dest, (void const   *)__src, __len,
-                                    tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) void *( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) memset)(void *__dest , int __ch , size_t __len ) ;
-__inline extern void *( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) memset)(void *__dest ,
-                                                                                                   int __ch ,
-                                                                                                   size_t __len ) 
-{ 
-  unsigned long tmp ;
-  void *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  tmp___0 = __builtin___memset_chk(__dest, __ch, __len, tmp);
-  return (tmp___0);
-}
-}
-extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1))) __explicit_bzero_chk)(void *__dest ,
-                                                                                                  size_t __len ,
-                                                                                                  size_t __destlen ) ;
-__inline extern  __attribute__((__nothrow__)) void ( __attribute__((__nonnull__(1),
-__gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest , size_t __len ) ;
-__inline extern void ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) explicit_bzero)(void *__dest ,
-                                                                                                          size_t __len ) 
-{ 
-  unsigned long tmp ;
-
-  {
-  tmp = __builtin_object_size(__dest, 0);
-  __explicit_bzero_chk(__dest, __len, tmp);
-  return;
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strcpy)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strcpy_chk((char *)__dest, (char const   *)__src, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpcpy)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) stpcpy)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___stpcpy_chk((char *)__dest, (char const   *)__src, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strncpy)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strncpy_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp);
-  return (tmp___0);
-}
-}
-extern  __attribute__((__nothrow__)) char *__stpncpy_chk(char *__dest , char const   *__src ,
-                                                         size_t __n , size_t __destlen ) ;
-extern  __attribute__((__nothrow__)) char *__stpncpy_alias(char *__dest , char const   *__src ,
-                                                           size_t __n )  __asm__("stpncpy")  ;
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __n ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) stpncpy)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __n ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-  unsigned long tmp___1 ;
-  char *tmp___3 ;
-
-  {
-  tmp___1 = __builtin_object_size((void *)__dest, 1);
-  if (tmp___1 != 0xffffffffffffffffUL) {
-    tmp = __builtin_object_size((void *)__dest, 1);
-    tmp___0 = __stpncpy_chk((char *)__dest, (char const   *)__src, __n, tmp);
-    return (tmp___0);
-  }
-  tmp___3 = __stpncpy_alias((char *)__dest, (char const   *)__src, __n);
-  return (tmp___3);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest , char const   * __restrict  __src ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strcat)(char * __restrict  __dest ,
-                                                                                                     char const   * __restrict  __src ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strcat_chk((char *)__dest, (char const   *)__src, tmp);
-  return (tmp___0);
-}
-}
-__inline extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2),
-__gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest , char const   * __restrict  __src ,
-                                             size_t __len ) ;
-__inline extern char *( __attribute__((__nonnull__(1,2), __gnu_inline__, __always_inline__)) strncat)(char * __restrict  __dest ,
-                                                                                                      char const   * __restrict  __src ,
-                                                                                                      size_t __len ) 
-{ 
-  unsigned long tmp ;
-  char *tmp___0 ;
-
-  {
-  tmp = __builtin_object_size((void *)__dest, 1);
-  tmp___0 = __builtin___strncat_chk((char *)__dest, (char const   *)__src, __len,
-                                    tmp);
-  return (tmp___0);
-}
-}
 extern  __attribute__((__nothrow__)) int *__errno_location(void)  __attribute__((__const__)) ;
 extern  __attribute__((__nothrow__)) __int32_t const   **__ctype_tolower_loc(void)  __attribute__((__const__)) ;
 extern  __attribute__((__nothrow__)) __int32_t const   **__ctype_toupper_loc(void)  __attribute__((__const__)) ;
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) tolower)(int __c ) ;
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) toupper)(int __c ) ;
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) tolower)(int __c ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) tolower)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) tolower)(int __c )
+{
   __int32_t const   **tmp ;
   __int32_t tmp___0 ;
 
@@ -1485,8 +1241,8 @@ __inline extern int ( __attribute__((__gnu_inline__)) tolower)(int __c )
 }
 }
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) toupper)(int __c ) ;
-__inline extern int ( __attribute__((__gnu_inline__)) toupper)(int __c ) 
-{ 
+__inline extern int ( __attribute__((__gnu_inline__)) toupper)(int __c )
+{
   __int32_t const   **tmp ;
   __int32_t tmp___0 ;
 
@@ -1509,8 +1265,8 @@ __inline extern  __attribute__((__nothrow__)) struct cmsghdr *( __attribute__((_
 __inline extern  __attribute__((__nothrow__)) struct cmsghdr *( __attribute__((__gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr ,
                                                                                                                struct cmsghdr *__cmsg ) ;
 __inline extern struct cmsghdr *( __attribute__((__gnu_inline__)) __cmsg_nxthdr)(struct msghdr *__mhdr ,
-                                                                                 struct cmsghdr *__cmsg ) 
-{ 
+                                                                                 struct cmsghdr *__cmsg )
+{
 
 
   {
@@ -1545,8 +1301,8 @@ extern ssize_t __recv_chk_warn(int __fd , void *__buf , size_t __n , size_t __bu
 __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) recv)(int __fd ,
                                                                                    void *__buf ,
                                                                                    size_t __n ,
-                                                                                   int __flags ) 
-{ 
+                                                                                   int __flags )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1586,8 +1342,8 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) rec
                                                                                        size_t __n ,
                                                                                        int __flags ,
                                                                                        struct sockaddr * __restrict  __cil_tmp14 ,
-                                                                                       socklen_t * __restrict  __addr_len ) 
-{ 
+                                                                                       socklen_t * __restrict  __addr_len )
+{
   __SOCKADDR_ARG __addr ;
   unsigned long tmp ;
   ssize_t tmp___0 ;
@@ -1617,10 +1373,10 @@ __inline extern ssize_t ( __attribute__((__gnu_inline__, __always_inline__)) rec
   return (tmp___5);
 }
 }
-extern int ( /* format attribute */  pg_snprintf)(char *str , size_t count , char const   *fmt 
+extern int ( /* format attribute */  pg_snprintf)(char *str , size_t count , char const   *fmt
                                                   , ...) ;
 extern int ( /* format attribute */  pg_sprintf)(char *str , char const   *fmt  , ...) ;
-extern int ( /* format attribute */  pg_fprintf)(FILE *stream , char const   *fmt 
+extern int ( /* format attribute */  pg_fprintf)(FILE *stream , char const   *fmt
                                                  , ...) ;
 extern int ( /* format attribute */  pg_printf)(char const   *fmt  , ...) ;
 extern  __attribute__((__nothrow__, __noreturn__)) void __assert_fail(char const   *__assertion ,
@@ -1676,8 +1432,8 @@ extern ssize_t ( __attribute__((__warn_unused_result__)) __read_chk_warn)(int __
                                                                           size_t __buflen )  __asm__("__read_chk")  ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) read)(int __fd ,
                                                                                                            void *__buf ,
-                                                                                                           size_t __nbytes ) 
-{ 
+                                                                                                           size_t __nbytes )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1733,8 +1489,8 @@ extern ssize_t ( __attribute__((__warn_unused_result__)) __pread64_chk_warn)(int
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) pread)(int __fd ,
                                                                                                             void *__buf ,
                                                                                                             size_t __nbytes ,
-                                                                                                            __off_t __offset ) 
-{ 
+                                                                                                            __off_t __offset )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1763,8 +1519,8 @@ __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__,
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) pread64)(int __fd ,
                                                                                                               void *__buf ,
                                                                                                               size_t __nbytes ,
-                                                                                                              __off64_t __offset ) 
-{ 
+                                                                                                              __off64_t __offset )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1805,8 +1561,8 @@ __nonnull__(1,2), __gnu_inline__, __always_inline__)) readlink)(char const   * _
                                                                 size_t __len ) ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(1,2),
 __gnu_inline__, __always_inline__)) readlink)(char const   * __restrict  __path ,
-                                              char * __restrict  __buf , size_t __len ) 
-{ 
+                                              char * __restrict  __buf , size_t __len )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1848,8 +1604,8 @@ __nonnull__(2,3), __gnu_inline__, __always_inline__)) readlinkat)(int __fd , cha
                                                                   size_t __len ) ;
 __inline extern ssize_t ( __attribute__((__warn_unused_result__, __nonnull__(2,3),
 __gnu_inline__, __always_inline__)) readlinkat)(int __fd , char const   * __restrict  __path ,
-                                                char * __restrict  __buf , size_t __len ) 
-{ 
+                                                char * __restrict  __buf , size_t __len )
+{
   unsigned long tmp ;
   ssize_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1886,8 +1642,8 @@ extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result
 __inline extern  __attribute__((__nothrow__)) char *( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) getcwd)(char *__buf , size_t __size ) ;
 __inline extern char *( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) getcwd)(char *__buf ,
-                                                                                                           size_t __size ) 
-{ 
+                                                                                                           size_t __size )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -1920,8 +1676,8 @@ __nonnull__(1))) __getwd_warn)(char *__buf )  __asm__("getwd")  ;
 __inline extern  __attribute__((__nothrow__)) char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf )  __attribute__((__deprecated__)) ;
 __inline extern char __attribute__((__deprecated__))  *( __attribute__((__warn_unused_result__,
-__nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf ) 
-{ 
+__nonnull__(1), __gnu_inline__, __always_inline__)) getwd)(char *__buf )
+{
   unsigned long tmp ;
   char *tmp___0 ;
   unsigned long tmp___1 ;
@@ -1948,8 +1704,8 @@ __inline extern  __attribute__((__nothrow__)) size_t ( __attribute__((__gnu_inli
 __always_inline__)) confstr)(int __name , char *__buf , size_t __len ) ;
 __inline extern size_t ( __attribute__((__gnu_inline__, __always_inline__)) confstr)(int __name ,
                                                                                      char *__buf ,
-                                                                                     size_t __len ) 
-{ 
+                                                                                     size_t __len )
+{
   unsigned long tmp ;
   size_t tmp___0 ;
   unsigned long tmp___1 ;
@@ -1986,8 +1742,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __gnu_inline__, __always_inline__)) getgroups)(int __size , __gid_t *__list ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __gnu_inline__, __always_inline__)) getgroups)(int __size ,
-                                                                                                            __gid_t *__list ) 
-{ 
+                                                                                                            __gid_t *__list )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -2028,8 +1784,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused
 __nonnull__(2), __gnu_inline__, __always_inline__)) ttyname_r)(int __fd , char *__buf ,
                                                                size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(2), __gnu_inline__,
-__always_inline__)) ttyname_r)(int __fd , char *__buf , size_t __buflen ) 
-{ 
+__always_inline__)) ttyname_r)(int __fd , char *__buf , size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -2062,8 +1818,8 @@ extern int ( __attribute__((__nonnull__(1))) __getlogin_r_chk_warn)(char *__buf 
                                                                     size_t __buflen ,
                                                                     size_t __nreal )  __asm__("__getlogin_r_chk")  ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) getlogin_r)(char *__buf ,
-                                                                                                     size_t __buflen ) 
-{ 
+                                                                                                     size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -2100,8 +1856,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) __get
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1),
 __gnu_inline__, __always_inline__)) gethostname)(char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__, __always_inline__)) gethostname)(char *__buf ,
-                                                                                                      size_t __buflen ) 
-{ 
+                                                                                                      size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -2136,8 +1892,8 @@ __nonnull__(1))) __getdomainname_chk_warn)(char *__buf , size_t __buflen , size_
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__,
 __nonnull__(1), __gnu_inline__, __always_inline__)) getdomainname)(char *__buf , size_t __buflen ) ;
 __inline extern int ( __attribute__((__warn_unused_result__, __nonnull__(1), __gnu_inline__,
-__always_inline__)) getdomainname)(char *__buf , size_t __buflen ) 
-{ 
+__always_inline__)) getdomainname)(char *__buf , size_t __buflen )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___1 ;
@@ -2182,9 +1938,9 @@ extern void PQclear(PGresult *res ) ;
 extern void initPQExpBuffer(PQExpBuffer str ) ;
 extern void termPQExpBuffer(PQExpBuffer str ) ;
 extern void resetPQExpBuffer(PQExpBuffer str ) ;
-extern void ( /* format attribute */  printfPQExpBuffer)(PQExpBuffer str , char const   *fmt 
+extern void ( /* format attribute */  printfPQExpBuffer)(PQExpBuffer str , char const   *fmt
                                                          , ...) ;
-extern void ( /* format attribute */  appendPQExpBuffer)(PQExpBuffer str , char const   *fmt 
+extern void ( /* format attribute */  appendPQExpBuffer)(PQExpBuffer str , char const   *fmt
                                                          , ...) ;
 extern void appendPQExpBufferStr(PQExpBuffer str , char const   *data ) ;
 extern void appendPQExpBufferChar(PQExpBuffer str , char ch ) ;
@@ -2230,8 +1986,8 @@ extern int __poll_alias(struct pollfd *__fds , nfds_t __nfds , int __timeout )  
 extern int __poll_chk(struct pollfd *__fds , nfds_t __nfds , int __timeout , unsigned long __fdslen ) ;
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) poll)(struct pollfd *__fds ,
                                                                                nfds_t __nfds ,
-                                                                               int __timeout ) 
-{ 
+                                                                               int __timeout )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___4 ;
@@ -2255,8 +2011,8 @@ extern int __ppoll_chk(struct pollfd *__fds , nfds_t __nfds , struct timespec  c
 __inline extern int ( __attribute__((__gnu_inline__, __always_inline__)) ppoll)(struct pollfd *__fds ,
                                                                                 nfds_t __nfds ,
                                                                                 struct timespec  const  *__timeout ,
-                                                                                __sigset_t const   *__ss ) 
-{ 
+                                                                                __sigset_t const   *__ss )
+{
   unsigned long tmp ;
   int tmp___0 ;
   unsigned long tmp___4 ;
@@ -2292,8 +2048,8 @@ static _Bool lock_exclusive(PGconn *conn , char const   *relid , char const   *l
                             _Bool start_xact ) ;
 static _Bool kill_ddl(PGconn *conn , Oid relid , _Bool terminate ) ;
 static _Bool lock_access_share(PGconn *conn , Oid relid , char const   *target_name ) ;
-static _Bool sqlstate_equals(PGresult *res , char const   *state ) 
-{ 
+static _Bool sqlstate_equals(PGresult *res , char const   *state )
+{
   char *tmp ;
   int tmp___0 ;
 
@@ -2321,8 +2077,8 @@ static unsigned int temp_obj_num  =    0U;
 static _Bool no_kill_backend  =    (_Bool)0;
 static _Bool no_superuser_check  =    (_Bool)0;
 static SimpleStringList exclude_extension_list  =    {(SimpleStringListCell *)((void *)0), (SimpleStringListCell *)((void *)0)};
-static char *utoa(unsigned int value , char *buffer ) 
-{ 
+static char *utoa(unsigned int value , char *buffer )
+{
 
 
   {
@@ -2330,31 +2086,31 @@ static char *utoa(unsigned int value , char *buffer )
   return (buffer);
 }
 }
-static pgut_option options[18]  = 
-  {      {(char )'b', (char )'a', "all", (void *)(& alldb), 0U, 0U}, 
-        {(char )'l', (char )'t', "table", (void *)(& table_list), 0U, 0U}, 
-        {(char )'l', (char )'I', "parent-table", (void *)(& parent_table_list), 0U, 0U}, 
+static pgut_option options[18]  =
+  {      {(char )'b', (char )'a', "all", (void *)(& alldb), 0U, 0U},
+        {(char )'l', (char )'t', "table", (void *)(& table_list), 0U, 0U},
+        {(char )'l', (char )'I', "parent-table", (void *)(& parent_table_list), 0U, 0U},
         {(char )'l',
-      (char )'c', "schema", (void *)(& schema_list), 0U, 0U}, 
-        {(char )'b', (char )'n', "no-order", (void *)(& noorder), 0U, 0U}, 
-        {(char )'b', (char )'N', "dry-run", (void *)(& dryrun), 0U, 0U}, 
-        {(char )'s', (char )'o', "order-by", (void *)(& orderby), 0U, 0U}, 
-        {(char )'s', (char )'s', "tablespace", (void *)(& tablespace), 0U, 0U}, 
-        {(char )'b', (char )'S', "moveidx", (void *)(& moveidx), 0U, 0U}, 
-        {(char )'l', (char )'i', "index", (void *)(& r_index), 0U, 0U}, 
-        {(char )'b', (char )'x', "only-indexes", (void *)(& only_indexes), 0U, 0U}, 
-        {(char )'i', (char )'T', "wait-timeout", (void *)(& wait_timeout), 0U, 0U}, 
-        {(char )'B', (char )'Z', "no-analyze", (void *)(& analyze), 0U, 0U}, 
-        {(char )'i', (char )'j', "jobs", (void *)(& jobs), 0U, 0U}, 
+      (char )'c', "schema", (void *)(& schema_list), 0U, 0U},
+        {(char )'b', (char )'n', "no-order", (void *)(& noorder), 0U, 0U},
+        {(char )'b', (char )'N', "dry-run", (void *)(& dryrun), 0U, 0U},
+        {(char )'s', (char )'o', "order-by", (void *)(& orderby), 0U, 0U},
+        {(char )'s', (char )'s', "tablespace", (void *)(& tablespace), 0U, 0U},
+        {(char )'b', (char )'S', "moveidx", (void *)(& moveidx), 0U, 0U},
+        {(char )'l', (char )'i', "index", (void *)(& r_index), 0U, 0U},
+        {(char )'b', (char )'x', "only-indexes", (void *)(& only_indexes), 0U, 0U},
+        {(char )'i', (char )'T', "wait-timeout", (void *)(& wait_timeout), 0U, 0U},
+        {(char )'B', (char )'Z', "no-analyze", (void *)(& analyze), 0U, 0U},
+        {(char )'i', (char )'j', "jobs", (void *)(& jobs), 0U, 0U},
         {(char )'b', (char )'D', "no-kill-backend", (void *)(& no_kill_backend), 0U,
-      0U}, 
+      0U},
         {(char )'b', (char )'k', "no-superuser-check", (void *)(& no_superuser_check),
-      0U, 0U}, 
+      0U, 0U},
         {(char )'l', (char )'C', "exclude-extension", (void *)(& exclude_extension_list),
-      0U, 0U}, 
+      0U, 0U},
         {(char)0, (char)0, (char const   *)0, (void *)0, 0U, 0U}};
-int main(int argc , char **argv ) 
-{ 
+int main(int argc , char **argv )
+{
   int i ;
   char errbuf[256] ;
   int tmp ;
@@ -2438,7 +2194,7 @@ int main(int argc , char **argv )
     goto _L___6;
   } else
   if (only_indexes) {
-    _L___6: /* CIL Label */ 
+    _L___6: /* CIL Label */
     if (r_index.head) {
       if (table_list.head) {
         tmp___4 = pgut_errstart(20);
@@ -2461,7 +2217,7 @@ int main(int argc , char **argv )
         goto _L___3;
       }
     } else
-    _L___3: /* CIL Label */ 
+    _L___3: /* CIL Label */
     if (r_index.head) {
       if (only_indexes) {
         tmp___10 = pgut_errstart(20);
@@ -2474,7 +2230,7 @@ int main(int argc , char **argv )
         goto _L___2;
       }
     } else
-    _L___2: /* CIL Label */ 
+    _L___2: /* CIL Label */
     if (r_index.head) {
       if (exclude_extension_list.head) {
         tmp___13 = pgut_errstart(20);
@@ -2487,7 +2243,7 @@ int main(int argc , char **argv )
         goto _L___1;
       }
     } else
-    _L___1: /* CIL Label */ 
+    _L___1: /* CIL Label */
     if (only_indexes) {
       if (table_list.head) {
         goto _L___0;
@@ -2503,7 +2259,7 @@ int main(int argc , char **argv )
         }
       }
     } else
-    _L___0: /* CIL Label */ 
+    _L___0: /* CIL Label */
     if (only_indexes) {
       if (exclude_extension_list.head) {
         tmp___19 = pgut_errstart(20);
@@ -2516,7 +2272,7 @@ int main(int argc , char **argv )
         goto _L;
       }
     } else
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (alldb) {
       tmp___22 = pgut_errstart(20);
       if (tmp___22) {
@@ -2573,7 +2329,7 @@ int main(int argc , char **argv )
         goto _L___4;
       } else
       if (parent_table_list.head) {
-        _L___4: /* CIL Label */ 
+        _L___4: /* CIL Label */
         tmp___41 = pgut_errstart(20);
         if (tmp___41) {
           tmp___39 = errmsg("cannot repack specific table(s) in schema, use schema.table notation instead");
@@ -2610,7 +2366,7 @@ int main(int argc , char **argv )
         goto _L___5;
       } else
       if (parent_table_list.head) {
-        _L___5: /* CIL Label */ 
+        _L___5: /* CIL Label */
         tmp___50 = pgut_errstart(20);
         if (tmp___50) {
           tmp___48 = errmsg("cannot repack specific table(s) in all databases");
@@ -2642,8 +2398,8 @@ int main(int argc , char **argv )
   return (0);
 }
 }
-static _Bool is_superuser(void) 
-{ 
+static _Bool is_superuser(void)
+{
   char const   *val ;
   int tmp ;
 
@@ -2664,8 +2420,8 @@ static _Bool is_superuser(void)
   return ((_Bool)0);
 }
 }
-static void check_tablespace(void) 
-{ 
+static void check_tablespace(void)
+{
   PGresult *res ;
   char const   *params[1] ;
   int tmp ;
@@ -2726,8 +2482,8 @@ static void check_tablespace(void)
   return;
 }
 }
-static _Bool preliminary_checks(char *errbuf , size_t errsize ) 
-{ 
+static _Bool preliminary_checks(char *errbuf , size_t errsize )
+{
   _Bool ret ;
   PGresult *res ;
   _Bool tmp ;
@@ -2784,7 +2540,7 @@ static _Bool preliminary_checks(char *errbuf , size_t errsize )
     } else {
       tmp___6 = sqlstate_equals(res, "42883");
       if (tmp___6) {
-        _L: /* CIL Label */ 
+        _L: /* CIL Label */
         if (errbuf) {
           pg_snprintf(errbuf, errsize, "%s %s is not installed in the database", PROGRAM_NAME,
                       PROGRAM_VERSION);
@@ -2806,7 +2562,7 @@ static _Bool preliminary_checks(char *errbuf , size_t errsize )
   command("SET search_path = pg_catalog, pg_temp, public", 0, (char const   **)((void *)0));
   command("SET client_min_messages = warning", 0, (char const   **)((void *)0));
   ret = (_Bool)1;
-  cleanup: 
+  cleanup:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -2815,8 +2571,8 @@ static _Bool preliminary_checks(char *errbuf , size_t errsize )
   return (ret);
 }
 }
-static _Bool is_requested_relation_exists(char *errbuf , size_t errsize ) 
-{ 
+static _Bool is_requested_relation_exists(char *errbuf , size_t errsize )
+{
   _Bool ret ;
   PGresult *res ;
   char const   **params ;
@@ -2922,7 +2678,7 @@ static _Bool is_requested_relation_exists(char *errbuf , size_t errsize )
     res = (PGresult *)((void *)0);
     break;
   }
-  cleanup: 
+  cleanup:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -2933,8 +2689,8 @@ static _Bool is_requested_relation_exists(char *errbuf , size_t errsize )
   return (ret);
 }
 }
-static void repack_all_databases(char const   *orderby___0 ) 
-{ 
+static void repack_all_databases(char const   *orderby___0 )
+{
   PGresult *result ;
   int i ;
   _Bool tmp ;
@@ -2976,8 +2732,8 @@ static void repack_all_databases(char const   *orderby___0 )
   return;
 }
 }
-static char *getstr(PGresult *res , int row , int col ) 
-{ 
+static char *getstr(PGresult *res , int row , int col )
+{
   char *tmp ;
   int tmp___0 ;
 
@@ -2991,8 +2747,8 @@ static char *getstr(PGresult *res , int row , int col )
   }
 }
 }
-static Oid getoid(PGresult *res , int row , int col ) 
-{ 
+static Oid getoid(PGresult *res , int row , int col )
+{
   char *tmp ;
   unsigned long tmp___0 ;
   int tmp___1 ;
@@ -3009,8 +2765,8 @@ static Oid getoid(PGresult *res , int row , int col )
   }
 }
 }
-static _Bool repack_one_database(char const   *orderby___0 , char *errbuf , size_t errsize ) 
-{ 
+static _Bool repack_one_database(char const   *orderby___0 , char *errbuf , size_t errsize )
+{
   _Bool ret ;
   PGresult *res ;
   int i ;
@@ -3124,7 +2880,7 @@ static _Bool repack_one_database(char const   *orderby___0 , char *errbuf , size
     goto _L;
   } else
   if (num_parent_tables) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (num_tables) {
       appendPQExpBufferStr(& sql, "(");
       cell = table_list.head;
@@ -3344,11 +3100,11 @@ static _Bool repack_one_database(char const   *orderby___0 , char *errbuf , size
     }
     table.copy_data = (char const   *)copy_sql.data;
     repack_one_table(& table, orderby___0);
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   ret = (_Bool)1;
-  cleanup: 
+  cleanup:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -3360,8 +3116,8 @@ static _Bool repack_one_database(char const   *orderby___0 , char *errbuf , size
   return (ret);
 }
 }
-static int apply_log(PGconn *conn , repack_table const   *table , int count ) 
-{ 
+static int apply_log(PGconn *conn , repack_table const   *table , int count )
+{
   int result ;
   PGresult *res ;
   char const   *params[6] ;
@@ -3389,8 +3145,8 @@ static int apply_log(PGconn *conn , repack_table const   *table , int count )
   return (result);
 }
 }
-static _Bool rebuild_indexes(repack_table const   *table ) 
-{ 
+static _Bool rebuild_indexes(repack_table const   *table )
+{
   PGresult *res ;
   int num_indexes ;
   int i ;
@@ -3538,7 +3294,7 @@ static _Bool rebuild_indexes(repack_table const   *table )
       }
     }
   }
-  cleanup: 
+  cleanup:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -3547,8 +3303,8 @@ static _Bool rebuild_indexes(repack_table const   *table )
   return ((_Bool )(! have_error));
 }
 }
-static void repack_one_table(repack_table *table , char const   *orderby___0 ) 
-{ 
+static void repack_one_table(repack_table *table , char const   *orderby___0 )
+{
   PGresult *res ;
   char const   *params[3] ;
   int num ;
@@ -3931,7 +3687,7 @@ static void repack_one_table(repack_table *table , char const   *orderby___0 )
   res = pgut_execute(connection, "SELECT pg_advisory_unlock($1, CAST(-2147483648 + $2::bigint AS integer))",
                      2, params);
   ret = (_Bool)1;
-  cleanup: 
+  cleanup:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -3951,8 +3707,8 @@ static void repack_one_table(repack_table *table , char const   *orderby___0 )
   return;
 }
 }
-static _Bool kill_ddl(PGconn *conn , Oid relid , _Bool terminate ) 
-{ 
+static _Bool kill_ddl(PGconn *conn , Oid relid , _Bool terminate )
+{
   _Bool ret ;
   PGresult *res ;
   PQExpBufferData sql ;
@@ -4019,7 +3775,7 @@ static _Bool kill_ddl(PGconn *conn , Oid relid , _Bool terminate )
             goto _L___0;
           }
         } else {
-          _L___0: /* CIL Label */ 
+          _L___0: /* CIL Label */
           tmp___4 = PQntuples((PGresult const   *)res);
           if (tmp___4 > 0) {
             tmp___3 = PQntuples((PGresult const   *)res);
@@ -4040,8 +3796,8 @@ static _Bool kill_ddl(PGconn *conn , Oid relid , _Bool terminate )
   return (ret);
 }
 }
-static _Bool lock_access_share(PGconn *conn , Oid relid , char const   *target_name ) 
-{ 
+static _Bool lock_access_share(PGconn *conn , Oid relid , char const   *target_name )
+{
   PQExpBufferData sql ;
   time_t start ;
   time_t tmp ;
@@ -4112,7 +3868,7 @@ static _Bool lock_access_share(PGconn *conn , Oid relid , char const   *target_n
         break;
       }
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   termPQExpBuffer(& sql);
@@ -4120,8 +3876,8 @@ static _Bool lock_access_share(PGconn *conn , Oid relid , char const   *target_n
   return (ret);
 }
 }
-static _Bool advisory_lock(PGconn *conn , char const   *relid ) 
-{ 
+static _Bool advisory_lock(PGconn *conn , char const   *relid )
+{
   PGresult *res ;
   _Bool ret ;
   char const   *params[2] ;
@@ -4159,8 +3915,8 @@ static _Bool advisory_lock(PGconn *conn , char const   *relid )
 }
 }
 static _Bool lock_exclusive(PGconn *conn , char const   *relid , char const   *lock_query ,
-                            _Bool start_xact ) 
-{ 
+                            _Bool start_xact )
+{
   time_t start ;
   time_t tmp ;
   int i ;
@@ -4259,15 +4015,15 @@ static _Bool lock_exclusive(PGconn *conn , char const   *relid , char const   *l
         break;
       }
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   pgut_command(conn, "RESET statement_timeout", 0, (char const   **)((void *)0));
   return (ret);
 }
 }
-static void repack_cleanup_callback(_Bool fatal , void *userdata ) 
-{ 
+static void repack_cleanup_callback(_Bool fatal , void *userdata )
+{
   Oid target_table ;
   char const   *params[2] ;
   char buffer[12] ;
@@ -4289,8 +4045,8 @@ static void repack_cleanup_callback(_Bool fatal , void *userdata )
   return;
 }
 }
-static void repack_cleanup(_Bool fatal , repack_table const   *table ) 
-{ 
+static void repack_cleanup(_Bool fatal , repack_table const   *table )
+{
   char buffer[12] ;
   char num_buff[12] ;
   char const   *params[2] ;
@@ -4322,8 +4078,8 @@ static void repack_cleanup(_Bool fatal , repack_table const   *table )
   return;
 }
 }
-static _Bool repack_table_indexes(PGresult *index_details ) 
-{ 
+static _Bool repack_table_indexes(PGresult *index_details )
+{
   _Bool ret ;
   PGresult *res ;
   PGresult *res2 ;
@@ -4485,7 +4241,7 @@ static _Bool repack_table_indexes(PGresult *index_details )
       tmp___28 = getstr(index_details, i, 0);
       elog(19, "skipping invalid index: %s.%s", schema_name, tmp___28);
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   if (dryrun) {
@@ -4517,7 +4273,7 @@ static _Bool repack_table_indexes(PGresult *index_details )
   }
   pgut_command(connection, "COMMIT", 0, (char const   **)((void *)0));
   ret = (_Bool)1;
-  drop_idx: 
+  drop_idx:
   resetPQExpBuffer(& sql);
   initPQExpBuffer(& sql_drop);
   appendPQExpBufferStr(& sql, "DROP INDEX CONCURRENTLY ");
@@ -4536,7 +4292,7 @@ static _Bool repack_table_indexes(PGresult *index_details )
   }
   termPQExpBuffer(& sql_drop);
   termPQExpBuffer(& sql);
-  done: 
+  done:
   while (1) {
     PQclear(res);
     res = (PGresult *)((void *)0);
@@ -4546,8 +4302,8 @@ static _Bool repack_table_indexes(PGresult *index_details )
   return (ret);
 }
 }
-static _Bool repack_all_indexes(char *errbuf , size_t errsize ) 
-{ 
+static _Bool repack_all_indexes(char *errbuf , size_t errsize )
+{
   _Bool ret ;
   PGresult *res ;
   PQExpBufferData sql ;
@@ -4595,7 +4351,7 @@ static _Bool repack_all_indexes(char *errbuf , size_t errsize )
     goto _L;
   } else
   if (parent_table_list.head) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     appendPQExpBufferStr(& sql, "SELECT repack.oid2text(i.oid), idx.indexrelid, idx.indisvalid, idx.indrelid, $1::text, n.nspname FROM pg_index idx JOIN pg_class i ON i.oid = idx.indexrelid JOIN pg_namespace n ON n.oid = i.relnamespace WHERE idx.indrelid = $1::regclass ORDER BY indisvalid DESC, i.relname, n.nspname");
     cell = parent_table_list.head;
     while (cell) {
@@ -4619,7 +4375,7 @@ static _Bool repack_all_indexes(char *errbuf , size_t errsize )
         simple_string_list_append(& table_list, (char const   *)tmp___4);
         i ++;
       }
-      __Cont: /* CIL Label */ 
+      __Cont: /* CIL Label */
       cell = cell->next;
     }
     while (1) {
@@ -4660,18 +4416,18 @@ static _Bool repack_all_indexes(char *errbuf , size_t errsize )
       res = (PGresult *)((void *)0);
       break;
     }
-    __Cont___0: /* CIL Label */ 
+    __Cont___0: /* CIL Label */
     cell = cell->next;
   }
   ret = (_Bool)1;
-  cleanup: 
+  cleanup:
   disconnect();
   termPQExpBuffer(& sql);
   return (ret);
 }
 }
-void pgut_help(_Bool details ) 
-{ 
+void pgut_help(_Bool details )
+{
 
 
   {
@@ -4702,15 +4458,15 @@ void pgut_help(_Bool details )
   return;
 }
 }
-/* compiler builtin: 
+/* compiler builtin:
    void __builtin_va_start(__builtin_va_list  ) ;  */
-/* compiler builtin: 
+/* compiler builtin:
    void __builtin_va_end(__builtin_va_list  ) ;  */
 #pragma merger("0","/tmp/cil-qILHDzCn.i","-Wall,-Wmissing-prototypes,-Wpointer-arith,-Wdeclaration-after-statement,-Werror=vla,-Wendif-labels,-Wmissing-format-attribute,-Wimplicit-fallthrough=3,-Wformat-security,-fno-strict-aliasing,-fwrapv,-fexcess-precision=standard,-Wno-format-truncation,-Wno-stringop-truncation,-g,-g,-O2,-fstack-protector-strong,-Wformat,-Werror=format-security,-fno-omit-frame-pointer,-Wdate-time")
 extern int fflush(FILE *__stream ) ;
 extern FILE *( __attribute__((__warn_unused_result__)) fopen)(char const   * __restrict  __filename ,
                                                               char const   * __restrict  __modes ) ;
-extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format 
+extern  __attribute__((__nothrow__)) int sscanf(char const   * __restrict  __s , char const   * __restrict  __format
                                                 , ...)  __asm__("__isoc99_sscanf")  ;
 extern  __attribute__((__nothrow__)) int ( __attribute__((__warn_unused_result__)) ferror)(FILE *__stream ) ;
 extern int select(int __nfds , fd_set * __restrict  __readfds , fd_set * __restrict  __writefds ,
@@ -4803,8 +4559,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(3,5))) __x
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __gnu_inline__)) stat)(char const   * __restrict  __path , struct stat * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) stat)(char const   * __restrict  __path ,
-                                                                              struct stat * __restrict  __statbuf ) 
-{ 
+                                                                              struct stat * __restrict  __statbuf )
+{
   int tmp ;
 
   {
@@ -4815,8 +4571,8 @@ __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) stat)(ch
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __gnu_inline__)) lstat)(char const   * __restrict  __path , struct stat * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) lstat)(char const   * __restrict  __path ,
-                                                                               struct stat * __restrict  __statbuf ) 
-{ 
+                                                                               struct stat * __restrict  __statbuf )
+{
   int tmp ;
 
   {
@@ -4827,8 +4583,8 @@ __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) lstat)(c
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2),
 __gnu_inline__)) fstat)(int __fd , struct stat *__statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__)) fstat)(int __fd ,
-                                                                             struct stat *__statbuf ) 
-{ 
+                                                                             struct stat *__statbuf )
+{
   int tmp ;
 
   {
@@ -4842,8 +4598,8 @@ __gnu_inline__)) fstatat)(int __fd , char const   * __restrict  __filename , str
 __inline extern int ( __attribute__((__nonnull__(2,3), __gnu_inline__)) fstatat)(int __fd ,
                                                                                  char const   * __restrict  __filename ,
                                                                                  struct stat * __restrict  __statbuf ,
-                                                                                 int __flag ) 
-{ 
+                                                                                 int __flag )
+{
   int tmp ;
 
   {
@@ -4856,8 +4612,8 @@ __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1
 __gnu_inline__)) mknod)(char const   *__path , __mode_t __mode , __dev_t __dev ) ;
 __inline extern int ( __attribute__((__nonnull__(1), __gnu_inline__)) mknod)(char const   *__path ,
                                                                              __mode_t __mode ,
-                                                                             __dev_t __dev ) 
-{ 
+                                                                             __dev_t __dev )
+{
   int tmp ;
 
   {
@@ -4870,8 +4626,8 @@ __gnu_inline__)) mknodat)(int __fd , char const   *__path , __mode_t __mode , __
 __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__)) mknodat)(int __fd ,
                                                                                char const   *__path ,
                                                                                __mode_t __mode ,
-                                                                               __dev_t __dev ) 
-{ 
+                                                                               __dev_t __dev )
+{
   int tmp ;
 
   {
@@ -4882,8 +4638,8 @@ __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__)) mknodat)(i
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __gnu_inline__)) stat64)(char const   * __restrict  __path , struct stat64 * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) stat64)(char const   * __restrict  __path ,
-                                                                                struct stat64 * __restrict  __statbuf ) 
-{ 
+                                                                                struct stat64 * __restrict  __statbuf )
+{
   int tmp ;
 
   {
@@ -4894,8 +4650,8 @@ __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) stat64)(
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1,2),
 __gnu_inline__)) lstat64)(char const   * __restrict  __path , struct stat64 * __restrict  __statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) lstat64)(char const   * __restrict  __path ,
-                                                                                 struct stat64 * __restrict  __statbuf ) 
-{ 
+                                                                                 struct stat64 * __restrict  __statbuf )
+{
   int tmp ;
 
   {
@@ -4906,8 +4662,8 @@ __inline extern int ( __attribute__((__nonnull__(1,2), __gnu_inline__)) lstat64)
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(2),
 __gnu_inline__)) fstat64)(int __fd , struct stat64 *__statbuf ) ;
 __inline extern int ( __attribute__((__nonnull__(2), __gnu_inline__)) fstat64)(int __fd ,
-                                                                               struct stat64 *__statbuf ) 
-{ 
+                                                                               struct stat64 *__statbuf )
+{
   int tmp ;
 
   {
@@ -4921,8 +4677,8 @@ __gnu_inline__)) fstatat64)(int __fd , char const   * __restrict  __filename , s
 __inline extern int ( __attribute__((__nonnull__(2,3), __gnu_inline__)) fstatat64)(int __fd ,
                                                                                    char const   * __restrict  __filename ,
                                                                                    struct stat64 * __restrict  __statbuf ,
-                                                                                   int __flag ) 
-{ 
+                                                                                   int __flag )
+{
   int tmp ;
 
   {
@@ -4939,8 +4695,8 @@ extern  __attribute__((__nothrow__)) int ( __attribute__((__nonnull__(1))) pthre
 __inline extern  __attribute__((__nothrow__)) int ( __attribute__((__gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
                                                                                                    pthread_t __thread2 )  __attribute__((__const__)) ;
 __inline extern int ( __attribute__((__gnu_inline__)) pthread_equal)(pthread_t __thread1 ,
-                                                                     pthread_t __thread2 ) 
-{ 
+                                                                     pthread_t __thread2 )
+{
 
 
   {
@@ -5016,8 +4772,8 @@ static void on_after_exec(pgutConn *conn ) ;
 static void on_interrupt(void) ;
 static void on_cleanup(void) ;
 static void exit_or_abort(int exitcode , int elevel ) ;
-void pgut_init(int argc , char **argv ) 
-{ 
+void pgut_init(int argc , char **argv )
+{
   char *tmp ;
 
   {
@@ -5034,8 +4790,8 @@ void pgut_init(int argc , char **argv )
   return;
 }
 }
-void pgut_putenv(char const   *key , char const   *value ) 
-{ 
+void pgut_putenv(char const   *key , char const   *value )
+{
   char buf[1024] ;
   char *tmp ;
 
@@ -5046,8 +4802,8 @@ void pgut_putenv(char const   *key , char const   *value )
   return;
 }
 }
-_Bool parse_bool(char const   *value , _Bool *result ) 
-{ 
+_Bool parse_bool(char const   *value , _Bool *result )
+{
   size_t tmp ;
   _Bool tmp___0 ;
 
@@ -5057,8 +4813,8 @@ _Bool parse_bool(char const   *value , _Bool *result )
   return (tmp___0);
 }
 }
-_Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result ) 
-{ 
+_Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
+{
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
@@ -5070,8 +4826,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
 
   {
   switch ((int const   )*value) {
-  case 84: 
-  case 116: 
+  case 84:
+  case 116:
   tmp = pg_strncasecmp(value, "true", len);
   if (tmp == 0) {
     if (result) {
@@ -5080,8 +4836,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  case 70: 
-  case 102: 
+  case 70:
+  case 102:
   tmp___0 = pg_strncasecmp(value, "false", len);
   if (tmp___0 == 0) {
     if (result) {
@@ -5090,8 +4846,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  case 89: 
-  case 121: 
+  case 89:
+  case 121:
   tmp___1 = pg_strncasecmp(value, "yes", len);
   if (tmp___1 == 0) {
     if (result) {
@@ -5100,8 +4856,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  case 78: 
-  case 110: 
+  case 78:
+  case 110:
   tmp___2 = pg_strncasecmp(value, "no", len);
   if (tmp___2 == 0) {
     if (result) {
@@ -5110,8 +4866,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  case 79: 
-  case 111: 
+  case 79:
+  case 111:
   if (len > 2UL) {
     tmp___5 = len;
   } else {
@@ -5138,7 +4894,7 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     }
   }
   break;
-  case 49: 
+  case 49:
   if (len == 1UL) {
     if (result) {
       *result = (_Bool)1;
@@ -5146,7 +4902,7 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  case 48: 
+  case 48:
   if (len == 1UL) {
     if (result) {
       *result = (_Bool)0;
@@ -5154,7 +4910,7 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
     return ((_Bool)1);
   }
   break;
-  default: 
+  default:
   break;
   }
   if (result) {
@@ -5163,8 +4919,8 @@ _Bool parse_bool_with_len(char const   *value , size_t len , _Bool *result )
   return ((_Bool)0);
 }
 }
-_Bool parse_int32(char const   *value , int32 *result ) 
-{ 
+_Bool parse_int32(char const   *value , int32 *result )
+{
   int64 val ;
   char *endptr ;
   int tmp ;
@@ -5198,8 +4954,8 @@ _Bool parse_int32(char const   *value , int32 *result )
   return ((_Bool)1);
 }
 }
-_Bool parse_uint32(char const   *value , uint32 *result ) 
-{ 
+_Bool parse_uint32(char const   *value , uint32 *result )
+{
   uint64 val ;
   char *endptr ;
   int tmp ;
@@ -5233,8 +4989,8 @@ _Bool parse_uint32(char const   *value , uint32 *result )
   return ((_Bool)1);
 }
 }
-_Bool parse_int64(char const   *value , int64 *result ) 
-{ 
+_Bool parse_int64(char const   *value , int64 *result )
+{
   int64 val ;
   char *endptr ;
   int tmp ;
@@ -5265,8 +5021,8 @@ _Bool parse_int64(char const   *value , int64 *result )
   return ((_Bool)1);
 }
 }
-_Bool parse_uint64(char const   *value , uint64 *result ) 
-{ 
+_Bool parse_uint64(char const   *value , uint64 *result )
+{
   uint64 val ;
   char *endptr ;
   int tmp ;
@@ -5297,8 +5053,8 @@ _Bool parse_uint64(char const   *value , uint64 *result )
   return ((_Bool)1);
 }
 }
-_Bool parse_time(char const   *value , time_t *time___0 ) 
-{ 
+_Bool parse_time(char const   *value , time_t *time___0 )
+{
   size_t len ;
   char *tmp ;
   int i ;
@@ -5358,8 +5114,8 @@ _Bool parse_time(char const   *value , time_t *time___0 )
   return ((_Bool)1);
 }
 }
-void simple_string_list_append(SimpleStringList *list , char const   *val ) 
-{ 
+void simple_string_list_append(SimpleStringList *list , char const   *val )
+{
   SimpleStringListCell *cell ;
   size_t tmp ;
   void *tmp___0 ;
@@ -5379,8 +5135,8 @@ void simple_string_list_append(SimpleStringList *list , char const   *val )
   return;
 }
 }
-_Bool simple_string_list_member(SimpleStringList *list , char const   *val ) 
-{ 
+_Bool simple_string_list_member(SimpleStringList *list , char const   *val )
+{
   SimpleStringListCell *cell ;
   int tmp ;
 
@@ -5396,8 +5152,8 @@ _Bool simple_string_list_member(SimpleStringList *list , char const   *val )
   return ((_Bool)0);
 }
 }
-size_t simple_string_list_size(SimpleStringList list ) 
-{ 
+size_t simple_string_list_size(SimpleStringList list )
+{
   size_t i ;
   SimpleStringListCell *cell ;
 
@@ -5414,8 +5170,8 @@ size_t simple_string_list_size(SimpleStringList list )
 static char *passwdbuf  ;
 static char *prompt_for_password(void) ;
 static _Bool have_passwd  =    (_Bool)0;
-static char *prompt_for_password(void) 
-{ 
+static char *prompt_for_password(void)
+{
   char *buf ;
   void *tmp ;
   void *tmp___0 ;
@@ -5448,8 +5204,8 @@ static char *prompt_for_password(void)
   return (buf);
 }
 }
-PGconn *pgut_connect(char const   *info , YesNo prompt , int elevel ) 
-{ 
+PGconn *pgut_connect(char const   *info , YesNo prompt , int elevel )
+{
   char *passwd ;
   PQExpBufferData add_pass ;
   PGconn *conn ;
@@ -5531,8 +5287,8 @@ PGconn *pgut_connect(char const   *info , YesNo prompt , int elevel )
   }
 }
 }
-void pgut_disconnect(PGconn *conn ) 
-{ 
+void pgut_disconnect(PGconn *conn )
+{
   pgutConn *c ;
   pgutConn **prev ;
 
@@ -5555,8 +5311,8 @@ void pgut_disconnect(PGconn *conn )
   return;
 }
 }
-void pgut_disconnect_all(void) 
-{ 
+void pgut_disconnect_all(void)
+{
 
 
   {
@@ -5569,8 +5325,8 @@ void pgut_disconnect_all(void)
   return;
 }
 }
-static void echo_query(char const   *query , int nParams , char const   **params ) 
-{ 
+static void echo_query(char const   *query , int nParams , char const   **params )
+{
   int i ;
   char *tmp ;
   char const   *tmp___0 ;
@@ -5595,8 +5351,8 @@ static void echo_query(char const   *query , int nParams , char const   **params
   return;
 }
 }
-PGresult *pgut_execute(PGconn *conn , char const   *query , int nParams , char const   **params ) 
-{ 
+PGresult *pgut_execute(PGconn *conn , char const   *query , int nParams , char const   **params )
+{
   PGresult *tmp ;
 
   {
@@ -5605,8 +5361,8 @@ PGresult *pgut_execute(PGconn *conn , char const   *query , int nParams , char c
 }
 }
 PGresult *pgut_execute_elevel(PGconn *conn , char const   *query , int nParams , char const   **params ,
-                              int elevel ) 
-{ 
+                              int elevel )
+{
   PGresult *res ;
   pgutConn *c ;
   int tmp ;
@@ -5656,11 +5412,11 @@ PGresult *pgut_execute_elevel(PGconn *conn , char const   *query , int nParams ,
   }
   tmp___2 = PQresultStatus((PGresult const   *)res);
   switch ((unsigned int )tmp___2) {
-  case 4U: 
-  case 1U: 
-  case 2U: 
+  case 4U:
+  case 1U:
+  case 2U:
   break;
-  default: 
+  default:
   tmp___7 = pgut_errstart(elevel);
   if (tmp___7) {
     tmp___3 = errdetail("query was: %s", query);
@@ -5674,8 +5430,8 @@ PGresult *pgut_execute_elevel(PGconn *conn , char const   *query , int nParams ,
   return (res);
 }
 }
-ExecStatusType pgut_command(PGconn *conn , char const   *query , int nParams , char const   **params ) 
-{ 
+ExecStatusType pgut_command(PGconn *conn , char const   *query , int nParams , char const   **params )
+{
   PGresult *res ;
   ExecStatusType code ;
 
@@ -5686,8 +5442,8 @@ ExecStatusType pgut_command(PGconn *conn , char const   *query , int nParams , c
   return (code);
 }
 }
-_Bool pgut_commit(PGconn *conn ) 
-{ 
+_Bool pgut_commit(PGconn *conn )
+{
   ExecStatusType tmp ;
   PGTransactionStatusType tmp___0 ;
 
@@ -5702,8 +5458,8 @@ _Bool pgut_commit(PGconn *conn )
   return ((_Bool)1);
 }
 }
-void pgut_rollback(PGconn *conn ) 
-{ 
+void pgut_rollback(PGconn *conn )
+{
   PGTransactionStatusType tmp ;
 
   {
@@ -5716,8 +5472,8 @@ void pgut_rollback(PGconn *conn )
   return;
 }
 }
-_Bool pgut_send(PGconn *conn , char const   *query , int nParams , char const   **params ) 
-{ 
+_Bool pgut_send(PGconn *conn , char const   *query , int nParams , char const   **params )
+{
   int res ;
   int tmp ;
   int tmp___0 ;
@@ -5763,8 +5519,8 @@ _Bool pgut_send(PGconn *conn , char const   *query , int nParams , char const   
   return ((_Bool)1);
 }
 }
-int pgut_wait(int num , PGconn **connections , struct timeval *timeout ) 
-{ 
+int pgut_wait(int num , PGconn **connections , struct timeval *timeout )
+{
   int i ;
   fd_set mask ;
   int maxsock ;
@@ -5804,7 +5560,7 @@ int pgut_wait(int num , PGconn **connections , struct timeval *timeout )
           maxsock = sock;
         }
       }
-      __Cont: /* CIL Label */ 
+      __Cont: /* CIL Label */
       i ++;
     }
     if (maxsock == -1) {
@@ -5832,7 +5588,7 @@ int pgut_wait(int num , PGconn **connections , struct timeval *timeout )
           return (i);
         }
       }
-      __Cont___0: /* CIL Label */ 
+      __Cont___0: /* CIL Label */
       i ++;
     }
   }
@@ -5841,8 +5597,8 @@ int pgut_wait(int num , PGconn **connections , struct timeval *timeout )
   return (-1);
 }
 }
-void CHECK_FOR_INTERRUPTS(void) 
-{ 
+void CHECK_FOR_INTERRUPTS(void)
+{
   int tmp ;
   int tmp___0 ;
   _Bool tmp___1 ;
@@ -5862,16 +5618,16 @@ void CHECK_FOR_INTERRUPTS(void)
 }
 }
 static pgutErrorData edata  ;
-static pgutErrorData *getErrorData(void) 
-{ 
+static pgutErrorData *getErrorData(void)
+{
 
 
   {
   return (& edata);
 }
 }
-static pgutErrorData *pgut_errinit(int elevel ) 
-{ 
+static pgutErrorData *pgut_errinit(int elevel )
+{
   int save_errno ;
   int *tmp ;
   pgutErrorData *edata___0 ;
@@ -5902,8 +5658,8 @@ static pgutErrorData *pgut_errinit(int elevel )
   return (edata___0);
 }
 }
-static void trimStringBuffer(PQExpBuffer str ) 
-{ 
+static void trimStringBuffer(PQExpBuffer str )
+{
   unsigned short const   **tmp ;
 
   {
@@ -5922,8 +5678,8 @@ static void trimStringBuffer(PQExpBuffer str )
   return;
 }
 }
-void ( /* format attribute */  elog)(int elevel , char const   *fmt  , ...) 
-{ 
+void ( /* format attribute */  elog)(int elevel , char const   *fmt  , ...)
+{
   va_list___0 args ;
   _Bool ok ;
   size_t len ;
@@ -5961,8 +5717,8 @@ void ( /* format attribute */  elog)(int elevel , char const   *fmt  , ...)
   return;
 }
 }
-_Bool pgut_errstart(int elevel ) 
-{ 
+_Bool pgut_errstart(int elevel )
+{
   _Bool tmp ;
 
   {
@@ -5976,8 +5732,8 @@ _Bool pgut_errstart(int elevel )
   return ((_Bool)1);
 }
 }
-void pgut_errfinish(int dummy  , ...) 
-{ 
+void pgut_errfinish(int dummy  , ...)
+{
   pgutErrorData *edata___0 ;
   pgutErrorData *tmp ;
   char const   *tmp___0 ;
@@ -6004,8 +5760,8 @@ void pgut_errfinish(int dummy  , ...)
   return;
 }
 }
-void pgut_error(int elevel , int code , char const   *msg , char const   *detail ) 
-{ 
+void pgut_error(int elevel , int code , char const   *msg , char const   *detail )
+{
   char const   *tag ;
   char const   *tmp ;
 
@@ -6025,8 +5781,8 @@ void pgut_error(int elevel , int code , char const   *msg , char const   *detail
   return;
 }
 }
-_Bool log_required(int elevel , int log_min_level ) 
-{ 
+_Bool log_required(int elevel , int log_min_level )
+{
 
 
   {
@@ -6034,7 +5790,7 @@ _Bool log_required(int elevel , int log_min_level )
     goto _L;
   } else
   if (elevel == 16) {
-    _L: /* CIL Label */ 
+    _L: /* CIL Label */
     if (log_min_level == 15) {
       return ((_Bool)1);
     } else
@@ -6053,36 +5809,36 @@ _Bool log_required(int elevel , int log_min_level )
   return ((_Bool)0);
 }
 }
-char const   *format_elevel(int elevel ) 
-{ 
+char const   *format_elevel(int elevel )
+{
   int tmp ;
   int tmp___0 ;
   _Bool tmp___1 ;
 
   {
   switch (elevel) {
-  case 14: 
-  case 13: 
-  case 12: 
-  case 11: 
-  case 10: 
+  case 14:
+  case 13:
+  case 12:
+  case 11:
+  case 10:
   return ("DEBUG");
-  case 15: 
+  case 15:
   return ("LOG");
-  case 17: 
+  case 17:
   return ("INFO");
-  case 18: 
+  case 18:
   return ("NOTICE");
-  case 19: 
+  case 19:
   return ("WARNING");
-  case 20: 
-  case 16: 
+  case 20:
+  case 16:
   return ("ERROR");
-  case 21: 
+  case 21:
   return ("FATAL");
-  case 22: 
+  case 22:
   return ("PANIC");
-  default: 
+  default:
   tmp___1 = pgut_errstart(20);
   if (tmp___1) {
     tmp = errmsg("invalid elevel: %d", elevel);
@@ -6093,8 +5849,8 @@ char const   *format_elevel(int elevel )
   }
 }
 }
-int parse_elevel(char const   *value ) 
-{ 
+int parse_elevel(char const   *value )
+{
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
@@ -6156,8 +5912,8 @@ int parse_elevel(char const   *value )
   return (20);
 }
 }
-int errcode(int sqlerrcode ) 
-{ 
+int errcode(int sqlerrcode )
+{
   pgutErrorData *edata___0 ;
   pgutErrorData *tmp ;
 
@@ -6168,8 +5924,8 @@ int errcode(int sqlerrcode )
   return (0);
 }
 }
-int errcode_errno(void) 
-{ 
+int errcode_errno(void)
+{
   pgutErrorData *edata___0 ;
   pgutErrorData *tmp ;
 
@@ -6180,8 +5936,8 @@ int errcode_errno(void)
   return (0);
 }
 }
-int ( /* format attribute */  errmsg)(char const   *fmt  , ...) 
-{ 
+int ( /* format attribute */  errmsg)(char const   *fmt  , ...)
+{
   pgutErrorData *edata___0 ;
   pgutErrorData *tmp ;
   va_list___0 args ;
@@ -6213,8 +5969,8 @@ int ( /* format attribute */  errmsg)(char const   *fmt  , ...)
   return (0);
 }
 }
-int ( /* format attribute */  errdetail)(char const   *fmt  , ...) 
-{ 
+int ( /* format attribute */  errdetail)(char const   *fmt  , ...)
+{
   pgutErrorData *edata___0 ;
   pgutErrorData *tmp ;
   va_list___0 args ;
@@ -6235,8 +5991,8 @@ int ( /* format attribute */  errdetail)(char const   *fmt  , ...)
   return (0);
 }
 }
-static void on_before_exec(pgutConn *conn ) 
-{ 
+static void on_before_exec(pgutConn *conn )
+{
   PGcancel *old ;
 
   {
@@ -6252,8 +6008,8 @@ static void on_before_exec(pgutConn *conn )
   return;
 }
 }
-static void on_after_exec(pgutConn *conn ) 
-{ 
+static void on_after_exec(pgutConn *conn )
+{
   PGcancel *old ;
 
   {
@@ -6268,8 +6024,8 @@ static void on_after_exec(pgutConn *conn )
   return;
 }
 }
-static void on_interrupt(void) 
-{ 
+static void on_interrupt(void)
+{
   pgutConn *c ;
   int save_errno ;
   int *tmp ;
@@ -6302,8 +6058,8 @@ static void on_interrupt(void)
 }
 }
 static pgut_atexit_item *pgut_atexit_stack  =    (pgut_atexit_item *)((void *)0);
-void pgut_atexit_push(void (*callback)(_Bool fatal , void *userdata ) , void *userdata ) 
-{ 
+void pgut_atexit_push(void (*callback)(_Bool fatal , void *userdata ) , void *userdata )
+{
   pgut_atexit_item *item ;
   void *tmp ;
 
@@ -6317,8 +6073,8 @@ void pgut_atexit_push(void (*callback)(_Bool fatal , void *userdata ) , void *us
   return;
 }
 }
-void pgut_atexit_pop(void (*callback)(_Bool fatal , void *userdata ) , void *userdata ) 
-{ 
+void pgut_atexit_pop(void (*callback)(_Bool fatal , void *userdata ) , void *userdata )
+{
   pgut_atexit_item *item ;
   pgut_atexit_item **prev ;
 
@@ -6339,8 +6095,8 @@ void pgut_atexit_pop(void (*callback)(_Bool fatal , void *userdata ) , void *use
   return;
 }
 }
-static void call_atexit_callbacks(_Bool fatal ) 
-{ 
+static void call_atexit_callbacks(_Bool fatal )
+{
   pgut_atexit_item *item ;
 
   {
@@ -6352,8 +6108,8 @@ static void call_atexit_callbacks(_Bool fatal )
   return;
 }
 }
-static void on_cleanup(void) 
-{ 
+static void on_cleanup(void)
+{
 
 
   {
@@ -6364,8 +6120,8 @@ static void on_cleanup(void)
   return;
 }
 }
-static void exit_or_abort(int exitcode , int elevel ) 
-{ 
+static void exit_or_abort(int exitcode , int elevel )
+{
 
 
   {
@@ -6377,7 +6133,7 @@ static void exit_or_abort(int exitcode , int elevel )
       goto _L;
     }
   } else
-  _L: /* CIL Label */ 
+  _L: /* CIL Label */
   if (elevel >= 21) {
     if (elevel <= 22) {
       call_atexit_callbacks((_Bool)1);
@@ -6391,8 +6147,8 @@ static void exit_or_abort(int exitcode , int elevel )
 }
 }
 _Bool ( /* format attribute */  pgut_appendStringInfoVA)(PQExpBuffer str , char const   *fmt ,
-                                                         va_list___0 args ) 
-{ 
+                                                         va_list___0 args )
+{
   size_t avail ;
   int nprinted ;
 
@@ -6409,8 +6165,8 @@ _Bool ( /* format attribute */  pgut_appendStringInfoVA)(PQExpBuffer str , char 
   return ((_Bool)0);
 }
 }
-int appendStringInfoFile(PQExpBuffer str , FILE *fp ) 
-{ 
+int appendStringInfoFile(PQExpBuffer str , FILE *fp )
+{
   int rc ;
   int *tmp ;
   int tmp___0 ;
@@ -6454,8 +6210,8 @@ int appendStringInfoFile(PQExpBuffer str , FILE *fp )
   return (0);
 }
 }
-int appendStringInfoFd(PQExpBuffer str , int fd ) 
-{ 
+int appendStringInfoFd(PQExpBuffer str , int fd )
+{
   int rc ;
   int *tmp ;
   int tmp___0 ;
@@ -6494,8 +6250,8 @@ int appendStringInfoFd(PQExpBuffer str , int fd )
   return (0);
 }
 }
-void *pgut_malloc(size_t size ) 
-{ 
+void *pgut_malloc(size_t size )
+{
   char *ret ;
   int tmp ;
   int tmp___0 ;
@@ -6516,8 +6272,8 @@ void *pgut_malloc(size_t size )
   return ((void *)ret);
 }
 }
-void *pgut_realloc(void *p , size_t size ) 
-{ 
+void *pgut_realloc(void *p , size_t size )
+{
   char *ret ;
   int tmp ;
   int tmp___0 ;
@@ -6538,8 +6294,8 @@ void *pgut_realloc(void *p , size_t size )
   return ((void *)ret);
 }
 }
-char *pgut_strdup(char const   *str ) 
-{ 
+char *pgut_strdup(char const   *str )
+{
   char *ret ;
   int tmp ;
   int tmp___0 ;
@@ -6561,8 +6317,8 @@ char *pgut_strdup(char const   *str )
   return (ret);
 }
 }
-char *strdup_with_len(char const   *str , size_t len ) 
-{ 
+char *strdup_with_len(char const   *str , size_t len )
+{
   char *r ;
   void *tmp ;
 
@@ -6577,8 +6333,8 @@ char *strdup_with_len(char const   *str , size_t len )
   return (r);
 }
 }
-char *strdup_trim(char const   *str ) 
-{ 
+char *strdup_trim(char const   *str )
+{
   size_t len ;
   unsigned short const   **tmp ;
   unsigned short const   **tmp___0 ;
@@ -6611,8 +6367,8 @@ char *strdup_trim(char const   *str )
   return (tmp___1);
 }
 }
-FILE *pgut_fopen(char const   *path , char const   *omode ) 
-{ 
+FILE *pgut_fopen(char const   *path , char const   *omode )
+{
   FILE *fp ;
   _Bool missing_ok ;
   char mode[16] ;
@@ -6629,7 +6385,7 @@ FILE *pgut_fopen(char const   *path , char const   *omode )
     mode[0] = (char )'r';
     missing_ok = (_Bool)1;
   }
-  retry: 
+  retry:
   fp = fopen((char const   * __restrict  )path, (char const   * __restrict  )(mode));
   if ((unsigned long )fp == (unsigned long )((void *)0)) {
     tmp = __errno_location();
@@ -6660,8 +6416,8 @@ FILE *pgut_fopen(char const   *path , char const   *omode )
   return (fp);
 }
 }
-_Bool pgut_mkdir(char const   *dirpath ) 
-{ 
+_Bool pgut_mkdir(char const   *dirpath )
+{
   struct stat sb ;
   int first ;
   int last ;
@@ -6702,7 +6458,7 @@ _Bool pgut_mkdir(char const   *dirpath )
     if (first) {
       first = 0;
     }
-    retry: 
+    retry:
     tmp___3 = stat((char const   * __restrict  )path, (struct stat * __restrict  )(& sb));
     if (tmp___3 == 0) {
       if (! ((sb.st_mode & 61440U) == 16384U)) {
@@ -6730,7 +6486,7 @@ _Bool pgut_mkdir(char const   *dirpath )
     if (! last) {
       *p = (char )'/';
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     p ++;
   }
   free((void *)path);
@@ -6746,8 +6502,8 @@ _Bool pgut_mkdir(char const   *dirpath )
   return ((_Bool)1);
 }
 }
-int wait_for_socket(int sock , struct timeval *timeout ) 
-{ 
+int wait_for_socket(int sock , struct timeval *timeout )
+{
   fd_set fds ;
   int __d0 ;
   int __d1 ;
@@ -6769,8 +6525,8 @@ int wait_for_socket(int sock , struct timeval *timeout )
   return (tmp___2);
 }
 }
-int wait_for_sockets(int nfds , fd_set *fds , struct timeval *timeout ) 
-{ 
+int wait_for_sockets(int nfds , fd_set *fds , struct timeval *timeout )
+{
   int i ;
   int tmp ;
   int tmp___0 ;
@@ -6799,8 +6555,8 @@ int wait_for_sockets(int nfds , fd_set *fds , struct timeval *timeout )
   }
 }
 }
-static void handle_sigint(int postgres_signal_arg ) 
-{ 
+static void handle_sigint(int postgres_signal_arg )
+{
 
 
   {
@@ -6808,8 +6564,8 @@ static void handle_sigint(int postgres_signal_arg )
   return;
 }
 }
-static void init_cancel_handler(void) 
-{ 
+static void init_cancel_handler(void)
+{
 
 
   {
@@ -6852,8 +6608,8 @@ PGconn *conn2  =    (PGconn *)((void *)0);
 worker_conns workers  =    {0, 0, (PGconn **)((void *)0)};
 static _Bool parse_pair(char const   *buffer , char *key , char *value ) ;
 static char *get_username(void) ;
-void setup_workers(int num_workers ) 
-{ 
+void setup_workers(int num_workers )
+{
   PQExpBufferData buf ;
   int i ;
   PGconn *conn ;
@@ -6925,8 +6681,8 @@ void setup_workers(int num_workers )
   return;
 }
 }
-void disconnect_workers(void) 
-{ 
+void disconnect_workers(void)
+{
   int i ;
 
   {
@@ -6951,8 +6707,8 @@ void disconnect_workers(void)
   return;
 }
 }
-void reconnect(int elevel ) 
-{ 
+void reconnect(int elevel )
+{
   PQExpBufferData buf ;
   char *new_password ;
   int tmp ;
@@ -7008,8 +6764,8 @@ void reconnect(int elevel )
   return;
 }
 }
-void disconnect(void) 
-{ 
+void disconnect(void)
+{
 
 
   {
@@ -7025,8 +6781,8 @@ void disconnect(void)
   return;
 }
 }
-static void option_from_env(pgut_option *options___0 ) 
-{ 
+static void option_from_env(pgut_option *options___0 )
+{
   size_t i ;
   pgut_option *opt ;
   char name[256] ;
@@ -7089,14 +6845,14 @@ static void option_from_env(pgut_option *options___0 )
     if ((unsigned long )value != (unsigned long )((void *)0)) {
       pgut_setopt(opt, value, (pgut_optsrc )1);
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     i ++;
   }
   return;
 }
 }
-_Bool pgut_keyeq(char const   *lhs , char const   *rhs ) 
-{ 
+_Bool pgut_keyeq(char const   *lhs , char const   *rhs )
+{
   char *tmp ;
   int __res ;
   __int32_t const   **tmp___1 ;
@@ -7152,8 +6908,8 @@ _Bool pgut_keyeq(char const   *lhs , char const   *rhs )
   return ((_Bool )tmp___5);
 }
 }
-void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src ) 
-{ 
+void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src )
+{
   char const   *message ;
   _Bool tmp ;
   _Bool tmp___0 ;
@@ -7193,11 +6949,11 @@ void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src )
       goto _L___0;
     }
   } else {
-    _L___0: /* CIL Label */ 
+    _L___0: /* CIL Label */
     opt->source = src;
     switch ((int )opt->type) {
-    case 66: 
-    case 98: 
+    case 66:
+    case 98:
     if ((unsigned long )optarg___0 == (unsigned long )((void *)0)) {
       *((_Bool *)opt->var) = (_Bool )((int )opt->type == 98);
       return;
@@ -7209,56 +6965,56 @@ void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src )
     }
     message = "a boolean";
     break;
-    case 102: 
+    case 102:
     (*((void (*)(pgut_option *opt , char const   *arg ))opt->var))(opt, optarg___0);
     return;
-    case 105: 
+    case 105:
     tmp___0 = parse_int32(optarg___0, (int32 *)opt->var);
     if (tmp___0) {
       return;
     }
     message = "a 32bit signed integer";
     break;
-    case 108: 
+    case 108:
     message = "a List";
     simple_string_list_append((SimpleStringList *)opt->var, optarg___0);
     return;
-    case 117: 
+    case 117:
     tmp___1 = parse_uint32(optarg___0, (uint32 *)opt->var);
     if (tmp___1) {
       return;
     }
     message = "a 32bit unsigned integer";
     break;
-    case 73: 
+    case 73:
     tmp___2 = parse_int64(optarg___0, (int64 *)opt->var);
     if (tmp___2) {
       return;
     }
     message = "a 64bit signed integer";
     break;
-    case 85: 
+    case 85:
     tmp___3 = parse_uint64(optarg___0, (uint64 *)opt->var);
     if (tmp___3) {
       return;
     }
     message = "a 64bit unsigned integer";
     break;
-    case 115: 
+    case 115:
     if ((unsigned int )opt->source != 0U) {
       free((void *)*((char **)opt->var));
     }
     *((char **)opt->var) = pgut_strdup(optarg___0);
     return;
-    case 116: 
+    case 116:
     tmp___4 = parse_time(optarg___0, (time_t *)opt->var);
     if (tmp___4) {
       return;
     }
     message = "a time";
     break;
-    case 89: 
-    case 121: 
+    case 89:
+    case 121:
     if ((unsigned long )optarg___0 == (unsigned long )((void *)0)) {
       if ((int )opt->type == 121) {
         *((YesNo *)opt->var) = (YesNo )2;
@@ -7279,7 +7035,7 @@ void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src )
     }
     message = "a boolean";
     break;
-    default: 
+    default:
     tmp___8 = pgut_errstart(20);
     if (tmp___8) {
       tmp___6 = errmsg("invalid option type: %c", (int )opt->type);
@@ -7309,8 +7065,8 @@ void pgut_setopt(pgut_option *opt , char const   *optarg___0 , pgut_optsrc src )
   return;
 }
 }
-void pgut_readopt(char const   *path , pgut_option *options___0 , int elevel ) 
-{ 
+void pgut_readopt(char const   *path , pgut_option *options___0 , int elevel )
+{
   FILE *fp ;
   char buf[1024] ;
   char key[1024] ;
@@ -7378,8 +7134,8 @@ void pgut_readopt(char const   *path , pgut_option *options___0 , int elevel )
   return;
 }
 }
-static char const   *skip_space(char const   *str , char const   *line ) 
-{ 
+static char const   *skip_space(char const   *str , char const   *line )
+{
   unsigned short const   **tmp ;
 
   {
@@ -7393,8 +7149,8 @@ static char const   *skip_space(char const   *str , char const   *line )
   return (str);
 }
 }
-static char const   *get_next_token(char const   *src , char *dst , char const   *line ) 
-{ 
+static char const   *get_next_token(char const   *src , char *dst , char const   *line )
+{
   char const   *s ;
   size_t i ;
   size_t j ;
@@ -7414,29 +7170,29 @@ static char const   *get_next_token(char const   *src , char *dst , char const  
       if ((int const   )*(s + i) == 92) {
         i ++;
         switch ((int const   )*(s + i)) {
-        case 98: 
+        case 98:
         *(dst + j) = (char )'\b';
         break;
-        case 102: 
+        case 102:
         *(dst + j) = (char )'\f';
         break;
-        case 110: 
+        case 110:
         *(dst + j) = (char )'\n';
         break;
-        case 114: 
+        case 114:
         *(dst + j) = (char )'\r';
         break;
-        case 116: 
+        case 116:
         *(dst + j) = (char )'\t';
         break;
-        case 55: 
-        case 54: 
-        case 53: 
-        case 52: 
-        case 51: 
-        case 50: 
-        case 49: 
-        case 48: 
+        case 55:
+        case 54:
+        case 53:
+        case 52:
+        case 51:
+        case 50:
+        case 49:
+        case 48:
         octVal = 0L;
         k = 0;
         while (1) {
@@ -7457,7 +7213,7 @@ static char const   *get_next_token(char const   *src , char *dst , char const  
         i += (size_t )(k - 1);
         *(dst + j) = (char )octVal;
         break;
-        default: 
+        default:
         *(dst + j) = (char )*(s + i);
         break;
         }
@@ -7484,8 +7240,8 @@ static char const   *get_next_token(char const   *src , char *dst , char const  
   return (s + i);
 }
 }
-static _Bool parse_pair(char const   *buffer , char *key , char *value ) 
-{ 
+static _Bool parse_pair(char const   *buffer , char *key , char *value )
+{
   char const   *start ;
   char const   *end ;
   char tmp ;
@@ -7536,8 +7292,8 @@ static _Bool parse_pair(char const   *buffer , char *key , char *value )
   return ((_Bool)1);
 }
 }
-PGresult *execute(char const   *query , int nParams , char const   **params ) 
-{ 
+PGresult *execute(char const   *query , int nParams , char const   **params )
+{
   PGresult *tmp ;
 
   {
@@ -7546,8 +7302,8 @@ PGresult *execute(char const   *query , int nParams , char const   **params )
 }
 }
 PGresult *execute_elevel(char const   *query , int nParams , char const   **params ,
-                         int elevel ) 
-{ 
+                         int elevel )
+{
   PGresult *tmp ;
 
   {
@@ -7555,8 +7311,8 @@ PGresult *execute_elevel(char const   *query , int nParams , char const   **para
   return (tmp);
 }
 }
-ExecStatusType command(char const   *query , int nParams , char const   **params ) 
-{ 
+ExecStatusType command(char const   *query , int nParams , char const   **params )
+{
   ExecStatusType tmp ;
 
   {
@@ -7564,8 +7320,8 @@ ExecStatusType command(char const   *query , int nParams , char const   **params
   return (tmp);
 }
 }
-static void set_elevel(pgut_option *opt , char const   *arg ) 
-{ 
+static void set_elevel(pgut_option *opt , char const   *arg )
+{
 
 
   {
@@ -7573,19 +7329,19 @@ static void set_elevel(pgut_option *opt , char const   *arg )
   return;
 }
 }
-static pgut_option default_options[9]  = 
-  {      {(char )'b', (char )'e', "echo", (void *)(& pgut_echo), 0U, 0U}, 
-        {(char )'f', (char )'E', "elevel", (void *)(& set_elevel), 0U, 0U}, 
-        {(char )'s', (char )'d', "dbname", (void *)(& dbname), 0U, 0U}, 
-        {(char )'s', (char )'h', "host", (void *)(& host), 0U, 0U}, 
-        {(char )'s', (char )'p', "port", (void *)(& port), 0U, 0U}, 
-        {(char )'s', (char )'U', "username", (void *)(& username), 0U, 0U}, 
-        {(char )'Y', (char )'w', "no-password", (void *)(& prompt_password), 0U, 0U}, 
+static pgut_option default_options[9]  =
+  {      {(char )'b', (char )'e', "echo", (void *)(& pgut_echo), 0U, 0U},
+        {(char )'f', (char )'E', "elevel", (void *)(& set_elevel), 0U, 0U},
+        {(char )'s', (char )'d', "dbname", (void *)(& dbname), 0U, 0U},
+        {(char )'s', (char )'h', "host", (void *)(& host), 0U, 0U},
+        {(char )'s', (char )'p', "port", (void *)(& port), 0U, 0U},
+        {(char )'s', (char )'U', "username", (void *)(& username), 0U, 0U},
+        {(char )'Y', (char )'w', "no-password", (void *)(& prompt_password), 0U, 0U},
         {(char )'y',
-      (char )'W', "password", (void *)(& prompt_password), 0U, 0U}, 
+      (char )'W', "password", (void *)(& prompt_password), 0U, 0U},
         {(char)0, (char)0, (char const   *)0, (void *)0, 0U, 0U}};
-static size_t option_length(pgut_option const   *opts ) 
-{ 
+static size_t option_length(pgut_option const   *opts )
+{
   size_t len ;
 
   {
@@ -7603,8 +7359,8 @@ static size_t option_length(pgut_option const   *opts )
   return (len);
 }
 }
-static pgut_option *option_find(int c , pgut_option *opts1 , pgut_option *opts2 ) 
-{ 
+static pgut_option *option_find(int c , pgut_option *opts1 , pgut_option *opts2 )
+{
   size_t i ;
 
   {
@@ -7639,8 +7395,8 @@ static pgut_option *option_find(int c , pgut_option *opts1 , pgut_option *opts2 
   return ((pgut_option *)((void *)0));
 }
 }
-static char *get_username(void) 
-{ 
+static char *get_username(void)
+{
   char *ret ;
   struct passwd *pw ;
   __uid_t tmp ;
@@ -7667,24 +7423,24 @@ static char *get_username(void)
   return (ret);
 }
 }
-static int option_has_arg(char type ) 
-{ 
+static int option_has_arg(char type )
+{
 
 
   {
   switch ((int )type) {
-  case 89: 
-  case 121: 
-  case 66: 
-  case 98: 
+  case 89:
+  case 121:
+  case 66:
+  case 98:
   return (0);
-  default: 
+  default:
   return (1);
   }
 }
 }
-static void option_copy(struct option *dst , pgut_option const   *opts , size_t len ) 
-{ 
+static void option_copy(struct option *dst , pgut_option const   *opts , size_t len )
+{
   size_t i ;
 
   {
@@ -7699,8 +7455,8 @@ static void option_copy(struct option *dst , pgut_option const   *opts , size_t 
   return;
 }
 }
-static struct option *option_merge(pgut_option const   *opts1 , pgut_option const   *opts2 ) 
-{ 
+static struct option *option_merge(pgut_option const   *opts1 , pgut_option const   *opts2 )
+{
   struct option *result ;
   size_t len1 ;
   size_t tmp ;
@@ -7723,8 +7479,8 @@ static struct option *option_merge(pgut_option const   *opts1 , pgut_option cons
   return (result);
 }
 }
-static char *longopts_to_optstring(struct option  const  *opts ) 
-{ 
+static char *longopts_to_optstring(struct option  const  *opts )
+{
   size_t len ;
   char *result ;
   char *s ;
@@ -7755,15 +7511,15 @@ static char *longopts_to_optstring(struct option  const  *opts )
       s ++;
       *tmp___2 = (char )':';
     }
-    __Cont: /* CIL Label */ 
+    __Cont: /* CIL Label */
     len ++;
   }
   *s = (char )'\000';
   return (result);
 }
 }
-int pgut_getopt(int argc , char **argv , pgut_option *options___0 ) 
-{ 
+int pgut_getopt(int argc , char **argv , pgut_option *options___0 )
+{
   int c ;
   int optindex ;
   char *optstring ;
@@ -7843,8 +7599,8 @@ int pgut_getopt(int argc , char **argv , pgut_option *options___0 )
   return (optind);
 }
 }
-void help(_Bool details ) 
-{ 
+void help(_Bool details )
+{
 
 
   {
@@ -7870,7 +7626,7 @@ void help(_Bool details )
       goto _L;
     } else
     if (PROGRAM_ISSUES) {
-      _L: /* CIL Label */ 
+      _L: /* CIL Label */
       pg_printf("\n");
       if (PROGRAM_URL) {
         pg_printf("Read the website for details: <%s>.\n", PROGRAM_URL);

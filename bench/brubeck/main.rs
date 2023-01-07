@@ -3183,7 +3183,7 @@ pub unsafe extern "C" fn brubeck_internal__sample(
     let mut value: uint32_t = 0;
     let mut key: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut tmp: size_t = 0;
-    let mut tmp___0 = 0 as *mut _;
+    let mut tmp___0: *mut _ = 0 as *mut _;
     let mut tmp___1: size_t = 0;
     let mut tmp___2: size_t = 0;
     let mut tmp___3: size_t = 0;
@@ -3563,7 +3563,7 @@ unsafe extern "C" fn histogram__sample(
     };
     let mut key: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut tmp: size_t = 0;
-    let mut tmp___0 = 0 as *mut _;
+    let mut tmp___0: *mut _ = 0 as *mut _;
     let mut tmp___1: size_t = 0;
     let mut tmp___2: size_t = 0;
     let mut backend: *mut brubeck_backend = 0 as *mut brubeck_backend;

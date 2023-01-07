@@ -4439,7 +4439,7 @@ unsafe extern "C" fn ipc_write_rc(
 ) -> libc::c_int {
     let mut resplen: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut err: ipc_err = ipc_err { rc: 0, err: 0, data: [] };
     let mut tmp___0: libc::c_int = 0;
     resplen = (::std::mem::size_of::<ipc_msg>() as libc::c_ulong)
@@ -4491,7 +4491,7 @@ unsafe extern "C" fn ipc_read(
     let mut resplen: libc::c_int = 0;
     let mut tmp: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp___0 = 0 as *mut _;
+    let mut tmp___0: *mut _ = 0 as *mut _;
     let mut error: *mut ipc_err = 0 as *mut ipc_err;
     let mut actual: *mut ipc_read = 0 as *mut ipc_read;
     let mut tmp___1: libc::c_int = 0;
@@ -4688,7 +4688,7 @@ unsafe extern "C" fn ipc_poll(
     let mut i: libc::c_int = 0;
     let mut resplen: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut err: ipc_err = ipc_err { rc: 0, err: 0, data: [] };
     let mut polled: *mut ipc_pollfd = 0 as *mut ipc_pollfd;
     let mut i___0: libc::c_int = 0;
@@ -4816,7 +4816,7 @@ unsafe extern "C" fn ipc_getsockopt(
     let mut rc: libc::c_int = 0;
     let mut resplen: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut err: ipc_err = ipc_err { rc: 0, err: 0, data: [] };
     let mut optres: *mut ipc_sockopt = 0 as *mut ipc_sockopt;
     let mut tmp___0: libc::c_int = 0;
@@ -4893,7 +4893,7 @@ unsafe extern "C" fn ipc_getpeername(
     let mut rc: libc::c_int = 0;
     let mut resplen: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut nameres: *mut ipc_sockname = 0 as *mut ipc_sockname;
     let mut err: ipc_err = ipc_err { rc: 0, err: 0, data: [] };
     let mut tmp___0: libc::c_int = 0;
@@ -4960,7 +4960,7 @@ unsafe extern "C" fn ipc_getsockname(
     let mut rc: libc::c_int = 0;
     let mut resplen: libc::c_int = 0;
     let mut response: *mut ipc_msg = 0 as *mut ipc_msg;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut nameres: *mut ipc_sockname = 0 as *mut ipc_sockname;
     let mut err: ipc_err = ipc_err { rc: 0, err: 0, data: [] };
     let mut tmp___0: libc::c_int = 0;

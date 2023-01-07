@@ -358,8 +358,8 @@ pub unsafe extern "C" fn kt_for(
         data: 0 as *mut libc::c_void,
     };
     let mut tid: *mut pthread_t = 0 as *mut pthread_t;
-    let mut tmp = 0 as *mut _;
-    let mut tmp___0 = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
+    let mut tmp___0: *mut _ = 0 as *mut _;
     let mut j: libc::c_long = 0;
     if n_threads > 1 as libc::c_int {
         t.func = func;
@@ -745,10 +745,10 @@ pub unsafe extern "C" fn kt_pipeline(
     };
     let mut tid: *mut pthread_t = 0 as *mut pthread_t;
     let mut i: libc::c_int = 0;
-    let mut tmp = 0 as *mut _;
+    let mut tmp: *mut _ = 0 as *mut _;
     let mut w: *mut ktp_worker_t = 0 as *mut ktp_worker_t;
     let mut tmp___0: int64_t = 0;
-    let mut tmp___1 = 0 as *mut _;
+    let mut tmp___1: *mut _ = 0 as *mut _;
     if n_threads < 1 as libc::c_int {
         n_threads = 1 as libc::c_int;
     }

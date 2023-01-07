@@ -5,13 +5,13 @@
 #![allow(non_upper_case_globals)]
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
+#![feature(asm)]
 #![feature(c_variadic)]
 #![feature(extern_types)]
 #![feature(label_break_value)]
 #![feature(register_tool)]
 #![feature(rustc_private)]
 #![feature(untagged_unions)]
-#![feature(core_intrinsics)]
 #![register_tool(c2rust)]
 
 

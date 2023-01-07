@@ -12269,7 +12269,7 @@ unsafe extern "C" fn init___3(
     let mut ret: libc::c_int = 0;
     let mut alsa_mix_maxv: libc::c_long = 0;
     let mut tmp___1: size_t = 0;
-    let mut tmp___2 = 0 as *mut _;
+    let mut tmp___2: *mut _ = 0 as *mut _;
     let mut tmp___3: size_t = 0;
     let mut tmp___4: libc::c_int = 0;
     let mut tmp___5: libc::c_int = 0;
@@ -12409,7 +12409,7 @@ unsafe extern "C" fn start___3(mut sample_rate: libc::c_int) {
     let mut frames: snd_pcm_uframes_t = 0;
     let mut tmp: *const libc::c_char = 0 as *const libc::c_char;
     let mut tmp___0: size_t = 0;
-    let mut tmp___1 = 0 as *mut _;
+    let mut tmp___1: *mut _ = 0 as *mut _;
     let mut tmp___2: size_t = 0;
     let mut tmp___3: *const libc::c_char = 0 as *const libc::c_char;
     if sample_rate != 44100 as libc::c_int {
