@@ -1,3 +1,3 @@
 #! /bin/bash
 
-sed -i '12473,12477s/.*//g' main.rs
+sed -i '12490,12494s/.*//g' main.rs

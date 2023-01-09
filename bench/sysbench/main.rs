@@ -5984,16 +5984,16 @@ pub unsafe extern "C" fn db_create(mut name: *const libc::c_char) -> *mut db_dri
                     current_block = 4519071079872203859;
                 }
             } else {
-                current_block = 5043415446234504278;
+                current_block = 10394926462389514359;
             }
         } else {
-            current_block = 5043415446234504278;
+            current_block = 10394926462389514359;
         }
         match current_block {
             4519071079872203859 => {}
             _ => {
                 match current_block {
-                    5043415446234504278 => {
+                    10394926462389514359 => {
                         if name as libc::c_ulong
                             == 0 as *mut libc::c_void as libc::c_ulong
                         {
@@ -6035,30 +6035,40 @@ pub unsafe extern "C" fn db_create(mut name: *const libc::c_char) -> *mut db_dri
                             .expect("non-null function pointer")();
                         if tmp___1 != 0 {
                             pthread_mutex_unlock(&mut (*drv).mutex);
-                            return 0 as *mut libc::c_void as *mut db_driver_t;
+                            current_block = 4519071079872203859;
+                        } else {
+                            (*drv).initialized = 1 as libc::c_int != 0;
+                            current_block = 5689316957504528238;
                         }
-                        (*drv).initialized = 1 as libc::c_int != 0;
+                    } else {
+                        current_block = 5689316957504528238;
                     }
-                    pthread_mutex_unlock(&mut (*drv).mutex);
-                    if ::std::mem::transmute::<
-                        Option::<drv_op_thread_init>,
-                        libc::c_ulong,
-                    >((*drv).ops.thread_init) != 0 as *mut libc::c_void as libc::c_ulong
-                    {
-                        tmp___2 = (Some(
-                            ((*drv).ops.thread_init).expect("non-null function pointer"),
-                        ))
-                            .expect("non-null function pointer")(sb_tls_thread_id);
-                        if tmp___2 != 0 {
-                            log_text(
-                                LOG_FATAL,
-                                b"thread-local driver initialization failed.\0" as *const u8
-                                    as *const libc::c_char,
-                            );
-                            return 0 as *mut libc::c_void as *mut db_driver_t;
+                    match current_block {
+                        4519071079872203859 => {}
+                        _ => {
+                            pthread_mutex_unlock(&mut (*drv).mutex);
+                            if ::std::mem::transmute::<
+                                Option::<drv_op_thread_init>,
+                                libc::c_ulong,
+                            >((*drv).ops.thread_init)
+                                != 0 as *mut libc::c_void as libc::c_ulong
+                            {
+                                tmp___2 = (Some(
+                                    ((*drv).ops.thread_init).expect("non-null function pointer"),
+                                ))
+                                    .expect("non-null function pointer")(sb_tls_thread_id);
+                                if tmp___2 != 0 {
+                                    log_text(
+                                        LOG_FATAL,
+                                        b"thread-local driver initialization failed.\0" as *const u8
+                                            as *const libc::c_char,
+                                    );
+                                    return 0 as *mut libc::c_void as *mut db_driver_t;
+                                }
+                            }
+                            return drv;
                         }
                     }
-                    return drv;
                 }
             }
         }
@@ -6994,14 +7004,14 @@ unsafe extern "C" fn db_bulk_do_insert(
         (*con).bulk_commit_cnt = ((*con).bulk_commit_cnt).wrapping_add((*con).bulk_cnt);
         let mut current_block_16: u64;
         if is_last != 0 {
-            current_block_16 = 7177995817771013126;
+            current_block_16 = 10217124275089150897;
         } else if (*con).bulk_commit_cnt >= (*con).bulk_commit_max {
-            current_block_16 = 7177995817771013126;
+            current_block_16 = 10217124275089150897;
         } else {
             current_block_16 = 7149356873433890176;
         }
         match current_block_16 {
-            7177995817771013126 => {
+            10217124275089150897 => {
                 tmp___0 = db_query(
                     con,
                     b"COMMIT\0" as *const u8 as *const libc::c_char,

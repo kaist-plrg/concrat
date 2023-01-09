@@ -5350,8 +5350,7 @@ db_driver_t *db_create(char const   *name )
     tmp___1 = (*(drv->ops.init))();
     if (tmp___1) {
       pthread_mutex_unlock(& drv->mutex);
-//      goto err;
-      return ((db_driver_t *)((void *)0));
+      goto err;
     }
     drv->initialized = (_Bool)1;
   }

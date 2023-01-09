@@ -1170,15 +1170,15 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
         i = 0 as libc::c_int;
         while i < ret {
             if pevents[i as usize].events & 8 as libc::c_uint != 0 {
-                current_block = 10212990495229635068;
+                current_block = 418369732160336472;
             } else if pevents[i as usize].events & 16 as libc::c_uint != 0 {
-                current_block = 10212990495229635068;
+                current_block = 418369732160336472;
             } else if pevents[i as usize].events & 8192 as libc::c_uint != 0 {
-                current_block = 10212990495229635068;
+                current_block = 418369732160336472;
             } else {
                 if pevents[i as usize].events & 1 as libc::c_uint == 0 {
                     if pevents[i as usize].events & 4 as libc::c_uint == 0 {
-                        current_block = 10212990495229635068;
+                        current_block = 418369732160336472;
                     } else {
                         current_block = 13188094114917870486;
                     }
@@ -1186,7 +1186,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                     current_block = 13188094114917870486;
                 }
                 match current_block {
-                    10212990495229635068 => {}
+                    418369732160336472 => {}
                     _ => {
                         if pevents[i as usize].events & 1 as libc::c_uint != 0 {
                             is_closed = 0 as libc::c_int;
@@ -1285,7 +1285,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                                     9 as libc::c_int,
                                                     16384 as libc::c_int,
                                                 );
-                                                current_block_77 = 3491679287662957171;
+                                                current_block_77 = 2521637887878013520;
                                             } else {
                                                 current_block_77 = 14541395414537699361;
                                             }
@@ -1293,7 +1293,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                             current_block_77 = 14541395414537699361;
                                         }
                                         match current_block_77 {
-                                            3491679287662957171 => {}
+                                            2521637887878013520 => {}
                                             _ => {
                                                 ii = 0 as libc::c_int;
                                                 while ii < 3 as libc::c_int {
@@ -1745,7 +1745,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                                 if start as libc::c_ulong
                                                     == buf.as_mut_ptr() as libc::c_ulong
                                                 {
-                                                    current_block_199 = 5594157602398397256;
+                                                    current_block_199 = 17726211388728073330;
                                                 } else {
                                                     start = start.offset(1);
                                                     space = strchr(start as *const libc::c_char, ' ' as i32);
@@ -2167,8 +2167,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                     handle_failed_connect((*state___1).fd);
                                     closeAndCleanup((*state___1).fd);
                                     pthread_mutex_unlock(&mut (*state___1).mutex);
-                                    i += 1;
-                                    continue;
+                                    current_block = 13444672592469766708;
                                 } else {
                                     (*state___1).state = 1 as libc::c_int as libc::c_uchar;
                                     pevents[i as usize].events = 3221233665 as libc::c_uint;
@@ -2178,6 +2177,7 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                         (*state___1).fd,
                                         &mut *pevents.as_mut_ptr().offset(i as isize),
                                     );
+                                    current_block = 17067626392193834262;
                                 }
                             } else {
                                 printf(
@@ -2186,15 +2186,21 @@ pub unsafe extern "C" fn flood(mut par1: *mut libc::c_void) -> *mut libc::c_void
                                     (*state___1).fd,
                                 );
                                 closeAndCleanup((*state___1).fd);
+                                current_block = 17067626392193834262;
                             }
-                            pthread_mutex_unlock(&mut (*state___1).mutex);
+                            match current_block {
+                                13444672592469766708 => {}
+                                _ => {
+                                    pthread_mutex_unlock(&mut (*state___1).mutex);
+                                }
+                            }
                         }
                         current_block = 13444672592469766708;
                     }
                 }
             }
             match current_block {
-                10212990495229635068 => {
+                418369732160336472 => {
                     state = &mut *stateTable
                         .as_mut_ptr()
                         .offset(

@@ -1412,9 +1412,7 @@ void *flood(void *par1 )
             handle_failed_connect(state___1->fd);
             closeAndCleanup(state___1->fd);
             pthread_mutex_unlock(& state___1->mutex);
-//            goto __Cont___1;
-            i++;
-            continue;
+            goto __Cont___1;
           }
           state___1->state = (unsigned char)1;
           pevents[i].events = 3221233665U;

@@ -9376,7 +9376,7 @@ static int kvs_update(strm_stream *strm , int argc , strm_value *args , strm_val
   pthread_mutex_unlock(& k->lock);
   tmp___2 = strm_funcall(strm, *(args + 2), 1, & old, & val);
   if (tmp___2 == 1) {
-//    pthread_mutex_unlock(& k->lock);
+    pthread_mutex_unlock(& k->lock);
     return (1);
   }
   pthread_mutex_lock(& k->lock);

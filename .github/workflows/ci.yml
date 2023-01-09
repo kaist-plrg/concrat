@@ -30,10 +30,16 @@ jobs:
       - name: Run Cargo tests
         run: cargo test --release --lib
       - name: Run dataflow analysis tests
-        run: ./test_dataflow.sh
-      - name: Run tests (example, dataflow)
-        run: ./test_examples.sh
-      - name: Run tests (example, goblint)
-        run: GOBLINT=yes ./test_examples.sh
-      - name: Run tests (benchmark)
-        run: ./test_bench.sh
+        run: ./scripts/test_dataflow.sh
+      - name: Run tests (example)
+        run: ./scripts/test_examples.sh
+      - name: Run tests (example-goblint)
+        run: GOBLINT=yes ./scripts/test_examples.sh
+      - name: Run tests (benchmark-success)
+        run: ./scripts/test_bench_success.sh
+      - name: Run tests (benchmark-fail)
+        run: ./scripts/test_bench_fail.sh
+      - name: Run tests (benchmark-goblint-success)
+        run: ./scripts/test_bench_goblint_success.sh
+      - name: Run tests (benchmark-goblint-fail)
+        run: ./scripts/test_bench_goblint_fail.sh

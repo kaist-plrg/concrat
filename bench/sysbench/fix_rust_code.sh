@@ -12,8 +12,8 @@ sed -i '1099s/.*//g' main.rs
 sed -i '1109,1114s/.*//g' main.rs
 sed -i '5759,5762s/.*//g' main.rs
 sed -i '5767,5770s/.*//g' main.rs
-sed -i '7271,7274s/.*//g' main.rs
-sed -i '7279s/.*//g' main.rs
-sed -i '7650,7653s/.*//g' main.rs
-sed -i '8107s/.*//g' main.rs
+sed -i '7281,7284s/.*//g' main.rs
+sed -i '7289s/.*//g' main.rs
+sed -i '7660,7663s/.*//g' main.rs
+sed -i '8117s/.*//g' main.rs
 sed -i 's/lua.as_ptr() as \*mut _/lua.as_ptr()/g' main.rs

@@ -448,7 +448,7 @@ struct author {
    struct list *el ;
    int bdepfd ;
    struct log_info *loginfo ;
-//   pthread_spinlock_t dblock[101] ;
+   pthread_spinlock_t dblock[101] ;
    uchar databuffer[65528] ;
    uchar randombuffer[3000] ;
    uchar tmpbuffer[2000] ;
@@ -850,7 +850,7 @@ int to_lowercase(uchar *msg , int len ) ;
 int fix_tail(char *domain ) ;
 int empty_function(int i ) ;
 void insert_mem_bar(void) ;
-//int test_lock(pthread_spinlock_t *l ) ;
+int test_lock(pthread_spinlock_t *l ) ;
 int set_bit(unsigned short *bit , int off ) ;
 int clr_bit(unsigned short *bit , int off ) ;
 int tst_bit(unsigned short const   bit , int off ) ;
@@ -1643,19 +1643,19 @@ void insert_mem_bar(void)
   return;
 }
 }
-//int test_lock(pthread_spinlock_t *l )
-//{
-//  int tmp ;
-//
-//  {
-//  tmp = pthread_spin_trylock(l);
-//  if (tmp < 0) {
-//    return (-1);
-//  }
-//  pthread_spin_unlock(l);
-//  return (0);
-//}
-//}
+int test_lock(pthread_spinlock_t *l )
+{
+  int tmp ;
+
+  {
+  tmp = pthread_spin_trylock(l);
+  if (tmp < 0) {
+    return (-1);
+  }
+  pthread_spin_unlock(l);
+  return (0);
+}
+}
 void dbg_print_bit(unsigned short bit )
 {
   int i ;
@@ -8457,7 +8457,7 @@ int create_author(struct server *s , int n )
     ((authors + i)->loginfo)->logfd = create_new_log(s->logpath, i, 233);
     j = 0;
     while (j < 101) {
-//      pthread_spin_init(& (authors + i)->dblock[j], 0);
+      pthread_spin_init(& (authors + i)->dblock[j], 0);
       j ++;
     }
     j = 0;
