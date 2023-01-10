@@ -10,6 +10,6 @@ while read d; do
       *) SUC="no" ;;
     esac
     rm -rf $td
-    echo $SUC $d | tr ' ' '\t'
+    echo $SUC $(basename $d) | tr ' ' '\t'
   fi
 done < scripts/list_all

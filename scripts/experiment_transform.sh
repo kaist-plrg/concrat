@@ -14,5 +14,5 @@ while read d; do
   RES=`echo $RES | tr ' ' '\n' | tail -n 6`
   INS=`echo $RES | tr ' ' '\n' | sed -n 1p`
   DEL=`echo $RES | tr ' ' '\n' | sed -n 3p`
-  echo $ANA $TRA $INS $DEL $SUC $d | tr ' ' '\t'
+  echo $ANA $TRA $INS $DEL $SUC $(basename $d) | tr ' ' '\t'
 done < scripts/list_all
