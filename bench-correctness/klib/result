@@ -1,0 +1,736 @@
+}
+}
+;)0( nruter  
+}  
+;)pf.lp(esolcf    
+{ )nidts) gnol dengisnu( =! pf.lp) gnol dengisnu(( fi  
+;)fub.lp)* diov((eerf  
+;)3 ,)lp &()* diov( ,enilepip_rekrow & ,sdaerht_lp(enilepip_tk  
+;4___pmt)* rahc( = fub.lp  
+;)1) t_ezis( ,ezis_fub.lp) t_ezis((collac = 4___pmt  
+}  
+;1 = sdaerht_n.lp    
+{ esle }  
+;3___pmt = sdaerht_n.lp    
+;))3 + vgra(*)*   tsnoc rahc((iota = 3___pmt    
+{ )3 > cgra( fi  
+;63556 = ezis_fub.lp  
+;6904 = senil_xam.lp  
+}  
+;3 = sdaerht_lp    
+{ esle }  
+;2___pmt = sdaerht_lp    
+;))2 + vgra(*)*   tsnoc rahc((iota = 2___pmt    
+{ )2 > cgra( fi  
+}  
+;)1( nruter    
+;)"n\.elif tupni eht nepo ot deliaf :RORRE")  tcirtser__ *   tsnoc rahc( ,rredts)  tcirtser__ * ELIF((ftnirpf    
+{ ))0)* ELIF(() gnol dengisnu( == pf.lp) gnol dengisnu(( fi  
+}  
+;nidts = pf.lp    
+{ esle }  
+;0___pmt = pf.lp    
+;)"r")  tcirtser__ *   tsnoc rahc( ,)1 + vgra(*)  tcirtser__ *   tsnoc rahc((nepof = 0___pmt    
+{ )1___pmt( fi  
+;)"-" ,)1 + vgra(*)*   tsnoc rahc((pmcrts = 1___pmt  
+}  
+;)1( nruter    
+;)"n\]]sdaerht_rof[ sdaerht_enilepip[ >txt.ni< esrever :egasU")  tcirtser__ *   tsnoc rahc( ,rredts)  tcirtser__ * ELIF((ftnirpf    
+{ )1 == cgra( fi  
+{  
+
+; 4___pmt* diov  
+; 3___pmt tni  
+; 2___pmt tni  
+; 1___pmt tni  
+; 0___pmt* ELIF  
+; sdaerht_lp tni  
+; lp t_enilepip  
+ {
+ ) vgra** rahc , cgra tni(niam tni
+}
+}
+;)0)* diov(( nruter  
+}  
+;)0___s)* diov((eerf    
+;)senil>-0___s)* diov((eerf    
+}    
+;))senil_n>-0___s + senil>-0___s(*)* diov((eerf      
+;)tuodts)  tcirtser__ * ELIF( ,)senil_n>-0___s + senil>-0___s(*)  tcirtser__ *   tsnoc rahc((stupf      
+;-- )senil_n>-0___s(      
+{ )0 > senil_n>-0___s( elihw    
+;ni)* t_pets( = 0___s    
+{ )2 == pets( fi  
+esle }  
+;)ni( nruter    
+;)senil_n>-)ni)* t_pets(() gnol( ,ni ,rof_rekrow & ,sdaerht_n>-p(rof_tk    
+{ )1 == pets( fi  
+esle }  
+}    
+;)s)* diov(( nruter      
+{ )senil_n>-s( fi    
+}    
+}      
+;kaerb        
+{ )senil_xam>-p => senil_n>-s( fi      
+;++ )senil_n>-s(      
+;)fub>-p)*   tsnoc rahc((pudrts = )senil_n>-s + senil>-s(*      
+}      
+;kaerb        
+{ )))0)* rahc(() gnol dengisnu( =! 1___pmt) gnol dengisnu(( !( fi      
+;)pf>-p)  tcirtser__ * ELIF( ,ezis_fub>-p ,fub>-p)  tcirtser__ * rahc((stegf = 1___pmt      
+{ )1( elihw    
+;0___pmt)** rahc( = senil>-s    
+;))* rahc(foezis ,senil_xam>-p) t_ezis((collac = 0___pmt    
+;pmt)* t_pets( = s    
+;)) t_pets(foezis ,1) t_ezis((collac = pmt    
+{ )0 == pets( fi  
+;derahs)* t_enilepip( = p  
+{  
+
+; 0___s* t_pets  
+; 1___pmt* rahc  
+; 0___pmt* diov  
+; pmt* diov  
+; s* t_pets  
+; p* t_enilepip  
+ {
+ ) ni* diov , pets tni , derahs* diov(enilepip_rekrow* diov citats
+}
+}
+;nruter  
+}  
+;++ j    
+;t) rahc( = ))j - )1 - l(( + s(*    
+;))j - )1 - l(( + s(* = )j + s(*    
+;)j + s(*) tni( = t    
+{ )1 >> l < j( elihw  
+;0 = j  
+}  
+;)"rof_rekrow" ,U62 ,"c.2tset_daerhtk/tset" ,"'\n\\'\ == ]l[s"(liaf_tressa__    
+{ ))01 == )l + s(*) tni(( !( fi  
+;)LU1 - pmt() tni( = l  
+;)s)*   tsnoc rahc((nelrts = pmt  
+;)i + senil>-pets(* = s  
+;atad_)* t_pets( = pets  
+{  
+
+; pmt t_ezis  
+; j tni  
+; l tni  
+; t tni  
+; s* rahc  
+; pets* t_pets  
+ {
+ ) dit tni , i gnol , atad_* diov(rof_rekrow diov citats
+; ) noitcnuf__*   tsnoc rahc                                                                      
+, enil__ tni dengisnu                                                                      
+, elif__*   tsnoc rahc                                                                      
+, noitressa__*   tsnoc rahc(liaf_tressa__ diov ))__nruteron__ ,__worhton__((__etubirtta__  nretxe
+; ))__erup__((__etubirtta__  ) s__*   tsnoc rahc()nelrts )))1(__llunnon__((__etubirtta__ ( t_ezis ))__worhton__((__etubirtta__  nretxe
+; ))__collam__((__etubirtta__  ) s__*   tsnoc rahc()pudrts )))1(__llunnon__((__etubirtta__ (* rahc ))__worhton__((__etubirtta__  nretxe
+; ))__erup__((__etubirtta__  ) 2s__*   tsnoc rahc                                                                                     
+, 1s__*   tsnoc rahc()pmcrts )))2,1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ))__erup__((__etubirtta__  ) rtpn__*   tsnoc rahc()iota )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) maerts__  tcirtser__ * ELIF , s__  tcirtser__ *   tsnoc rahc(stupf tni nretxe
+; ) maerts__  tcirtser__ * ELIF , n__ tni , s__  tcirtser__ * rahc(stegf* rahc nretxe
+; )... ,                   
+ tamrof__  tcirtser__ *   tsnoc rahc , maerts__  tcirtser__ * ELIF(ftnirpf tni nretxe
+; ) sedom__  tcirtser__ *   tsnoc rahc , emanelif__  tcirtser__ *   tsnoc rahc(nepof* ELIF nretxe
+; ) maerts__* ELIF(esolcf tni nretxe
+; rredts* ELIF nretxe
+; tuodts* ELIF nretxe
+; nidts* ELIF nretxe
+)"daerhtp-","i.OWxIadgk-lic/pmt/","0"(regrem amgarp#
+}
+}
+;nruter  
+;)vc.xua &(yortsed_dnoc_daerhtp  
+;)xetum.xua &(yortsed_xetum_daerhtp  
+}  
+;++ i    
+;)0)** diov( ,)i + dit(*(nioj_daerhtp    
+{ )sdaerht_n < i( elihw  
+;0 = i  
+}  
+;++ i    
+;))i + srekrow.xua()  tcirtser__ * diov( ,rekrow_ptk &                   
+,0)  tcirtser__ *   tsnoc t_rtta_daerhtp( ,)i + dit()  tcirtser__ * t_daerhtp((etaerc_daerhtp    
+{ )sdaerht_n < i( elihw  
+;0 = i  
+;1___pmt)* t_daerhtp( = dit  
+;)) t_daerhtp(foezis * sdaerht_n) gnol dengisnu((acolla_nitliub__ = 1___pmt  
+}  
+;++ i    
+;0___pmt = xedni>-w    
+;++ )xedni.xua(    
+;xedni.xua = 0___pmt    
+;0)* diov( = atad>-w    
+;xua & = lp>-w    
+;0 = pets>-w    
+;i + srekrow.xua = w    
+{ )sdaerht_n < i( elihw  
+;0 = i  
+;pmt)* t_rekrow_ptk( = srekrow.xua  
+;)) t_rekrow_ptk(foezis * sdaerht_n) gnol dengisnu((acolla_nitliub__ = pmt  
+;)0)  tcirtser__ *   tsnoc t_rttadnoc_daerhtp( ,)vc.xua &()  tcirtser__ * t_dnoc_daerhtp((tini_dnoc_daerhtp  
+;)0)*   tsnoc t_rttaxetum_daerhtp( ,xetum.xua &(tini_xetum_daerhtp  
+;0) t_46tni( = xedni.xua  
+;atad_derahs = derahs.xua  
+;cnuf = cnuf.xua  
+;spets_n = spets_n.xua  
+;sdaerht_n = srekrow_n.xua  
+}  
+;1 = sdaerht_n    
+{ )1 < sdaerht_n( fi  
+{  
+
+; 1___pmt* diov  
+; 0___pmt t_46tni  
+; w* t_rekrow_ptk  
+; pmt* diov  
+; i tni  
+; dit* t_daerhtp  
+; xua t_ptk  
+ {
+ ) spets_n tni                 
+, atad_derahs* diov , ) * diov ,  tni , * diov()cnuf*(* diov , sdaerht_n tni(enilepip_tk diov
+}
+}
+;)0)* diov((tixe_daerhtp  
+}  
+;)xetum>-p &(kcolnu_xetum_daerhtp    
+;)vc>-p &(tsacdaorb_dnoc_daerhtp    
+}    
+;0___pmt = xedni>-w      
+;++ )xedni>-p(      
+;xedni>-p = 0___pmt      
+{ )0 == pets>-w( fi    
+}    
+;spets_n>-p = pets>-w      
+{ esle }    
+;spets_n>-p % )1 + pets>-w( = pets>-w      
+{ )atad>-w( fi    
+esle }    
+;spets_n>-p % )1 + pets>-w( = pets>-w      
+{ )1 - spets_n>-p == pets>-w( fi    
+;)xetum>-p &(kcol_xetum_daerhtp    
+;)pmt ,pets>-w ,derahs>-p())cnuf>-p(*( = atad>-w    
+}    
+;0)* diov( = pmt      
+{ esle }    
+;atad>-w = pmt      
+{ )pets>-w( fi    
+;)xetum>-p &(kcolnu_xetum_daerhtp    
+}    
+;))xetum>-p &()  tcirtser__ * t_xetum_daerhtp( ,)vc>-p &()  tcirtser__ * t_dnoc_daerhtp((tiaw_dnoc_daerhtp      
+}      
+;kaerb        
+{ )srekrow_n>-p == i( fi      
+}      
+;++ i        
+ /* lebaL LIC */ :tnoC__        
+}        
+}          
+;kaerb            
+{ )xedni>-w < xedni>-)i + srekrow>-p(( fi          
+{ )pets>-w =< pets>-)i + srekrow>-p(( fi        
+}        
+;tnoC__ otog          
+{ ))i + srekrow>-p() gnol dengisnu( == w) gnol dengisnu(( fi        
+{ )srekrow_n>-p < i( elihw      
+;0 = i      
+{ )1( elihw    
+;)xetum>-p &(kcol_xetum_daerhtp    
+{ )spets_n>-p < pets>-w( elihw  
+;lp>-w = p  
+;atad)* t_rekrow_ptk( = w  
+{  
+
+; 0___pmt t_46tni  
+; pmt* diov  
+; i tni  
+; p* t_ptk  
+; w* t_rekrow_ptk  
+ {
+ ) atad* diov(rekrow_ptk* diov citats
+}
+}
+;nruter  
+}  
+}    
+;++ i      
+;)0 ,i ,atad()cnuf*(      
+{ )n < i( elihw    
+;L0 = i    
+ /* lebaL LIC */ :L_    
+{ esle }  
+}    
+;L_ otog      
+{ esle }    
+;)xetum>-pf &(kcolnu_xetum_daerhtp      
+}      
+;))xetum>-pf &()  tcirtser__ * t_xetum_daerhtp( ,)m_vc>-pf &()  tcirtser__ * t_dnoc_daerhtp((tiaw_dnoc_daerhtp        
+{ )gnidnep_n>-pf( elihw      
+;)s_vc>-pf &(tsacdaorb_dnoc_daerhtp      
+;)xetum>-pf &(kcol_xetum_daerhtp      
+}      
+;++ i        
+;1 = noitca>-)i + w>-pf(        
+;i = i>-)i + w>-pf(        
+{ )sdaerht_n>-pf) gnol( < i( elihw      
+;L0 = i      
+;sdaerht_n>-pf = gnidnep_n>-pf      
+;atad = atad>-pf      
+;cnuf = cnuf>-pf      
+;n = n>-pf      
+{ )1 > sdaerht_n>-pf( fi    
+{ )pf( fi  
+;pf_)* t_looprof_tk( = pf  
+{  
+
+; i gnol  
+; pf* t_looprof_tk  
+ {
+ ) n gnol , atad* diov , )  tni ,  gnol , * diov()cnuf*( diov , pf_* diov(looprof_tk diov
+}
+}
+;nruter  
+;)pf)* diov((eerf  
+;)dit>-pf)* diov((eerf  
+;)w>-pf)* diov((eerf  
+;)xetum>-pf &(yortsed_xetum_daerhtp  
+;)m_vc>-pf &(yortsed_dnoc_daerhtp  
+;)s_vc>-pf &(yortsed_dnoc_daerhtp  
+}  
+;++ i    
+;)0)** diov( ,)i + dit>-pf(*(nioj_daerhtp    
+{ )sdaerht_n>-pf < i( elihw  
+;0 = i  
+;)s_vc>-pf &(tsacdaorb_dnoc_daerhtp  
+}  
+;++ i    
+;1- = noitca>-)i + w>-pf(    
+{ )sdaerht_n>-pf < i( elihw  
+;0 = i  
+;pf_)* t_looprof_tk( = pf  
+{  
+
+; i tni  
+; pf* t_looprof_tk  
+ {
+ ) pf_* diov(yortsed_looprof_tk diov
+}
+}
+;)pf)* diov(( nruter  
+;)xetum>-pf &(kcolnu_xetum_daerhtp  
+}  
+;))xetum>-pf &()  tcirtser__ * t_xetum_daerhtp( ,)m_vc>-pf &()  tcirtser__ * t_dnoc_daerhtp((tiaw_dnoc_daerhtp    
+{ )gnidnep_n>-pf( elihw  
+;)xetum>-pf &(kcol_xetum_daerhtp  
+}  
+;++ i    
+;))i + w>-pf()  tcirtser__ * diov( ,rekrow_pf_tk &                   
+,0)  tcirtser__ *   tsnoc t_rtta_daerhtp( ,)i + dit>-pf()  tcirtser__ * t_daerhtp((etaerc_daerhtp    
+{ )sdaerht_n>-pf < i( elihw  
+;0 = i  
+;)0)  tcirtser__ *   tsnoc t_rttadnoc_daerhtp( ,)s_vc>-pf &()  tcirtser__ * t_dnoc_daerhtp((tini_dnoc_daerhtp  
+;)0)  tcirtser__ *   tsnoc t_rttadnoc_daerhtp( ,)m_vc>-pf &()  tcirtser__ * t_dnoc_daerhtp((tini_dnoc_daerhtp  
+;)0)*   tsnoc t_rttaxetum_daerhtp( ,xetum>-pf &(tini_xetum_daerhtp  
+}  
+;++ i    
+;pf = t>-)i + w>-pf(    
+{ )sdaerht_n>-pf < i( elihw  
+;0 = i  
+;2___pmt)* t_rekrow_otk( = w>-pf  
+;)) t_rekrow_otk(foezis ,sdaerht_n>-pf) t_ezis((collac = 2___pmt  
+;1___pmt)* t_daerhtp( = dit>-pf  
+;)) t_daerhtp(foezis ,sdaerht_n>-pf) t_ezis((collac = 1___pmt  
+;0___pmt = sdaerht_n>-pf  
+;0___pmt = gnidnep_n>-pf  
+;sdaerht_n = 0___pmt  
+;pmt)* t_looprof_tk( = pf  
+;)) t_looprof_tk(foezis ,1) t_ezis((collac = pmt  
+{  
+
+; 2___pmt* diov  
+; 1___pmt* diov  
+; 0___pmt tni  
+; pmt* diov  
+; i tni  
+; pf* t_looprof_tk  
+ {
+ ) sdaerht_n tni(tini_looprof_tk* diov
+}
+}
+;)0)* diov((tixe_daerhtp  
+}  
+}    
+;))w>-pf - w() tni( ,i ,atad>-pf())cnuf>-pf(*(      
+}      
+;kaerb        
+{ ))L0 => i( !( fi      
+;)pf(krow_laets_pf_tk = i      
+{ )1( elihw    
+}    
+;))w>-pf - w() tni( ,i ,atad>-pf())cnuf>-pf(*(      
+}      
+;kaerb        
+{ )n>-pf => i( fi      
+;)sdaerht_n>-pf ,i>-w &(dda_dna_hctef_cnys__) gnol( = i      
+{ )1( elihw    
+}    
+;kaerb      
+{ )0 < noitca( fi    
+;)xetum>-pf &(kcolnu_xetum_daerhtp    
+;noitca>-w = noitca    
+}    
+;))xetum>-pf &()  tcirtser__ * t_xetum_daerhtp( ,)s_vc>-pf &()  tcirtser__ * t_dnoc_daerhtp((tiaw_dnoc_daerhtp      
+{ )0 == noitca>-w( elihw    
+;0 = noitca>-w    
+}    
+;)m_vc>-pf &(langis_dnoc_daerhtp      
+{ )0 == gnidnep_n>-pf( fi    
+;-- )gnidnep_n>-pf(    
+;)xetum>-pf &(kcol_xetum_daerhtp    
+{ )1( elihw  
+;t>-w = pf  
+;atad)* t_rekrow_otk( = w  
+{  
+
+; noitca tni  
+; i gnol  
+; pf* t_looprof_tk  
+; w* t_rekrow_otk  
+ {
+ ) atad* diov(rekrow_pf_tk* diov citats
+}
+}
+;)pmt( nruter  
+}  
+;k = pmt    
+{ esle }  
+;L1- = pmt    
+{ )n>-t => k( fi  
+;)sdaerht_n>-t ,i>-)i_nim + w>-t( &(dda_dna_hctef_cnys__) gnol( = k  
+}  
+;++ i    
+}    
+;i = i_nim      
+;i>-)i + w>-t( = nim      
+{ )i>-)i + w>-t( > nim( fi    
+{ )sdaerht_n>-t < i( elihw  
+;0 = i  
+;L7085774586302733229 = nim  
+;1- = i_nim  
+{  
+
+; pmt gnol  
+; nim gnol  
+; k gnol  
+; i_nim tni  
+; i tni  
+ {
+ ) t* t_looprof_tk(krow_laets_pf_tk gnol citats enilni__
+}
+}
+;nruter  
+}  
+}    
+;++ j      
+;)0 ,j ,atad()cnuf*(      
+{ )n < j( elihw    
+;L0 = j    
+{ esle }  
+}    
+;++ i      
+;)0)** diov( ,)i + dit(*(nioj_daerhtp      
+{ )sdaerht_n < i( elihw    
+;0 = i    
+}    
+;++ i      
+;))i + w.t()  tcirtser__ * diov( ,rekrow_ftk &                     
+,0)  tcirtser__ *   tsnoc t_rtta_daerhtp( ,)i + dit()  tcirtser__ * t_daerhtp((etaerc_daerhtp      
+{ )sdaerht_n < i( elihw    
+;0 = i    
+}    
+;++ i      
+;i) gnol( = i>-)i + w.t(      
+;t & = t>-)i + w.t(      
+{ )sdaerht_n < i( elihw    
+;0 = i    
+;0___pmt)* t_daerhtp( = dit    
+;)) t_daerhtp(foezis * sdaerht_n) gnol dengisnu((acolla_nitliub__ = 0___pmt    
+;pmt)* t_rekrow_ftk( = w.t    
+;)) t_rekrow_ftk(foezis * sdaerht_n) gnol dengisnu((acolla_nitliub__ = pmt    
+;n = n.t    
+;sdaerht_n = sdaerht_n.t    
+;atad = atad.t    
+;cnuf = cnuf.t    
+{ )1 > sdaerht_n( fi  
+{  
+
+; j gnol  
+; 0___pmt* diov  
+; pmt* diov  
+; dit* t_daerhtp  
+; t t_rof_tk  
+; i tni  
+ {
+ ) n gnol , atad* diov , )  tni ,  gnol , * diov()cnuf*( diov , sdaerht_n tni(rof_tk diov
+}
+}
+;)0)* diov((tixe_daerhtp  
+}  
+;))w>-)t>-w( - w() tni( ,i ,atad>-)t>-w(())cnuf>-)t>-w((*(    
+}    
+;kaerb      
+{ ))L0 => i( !( fi    
+;)t>-w(krow_laets = i    
+{ )1( elihw  
+}  
+;))w>-)t>-w( - w() tni( ,i ,atad>-)t>-w(())cnuf>-)t>-w((*(    
+}    
+;kaerb      
+{ )n>-)t>-w( => i( fi    
+;)sdaerht_n>-)t>-w( ,i>-w &(dda_dna_hctef_cnys__) gnol( = i    
+{ )1( elihw  
+;atad)* t_rekrow_ftk( = w  
+{  
+
+; i gnol  
+; w* t_rekrow_ftk  
+ {
+ ) atad* diov(rekrow_ftk* diov citats
+}
+}
+;)pmt( nruter  
+}  
+;k = pmt    
+{ esle }  
+;L1- = pmt    
+{ )n>-t => k( fi  
+;)sdaerht_n>-t ,i>-)i_nim + w>-t( &(dda_dna_hctef_cnys__) gnol( = k  
+}  
+;++ i    
+}    
+;i = i_nim      
+;i>-)i + w>-t( = nim      
+{ )i>-)i + w>-t( > nim( fi    
+{ )sdaerht_n>-t < i( elihw  
+;0 = i  
+;L7085774586302733229 = nim  
+;1- = i_nim  
+{  
+
+; pmt gnol  
+; nim gnol  
+; k gnol  
+; i_nim tni  
+; i tni  
+ {
+ ) t* t_rof_tk(krow_laets gnol citats enilni__
+; ) rtp__* diov(eerf diov ))__worhton__((__etubirtta__  nretxe
+; ))__collam__((__etubirtta__  ) ezis__ t_ezis , bmemn__ t_ezis(collac* diov ))__worhton__((__etubirtta__  nretxe
+; ) xetum__  tcirtser__ * t_xetum_daerhtp                                                                  
+, dnoc__  tcirtser__ * t_dnoc_daerhtp()tiaw_dnoc_daerhtp )))2,1(__llunnon__((__etubirtta__ ( tni nretxe
+; ) dnoc__* t_dnoc_daerhtp()tsacdaorb_dnoc_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) dnoc__* t_dnoc_daerhtp()langis_dnoc_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) dnoc__* t_dnoc_daerhtp()yortsed_dnoc_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) rtta_dnoc__  tcirtser__ *   tsnoc t_rttadnoc_daerhtp                                                                                              
+, dnoc__  tcirtser__ * t_dnoc_daerhtp()tini_dnoc_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) xetum__* t_xetum_daerhtp()kcolnu_xetum_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) xetum__* t_xetum_daerhtp()kcol_xetum_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) xetum__* t_xetum_daerhtp()yortsed_xetum_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) rttaxetum__*   tsnoc t_rttaxetum_daerhtp                                                                                               
+, xetum__* t_xetum_daerhtp()tini_xetum_daerhtp )))1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+; ) nruter_daerht__** diov , ht__ t_daerhtp(nioj_daerhtp tni nretxe
+; ) lavter__* diov(tixe_daerhtp diov ))__nruteron__((__etubirtta__  nretxe
+; ) gra__  tcirtser__ * diov                                                                                             
+, ) * diov()enituor_trats__*(* diov                                                                                             
+, rtta__  tcirtser__ *   tsnoc t_rtta_daerhtp                                                                                             
+, daerhtwen__  tcirtser__ * t_daerhtp()etaerc_daerhtp )))3,1(__llunnon__((__etubirtta__ ( tni ))__worhton__((__etubirtta__  nretxe
+)"daerhtp-","i.ldXokCcb-lic/pmt/","0"(regrem amgarp#
+/*  ; )...(dda_dna_hctef_cnys__  ))__dedaolrevo__((__etubirtta__ diov   
+ :nitliub relipmoc */
+/*  ; )  gnol dengisnu(acolla_nitliub__* diov   
+ :nitliub relipmoc */
+;t_pets 228884612_t_pets_tcurtsnona__ tcurts fedepyt
+;}
+; senil** rahc   
+; senil_n tni   
+{ 228884612_t_pets_tcurtsnona__ tcurts
+;t_enilepip 228611305_t_enilepip_tcurtsnona__ tcurts fedepyt
+;}
+; fub* rahc   
+; sdaerht_n tni   
+; ezis_fub tni   
+; senil_xam tni   
+; pf* ELIF   
+{ 228611305_t_enilepip_tcurtsnona__ tcurts
+;}
+; ]) t_ezis(foezis - ))* diov(foezis * LU4 - ) tni(foezis * LU51([2desunu_ rahc   
+; edom_ tni   
+; 5dap__ t_ezis   
+; fub_sereerf_* diov   
+; tsil_sereerf_* ELIF_OI_ tcurts   
+; atad_ediw_* atad_ediw_OI_ tcurts   
+; tvcedoc_* tvcedoc_OI_ tcurts   
+; tesffo_ t_46ffo__   
+; kcol_* t_kcol_OI_   
+; ]1[fubtrohs_ rahc   
+; tesffo_elbatv_ rahc dengis   
+; nmuloc_ruc_ trohs dengisnu   
+; tesffo_dlo_ t_ffo__   
+; 2sgalf_ tni   
+; onelif_ tni   
+; niahc_* ELIF_OI_ tcurts   
+; srekram_* rekram_OI_ tcurts   
+; dne_evas_OI_* rahc   
+; esab_pukcab_OI_* rahc   
+; esab_evas_OI_* rahc   
+; dne_fub_OI_* rahc   
+; esab_fub_OI_* rahc   
+; dne_etirw_OI_* rahc   
+; rtp_etirw_OI_* rahc   
+; esab_etirw_OI_* rahc   
+; esab_daer_OI_* rahc   
+; dne_daer_OI_* rahc   
+; rtp_daer_OI_* rahc   
+; sgalf_ tni   
+{ ELIF_OI_ tcurts
+;t_kcol_OI_ diov fedepyt
+; atad_ediw_OI_ tcurts
+; tvcedoc_OI_ tcurts
+; rekram_OI_ tcurts
+;ELIF ELIF_OI_ tcurts fedepyt
+; ELIF_OI_ tcurts
+;t_46ffo__ gnol fedepyt
+;t_ffo__ gnol fedepyt
+;t_ptk t_ptk tcurts fedepyt
+;}
+; vc t_dnoc_daerhtp   
+; xetum t_xetum_daerhtp   
+; srekrow* t_rekrow_ptk   
+; spets_n tni   
+; srekrow_n tni   
+; xedni t_46tni   
+; ) * diov ,  tni , * diov()cnuf*(* diov   
+; derahs* diov   
+{ t_ptk tcurts
+;t_rekrow_ptk 897515323_t_rekrow_ptk_tcurtsnona__ tcurts fedepyt
+;}
+; atad* diov   
+; pets tni   
+; xedni t_46tni   
+; lp* t_ptk tcurts   
+{ 897515323_t_rekrow_ptk_tcurtsnona__ tcurts
+; t_ptk tcurts
+;t_looprof_tk t_looprof_tk tcurts fedepyt
+;}
+; s_vc t_dnoc_daerhtp   
+; m_vc t_dnoc_daerhtp   
+; xetum t_xetum_daerhtp   
+; atad* diov   
+; )  tni ,  gnol , * diov()cnuf*( diov   
+; w* t_rekrow_otk   
+; dit* t_daerhtp   
+; n gnol   
+; gnidnep_n tni   
+; sdaerht_n tni   
+{ t_looprof_tk tcurts
+;t_rekrow_otk 003370704_t_rekrow_otk_tcurtsnona__ tcurts fedepyt
+;}
+; noitca tni   
+; i gnol   
+; t* t_looprof_tk tcurts   
+{ 003370704_t_rekrow_otk_tcurtsnona__ tcurts
+; t_looprof_tk tcurts
+;t_rof_tk t_rof_tk tcurts fedepyt
+;}
+; atad* diov   
+; )  tni ,  gnol , * diov()cnuf*( diov   
+; w* t_rekrow_ftk   
+; n gnol   
+; sdaerht_n tni   
+{ t_rof_tk tcurts
+;t_rekrow_ftk 681330594_t_rekrow_ftk_tcurtsnona__ tcurts fedepyt
+;}
+; i gnol   
+; t* t_rof_tk tcurts   
+{ 681330594_t_rekrow_ftk_tcurtsnona__ tcurts
+; t_rof_tk tcurts
+;t_46tni t_46tni__ fedepyt
+;t_dnoc_daerhtp 508167159_t_dnoc_daerhtp_noinunona__ noinu fedepyt
+;}
+; ngila__ gnol gnol   
+; ]84[ezis__ rahc   
+; atad__ s_dnoc_daerhtp__ tcurts   
+{ 508167159_t_dnoc_daerhtp_noinunona__ noinu
+;t_xetum_daerhtp 716064533_t_xetum_daerhtp_noinunona__ noinu fedepyt
+;}
+; ngila__ gnol   
+; ]04[ezis__ rahc   
+; atad__ s_xetum_daerhtp__ tcurts   
+{ 716064533_t_xetum_daerhtp_noinunona__ noinu
+;t_rtta_daerhtp t_rtta_daerhtp noinu fedepyt
+;}
+; ngila__ gnol   
+; ]65[ezis__ rahc   
+{ t_rtta_daerhtp noinu
+;t_rttadnoc_daerhtp 541495884_t_rttadnoc_daerhtp_noinunona__ noinu fedepyt
+;}
+; ngila__ tni   
+; ]4[ezis__ rahc   
+{ 541495884_t_rttadnoc_daerhtp_noinunona__ noinu
+;t_rttaxetum_daerhtp 441495884_t_rttaxetum_daerhtp_noinunona__ noinu fedepyt
+;}
+; ngila__ tni   
+; ]4[ezis__ rahc   
+{ 441495884_t_rttaxetum_daerhtp_noinunona__ noinu
+;t_daerhtp gnol dengisnu fedepyt
+;}
+; ]2[slangis_g__ tni dengisnu   
+; sferw__ tni dengisnu   
+; ezis_giro_1g__ tni dengisnu   
+; ]2[ezis_g__ tni dengisnu   
+; ]2[sfer_g__ tni dengisnu   
+; 2dleiFpmoCnonna__ 725159175_eman_dleif_gnissim____noinunona__ noinu   
+; 1dleiFpmoCnonna__ 051240721_eman_dleif_gnissim____noinunona__ noinu   
+{ s_dnoc_daerhtp__ tcurts
+;}
+; 23trats_1g__ 825159175_23trats_1g___tcurtsnona__ tcurts   
+; trats_1g__ gnol gnol dengisnu   
+{ 725159175_eman_dleif_gnissim____noinunona__ noinu
+;}
+; hgih__ tni dengisnu   
+; wol__ tni dengisnu   
+{ 825159175_23trats_1g___tcurtsnona__ tcurts
+;}
+; 23qesw__ 648459211_23qesw___tcurtsnona__ tcurts   
+; qesw__ gnol gnol dengisnu   
+{ 051240721_eman_dleif_gnissim____noinunona__ noinu
+;}
+; hgih__ tni dengisnu   
+; wol__ tni dengisnu   
+{ 648459211_23qesw___tcurtsnona__ tcurts
+;}
+; tsil__ t_tsil_daerhtp__   
+; noisile__ trohs   
+; snips__ trohs   
+; dnik__ tni   
+; sresun__ tni dengisnu   
+; renwo__ tni   
+; tnuoc__ tni dengisnu   
+; kcol__ tni   
+{ s_xetum_daerhtp__ tcurts
+;t_tsil_daerhtp__ tsil_lanretni_daerhtp__ tcurts fedepyt
+;}
+; txen__* tsil_lanretni_daerhtp__ tcurts   
+; verp__* tsil_lanretni_daerhtp__ tcurts   
+{ tsil_lanretni_daerhtp__ tcurts
+;t_ezis gnol dengisnu fedepyt
+;t_46tni__ gnol fedepyt
+
+/* eurt si tupnI_LIC_tnirp */
+/* 2.8.1 .v LIC yb detareneG */

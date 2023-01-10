@@ -1,0 +1,41 @@
+CFLAGS = -pthread
+
+main.rs: main.c
+	echo "[{\"arguments\":[\"cc\",\"-c\",\"-pthread\",\"-o\",\"main.o\",\"main.c\"],\"directory\":\"`pwd`\",\"file\":\"main.c\"}]" > compile_commands.json && \
+	rm -f *.rs && \
+	c2rust transpile -b main compile_commands.json > /dev/null && \
+	if [ -f "fix_rust_code.sh" ]; then ./fix_rust_code.sh; fi
+
+transformation: main.rs
+	cp main.rs transformation && \
+	echo 'pub mod main;' >> c2rust-lib.rs && \
+	head -n 3 main.rs > .main_header && \
+	sed -i '1,3d' main.rs && \
+	sed -i 's/#\[macro_use\]//g' main.rs && \
+	sed -i 's/extern crate c2rust_/use ::c2rust_/g' main.rs && \
+	sed -i 's/use ::c2rust_out::\*;/use ::libc;/g' main.rs && \
+	cargo run --manifest-path ../../Cargo.toml --release --bin dataflow -- -d ../../deps_crate/target/debug/deps -i . && \
+	cargo run --manifest-path ../../Cargo.toml --release --bin concrat -- -d ../../deps_crate/target/debug/deps -i . && \
+	sed -i '$$ d' c2rust-lib.rs && \
+	sed -i 's/use ::c2rust_/#[macro_use] extern crate c2rust_/g' main.rs && \
+	sed -i 's/use ::libc;/use ::c2rust_out::\*;/g' main.rs && \
+	sed -i 's/u#/#/g' main.rs && \
+	cat .main_header main.rs > .main.rs && \
+	mv .main.rs main.rs && \
+	rm .main_header && \
+	touch transformation
+
+revert:
+	mv transformation main.rs
+
+ifeq ($(C),yes)
+CMD=./build_c.sh
+else
+CMD=cargo build && cp target/debug/main main
+endif
+
+test:
+	rm -f main && $(CMD) && ./test.sh
+
+clean:
+	rm -rf *.json *.rs Cargo.* rust-toolchain target *.rlib main transformation

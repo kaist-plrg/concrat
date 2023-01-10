@@ -1,0 +1,8 @@
+#! /bin/bash
+
+/bin/bash ../../build/aux/test-driver --test-name combined-nofilter-1.sh --log-file combined-nofilter-1.sh.log --trs-file combined-nofilter-1.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-nofilter-1.sh
+/bin/bash ../../build/aux/test-driver --test-name combined-nofilter-2.sh --log-file combined-nofilter-2.sh.log --trs-file combined-nofilter-2.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-nofilter-2.sh
+/bin/bash ../../build/aux/test-driver --test-name combined-filter-exclude_uid-drop.sh --log-file combined-filter-exclude_uid-drop.sh.log --trs-file combined-filter-exclude_uid-drop.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-filter-exclude_uid-drop.sh
+/bin/bash ../../build/aux/test-driver --test-name combined-filter-exclude_uid-pass.sh --log-file combined-filter-exclude_uid-pass.sh.log --trs-file combined-filter-exclude_uid-pass.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-filter-exclude_uid-pass.sh
+/bin/bash ../../build/aux/test-driver --test-name combined-filter-only_uid-drop.sh --log-file combined-filter-only_uid-drop.sh.log --trs-file combined-filter-only_uid-drop.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-filter-only_uid-drop.sh
+/bin/bash ../../build/aux/test-driver --test-name combined-filter-only_uid-pass.sh --log-file combined-filter-only_uid-pass.sh.log --trs-file combined-filter-only_uid-pass.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./combined-filter-only_uid-pass.sh

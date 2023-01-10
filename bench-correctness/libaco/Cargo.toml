@@ -1,0 +1,22 @@
+[workspace]
+members = [
+]
+[package]
+name = "c2rust_out"
+authors = ["C2Rust"]
+version = "0.0.0"
+publish = false
+edition = "2021"
+autobins = false
+
+[build-dependencies]
+cc = "1.0"
+[lib]
+name = "c2rust_out"
+path = "c2rust-lib.rs"
+crate-type = ["staticlib", "rlib"]
+[[bin]]
+path = "main.rs"
+name = "main"
+[dependencies]
+libc= "0.2"

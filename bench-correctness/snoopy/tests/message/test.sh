@@ -1,0 +1,9 @@
+#! /bin/bash
+
+/bin/bash ../../build/aux/test-driver --test-name message_format-datasource-arg.sh --log-file message_format-datasource-arg.sh.log --trs-file message_format-datasource-arg.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-datasource-arg.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-datasource-noarg.sh --log-file message_format-datasource-noarg.sh.log --trs-file message_format-datasource-noarg.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-datasource-noarg.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-ds-closing-tag-missing.sh --log-file message_format-ds-closing-tag-missing.sh.log --trs-file message_format-ds-closing-tag-missing.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-ds-closing-tag-missing.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-ds-unknown.sh --log-file message_format-ds-unknown.sh.log --trs-file message_format-ds-unknown.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-ds-unknown.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-ds-failure.sh --log-file message_format-ds-failure.sh.log --trs-file message_format-ds-failure.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-ds-failure.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-empty.sh --log-file message_format-empty.sh.log --trs-file message_format-empty.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-empty.sh
+/bin/bash ../../build/aux/test-driver --test-name message_format-static.sh --log-file message_format-static.sh.log --trs-file message_format-static.sh.trs --color-tests no --enable-hard-errors yes --expect-failure no -- ./message_format-static.sh
