@@ -1,5 +1,5 @@
 <run><result>
-<file name="uthash.c" path="experiment/progs/uthash.c">
+<file name="main.c" path="main.c">
 <function name="main">
 <node name="778"/>
 <node name="823"/>

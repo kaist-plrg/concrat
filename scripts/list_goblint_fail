@@ -1,6 +1,8 @@
 bench/brubeck
+bench/dnspod-sr
 bench/dnspod-sr-fixed
 bench/EasyLogger
 bench/Mirai-Source-Code
 bench/pingfs
+bench/sshfs
 bench/ProcDump-for-Linux

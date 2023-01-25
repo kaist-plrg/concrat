@@ -1,5 +1,5 @@
 <run><result>
-<file name="cava.c" path="experiment/progs/cava.c">
+<file name="main.c" path="main.c">
 <function name="cleanup_terminal_ncurses">
 <node name="3222"/>
 <node name="3221"/>

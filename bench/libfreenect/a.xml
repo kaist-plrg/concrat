@@ -1,5 +1,5 @@
 <run><result>
-<file name="libfreenect.c" path="experiment/progs/libfreenect.c">
+<file name="main.c" path="main.c">
 <function name="main">
 <node name="297"/>
 <node name="260"/>

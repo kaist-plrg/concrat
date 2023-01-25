@@ -1,5 +1,5 @@
 <run><result>
-<file name="C-Thread-Pool.c" path="experiment/progs/C-Thread-Pool.c">
+<file name="main.c" path="main.c">
 <function name="main">
 <node name="362"/>
 <node name="348"/>

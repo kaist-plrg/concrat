@@ -1,5 +1,5 @@
 <run><result>
-<file name="pingfs.c" path="experiment/progs/pingfs.c">
+<file name="main.c" path="main.c">
 <function name="chunk_done">
 <node name="1329"/>
 <node name="1326"/>

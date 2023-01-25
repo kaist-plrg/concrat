@@ -1,5 +1,5 @@
 <run><result>
-<file name="libfaketime.c" path="experiment/progs/libfaketime.c">
+<file name="main.c" path="main.c">
 <function name="main">
 <node name="78"/>
 <node name="93"/>

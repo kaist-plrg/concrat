@@ -1,5 +1,5 @@
 <run><result>
-<file name="sc.c" path="experiment/progs/sc.c">
+<file name="main.c" path="main.c">
 <function name="sc_mutex_unlock">
 <node name="59"/>
 <node name="ret323"/>

@@ -6,12 +6,9 @@ main.rs: main.c
 	c2rust transpile -e compile_commands.json > lines && \
 	if [ -f "fix_rust_code.sh" ]; then ./fix_rust_code.sh; fi
 
-ifeq ($(LIB),yes)
-FLAG = --enable allfuns --enable exp.earlyglobs
-endif
-
 a.xml: main.c
-	goblint --conf ../../conf.json $(FLAG) \
+	if grep 'int main(' main.c; then FLAG=""; else FLAG="--enable allfuns --enable exp.earlyglobs"; fi && \
+	goblint --conf ../../conf.json $$FLAG \
 		--enable allglobs \
 		--enable justcfg \
 		--set result fast_xml \
